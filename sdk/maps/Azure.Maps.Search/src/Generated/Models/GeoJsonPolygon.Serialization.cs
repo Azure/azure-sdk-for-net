@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using System;
 
 namespace Azure.Maps.Search.Models
 {
@@ -45,11 +44,6 @@ namespace Azure.Maps.Search.Models
             GeoJsonObjectType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString().ToGeoJsonObjectType();
-                    continue;
-                }
                 if (property.NameEquals("coordinates"))
                 {
                     List<IList<IList<double>>> array = new List<IList<IList<double>>>();
@@ -67,33 +61,15 @@ namespace Azure.Maps.Search.Models
                         }
                         array.Add(array0);
                     }
-                    foreach(var a in array) {
-                        foreach(var b in a) {
-                            foreach (var c in b) {
-                                Console.WriteLine("array " + c);
-                            }
-                        }
-                    }
                     coordinates = array;
-                    foreach(var a in coordinates) {
-                        foreach(var b in a) {
-                            foreach (var c in b) {
-                                Console.WriteLine("coordinate " + c);
-                            }
-                        }
-                    }
                     continue;
                 }
-                // if (property.NameEquals("type"))
-                // {
-                //     Console.WriteLine("should enter here");
-                //     type = property.Value.GetString().ToGeoJsonObjectType();
-                //     continue;
-                // }
+                if (property.NameEquals("type"))
+                {
+                    type = property.Value.GetString().ToGeoJsonObjectType();
+                    continue;
+                }
             }
-            GeoJsonPolygon g = new GeoJsonPolygon(type, coordinates);
-            var json = JsonSerializer.Serialize(g);
-            Console.WriteLine("geojsonpolygon " + json);
             return new GeoJsonPolygon(type, coordinates);
         }
     }

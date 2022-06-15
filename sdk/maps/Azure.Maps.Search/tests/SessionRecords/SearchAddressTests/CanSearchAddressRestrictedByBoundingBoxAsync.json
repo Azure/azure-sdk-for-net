@@ -6,33 +6,30 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-0c80cb90aff6dc49b52d02aced9c473c-9f409a662911b448-00",
-        "User-Agent": [
-          "azsdk-net-Maps.Search/1.0.0-alpha.20220613.1",
-          "(.NET 5.0.17; Microsoft Windows 10.0.19044)"
-        ],
+        "traceparent": "00-152090d596921c571713e80d5f3ab4ee-90a79f114b048a3b-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220615.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "3d75b8088641d77f37f25ac164ff5788",
+        "x-ms-client-request-id": "022d73591db1dec75971464a032bf089",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "766",
+        "Content-Length": "763",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 13 Jun 2022 08:14:07 GMT",
+        "Date": "Wed, 15 Jun 2022 15:23:29 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: F88632BC6B074034AA75E4B3ADF9DB1C Ref B: TPE30EDGE0911 Ref C: 2022-06-13T08:14:07Z"
+        "X-MSEdge-Ref": "Ref A: C0C5AAE93010457B8F97987BC11F3EFC Ref B: TPE30EDGE0915 Ref C: 2022-06-15T15:23:29Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "moke",
           "queryType": "NON_NEAR",
-          "queryTime": 4,
+          "queryTime": 3,
           "numResults": 1,
           "offset": 0,
           "totalResults": 1,
@@ -41,10 +38,10 @@
         "results": [
           {
             "type": "Street",
-            "id": "NZ/STR/p0/171282",
-            "score": 2.0553295612,
+            "id": "NZ/STR/p0/51550",
+            "score": 2.055409193,
             "matchConfidence": {
-              "score": 0.8924837714176492
+              "score": 0.892483445239383
             },
             "address": {
               "streetName": "Moke Lake Road",
@@ -60,17 +57,17 @@
               "localName": "Closeburn"
             },
             "position": {
-              "lat": -44.99791,
-              "lon": 168.57396
+              "lat": -44.99444,
+              "lon": 168.57535
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -44.99757,
-                "lon": 168.57261
+                "lat": -44.99355,
+                "lon": 168.57394
               },
               "btmRightPoint": {
-                "lat": -44.99862,
-                "lon": 168.57492
+                "lat": -44.99558,
+                "lon": 168.57587
               }
             }
           }
@@ -81,6 +78,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "518046206"
+    "RandomSeed": "397837554"
   }
 }

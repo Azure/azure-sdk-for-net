@@ -6,13 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-759c77e636e4f8408cf8a4f80cb8605d-16458dd298a8b546-00",
-        "User-Agent": [
-          "azsdk-net-Maps.Search/1.0.0-alpha.20220613.1",
-          "(.NET 5.0.17; Microsoft Windows 10.0.19044)"
-        ],
+        "traceparent": "00-4f1793047d7818283d5f39ea31d06702-70cb9787da1dadd5-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220615.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "03551aec6eefc8350cc772910c3260d5",
+        "x-ms-client-request-id": "f37b35431aad3d329b39114047db9700",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -20,19 +17,19 @@
       "ResponseHeaders": {
         "Content-Length": "8623",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 13 Jun 2022 08:13:51 GMT",
+        "Date": "Wed, 15 Jun 2022 15:23:14 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 34B3639863484A5ABAD1066182412AB4 Ref B: TPE30EDGE0911 Ref C: 2022-06-13T08:13:51Z"
+        "X-MSEdge-Ref": "Ref A: F57D9608CB1C444DAF6C005DB3699BA3 Ref B: TPE30EDGE0915 Ref C: 2022-06-15T15:23:14Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "milford",
           "queryType": "NON_NEAR",
-          "queryTime": 6,
+          "queryTime": 8,
           "numResults": 10,
           "offset": 0,
           "totalResults": 125,
@@ -41,7 +38,7 @@
         "results": [
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/2891",
+            "id": "NZ/GEO/p0/1320",
             "score": 2.3825688362,
             "entityType": "Municipality",
             "address": {
@@ -131,7 +128,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/4196",
+            "id": "NZ/GEO/p0/4153",
             "score": 2.1768069267,
             "entityType": "MunicipalitySubdivision",
             "address": {
@@ -520,7 +517,7 @@
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/83036",
+            "id": "NZ/STR/p0/29664",
             "score": 2.0962057114,
             "address": {
               "streetName": "Milford Street",
@@ -553,7 +550,7 @@
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/83039",
+            "id": "NZ/STR/p0/29667",
             "score": 2.0962057114,
             "address": {
               "streetName": "Milford Street",
@@ -590,6 +587,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "422660774"
+    "RandomSeed": "76374080"
   }
 }

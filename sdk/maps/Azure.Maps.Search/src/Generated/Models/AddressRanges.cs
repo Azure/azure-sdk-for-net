@@ -20,7 +20,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="rangeRight"> Address range on the right side of the street. </param>
         /// <param name="from"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
         /// <param name="to"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
-        internal AddressRanges(string rangeLeft, string rangeRight, LatLon @from, LatLon to)
+        internal AddressRanges(string rangeLeft, string rangeRight, LatLongPairAbbreviated @from, LatLongPairAbbreviated to)
         {
             RangeLeft = rangeLeft;
             RangeRight = rangeRight;
@@ -33,8 +33,8 @@ namespace Azure.Maps.Search.Models
         /// <summary> Address range on the right side of the street. </summary>
         public string RangeRight { get; }
         /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
-        public LatLon From { get; }
+        public LatLongPairAbbreviated From { get; }
         /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
-        public LatLon To { get; }
+        public LatLongPairAbbreviated To { get; }
     }
 }

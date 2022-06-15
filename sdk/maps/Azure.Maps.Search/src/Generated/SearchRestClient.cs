@@ -19,11 +19,13 @@ namespace Azure.Maps.Search
 {
     internal partial class SearchRestClient
     {
-        private Uri endpoint;
-        private string clientId;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _clientId;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of SearchRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -31,14 +33,14 @@ namespace Azure.Maps.Search
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following [articles](https://aka.ms/amauthdetails) for guidance. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public SearchRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string clientId = null, string apiVersion = "1.0")
         {
-            this.endpoint = endpoint ?? new Uri("https://atlas.microsoft.com");
-            this.clientId = clientId;
-            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? new Uri("https://atlas.microsoft.com");
+            _clientId = clientId;
+            _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
         internal HttpMessage CreateListPolygonsRequest(IEnumerable<string> geometryIds, JsonFormat? format)
@@ -47,15 +49,15 @@ namespace Azure.Maps.Search
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/search/polygon/", false);
             uri.AppendPath(format.Value.ToString(), true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQueryDelimited("geometries", geometryIds, ",", true);
             request.Uri = uri;
-            if (clientId != null)
+            if (_clientId != null)
             {
-                request.Headers.Add("x-ms-client-id", clientId);
+                request.Headers.Add("x-ms-client-id", _clientId);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -75,7 +77,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="geometryIds"/> is null. </exception>
-        public async Task<Response<PolygonResult>> ListPolygonsAsync(IEnumerable<string> geometryIds, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public async Task<Response<PolygonResult>> ListPolygonsAsync(IEnumerable<string> geometryIds, JsonFormat? format = null, CancellationToken cancellationToken = default)
         {
             if (geometryIds == null)
             {
@@ -95,7 +97,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -113,7 +115,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="geometryIds"/> is null. </exception>
-        public Response<PolygonResult> ListPolygons(IEnumerable<string> geometryIds, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public Response<PolygonResult> ListPolygons(IEnumerable<string> geometryIds, JsonFormat? format = null, CancellationToken cancellationToken = default)
         {
             if (geometryIds == null)
             {
@@ -133,7 +135,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -143,10 +145,10 @@ namespace Azure.Maps.Search
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/search/fuzzy/", false);
             uri.AppendPath(format.Value.ToString(), true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("query", query, true);
             if (isTypeAhead != null)
             {
@@ -229,9 +231,9 @@ namespace Azure.Maps.Search
                 uri.AppendQuery("openingHours", operatingHours.Value.ToString(), true);
             }
             request.Uri = uri;
-            if (clientId != null)
+            if (_clientId != null)
             {
-                request.Headers.Add("x-ms-client-id", clientId);
+                request.Headers.Add("x-ms-client-id", _clientId);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -382,7 +384,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public async Task<Response<SearchAddressResult>> FuzzySearchAsync(string query, ResponseFormat? format = default, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, int? minFuzzyLevel = null, int? maxFuzzyLevel = null, IEnumerable<SearchIndexes> indexFilter = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchAddressResult>> FuzzySearchAsync(string query, ResponseFormat? format = null, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, int? minFuzzyLevel = null, int? maxFuzzyLevel = null, IEnumerable<SearchIndexes> indexFilter = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {
@@ -402,7 +404,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -551,7 +553,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public Response<SearchAddressResult> FuzzySearch(string query, ResponseFormat? format = default, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, int? minFuzzyLevel = null, int? maxFuzzyLevel = null, IEnumerable<SearchIndexes> indexFilter = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public Response<SearchAddressResult> FuzzySearch(string query, ResponseFormat? format = null, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, int? minFuzzyLevel = null, int? maxFuzzyLevel = null, IEnumerable<SearchIndexes> indexFilter = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {
@@ -571,7 +573,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -581,10 +583,10 @@ namespace Azure.Maps.Search
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/search/poi/", false);
             uri.AppendPath(format.Value.ToString(), true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("query", query, true);
             if (isTypeAhead != null)
             {
@@ -651,9 +653,9 @@ namespace Azure.Maps.Search
                 uri.AppendQuery("openingHours", operatingHours.Value.ToString(), true);
             }
             request.Uri = uri;
-            if (clientId != null)
+            if (_clientId != null)
             {
-                request.Headers.Add("x-ms-client-id", clientId);
+                request.Headers.Add("x-ms-client-id", _clientId);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -751,7 +753,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public async Task<Response<SearchAddressResult>> SearchPointOfInterestAsync(string query, ResponseFormat? format = default, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<PointOfInterestExtendedPostalCodes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchAddressResult>> SearchPointOfInterestAsync(string query, ResponseFormat? format = null, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<PointOfInterestExtendedPostalCodes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {
@@ -771,7 +773,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -867,7 +869,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public Response<SearchAddressResult> SearchPointOfInterest(string query, ResponseFormat? format = default, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<PointOfInterestExtendedPostalCodes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public Response<SearchAddressResult> SearchPointOfInterest(string query, ResponseFormat? format = null, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<PointOfInterestExtendedPostalCodes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {
@@ -887,7 +889,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -897,10 +899,10 @@ namespace Azure.Maps.Search
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/search/nearby/", false);
             uri.AppendPath(format.Value.ToString(), true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("lat", lat, true);
             uri.AppendQuery("lon", lon, true);
             if (top != null)
@@ -944,9 +946,9 @@ namespace Azure.Maps.Search
                 uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
             }
             request.Uri = uri;
-            if (clientId != null)
+            if (_clientId != null)
             {
-                request.Headers.Add("x-ms-client-id", clientId);
+                request.Headers.Add("x-ms-client-id", _clientId);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1047,7 +1049,7 @@ namespace Azure.Maps.Search
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<SearchAddressResult>> SearchNearbyPointOfInterestAsync(double lat, double lon, ResponseFormat? format = default, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, int? radiusInMeters = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchAddressResult>> SearchNearbyPointOfInterestAsync(double lat, double lon, ResponseFormat? format = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, int? radiusInMeters = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             format ??= ResponseFormat.Json;
 
@@ -1063,7 +1065,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1162,7 +1164,7 @@ namespace Azure.Maps.Search
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SearchAddressResult> SearchNearbyPointOfInterest(double lat, double lon, ResponseFormat? format = default, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, int? radiusInMeters = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public Response<SearchAddressResult> SearchNearbyPointOfInterest(double lat, double lon, ResponseFormat? format = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, int? radiusInMeters = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             format ??= ResponseFormat.Json;
 
@@ -1178,7 +1180,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1188,10 +1190,10 @@ namespace Azure.Maps.Search
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/search/poi/category/", false);
             uri.AppendPath(format.Value.ToString(), true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("query", query, true);
             if (isTypeAhead != null)
             {
@@ -1258,9 +1260,9 @@ namespace Azure.Maps.Search
                 uri.AppendQuery("openingHours", operatingHours.Value.ToString(), true);
             }
             request.Uri = uri;
-            if (clientId != null)
+            if (_clientId != null)
             {
-                request.Headers.Add("x-ms-client-id", clientId);
+                request.Headers.Add("x-ms-client-id", _clientId);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1370,7 +1372,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public async Task<Response<SearchAddressResult>> SearchPointOfInterestCategoryAsync(string query, ResponseFormat? format = default, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchAddressResult>> SearchPointOfInterestCategoryAsync(string query, ResponseFormat? format = null, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {
@@ -1390,7 +1392,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1498,7 +1500,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public Response<SearchAddressResult> SearchPointOfInterestCategory(string query, ResponseFormat? format = default, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public Response<SearchAddressResult> SearchPointOfInterestCategory(string query, ResponseFormat? format = null, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {
@@ -1518,7 +1520,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1528,18 +1530,18 @@ namespace Azure.Maps.Search
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/search/poi/category/tree/", false);
             uri.AppendPath(format.Value.ToString(), true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (language != null)
             {
                 uri.AppendQuery("language", language, true);
             }
             request.Uri = uri;
-            if (clientId != null)
+            if (_clientId != null)
             {
-                request.Headers.Add("x-ms-client-id", clientId);
+                request.Headers.Add("x-ms-client-id", _clientId);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1559,7 +1561,7 @@ namespace Azure.Maps.Search
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<PointOfInterestCategoryTreeResult>> GetPointOfInterestCategoryTreeAsync(JsonFormat? format = default, string language = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PointOfInterestCategoryTreeResult>> GetPointOfInterestCategoryTreeAsync(JsonFormat? format = null, string language = null, CancellationToken cancellationToken = default)
         {
             format ??= JsonFormat.Json;
 
@@ -1575,7 +1577,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1593,7 +1595,7 @@ namespace Azure.Maps.Search
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<PointOfInterestCategoryTreeResult> GetPointOfInterestCategoryTree(JsonFormat? format = default, string language = null, CancellationToken cancellationToken = default)
+        public Response<PointOfInterestCategoryTreeResult> GetPointOfInterestCategoryTree(JsonFormat? format = null, string language = null, CancellationToken cancellationToken = default)
         {
             format ??= JsonFormat.Json;
 
@@ -1609,7 +1611,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1619,10 +1621,10 @@ namespace Azure.Maps.Search
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/search/address/", false);
             uri.AppendPath(format.Value.ToString(), true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("query", query, true);
             if (isTypeAhead != null)
             {
@@ -1677,9 +1679,9 @@ namespace Azure.Maps.Search
                 uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
             }
             request.Uri = uri;
-            if (clientId != null)
+            if (_clientId != null)
             {
-                request.Headers.Add("x-ms-client-id", clientId);
+                request.Headers.Add("x-ms-client-id", _clientId);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1756,7 +1758,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public async Task<Response<SearchAddressResult>> SearchAddressAsync(string query, ResponseFormat? format = default, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchAddressResult>> SearchAddressAsync(string query, ResponseFormat? format = null, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {
@@ -1776,7 +1778,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1851,7 +1853,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public Response<SearchAddressResult> SearchAddress(string query, ResponseFormat? format = default, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public Response<SearchAddressResult> SearchAddress(string query, ResponseFormat? format = null, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {
@@ -1871,7 +1873,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1881,10 +1883,10 @@ namespace Azure.Maps.Search
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/search/address/reverse/", false);
             uri.AppendPath(format.Value.ToString(), true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQueryDelimited("query", query, ",", true);
             if (language != null)
             {
@@ -1931,9 +1933,9 @@ namespace Azure.Maps.Search
                 uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
             }
             request.Uri = uri;
-            if (clientId != null)
+            if (_clientId != null)
             {
-                request.Headers.Add("x-ms-client-id", clientId);
+                request.Headers.Add("x-ms-client-id", _clientId);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1983,7 +1985,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public async Task<Response<ReverseSearchAddressResult>> ReverseSearchAddressAsync(IEnumerable<double> query, ResponseFormat? format = default, string language = null, bool? includeSpeedLimit = null, int? heading = null, int? radiusInMeters = null, string number = null, bool? includeRoadUse = null, IEnumerable<RoadUseType> roadUse = null, bool? allowFreeformNewline = null, bool? includeMatchType = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReverseSearchAddressResult>> ReverseSearchAddressAsync(IEnumerable<double> query, ResponseFormat? format = null, string language = null, bool? includeSpeedLimit = null, int? heading = null, int? radiusInMeters = null, string number = null, bool? includeRoadUse = null, IEnumerable<RoadUseType> roadUse = null, bool? allowFreeformNewline = null, bool? includeMatchType = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {
@@ -2003,7 +2005,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2051,7 +2053,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public Response<ReverseSearchAddressResult> ReverseSearchAddress(IEnumerable<double> query, ResponseFormat? format = default, string language = null, bool? includeSpeedLimit = null, int? heading = null, int? radiusInMeters = null, string number = null, bool? includeRoadUse = null, IEnumerable<RoadUseType> roadUse = null, bool? allowFreeformNewline = null, bool? includeMatchType = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public Response<ReverseSearchAddressResult> ReverseSearchAddress(IEnumerable<double> query, ResponseFormat? format = null, string language = null, bool? includeSpeedLimit = null, int? heading = null, int? radiusInMeters = null, string number = null, bool? includeRoadUse = null, IEnumerable<RoadUseType> roadUse = null, bool? allowFreeformNewline = null, bool? includeMatchType = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {
@@ -2071,7 +2073,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2081,10 +2083,10 @@ namespace Azure.Maps.Search
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/search/address/reverse/crossStreet/", false);
             uri.AppendPath(format.Value.ToString(), true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQueryDelimited("query", query, ",", true);
             if (top != null)
             {
@@ -2107,9 +2109,9 @@ namespace Azure.Maps.Search
                 uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
             }
             request.Uri = uri;
-            if (clientId != null)
+            if (_clientId != null)
             {
-                request.Headers.Add("x-ms-client-id", clientId);
+                request.Headers.Add("x-ms-client-id", _clientId);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -2140,7 +2142,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public async Task<Response<ReverseSearchCrossStreetAddressResult>> ReverseSearchCrossStreetAddressAsync(IEnumerable<double> query, ResponseFormat? format = default, int? top = null, int? heading = null, int? radiusInMeters = null, string language = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReverseSearchCrossStreetAddressResult>> ReverseSearchCrossStreetAddressAsync(IEnumerable<double> query, ResponseFormat? format = null, int? top = null, int? heading = null, int? radiusInMeters = null, string language = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {
@@ -2160,7 +2162,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2189,7 +2191,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public Response<ReverseSearchCrossStreetAddressResult> ReverseSearchCrossStreetAddress(IEnumerable<double> query, ResponseFormat? format = default, int? top = null, int? heading = null, int? radiusInMeters = null, string language = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public Response<ReverseSearchCrossStreetAddressResult> ReverseSearchCrossStreetAddress(IEnumerable<double> query, ResponseFormat? format = null, int? top = null, int? heading = null, int? radiusInMeters = null, string language = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {
@@ -2209,7 +2211,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2219,10 +2221,10 @@ namespace Azure.Maps.Search
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/search/address/structured/", false);
             uri.AppendPath(format.Value.ToString(), true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (language != null)
             {
                 uri.AppendQuery("language", language, true);
@@ -2285,9 +2287,9 @@ namespace Azure.Maps.Search
                 uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
             }
             request.Uri = uri;
-            if (clientId != null)
+            if (_clientId != null)
             {
-                request.Headers.Add("x-ms-client-id", clientId);
+                request.Headers.Add("x-ms-client-id", _clientId);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -2366,7 +2368,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> is null. </exception>
-        public async Task<Response<SearchAddressResult>> SearchStructuredAddressAsync(string countryCode, ResponseFormat? format = default, string language = null, int? top = null, int? skip = null, string streetNumber = null, string streetName = null, string crossStreet = null, string municipality = null, string municipalitySubdivision = null, string countryTertiarySubdivision = null, string countrySecondarySubdivision = null, string countrySubdivision = null, string postalCode = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchAddressResult>> SearchStructuredAddressAsync(string countryCode, ResponseFormat? format = null, string language = null, int? top = null, int? skip = null, string streetNumber = null, string streetName = null, string crossStreet = null, string municipality = null, string municipalitySubdivision = null, string countryTertiarySubdivision = null, string countrySecondarySubdivision = null, string countrySubdivision = null, string postalCode = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             if (countryCode == null)
             {
@@ -2386,7 +2388,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2463,7 +2465,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> is null. </exception>
-        public Response<SearchAddressResult> SearchStructuredAddress(string countryCode, ResponseFormat? format = default, string language = null, int? top = null, int? skip = null, string streetNumber = null, string streetName = null, string crossStreet = null, string municipality = null, string municipalitySubdivision = null, string countryTertiarySubdivision = null, string countrySecondarySubdivision = null, string countrySubdivision = null, string postalCode = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public Response<SearchAddressResult> SearchStructuredAddress(string countryCode, ResponseFormat? format = null, string language = null, int? top = null, int? skip = null, string streetNumber = null, string streetName = null, string crossStreet = null, string municipality = null, string municipalitySubdivision = null, string countryTertiarySubdivision = null, string countrySecondarySubdivision = null, string countrySubdivision = null, string postalCode = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             if (countryCode == null)
             {
@@ -2483,7 +2485,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2493,10 +2495,10 @@ namespace Azure.Maps.Search
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/search/geometry/", false);
             uri.AppendPath(format.Value.ToString(), true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("query", query, true);
             if (top != null)
             {
@@ -2527,9 +2529,9 @@ namespace Azure.Maps.Search
                 uri.AppendQuery("openingHours", operatingHours.Value.ToString(), true);
             }
             request.Uri = uri;
-            if (clientId != null)
+            if (_clientId != null)
             {
-                request.Headers.Add("x-ms-client-id", clientId);
+                request.Headers.Add("x-ms-client-id", _clientId);
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -2603,7 +2605,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> or <paramref name="geometry"/> is null. </exception>
-        public async Task<Response<SearchAddressResult>> SearchInsideGeometryAsync(string query, SearchInsideGeometryRequest geometry, ResponseFormat? format = default, int? top = null, string language = null, IEnumerable<int> categoryFilter = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<SearchIndexes> indexFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchAddressResult>> SearchInsideGeometryAsync(string query, SearchInsideGeometryRequest geometry, ResponseFormat? format = null, int? top = null, string language = null, IEnumerable<int> categoryFilter = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<SearchIndexes> indexFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {
@@ -2627,7 +2629,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2695,7 +2697,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> or <paramref name="geometry"/> is null. </exception>
-        public Response<SearchAddressResult> SearchInsideGeometry(string query, SearchInsideGeometryRequest geometry, ResponseFormat? format = default, int? top = null, string language = null, IEnumerable<int> categoryFilter = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<SearchIndexes> indexFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public Response<SearchAddressResult> SearchInsideGeometry(string query, SearchInsideGeometryRequest geometry, ResponseFormat? format = null, int? top = null, string language = null, IEnumerable<int> categoryFilter = null, IEnumerable<SearchIndexes> extendedPostalCodesFor = null, IEnumerable<SearchIndexes> indexFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {
@@ -2719,7 +2721,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2729,10 +2731,10 @@ namespace Azure.Maps.Search
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/search/alongRoute/", false);
             uri.AppendPath(format.Value.ToString(), true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("query", query, true);
             uri.AppendQuery("maxDetourTime", maxDetourTime, true);
             if (top != null)
@@ -2760,9 +2762,9 @@ namespace Azure.Maps.Search
                 uri.AppendQuery("openingHours", operatingHours.Value.ToString(), true);
             }
             request.Uri = uri;
-            if (clientId != null)
+            if (_clientId != null)
             {
-                request.Headers.Add("x-ms-client-id", clientId);
+                request.Headers.Add("x-ms-client-id", _clientId);
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -2832,7 +2834,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> or <paramref name="route"/> is null. </exception>
-        public async Task<Response<SearchAddressResult>> SearchAlongRouteAsync(string query, int maxDetourTime, SearchAlongRouteRequest route, ResponseFormat? format = default, int? top = null, IEnumerable<string> brandFilter = null, IEnumerable<int> categoryFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchAddressResult>> SearchAlongRouteAsync(string query, int maxDetourTime, SearchAlongRouteRequest route, ResponseFormat? format = null, int? top = null, IEnumerable<string> brandFilter = null, IEnumerable<int> categoryFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {
@@ -2856,7 +2858,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2920,7 +2922,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> or <paramref name="route"/> is null. </exception>
-        public Response<SearchAddressResult> SearchAlongRoute(string query, int maxDetourTime, SearchAlongRouteRequest route, ResponseFormat? format = default, int? top = null, IEnumerable<string> brandFilter = null, IEnumerable<int> categoryFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public Response<SearchAddressResult> SearchAlongRoute(string query, int maxDetourTime, SearchAlongRouteRequest route, ResponseFormat? format = null, int? top = null, IEnumerable<string> brandFilter = null, IEnumerable<int> categoryFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {
@@ -2944,7 +2946,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2954,14 +2956,14 @@ namespace Azure.Maps.Search
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/search/fuzzy/batch/sync/", false);
             uri.AppendPath(format.Value.ToString(), true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (clientId != null)
+            if (_clientId != null)
             {
-                request.Headers.Add("x-ms-client-id", clientId);
+                request.Headers.Add("x-ms-client-id", _clientId);
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -3125,7 +3127,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public async Task<Response<SearchAddressBatchResult>> FuzzySearchBatchSyncAsync(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchAddressBatchResult>> FuzzySearchBatchSyncAsync(BatchRequestInternal batchRequest, JsonFormat? format = null, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -3145,7 +3147,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3303,7 +3305,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public Response<SearchAddressBatchResult> FuzzySearchBatchSync(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public Response<SearchAddressBatchResult> FuzzySearchBatchSync(BatchRequestInternal batchRequest, JsonFormat? format = null, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -3323,7 +3325,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3333,14 +3335,14 @@ namespace Azure.Maps.Search
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/search/fuzzy/batch/", false);
             uri.AppendPath(format.Value.ToString(), true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (clientId != null)
+            if (_clientId != null)
             {
-                request.Headers.Add("x-ms-client-id", clientId);
+                request.Headers.Add("x-ms-client-id", _clientId);
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -3504,7 +3506,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SearchFuzzySearchBatchHeaders>> FuzzySearchBatchAsync(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SearchFuzzySearchBatchHeaders>> FuzzySearchBatchAsync(BatchRequestInternal batchRequest, JsonFormat? format = null, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -3521,7 +3523,7 @@ namespace Azure.Maps.Search
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3679,7 +3681,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public ResponseWithHeaders<SearchFuzzySearchBatchHeaders> FuzzySearchBatch(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SearchFuzzySearchBatchHeaders> FuzzySearchBatch(BatchRequestInternal batchRequest, JsonFormat? format = null, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -3696,7 +3698,7 @@ namespace Azure.Maps.Search
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3706,14 +3708,14 @@ namespace Azure.Maps.Search
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/search/fuzzy/batch/", false);
             uri.AppendPath(batchId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (clientId != null)
+            if (_clientId != null)
             {
-                request.Headers.Add("x-ms-client-id", clientId);
+                request.Headers.Add("x-ms-client-id", _clientId);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -3888,7 +3890,7 @@ namespace Azure.Maps.Search
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4061,7 +4063,7 @@ namespace Azure.Maps.Search
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4071,14 +4073,14 @@ namespace Azure.Maps.Search
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/search/address/batch/sync/", false);
             uri.AppendPath(format.Value.ToString(), true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (clientId != null)
+            if (_clientId != null)
             {
-                request.Headers.Add("x-ms-client-id", clientId);
+                request.Headers.Add("x-ms-client-id", _clientId);
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -4234,7 +4236,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public async Task<Response<SearchAddressBatchResult>> SearchAddressBatchSyncAsync(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchAddressBatchResult>> SearchAddressBatchSyncAsync(BatchRequestInternal batchRequest, JsonFormat? format = null, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -4254,7 +4256,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4404,7 +4406,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public Response<SearchAddressBatchResult> SearchAddressBatchSync(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public Response<SearchAddressBatchResult> SearchAddressBatchSync(BatchRequestInternal batchRequest, JsonFormat? format = null, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -4424,7 +4426,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4434,14 +4436,14 @@ namespace Azure.Maps.Search
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/search/address/batch/", false);
             uri.AppendPath(format.Value.ToString(), true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (clientId != null)
+            if (_clientId != null)
             {
-                request.Headers.Add("x-ms-client-id", clientId);
+                request.Headers.Add("x-ms-client-id", _clientId);
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -4597,7 +4599,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SearchSearchAddressBatchHeaders>> SearchAddressBatchAsync(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SearchSearchAddressBatchHeaders>> SearchAddressBatchAsync(BatchRequestInternal batchRequest, JsonFormat? format = null, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -4614,7 +4616,7 @@ namespace Azure.Maps.Search
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4764,7 +4766,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public ResponseWithHeaders<SearchSearchAddressBatchHeaders> SearchAddressBatch(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SearchSearchAddressBatchHeaders> SearchAddressBatch(BatchRequestInternal batchRequest, JsonFormat? format = null, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -4781,7 +4783,7 @@ namespace Azure.Maps.Search
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4791,14 +4793,14 @@ namespace Azure.Maps.Search
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/search/address/batch/", false);
             uri.AppendPath(batchId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (clientId != null)
+            if (_clientId != null)
             {
-                request.Headers.Add("x-ms-client-id", clientId);
+                request.Headers.Add("x-ms-client-id", _clientId);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -4965,7 +4967,7 @@ namespace Azure.Maps.Search
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -5130,7 +5132,7 @@ namespace Azure.Maps.Search
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -5140,14 +5142,14 @@ namespace Azure.Maps.Search
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/search/address/reverse/batch/sync/", false);
             uri.AppendPath(format.Value.ToString(), true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (clientId != null)
+            if (_clientId != null)
             {
-                request.Headers.Add("x-ms-client-id", clientId);
+                request.Headers.Add("x-ms-client-id", _clientId);
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -5305,7 +5307,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public async Task<Response<ReverseSearchAddressBatchResult>> ReverseSearchAddressBatchSyncAsync(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public async Task<Response<ReverseSearchAddressBatchResult>> ReverseSearchAddressBatchSyncAsync(BatchRequestInternal batchRequest, JsonFormat? format = null, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -5325,7 +5327,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -5477,7 +5479,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public Response<ReverseSearchAddressBatchResult> ReverseSearchAddressBatchSync(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public Response<ReverseSearchAddressBatchResult> ReverseSearchAddressBatchSync(BatchRequestInternal batchRequest, JsonFormat? format = null, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -5497,7 +5499,7 @@ namespace Azure.Maps.Search
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -5507,14 +5509,14 @@ namespace Azure.Maps.Search
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/search/address/reverse/batch/", false);
             uri.AppendPath(format.Value.ToString(), true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (clientId != null)
+            if (_clientId != null)
             {
-                request.Headers.Add("x-ms-client-id", clientId);
+                request.Headers.Add("x-ms-client-id", _clientId);
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -5672,7 +5674,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SearchReverseSearchAddressBatchHeaders>> ReverseSearchAddressBatchAsync(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SearchReverseSearchAddressBatchHeaders>> ReverseSearchAddressBatchAsync(BatchRequestInternal batchRequest, JsonFormat? format = null, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -5689,7 +5691,7 @@ namespace Azure.Maps.Search
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -5841,7 +5843,7 @@ namespace Azure.Maps.Search
         /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public ResponseWithHeaders<SearchReverseSearchAddressBatchHeaders> ReverseSearchAddressBatch(BatchRequestInternal batchRequest, JsonFormat? format = default, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SearchReverseSearchAddressBatchHeaders> ReverseSearchAddressBatch(BatchRequestInternal batchRequest, JsonFormat? format = null, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -5858,7 +5860,7 @@ namespace Azure.Maps.Search
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -5868,14 +5870,14 @@ namespace Azure.Maps.Search
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/search/address/reverse/batch/", false);
             uri.AppendPath(batchId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (clientId != null)
+            if (_clientId != null)
             {
-                request.Headers.Add("x-ms-client-id", clientId);
+                request.Headers.Add("x-ms-client-id", _clientId);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -6044,7 +6046,7 @@ namespace Azure.Maps.Search
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -6211,7 +6213,7 @@ namespace Azure.Maps.Search
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

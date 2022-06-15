@@ -4,6 +4,7 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.Core.GeoJson;
 using System.Collections.Generic;
 
 namespace Azure.Maps.Search.Models
@@ -34,7 +35,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> The maximum fuzzy level required to provide Results. </summary>
         public int? FuzzyLevel => Response.FuzzyLevel;
         /// <summary> Indication when the internal search engine has applied a geospatial bias to improve the ranking of results.  In  some methods, this can be affected by setting the lat and lon parameters where available.  In other cases it is  purely internal. </summary>
-        public LatLon GeoBias => Response.GeoBias;
+        public GeoPosition GeoBias => Response.GeoBias;
         /// <summary> A list of Search API results. </summary>
         public IReadOnlyList<SearchAddressResultItem> Results => Response.Results;
     }

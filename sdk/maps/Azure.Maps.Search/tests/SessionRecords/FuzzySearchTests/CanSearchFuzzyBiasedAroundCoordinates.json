@@ -6,36 +6,33 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-75f58f19b951ea41bc916af09afa6d2e-bb135ddbb1c8e74a-00",
-        "User-Agent": [
-          "azsdk-net-Maps.Search/1.0.0-alpha.20220613.1",
-          "(.NET 5.0.17; Microsoft Windows 10.0.19044)"
-        ],
+        "traceparent": "00-6b99c88354cf63388d47f716db2004f6-915daf2019c9408e-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220615.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "daea917bbec3c46495d810f7938bf81b",
+        "x-ms-client-request-id": "8ce9755a5f729983bc4d4656a1424fc0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "10488",
+        "Content-Length": "10487",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 13 Jun 2022 08:13:51 GMT",
+        "Date": "Wed, 15 Jun 2022 15:23:14 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: BE10B428ED4749428A0E6FD4FB4B9B97 Ref B: TPE30EDGE0911 Ref C: 2022-06-13T08:13:52Z"
+        "X-MSEdge-Ref": "Ref A: 4A977FD88C0E4F0B915C45F1724646B1 Ref B: TPE30EDGE0915 Ref C: 2022-06-15T15:23:15Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "coffee",
           "queryType": "NON_NEAR",
-          "queryTime": 11,
+          "queryTime": 9,
           "numResults": 10,
           "offset": 0,
-          "totalResults": 1802490,
+          "totalResults": 1802495,
           "fuzzyLevel": 1,
           "geoBias": {
             "lat": 25.04,
@@ -421,12 +418,13 @@
           },
           {
             "type": "POI",
-            "id": "158009001710928",
+            "id": "158009001789613",
             "score": 2.5745120049,
             "dist": 220.2243834162837,
-            "info": "search:ta:158009001710928-TW",
+            "info": "search:ta:158009001789613-TW",
             "poi": {
-              "name": "ou li jiang ka fei guan",
+              "name": "louisacoffee yi xian dian",
+              "phone": "\u002B886 2 8780 4613",
               "categorySet": [
                 {
                   "id": 9376006
@@ -563,13 +561,12 @@
           },
           {
             "type": "POI",
-            "id": "158009001789613",
+            "id": "158009001710928",
             "score": 2.5745120049,
             "dist": 220.2243834162837,
-            "info": "search:ta:158009001789613-TW",
+            "info": "search:ta:158009001710928-TW",
             "poi": {
-              "name": "louisacoffee yi xian dian",
-              "phone": "\u002B886 2 8780 4613",
+              "name": "ou li jiang ka fei guan",
               "categorySet": [
                 {
                   "id": 9376006
@@ -795,6 +792,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1472355985"
+    "RandomSeed": "1880432625"
   }
 }

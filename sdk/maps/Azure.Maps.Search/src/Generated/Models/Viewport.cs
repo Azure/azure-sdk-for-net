@@ -16,8 +16,8 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
-        public LatLon TopLeftPoint { get; }
+        public LatLongPairAbbreviated TopLeftPoint { get; }
         /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
-        public LatLon BtmRightPoint { get; }
+        public LatLongPairAbbreviated BtmRightPoint { get; }
     }
 }

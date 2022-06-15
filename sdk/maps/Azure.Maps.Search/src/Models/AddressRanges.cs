@@ -14,17 +14,17 @@ namespace Azure.Maps.Search.Models
     [CodeGenModel("AddressRanges")]
     public partial class AddressRanges
     {
-        // / <param name="from"> </param>
-        // / <param name="to"> </param>
-        // public AddressRanges(GeoPosition from, GeoPosition to){
-            // this.From = new LatLon(from.Latitude, from.Longitude);
-            // this.To = new LatLon(to.Latitude, to.Longitude);
+        // /// <param name="from"> </param>
+        // /// <param name="to"> </param>
+        // public AddressRanges(GeoPosition from, GeoPosition to) {
+        //     this.From = new LatLon(from.Latitude, from.Longitude);
+        //     this.To = new LatLon(to.Latitude, to.Longitude);
         // }
 
-// / Comment
+        // /// Comment
         // [CodeGenMember("From")]
         // public LatLon From { get; }
-        // / <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
+        // /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
         // [CodeGenMember("To")]
         // public LatLon To { get; }
     }

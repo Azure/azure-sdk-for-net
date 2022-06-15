@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core.GeoJson;
 
 namespace Azure.Maps.Search.Models
 {
@@ -75,18 +76,18 @@ namespace Azure.Maps.Search.Models
         /// <param name="fuzzyLevel"> The maximum fuzzy level required to provide Results. </param>
         /// <param name="geoBias"> Indication when the internal search engine has applied a geospatial bias to improve the ranking of results.  In  some methods, this can be affected by setting the lat and lon parameters where available.  In other cases it is  purely internal. </param>
         /// <returns> A new <see cref="Models.SearchSummary"/> instance for mocking. </returns>
-        public static SearchSummary SearchSummary(string query = null, QueryType? queryType = null, int? queryTime = null, int? numResults = null, int? top = null, int? skip = null, int? totalResults = null, int? fuzzyLevel = null, LatLon geoBias = null)
+        public static SearchSummary SearchSummary(string query = null, QueryType? queryType = null, int? queryTime = null, int? numResults = null, int? top = null, int? skip = null, int? totalResults = null, int? fuzzyLevel = null, GeoPosition geoBias = default)
         {
             return new SearchSummary(query, queryType, queryTime, numResults, top, skip, totalResults, fuzzyLevel, geoBias);
         }
 
-        /// <summary> Initializes a new instance of LatLon. </summary>
+        /// <summary> Initializes a new instance of LatLongPairAbbreviated. </summary>
         /// <param name="lat"> Latitude property. </param>
         /// <param name="lon"> Longitude property. </param>
-        /// <returns> A new <see cref="Models.LatLon"/> instance for mocking. </returns>
-        public static LatLon LatLon(double lat = default, double lon = default)
+        /// <returns> A new <see cref="Models.LatLongPairAbbreviated"/> instance for mocking. </returns>
+        public static LatLongPairAbbreviated LatLongPairAbbreviated(double? lat = null, double? lon = null)
         {
-            return new LatLon(lat, lon);
+            return new LatLongPairAbbreviated(lat, lon);
         }
 
         /// <summary> Initializes a new instance of SearchAddressResultItem. </summary>
@@ -121,7 +122,7 @@ namespace Azure.Maps.Search.Models
         /// </param>
         /// <param name="detourTime"> Detour time in seconds. Only returned for calls to the Search Along Route API. </param>
         /// <returns> A new <see cref="Models.SearchAddressResultItem"/> instance for mocking. </returns>
-        public static SearchAddressResultItem SearchAddressResultItem(SearchAddressResultType? type = null, string id = null, double? score = null, double? distanceInMeters = null, string dataSourceInfo = null, GeographicEntityType? entityType = null, PointOfInterest pointOfInterest = null, Address address = null, LatLon position = null, BoundingBox viewport = null, IEnumerable<EntryPoint> entryPoints = null, AddressRanges addressRanges = null, DataSource dataSources = null, MatchType? matchType = null, int? detourTime = null)
+        public static SearchAddressResultItem SearchAddressResultItem(SearchAddressResultType? type = null, string id = null, double? score = null, double? distanceInMeters = null, string dataSourceInfo = null, GeographicEntityType? entityType = null, PointOfInterest pointOfInterest = null, Address address = null, LatLongPairAbbreviated position = null, BoundingBox viewport = null, IEnumerable<EntryPoint> entryPoints = null, AddressRanges addressRanges = null, DataSource dataSources = null, MatchType? matchType = null, int? detourTime = null)
         {
             entryPoints ??= new List<EntryPoint>();
 
@@ -239,7 +240,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="topLeft"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
         /// <param name="bottomRight"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
         /// <returns> A new <see cref="Models.BoundingBox"/> instance for mocking. </returns>
-        public static BoundingBox BoundingBox(LatLon topLeft = null, LatLon bottomRight = null)
+        public static BoundingBox BoundingBox(LatLongPairAbbreviated topLeft = null, LatLongPairAbbreviated bottomRight = null)
         {
             return new BoundingBox(topLeft, bottomRight);
         }
@@ -248,7 +249,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="type"> The type of entry point. Value can be either _main_ or _minor_. </param>
         /// <param name="position"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
         /// <returns> A new <see cref="Models.EntryPoint"/> instance for mocking. </returns>
-        public static EntryPoint EntryPoint(EntryPointType? type = null, LatLon position = null)
+        public static EntryPoint EntryPoint(EntryPointType? type = null, LatLongPairAbbreviated position = null)
         {
             return new EntryPoint(type, position);
         }
@@ -259,7 +260,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="from"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
         /// <param name="to"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
         /// <returns> A new <see cref="Models.AddressRanges"/> instance for mocking. </returns>
-        public static AddressRanges AddressRanges(string rangeLeft = null, string rangeRight = null, LatLon @from = null, LatLon to = null)
+        public static AddressRanges AddressRanges(string rangeLeft = null, string rangeRight = null, LatLongPairAbbreviated @from = null, LatLongPairAbbreviated to = null)
         {
             return new AddressRanges(rangeLeft, rangeRight, @from, to);
         }

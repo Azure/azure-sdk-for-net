@@ -18,7 +18,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of EntryPoint. </summary>
         /// <param name="type"> The type of entry point. Value can be either _main_ or _minor_. </param>
         /// <param name="position"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
-        internal EntryPoint(EntryPointType? type, LatLon position)
+        internal EntryPoint(EntryPointType? type, LatLongPairAbbreviated position)
         {
             Type = type;
             Position = position;
@@ -27,6 +27,6 @@ namespace Azure.Maps.Search.Models
         /// <summary> The type of entry point. Value can be either _main_ or _minor_. </summary>
         public EntryPointType? Type { get; }
         /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
-        public LatLon Position { get; }
+        public LatLongPairAbbreviated Position { get; }
     }
 }

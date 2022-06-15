@@ -8,13 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "190",
         "Content-Type": "application/json",
-        "traceparent": "00-17e16d546d7581479c8724314e16b4f5-d2ba2296cd8ca44c-00",
-        "User-Agent": [
-          "azsdk-net-Maps.Search/1.0.0-alpha.20220613.1",
-          "(.NET 5.0.17; Microsoft Windows 10.0.19044)"
-        ],
+        "traceparent": "00-3507997163e46ea1b1ec19f419db7ce5-c46c95efde479203-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220615.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "d4fe9fff6de9bb1674d1f2e501971d60",
+        "x-ms-client-request-id": "4960affaf87ac0c3d614037e7a01bda5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -31,40 +28,37 @@
       "ResponseHeaders": {
         "Content-Length": "2",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 13 Jun 2022 08:13:50 GMT",
-        "Location": "https://atlas.microsoft.com/search/fuzzy/batch/3bfeea67-b848-4008-9ad2-21f581f1307d?api-version=1.0",
+        "Date": "Wed, 15 Jun 2022 15:23:13 GMT",
+        "Location": "https://atlas.microsoft.com/search/fuzzy/batch/22cb27a1-b88c-4c22-abbf-cdaca488921d?api-version=1.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: DDE4BCD6429D4EFB8256E589B1B2C0A3 Ref B: TPE30EDGE0911 Ref C: 2022-06-13T08:13:51Z"
+        "X-MSEdge-Ref": "Ref A: E354A48D70A740DBA660E424FCB3BB12 Ref B: TPE30EDGE0915 Ref C: 2022-06-15T15:23:14Z"
       },
       "ResponseBody": "\u0022\u0022"
     },
     {
-      "RequestUri": "https://atlas.microsoft.com/search/fuzzy/batch/3bfeea67-b848-4008-9ad2-21f581f1307d?api-version=1.0",
+      "RequestUri": "https://atlas.microsoft.com/search/fuzzy/batch/22cb27a1-b88c-4c22-abbf-cdaca488921d?api-version=1.0",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-Maps.Search/1.0.0-alpha.20220613.1",
-          "(.NET 5.0.17; Microsoft Windows 10.0.19044)"
-        ],
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220615.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "5384a41dba4eb2c65c45af934a519400",
+        "x-ms-client-request-id": "ce7ef06298aca5b7d3564756f8f4fc72",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Mon, 13 Jun 2022 08:13:50 GMT",
+        "Date": "Wed, 15 Jun 2022 15:23:14 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: F6097429A0894A0C8DEA3090CEBA9F3D Ref B: TPE30EDGE0911 Ref C: 2022-06-13T08:13:51Z"
+        "X-MSEdge-Ref": "Ref A: 932849EFAC66485B85786104517A7D58 Ref B: TPE30EDGE0915 Ref C: 2022-06-15T15:23:14Z"
       },
       "ResponseBody": {
         "batchItems": [
@@ -74,10 +68,10 @@
               "summary": {
                 "query": "coffee",
                 "queryType": "NON_NEAR",
-                "queryTime": 10,
+                "queryTime": 9,
                 "numResults": 10,
                 "offset": 0,
-                "totalResults": 1802490,
+                "totalResults": 1802495,
                 "fuzzyLevel": 1,
                 "geoBias": {
                   "lat": 25.04,
@@ -110,11 +104,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9"
+                            "name": "caf\u00E9/pub"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "caf\u00E9"
                           }
                         ]
                       }
@@ -187,11 +181,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9"
+                            "name": "caf\u00E9/pub"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "caf\u00E9"
                           }
                         ]
                       }
@@ -258,11 +252,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9"
+                            "name": "caf\u00E9/pub"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "caf\u00E9"
                           }
                         ]
                       }
@@ -342,11 +336,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "coffee shop"
+                            "name": "caf\u00E9/pub"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "coffee shop"
                           }
                         ]
                       }
@@ -413,153 +407,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "coffee shop"
+                            "name": "caf\u00E9/pub"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "address": {
-                    "streetNumber": "6",
-                    "streetName": "Yixian Road Lane 50",
-                    "municipalitySubdivision": "Xinyi District",
-                    "municipality": "Taipei City",
-                    "countrySubdivision": "Taipei City",
-                    "postalCode": "110",
-                    "extendedPostalCode": "11071",
-                    "countryCode": "TW",
-                    "country": "Taiwan",
-                    "countryCodeISO3": "TWN",
-                    "freeformAddress": "6, Yixian Road Lane 50, Xinyi District, Taipei City 11071",
-                    "localName": "Xinyi District"
-                  },
-                  "position": {
-                    "lat": 25.04055,
-                    "lon": 121.5621
-                  },
-                  "viewport": {
-                    "topLeftPoint": {
-                      "lat": 25.04145,
-                      "lon": 121.56111
-                    },
-                    "btmRightPoint": {
-                      "lat": 25.03965,
-                      "lon": 121.56309
-                    }
-                  },
-                  "entryPoints": [
-                    {
-                      "type": "main",
-                      "position": {
-                        "lat": 25.04064,
-                        "lon": 121.5621
-                      }
-                    }
-                  ]
-                },
-                {
-                  "type": "POI",
-                  "id": "158009001710928",
-                  "score": 2.5745120049,
-                  "dist": 220.2243834162837,
-                  "info": "search:ta:158009001710928-TW",
-                  "poi": {
-                    "name": "ou li jiang ka fei guan",
-                    "categorySet": [
-                      {
-                        "id": 9376006
-                      }
-                    ],
-                    "categories": [
-                      "caf\u00E9/pub",
-                      "coffee shop"
-                    ],
-                    "classifications": [
-                      {
-                        "code": "CAFE_PUB",
-                        "names": [
-                          {
-                            "nameLocale": "en-US",
                             "name": "coffee shop"
-                          },
-                          {
-                            "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "address": {
-                    "streetNumber": "6",
-                    "streetName": "Yixian Road Lane 50",
-                    "municipalitySubdivision": "Xinyi District",
-                    "municipality": "Taipei City",
-                    "countrySubdivision": "Taipei City",
-                    "postalCode": "110",
-                    "extendedPostalCode": "11071",
-                    "countryCode": "TW",
-                    "country": "Taiwan",
-                    "countryCodeISO3": "TWN",
-                    "freeformAddress": "6, Yixian Road Lane 50, Xinyi District, Taipei City 11071",
-                    "localName": "Xinyi District"
-                  },
-                  "position": {
-                    "lat": 25.04055,
-                    "lon": 121.5621
-                  },
-                  "viewport": {
-                    "topLeftPoint": {
-                      "lat": 25.04145,
-                      "lon": 121.56111
-                    },
-                    "btmRightPoint": {
-                      "lat": 25.03965,
-                      "lon": 121.56309
-                    }
-                  },
-                  "entryPoints": [
-                    {
-                      "type": "main",
-                      "position": {
-                        "lat": 25.04064,
-                        "lon": 121.5621
-                      }
-                    }
-                  ]
-                },
-                {
-                  "type": "POI",
-                  "id": "158009001771249",
-                  "score": 2.5745120049,
-                  "dist": 220.2243834162837,
-                  "info": "search:ta:158009001771249-TW",
-                  "poi": {
-                    "name": "fa dou ka fei qing shi guan",
-                    "categorySet": [
-                      {
-                        "id": 9376006
-                      }
-                    ],
-                    "categories": [
-                      "caf\u00E9/pub",
-                      "coffee shop"
-                    ],
-                    "classifications": [
-                      {
-                        "code": "CAFE_PUB",
-                        "names": [
-                          {
-                            "nameLocale": "en-US",
-                            "name": "coffee shop"
-                          },
-                          {
-                            "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
                           }
                         ]
                       }
@@ -627,11 +479,153 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "coffee shop"
+                            "name": "caf\u00E9/pub"
                           },
                           {
                             "nameLocale": "en-US",
+                            "name": "coffee shop"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "address": {
+                    "streetNumber": "6",
+                    "streetName": "Yixian Road Lane 50",
+                    "municipalitySubdivision": "Xinyi District",
+                    "municipality": "Taipei City",
+                    "countrySubdivision": "Taipei City",
+                    "postalCode": "110",
+                    "extendedPostalCode": "11071",
+                    "countryCode": "TW",
+                    "country": "Taiwan",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "6, Yixian Road Lane 50, Xinyi District, Taipei City 11071",
+                    "localName": "Xinyi District"
+                  },
+                  "position": {
+                    "lat": 25.04055,
+                    "lon": 121.5621
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 25.04145,
+                      "lon": 121.56111
+                    },
+                    "btmRightPoint": {
+                      "lat": 25.03965,
+                      "lon": 121.56309
+                    }
+                  },
+                  "entryPoints": [
+                    {
+                      "type": "main",
+                      "position": {
+                        "lat": 25.04064,
+                        "lon": 121.5621
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "POI",
+                  "id": "158009001771249",
+                  "score": 2.5745120049,
+                  "dist": 220.2243834162837,
+                  "info": "search:ta:158009001771249-TW",
+                  "poi": {
+                    "name": "fa dou ka fei qing shi guan",
+                    "categorySet": [
+                      {
+                        "id": 9376006
+                      }
+                    ],
+                    "categories": [
+                      "caf\u00E9/pub",
+                      "coffee shop"
+                    ],
+                    "classifications": [
+                      {
+                        "code": "CAFE_PUB",
+                        "names": [
+                          {
+                            "nameLocale": "en-US",
                             "name": "caf\u00E9/pub"
+                          },
+                          {
+                            "nameLocale": "en-US",
+                            "name": "coffee shop"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "address": {
+                    "streetNumber": "6",
+                    "streetName": "Yixian Road Lane 50",
+                    "municipalitySubdivision": "Xinyi District",
+                    "municipality": "Taipei City",
+                    "countrySubdivision": "Taipei City",
+                    "postalCode": "110",
+                    "extendedPostalCode": "11071",
+                    "countryCode": "TW",
+                    "country": "Taiwan",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "6, Yixian Road Lane 50, Xinyi District, Taipei City 11071",
+                    "localName": "Xinyi District"
+                  },
+                  "position": {
+                    "lat": 25.04055,
+                    "lon": 121.5621
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 25.04145,
+                      "lon": 121.56111
+                    },
+                    "btmRightPoint": {
+                      "lat": 25.03965,
+                      "lon": 121.56309
+                    }
+                  },
+                  "entryPoints": [
+                    {
+                      "type": "main",
+                      "position": {
+                        "lat": 25.04064,
+                        "lon": 121.5621
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "POI",
+                  "id": "158009001710928",
+                  "score": 2.5745120049,
+                  "dist": 220.2243834162837,
+                  "info": "search:ta:158009001710928-TW",
+                  "poi": {
+                    "name": "ou li jiang ka fei guan",
+                    "categorySet": [
+                      {
+                        "id": 9376006
+                      }
+                    ],
+                    "categories": [
+                      "caf\u00E9/pub",
+                      "coffee shop"
+                    ],
+                    "classifications": [
+                      {
+                        "code": "CAFE_PUB",
+                        "names": [
+                          {
+                            "nameLocale": "en-US",
+                            "name": "caf\u00E9/pub"
+                          },
+                          {
+                            "nameLocale": "en-US",
+                            "name": "coffee shop"
                           }
                         ]
                       }
@@ -703,11 +697,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "coffee shop"
+                            "name": "caf\u00E9/pub"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "coffee shop"
                           }
                         ]
                       }
@@ -839,10 +833,10 @@
               "summary": {
                 "query": "pizza",
                 "queryType": "NON_NEAR",
-                "queryTime": 10,
+                "queryTime": 7,
                 "numResults": 10,
                 "offset": 0,
-                "totalResults": 377592,
+                "totalResults": 377591,
                 "fuzzyLevel": 1,
                 "geoBias": {
                   "lat": 25.04,
@@ -874,11 +868,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -952,11 +946,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1029,11 +1023,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1107,11 +1101,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1179,11 +1173,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1251,11 +1245,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1335,11 +1329,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1407,11 +1401,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1478,11 +1472,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1557,11 +1551,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1625,6 +1619,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "2144247060"
+    "RandomSeed": "1463464521"
   }
 }

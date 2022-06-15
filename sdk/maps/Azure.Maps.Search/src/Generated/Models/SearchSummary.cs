@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core.GeoJson;
+
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Summary object for a Search API response. </summary>
@@ -25,7 +27,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="totalResults"> The total number of Results found. </param>
         /// <param name="fuzzyLevel"> The maximum fuzzy level required to provide Results. </param>
         /// <param name="geoBias"> Indication when the internal search engine has applied a geospatial bias to improve the ranking of results.  In  some methods, this can be affected by setting the lat and lon parameters where available.  In other cases it is  purely internal. </param>
-        internal SearchSummary(string query, QueryType? queryType, int? queryTime, int? numResults, int? top, int? skip, int? totalResults, int? fuzzyLevel, LatLon geoBias)
+        internal SearchSummary(string query, QueryType? queryType, int? queryTime, int? numResults, int? top, int? skip, int? totalResults, int? fuzzyLevel, GeoPosition geoBias)
         {
             Query = query;
             QueryType = queryType;
@@ -54,7 +56,5 @@ namespace Azure.Maps.Search.Models
         public int? TotalResults { get; }
         /// <summary> The maximum fuzzy level required to provide Results. </summary>
         public int? FuzzyLevel { get; }
-        /// <summary> Indication when the internal search engine has applied a geospatial bias to improve the ranking of results.  In  some methods, this can be affected by setting the lat and lon parameters where available.  In other cases it is  purely internal. </summary>
-        public LatLon GeoBias { get; }
     }
 }
