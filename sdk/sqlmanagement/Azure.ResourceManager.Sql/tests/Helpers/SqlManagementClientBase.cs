@@ -16,9 +16,6 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Tests
 {
-    [RunFrequency(RunTestFrequency.Manually)]
-    [ClientTestFixture]
-    [NonParallelizable]
     public abstract class SqlManagementClientBase : ManagementRecordedTestBase<SqlManagementTestEnvironment>
     {
         protected string DefaultLocation = "westus2";
