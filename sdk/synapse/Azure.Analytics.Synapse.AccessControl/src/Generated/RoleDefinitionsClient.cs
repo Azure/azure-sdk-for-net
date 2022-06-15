@@ -65,24 +65,22 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/AccessControlClient/RoleDefinitions/ListRoleDefinitions
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   id: SynapseRoleDefinitionId, # Optional. <Description>Role Definition ID</Description>
-        ///   name: string, # Optional. <Description>Name of the Synapse role</Description>
-        ///   isBuiltIn: boolean, # Optional. <Description>Is a built-in role or not</Description>
-        ///   description: string, # Optional. <Description>Description for the Synapse role</Description>
+        ///   id: SynapseRoleDefinitionId, # Optional. Role Definition ID
+        ///   name: string, # Optional. Name of the Synapse role
+        ///   isBuiltIn: boolean, # Optional. Is a built-in role or not
+        ///   description: string, # Optional. Description for the Synapse role
         ///   permissions: [
         ///     {
-        ///       actions: [string], # Optional. <Description>List of actions</Description>
-        ///       notActions: [string], # Optional. <Description>List of Not actions</Description>
-        ///       dataActions: [string], # Optional. <Description>List of data actions</Description>
-        ///       notDataActions: [string], # Optional. <Description>List of Not data actions</Description>
+        ///       actions: [string], # Optional. List of actions
+        ///       notActions: [string], # Optional. List of Not actions
+        ///       dataActions: [string], # Optional. List of data actions
+        ///       notDataActions: [string], # Optional. List of Not data actions
         ///     }
-        ///   ], # Optional. <Description>Permissions for the Synapse role</Description>
-        ///   scopes: [string], # Optional. <Description>Allowed scopes for the Synapse role</Description>
-        ///   availabilityStatus: string, # Optional. <Description>Availability of the Synapse role</Description>
+        ///   ], # Optional. Permissions for the Synapse role
+        ///   scopes: [string], # Optional. Allowed scopes for the Synapse role
+        ///   availabilityStatus: string, # Optional. Availability of the Synapse role
         /// }
         /// </code>
         /// 
@@ -109,24 +107,22 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/AccessControlClient/RoleDefinitions/ListRoleDefinitions
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   id: SynapseRoleDefinitionId, # Optional. <Description>Role Definition ID</Description>
-        ///   name: string, # Optional. <Description>Name of the Synapse role</Description>
-        ///   isBuiltIn: boolean, # Optional. <Description>Is a built-in role or not</Description>
-        ///   description: string, # Optional. <Description>Description for the Synapse role</Description>
+        ///   id: SynapseRoleDefinitionId, # Optional. Role Definition ID
+        ///   name: string, # Optional. Name of the Synapse role
+        ///   isBuiltIn: boolean, # Optional. Is a built-in role or not
+        ///   description: string, # Optional. Description for the Synapse role
         ///   permissions: [
         ///     {
-        ///       actions: [string], # Optional. <Description>List of actions</Description>
-        ///       notActions: [string], # Optional. <Description>List of Not actions</Description>
-        ///       dataActions: [string], # Optional. <Description>List of data actions</Description>
-        ///       notDataActions: [string], # Optional. <Description>List of Not data actions</Description>
+        ///       actions: [string], # Optional. List of actions
+        ///       notActions: [string], # Optional. List of Not actions
+        ///       dataActions: [string], # Optional. List of data actions
+        ///       notDataActions: [string], # Optional. List of Not data actions
         ///     }
-        ///   ], # Optional. <Description>Permissions for the Synapse role</Description>
-        ///   scopes: [string], # Optional. <Description>Allowed scopes for the Synapse role</Description>
-        ///   availabilityStatus: string, # Optional. <Description>Availability of the Synapse role</Description>
+        ///   ], # Optional. Permissions for the Synapse role
+        ///   scopes: [string], # Optional. Allowed scopes for the Synapse role
+        ///   availabilityStatus: string, # Optional. Availability of the Synapse role
         /// }
         /// </code>
         /// 
@@ -154,24 +150,22 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/AccessControlClient/RoleDefinitions/GetRoleDefinitionById
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   id: SynapseRoleDefinitionId, # Optional. <Description>Role Definition ID</Description>
-        ///   name: string, # Optional. <Description>Name of the Synapse role</Description>
-        ///   isBuiltIn: boolean, # Optional. <Description>Is a built-in role or not</Description>
-        ///   description: string, # Optional. <Description>Description for the Synapse role</Description>
+        ///   id: SynapseRoleDefinitionId, # Optional. Role Definition ID
+        ///   name: string, # Optional. Name of the Synapse role
+        ///   isBuiltIn: boolean, # Optional. Is a built-in role or not
+        ///   description: string, # Optional. Description for the Synapse role
         ///   permissions: [
         ///     {
-        ///       actions: [string], # Optional. <Description>List of actions</Description>
-        ///       notActions: [string], # Optional. <Description>List of Not actions</Description>
-        ///       dataActions: [string], # Optional. <Description>List of data actions</Description>
-        ///       notDataActions: [string], # Optional. <Description>List of Not data actions</Description>
+        ///       actions: [string], # Optional. List of actions
+        ///       notActions: [string], # Optional. List of Not actions
+        ///       dataActions: [string], # Optional. List of data actions
+        ///       notDataActions: [string], # Optional. List of Not data actions
         ///     }
-        ///   ], # Optional. <Description>Permissions for the Synapse role</Description>
-        ///   scopes: [string], # Optional. <Description>Allowed scopes for the Synapse role</Description>
-        ///   availabilityStatus: string, # Optional. <Description>Availability of the Synapse role</Description>
+        ///   ], # Optional. Permissions for the Synapse role
+        ///   scopes: [string], # Optional. Allowed scopes for the Synapse role
+        ///   availabilityStatus: string, # Optional. Availability of the Synapse role
         /// }
         /// </code>
         /// 
@@ -201,24 +195,22 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/AccessControlClient/RoleDefinitions/GetRoleDefinitionById
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   id: SynapseRoleDefinitionId, # Optional. <Description>Role Definition ID</Description>
-        ///   name: string, # Optional. <Description>Name of the Synapse role</Description>
-        ///   isBuiltIn: boolean, # Optional. <Description>Is a built-in role or not</Description>
-        ///   description: string, # Optional. <Description>Description for the Synapse role</Description>
+        ///   id: SynapseRoleDefinitionId, # Optional. Role Definition ID
+        ///   name: string, # Optional. Name of the Synapse role
+        ///   isBuiltIn: boolean, # Optional. Is a built-in role or not
+        ///   description: string, # Optional. Description for the Synapse role
         ///   permissions: [
         ///     {
-        ///       actions: [string], # Optional. <Description>List of actions</Description>
-        ///       notActions: [string], # Optional. <Description>List of Not actions</Description>
-        ///       dataActions: [string], # Optional. <Description>List of data actions</Description>
-        ///       notDataActions: [string], # Optional. <Description>List of Not data actions</Description>
+        ///       actions: [string], # Optional. List of actions
+        ///       notActions: [string], # Optional. List of Not actions
+        ///       dataActions: [string], # Optional. List of data actions
+        ///       notDataActions: [string], # Optional. List of Not data actions
         ///     }
-        ///   ], # Optional. <Description>Permissions for the Synapse role</Description>
-        ///   scopes: [string], # Optional. <Description>Allowed scopes for the Synapse role</Description>
-        ///   availabilityStatus: string, # Optional. <Description>Availability of the Synapse role</Description>
+        ///   ], # Optional. Permissions for the Synapse role
+        ///   scopes: [string], # Optional. Allowed scopes for the Synapse role
+        ///   availabilityStatus: string, # Optional. Availability of the Synapse role
         /// }
         /// </code>
         /// 

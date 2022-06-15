@@ -69,32 +69,30 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/Weather/GetDataIngestionJobDetails
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   boundaryId: string, # Required. <Description>The id of the boundary object for which weather data is being fetched.</Description>
-        ///   farmerId: string, # Required. <Description>The id of the farmer object for which weather data is being fetched.</Description>
-        ///   extensionId: string, # Required. <Description>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</Description>
-        ///   extensionApiName: string, # Required. <Description>Extension api name to which request is to be made.</Description>
-        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt;, # Required. <Description>Extension api input dictionary which would be used to feed request query/body/parameter information.</Description>
-        ///   extensionDataProviderAppId: string, # Optional. <Description>App id of the weather data provider.</Description>
-        ///   extensionDataProviderApiKey: string, # Optional. <Description>Api key of the weather data provider.</Description>
-        ///   id: string, # Optional. <Description>Unique job id.</Description>
-        ///   status: string, # Optional. <Description>Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
-        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
-        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///   boundaryId: string, # Required. The id of the boundary object for which weather data is being fetched.
+        ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
+        ///   extensionId: string, # Required. ID of the extension to be used for the providerInput. eg. DTN.ClearAg.
+        ///   extensionApiName: string, # Required. Extension api name to which request is to be made.
+        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt;, # Required. Extension api input dictionary which would be used to feed request query/body/parameter information.
+        ///   extensionDataProviderAppId: string, # Optional. App id of the weather data provider.
+        ///   extensionDataProviderApiKey: string, # Optional. Api key of the weather data provider.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -124,32 +122,30 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/Weather/GetDataIngestionJobDetails
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   boundaryId: string, # Required. <Description>The id of the boundary object for which weather data is being fetched.</Description>
-        ///   farmerId: string, # Required. <Description>The id of the farmer object for which weather data is being fetched.</Description>
-        ///   extensionId: string, # Required. <Description>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</Description>
-        ///   extensionApiName: string, # Required. <Description>Extension api name to which request is to be made.</Description>
-        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt;, # Required. <Description>Extension api input dictionary which would be used to feed request query/body/parameter information.</Description>
-        ///   extensionDataProviderAppId: string, # Optional. <Description>App id of the weather data provider.</Description>
-        ///   extensionDataProviderApiKey: string, # Optional. <Description>Api key of the weather data provider.</Description>
-        ///   id: string, # Optional. <Description>Unique job id.</Description>
-        ///   status: string, # Optional. <Description>Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
-        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
-        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///   boundaryId: string, # Required. The id of the boundary object for which weather data is being fetched.
+        ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
+        ///   extensionId: string, # Required. ID of the extension to be used for the providerInput. eg. DTN.ClearAg.
+        ///   extensionApiName: string, # Required. Extension api name to which request is to be made.
+        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt;, # Required. Extension api input dictionary which would be used to feed request query/body/parameter information.
+        ///   extensionDataProviderAppId: string, # Optional. App id of the weather data provider.
+        ///   extensionDataProviderApiKey: string, # Optional. Api key of the weather data provider.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -179,32 +175,30 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/Weather/GetDataDeleteJobDetails
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   extensionId: string, # Required. <Description>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</Description>
-        ///   farmerId: string, # Required. <Description>The id of the farmer object for which weather data is being fetched.</Description>
-        ///   boundaryId: string, # Required. <Description>The id of the boundary object for which weather data is being fetched.</Description>
-        ///   weatherDataType: string, # Optional. <Description>Type of weather data. Possible values include: &apos;forecast&apos; , &apos;historical&apos;.</Description>
-        ///   granularity: string, # Optional. <Description>Granularity of weather data. Possible values include: &apos;daily&apos; , &apos;hourly&apos;.</Description>
-        ///   startDateTime: string (ISO 8601 Format), # Optional. <Description>Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   endDateTime: string (ISO 8601 Format), # Optional. <Description>Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   id: string, # Optional. <Description>Unique job id.</Description>
-        ///   status: string, # Optional. <Description>Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
-        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
-        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///   extensionId: string, # Required. ID of the extension to be used for the providerInput. eg. DTN.ClearAg.
+        ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
+        ///   boundaryId: string, # Required. The id of the boundary object for which weather data is being fetched.
+        ///   weatherDataType: string, # Optional. Type of weather data. Possible values include: &apos;forecast&apos; , &apos;historical&apos;.
+        ///   granularity: string, # Optional. Granularity of weather data. Possible values include: &apos;daily&apos; , &apos;hourly&apos;.
+        ///   startDateTime: string (ISO 8601 Format), # Optional. Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endDateTime: string (ISO 8601 Format), # Optional. Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -234,32 +228,30 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/Weather/GetDataDeleteJobDetails
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   extensionId: string, # Required. <Description>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</Description>
-        ///   farmerId: string, # Required. <Description>The id of the farmer object for which weather data is being fetched.</Description>
-        ///   boundaryId: string, # Required. <Description>The id of the boundary object for which weather data is being fetched.</Description>
-        ///   weatherDataType: string, # Optional. <Description>Type of weather data. Possible values include: &apos;forecast&apos; , &apos;historical&apos;.</Description>
-        ///   granularity: string, # Optional. <Description>Granularity of weather data. Possible values include: &apos;daily&apos; , &apos;hourly&apos;.</Description>
-        ///   startDateTime: string (ISO 8601 Format), # Optional. <Description>Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   endDateTime: string (ISO 8601 Format), # Optional. <Description>Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   id: string, # Optional. <Description>Unique job id.</Description>
-        ///   status: string, # Optional. <Description>Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
-        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
-        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///   extensionId: string, # Required. ID of the extension to be used for the providerInput. eg. DTN.ClearAg.
+        ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
+        ///   boundaryId: string, # Required. The id of the boundary object for which weather data is being fetched.
+        ///   weatherDataType: string, # Optional. Type of weather data. Possible values include: &apos;forecast&apos; , &apos;historical&apos;.
+        ///   granularity: string, # Optional. Granularity of weather data. Possible values include: &apos;daily&apos; , &apos;hourly&apos;.
+        ///   startDateTime: string (ISO 8601 Format), # Optional. Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endDateTime: string (ISO 8601 Format), # Optional. Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -299,54 +291,52 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="extensionId"/>, <paramref name="weatherDataType"/> or <paramref name="granularity"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/Weather/List
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
-        ///       farmerId: string, # Required. <Description>Farmer ID.</Description>
-        ///       boundaryId: string, # Required. <Description>Boundary ID.</Description>
-        ///       extensionId: string, # Required. <Description>ID of the weather extension.</Description>
+        ///       farmerId: string, # Required. Farmer ID.
+        ///       boundaryId: string, # Required. Boundary ID.
+        ///       extensionId: string, # Required. ID of the weather extension.
         ///       location: {
-        ///         latitude: number, # Required. <Description>Latitude of the location.</Description>
-        ///         longitude: number, # Required. <Description>Longitude of the location.</Description>
-        ///       }, # Required. <Description>Location model class.</Description>
-        ///       dateTime: string (ISO 8601 Format), # Required. <Description>Date-time of the weather data, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       unitSystemCode: string, # Optional. <Description>Unit System like US/SI etc.</Description>
-        ///       extensionVersion: string, # Required. <Description>Version of the weather data extension.</Description>
-        ///       weatherDataType: string, # Required. <Description>Type of weather data (forecast/historical).</Description>
-        ///       granularity: string, # Required. <Description>Granularity of weather data (daily/hourly).</Description>
+        ///         latitude: number, # Required. Latitude of the location.
+        ///         longitude: number, # Required. Longitude of the location.
+        ///       }, # Required. Location model class.
+        ///       dateTime: string (ISO 8601 Format), # Required. Date-time of the weather data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       unitSystemCode: string, # Optional. Unit System like US/SI etc.
+        ///       extensionVersion: string, # Required. Version of the weather data extension.
+        ///       weatherDataType: string, # Required. Type of weather data (forecast/historical).
+        ///       granularity: string, # Required. Granularity of weather data (daily/hourly).
         ///       cloudCover: {
-        ///         unit: string, # Optional. <Description>Data unit.</Description>
-        ///         value: number, # Optional. <Description>Data value.</Description>
-        ///       }, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       dewPoint: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       growingDegreeDay: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       precipitation: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       pressure: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       relativeHumidity: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       soilMoisture: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       soilTemperature: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       temperature: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       visibility: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       wetBulbTemperature: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       windChill: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       windDirection: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       windGust: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       windSpeed: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       id: string, # Optional. <Description>Weather data ID.</Description>
-        ///       eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
-        ///       createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///         unit: string, # Optional. Data unit.
+        ///         value: number, # Optional. Data value.
+        ///       }, # Optional. Schema for storing measurement reading and unit.
+        ///       dewPoint: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       growingDegreeDay: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       precipitation: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       pressure: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       relativeHumidity: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       soilMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       soilTemperature: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       temperature: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       visibility: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       wetBulbTemperature: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       windChill: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       windDirection: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       windGust: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       windSpeed: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       id: string, # Optional. Weather data ID.
+        ///       eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///       createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         ///     }
-        ///   ], # Optional. <Description>List of requested objects.</Description>
-        ///   $skipToken: string, # Optional. <Description>Token used in retrieving the next page. If null, there are no additional pages.</Description>
-        ///   nextLink: string, # Optional. <Description>Continuation link (absolute URI) to the next page of results in the list.</Description>
+        ///   ], # Optional. List of requested objects.
+        ///   $skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.
+        ///   nextLink: string, # Optional. Continuation link (absolute URI) to the next page of results in the list.
         /// }
         /// </code>
         /// 
@@ -396,54 +386,52 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="extensionId"/>, <paramref name="weatherDataType"/> or <paramref name="granularity"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/Weather/List
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
-        ///       farmerId: string, # Required. <Description>Farmer ID.</Description>
-        ///       boundaryId: string, # Required. <Description>Boundary ID.</Description>
-        ///       extensionId: string, # Required. <Description>ID of the weather extension.</Description>
+        ///       farmerId: string, # Required. Farmer ID.
+        ///       boundaryId: string, # Required. Boundary ID.
+        ///       extensionId: string, # Required. ID of the weather extension.
         ///       location: {
-        ///         latitude: number, # Required. <Description>Latitude of the location.</Description>
-        ///         longitude: number, # Required. <Description>Longitude of the location.</Description>
-        ///       }, # Required. <Description>Location model class.</Description>
-        ///       dateTime: string (ISO 8601 Format), # Required. <Description>Date-time of the weather data, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       unitSystemCode: string, # Optional. <Description>Unit System like US/SI etc.</Description>
-        ///       extensionVersion: string, # Required. <Description>Version of the weather data extension.</Description>
-        ///       weatherDataType: string, # Required. <Description>Type of weather data (forecast/historical).</Description>
-        ///       granularity: string, # Required. <Description>Granularity of weather data (daily/hourly).</Description>
+        ///         latitude: number, # Required. Latitude of the location.
+        ///         longitude: number, # Required. Longitude of the location.
+        ///       }, # Required. Location model class.
+        ///       dateTime: string (ISO 8601 Format), # Required. Date-time of the weather data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       unitSystemCode: string, # Optional. Unit System like US/SI etc.
+        ///       extensionVersion: string, # Required. Version of the weather data extension.
+        ///       weatherDataType: string, # Required. Type of weather data (forecast/historical).
+        ///       granularity: string, # Required. Granularity of weather data (daily/hourly).
         ///       cloudCover: {
-        ///         unit: string, # Optional. <Description>Data unit.</Description>
-        ///         value: number, # Optional. <Description>Data value.</Description>
-        ///       }, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       dewPoint: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       growingDegreeDay: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       precipitation: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       pressure: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       relativeHumidity: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       soilMoisture: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       soilTemperature: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       temperature: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       visibility: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       wetBulbTemperature: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       windChill: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       windDirection: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       windGust: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       windSpeed: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       id: string, # Optional. <Description>Weather data ID.</Description>
-        ///       eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
-        ///       createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///         unit: string, # Optional. Data unit.
+        ///         value: number, # Optional. Data value.
+        ///       }, # Optional. Schema for storing measurement reading and unit.
+        ///       dewPoint: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       growingDegreeDay: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       precipitation: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       pressure: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       relativeHumidity: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       soilMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       soilTemperature: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       temperature: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       visibility: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       wetBulbTemperature: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       windChill: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       windDirection: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       windGust: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       windSpeed: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       id: string, # Optional. Weather data ID.
+        ///       eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///       createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         ///     }
-        ///   ], # Optional. <Description>List of requested objects.</Description>
-        ///   $skipToken: string, # Optional. <Description>Token used in retrieving the next page. If null, there are no additional pages.</Description>
-        ///   nextLink: string, # Optional. <Description>Continuation link (absolute URI) to the next page of results in the list.</Description>
+        ///   ], # Optional. List of requested objects.
+        ///   $skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.
+        ///   nextLink: string, # Optional. Continuation link (absolute URI) to the next page of results in the list.
         /// }
         /// </code>
         /// 
@@ -485,58 +473,56 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/Weather/CreateDataIngestionJob
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   boundaryId: string, # Required. <Description>The id of the boundary object for which weather data is being fetched.</Description>
-        ///   farmerId: string, # Required. <Description>The id of the farmer object for which weather data is being fetched.</Description>
-        ///   extensionId: string, # Required. <Description>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</Description>
-        ///   extensionApiName: string, # Required. <Description>Extension api name to which request is to be made.</Description>
-        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt;, # Required. <Description>Extension api input dictionary which would be used to feed request query/body/parameter information.</Description>
-        ///   extensionDataProviderAppId: string, # Optional. <Description>App id of the weather data provider.</Description>
-        ///   extensionDataProviderApiKey: string, # Optional. <Description>Api key of the weather data provider.</Description>
-        ///   id: string, # Optional. <Description>Unique job id.</Description>
-        ///   status: string, # Optional. <Description>Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
-        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
-        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///   boundaryId: string, # Required. The id of the boundary object for which weather data is being fetched.
+        ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
+        ///   extensionId: string, # Required. ID of the extension to be used for the providerInput. eg. DTN.ClearAg.
+        ///   extensionApiName: string, # Required. Extension api name to which request is to be made.
+        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt;, # Required. Extension api input dictionary which would be used to feed request query/body/parameter information.
+        ///   extensionDataProviderAppId: string, # Optional. App id of the weather data provider.
+        ///   extensionDataProviderApiKey: string, # Optional. Api key of the weather data provider.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   boundaryId: string, # Required. <Description>The id of the boundary object for which weather data is being fetched.</Description>
-        ///   farmerId: string, # Required. <Description>The id of the farmer object for which weather data is being fetched.</Description>
-        ///   extensionId: string, # Required. <Description>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</Description>
-        ///   extensionApiName: string, # Required. <Description>Extension api name to which request is to be made.</Description>
-        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt;, # Required. <Description>Extension api input dictionary which would be used to feed request query/body/parameter information.</Description>
-        ///   extensionDataProviderAppId: string, # Optional. <Description>App id of the weather data provider.</Description>
-        ///   extensionDataProviderApiKey: string, # Optional. <Description>Api key of the weather data provider.</Description>
-        ///   id: string, # Optional. <Description>Unique job id.</Description>
-        ///   status: string, # Optional. <Description>Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
-        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
-        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///   boundaryId: string, # Required. The id of the boundary object for which weather data is being fetched.
+        ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
+        ///   extensionId: string, # Required. ID of the extension to be used for the providerInput. eg. DTN.ClearAg.
+        ///   extensionApiName: string, # Required. Extension api name to which request is to be made.
+        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt;, # Required. Extension api input dictionary which would be used to feed request query/body/parameter information.
+        ///   extensionDataProviderAppId: string, # Optional. App id of the weather data provider.
+        ///   extensionDataProviderApiKey: string, # Optional. Api key of the weather data provider.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -568,58 +554,56 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/Weather/CreateDataIngestionJob
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   boundaryId: string, # Required. <Description>The id of the boundary object for which weather data is being fetched.</Description>
-        ///   farmerId: string, # Required. <Description>The id of the farmer object for which weather data is being fetched.</Description>
-        ///   extensionId: string, # Required. <Description>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</Description>
-        ///   extensionApiName: string, # Required. <Description>Extension api name to which request is to be made.</Description>
-        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt;, # Required. <Description>Extension api input dictionary which would be used to feed request query/body/parameter information.</Description>
-        ///   extensionDataProviderAppId: string, # Optional. <Description>App id of the weather data provider.</Description>
-        ///   extensionDataProviderApiKey: string, # Optional. <Description>Api key of the weather data provider.</Description>
-        ///   id: string, # Optional. <Description>Unique job id.</Description>
-        ///   status: string, # Optional. <Description>Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
-        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
-        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///   boundaryId: string, # Required. The id of the boundary object for which weather data is being fetched.
+        ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
+        ///   extensionId: string, # Required. ID of the extension to be used for the providerInput. eg. DTN.ClearAg.
+        ///   extensionApiName: string, # Required. Extension api name to which request is to be made.
+        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt;, # Required. Extension api input dictionary which would be used to feed request query/body/parameter information.
+        ///   extensionDataProviderAppId: string, # Optional. App id of the weather data provider.
+        ///   extensionDataProviderApiKey: string, # Optional. Api key of the weather data provider.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   boundaryId: string, # Required. <Description>The id of the boundary object for which weather data is being fetched.</Description>
-        ///   farmerId: string, # Required. <Description>The id of the farmer object for which weather data is being fetched.</Description>
-        ///   extensionId: string, # Required. <Description>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</Description>
-        ///   extensionApiName: string, # Required. <Description>Extension api name to which request is to be made.</Description>
-        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt;, # Required. <Description>Extension api input dictionary which would be used to feed request query/body/parameter information.</Description>
-        ///   extensionDataProviderAppId: string, # Optional. <Description>App id of the weather data provider.</Description>
-        ///   extensionDataProviderApiKey: string, # Optional. <Description>Api key of the weather data provider.</Description>
-        ///   id: string, # Optional. <Description>Unique job id.</Description>
-        ///   status: string, # Optional. <Description>Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
-        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
-        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///   boundaryId: string, # Required. The id of the boundary object for which weather data is being fetched.
+        ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
+        ///   extensionId: string, # Required. ID of the extension to be used for the providerInput. eg. DTN.ClearAg.
+        ///   extensionApiName: string, # Required. Extension api name to which request is to be made.
+        ///   extensionApiInput: Dictionary&lt;string, AnyObject&gt;, # Required. Extension api input dictionary which would be used to feed request query/body/parameter information.
+        ///   extensionDataProviderAppId: string, # Optional. App id of the weather data provider.
+        ///   extensionDataProviderApiKey: string, # Optional. Api key of the weather data provider.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -651,58 +635,56 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/Weather/CreateDataDeleteJob
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   extensionId: string, # Required. <Description>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</Description>
-        ///   farmerId: string, # Required. <Description>The id of the farmer object for which weather data is being fetched.</Description>
-        ///   boundaryId: string, # Required. <Description>The id of the boundary object for which weather data is being fetched.</Description>
-        ///   weatherDataType: string, # Optional. <Description>Type of weather data. Possible values include: &apos;forecast&apos; , &apos;historical&apos;.</Description>
-        ///   granularity: string, # Optional. <Description>Granularity of weather data. Possible values include: &apos;daily&apos; , &apos;hourly&apos;.</Description>
-        ///   startDateTime: string (ISO 8601 Format), # Optional. <Description>Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   endDateTime: string (ISO 8601 Format), # Optional. <Description>Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   id: string, # Optional. <Description>Unique job id.</Description>
-        ///   status: string, # Optional. <Description>Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
-        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
-        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///   extensionId: string, # Required. ID of the extension to be used for the providerInput. eg. DTN.ClearAg.
+        ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
+        ///   boundaryId: string, # Required. The id of the boundary object for which weather data is being fetched.
+        ///   weatherDataType: string, # Optional. Type of weather data. Possible values include: &apos;forecast&apos; , &apos;historical&apos;.
+        ///   granularity: string, # Optional. Granularity of weather data. Possible values include: &apos;daily&apos; , &apos;hourly&apos;.
+        ///   startDateTime: string (ISO 8601 Format), # Optional. Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endDateTime: string (ISO 8601 Format), # Optional. Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   extensionId: string, # Required. <Description>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</Description>
-        ///   farmerId: string, # Required. <Description>The id of the farmer object for which weather data is being fetched.</Description>
-        ///   boundaryId: string, # Required. <Description>The id of the boundary object for which weather data is being fetched.</Description>
-        ///   weatherDataType: string, # Optional. <Description>Type of weather data. Possible values include: &apos;forecast&apos; , &apos;historical&apos;.</Description>
-        ///   granularity: string, # Optional. <Description>Granularity of weather data. Possible values include: &apos;daily&apos; , &apos;hourly&apos;.</Description>
-        ///   startDateTime: string (ISO 8601 Format), # Optional. <Description>Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   endDateTime: string (ISO 8601 Format), # Optional. <Description>Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   id: string, # Optional. <Description>Unique job id.</Description>
-        ///   status: string, # Optional. <Description>Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
-        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
-        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///   extensionId: string, # Required. ID of the extension to be used for the providerInput. eg. DTN.ClearAg.
+        ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
+        ///   boundaryId: string, # Required. The id of the boundary object for which weather data is being fetched.
+        ///   weatherDataType: string, # Optional. Type of weather data. Possible values include: &apos;forecast&apos; , &apos;historical&apos;.
+        ///   granularity: string, # Optional. Granularity of weather data. Possible values include: &apos;daily&apos; , &apos;hourly&apos;.
+        ///   startDateTime: string (ISO 8601 Format), # Optional. Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endDateTime: string (ISO 8601 Format), # Optional. Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -734,58 +716,56 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/Weather/CreateDataDeleteJob
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   extensionId: string, # Required. <Description>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</Description>
-        ///   farmerId: string, # Required. <Description>The id of the farmer object for which weather data is being fetched.</Description>
-        ///   boundaryId: string, # Required. <Description>The id of the boundary object for which weather data is being fetched.</Description>
-        ///   weatherDataType: string, # Optional. <Description>Type of weather data. Possible values include: &apos;forecast&apos; , &apos;historical&apos;.</Description>
-        ///   granularity: string, # Optional. <Description>Granularity of weather data. Possible values include: &apos;daily&apos; , &apos;hourly&apos;.</Description>
-        ///   startDateTime: string (ISO 8601 Format), # Optional. <Description>Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   endDateTime: string (ISO 8601 Format), # Optional. <Description>Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   id: string, # Optional. <Description>Unique job id.</Description>
-        ///   status: string, # Optional. <Description>Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
-        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
-        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///   extensionId: string, # Required. ID of the extension to be used for the providerInput. eg. DTN.ClearAg.
+        ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
+        ///   boundaryId: string, # Required. The id of the boundary object for which weather data is being fetched.
+        ///   weatherDataType: string, # Optional. Type of weather data. Possible values include: &apos;forecast&apos; , &apos;historical&apos;.
+        ///   granularity: string, # Optional. Granularity of weather data. Possible values include: &apos;daily&apos; , &apos;hourly&apos;.
+        ///   startDateTime: string (ISO 8601 Format), # Optional. Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endDateTime: string (ISO 8601 Format), # Optional. Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   extensionId: string, # Required. <Description>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</Description>
-        ///   farmerId: string, # Required. <Description>The id of the farmer object for which weather data is being fetched.</Description>
-        ///   boundaryId: string, # Required. <Description>The id of the boundary object for which weather data is being fetched.</Description>
-        ///   weatherDataType: string, # Optional. <Description>Type of weather data. Possible values include: &apos;forecast&apos; , &apos;historical&apos;.</Description>
-        ///   granularity: string, # Optional. <Description>Granularity of weather data. Possible values include: &apos;daily&apos; , &apos;hourly&apos;.</Description>
-        ///   startDateTime: string (ISO 8601 Format), # Optional. <Description>Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   endDateTime: string (ISO 8601 Format), # Optional. <Description>Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   id: string, # Optional. <Description>Unique job id.</Description>
-        ///   status: string, # Optional. <Description>Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
-        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
-        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///   extensionId: string, # Required. ID of the extension to be used for the providerInput. eg. DTN.ClearAg.
+        ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
+        ///   boundaryId: string, # Required. The id of the boundary object for which weather data is being fetched.
+        ///   weatherDataType: string, # Optional. Type of weather data. Possible values include: &apos;forecast&apos; , &apos;historical&apos;.
+        ///   granularity: string, # Optional. Granularity of weather data. Possible values include: &apos;daily&apos; , &apos;hourly&apos;.
+        ///   startDateTime: string (ISO 8601 Format), # Optional. Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endDateTime: string (ISO 8601 Format), # Optional. Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 

@@ -44,65 +44,63 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAdministration/PurviewMetadataPolicy/UpdateMetadataPolicy
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   name: string, # Optional. <Description>The name of policy</Description>
-        ///   id: string, # Optional. <Description>The id of policy</Description>
-        ///   version: number, # Optional. <Description>The version of policy</Description>
+        ///   name: string, # Optional. The name of policy
+        ///   id: string, # Optional. The id of policy
+        ///   version: number, # Optional. The version of policy
         ///   properties: {
-        ///     description: string, # Optional. <Description>The description of policy</Description>
+        ///     description: string, # Optional. The description of policy
         ///     decisionRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. <Description>The kind of rule</Description>
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. <Description>The effect for rule</Description>
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. <Description>The dnf Condition for a rule</Description>
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ], # Optional. <Description>The DecisionRules of policy</Description>
+        ///     ], # Optional. The DecisionRules of policy
         ///     attributeRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. <Description>The kind of rule</Description>
-        ///         id: string, # Optional. <Description>The id for rule</Description>
-        ///         name: string, # Optional. <Description>The name for rule</Description>
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. <Description>The dnf Condition for a rule</Description>
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         id: string, # Optional. The id for rule
+        ///         name: string, # Optional. The name for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ], # Optional. <Description>The AttributeRules of policy</Description>
+        ///     ], # Optional. The AttributeRules of policy
         ///     collection: {
-        ///       type: string, # Optional. <Description>The type of reference</Description>
-        ///       referenceName: string, # Optional. <Description>The name of reference</Description>
-        ///     }, # Optional. <Description>The collection reference for a policy</Description>
-        ///     parentCollectionName: string, # Optional. <Description>The parent collection of the policy</Description>
+        ///       type: string, # Optional. The type of reference
+        ///       referenceName: string, # Optional. The name of reference
+        ///     }, # Optional. The collection reference for a policy
+        ///     parentCollectionName: string, # Optional. The parent collection of the policy
         ///   }, # Optional.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   name: string, # Optional. <Description>The name of policy</Description>
-        ///   id: string, # Optional. <Description>The id of policy</Description>
-        ///   version: number, # Optional. <Description>The version of policy</Description>
+        ///   name: string, # Optional. The name of policy
+        ///   id: string, # Optional. The id of policy
+        ///   version: number, # Optional. The version of policy
         ///   properties: {
-        ///     description: string, # Optional. <Description>The description of policy</Description>
+        ///     description: string, # Optional. The description of policy
         ///     decisionRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. <Description>The kind of rule</Description>
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. <Description>The effect for rule</Description>
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. <Description>The dnf Condition for a rule</Description>
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ], # Optional. <Description>The DecisionRules of policy</Description>
+        ///     ], # Optional. The DecisionRules of policy
         ///     attributeRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. <Description>The kind of rule</Description>
-        ///         id: string, # Optional. <Description>The id for rule</Description>
-        ///         name: string, # Optional. <Description>The name for rule</Description>
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. <Description>The dnf Condition for a rule</Description>
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         id: string, # Optional. The id for rule
+        ///         name: string, # Optional. The name for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ], # Optional. <Description>The AttributeRules of policy</Description>
+        ///     ], # Optional. The AttributeRules of policy
         ///     collection: {
-        ///       type: string, # Optional. <Description>The type of reference</Description>
-        ///       referenceName: string, # Optional. <Description>The name of reference</Description>
-        ///     }, # Optional. <Description>The collection reference for a policy</Description>
-        ///     parentCollectionName: string, # Optional. <Description>The parent collection of the policy</Description>
+        ///       type: string, # Optional. The type of reference
+        ///       referenceName: string, # Optional. The name of reference
+        ///     }, # Optional. The collection reference for a policy
+        ///     parentCollectionName: string, # Optional. The parent collection of the policy
         ///   }, # Optional.
         /// }
         /// </code>
@@ -134,65 +132,63 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAdministration/PurviewMetadataPolicy/UpdateMetadataPolicy
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   name: string, # Optional. <Description>The name of policy</Description>
-        ///   id: string, # Optional. <Description>The id of policy</Description>
-        ///   version: number, # Optional. <Description>The version of policy</Description>
+        ///   name: string, # Optional. The name of policy
+        ///   id: string, # Optional. The id of policy
+        ///   version: number, # Optional. The version of policy
         ///   properties: {
-        ///     description: string, # Optional. <Description>The description of policy</Description>
+        ///     description: string, # Optional. The description of policy
         ///     decisionRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. <Description>The kind of rule</Description>
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. <Description>The effect for rule</Description>
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. <Description>The dnf Condition for a rule</Description>
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ], # Optional. <Description>The DecisionRules of policy</Description>
+        ///     ], # Optional. The DecisionRules of policy
         ///     attributeRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. <Description>The kind of rule</Description>
-        ///         id: string, # Optional. <Description>The id for rule</Description>
-        ///         name: string, # Optional. <Description>The name for rule</Description>
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. <Description>The dnf Condition for a rule</Description>
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         id: string, # Optional. The id for rule
+        ///         name: string, # Optional. The name for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ], # Optional. <Description>The AttributeRules of policy</Description>
+        ///     ], # Optional. The AttributeRules of policy
         ///     collection: {
-        ///       type: string, # Optional. <Description>The type of reference</Description>
-        ///       referenceName: string, # Optional. <Description>The name of reference</Description>
-        ///     }, # Optional. <Description>The collection reference for a policy</Description>
-        ///     parentCollectionName: string, # Optional. <Description>The parent collection of the policy</Description>
+        ///       type: string, # Optional. The type of reference
+        ///       referenceName: string, # Optional. The name of reference
+        ///     }, # Optional. The collection reference for a policy
+        ///     parentCollectionName: string, # Optional. The parent collection of the policy
         ///   }, # Optional.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   name: string, # Optional. <Description>The name of policy</Description>
-        ///   id: string, # Optional. <Description>The id of policy</Description>
-        ///   version: number, # Optional. <Description>The version of policy</Description>
+        ///   name: string, # Optional. The name of policy
+        ///   id: string, # Optional. The id of policy
+        ///   version: number, # Optional. The version of policy
         ///   properties: {
-        ///     description: string, # Optional. <Description>The description of policy</Description>
+        ///     description: string, # Optional. The description of policy
         ///     decisionRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. <Description>The kind of rule</Description>
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. <Description>The effect for rule</Description>
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. <Description>The dnf Condition for a rule</Description>
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ], # Optional. <Description>The DecisionRules of policy</Description>
+        ///     ], # Optional. The DecisionRules of policy
         ///     attributeRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. <Description>The kind of rule</Description>
-        ///         id: string, # Optional. <Description>The id for rule</Description>
-        ///         name: string, # Optional. <Description>The name for rule</Description>
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. <Description>The dnf Condition for a rule</Description>
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         id: string, # Optional. The id for rule
+        ///         name: string, # Optional. The name for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ], # Optional. <Description>The AttributeRules of policy</Description>
+        ///     ], # Optional. The AttributeRules of policy
         ///     collection: {
-        ///       type: string, # Optional. <Description>The type of reference</Description>
-        ///       referenceName: string, # Optional. <Description>The name of reference</Description>
-        ///     }, # Optional. <Description>The collection reference for a policy</Description>
-        ///     parentCollectionName: string, # Optional. <Description>The parent collection of the policy</Description>
+        ///       type: string, # Optional. The type of reference
+        ///       referenceName: string, # Optional. The name of reference
+        ///     }, # Optional. The collection reference for a policy
+        ///     parentCollectionName: string, # Optional. The parent collection of the policy
         ///   }, # Optional.
         /// }
         /// </code>
@@ -223,35 +219,33 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAdministration/PurviewMetadataPolicy/GetMetadataPolicy
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   name: string, # Optional. <Description>The name of policy</Description>
-        ///   id: string, # Optional. <Description>The id of policy</Description>
-        ///   version: number, # Optional. <Description>The version of policy</Description>
+        ///   name: string, # Optional. The name of policy
+        ///   id: string, # Optional. The id of policy
+        ///   version: number, # Optional. The version of policy
         ///   properties: {
-        ///     description: string, # Optional. <Description>The description of policy</Description>
+        ///     description: string, # Optional. The description of policy
         ///     decisionRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. <Description>The kind of rule</Description>
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. <Description>The effect for rule</Description>
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. <Description>The dnf Condition for a rule</Description>
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ], # Optional. <Description>The DecisionRules of policy</Description>
+        ///     ], # Optional. The DecisionRules of policy
         ///     attributeRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. <Description>The kind of rule</Description>
-        ///         id: string, # Optional. <Description>The id for rule</Description>
-        ///         name: string, # Optional. <Description>The name for rule</Description>
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. <Description>The dnf Condition for a rule</Description>
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         id: string, # Optional. The id for rule
+        ///         name: string, # Optional. The name for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ], # Optional. <Description>The AttributeRules of policy</Description>
+        ///     ], # Optional. The AttributeRules of policy
         ///     collection: {
-        ///       type: string, # Optional. <Description>The type of reference</Description>
-        ///       referenceName: string, # Optional. <Description>The name of reference</Description>
-        ///     }, # Optional. <Description>The collection reference for a policy</Description>
-        ///     parentCollectionName: string, # Optional. <Description>The parent collection of the policy</Description>
+        ///       type: string, # Optional. The type of reference
+        ///       referenceName: string, # Optional. The name of reference
+        ///     }, # Optional. The collection reference for a policy
+        ///     parentCollectionName: string, # Optional. The parent collection of the policy
         ///   }, # Optional.
         /// }
         /// </code>
@@ -282,35 +276,33 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAdministration/PurviewMetadataPolicy/GetMetadataPolicy
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   name: string, # Optional. <Description>The name of policy</Description>
-        ///   id: string, # Optional. <Description>The id of policy</Description>
-        ///   version: number, # Optional. <Description>The version of policy</Description>
+        ///   name: string, # Optional. The name of policy
+        ///   id: string, # Optional. The id of policy
+        ///   version: number, # Optional. The version of policy
         ///   properties: {
-        ///     description: string, # Optional. <Description>The description of policy</Description>
+        ///     description: string, # Optional. The description of policy
         ///     decisionRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. <Description>The kind of rule</Description>
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. <Description>The effect for rule</Description>
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. <Description>The dnf Condition for a rule</Description>
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ], # Optional. <Description>The DecisionRules of policy</Description>
+        ///     ], # Optional. The DecisionRules of policy
         ///     attributeRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. <Description>The kind of rule</Description>
-        ///         id: string, # Optional. <Description>The id for rule</Description>
-        ///         name: string, # Optional. <Description>The name for rule</Description>
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. <Description>The dnf Condition for a rule</Description>
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         id: string, # Optional. The id for rule
+        ///         name: string, # Optional. The name for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ], # Optional. <Description>The AttributeRules of policy</Description>
+        ///     ], # Optional. The AttributeRules of policy
         ///     collection: {
-        ///       type: string, # Optional. <Description>The type of reference</Description>
-        ///       referenceName: string, # Optional. <Description>The name of reference</Description>
-        ///     }, # Optional. <Description>The collection reference for a policy</Description>
-        ///     parentCollectionName: string, # Optional. <Description>The parent collection of the policy</Description>
+        ///       type: string, # Optional. The type of reference
+        ///       referenceName: string, # Optional. The name of reference
+        ///     }, # Optional. The collection reference for a policy
+        ///     parentCollectionName: string, # Optional. The parent collection of the policy
         ///   }, # Optional.
         /// }
         /// </code>
@@ -338,37 +330,35 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAdministration/PurviewMetadataPolicy/GetMetadataPolicies
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   values: [
         ///     {
-        ///       name: string, # Optional. <Description>The name of policy</Description>
-        ///       id: string, # Optional. <Description>The id of policy</Description>
-        ///       version: number, # Optional. <Description>The version of policy</Description>
+        ///       name: string, # Optional. The name of policy
+        ///       id: string, # Optional. The id of policy
+        ///       version: number, # Optional. The version of policy
         ///       properties: {
-        ///         description: string, # Optional. <Description>The description of policy</Description>
+        ///         description: string, # Optional. The description of policy
         ///         decisionRules: [
         ///           {
-        ///             kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. <Description>The kind of rule</Description>
-        ///             effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. <Description>The effect for rule</Description>
-        ///             dnfCondition: [AttributeMatcher[]], # Optional. <Description>The dnf Condition for a rule</Description>
+        ///             kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///             effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
+        ///             dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///           }
-        ///         ], # Optional. <Description>The DecisionRules of policy</Description>
+        ///         ], # Optional. The DecisionRules of policy
         ///         attributeRules: [
         ///           {
-        ///             kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. <Description>The kind of rule</Description>
-        ///             id: string, # Optional. <Description>The id for rule</Description>
-        ///             name: string, # Optional. <Description>The name for rule</Description>
-        ///             dnfCondition: [AttributeMatcher[]], # Optional. <Description>The dnf Condition for a rule</Description>
+        ///             kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///             id: string, # Optional. The id for rule
+        ///             name: string, # Optional. The name for rule
+        ///             dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///           }
-        ///         ], # Optional. <Description>The AttributeRules of policy</Description>
+        ///         ], # Optional. The AttributeRules of policy
         ///         collection: {
-        ///           type: string, # Optional. <Description>The type of reference</Description>
-        ///           referenceName: string, # Optional. <Description>The name of reference</Description>
-        ///         }, # Optional. <Description>The collection reference for a policy</Description>
-        ///         parentCollectionName: string, # Optional. <Description>The parent collection of the policy</Description>
+        ///           type: string, # Optional. The type of reference
+        ///           referenceName: string, # Optional. The name of reference
+        ///         }, # Optional. The collection reference for a policy
+        ///         parentCollectionName: string, # Optional. The parent collection of the policy
         ///       }, # Optional.
         ///     }
         ///   ], # Required.
@@ -403,37 +393,35 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAdministration/PurviewMetadataPolicy/GetMetadataPolicies
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   values: [
         ///     {
-        ///       name: string, # Optional. <Description>The name of policy</Description>
-        ///       id: string, # Optional. <Description>The id of policy</Description>
-        ///       version: number, # Optional. <Description>The version of policy</Description>
+        ///       name: string, # Optional. The name of policy
+        ///       id: string, # Optional. The id of policy
+        ///       version: number, # Optional. The version of policy
         ///       properties: {
-        ///         description: string, # Optional. <Description>The description of policy</Description>
+        ///         description: string, # Optional. The description of policy
         ///         decisionRules: [
         ///           {
-        ///             kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. <Description>The kind of rule</Description>
-        ///             effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. <Description>The effect for rule</Description>
-        ///             dnfCondition: [AttributeMatcher[]], # Optional. <Description>The dnf Condition for a rule</Description>
+        ///             kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///             effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
+        ///             dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///           }
-        ///         ], # Optional. <Description>The DecisionRules of policy</Description>
+        ///         ], # Optional. The DecisionRules of policy
         ///         attributeRules: [
         ///           {
-        ///             kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. <Description>The kind of rule</Description>
-        ///             id: string, # Optional. <Description>The id for rule</Description>
-        ///             name: string, # Optional. <Description>The name for rule</Description>
-        ///             dnfCondition: [AttributeMatcher[]], # Optional. <Description>The dnf Condition for a rule</Description>
+        ///             kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///             id: string, # Optional. The id for rule
+        ///             name: string, # Optional. The name for rule
+        ///             dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///           }
-        ///         ], # Optional. <Description>The AttributeRules of policy</Description>
+        ///         ], # Optional. The AttributeRules of policy
         ///         collection: {
-        ///           type: string, # Optional. <Description>The type of reference</Description>
-        ///           referenceName: string, # Optional. <Description>The name of reference</Description>
-        ///         }, # Optional. <Description>The collection reference for a policy</Description>
-        ///         parentCollectionName: string, # Optional. <Description>The parent collection of the policy</Description>
+        ///           type: string, # Optional. The type of reference
+        ///           referenceName: string, # Optional. The name of reference
+        ///         }, # Optional. The collection reference for a policy
+        ///         parentCollectionName: string, # Optional. The parent collection of the policy
         ///       }, # Optional.
         ///     }
         ///   ], # Required.

@@ -78,8 +78,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewScan/GetFilter
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   id: string, # Optional.
@@ -112,8 +110,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewScan/GetFilter
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   id: string, # Optional.
@@ -147,8 +143,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewScan/CreateOrUpdateFilter
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   id: string, # Optional.
@@ -192,8 +186,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewScan/CreateOrUpdateFilter
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   id: string, # Optional.
@@ -238,8 +230,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewScan/CreateOrUpdate
         /// Schema for <c>AzureSubscriptionCredentialScan Request Body</c>:
         /// <code>{
         ///   kind: AzureSubscriptionCredential, # Required.
@@ -258,7 +248,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -366,7 +356,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -474,7 +464,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -582,7 +572,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -690,7 +680,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -798,7 +788,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -906,7 +896,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -1014,7 +1004,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -1122,7 +1112,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -1190,7 +1180,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -1254,7 +1244,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -1322,7 +1312,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -1386,7 +1376,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -1494,7 +1484,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -1563,7 +1553,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -1628,7 +1618,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -1698,7 +1688,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -1767,7 +1757,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -1836,7 +1826,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -1901,7 +1891,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -1970,7 +1960,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -2040,7 +2030,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -2106,7 +2096,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -2177,7 +2167,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -2249,7 +2239,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -2319,7 +2309,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -2389,7 +2379,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -2455,7 +2445,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -2525,7 +2515,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -2591,7 +2581,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -2662,7 +2652,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -2730,7 +2720,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -2794,7 +2784,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -2866,7 +2856,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -2932,7 +2922,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -3002,7 +2992,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -3074,7 +3064,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -3144,7 +3134,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -3216,7 +3206,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -3286,7 +3276,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -3358,7 +3348,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -3428,7 +3418,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -3498,7 +3488,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -3563,7 +3553,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -3671,7 +3661,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -3779,7 +3769,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -3887,7 +3877,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -3995,7 +3985,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -4103,7 +4093,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -4211,7 +4201,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -4319,7 +4309,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -4427,7 +4417,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -4495,7 +4485,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -4559,7 +4549,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -4627,7 +4617,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -4691,7 +4681,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -4799,7 +4789,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -4868,7 +4858,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -4933,7 +4923,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -5003,7 +4993,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -5072,7 +5062,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -5141,7 +5131,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -5206,7 +5196,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -5275,7 +5265,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -5345,7 +5335,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -5411,7 +5401,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -5482,7 +5472,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -5554,7 +5544,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -5624,7 +5614,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -5694,7 +5684,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -5760,7 +5750,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -5830,7 +5820,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -5896,7 +5886,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -5967,7 +5957,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -6035,7 +6025,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -6099,7 +6089,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -6171,7 +6161,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -6237,7 +6227,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -6307,7 +6297,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -6379,7 +6369,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -6449,7 +6439,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -6521,7 +6511,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -6591,7 +6581,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -6663,7 +6653,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -6733,7 +6723,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -6803,7 +6793,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -6876,8 +6866,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewScan/CreateOrUpdate
         /// Schema for <c>AzureSubscriptionCredentialScan Request Body</c>:
         /// <code>{
         ///   kind: AzureSubscriptionCredential, # Required.
@@ -6896,7 +6884,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -7004,7 +6992,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -7112,7 +7100,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -7220,7 +7208,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -7328,7 +7316,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -7436,7 +7424,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -7544,7 +7532,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -7652,7 +7640,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -7760,7 +7748,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -7828,7 +7816,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -7892,7 +7880,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -7960,7 +7948,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -8024,7 +8012,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -8132,7 +8120,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -8201,7 +8189,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -8266,7 +8254,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -8336,7 +8324,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -8405,7 +8393,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -8474,7 +8462,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -8539,7 +8527,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -8608,7 +8596,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -8678,7 +8666,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -8744,7 +8732,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -8815,7 +8803,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -8887,7 +8875,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -8957,7 +8945,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -9027,7 +9015,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -9093,7 +9081,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -9163,7 +9151,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -9229,7 +9217,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -9300,7 +9288,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -9368,7 +9356,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -9432,7 +9420,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -9504,7 +9492,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -9570,7 +9558,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -9640,7 +9628,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -9712,7 +9700,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -9782,7 +9770,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -9854,7 +9842,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -9924,7 +9912,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -9996,7 +9984,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -10066,7 +10054,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -10136,7 +10124,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -10201,7 +10189,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -10309,7 +10297,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -10417,7 +10405,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -10525,7 +10513,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -10633,7 +10621,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -10741,7 +10729,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -10849,7 +10837,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -10957,7 +10945,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -11065,7 +11053,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -11133,7 +11121,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -11197,7 +11185,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -11265,7 +11253,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -11329,7 +11317,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -11437,7 +11425,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -11506,7 +11494,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -11571,7 +11559,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -11641,7 +11629,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -11710,7 +11698,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -11779,7 +11767,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -11844,7 +11832,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -11913,7 +11901,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -11983,7 +11971,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -12049,7 +12037,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -12120,7 +12108,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -12192,7 +12180,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -12262,7 +12250,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -12332,7 +12320,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -12398,7 +12386,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -12468,7 +12456,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -12534,7 +12522,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -12605,7 +12593,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -12673,7 +12661,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -12737,7 +12725,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -12809,7 +12797,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -12875,7 +12863,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -12945,7 +12933,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -13017,7 +13005,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -13087,7 +13075,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -13159,7 +13147,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -13229,7 +13217,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -13301,7 +13289,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -13371,7 +13359,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -13441,7 +13429,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -13512,8 +13500,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewScan/GetProperties
         /// Schema for <c>AzureSubscriptionCredentialScan Response Body</c>:
         /// <code>{
         ///   kind: AzureSubscriptionCredential, # Required.
@@ -13532,7 +13518,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -13640,7 +13626,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -13748,7 +13734,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -13856,7 +13842,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -13964,7 +13950,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -14072,7 +14058,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -14180,7 +14166,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -14288,7 +14274,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -14396,7 +14382,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -14464,7 +14450,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -14528,7 +14514,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -14596,7 +14582,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -14660,7 +14646,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -14768,7 +14754,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -14837,7 +14823,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -14902,7 +14888,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -14972,7 +14958,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -15041,7 +15027,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -15110,7 +15096,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -15175,7 +15161,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -15244,7 +15230,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -15314,7 +15300,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -15380,7 +15366,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -15451,7 +15437,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -15523,7 +15509,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -15593,7 +15579,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -15663,7 +15649,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -15729,7 +15715,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -15799,7 +15785,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -15865,7 +15851,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -15936,7 +15922,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -16004,7 +15990,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -16068,7 +16054,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -16140,7 +16126,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -16206,7 +16192,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -16276,7 +16262,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -16348,7 +16334,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -16418,7 +16404,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -16490,7 +16476,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -16560,7 +16546,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -16632,7 +16618,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -16702,7 +16688,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -16772,7 +16758,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -16841,8 +16827,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewScan/GetProperties
         /// Schema for <c>AzureSubscriptionCredentialScan Response Body</c>:
         /// <code>{
         ///   kind: AzureSubscriptionCredential, # Required.
@@ -16861,7 +16845,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -16969,7 +16953,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -17077,7 +17061,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -17185,7 +17169,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -17293,7 +17277,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -17401,7 +17385,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -17509,7 +17493,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -17617,7 +17601,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -17725,7 +17709,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -17793,7 +17777,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -17857,7 +17841,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -17925,7 +17909,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -17989,7 +17973,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -18097,7 +18081,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -18166,7 +18150,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -18231,7 +18215,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -18301,7 +18285,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -18370,7 +18354,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -18439,7 +18423,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -18504,7 +18488,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -18573,7 +18557,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -18643,7 +18627,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -18709,7 +18693,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -18780,7 +18764,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -18852,7 +18836,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -18922,7 +18906,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -18992,7 +18976,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -19058,7 +19042,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -19128,7 +19112,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -19194,7 +19178,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -19265,7 +19249,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -19333,7 +19317,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -19397,7 +19381,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -19469,7 +19453,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -19535,7 +19519,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -19605,7 +19589,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -19677,7 +19661,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -19747,7 +19731,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -19819,7 +19803,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -19889,7 +19873,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -19961,7 +19945,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -20031,7 +20015,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -20101,7 +20085,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -20170,8 +20154,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewScan/Delete
         /// Schema for <c>AzureSubscriptionCredentialScan Response Body</c>:
         /// <code>{
         ///   kind: AzureSubscriptionCredential, # Required.
@@ -20190,7 +20172,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -20298,7 +20280,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -20406,7 +20388,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -20514,7 +20496,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -20622,7 +20604,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -20730,7 +20712,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -20838,7 +20820,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -20946,7 +20928,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -21054,7 +21036,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -21122,7 +21104,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -21186,7 +21168,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -21254,7 +21236,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -21318,7 +21300,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -21426,7 +21408,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -21495,7 +21477,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -21560,7 +21542,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -21630,7 +21612,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -21699,7 +21681,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -21768,7 +21750,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -21833,7 +21815,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -21902,7 +21884,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -21972,7 +21954,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -22038,7 +22020,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -22109,7 +22091,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -22181,7 +22163,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -22251,7 +22233,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -22321,7 +22303,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -22387,7 +22369,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -22457,7 +22439,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -22523,7 +22505,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -22594,7 +22576,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -22662,7 +22644,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -22726,7 +22708,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -22798,7 +22780,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -22864,7 +22846,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -22934,7 +22916,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -23006,7 +22988,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -23076,7 +23058,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -23148,7 +23130,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -23218,7 +23200,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -23290,7 +23272,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -23360,7 +23342,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -23430,7 +23412,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -23499,8 +23481,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewScan/Delete
         /// Schema for <c>AzureSubscriptionCredentialScan Response Body</c>:
         /// <code>{
         ///   kind: AzureSubscriptionCredential, # Required.
@@ -23519,7 +23499,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -23627,7 +23607,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -23735,7 +23715,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -23843,7 +23823,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -23951,7 +23931,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -24059,7 +24039,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -24167,7 +24147,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -24275,7 +24255,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -24383,7 +24363,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -24451,7 +24431,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -24515,7 +24495,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -24583,7 +24563,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -24647,7 +24627,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -24755,7 +24735,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -24824,7 +24804,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -24889,7 +24869,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -24959,7 +24939,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -25028,7 +25008,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -25097,7 +25077,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -25162,7 +25142,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -25231,7 +25211,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -25301,7 +25281,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -25367,7 +25347,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -25438,7 +25418,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -25510,7 +25490,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -25580,7 +25560,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -25650,7 +25630,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -25716,7 +25696,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -25786,7 +25766,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -25852,7 +25832,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -25923,7 +25903,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -25991,7 +25971,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -26055,7 +26035,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -26127,7 +26107,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -26193,7 +26173,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -26263,7 +26243,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -26335,7 +26315,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -26405,7 +26385,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -26477,7 +26457,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -26547,7 +26527,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -26619,7 +26599,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -26689,7 +26669,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -26759,7 +26739,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -26832,8 +26812,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewScan/RunScan
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   scanResultId: OperationResponseScanResultId, # Optional.
@@ -26883,8 +26861,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewScan/RunScan
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   scanResultId: OperationResponseScanResultId, # Optional.
@@ -26933,8 +26909,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewScan/CancelScan
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   scanResultId: OperationResponseScanResultId, # Optional.
@@ -26983,8 +26957,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewScan/CancelScan
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   scanResultId: OperationResponseScanResultId, # Optional.
@@ -27030,8 +27002,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewScan/GetTrigger
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   id: string, # Optional.
@@ -27043,14 +27013,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       endTime: string (ISO 8601 Format), # Optional.
         ///       schedule: {
-        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>Dictionary of &lt;AnyObject&gt;</Description>
+        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         ///         minutes: [number], # Optional.
         ///         hours: [number], # Optional.
         ///         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;], # Optional.
         ///         monthDays: [number], # Optional.
         ///         monthlyOccurrences: [
         ///           {
-        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>Dictionary of &lt;AnyObject&gt;</Description>
+        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         ///             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;, # Optional.
         ///             occurrence: number, # Optional.
         ///           }
@@ -27089,8 +27059,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewScan/GetTrigger
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   id: string, # Optional.
@@ -27102,14 +27070,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       endTime: string (ISO 8601 Format), # Optional.
         ///       schedule: {
-        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>Dictionary of &lt;AnyObject&gt;</Description>
+        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         ///         minutes: [number], # Optional.
         ///         hours: [number], # Optional.
         ///         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;], # Optional.
         ///         monthDays: [number], # Optional.
         ///         monthlyOccurrences: [
         ///           {
-        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>Dictionary of &lt;AnyObject&gt;</Description>
+        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         ///             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;, # Optional.
         ///             occurrence: number, # Optional.
         ///           }
@@ -27150,8 +27118,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewScan/CreateOrUpdateTrigger
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   id: string, # Optional.
@@ -27163,14 +27129,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       endTime: string (ISO 8601 Format), # Optional.
         ///       schedule: {
-        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>Dictionary of &lt;AnyObject&gt;</Description>
+        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         ///         minutes: [number], # Optional.
         ///         hours: [number], # Optional.
         ///         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;], # Optional.
         ///         monthDays: [number], # Optional.
         ///         monthlyOccurrences: [
         ///           {
-        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>Dictionary of &lt;AnyObject&gt;</Description>
+        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         ///             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;, # Optional.
         ///             occurrence: number, # Optional.
         ///           }
@@ -27198,14 +27164,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       endTime: string (ISO 8601 Format), # Optional.
         ///       schedule: {
-        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>Dictionary of &lt;AnyObject&gt;</Description>
+        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         ///         minutes: [number], # Optional.
         ///         hours: [number], # Optional.
         ///         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;], # Optional.
         ///         monthDays: [number], # Optional.
         ///         monthlyOccurrences: [
         ///           {
-        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>Dictionary of &lt;AnyObject&gt;</Description>
+        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         ///             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;, # Optional.
         ///             occurrence: number, # Optional.
         ///           }
@@ -27248,8 +27214,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewScan/CreateOrUpdateTrigger
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   id: string, # Optional.
@@ -27261,14 +27225,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       endTime: string (ISO 8601 Format), # Optional.
         ///       schedule: {
-        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>Dictionary of &lt;AnyObject&gt;</Description>
+        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         ///         minutes: [number], # Optional.
         ///         hours: [number], # Optional.
         ///         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;], # Optional.
         ///         monthDays: [number], # Optional.
         ///         monthlyOccurrences: [
         ///           {
-        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>Dictionary of &lt;AnyObject&gt;</Description>
+        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         ///             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;, # Optional.
         ///             occurrence: number, # Optional.
         ///           }
@@ -27296,14 +27260,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       endTime: string (ISO 8601 Format), # Optional.
         ///       schedule: {
-        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>Dictionary of &lt;AnyObject&gt;</Description>
+        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         ///         minutes: [number], # Optional.
         ///         hours: [number], # Optional.
         ///         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;], # Optional.
         ///         monthDays: [number], # Optional.
         ///         monthlyOccurrences: [
         ///           {
-        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>Dictionary of &lt;AnyObject&gt;</Description>
+        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         ///             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;, # Optional.
         ///             occurrence: number, # Optional.
         ///           }
@@ -27344,8 +27308,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewScan/DeleteTrigger
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   id: string, # Optional.
@@ -27357,14 +27319,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       endTime: string (ISO 8601 Format), # Optional.
         ///       schedule: {
-        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>Dictionary of &lt;AnyObject&gt;</Description>
+        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         ///         minutes: [number], # Optional.
         ///         hours: [number], # Optional.
         ///         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;], # Optional.
         ///         monthDays: [number], # Optional.
         ///         monthlyOccurrences: [
         ///           {
-        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>Dictionary of &lt;AnyObject&gt;</Description>
+        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         ///             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;, # Optional.
         ///             occurrence: number, # Optional.
         ///           }
@@ -27403,8 +27365,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewScan/DeleteTrigger
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   id: string, # Optional.
@@ -27416,14 +27376,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       endTime: string (ISO 8601 Format), # Optional.
         ///       schedule: {
-        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>Dictionary of &lt;AnyObject&gt;</Description>
+        ///         additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         ///         minutes: [number], # Optional.
         ///         hours: [number], # Optional.
         ///         weekDays: [&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;], # Optional.
         ///         monthDays: [number], # Optional.
         ///         monthlyOccurrences: [
         ///           {
-        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>Dictionary of &lt;AnyObject&gt;</Description>
+        ///             additionalProperties: Dictionary&lt;string, AnyObject&gt;, # Optional. Dictionary of &lt;AnyObject&gt;
         ///             day: &quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;, # Optional.
         ///             occurrence: number, # Optional.
         ///           }
@@ -27462,8 +27422,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewScan/GetRuns
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
@@ -27481,7 +27439,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.
@@ -27540,8 +27498,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewScan/GetRuns
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
@@ -27559,7 +27515,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: number, # Optional.
         ///           }
         ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///       }, # Optional.
         ///       startTime: string (ISO 8601 Format), # Optional.
         ///       queuedTime: string (ISO 8601 Format), # Optional.

@@ -66,74 +66,72 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/GetAccountProperties
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   id: string, # Optional. <Description>Gets or sets the identifier.</Description>
+        ///   id: string, # Optional. Gets or sets the identifier.
         ///   identity: {
-        ///     principalId: string, # Optional. <Description>Service principal object Id</Description>
-        ///     tenantId: string, # Optional. <Description>Tenant Id</Description>
-        ///     type: &quot;SystemAssigned&quot;, # Optional. <Description>Identity Type</Description>
-        ///   }, # Optional. <Description>Identity Info on the tracked resource</Description>
-        ///   location: string, # Optional. <Description>Gets or sets the location.</Description>
-        ///   name: string, # Optional. <Description>Gets or sets the name.</Description>
+        ///     principalId: string, # Optional. Service principal object Id
+        ///     tenantId: string, # Optional. Tenant Id
+        ///     type: &quot;SystemAssigned&quot;, # Optional. Identity Type
+        ///   }, # Optional. Identity Info on the tracked resource
+        ///   location: string, # Optional. Gets or sets the location.
+        ///   name: string, # Optional. Gets or sets the name.
         ///   properties: {
         ///     cloudConnectors: {
-        ///       awsExternalId: string, # Optional. <Description>AWS external identifier.
-        /// Configured in AWS to allow use of the role arn used for scanning</Description>
-        ///     }, # Optional. <Description>Cloud connectors.
-        /// External cloud identifier used as part of scanning configuration.</Description>
-        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>Gets the time at which the entity was created.</Description>
-        ///     createdBy: string, # Optional. <Description>Gets the creator of the entity.</Description>
-        ///     createdByObjectId: string, # Optional. <Description>Gets the creators of the entity&apos;s object id.</Description>
+        ///       awsExternalId: string, # Optional. AWS external identifier.
+        /// Configured in AWS to allow use of the role arn used for scanning
+        ///     }, # Optional. Cloud connectors.
+        /// External cloud identifier used as part of scanning configuration.
+        ///     createdAt: string (ISO 8601 Format), # Optional. Gets the time at which the entity was created.
+        ///     createdBy: string, # Optional. Gets the creator of the entity.
+        ///     createdByObjectId: string, # Optional. Gets the creators of the entity&apos;s object id.
         ///     endpoints: {
-        ///       catalog: string, # Optional. <Description>Gets the catalog endpoint.</Description>
-        ///       guardian: string, # Optional. <Description>Gets the guardian endpoint.</Description>
-        ///       scan: string, # Optional. <Description>Gets the scan endpoint.</Description>
-        ///     }, # Optional. <Description>The URIs that are the public endpoints of the account.</Description>
-        ///     friendlyName: string, # Optional. <Description>Gets or sets the friendly name.</Description>
-        ///     managedResourceGroupName: string, # Optional. <Description>Gets or sets the managed resource group name</Description>
+        ///       catalog: string, # Optional. Gets the catalog endpoint.
+        ///       guardian: string, # Optional. Gets the guardian endpoint.
+        ///       scan: string, # Optional. Gets the scan endpoint.
+        ///     }, # Optional. The URIs that are the public endpoints of the account.
+        ///     friendlyName: string, # Optional. Gets or sets the friendly name.
+        ///     managedResourceGroupName: string, # Optional. Gets or sets the managed resource group name
         ///     managedResources: {
-        ///       eventHubNamespace: string, # Optional. <Description>Gets the managed event hub namespace resource identifier.</Description>
-        ///       resourceGroup: string, # Optional. <Description>Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account.</Description>
-        ///       storageAccount: string, # Optional. <Description>Gets the managed storage account resource identifier.</Description>
-        ///     }, # Optional. <Description>Gets the resource identifiers of the managed resources.</Description>
+        ///       eventHubNamespace: string, # Optional. Gets the managed event hub namespace resource identifier.
+        ///       resourceGroup: string, # Optional. Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account.
+        ///       storageAccount: string, # Optional. Gets the managed storage account resource identifier.
+        ///     }, # Optional. Gets the resource identifiers of the managed resources.
         ///     privateEndpointConnections: [
         ///       {
-        ///         id: string, # Optional. <Description>Gets or sets the identifier.</Description>
-        ///         name: string, # Optional. <Description>Gets or sets the name.</Description>
+        ///         id: string, # Optional. Gets or sets the identifier.
+        ///         name: string, # Optional. Gets or sets the name.
         ///         properties: {
         ///           privateEndpoint: {
-        ///             id: string, # Optional. <Description>The private endpoint identifier.</Description>
-        ///           }, # Optional. <Description>The private endpoint information.</Description>
+        ///             id: string, # Optional. The private endpoint identifier.
+        ///           }, # Optional. The private endpoint information.
         ///           privateLinkServiceConnectionState: {
-        ///             actionsRequired: string, # Optional. <Description>The required actions.</Description>
-        ///             description: string, # Optional. <Description>The description.</Description>
-        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;, # Optional. <Description>The status.</Description>
-        ///           }, # Optional. <Description>The private link service connection state.</Description>
-        ///           provisioningState: string, # Optional. <Description>The provisioning state.</Description>
-        ///         }, # Optional. <Description>The connection identifier.</Description>
-        ///         type: string, # Optional. <Description>Gets or sets the type.</Description>
+        ///             actionsRequired: string, # Optional. The required actions.
+        ///             description: string, # Optional. The description.
+        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;, # Optional. The status.
+        ///           }, # Optional. The private link service connection state.
+        ///           provisioningState: string, # Optional. The provisioning state.
+        ///         }, # Optional. The connection identifier.
+        ///         type: string, # Optional. Gets or sets the type.
         ///       }
-        ///     ], # Optional. <Description>Gets the private endpoint connections information.</Description>
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;, # Optional. <Description>Gets or sets the state of the provisioning.</Description>
-        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. <Description>Gets or sets the public network access.</Description>
-        ///   }, # Optional. <Description>Gets or sets the properties.</Description>
+        ///     ], # Optional. Gets the private endpoint connections information.
+        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;, # Optional. Gets or sets the state of the provisioning.
+        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Gets or sets the public network access.
+        ///   }, # Optional. Gets or sets the properties.
         ///   sku: {
-        ///     capacity: number, # Optional. <Description>Gets or sets the sku capacity. Possible values include: 4, 16</Description>
-        ///     name: &quot;Standard&quot;, # Optional. <Description>Gets or sets the sku name.</Description>
-        ///   }, # Optional. <Description>Gets or sets the Sku.</Description>
+        ///     capacity: number, # Optional. Gets or sets the sku capacity. Possible values include: 4, 16
+        ///     name: &quot;Standard&quot;, # Optional. Gets or sets the sku name.
+        ///   }, # Optional. Gets or sets the Sku.
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
-        ///     createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
-        ///     lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
-        ///   }, # Optional. <Description>Metadata pertaining to creation and last modification of the resource.</Description>
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. <Description>Tags on the azure resource.</Description>
-        ///   type: string, # Optional. <Description>Gets or sets the type.</Description>
+        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
+        ///     createdBy: string, # Optional. The identity that created the resource.
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
+        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
+        ///   }, # Optional. Metadata pertaining to creation and last modification of the resource.
+        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Tags on the azure resource.
+        ///   type: string, # Optional. Gets or sets the type.
         /// }
         /// </code>
         /// 
@@ -158,74 +156,72 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/GetAccountProperties
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   id: string, # Optional. <Description>Gets or sets the identifier.</Description>
+        ///   id: string, # Optional. Gets or sets the identifier.
         ///   identity: {
-        ///     principalId: string, # Optional. <Description>Service principal object Id</Description>
-        ///     tenantId: string, # Optional. <Description>Tenant Id</Description>
-        ///     type: &quot;SystemAssigned&quot;, # Optional. <Description>Identity Type</Description>
-        ///   }, # Optional. <Description>Identity Info on the tracked resource</Description>
-        ///   location: string, # Optional. <Description>Gets or sets the location.</Description>
-        ///   name: string, # Optional. <Description>Gets or sets the name.</Description>
+        ///     principalId: string, # Optional. Service principal object Id
+        ///     tenantId: string, # Optional. Tenant Id
+        ///     type: &quot;SystemAssigned&quot;, # Optional. Identity Type
+        ///   }, # Optional. Identity Info on the tracked resource
+        ///   location: string, # Optional. Gets or sets the location.
+        ///   name: string, # Optional. Gets or sets the name.
         ///   properties: {
         ///     cloudConnectors: {
-        ///       awsExternalId: string, # Optional. <Description>AWS external identifier.
-        /// Configured in AWS to allow use of the role arn used for scanning</Description>
-        ///     }, # Optional. <Description>Cloud connectors.
-        /// External cloud identifier used as part of scanning configuration.</Description>
-        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>Gets the time at which the entity was created.</Description>
-        ///     createdBy: string, # Optional. <Description>Gets the creator of the entity.</Description>
-        ///     createdByObjectId: string, # Optional. <Description>Gets the creators of the entity&apos;s object id.</Description>
+        ///       awsExternalId: string, # Optional. AWS external identifier.
+        /// Configured in AWS to allow use of the role arn used for scanning
+        ///     }, # Optional. Cloud connectors.
+        /// External cloud identifier used as part of scanning configuration.
+        ///     createdAt: string (ISO 8601 Format), # Optional. Gets the time at which the entity was created.
+        ///     createdBy: string, # Optional. Gets the creator of the entity.
+        ///     createdByObjectId: string, # Optional. Gets the creators of the entity&apos;s object id.
         ///     endpoints: {
-        ///       catalog: string, # Optional. <Description>Gets the catalog endpoint.</Description>
-        ///       guardian: string, # Optional. <Description>Gets the guardian endpoint.</Description>
-        ///       scan: string, # Optional. <Description>Gets the scan endpoint.</Description>
-        ///     }, # Optional. <Description>The URIs that are the public endpoints of the account.</Description>
-        ///     friendlyName: string, # Optional. <Description>Gets or sets the friendly name.</Description>
-        ///     managedResourceGroupName: string, # Optional. <Description>Gets or sets the managed resource group name</Description>
+        ///       catalog: string, # Optional. Gets the catalog endpoint.
+        ///       guardian: string, # Optional. Gets the guardian endpoint.
+        ///       scan: string, # Optional. Gets the scan endpoint.
+        ///     }, # Optional. The URIs that are the public endpoints of the account.
+        ///     friendlyName: string, # Optional. Gets or sets the friendly name.
+        ///     managedResourceGroupName: string, # Optional. Gets or sets the managed resource group name
         ///     managedResources: {
-        ///       eventHubNamespace: string, # Optional. <Description>Gets the managed event hub namespace resource identifier.</Description>
-        ///       resourceGroup: string, # Optional. <Description>Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account.</Description>
-        ///       storageAccount: string, # Optional. <Description>Gets the managed storage account resource identifier.</Description>
-        ///     }, # Optional. <Description>Gets the resource identifiers of the managed resources.</Description>
+        ///       eventHubNamespace: string, # Optional. Gets the managed event hub namespace resource identifier.
+        ///       resourceGroup: string, # Optional. Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account.
+        ///       storageAccount: string, # Optional. Gets the managed storage account resource identifier.
+        ///     }, # Optional. Gets the resource identifiers of the managed resources.
         ///     privateEndpointConnections: [
         ///       {
-        ///         id: string, # Optional. <Description>Gets or sets the identifier.</Description>
-        ///         name: string, # Optional. <Description>Gets or sets the name.</Description>
+        ///         id: string, # Optional. Gets or sets the identifier.
+        ///         name: string, # Optional. Gets or sets the name.
         ///         properties: {
         ///           privateEndpoint: {
-        ///             id: string, # Optional. <Description>The private endpoint identifier.</Description>
-        ///           }, # Optional. <Description>The private endpoint information.</Description>
+        ///             id: string, # Optional. The private endpoint identifier.
+        ///           }, # Optional. The private endpoint information.
         ///           privateLinkServiceConnectionState: {
-        ///             actionsRequired: string, # Optional. <Description>The required actions.</Description>
-        ///             description: string, # Optional. <Description>The description.</Description>
-        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;, # Optional. <Description>The status.</Description>
-        ///           }, # Optional. <Description>The private link service connection state.</Description>
-        ///           provisioningState: string, # Optional. <Description>The provisioning state.</Description>
-        ///         }, # Optional. <Description>The connection identifier.</Description>
-        ///         type: string, # Optional. <Description>Gets or sets the type.</Description>
+        ///             actionsRequired: string, # Optional. The required actions.
+        ///             description: string, # Optional. The description.
+        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;, # Optional. The status.
+        ///           }, # Optional. The private link service connection state.
+        ///           provisioningState: string, # Optional. The provisioning state.
+        ///         }, # Optional. The connection identifier.
+        ///         type: string, # Optional. Gets or sets the type.
         ///       }
-        ///     ], # Optional. <Description>Gets the private endpoint connections information.</Description>
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;, # Optional. <Description>Gets or sets the state of the provisioning.</Description>
-        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. <Description>Gets or sets the public network access.</Description>
-        ///   }, # Optional. <Description>Gets or sets the properties.</Description>
+        ///     ], # Optional. Gets the private endpoint connections information.
+        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;, # Optional. Gets or sets the state of the provisioning.
+        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Gets or sets the public network access.
+        ///   }, # Optional. Gets or sets the properties.
         ///   sku: {
-        ///     capacity: number, # Optional. <Description>Gets or sets the sku capacity. Possible values include: 4, 16</Description>
-        ///     name: &quot;Standard&quot;, # Optional. <Description>Gets or sets the sku name.</Description>
-        ///   }, # Optional. <Description>Gets or sets the Sku.</Description>
+        ///     capacity: number, # Optional. Gets or sets the sku capacity. Possible values include: 4, 16
+        ///     name: &quot;Standard&quot;, # Optional. Gets or sets the sku name.
+        ///   }, # Optional. Gets or sets the Sku.
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
-        ///     createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
-        ///     lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
-        ///   }, # Optional. <Description>Metadata pertaining to creation and last modification of the resource.</Description>
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. <Description>Tags on the azure resource.</Description>
-        ///   type: string, # Optional. <Description>Gets or sets the type.</Description>
+        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
+        ///     createdBy: string, # Optional. The identity that created the resource.
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
+        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
+        ///   }, # Optional. Metadata pertaining to creation and last modification of the resource.
+        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Tags on the azure resource.
+        ///   type: string, # Optional. Gets or sets the type.
         /// }
         /// </code>
         /// 
@@ -252,79 +248,77 @@ namespace Azure.Analytics.Purview.Account
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/UpdateAccountProperties
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   friendlyName: string, # Optional. <Description>The friendly name for the azure resource.</Description>
+        ///   friendlyName: string, # Optional. The friendly name for the azure resource.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   id: string, # Optional. <Description>Gets or sets the identifier.</Description>
+        ///   id: string, # Optional. Gets or sets the identifier.
         ///   identity: {
-        ///     principalId: string, # Optional. <Description>Service principal object Id</Description>
-        ///     tenantId: string, # Optional. <Description>Tenant Id</Description>
-        ///     type: &quot;SystemAssigned&quot;, # Optional. <Description>Identity Type</Description>
-        ///   }, # Optional. <Description>Identity Info on the tracked resource</Description>
-        ///   location: string, # Optional. <Description>Gets or sets the location.</Description>
-        ///   name: string, # Optional. <Description>Gets or sets the name.</Description>
+        ///     principalId: string, # Optional. Service principal object Id
+        ///     tenantId: string, # Optional. Tenant Id
+        ///     type: &quot;SystemAssigned&quot;, # Optional. Identity Type
+        ///   }, # Optional. Identity Info on the tracked resource
+        ///   location: string, # Optional. Gets or sets the location.
+        ///   name: string, # Optional. Gets or sets the name.
         ///   properties: {
         ///     cloudConnectors: {
-        ///       awsExternalId: string, # Optional. <Description>AWS external identifier.
-        /// Configured in AWS to allow use of the role arn used for scanning</Description>
-        ///     }, # Optional. <Description>Cloud connectors.
-        /// External cloud identifier used as part of scanning configuration.</Description>
-        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>Gets the time at which the entity was created.</Description>
-        ///     createdBy: string, # Optional. <Description>Gets the creator of the entity.</Description>
-        ///     createdByObjectId: string, # Optional. <Description>Gets the creators of the entity&apos;s object id.</Description>
+        ///       awsExternalId: string, # Optional. AWS external identifier.
+        /// Configured in AWS to allow use of the role arn used for scanning
+        ///     }, # Optional. Cloud connectors.
+        /// External cloud identifier used as part of scanning configuration.
+        ///     createdAt: string (ISO 8601 Format), # Optional. Gets the time at which the entity was created.
+        ///     createdBy: string, # Optional. Gets the creator of the entity.
+        ///     createdByObjectId: string, # Optional. Gets the creators of the entity&apos;s object id.
         ///     endpoints: {
-        ///       catalog: string, # Optional. <Description>Gets the catalog endpoint.</Description>
-        ///       guardian: string, # Optional. <Description>Gets the guardian endpoint.</Description>
-        ///       scan: string, # Optional. <Description>Gets the scan endpoint.</Description>
-        ///     }, # Optional. <Description>The URIs that are the public endpoints of the account.</Description>
-        ///     friendlyName: string, # Optional. <Description>Gets or sets the friendly name.</Description>
-        ///     managedResourceGroupName: string, # Optional. <Description>Gets or sets the managed resource group name</Description>
+        ///       catalog: string, # Optional. Gets the catalog endpoint.
+        ///       guardian: string, # Optional. Gets the guardian endpoint.
+        ///       scan: string, # Optional. Gets the scan endpoint.
+        ///     }, # Optional. The URIs that are the public endpoints of the account.
+        ///     friendlyName: string, # Optional. Gets or sets the friendly name.
+        ///     managedResourceGroupName: string, # Optional. Gets or sets the managed resource group name
         ///     managedResources: {
-        ///       eventHubNamespace: string, # Optional. <Description>Gets the managed event hub namespace resource identifier.</Description>
-        ///       resourceGroup: string, # Optional. <Description>Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account.</Description>
-        ///       storageAccount: string, # Optional. <Description>Gets the managed storage account resource identifier.</Description>
-        ///     }, # Optional. <Description>Gets the resource identifiers of the managed resources.</Description>
+        ///       eventHubNamespace: string, # Optional. Gets the managed event hub namespace resource identifier.
+        ///       resourceGroup: string, # Optional. Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account.
+        ///       storageAccount: string, # Optional. Gets the managed storage account resource identifier.
+        ///     }, # Optional. Gets the resource identifiers of the managed resources.
         ///     privateEndpointConnections: [
         ///       {
-        ///         id: string, # Optional. <Description>Gets or sets the identifier.</Description>
-        ///         name: string, # Optional. <Description>Gets or sets the name.</Description>
+        ///         id: string, # Optional. Gets or sets the identifier.
+        ///         name: string, # Optional. Gets or sets the name.
         ///         properties: {
         ///           privateEndpoint: {
-        ///             id: string, # Optional. <Description>The private endpoint identifier.</Description>
-        ///           }, # Optional. <Description>The private endpoint information.</Description>
+        ///             id: string, # Optional. The private endpoint identifier.
+        ///           }, # Optional. The private endpoint information.
         ///           privateLinkServiceConnectionState: {
-        ///             actionsRequired: string, # Optional. <Description>The required actions.</Description>
-        ///             description: string, # Optional. <Description>The description.</Description>
-        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;, # Optional. <Description>The status.</Description>
-        ///           }, # Optional. <Description>The private link service connection state.</Description>
-        ///           provisioningState: string, # Optional. <Description>The provisioning state.</Description>
-        ///         }, # Optional. <Description>The connection identifier.</Description>
-        ///         type: string, # Optional. <Description>Gets or sets the type.</Description>
+        ///             actionsRequired: string, # Optional. The required actions.
+        ///             description: string, # Optional. The description.
+        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;, # Optional. The status.
+        ///           }, # Optional. The private link service connection state.
+        ///           provisioningState: string, # Optional. The provisioning state.
+        ///         }, # Optional. The connection identifier.
+        ///         type: string, # Optional. Gets or sets the type.
         ///       }
-        ///     ], # Optional. <Description>Gets the private endpoint connections information.</Description>
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;, # Optional. <Description>Gets or sets the state of the provisioning.</Description>
-        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. <Description>Gets or sets the public network access.</Description>
-        ///   }, # Optional. <Description>Gets or sets the properties.</Description>
+        ///     ], # Optional. Gets the private endpoint connections information.
+        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;, # Optional. Gets or sets the state of the provisioning.
+        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Gets or sets the public network access.
+        ///   }, # Optional. Gets or sets the properties.
         ///   sku: {
-        ///     capacity: number, # Optional. <Description>Gets or sets the sku capacity. Possible values include: 4, 16</Description>
-        ///     name: &quot;Standard&quot;, # Optional. <Description>Gets or sets the sku name.</Description>
-        ///   }, # Optional. <Description>Gets or sets the Sku.</Description>
+        ///     capacity: number, # Optional. Gets or sets the sku capacity. Possible values include: 4, 16
+        ///     name: &quot;Standard&quot;, # Optional. Gets or sets the sku name.
+        ///   }, # Optional. Gets or sets the Sku.
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
-        ///     createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
-        ///     lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
-        ///   }, # Optional. <Description>Metadata pertaining to creation and last modification of the resource.</Description>
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. <Description>Tags on the azure resource.</Description>
-        ///   type: string, # Optional. <Description>Gets or sets the type.</Description>
+        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
+        ///     createdBy: string, # Optional. The identity that created the resource.
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
+        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
+        ///   }, # Optional. Metadata pertaining to creation and last modification of the resource.
+        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Tags on the azure resource.
+        ///   type: string, # Optional. Gets or sets the type.
         /// }
         /// </code>
         /// 
@@ -353,79 +347,77 @@ namespace Azure.Analytics.Purview.Account
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/UpdateAccountProperties
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   friendlyName: string, # Optional. <Description>The friendly name for the azure resource.</Description>
+        ///   friendlyName: string, # Optional. The friendly name for the azure resource.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   id: string, # Optional. <Description>Gets or sets the identifier.</Description>
+        ///   id: string, # Optional. Gets or sets the identifier.
         ///   identity: {
-        ///     principalId: string, # Optional. <Description>Service principal object Id</Description>
-        ///     tenantId: string, # Optional. <Description>Tenant Id</Description>
-        ///     type: &quot;SystemAssigned&quot;, # Optional. <Description>Identity Type</Description>
-        ///   }, # Optional. <Description>Identity Info on the tracked resource</Description>
-        ///   location: string, # Optional. <Description>Gets or sets the location.</Description>
-        ///   name: string, # Optional. <Description>Gets or sets the name.</Description>
+        ///     principalId: string, # Optional. Service principal object Id
+        ///     tenantId: string, # Optional. Tenant Id
+        ///     type: &quot;SystemAssigned&quot;, # Optional. Identity Type
+        ///   }, # Optional. Identity Info on the tracked resource
+        ///   location: string, # Optional. Gets or sets the location.
+        ///   name: string, # Optional. Gets or sets the name.
         ///   properties: {
         ///     cloudConnectors: {
-        ///       awsExternalId: string, # Optional. <Description>AWS external identifier.
-        /// Configured in AWS to allow use of the role arn used for scanning</Description>
-        ///     }, # Optional. <Description>Cloud connectors.
-        /// External cloud identifier used as part of scanning configuration.</Description>
-        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>Gets the time at which the entity was created.</Description>
-        ///     createdBy: string, # Optional. <Description>Gets the creator of the entity.</Description>
-        ///     createdByObjectId: string, # Optional. <Description>Gets the creators of the entity&apos;s object id.</Description>
+        ///       awsExternalId: string, # Optional. AWS external identifier.
+        /// Configured in AWS to allow use of the role arn used for scanning
+        ///     }, # Optional. Cloud connectors.
+        /// External cloud identifier used as part of scanning configuration.
+        ///     createdAt: string (ISO 8601 Format), # Optional. Gets the time at which the entity was created.
+        ///     createdBy: string, # Optional. Gets the creator of the entity.
+        ///     createdByObjectId: string, # Optional. Gets the creators of the entity&apos;s object id.
         ///     endpoints: {
-        ///       catalog: string, # Optional. <Description>Gets the catalog endpoint.</Description>
-        ///       guardian: string, # Optional. <Description>Gets the guardian endpoint.</Description>
-        ///       scan: string, # Optional. <Description>Gets the scan endpoint.</Description>
-        ///     }, # Optional. <Description>The URIs that are the public endpoints of the account.</Description>
-        ///     friendlyName: string, # Optional. <Description>Gets or sets the friendly name.</Description>
-        ///     managedResourceGroupName: string, # Optional. <Description>Gets or sets the managed resource group name</Description>
+        ///       catalog: string, # Optional. Gets the catalog endpoint.
+        ///       guardian: string, # Optional. Gets the guardian endpoint.
+        ///       scan: string, # Optional. Gets the scan endpoint.
+        ///     }, # Optional. The URIs that are the public endpoints of the account.
+        ///     friendlyName: string, # Optional. Gets or sets the friendly name.
+        ///     managedResourceGroupName: string, # Optional. Gets or sets the managed resource group name
         ///     managedResources: {
-        ///       eventHubNamespace: string, # Optional. <Description>Gets the managed event hub namespace resource identifier.</Description>
-        ///       resourceGroup: string, # Optional. <Description>Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account.</Description>
-        ///       storageAccount: string, # Optional. <Description>Gets the managed storage account resource identifier.</Description>
-        ///     }, # Optional. <Description>Gets the resource identifiers of the managed resources.</Description>
+        ///       eventHubNamespace: string, # Optional. Gets the managed event hub namespace resource identifier.
+        ///       resourceGroup: string, # Optional. Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account.
+        ///       storageAccount: string, # Optional. Gets the managed storage account resource identifier.
+        ///     }, # Optional. Gets the resource identifiers of the managed resources.
         ///     privateEndpointConnections: [
         ///       {
-        ///         id: string, # Optional. <Description>Gets or sets the identifier.</Description>
-        ///         name: string, # Optional. <Description>Gets or sets the name.</Description>
+        ///         id: string, # Optional. Gets or sets the identifier.
+        ///         name: string, # Optional. Gets or sets the name.
         ///         properties: {
         ///           privateEndpoint: {
-        ///             id: string, # Optional. <Description>The private endpoint identifier.</Description>
-        ///           }, # Optional. <Description>The private endpoint information.</Description>
+        ///             id: string, # Optional. The private endpoint identifier.
+        ///           }, # Optional. The private endpoint information.
         ///           privateLinkServiceConnectionState: {
-        ///             actionsRequired: string, # Optional. <Description>The required actions.</Description>
-        ///             description: string, # Optional. <Description>The description.</Description>
-        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;, # Optional. <Description>The status.</Description>
-        ///           }, # Optional. <Description>The private link service connection state.</Description>
-        ///           provisioningState: string, # Optional. <Description>The provisioning state.</Description>
-        ///         }, # Optional. <Description>The connection identifier.</Description>
-        ///         type: string, # Optional. <Description>Gets or sets the type.</Description>
+        ///             actionsRequired: string, # Optional. The required actions.
+        ///             description: string, # Optional. The description.
+        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;, # Optional. The status.
+        ///           }, # Optional. The private link service connection state.
+        ///           provisioningState: string, # Optional. The provisioning state.
+        ///         }, # Optional. The connection identifier.
+        ///         type: string, # Optional. Gets or sets the type.
         ///       }
-        ///     ], # Optional. <Description>Gets the private endpoint connections information.</Description>
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;, # Optional. <Description>Gets or sets the state of the provisioning.</Description>
-        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. <Description>Gets or sets the public network access.</Description>
-        ///   }, # Optional. <Description>Gets or sets the properties.</Description>
+        ///     ], # Optional. Gets the private endpoint connections information.
+        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;, # Optional. Gets or sets the state of the provisioning.
+        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Gets or sets the public network access.
+        ///   }, # Optional. Gets or sets the properties.
         ///   sku: {
-        ///     capacity: number, # Optional. <Description>Gets or sets the sku capacity. Possible values include: 4, 16</Description>
-        ///     name: &quot;Standard&quot;, # Optional. <Description>Gets or sets the sku name.</Description>
-        ///   }, # Optional. <Description>Gets or sets the Sku.</Description>
+        ///     capacity: number, # Optional. Gets or sets the sku capacity. Possible values include: 4, 16
+        ///     name: &quot;Standard&quot;, # Optional. Gets or sets the sku name.
+        ///   }, # Optional. Gets or sets the Sku.
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
-        ///     createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
-        ///     lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
-        ///   }, # Optional. <Description>Metadata pertaining to creation and last modification of the resource.</Description>
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. <Description>Tags on the azure resource.</Description>
-        ///   type: string, # Optional. <Description>Gets or sets the type.</Description>
+        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
+        ///     createdBy: string, # Optional. The identity that created the resource.
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
+        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
+        ///   }, # Optional. Metadata pertaining to creation and last modification of the resource.
+        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Tags on the azure resource.
+        ///   type: string, # Optional. Gets or sets the type.
         /// }
         /// </code>
         /// 
@@ -452,12 +444,10 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/GetAccessKeys
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   atlasKafkaPrimaryEndpoint: string, # Optional. <Description>Gets or sets the primary connection string.</Description>
-        ///   atlasKafkaSecondaryEndpoint: string, # Optional. <Description>Gets or sets the secondary connection string.</Description>
+        ///   atlasKafkaPrimaryEndpoint: string, # Optional. Gets or sets the primary connection string.
+        ///   atlasKafkaSecondaryEndpoint: string, # Optional. Gets or sets the secondary connection string.
         /// }
         /// </code>
         /// 
@@ -482,12 +472,10 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/GetAccessKeys
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   atlasKafkaPrimaryEndpoint: string, # Optional. <Description>Gets or sets the primary connection string.</Description>
-        ///   atlasKafkaSecondaryEndpoint: string, # Optional. <Description>Gets or sets the secondary connection string.</Description>
+        ///   atlasKafkaPrimaryEndpoint: string, # Optional. Gets or sets the primary connection string.
+        ///   atlasKafkaSecondaryEndpoint: string, # Optional. Gets or sets the secondary connection string.
         /// }
         /// </code>
         /// 
@@ -514,17 +502,15 @@ namespace Azure.Analytics.Purview.Account
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/RegenerateAccessKey
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   keyType: &quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;, # Optional. <Description>The access key type.</Description>
+        ///   keyType: &quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;, # Optional. The access key type.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   atlasKafkaPrimaryEndpoint: string, # Optional. <Description>Gets or sets the primary connection string.</Description>
-        ///   atlasKafkaSecondaryEndpoint: string, # Optional. <Description>Gets or sets the secondary connection string.</Description>
+        ///   atlasKafkaPrimaryEndpoint: string, # Optional. Gets or sets the primary connection string.
+        ///   atlasKafkaSecondaryEndpoint: string, # Optional. Gets or sets the secondary connection string.
         /// }
         /// </code>
         /// 
@@ -553,17 +539,15 @@ namespace Azure.Analytics.Purview.Account
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/RegenerateAccessKey
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   keyType: &quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;, # Optional. <Description>The access key type.</Description>
+        ///   keyType: &quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;, # Optional. The access key type.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   atlasKafkaPrimaryEndpoint: string, # Optional. <Description>Gets or sets the primary connection string.</Description>
-        ///   atlasKafkaSecondaryEndpoint: string, # Optional. <Description>Gets or sets the secondary connection string.</Description>
+        ///   atlasKafkaPrimaryEndpoint: string, # Optional. Gets or sets the primary connection string.
+        ///   atlasKafkaSecondaryEndpoint: string, # Optional. Gets or sets the secondary connection string.
         /// }
         /// </code>
         /// 
@@ -591,32 +575,30 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/GetCollections
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   count: number, # Optional. <Description>Total item count.</Description>
-        ///   nextLink: string, # Optional. <Description>The Url of next result page.</Description>
+        ///   count: number, # Optional. Total item count.
+        ///   nextLink: string, # Optional. The Url of next result page.
         ///   value: [
         ///     {
-        ///       collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. <Description>Gets the state of the provisioning.</Description>
-        ///       description: string, # Optional. <Description>Gets or sets the description.</Description>
-        ///       friendlyName: string, # Optional. <Description>Gets or sets the friendly name of the collection.</Description>
-        ///       name: string, # Optional. <Description>Gets the name.</Description>
+        ///       collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
+        ///       description: string, # Optional. Gets or sets the description.
+        ///       friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
+        ///       name: string, # Optional. Gets the name.
         ///       parentCollection: {
-        ///         referenceName: string, # Optional. <Description>Gets or sets the reference name.</Description>
-        ///         type: string, # Optional. <Description>Gets the reference type property.</Description>
-        ///       }, # Optional. <Description>Gets or sets the parent collection reference.</Description>
+        ///         referenceName: string, # Optional. Gets or sets the reference name.
+        ///         type: string, # Optional. Gets the reference type property.
+        ///       }, # Optional. Gets or sets the parent collection reference.
         ///       systemData: {
-        ///         createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
-        ///         createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
-        ///         createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
-        ///         lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
-        ///         lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
-        ///         lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
-        ///       }, # Optional. <Description>Gets the system data that contains information about who and when created and updated the resource.</Description>
+        ///         createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
+        ///         createdBy: string, # Optional. The identity that created the resource.
+        ///         createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
+        ///         lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
+        ///         lastModifiedBy: string, # Optional. The identity that last modified the resource.
+        ///         lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
+        ///       }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
         ///     }
-        ///   ], # Required. <Description>Collection of items of type results.</Description>
+        ///   ], # Required. Collection of items of type results.
         /// }
         /// </code>
         /// 
@@ -648,32 +630,30 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/GetCollections
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   count: number, # Optional. <Description>Total item count.</Description>
-        ///   nextLink: string, # Optional. <Description>The Url of next result page.</Description>
+        ///   count: number, # Optional. Total item count.
+        ///   nextLink: string, # Optional. The Url of next result page.
         ///   value: [
         ///     {
-        ///       collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. <Description>Gets the state of the provisioning.</Description>
-        ///       description: string, # Optional. <Description>Gets or sets the description.</Description>
-        ///       friendlyName: string, # Optional. <Description>Gets or sets the friendly name of the collection.</Description>
-        ///       name: string, # Optional. <Description>Gets the name.</Description>
+        ///       collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
+        ///       description: string, # Optional. Gets or sets the description.
+        ///       friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
+        ///       name: string, # Optional. Gets the name.
         ///       parentCollection: {
-        ///         referenceName: string, # Optional. <Description>Gets or sets the reference name.</Description>
-        ///         type: string, # Optional. <Description>Gets the reference type property.</Description>
-        ///       }, # Optional. <Description>Gets or sets the parent collection reference.</Description>
+        ///         referenceName: string, # Optional. Gets or sets the reference name.
+        ///         type: string, # Optional. Gets the reference type property.
+        ///       }, # Optional. Gets or sets the parent collection reference.
         ///       systemData: {
-        ///         createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
-        ///         createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
-        ///         createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
-        ///         lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
-        ///         lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
-        ///         lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
-        ///       }, # Optional. <Description>Gets the system data that contains information about who and when created and updated the resource.</Description>
+        ///         createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
+        ///         createdBy: string, # Optional. The identity that created the resource.
+        ///         createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
+        ///         lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
+        ///         lastModifiedBy: string, # Optional. The identity that last modified the resource.
+        ///         lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
+        ///       }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
         ///     }
-        ///   ], # Required. <Description>Collection of items of type results.</Description>
+        ///   ], # Required. Collection of items of type results.
         /// }
         /// </code>
         /// 
@@ -705,19 +685,17 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/GetResourceSetRules
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   count: number, # Optional. <Description>Total item count.</Description>
-        ///   nextLink: string, # Optional. <Description>The Url of next result page.</Description>
+        ///   count: number, # Optional. Total item count.
+        ///   nextLink: string, # Optional. The Url of next result page.
         ///   value: [
         ///     {
         ///       advancedResourceSet: {
-        ///         modifiedAt: string (ISO 8601 Format), # Optional. <Description>Date at which ResourceSetProcessing property of the account is updated.</Description>
-        ///         resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. <Description>The advanced resource property of the account.</Description>
-        ///       }, # Optional. <Description>Gets or sets the advanced resource set property of the account.</Description>
-        ///       name: string, # Optional. <Description>The name of the rule</Description>
+        ///         modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///         resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///       }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///       name: string, # Optional. The name of the rule
         ///       pathPatternConfig: {
         ///         acceptedPatterns: [
         ///           {
@@ -802,9 +780,9 @@ namespace Azure.Analytics.Purview.Account
         ///           }
         ///         ], # Optional.
         ///         version: number, # Optional.
-        ///       }, # Optional. <Description>The configuration rules for path pattern extraction.</Description>
+        ///       }, # Optional. The configuration rules for path pattern extraction.
         ///     }
-        ///   ], # Required. <Description>Collection of items of type results.</Description>
+        ///   ], # Required. Collection of items of type results.
         /// }
         /// </code>
         /// 
@@ -836,19 +814,17 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/GetResourceSetRules
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   count: number, # Optional. <Description>Total item count.</Description>
-        ///   nextLink: string, # Optional. <Description>The Url of next result page.</Description>
+        ///   count: number, # Optional. Total item count.
+        ///   nextLink: string, # Optional. The Url of next result page.
         ///   value: [
         ///     {
         ///       advancedResourceSet: {
-        ///         modifiedAt: string (ISO 8601 Format), # Optional. <Description>Date at which ResourceSetProcessing property of the account is updated.</Description>
-        ///         resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. <Description>The advanced resource property of the account.</Description>
-        ///       }, # Optional. <Description>Gets or sets the advanced resource set property of the account.</Description>
-        ///       name: string, # Optional. <Description>The name of the rule</Description>
+        ///         modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///         resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///       }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///       name: string, # Optional. The name of the rule
         ///       pathPatternConfig: {
         ///         acceptedPatterns: [
         ///           {
@@ -933,9 +909,9 @@ namespace Azure.Analytics.Purview.Account
         ///           }
         ///         ], # Optional.
         ///         version: number, # Optional.
-        ///       }, # Optional. <Description>The configuration rules for path pattern extraction.</Description>
+        ///       }, # Optional. The configuration rules for path pattern extraction.
         ///     }
-        ///   ], # Required. <Description>Collection of items of type results.</Description>
+        ///   ], # Required. Collection of items of type results.
         /// }
         /// </code>
         /// 

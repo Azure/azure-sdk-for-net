@@ -66,35 +66,33 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewCatalog/Search
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   keywords: string, # Optional. <Description>The keywords applied to all searchable fields.</Description>
-        ///   offset: number, # Optional. <Description>The offset. The default value is 0. The maximum value is 100000.</Description>
-        ///   limit: number, # Optional. <Description>The limit of the number of the search result. default value is 50; maximum value is 1000.</Description>
-        ///   filter: AnyObject, # Optional. <Description>The filter for the search. See examples for the usage of supported filters.</Description>
+        ///   keywords: string, # Optional. The keywords applied to all searchable fields.
+        ///   offset: number, # Optional. The offset. The default value is 0. The maximum value is 100000.
+        ///   limit: number, # Optional. The limit of the number of the search result. default value is 50; maximum value is 1000.
+        ///   filter: AnyObject, # Optional. The filter for the search. See examples for the usage of supported filters.
         ///   facets: [
         ///     {
-        ///       count: number, # Optional. <Description>The count of the facet item.</Description>
-        ///       facet: string, # Optional. <Description>The name of the facet item.</Description>
-        ///       sort: AnyObject, # Optional. <Description>Any object</Description>
+        ///       count: number, # Optional. The count of the facet item.
+        ///       facet: string, # Optional. The name of the facet item.
+        ///       sort: AnyObject, # Optional. Any object
         ///     }
         ///   ], # Optional.
         ///   taxonomySetting: {
         ///     assetTypes: [string], # Optional.
-        ///     facet: SearchFacetItem, # Optional. <Description>The content of a search facet result item.</Description>
+        ///     facet: SearchFacetItem, # Optional. The content of a search facet result item.
         ///   }, # Optional.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   @search.count: number, # Optional. <Description>The total number of search results (not the number of documents in a single page).</Description>
+        ///   @search.count: number, # Optional. The total number of search results (not the number of documents in a single page).
         ///   @search.facets: {
         ///     assetType: [
         ///       {
-        ///         count: number, # Optional. <Description>The count of the facet item.</Description>
-        ///         value: string, # Optional. <Description>The name of the facet item.</Description>
+        ///         count: number, # Optional. The count of the facet item.
+        ///         value: string, # Optional. The name of the facet item.
         ///       }
         ///     ], # Optional.
         ///     classification: [SearchFacetItemValue], # Optional.
@@ -103,7 +101,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///     fileExtension: [SearchFacetItemValue], # Optional.
         ///     label: [SearchFacetItemValue], # Optional.
         ///     term: [SearchFacetItemValue], # Optional.
-        ///   }, # Optional. <Description>A facet list that consists of index fields assetType ,classification, contactId, and label. When the facet is specified in the request, the value of the facet is returned as an element of @search.facets.</Description>
+        ///   }, # Optional. A facet list that consists of index fields assetType ,classification, contactId, and label. When the facet is specified in the request, the value of the facet is returned as an element of @search.facets.
         ///   value: [SearchResultValue], # Optional.
         /// }
         /// </code>
@@ -133,35 +131,33 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewCatalog/Search
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   keywords: string, # Optional. <Description>The keywords applied to all searchable fields.</Description>
-        ///   offset: number, # Optional. <Description>The offset. The default value is 0. The maximum value is 100000.</Description>
-        ///   limit: number, # Optional. <Description>The limit of the number of the search result. default value is 50; maximum value is 1000.</Description>
-        ///   filter: AnyObject, # Optional. <Description>The filter for the search. See examples for the usage of supported filters.</Description>
+        ///   keywords: string, # Optional. The keywords applied to all searchable fields.
+        ///   offset: number, # Optional. The offset. The default value is 0. The maximum value is 100000.
+        ///   limit: number, # Optional. The limit of the number of the search result. default value is 50; maximum value is 1000.
+        ///   filter: AnyObject, # Optional. The filter for the search. See examples for the usage of supported filters.
         ///   facets: [
         ///     {
-        ///       count: number, # Optional. <Description>The count of the facet item.</Description>
-        ///       facet: string, # Optional. <Description>The name of the facet item.</Description>
-        ///       sort: AnyObject, # Optional. <Description>Any object</Description>
+        ///       count: number, # Optional. The count of the facet item.
+        ///       facet: string, # Optional. The name of the facet item.
+        ///       sort: AnyObject, # Optional. Any object
         ///     }
         ///   ], # Optional.
         ///   taxonomySetting: {
         ///     assetTypes: [string], # Optional.
-        ///     facet: SearchFacetItem, # Optional. <Description>The content of a search facet result item.</Description>
+        ///     facet: SearchFacetItem, # Optional. The content of a search facet result item.
         ///   }, # Optional.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   @search.count: number, # Optional. <Description>The total number of search results (not the number of documents in a single page).</Description>
+        ///   @search.count: number, # Optional. The total number of search results (not the number of documents in a single page).
         ///   @search.facets: {
         ///     assetType: [
         ///       {
-        ///         count: number, # Optional. <Description>The count of the facet item.</Description>
-        ///         value: string, # Optional. <Description>The name of the facet item.</Description>
+        ///         count: number, # Optional. The count of the facet item.
+        ///         value: string, # Optional. The name of the facet item.
         ///       }
         ///     ], # Optional.
         ///     classification: [SearchFacetItemValue], # Optional.
@@ -170,7 +166,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///     fileExtension: [SearchFacetItemValue], # Optional.
         ///     label: [SearchFacetItemValue], # Optional.
         ///     term: [SearchFacetItemValue], # Optional.
-        ///   }, # Optional. <Description>A facet list that consists of index fields assetType ,classification, contactId, and label. When the facet is specified in the request, the value of the facet is returned as an element of @search.facets.</Description>
+        ///   }, # Optional. A facet list that consists of index fields assetType ,classification, contactId, and label. When the facet is specified in the request, the value of the facet is returned as an element of @search.facets.
         ///   value: [SearchResultValue], # Optional.
         /// }
         /// </code>
@@ -200,13 +196,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewCatalog/Suggest
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   keywords: string, # Optional. <Description>The keywords applied to all fields that support suggest operation. It must be at least 1 character, and no more than 100 characters. In the index schema we defined a default suggester which lists all the supported fields and specifies a search mode.</Description>
-        ///   limit: number, # Optional. <Description>The number of suggestions we hope to return. The default value is 5. The value must be a number between 1 and 100.</Description>
-        ///   filter: AnyObject, # Optional. <Description>The filter for the search.</Description>
+        ///   keywords: string, # Optional. The keywords applied to all fields that support suggest operation. It must be at least 1 character, and no more than 100 characters. In the index schema we defined a default suggester which lists all the supported fields and specifies a search mode.
+        ///   limit: number, # Optional. The number of suggestions we hope to return. The default value is 5. The value must be a number between 1 and 100.
+        ///   filter: AnyObject, # Optional. The filter for the search.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
@@ -240,13 +234,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewCatalog/Suggest
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   keywords: string, # Optional. <Description>The keywords applied to all fields that support suggest operation. It must be at least 1 character, and no more than 100 characters. In the index schema we defined a default suggester which lists all the supported fields and specifies a search mode.</Description>
-        ///   limit: number, # Optional. <Description>The number of suggestions we hope to return. The default value is 5. The value must be a number between 1 and 100.</Description>
-        ///   filter: AnyObject, # Optional. <Description>The filter for the search.</Description>
+        ///   keywords: string, # Optional. The keywords applied to all fields that support suggest operation. It must be at least 1 character, and no more than 100 characters. In the index schema we defined a default suggester which lists all the supported fields and specifies a search mode.
+        ///   limit: number, # Optional. The number of suggestions we hope to return. The default value is 5. The value must be a number between 1 and 100.
+        ///   filter: AnyObject, # Optional. The filter for the search.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
@@ -280,19 +272,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewCatalog/Browse
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   entityType: string, # Optional. <Description>The entity type to browse as the root level entry point.</Description>
-        ///   path: string, # Optional. <Description>The path to browse the next level child entities.</Description>
-        ///   limit: number, # Optional. <Description>The number of browse items we hope to return. The maximum value is 10000.</Description>
-        ///   offset: number, # Optional. <Description>The offset. The default value is 0. The maximum value is 100000.</Description>
+        ///   entityType: string, # Optional. The entity type to browse as the root level entry point.
+        ///   path: string, # Optional. The path to browse the next level child entities.
+        ///   limit: number, # Optional. The number of browse items we hope to return. The maximum value is 10000.
+        ///   offset: number, # Optional. The offset. The default value is 0. The maximum value is 100000.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   @search.count: number, # Optional. <Description>The total number of browse results.</Description>
+        ///   @search.count: number, # Optional. The total number of browse results.
         ///   value: [BrowseResultValue], # Optional.
         /// }
         /// </code>
@@ -322,19 +312,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewCatalog/Browse
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   entityType: string, # Optional. <Description>The entity type to browse as the root level entry point.</Description>
-        ///   path: string, # Optional. <Description>The path to browse the next level child entities.</Description>
-        ///   limit: number, # Optional. <Description>The number of browse items we hope to return. The maximum value is 10000.</Description>
-        ///   offset: number, # Optional. <Description>The offset. The default value is 0. The maximum value is 100000.</Description>
+        ///   entityType: string, # Optional. The entity type to browse as the root level entry point.
+        ///   path: string, # Optional. The path to browse the next level child entities.
+        ///   limit: number, # Optional. The number of browse items we hope to return. The maximum value is 10000.
+        ///   offset: number, # Optional. The offset. The default value is 0. The maximum value is 100000.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   @search.count: number, # Optional. <Description>The total number of browse results.</Description>
+        ///   @search.count: number, # Optional. The total number of browse results.
         ///   value: [BrowseResultValue], # Optional.
         /// }
         /// </code>
@@ -364,13 +352,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewCatalog/AutoComplete
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   keywords: string, # Optional. <Description>The keywords applied to all fields that support autocomplete operation. It must be at least 1 character, and no more than 100 characters.</Description>
-        ///   limit: number, # Optional. <Description>The number of autocomplete results we hope to return. The default value is 50. The value must be a number between 1 and 100.</Description>
-        ///   filter: AnyObject, # Optional. <Description>The filter for the autocomplete request.</Description>
+        ///   keywords: string, # Optional. The keywords applied to all fields that support autocomplete operation. It must be at least 1 character, and no more than 100 characters.
+        ///   limit: number, # Optional. The number of autocomplete results we hope to return. The default value is 50. The value must be a number between 1 and 100.
+        ///   filter: AnyObject, # Optional. The filter for the autocomplete request.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
@@ -404,13 +390,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewCatalog/AutoComplete
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   keywords: string, # Optional. <Description>The keywords applied to all fields that support autocomplete operation. It must be at least 1 character, and no more than 100 characters.</Description>
-        ///   limit: number, # Optional. <Description>The number of autocomplete results we hope to return. The default value is 50. The value must be a number between 1 and 100.</Description>
-        ///   filter: AnyObject, # Optional. <Description>The filter for the autocomplete request.</Description>
+        ///   keywords: string, # Optional. The keywords applied to all fields that support autocomplete operation. It must be at least 1 character, and no more than 100 characters.
+        ///   limit: number, # Optional. The number of autocomplete results we hope to return. The default value is 50. The value must be a number between 1 and 100.
+        ///   filter: AnyObject, # Optional. The filter for the autocomplete request.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:

@@ -67,14 +67,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/OAuthTokens/GetOAuthConnectionLink
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   farmerId: string, # Required. <Description>ID of the farmer.</Description>
-        ///   oAuthProviderId: string, # Required. <Description>ID of the OAuthProvider.</Description>
-        ///   userRedirectLink: string, # Required. <Description>Link to redirect the user to, at the end of the oauth flow.</Description>
-        ///   userRedirectState: string, # Optional. <Description>State to provide back when redirecting the user, at the end of the oauth flow.</Description>
+        ///   farmerId: string, # Required. ID of the farmer.
+        ///   oAuthProviderId: string, # Required. ID of the OAuthProvider.
+        ///   userRedirectLink: string, # Required. Link to redirect the user to, at the end of the oauth flow.
+        ///   userRedirectState: string, # Optional. State to provide back when redirecting the user, at the end of the oauth flow.
         /// }
         /// </code>
         /// 
@@ -100,14 +98,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/OAuthTokens/GetOAuthConnectionLink
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   farmerId: string, # Required. <Description>ID of the farmer.</Description>
-        ///   oAuthProviderId: string, # Required. <Description>ID of the OAuthProvider.</Description>
-        ///   userRedirectLink: string, # Required. <Description>Link to redirect the user to, at the end of the oauth flow.</Description>
-        ///   userRedirectState: string, # Optional. <Description>State to provide back when redirecting the user, at the end of the oauth flow.</Description>
+        ///   farmerId: string, # Required. ID of the farmer.
+        ///   oAuthProviderId: string, # Required. ID of the OAuthProvider.
+        ///   userRedirectLink: string, # Required. Link to redirect the user to, at the end of the oauth flow.
+        ///   userRedirectState: string, # Optional. State to provide back when redirecting the user, at the end of the oauth flow.
         /// }
         /// </code>
         /// 
@@ -135,28 +131,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/OAuthTokens/GetCascadeDeleteJobDetails
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   farmerId: string, # Required. <Description>Farmer ID.</Description>
-        ///   resourceId: string, # Required. <Description>The id of the resource.</Description>
-        ///   resourceType: string, # Required. <Description>The type of the resource.</Description>
-        ///   id: string, # Optional. <Description>Unique job id.</Description>
-        ///   status: string, # Optional. <Description>Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
-        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
-        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///   farmerId: string, # Required. Farmer ID.
+        ///   resourceId: string, # Required. The id of the resource.
+        ///   resourceType: string, # Required. The type of the resource.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -186,28 +180,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/OAuthTokens/GetCascadeDeleteJobDetails
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   farmerId: string, # Required. <Description>Farmer ID.</Description>
-        ///   resourceId: string, # Required. <Description>The id of the resource.</Description>
-        ///   resourceType: string, # Required. <Description>The type of the resource.</Description>
-        ///   id: string, # Optional. <Description>Unique job id.</Description>
-        ///   status: string, # Optional. <Description>Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
-        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
-        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///   farmerId: string, # Required. Farmer ID.
+        ///   resourceId: string, # Required. The id of the resource.
+        ///   resourceType: string, # Required. The type of the resource.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -246,22 +238,20 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/OAuthTokens/List
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
-        ///       farmerId: string, # Required. <Description>Farmer ID for this OAuth config.</Description>
-        ///       authProviderId: string, # Required. <Description>ID of the OAuth provider resource containing app information.</Description>
-        ///       isValid: boolean, # Optional. <Description>An optional flag indicating whether the token is a valid or expired (Default value: true).</Description>
-        ///       eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
-        ///       createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///       farmerId: string, # Required. Farmer ID for this OAuth config.
+        ///       authProviderId: string, # Required. ID of the OAuth provider resource containing app information.
+        ///       isValid: boolean, # Optional. An optional flag indicating whether the token is a valid or expired (Default value: true).
+        ///       eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///       createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///     }
-        ///   ], # Optional. <Description>List of requested objects.</Description>
-        ///   $skipToken: string, # Optional. <Description>Token used in retrieving the next page. If null, there are no additional pages.</Description>
-        ///   nextLink: string, # Optional. <Description>Continuation link (absolute URI) to the next page of results in the list.</Description>
+        ///   ], # Optional. List of requested objects.
+        ///   $skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.
+        ///   nextLink: string, # Optional. Continuation link (absolute URI) to the next page of results in the list.
         /// }
         /// </code>
         /// 
@@ -304,22 +294,20 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/OAuthTokens/List
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
-        ///       farmerId: string, # Required. <Description>Farmer ID for this OAuth config.</Description>
-        ///       authProviderId: string, # Required. <Description>ID of the OAuth provider resource containing app information.</Description>
-        ///       isValid: boolean, # Optional. <Description>An optional flag indicating whether the token is a valid or expired (Default value: true).</Description>
-        ///       eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
-        ///       createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///       farmerId: string, # Required. Farmer ID for this OAuth config.
+        ///       authProviderId: string, # Required. ID of the OAuth provider resource containing app information.
+        ///       isValid: boolean, # Optional. An optional flag indicating whether the token is a valid or expired (Default value: true).
+        ///       eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///       createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
         ///     }
-        ///   ], # Optional. <Description>List of requested objects.</Description>
-        ///   $skipToken: string, # Optional. <Description>Token used in retrieving the next page. If null, there are no additional pages.</Description>
-        ///   nextLink: string, # Optional. <Description>Continuation link (absolute URI) to the next page of results in the list.</Description>
+        ///   ], # Optional. List of requested objects.
+        ///   $skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.
+        ///   nextLink: string, # Optional. Continuation link (absolute URI) to the next page of results in the list.
         /// }
         /// </code>
         /// 
@@ -356,28 +344,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/OAuthTokens/CreateCascadeDeleteJob
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   farmerId: string, # Required. <Description>Farmer ID.</Description>
-        ///   resourceId: string, # Required. <Description>The id of the resource.</Description>
-        ///   resourceType: string, # Required. <Description>The type of the resource.</Description>
-        ///   id: string, # Optional. <Description>Unique job id.</Description>
-        ///   status: string, # Optional. <Description>Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
-        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
-        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///   farmerId: string, # Required. Farmer ID.
+        ///   resourceId: string, # Required. The id of the resource.
+        ///   resourceType: string, # Required. The type of the resource.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -412,28 +398,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/OAuthTokens/CreateCascadeDeleteJob
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   farmerId: string, # Required. <Description>Farmer ID.</Description>
-        ///   resourceId: string, # Required. <Description>The id of the resource.</Description>
-        ///   resourceType: string, # Required. <Description>The type of the resource.</Description>
-        ///   id: string, # Optional. <Description>Unique job id.</Description>
-        ///   status: string, # Optional. <Description>Status of the job.
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
-        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
-        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///   farmerId: string, # Required. Farmer ID.
+        ///   resourceId: string, # Required. The id of the resource.
+        ///   resourceType: string, # Required. The type of the resource.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 

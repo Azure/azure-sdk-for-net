@@ -70,44 +70,42 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="applicationDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/ApplicationData/Get
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   applicationProductDetails: [
         ///     {
-        ///       productName: string, # Optional. <Description>Name of the product applied.</Description>
-        ///       isCarrier: boolean, # Optional. <Description>A flag indicating whether product is a carrier for a tank mix.</Description>
+        ///       productName: string, # Optional. Name of the product applied.
+        ///       isCarrier: boolean, # Optional. A flag indicating whether product is a carrier for a tank mix.
         ///       avgMaterial: {
-        ///         unit: string, # Optional. <Description>Data unit.</Description>
-        ///         value: number, # Optional. <Description>Data value.</Description>
-        ///       }, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       totalMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
+        ///         unit: string, # Optional. Data unit.
+        ///         value: number, # Optional. Data value.
+        ///       }, # Optional. Schema for storing measurement reading and unit.
+        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
         ///     }
-        ///   ], # Optional. <Description>Application product details.</Description>
-        ///   avgMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///   totalMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///   area: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///   source: string, # Optional. <Description>Source of the operation data.</Description>
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.</Description>
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. <Description>Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. <Description>End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   attachmentsLink: string, # Optional. <Description>Link for attachments.</Description>
-        ///   associatedBoundaryId: string, # Optional. <Description>Optional boundary ID of the field for which operation was applied.</Description>
-        ///   operationBoundaryId: string, # Optional. <Description>Optional boundary ID of the actual area for which operation was applied inside the specified field.</Description>
-        ///   farmerId: string, # Optional. <Description>Farmer ID which belongs to the operation data.</Description>
-        ///   id: string, # Optional. <Description>Unique resource ID.</Description>
-        ///   eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
-        ///   status: string, # Optional. <Description>Status of the resource.</Description>
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///   ], # Optional. Application product details.
+        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   source: string, # Optional. Source of the operation data.
+        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.
+        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   attachmentsLink: string, # Optional. Link for attachments.
+        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
+        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
+        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -139,44 +137,42 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="applicationDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/ApplicationData/Get
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   applicationProductDetails: [
         ///     {
-        ///       productName: string, # Optional. <Description>Name of the product applied.</Description>
-        ///       isCarrier: boolean, # Optional. <Description>A flag indicating whether product is a carrier for a tank mix.</Description>
+        ///       productName: string, # Optional. Name of the product applied.
+        ///       isCarrier: boolean, # Optional. A flag indicating whether product is a carrier for a tank mix.
         ///       avgMaterial: {
-        ///         unit: string, # Optional. <Description>Data unit.</Description>
-        ///         value: number, # Optional. <Description>Data value.</Description>
-        ///       }, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       totalMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
+        ///         unit: string, # Optional. Data unit.
+        ///         value: number, # Optional. Data value.
+        ///       }, # Optional. Schema for storing measurement reading and unit.
+        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
         ///     }
-        ///   ], # Optional. <Description>Application product details.</Description>
-        ///   avgMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///   totalMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///   area: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///   source: string, # Optional. <Description>Source of the operation data.</Description>
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.</Description>
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. <Description>Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. <Description>End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   attachmentsLink: string, # Optional. <Description>Link for attachments.</Description>
-        ///   associatedBoundaryId: string, # Optional. <Description>Optional boundary ID of the field for which operation was applied.</Description>
-        ///   operationBoundaryId: string, # Optional. <Description>Optional boundary ID of the actual area for which operation was applied inside the specified field.</Description>
-        ///   farmerId: string, # Optional. <Description>Farmer ID which belongs to the operation data.</Description>
-        ///   id: string, # Optional. <Description>Unique resource ID.</Description>
-        ///   eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
-        ///   status: string, # Optional. <Description>Status of the resource.</Description>
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///   ], # Optional. Application product details.
+        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   source: string, # Optional. Source of the operation data.
+        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.
+        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   attachmentsLink: string, # Optional. Link for attachments.
+        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
+        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
+        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -209,82 +205,80 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="applicationDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/ApplicationData/CreateOrUpdate
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   applicationProductDetails: [
         ///     {
-        ///       productName: string, # Optional. <Description>Name of the product applied.</Description>
-        ///       isCarrier: boolean, # Optional. <Description>A flag indicating whether product is a carrier for a tank mix.</Description>
+        ///       productName: string, # Optional. Name of the product applied.
+        ///       isCarrier: boolean, # Optional. A flag indicating whether product is a carrier for a tank mix.
         ///       avgMaterial: {
-        ///         unit: string, # Optional. <Description>Data unit.</Description>
-        ///         value: number, # Optional. <Description>Data value.</Description>
-        ///       }, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       totalMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
+        ///         unit: string, # Optional. Data unit.
+        ///         value: number, # Optional. Data value.
+        ///       }, # Optional. Schema for storing measurement reading and unit.
+        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
         ///     }
-        ///   ], # Optional. <Description>Application product details.</Description>
-        ///   avgMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///   totalMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///   area: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///   source: string, # Optional. <Description>Source of the operation data.</Description>
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.</Description>
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. <Description>Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. <Description>End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   attachmentsLink: string, # Optional. <Description>Link for attachments.</Description>
-        ///   associatedBoundaryId: string, # Optional. <Description>Optional boundary ID of the field for which operation was applied.</Description>
-        ///   operationBoundaryId: string, # Optional. <Description>Optional boundary ID of the actual area for which operation was applied inside the specified field.</Description>
-        ///   farmerId: string, # Optional. <Description>Farmer ID which belongs to the operation data.</Description>
-        ///   id: string, # Optional. <Description>Unique resource ID.</Description>
-        ///   eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
-        ///   status: string, # Optional. <Description>Status of the resource.</Description>
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///   ], # Optional. Application product details.
+        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   source: string, # Optional. Source of the operation data.
+        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.
+        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   attachmentsLink: string, # Optional. Link for attachments.
+        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
+        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
+        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   applicationProductDetails: [
         ///     {
-        ///       productName: string, # Optional. <Description>Name of the product applied.</Description>
-        ///       isCarrier: boolean, # Optional. <Description>A flag indicating whether product is a carrier for a tank mix.</Description>
+        ///       productName: string, # Optional. Name of the product applied.
+        ///       isCarrier: boolean, # Optional. A flag indicating whether product is a carrier for a tank mix.
         ///       avgMaterial: {
-        ///         unit: string, # Optional. <Description>Data unit.</Description>
-        ///         value: number, # Optional. <Description>Data value.</Description>
-        ///       }, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       totalMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
+        ///         unit: string, # Optional. Data unit.
+        ///         value: number, # Optional. Data value.
+        ///       }, # Optional. Schema for storing measurement reading and unit.
+        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
         ///     }
-        ///   ], # Optional. <Description>Application product details.</Description>
-        ///   avgMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///   totalMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///   area: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///   source: string, # Optional. <Description>Source of the operation data.</Description>
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.</Description>
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. <Description>Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. <Description>End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   attachmentsLink: string, # Optional. <Description>Link for attachments.</Description>
-        ///   associatedBoundaryId: string, # Optional. <Description>Optional boundary ID of the field for which operation was applied.</Description>
-        ///   operationBoundaryId: string, # Optional. <Description>Optional boundary ID of the actual area for which operation was applied inside the specified field.</Description>
-        ///   farmerId: string, # Optional. <Description>Farmer ID which belongs to the operation data.</Description>
-        ///   id: string, # Optional. <Description>Unique resource ID.</Description>
-        ///   eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
-        ///   status: string, # Optional. <Description>Status of the resource.</Description>
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///   ], # Optional. Application product details.
+        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   source: string, # Optional. Source of the operation data.
+        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.
+        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   attachmentsLink: string, # Optional. Link for attachments.
+        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
+        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
+        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -317,82 +311,80 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="applicationDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/ApplicationData/CreateOrUpdate
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   applicationProductDetails: [
         ///     {
-        ///       productName: string, # Optional. <Description>Name of the product applied.</Description>
-        ///       isCarrier: boolean, # Optional. <Description>A flag indicating whether product is a carrier for a tank mix.</Description>
+        ///       productName: string, # Optional. Name of the product applied.
+        ///       isCarrier: boolean, # Optional. A flag indicating whether product is a carrier for a tank mix.
         ///       avgMaterial: {
-        ///         unit: string, # Optional. <Description>Data unit.</Description>
-        ///         value: number, # Optional. <Description>Data value.</Description>
-        ///       }, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       totalMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
+        ///         unit: string, # Optional. Data unit.
+        ///         value: number, # Optional. Data value.
+        ///       }, # Optional. Schema for storing measurement reading and unit.
+        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
         ///     }
-        ///   ], # Optional. <Description>Application product details.</Description>
-        ///   avgMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///   totalMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///   area: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///   source: string, # Optional. <Description>Source of the operation data.</Description>
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.</Description>
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. <Description>Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. <Description>End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   attachmentsLink: string, # Optional. <Description>Link for attachments.</Description>
-        ///   associatedBoundaryId: string, # Optional. <Description>Optional boundary ID of the field for which operation was applied.</Description>
-        ///   operationBoundaryId: string, # Optional. <Description>Optional boundary ID of the actual area for which operation was applied inside the specified field.</Description>
-        ///   farmerId: string, # Optional. <Description>Farmer ID which belongs to the operation data.</Description>
-        ///   id: string, # Optional. <Description>Unique resource ID.</Description>
-        ///   eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
-        ///   status: string, # Optional. <Description>Status of the resource.</Description>
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///   ], # Optional. Application product details.
+        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   source: string, # Optional. Source of the operation data.
+        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.
+        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   attachmentsLink: string, # Optional. Link for attachments.
+        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
+        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
+        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   applicationProductDetails: [
         ///     {
-        ///       productName: string, # Optional. <Description>Name of the product applied.</Description>
-        ///       isCarrier: boolean, # Optional. <Description>A flag indicating whether product is a carrier for a tank mix.</Description>
+        ///       productName: string, # Optional. Name of the product applied.
+        ///       isCarrier: boolean, # Optional. A flag indicating whether product is a carrier for a tank mix.
         ///       avgMaterial: {
-        ///         unit: string, # Optional. <Description>Data unit.</Description>
-        ///         value: number, # Optional. <Description>Data value.</Description>
-        ///       }, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       totalMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
+        ///         unit: string, # Optional. Data unit.
+        ///         value: number, # Optional. Data value.
+        ///       }, # Optional. Schema for storing measurement reading and unit.
+        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
         ///     }
-        ///   ], # Optional. <Description>Application product details.</Description>
-        ///   avgMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///   totalMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///   area: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///   source: string, # Optional. <Description>Source of the operation data.</Description>
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.</Description>
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. <Description>Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. <Description>End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   attachmentsLink: string, # Optional. <Description>Link for attachments.</Description>
-        ///   associatedBoundaryId: string, # Optional. <Description>Optional boundary ID of the field for which operation was applied.</Description>
-        ///   operationBoundaryId: string, # Optional. <Description>Optional boundary ID of the actual area for which operation was applied inside the specified field.</Description>
-        ///   farmerId: string, # Optional. <Description>Farmer ID which belongs to the operation data.</Description>
-        ///   id: string, # Optional. <Description>Unique resource ID.</Description>
-        ///   eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
-        ///   status: string, # Optional. <Description>Status of the resource.</Description>
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///   ], # Optional. Application product details.
+        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   source: string, # Optional. Source of the operation data.
+        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.
+        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   attachmentsLink: string, # Optional. Link for attachments.
+        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
+        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
+        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -504,50 +496,48 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/ApplicationData/ListByFarmerId
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
         ///       applicationProductDetails: [
         ///         {
-        ///           productName: string, # Optional. <Description>Name of the product applied.</Description>
-        ///           isCarrier: boolean, # Optional. <Description>A flag indicating whether product is a carrier for a tank mix.</Description>
+        ///           productName: string, # Optional. Name of the product applied.
+        ///           isCarrier: boolean, # Optional. A flag indicating whether product is a carrier for a tank mix.
         ///           avgMaterial: {
-        ///             unit: string, # Optional. <Description>Data unit.</Description>
-        ///             value: number, # Optional. <Description>Data value.</Description>
-        ///           }, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///           totalMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
+        ///             unit: string, # Optional. Data unit.
+        ///             value: number, # Optional. Data value.
+        ///           }, # Optional. Schema for storing measurement reading and unit.
+        ///           totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
         ///         }
-        ///       ], # Optional. <Description>Application product details.</Description>
-        ///       avgMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       totalMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       area: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       source: string, # Optional. <Description>Source of the operation data.</Description>
-        ///       operationModifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.</Description>
-        ///       operationStartDateTime: string (ISO 8601 Format), # Optional. <Description>Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       operationEndDateTime: string (ISO 8601 Format), # Optional. <Description>End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       attachmentsLink: string, # Optional. <Description>Link for attachments.</Description>
-        ///       associatedBoundaryId: string, # Optional. <Description>Optional boundary ID of the field for which operation was applied.</Description>
-        ///       operationBoundaryId: string, # Optional. <Description>Optional boundary ID of the actual area for which operation was applied inside the specified field.</Description>
-        ///       farmerId: string, # Optional. <Description>Farmer ID which belongs to the operation data.</Description>
-        ///       id: string, # Optional. <Description>Unique resource ID.</Description>
-        ///       eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
-        ///       status: string, # Optional. <Description>Status of the resource.</Description>
-        ///       createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///       description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///       properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///       ], # Optional. Application product details.
+        ///       avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       source: string, # Optional. Source of the operation data.
+        ///       operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.
+        ///       operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       attachmentsLink: string, # Optional. Link for attachments.
+        ///       associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
+        ///       operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
+        ///       farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+        ///       id: string, # Optional. Unique resource ID.
+        ///       eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///       status: string, # Optional. Status of the resource.
+        ///       createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       name: string, # Optional. Name to identify resource.
+        ///       description: string, # Optional. Textual description of the resource.
+        ///       properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         ///     }
-        ///   ], # Optional. <Description>List of requested objects.</Description>
-        ///   $skipToken: string, # Optional. <Description>Token used in retrieving the next page. If null, there are no additional pages.</Description>
-        ///   nextLink: string, # Optional. <Description>Continuation link (absolute URI) to the next page of results in the list.</Description>
+        ///   ], # Optional. List of requested objects.
+        ///   $skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.
+        ///   nextLink: string, # Optional. Continuation link (absolute URI) to the next page of results in the list.
         /// }
         /// </code>
         /// 
@@ -614,50 +604,48 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/ApplicationData/ListByFarmerId
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
         ///       applicationProductDetails: [
         ///         {
-        ///           productName: string, # Optional. <Description>Name of the product applied.</Description>
-        ///           isCarrier: boolean, # Optional. <Description>A flag indicating whether product is a carrier for a tank mix.</Description>
+        ///           productName: string, # Optional. Name of the product applied.
+        ///           isCarrier: boolean, # Optional. A flag indicating whether product is a carrier for a tank mix.
         ///           avgMaterial: {
-        ///             unit: string, # Optional. <Description>Data unit.</Description>
-        ///             value: number, # Optional. <Description>Data value.</Description>
-        ///           }, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///           totalMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
+        ///             unit: string, # Optional. Data unit.
+        ///             value: number, # Optional. Data value.
+        ///           }, # Optional. Schema for storing measurement reading and unit.
+        ///           totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
         ///         }
-        ///       ], # Optional. <Description>Application product details.</Description>
-        ///       avgMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       totalMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       area: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       source: string, # Optional. <Description>Source of the operation data.</Description>
-        ///       operationModifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.</Description>
-        ///       operationStartDateTime: string (ISO 8601 Format), # Optional. <Description>Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       operationEndDateTime: string (ISO 8601 Format), # Optional. <Description>End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       attachmentsLink: string, # Optional. <Description>Link for attachments.</Description>
-        ///       associatedBoundaryId: string, # Optional. <Description>Optional boundary ID of the field for which operation was applied.</Description>
-        ///       operationBoundaryId: string, # Optional. <Description>Optional boundary ID of the actual area for which operation was applied inside the specified field.</Description>
-        ///       farmerId: string, # Optional. <Description>Farmer ID which belongs to the operation data.</Description>
-        ///       id: string, # Optional. <Description>Unique resource ID.</Description>
-        ///       eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
-        ///       status: string, # Optional. <Description>Status of the resource.</Description>
-        ///       createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///       description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///       properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///       ], # Optional. Application product details.
+        ///       avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       source: string, # Optional. Source of the operation data.
+        ///       operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.
+        ///       operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       attachmentsLink: string, # Optional. Link for attachments.
+        ///       associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
+        ///       operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
+        ///       farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+        ///       id: string, # Optional. Unique resource ID.
+        ///       eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///       status: string, # Optional. Status of the resource.
+        ///       createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       name: string, # Optional. Name to identify resource.
+        ///       description: string, # Optional. Textual description of the resource.
+        ///       properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         ///     }
-        ///   ], # Optional. <Description>List of requested objects.</Description>
-        ///   $skipToken: string, # Optional. <Description>Token used in retrieving the next page. If null, there are no additional pages.</Description>
-        ///   nextLink: string, # Optional. <Description>Continuation link (absolute URI) to the next page of results in the list.</Description>
+        ///   ], # Optional. List of requested objects.
+        ///   $skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.
+        ///   nextLink: string, # Optional. Continuation link (absolute URI) to the next page of results in the list.
         /// }
         /// </code>
         /// 
@@ -721,50 +709,48 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/ApplicationData/List
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
         ///       applicationProductDetails: [
         ///         {
-        ///           productName: string, # Optional. <Description>Name of the product applied.</Description>
-        ///           isCarrier: boolean, # Optional. <Description>A flag indicating whether product is a carrier for a tank mix.</Description>
+        ///           productName: string, # Optional. Name of the product applied.
+        ///           isCarrier: boolean, # Optional. A flag indicating whether product is a carrier for a tank mix.
         ///           avgMaterial: {
-        ///             unit: string, # Optional. <Description>Data unit.</Description>
-        ///             value: number, # Optional. <Description>Data value.</Description>
-        ///           }, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///           totalMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
+        ///             unit: string, # Optional. Data unit.
+        ///             value: number, # Optional. Data value.
+        ///           }, # Optional. Schema for storing measurement reading and unit.
+        ///           totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
         ///         }
-        ///       ], # Optional. <Description>Application product details.</Description>
-        ///       avgMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       totalMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       area: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       source: string, # Optional. <Description>Source of the operation data.</Description>
-        ///       operationModifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.</Description>
-        ///       operationStartDateTime: string (ISO 8601 Format), # Optional. <Description>Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       operationEndDateTime: string (ISO 8601 Format), # Optional. <Description>End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       attachmentsLink: string, # Optional. <Description>Link for attachments.</Description>
-        ///       associatedBoundaryId: string, # Optional. <Description>Optional boundary ID of the field for which operation was applied.</Description>
-        ///       operationBoundaryId: string, # Optional. <Description>Optional boundary ID of the actual area for which operation was applied inside the specified field.</Description>
-        ///       farmerId: string, # Optional. <Description>Farmer ID which belongs to the operation data.</Description>
-        ///       id: string, # Optional. <Description>Unique resource ID.</Description>
-        ///       eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
-        ///       status: string, # Optional. <Description>Status of the resource.</Description>
-        ///       createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///       description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///       properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///       ], # Optional. Application product details.
+        ///       avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       source: string, # Optional. Source of the operation data.
+        ///       operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.
+        ///       operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       attachmentsLink: string, # Optional. Link for attachments.
+        ///       associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
+        ///       operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
+        ///       farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+        ///       id: string, # Optional. Unique resource ID.
+        ///       eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///       status: string, # Optional. Status of the resource.
+        ///       createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       name: string, # Optional. Name to identify resource.
+        ///       description: string, # Optional. Textual description of the resource.
+        ///       properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         ///     }
-        ///   ], # Optional. <Description>List of requested objects.</Description>
-        ///   $skipToken: string, # Optional. <Description>Token used in retrieving the next page. If null, there are no additional pages.</Description>
-        ///   nextLink: string, # Optional. <Description>Continuation link (absolute URI) to the next page of results in the list.</Description>
+        ///   ], # Optional. List of requested objects.
+        ///   $skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.
+        ///   nextLink: string, # Optional. Continuation link (absolute URI) to the next page of results in the list.
         /// }
         /// </code>
         /// 
@@ -826,50 +812,48 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/FarmBeats/ApplicationData/List
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
         ///       applicationProductDetails: [
         ///         {
-        ///           productName: string, # Optional. <Description>Name of the product applied.</Description>
-        ///           isCarrier: boolean, # Optional. <Description>A flag indicating whether product is a carrier for a tank mix.</Description>
+        ///           productName: string, # Optional. Name of the product applied.
+        ///           isCarrier: boolean, # Optional. A flag indicating whether product is a carrier for a tank mix.
         ///           avgMaterial: {
-        ///             unit: string, # Optional. <Description>Data unit.</Description>
-        ///             value: number, # Optional. <Description>Data value.</Description>
-        ///           }, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///           totalMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
+        ///             unit: string, # Optional. Data unit.
+        ///             value: number, # Optional. Data value.
+        ///           }, # Optional. Schema for storing measurement reading and unit.
+        ///           totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
         ///         }
-        ///       ], # Optional. <Description>Application product details.</Description>
-        ///       avgMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       totalMaterial: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       area: Measure, # Optional. <Description>Schema for storing measurement reading and unit.</Description>
-        ///       source: string, # Optional. <Description>Source of the operation data.</Description>
-        ///       operationModifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.</Description>
-        ///       operationStartDateTime: string (ISO 8601 Format), # Optional. <Description>Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       operationEndDateTime: string (ISO 8601 Format), # Optional. <Description>End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       attachmentsLink: string, # Optional. <Description>Link for attachments.</Description>
-        ///       associatedBoundaryId: string, # Optional. <Description>Optional boundary ID of the field for which operation was applied.</Description>
-        ///       operationBoundaryId: string, # Optional. <Description>Optional boundary ID of the actual area for which operation was applied inside the specified field.</Description>
-        ///       farmerId: string, # Optional. <Description>Farmer ID which belongs to the operation data.</Description>
-        ///       id: string, # Optional. <Description>Unique resource ID.</Description>
-        ///       eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
-        ///       status: string, # Optional. <Description>Status of the resource.</Description>
-        ///       createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
-        ///       name: string, # Optional. <Description>Name to identify resource.</Description>
-        ///       description: string, # Optional. <Description>Textual description of the resource.</Description>
-        ///       properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        ///       ], # Optional. Application product details.
+        ///       avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       area: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///       source: string, # Optional. Source of the operation data.
+        ///       operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.
+        ///       operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       attachmentsLink: string, # Optional. Link for attachments.
+        ///       associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
+        ///       operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
+        ///       farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+        ///       id: string, # Optional. Unique resource ID.
+        ///       eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///       status: string, # Optional. Status of the resource.
+        ///       createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///       name: string, # Optional. Name to identify resource.
+        ///       description: string, # Optional. Textual description of the resource.
+        ///       properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         ///     }
-        ///   ], # Optional. <Description>List of requested objects.</Description>
-        ///   $skipToken: string, # Optional. <Description>Token used in retrieving the next page. If null, there are no additional pages.</Description>
-        ///   nextLink: string, # Optional. <Description>Continuation link (absolute URI) to the next page of results in the list.</Description>
+        ///   ], # Optional. List of requested objects.
+        ///   $skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.
+        ///   nextLink: string, # Optional. Continuation link (absolute URI) to the next page of results in the list.
         /// }
         /// </code>
         /// 

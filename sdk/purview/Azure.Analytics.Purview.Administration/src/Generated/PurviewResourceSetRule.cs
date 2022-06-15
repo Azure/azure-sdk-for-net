@@ -49,15 +49,13 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAdministration/ResourceSetRules/GetResourceSetRule
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format), # Optional. <Description>Date at which ResourceSetProcessing property of the account is updated.</Description>
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. <Description>The advanced resource property of the account.</Description>
-        ///   }, # Optional. <Description>Gets or sets the advanced resource set property of the account.</Description>
-        ///   name: string, # Optional. <Description>The name of the rule</Description>
+        ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///   }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///   name: string, # Optional. The name of the rule
         ///   pathPatternConfig: {
         ///     acceptedPatterns: [
         ///       {
@@ -142,7 +140,7 @@ namespace Azure.Analytics.Purview.Administration
         ///       }
         ///     ], # Optional.
         ///     version: number, # Optional.
-        ///   }, # Optional. <Description>The configuration rules for path pattern extraction.</Description>
+        ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
         /// 
@@ -167,15 +165,13 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAdministration/ResourceSetRules/GetResourceSetRule
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format), # Optional. <Description>Date at which ResourceSetProcessing property of the account is updated.</Description>
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. <Description>The advanced resource property of the account.</Description>
-        ///   }, # Optional. <Description>Gets or sets the advanced resource set property of the account.</Description>
-        ///   name: string, # Optional. <Description>The name of the rule</Description>
+        ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///   }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///   name: string, # Optional. The name of the rule
         ///   pathPatternConfig: {
         ///     acceptedPatterns: [
         ///       {
@@ -260,7 +256,7 @@ namespace Azure.Analytics.Purview.Administration
         ///       }
         ///     ], # Optional.
         ///     version: number, # Optional.
-        ///   }, # Optional. <Description>The configuration rules for path pattern extraction.</Description>
+        ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
         /// 
@@ -287,15 +283,13 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAdministration/ResourceSetRules/CreateOrUpdateResourceSetRule
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format), # Optional. <Description>Date at which ResourceSetProcessing property of the account is updated.</Description>
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. <Description>The advanced resource property of the account.</Description>
-        ///   }, # Optional. <Description>Gets or sets the advanced resource set property of the account.</Description>
-        ///   name: string, # Optional. <Description>The name of the rule</Description>
+        ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///   }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///   name: string, # Optional. The name of the rule
         ///   pathPatternConfig: {
         ///     acceptedPatterns: [
         ///       {
@@ -380,16 +374,16 @@ namespace Azure.Analytics.Purview.Administration
         ///       }
         ///     ], # Optional.
         ///     version: number, # Optional.
-        ///   }, # Optional. <Description>The configuration rules for path pattern extraction.</Description>
+        ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format), # Optional. <Description>Date at which ResourceSetProcessing property of the account is updated.</Description>
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. <Description>The advanced resource property of the account.</Description>
-        ///   }, # Optional. <Description>Gets or sets the advanced resource set property of the account.</Description>
-        ///   name: string, # Optional. <Description>The name of the rule</Description>
+        ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///   }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///   name: string, # Optional. The name of the rule
         ///   pathPatternConfig: {
         ///     acceptedPatterns: [
         ///       {
@@ -474,7 +468,7 @@ namespace Azure.Analytics.Purview.Administration
         ///       }
         ///     ], # Optional.
         ///     version: number, # Optional.
-        ///   }, # Optional. <Description>The configuration rules for path pattern extraction.</Description>
+        ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
         /// 
@@ -503,15 +497,13 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAdministration/ResourceSetRules/CreateOrUpdateResourceSetRule
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format), # Optional. <Description>Date at which ResourceSetProcessing property of the account is updated.</Description>
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. <Description>The advanced resource property of the account.</Description>
-        ///   }, # Optional. <Description>Gets or sets the advanced resource set property of the account.</Description>
-        ///   name: string, # Optional. <Description>The name of the rule</Description>
+        ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///   }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///   name: string, # Optional. The name of the rule
         ///   pathPatternConfig: {
         ///     acceptedPatterns: [
         ///       {
@@ -596,16 +588,16 @@ namespace Azure.Analytics.Purview.Administration
         ///       }
         ///     ], # Optional.
         ///     version: number, # Optional.
-        ///   }, # Optional. <Description>The configuration rules for path pattern extraction.</Description>
+        ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format), # Optional. <Description>Date at which ResourceSetProcessing property of the account is updated.</Description>
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. <Description>The advanced resource property of the account.</Description>
-        ///   }, # Optional. <Description>Gets or sets the advanced resource set property of the account.</Description>
-        ///   name: string, # Optional. <Description>The name of the rule</Description>
+        ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///   }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///   name: string, # Optional. The name of the rule
         ///   pathPatternConfig: {
         ///     acceptedPatterns: [
         ///       {
@@ -690,7 +682,7 @@ namespace Azure.Analytics.Purview.Administration
         ///       }
         ///     ], # Optional.
         ///     version: number, # Optional.
-        ///   }, # Optional. <Description>The configuration rules for path pattern extraction.</Description>
+        ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
         /// 

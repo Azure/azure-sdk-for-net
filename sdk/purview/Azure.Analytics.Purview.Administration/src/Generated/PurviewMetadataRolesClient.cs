@@ -38,23 +38,21 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAdministration/PurviewMetadataRoles/GetMetadataRoles
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   values: [
         ///     {
-        ///       id: string, # Optional. <Description>The Id of role</Description>
-        ///       name: string, # Optional. <Description>The name of role</Description>
-        ///       type: string, # Optional. <Description>The type of role</Description>
+        ///       id: string, # Optional. The Id of role
+        ///       name: string, # Optional. The name of role
+        ///       type: string, # Optional. The type of role
         ///       properties: {
-        ///         provisioningState: string, # Optional. <Description>The provisioningState of role</Description>
-        ///         roleType: string, # Optional. <Description>The type of role</Description>
-        ///         friendlyName: string, # Optional. <Description>The friendly name of role</Description>
-        ///         description: string, # Optional. <Description>The description of role</Description>
-        ///         cnfCondition: [AttributeMatcher[]], # Optional. <Description>The cnf Condition for a rule</Description>
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. <Description>The dnf Condition for a rule</Description>
-        ///         version: number, # Optional. <Description>The version of role</Description>
+        ///         provisioningState: string, # Optional. The provisioningState of role
+        ///         roleType: string, # Optional. The type of role
+        ///         friendlyName: string, # Optional. The friendly name of role
+        ///         description: string, # Optional. The description of role
+        ///         cnfCondition: [AttributeMatcher[]], # Optional. The cnf Condition for a rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
+        ///         version: number, # Optional. The version of role
         ///       }, # Optional.
         ///     }
         ///   ], # Required.
@@ -89,23 +87,21 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAdministration/PurviewMetadataRoles/GetMetadataRoles
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   values: [
         ///     {
-        ///       id: string, # Optional. <Description>The Id of role</Description>
-        ///       name: string, # Optional. <Description>The name of role</Description>
-        ///       type: string, # Optional. <Description>The type of role</Description>
+        ///       id: string, # Optional. The Id of role
+        ///       name: string, # Optional. The name of role
+        ///       type: string, # Optional. The type of role
         ///       properties: {
-        ///         provisioningState: string, # Optional. <Description>The provisioningState of role</Description>
-        ///         roleType: string, # Optional. <Description>The type of role</Description>
-        ///         friendlyName: string, # Optional. <Description>The friendly name of role</Description>
-        ///         description: string, # Optional. <Description>The description of role</Description>
-        ///         cnfCondition: [AttributeMatcher[]], # Optional. <Description>The cnf Condition for a rule</Description>
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. <Description>The dnf Condition for a rule</Description>
-        ///         version: number, # Optional. <Description>The version of role</Description>
+        ///         provisioningState: string, # Optional. The provisioningState of role
+        ///         roleType: string, # Optional. The type of role
+        ///         friendlyName: string, # Optional. The friendly name of role
+        ///         description: string, # Optional. The description of role
+        ///         cnfCondition: [AttributeMatcher[]], # Optional. The cnf Condition for a rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
+        ///         version: number, # Optional. The version of role
         ///       }, # Optional.
         ///     }
         ///   ], # Required.

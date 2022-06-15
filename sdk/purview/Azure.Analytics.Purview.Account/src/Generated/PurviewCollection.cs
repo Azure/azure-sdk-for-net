@@ -58,26 +58,24 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAccount/Collections/GetCollection
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. <Description>Gets the state of the provisioning.</Description>
-        ///   description: string, # Optional. <Description>Gets or sets the description.</Description>
-        ///   friendlyName: string, # Optional. <Description>Gets or sets the friendly name of the collection.</Description>
-        ///   name: string, # Optional. <Description>Gets the name.</Description>
+        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
+        ///   description: string, # Optional. Gets or sets the description.
+        ///   friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
+        ///   name: string, # Optional. Gets the name.
         ///   parentCollection: {
-        ///     referenceName: string, # Optional. <Description>Gets or sets the reference name.</Description>
-        ///     type: string, # Optional. <Description>Gets the reference type property.</Description>
-        ///   }, # Optional. <Description>Gets or sets the parent collection reference.</Description>
+        ///     referenceName: string, # Optional. Gets or sets the reference name.
+        ///     type: string, # Optional. Gets the reference type property.
+        ///   }, # Optional. Gets or sets the parent collection reference.
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
-        ///     createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
-        ///     lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
-        ///   }, # Optional. <Description>Gets the system data that contains information about who and when created and updated the resource.</Description>
+        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
+        ///     createdBy: string, # Optional. The identity that created the resource.
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
+        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
+        ///   }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
         /// }
         /// </code>
         /// 
@@ -102,26 +100,24 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAccount/Collections/GetCollection
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. <Description>Gets the state of the provisioning.</Description>
-        ///   description: string, # Optional. <Description>Gets or sets the description.</Description>
-        ///   friendlyName: string, # Optional. <Description>Gets or sets the friendly name of the collection.</Description>
-        ///   name: string, # Optional. <Description>Gets the name.</Description>
+        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
+        ///   description: string, # Optional. Gets or sets the description.
+        ///   friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
+        ///   name: string, # Optional. Gets the name.
         ///   parentCollection: {
-        ///     referenceName: string, # Optional. <Description>Gets or sets the reference name.</Description>
-        ///     type: string, # Optional. <Description>Gets the reference type property.</Description>
-        ///   }, # Optional. <Description>Gets or sets the parent collection reference.</Description>
+        ///     referenceName: string, # Optional. Gets or sets the reference name.
+        ///     type: string, # Optional. Gets the reference type property.
+        ///   }, # Optional. Gets or sets the parent collection reference.
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
-        ///     createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
-        ///     lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
-        ///   }, # Optional. <Description>Gets the system data that contains information about who and when created and updated the resource.</Description>
+        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
+        ///     createdBy: string, # Optional. The identity that created the resource.
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
+        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
+        ///   }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
         /// }
         /// </code>
         /// 
@@ -148,46 +144,44 @@ namespace Azure.Analytics.Purview.Account
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAccount/Collections/CreateOrUpdateCollection
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. <Description>Gets the state of the provisioning.</Description>
-        ///   description: string, # Optional. <Description>Gets or sets the description.</Description>
-        ///   friendlyName: string, # Optional. <Description>Gets or sets the friendly name of the collection.</Description>
-        ///   name: string, # Optional. <Description>Gets the name.</Description>
+        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
+        ///   description: string, # Optional. Gets or sets the description.
+        ///   friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
+        ///   name: string, # Optional. Gets the name.
         ///   parentCollection: {
-        ///     referenceName: string, # Optional. <Description>Gets or sets the reference name.</Description>
-        ///     type: string, # Optional. <Description>Gets the reference type property.</Description>
-        ///   }, # Optional. <Description>Gets or sets the parent collection reference.</Description>
+        ///     referenceName: string, # Optional. Gets or sets the reference name.
+        ///     type: string, # Optional. Gets the reference type property.
+        ///   }, # Optional. Gets or sets the parent collection reference.
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
-        ///     createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
-        ///     lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
-        ///   }, # Optional. <Description>Gets the system data that contains information about who and when created and updated the resource.</Description>
+        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
+        ///     createdBy: string, # Optional. The identity that created the resource.
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
+        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
+        ///   }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. <Description>Gets the state of the provisioning.</Description>
-        ///   description: string, # Optional. <Description>Gets or sets the description.</Description>
-        ///   friendlyName: string, # Optional. <Description>Gets or sets the friendly name of the collection.</Description>
-        ///   name: string, # Optional. <Description>Gets the name.</Description>
+        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
+        ///   description: string, # Optional. Gets or sets the description.
+        ///   friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
+        ///   name: string, # Optional. Gets the name.
         ///   parentCollection: {
-        ///     referenceName: string, # Optional. <Description>Gets or sets the reference name.</Description>
-        ///     type: string, # Optional. <Description>Gets the reference type property.</Description>
-        ///   }, # Optional. <Description>Gets or sets the parent collection reference.</Description>
+        ///     referenceName: string, # Optional. Gets or sets the reference name.
+        ///     type: string, # Optional. Gets the reference type property.
+        ///   }, # Optional. Gets or sets the parent collection reference.
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
-        ///     createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
-        ///     lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
-        ///   }, # Optional. <Description>Gets the system data that contains information about who and when created and updated the resource.</Description>
+        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
+        ///     createdBy: string, # Optional. The identity that created the resource.
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
+        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
+        ///   }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
         /// }
         /// </code>
         /// 
@@ -216,46 +210,44 @@ namespace Azure.Analytics.Purview.Account
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAccount/Collections/CreateOrUpdateCollection
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. <Description>Gets the state of the provisioning.</Description>
-        ///   description: string, # Optional. <Description>Gets or sets the description.</Description>
-        ///   friendlyName: string, # Optional. <Description>Gets or sets the friendly name of the collection.</Description>
-        ///   name: string, # Optional. <Description>Gets the name.</Description>
+        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
+        ///   description: string, # Optional. Gets or sets the description.
+        ///   friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
+        ///   name: string, # Optional. Gets the name.
         ///   parentCollection: {
-        ///     referenceName: string, # Optional. <Description>Gets or sets the reference name.</Description>
-        ///     type: string, # Optional. <Description>Gets the reference type property.</Description>
-        ///   }, # Optional. <Description>Gets or sets the parent collection reference.</Description>
+        ///     referenceName: string, # Optional. Gets or sets the reference name.
+        ///     type: string, # Optional. Gets the reference type property.
+        ///   }, # Optional. Gets or sets the parent collection reference.
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
-        ///     createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
-        ///     lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
-        ///   }, # Optional. <Description>Gets the system data that contains information about who and when created and updated the resource.</Description>
+        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
+        ///     createdBy: string, # Optional. The identity that created the resource.
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
+        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
+        ///   }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. <Description>Gets the state of the provisioning.</Description>
-        ///   description: string, # Optional. <Description>Gets or sets the description.</Description>
-        ///   friendlyName: string, # Optional. <Description>Gets or sets the friendly name of the collection.</Description>
-        ///   name: string, # Optional. <Description>Gets the name.</Description>
+        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
+        ///   description: string, # Optional. Gets or sets the description.
+        ///   friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
+        ///   name: string, # Optional. Gets the name.
         ///   parentCollection: {
-        ///     referenceName: string, # Optional. <Description>Gets or sets the reference name.</Description>
-        ///     type: string, # Optional. <Description>Gets the reference type property.</Description>
-        ///   }, # Optional. <Description>Gets or sets the parent collection reference.</Description>
+        ///     referenceName: string, # Optional. Gets or sets the reference name.
+        ///     type: string, # Optional. Gets the reference type property.
+        ///   }, # Optional. Gets or sets the parent collection reference.
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
-        ///     createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
-        ///     lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
-        ///   }, # Optional. <Description>Gets the system data that contains information about who and when created and updated the resource.</Description>
+        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
+        ///     createdBy: string, # Optional. The identity that created the resource.
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
+        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
+        ///   }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
         /// }
         /// </code>
         /// 
@@ -318,12 +310,10 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAccount/Collections/GetCollectionPath
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   parentFriendlyNameChain: [string], # Optional. <Description>The friendly names of ancestors starting from the default (root) collection and ending with the immediate parent.</Description>
-        ///   parentNameChain: [string], # Optional. <Description>The names of ancestors starting from the default (root) collection and ending with the immediate parent.</Description>
+        ///   parentFriendlyNameChain: [string], # Optional. The friendly names of ancestors starting from the default (root) collection and ending with the immediate parent.
+        ///   parentNameChain: [string], # Optional. The names of ancestors starting from the default (root) collection and ending with the immediate parent.
         /// }
         /// </code>
         /// 
@@ -348,12 +338,10 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAccount/Collections/GetCollectionPath
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   parentFriendlyNameChain: [string], # Optional. <Description>The friendly names of ancestors starting from the default (root) collection and ending with the immediate parent.</Description>
-        ///   parentNameChain: [string], # Optional. <Description>The names of ancestors starting from the default (root) collection and ending with the immediate parent.</Description>
+        ///   parentFriendlyNameChain: [string], # Optional. The friendly names of ancestors starting from the default (root) collection and ending with the immediate parent.
+        ///   parentNameChain: [string], # Optional. The names of ancestors starting from the default (root) collection and ending with the immediate parent.
         /// }
         /// </code>
         /// 
@@ -379,18 +367,16 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAccount/Collections/ListChildCollectionNames
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   count: number, # Optional. <Description>Total item count.</Description>
-        ///   nextLink: string, # Optional. <Description>The Url of next result page.</Description>
+        ///   count: number, # Optional. Total item count.
+        ///   nextLink: string, # Optional. The Url of next result page.
         ///   value: [
         ///     {
-        ///       friendlyName: string, # Optional. <Description>Gets or sets the friendly name of the collection.</Description>
-        ///       name: string, # Optional. <Description>Gets the name.</Description>
+        ///       friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
+        ///       name: string, # Optional. Gets the name.
         ///     }
-        ///   ], # Required. <Description>Collection of items of type results.</Description>
+        ///   ], # Required. Collection of items of type results.
         /// }
         /// </code>
         /// 
@@ -422,18 +408,16 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewAccount/Collections/ListChildCollectionNames
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   count: number, # Optional. <Description>Total item count.</Description>
-        ///   nextLink: string, # Optional. <Description>The Url of next result page.</Description>
+        ///   count: number, # Optional. Total item count.
+        ///   nextLink: string, # Optional. The Url of next result page.
         ///   value: [
         ///     {
-        ///       friendlyName: string, # Optional. <Description>Gets or sets the friendly name of the collection.</Description>
-        ///       name: string, # Optional. <Description>Gets the name.</Description>
+        ///       friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
+        ///       name: string, # Optional. Gets the name.
         ///     }
-        ///   ], # Required. <Description>Collection of items of type results.</Description>
+        ///   ], # Required. Collection of items of type results.
         /// }
         /// </code>
         /// 

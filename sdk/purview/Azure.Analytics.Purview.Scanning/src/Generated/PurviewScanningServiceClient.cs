@@ -69,8 +69,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/GetKeyVaultReference
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   id: string, # Optional.
@@ -108,8 +106,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/GetKeyVaultReference
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   id: string, # Optional.
@@ -148,8 +144,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/CreateOrUpdateKeyVaultReference
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   id: string, # Optional.
@@ -199,8 +193,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/CreateOrUpdateKeyVaultReference
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   id: string, # Optional.
@@ -249,8 +241,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/DeleteKeyVaultReference
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   id: string, # Optional.
@@ -288,8 +278,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/DeleteKeyVaultReference
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   id: string, # Optional.
@@ -327,8 +315,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/GetScanRuleset
         /// Schema for <c>AzureSubscriptionScanRuleset Response Body</c>:
         /// <code>{
         ///   kind: AzureSubscription, # Required.
@@ -851,8 +837,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/GetScanRuleset
         /// Schema for <c>AzureSubscriptionScanRuleset Response Body</c>:
         /// <code>{
         ///   kind: AzureSubscription, # Required.
@@ -1376,8 +1360,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/CreateOrUpdateScanRuleset
         /// Schema for <c>AzureSubscriptionScanRuleset Request Body</c>:
         /// <code>{
         ///   kind: AzureSubscription, # Required.
@@ -2396,8 +2378,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/CreateOrUpdateScanRuleset
         /// Schema for <c>AzureSubscriptionScanRuleset Request Body</c>:
         /// <code>{
         ///   kind: AzureSubscription, # Required.
@@ -3415,8 +3395,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/DeleteScanRuleset
         /// Schema for <c>AzureSubscriptionScanRuleset Response Body</c>:
         /// <code>{
         ///   kind: AzureSubscription, # Required.
@@ -3939,8 +3917,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/DeleteScanRuleset
         /// Schema for <c>AzureSubscriptionScanRuleset Response Body</c>:
         /// <code>{
         ///   kind: AzureSubscription, # Required.
@@ -4463,8 +4439,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="dataSourceType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/GetSystemRulesetsForDataSource
         /// Schema for <c>AzureSubscriptionSystemScanRuleset Response Body</c>:
         /// <code>{
         ///   kind: None, # Required.
@@ -4987,8 +4961,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="dataSourceType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/GetSystemRulesetsForDataSource
         /// Schema for <c>AzureSubscriptionSystemScanRuleset Response Body</c>:
         /// <code>{
         ///   kind: None, # Required.
@@ -5510,8 +5482,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/GetSystemRulesetsForVersion
         /// Schema for <c>AzureSubscriptionSystemScanRuleset Response Body</c>:
         /// <code>{
         ///   kind: None, # Required.
@@ -6031,8 +6001,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/GetSystemRulesetsForVersion
         /// Schema for <c>AzureSubscriptionSystemScanRuleset Response Body</c>:
         /// <code>{
         ///   kind: None, # Required.
@@ -6551,8 +6519,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/GetLatestSystemRulesets
         /// Schema for <c>AzureSubscriptionSystemScanRuleset Response Body</c>:
         /// <code>{
         ///   kind: None, # Required.
@@ -7071,8 +7037,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/GetLatestSystemRulesets
         /// Schema for <c>AzureSubscriptionSystemScanRuleset Response Body</c>:
         /// <code>{
         ///   kind: None, # Required.
@@ -7590,8 +7554,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/GetKeyVaultReferences
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
@@ -7636,8 +7598,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/GetKeyVaultReferences
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
@@ -7682,8 +7642,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/GetClassificationRules
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
@@ -7725,8 +7683,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/GetClassificationRules
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
@@ -7768,8 +7724,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/GetDataSources
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
@@ -7797,7 +7751,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///                     code: number, # Optional.
         ///                   }
         ///                 ], # Optional.
-        ///                 exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///                 exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///               }, # Optional.
         ///               startTime: string (ISO 8601 Format), # Optional.
         ///               queuedTime: string (ISO 8601 Format), # Optional.
@@ -7860,8 +7814,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/GetDataSources
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
@@ -7889,7 +7841,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///                     code: number, # Optional.
         ///                   }
         ///                 ], # Optional.
-        ///                 exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. <Description>Dictionary of &lt;integer&gt;</Description>
+        ///                 exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
         ///               }, # Optional.
         ///               startTime: string (ISO 8601 Format), # Optional.
         ///               queuedTime: string (ISO 8601 Format), # Optional.
@@ -7952,8 +7904,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/GetScanRulesets
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
@@ -7998,8 +7948,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/GetScanRulesets
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
@@ -8044,8 +7992,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/GetSystemRulesets
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
@@ -8090,8 +8036,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/GetSystemRulesets
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
@@ -8137,8 +8081,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/GetSystemRulesetsVersions
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
@@ -8184,8 +8126,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/GetSystemRulesetsVersions
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [

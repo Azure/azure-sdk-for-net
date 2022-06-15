@@ -73,8 +73,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewClassificationRule/GetProperties
         /// Schema for <c>SystemClassificationRule Response Body</c>:
         /// <code>{
         ///   kind: System, # Required.
@@ -135,8 +133,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewClassificationRule/GetProperties
         /// Schema for <c>SystemClassificationRule Response Body</c>:
         /// <code>{
         ///   kind: System, # Required.
@@ -198,8 +194,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewClassificationRule/CreateOrUpdate
         /// Schema for <c>SystemClassificationRule Request Body</c>:
         /// <code>{
         ///   kind: System, # Required.
@@ -299,8 +293,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewClassificationRule/CreateOrUpdate
         /// Schema for <c>SystemClassificationRule Request Body</c>:
         /// <code>{
         ///   kind: System, # Required.
@@ -399,8 +391,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewClassificationRule/Delete
         /// Schema for <c>SystemClassificationRule Response Body</c>:
         /// <code>{
         ///   kind: System, # Required.
@@ -461,8 +451,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewClassificationRule/Delete
         /// Schema for <c>SystemClassificationRule Response Body</c>:
         /// <code>{
         ///   kind: System, # Required.
@@ -526,8 +514,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewClassificationRule/TagVersion
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   scanResultId: OperationResponseScanResultId, # Optional.
@@ -576,8 +562,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewClassificationRule/TagVersion
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   scanResultId: OperationResponseScanResultId, # Optional.
@@ -623,8 +607,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewClassificationRule/GetVersions
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
@@ -666,8 +648,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewClassificationRule/GetVersions
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [

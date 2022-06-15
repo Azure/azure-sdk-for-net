@@ -65,42 +65,40 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/Conversations/ConversationAnalysis/AnalyzeConversation
         /// Schema for <c>CustomConversationalTask Request Body</c>:
         /// <code>{
-        ///   kind: Conversation, # Required. <Description>Enumeration of supported Conversation tasks.</Description>
+        ///   kind: Conversation, # Required. Enumeration of supported Conversation tasks.
         ///   analysisInput: {
         ///     conversationItem: {
-        ///       id: string, # Required. <Description>The ID of a conversation item.</Description>
-        ///       participantId: string, # Required. <Description>The participant ID of a conversation item.</Description>
-        ///       language: string, # Optional. <Description>The override language of a conversation item in BCP 47 language representation.</Description>
-        ///       modality: &quot;transcript&quot; | &quot;text&quot;, # Optional. <Description>Enumeration of supported conversational modalities.</Description>
-        ///       role: &quot;agent&quot; | &quot;customer&quot; | &quot;generic&quot;, # Optional. <Description>The role of the participant.</Description>
-        ///     }, # Required. <Description>The abstract base for a user input formatted conversation (e.g., Text, Transcript).</Description>
-        ///   }, # Required. <Description>The input ConversationItem and its optional parameters</Description>
+        ///       id: string, # Required. The ID of a conversation item.
+        ///       participantId: string, # Required. The participant ID of a conversation item.
+        ///       language: string, # Optional. The override language of a conversation item in BCP 47 language representation.
+        ///       modality: &quot;transcript&quot; | &quot;text&quot;, # Optional. Enumeration of supported conversational modalities.
+        ///       role: &quot;agent&quot; | &quot;customer&quot; | &quot;generic&quot;, # Optional. The role of the participant.
+        ///     }, # Required. The abstract base for a user input formatted conversation (e.g., Text, Transcript).
+        ///   }, # Required. The input ConversationItem and its optional parameters
         ///   parameters: {
-        ///     projectName: string, # Required. <Description>The name of the project to use.</Description>
-        ///     deploymentName: string, # Required. <Description>The name of the deployment to use.</Description>
-        ///     verbose: boolean, # Optional. <Description>If true, the service will return more detailed information in the response.</Description>
-        ///     isLoggingEnabled: boolean, # Optional. <Description>If true, the service will keep the query for further review.</Description>
-        ///     stringIndexType: &quot;TextElements_v8&quot; | &quot;UnicodeCodePoint&quot; | &quot;Utf16CodeUnit&quot;, # Optional. <Description>Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets.</Description>
-        ///     directTarget: string, # Optional. <Description>The name of a target project to forward the request to.</Description>
-        ///     targetProjectParameters: Dictionary&lt;string, AnalysisParameters&gt;, # Optional. <Description>A dictionary representing the parameters for each target project.</Description>
-        ///   }, # Required. <Description>Input parameters necessary for a CustomConversation task.</Description>
+        ///     projectName: string, # Required. The name of the project to use.
+        ///     deploymentName: string, # Required. The name of the deployment to use.
+        ///     verbose: boolean, # Optional. If true, the service will return more detailed information in the response.
+        ///     isLoggingEnabled: boolean, # Optional. If true, the service will keep the query for further review.
+        ///     stringIndexType: &quot;TextElements_v8&quot; | &quot;UnicodeCodePoint&quot; | &quot;Utf16CodeUnit&quot;, # Optional. Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets.
+        ///     directTarget: string, # Optional. The name of a target project to forward the request to.
+        ///     targetProjectParameters: Dictionary&lt;string, AnalysisParameters&gt;, # Optional. A dictionary representing the parameters for each target project.
+        ///   }, # Required. Input parameters necessary for a CustomConversation task.
         /// }
         /// </code>
         /// Schema for <c>CustomConversationalTaskResult Response Body</c>:
         /// <code>{
-        ///   kind: ConversationResult, # Required. <Description>Enumeration of supported conversational task results</Description>
+        ///   kind: ConversationResult, # Required. Enumeration of supported conversational task results
         ///   result: {
-        ///     query: string, # Required. <Description>The conversation utterance given by the caller.</Description>
-        ///     detectedLanguage: string, # Optional. <Description>The system detected language for the query in BCP 47 language representation..</Description>
+        ///     query: string, # Required. The conversation utterance given by the caller.
+        ///     detectedLanguage: string, # Optional. The system detected language for the query in BCP 47 language representation..
         ///     prediction: {
-        ///       projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. <Description>The type of the project.</Description>
-        ///       topIntent: string, # Optional. <Description>The intent with the highest score.</Description>
-        ///     }, # Required. <Description>The prediction result of a conversation project.</Description>
-        ///   }, # Required. <Description>Represents a conversation analysis response.</Description>
+        ///       projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. The type of the project.
+        ///       topIntent: string, # Optional. The intent with the highest score.
+        ///     }, # Required. The prediction result of a conversation project.
+        ///   }, # Required. Represents a conversation analysis response.
         /// }
         /// </code>
         /// 
@@ -129,42 +127,40 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/Conversations/ConversationAnalysis/AnalyzeConversation
         /// Schema for <c>CustomConversationalTask Request Body</c>:
         /// <code>{
-        ///   kind: Conversation, # Required. <Description>Enumeration of supported Conversation tasks.</Description>
+        ///   kind: Conversation, # Required. Enumeration of supported Conversation tasks.
         ///   analysisInput: {
         ///     conversationItem: {
-        ///       id: string, # Required. <Description>The ID of a conversation item.</Description>
-        ///       participantId: string, # Required. <Description>The participant ID of a conversation item.</Description>
-        ///       language: string, # Optional. <Description>The override language of a conversation item in BCP 47 language representation.</Description>
-        ///       modality: &quot;transcript&quot; | &quot;text&quot;, # Optional. <Description>Enumeration of supported conversational modalities.</Description>
-        ///       role: &quot;agent&quot; | &quot;customer&quot; | &quot;generic&quot;, # Optional. <Description>The role of the participant.</Description>
-        ///     }, # Required. <Description>The abstract base for a user input formatted conversation (e.g., Text, Transcript).</Description>
-        ///   }, # Required. <Description>The input ConversationItem and its optional parameters</Description>
+        ///       id: string, # Required. The ID of a conversation item.
+        ///       participantId: string, # Required. The participant ID of a conversation item.
+        ///       language: string, # Optional. The override language of a conversation item in BCP 47 language representation.
+        ///       modality: &quot;transcript&quot; | &quot;text&quot;, # Optional. Enumeration of supported conversational modalities.
+        ///       role: &quot;agent&quot; | &quot;customer&quot; | &quot;generic&quot;, # Optional. The role of the participant.
+        ///     }, # Required. The abstract base for a user input formatted conversation (e.g., Text, Transcript).
+        ///   }, # Required. The input ConversationItem and its optional parameters
         ///   parameters: {
-        ///     projectName: string, # Required. <Description>The name of the project to use.</Description>
-        ///     deploymentName: string, # Required. <Description>The name of the deployment to use.</Description>
-        ///     verbose: boolean, # Optional. <Description>If true, the service will return more detailed information in the response.</Description>
-        ///     isLoggingEnabled: boolean, # Optional. <Description>If true, the service will keep the query for further review.</Description>
-        ///     stringIndexType: &quot;TextElements_v8&quot; | &quot;UnicodeCodePoint&quot; | &quot;Utf16CodeUnit&quot;, # Optional. <Description>Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets.</Description>
-        ///     directTarget: string, # Optional. <Description>The name of a target project to forward the request to.</Description>
-        ///     targetProjectParameters: Dictionary&lt;string, AnalysisParameters&gt;, # Optional. <Description>A dictionary representing the parameters for each target project.</Description>
-        ///   }, # Required. <Description>Input parameters necessary for a CustomConversation task.</Description>
+        ///     projectName: string, # Required. The name of the project to use.
+        ///     deploymentName: string, # Required. The name of the deployment to use.
+        ///     verbose: boolean, # Optional. If true, the service will return more detailed information in the response.
+        ///     isLoggingEnabled: boolean, # Optional. If true, the service will keep the query for further review.
+        ///     stringIndexType: &quot;TextElements_v8&quot; | &quot;UnicodeCodePoint&quot; | &quot;Utf16CodeUnit&quot;, # Optional. Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets.
+        ///     directTarget: string, # Optional. The name of a target project to forward the request to.
+        ///     targetProjectParameters: Dictionary&lt;string, AnalysisParameters&gt;, # Optional. A dictionary representing the parameters for each target project.
+        ///   }, # Required. Input parameters necessary for a CustomConversation task.
         /// }
         /// </code>
         /// Schema for <c>CustomConversationalTaskResult Response Body</c>:
         /// <code>{
-        ///   kind: ConversationResult, # Required. <Description>Enumeration of supported conversational task results</Description>
+        ///   kind: ConversationResult, # Required. Enumeration of supported conversational task results
         ///   result: {
-        ///     query: string, # Required. <Description>The conversation utterance given by the caller.</Description>
-        ///     detectedLanguage: string, # Optional. <Description>The system detected language for the query in BCP 47 language representation..</Description>
+        ///     query: string, # Required. The conversation utterance given by the caller.
+        ///     detectedLanguage: string, # Optional. The system detected language for the query in BCP 47 language representation..
         ///     prediction: {
-        ///       projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. <Description>The type of the project.</Description>
-        ///       topIntent: string, # Optional. <Description>The intent with the highest score.</Description>
-        ///     }, # Required. <Description>The prediction result of a conversation project.</Description>
-        ///   }, # Required. <Description>Represents a conversation analysis response.</Description>
+        ///       projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. The type of the project.
+        ///       topIntent: string, # Optional. The intent with the highest score.
+        ///     }, # Required. The prediction result of a conversation project.
+        ///   }, # Required. Represents a conversation analysis response.
         /// }
         /// </code>
         /// 

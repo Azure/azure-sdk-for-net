@@ -40,11 +40,9 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/WebPubSubServiceClient/WebPubSubService/GenerateClientTokenImpl
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   token: string, # Optional. <Description>The token value for the WebSocket client to connect to the service</Description>
+        ///   token: string, # Optional. The token value for the WebSocket client to connect to the service
         /// }
         /// </code>
         /// 
@@ -72,11 +70,9 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/WebPubSubServiceClient/WebPubSubService/GenerateClientTokenImpl
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   token: string, # Optional. <Description>The token value for the WebSocket client to connect to the service</Description>
+        ///   token: string, # Optional. The token value for the WebSocket client to connect to the service
         /// }
         /// </code>
         /// 

@@ -48,12 +48,10 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedger/GetConstitution
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   digest: string, # Required. <Description>SHA256 digest of the constitution script.</Description>
-        ///   script: string, # Required. <Description>Contents of the constitution.</Description>
+        ///   digest: string, # Required. SHA256 digest of the constitution script.
+        ///   script: string, # Required. Contents of the constitution.
         /// }
         /// </code>
         /// 
@@ -78,12 +76,10 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedger/GetConstitution
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   digest: string, # Required. <Description>SHA256 digest of the constitution script.</Description>
-        ///   script: string, # Required. <Description>Contents of the constitution.</Description>
+        ///   digest: string, # Required. SHA256 digest of the constitution script.
+        ///   script: string, # Required. Contents of the constitution.
         /// }
         /// </code>
         /// 
@@ -108,14 +104,12 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedger/GetConsortiumMembers
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   members: [
         ///     {
-        ///       certificate: string, # Required. <Description>PEM-encoded certificate associated with the member.</Description>
-        ///       id: string, # Required. <Description>Identifier assigned to the member.</Description>
+        ///       certificate: string, # Required. PEM-encoded certificate associated with the member.
+        ///       id: string, # Required. Identifier assigned to the member.
         ///     }
         ///   ], # Required.
         /// }
@@ -142,14 +136,12 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedger/GetConsortiumMembers
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   members: [
         ///     {
-        ///       certificate: string, # Required. <Description>PEM-encoded certificate associated with the member.</Description>
-        ///       id: string, # Required. <Description>Identifier assigned to the member.</Description>
+        ///       certificate: string, # Required. PEM-encoded certificate associated with the member.
+        ///       id: string, # Required. Identifier assigned to the member.
         ///     }
         ///   ], # Required.
         /// }
@@ -176,12 +168,10 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedger/GetEnclaveQuotes
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   currentNodeId: string, # Required. <Description>Id of the Confidential Ledger node responding to the request.</Description>
-        ///   enclaveQuotes: Dictionary&lt;string, EnclaveQuote&gt;, # Required. <Description>Dictionary of enclave quotes, indexed by node id.</Description>
+        ///   currentNodeId: string, # Required. Id of the Confidential Ledger node responding to the request.
+        ///   enclaveQuotes: Dictionary&lt;string, EnclaveQuote&gt;, # Required. Dictionary of enclave quotes, indexed by node id.
         /// }
         /// </code>
         /// 
@@ -206,12 +196,10 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedger/GetEnclaveQuotes
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   currentNodeId: string, # Required. <Description>Id of the Confidential Ledger node responding to the request.</Description>
-        ///   enclaveQuotes: Dictionary&lt;string, EnclaveQuote&gt;, # Required. <Description>Dictionary of enclave quotes, indexed by node id.</Description>
+        ///   currentNodeId: string, # Required. Id of the Confidential Ledger node responding to the request.
+        ///   enclaveQuotes: Dictionary&lt;string, EnclaveQuote&gt;, # Required. Dictionary of enclave quotes, indexed by node id.
         /// }
         /// </code>
         /// 
@@ -238,18 +226,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedger/PostLedgerEntry
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   contents: string, # Required. <Description>Contents of the ledger entry.</Description>
-        ///   subLedgerId: string, # Optional. <Description>Identifier for sub-ledgers.</Description>
-        ///   transactionId: string, # Optional. <Description>A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.</Description>
+        ///   contents: string, # Required. Contents of the ledger entry.
+        ///   subLedgerId: string, # Optional. Identifier for sub-ledgers.
+        ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   subLedgerId: string, # Required. <Description>Identifier for sub-ledgers.</Description>
+        ///   subLedgerId: string, # Required. Identifier for sub-ledgers.
         /// }
         /// </code>
         /// 
@@ -276,18 +262,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedger/PostLedgerEntry
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   contents: string, # Required. <Description>Contents of the ledger entry.</Description>
-        ///   subLedgerId: string, # Optional. <Description>Identifier for sub-ledgers.</Description>
-        ///   transactionId: string, # Optional. <Description>A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.</Description>
+        ///   contents: string, # Required. Contents of the ledger entry.
+        ///   subLedgerId: string, # Optional. Identifier for sub-ledgers.
+        ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   subLedgerId: string, # Required. <Description>Identifier for sub-ledgers.</Description>
+        ///   subLedgerId: string, # Required. Identifier for sub-ledgers.
         /// }
         /// </code>
         /// 
@@ -316,16 +300,14 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedger/GetLedgerEntry
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   state: &quot;Loading&quot; | &quot;Ready&quot;, # Required. <Description>State of a ledger query.</Description>
+        ///   state: &quot;Loading&quot; | &quot;Ready&quot;, # Required. State of a ledger query.
         ///   entry: {
-        ///     contents: string, # Required. <Description>Contents of the ledger entry.</Description>
-        ///     subLedgerId: string, # Optional. <Description>Identifier for sub-ledgers.</Description>
-        ///     transactionId: string, # Optional. <Description>A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.</Description>
-        ///   }, # Optional. <Description>The ledger entry found as a result of the query. This is only available if the query is in Ready state.</Description>
+        ///     contents: string, # Required. Contents of the ledger entry.
+        ///     subLedgerId: string, # Optional. Identifier for sub-ledgers.
+        ///     transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
+        ///   }, # Optional. The ledger entry found as a result of the query. This is only available if the query is in Ready state.
         /// }
         /// </code>
         /// 
@@ -356,16 +338,14 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedger/GetLedgerEntry
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   state: &quot;Loading&quot; | &quot;Ready&quot;, # Required. <Description>State of a ledger query.</Description>
+        ///   state: &quot;Loading&quot; | &quot;Ready&quot;, # Required. State of a ledger query.
         ///   entry: {
-        ///     contents: string, # Required. <Description>Contents of the ledger entry.</Description>
-        ///     subLedgerId: string, # Optional. <Description>Identifier for sub-ledgers.</Description>
-        ///     transactionId: string, # Optional. <Description>A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.</Description>
-        ///   }, # Optional. <Description>The ledger entry found as a result of the query. This is only available if the query is in Ready state.</Description>
+        ///     contents: string, # Required. Contents of the ledger entry.
+        ///     subLedgerId: string, # Optional. Identifier for sub-ledgers.
+        ///     transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
+        ///   }, # Optional. The ledger entry found as a result of the query. This is only available if the query is in Ready state.
         /// }
         /// </code>
         /// 
@@ -395,24 +375,22 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedger/GetReceipt
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   receipt: {
-        ///     leaf: string, # Required. <Description>Merkle tree leaf for this transaction.</Description>
-        ///     nodeId: string, # Required. <Description>Id of the node returning the receipt.</Description>
+        ///     leaf: string, # Required. Merkle tree leaf for this transaction.
+        ///     nodeId: string, # Required. Id of the node returning the receipt.
         ///     proof: [
         ///       {
         ///         left: string, # Optional.
         ///         right: string, # Optional.
         ///       }
-        ///     ], # Required. <Description>Merkle proof.</Description>
-        ///     root: string, # Required. <Description>Root of the Merkle tree at the time the transaction was recorded.</Description>
-        ///     signature: string, # Required. <Description>Signature by the node, with its certificate, over the Merkle root.</Description>
-        ///   }, # Optional. <Description>A receipt certifying the transaction at the specified id.</Description>
-        ///   state: &quot;Loading&quot; | &quot;Ready&quot;, # Required. <Description>State of a ledger query.</Description>
-        ///   transactionId: string, # Required. <Description>A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.</Description>
+        ///     ], # Required. Merkle proof.
+        ///     root: string, # Required. Root of the Merkle tree at the time the transaction was recorded.
+        ///     signature: string, # Required. Signature by the node, with its certificate, over the Merkle root.
+        ///   }, # Optional. A receipt certifying the transaction at the specified id.
+        ///   state: &quot;Loading&quot; | &quot;Ready&quot;, # Required. State of a ledger query.
+        ///   transactionId: string, # Required. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>
         /// 
@@ -442,24 +420,22 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedger/GetReceipt
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   receipt: {
-        ///     leaf: string, # Required. <Description>Merkle tree leaf for this transaction.</Description>
-        ///     nodeId: string, # Required. <Description>Id of the node returning the receipt.</Description>
+        ///     leaf: string, # Required. Merkle tree leaf for this transaction.
+        ///     nodeId: string, # Required. Id of the node returning the receipt.
         ///     proof: [
         ///       {
         ///         left: string, # Optional.
         ///         right: string, # Optional.
         ///       }
-        ///     ], # Required. <Description>Merkle proof.</Description>
-        ///     root: string, # Required. <Description>Root of the Merkle tree at the time the transaction was recorded.</Description>
-        ///     signature: string, # Required. <Description>Signature by the node, with its certificate, over the Merkle root.</Description>
-        ///   }, # Optional. <Description>A receipt certifying the transaction at the specified id.</Description>
-        ///   state: &quot;Loading&quot; | &quot;Ready&quot;, # Required. <Description>State of a ledger query.</Description>
-        ///   transactionId: string, # Required. <Description>A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.</Description>
+        ///     ], # Required. Merkle proof.
+        ///     root: string, # Required. Root of the Merkle tree at the time the transaction was recorded.
+        ///     signature: string, # Required. Signature by the node, with its certificate, over the Merkle root.
+        ///   }, # Optional. A receipt certifying the transaction at the specified id.
+        ///   state: &quot;Loading&quot; | &quot;Ready&quot;, # Required. State of a ledger query.
+        ///   transactionId: string, # Required. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>
         /// 
@@ -489,12 +465,10 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedger/GetTransactionStatus
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   state: &quot;Committed&quot; | &quot;Pending&quot;, # Required. <Description>Represents the state of the transaction.</Description>
-        ///   transactionId: string, # Required. <Description>A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.</Description>
+        ///   state: &quot;Committed&quot; | &quot;Pending&quot;, # Required. Represents the state of the transaction.
+        ///   transactionId: string, # Required. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>
         /// 
@@ -524,12 +498,10 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedger/GetTransactionStatus
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   state: &quot;Committed&quot; | &quot;Pending&quot;, # Required. <Description>Represents the state of the transaction.</Description>
-        ///   transactionId: string, # Required. <Description>A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.</Description>
+        ///   state: &quot;Committed&quot; | &quot;Pending&quot;, # Required. Represents the state of the transaction.
+        ///   transactionId: string, # Required. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>
         /// 
@@ -557,13 +529,11 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedger/GetCurrentLedgerEntry
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   contents: string, # Required. <Description>Contents of the ledger entry.</Description>
-        ///   subLedgerId: string, # Optional. <Description>Identifier for sub-ledgers.</Description>
-        ///   transactionId: string, # Optional. <Description>A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.</Description>
+        ///   contents: string, # Required. Contents of the ledger entry.
+        ///   subLedgerId: string, # Optional. Identifier for sub-ledgers.
+        ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>
         /// 
@@ -589,13 +559,11 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedger/GetCurrentLedgerEntry
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   contents: string, # Required. <Description>Contents of the ledger entry.</Description>
-        ///   subLedgerId: string, # Optional. <Description>Identifier for sub-ledgers.</Description>
-        ///   transactionId: string, # Optional. <Description>A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.</Description>
+        ///   contents: string, # Required. Contents of the ledger entry.
+        ///   subLedgerId: string, # Optional. Identifier for sub-ledgers.
+        ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>
         /// 
@@ -669,12 +637,10 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedger/GetUser
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;, # Required. <Description>Represents an assignable role.</Description>
-        ///   userId: string, # Optional. <Description>Identifier for the user. This must either be an AAD object id or a certificate fingerprint.</Description>
+        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;, # Required. Represents an assignable role.
+        ///   userId: string, # Optional. Identifier for the user. This must either be an AAD object id or a certificate fingerprint.
         /// }
         /// </code>
         /// 
@@ -704,12 +670,10 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedger/GetUser
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;, # Required. <Description>Represents an assignable role.</Description>
-        ///   userId: string, # Optional. <Description>Identifier for the user. This must either be an AAD object id or a certificate fingerprint.</Description>
+        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;, # Required. Represents an assignable role.
+        ///   userId: string, # Optional. Identifier for the user. This must either be an AAD object id or a certificate fingerprint.
         /// }
         /// </code>
         /// 
@@ -740,18 +704,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedger/CreateOrUpdateUser
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;, # Required. <Description>Represents an assignable role.</Description>
-        ///   userId: string, # Optional. <Description>Identifier for the user. This must either be an AAD object id or a certificate fingerprint.</Description>
+        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;, # Required. Represents an assignable role.
+        ///   userId: string, # Optional. Identifier for the user. This must either be an AAD object id or a certificate fingerprint.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;, # Required. <Description>Represents an assignable role.</Description>
-        ///   userId: string, # Optional. <Description>Identifier for the user. This must either be an AAD object id or a certificate fingerprint.</Description>
+        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;, # Required. Represents an assignable role.
+        ///   userId: string, # Optional. Identifier for the user. This must either be an AAD object id or a certificate fingerprint.
         /// }
         /// </code>
         /// 
@@ -783,18 +745,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedger/CreateOrUpdateUser
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;, # Required. <Description>Represents an assignable role.</Description>
-        ///   userId: string, # Optional. <Description>Identifier for the user. This must either be an AAD object id or a certificate fingerprint.</Description>
+        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;, # Required. Represents an assignable role.
+        ///   userId: string, # Optional. Identifier for the user. This must either be an AAD object id or a certificate fingerprint.
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;, # Required. <Description>Represents an assignable role.</Description>
-        ///   userId: string, # Optional. <Description>Identifier for the user. This must either be an AAD object id or a certificate fingerprint.</Description>
+        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;, # Required. Represents an assignable role.
+        ///   userId: string, # Optional. Identifier for the user. This must either be an AAD object id or a certificate fingerprint.
         /// }
         /// </code>
         /// 
@@ -825,19 +785,17 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedger/GetLedgerEntries
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   state: &quot;Loading&quot; | &quot;Ready&quot;, # Required. <Description>State of a ledger query.</Description>
-        ///   @nextLink: string, # Optional. <Description>Path from which to retrieve the next page of results.</Description>
+        ///   state: &quot;Loading&quot; | &quot;Ready&quot;, # Required. State of a ledger query.
+        ///   @nextLink: string, # Optional. Path from which to retrieve the next page of results.
         ///   entries: [
         ///     {
-        ///       contents: string, # Required. <Description>Contents of the ledger entry.</Description>
-        ///       subLedgerId: string, # Optional. <Description>Identifier for sub-ledgers.</Description>
-        ///       transactionId: string, # Optional. <Description>A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.</Description>
+        ///       contents: string, # Required. Contents of the ledger entry.
+        ///       subLedgerId: string, # Optional. Identifier for sub-ledgers.
+        ///       transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         ///     }
-        ///   ], # Required. <Description>Array of ledger entries.</Description>
+        ///   ], # Required. Array of ledger entries.
         /// }
         /// </code>
         /// 
@@ -871,19 +829,17 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedger/GetLedgerEntries
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   state: &quot;Loading&quot; | &quot;Ready&quot;, # Required. <Description>State of a ledger query.</Description>
-        ///   @nextLink: string, # Optional. <Description>Path from which to retrieve the next page of results.</Description>
+        ///   state: &quot;Loading&quot; | &quot;Ready&quot;, # Required. State of a ledger query.
+        ///   @nextLink: string, # Optional. Path from which to retrieve the next page of results.
         ///   entries: [
         ///     {
-        ///       contents: string, # Required. <Description>Contents of the ledger entry.</Description>
-        ///       subLedgerId: string, # Optional. <Description>Identifier for sub-ledgers.</Description>
-        ///       transactionId: string, # Optional. <Description>A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.</Description>
+        ///       contents: string, # Required. Contents of the ledger entry.
+        ///       subLedgerId: string, # Optional. Identifier for sub-ledgers.
+        ///       transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         ///     }
-        ///   ], # Required. <Description>Array of ledger entries.</Description>
+        ///   ], # Required. Array of ledger entries.
         /// }
         /// </code>
         /// 
