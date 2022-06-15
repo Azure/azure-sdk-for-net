@@ -87,10 +87,11 @@ namespace Azure.Storage.Cryptography.Models
             bool async,
             CancellationToken cancellationToken)
         {
-            // v2.0 binds content encryption key with content encryption algorithm under a single keywrap
-            var dataToWrap = new byte[contentEncryptionKey.Length + ClientSideEncryptionAlgorithm.AesGcm256.ToString().Length];
-            contentEncryptionKey.CopyTo(dataToWrap, 0);
-            Encoding.UTF8.GetBytes(ClientSideEncryptionAlgorithm.AesGcm256.ToString()).CopyTo(dataToWrap, contentEncryptionKey.Length);
+            // v2.0 binds content encryption key with protocol version under a single keywrap
+            int keyOffset = Constants.ClientSideEncryption.V2.WrappedDataVersionLength;
+            var dataToWrap = new byte[keyOffset + contentEncryptionKey.Length];
+            Encoding.UTF8.GetBytes(ClientSideEncryptionVersion.V2_0.Serialize()).CopyTo(dataToWrap, 0);
+            contentEncryptionKey.CopyTo(dataToWrap, keyOffset);
 
             return new EncryptionData()
             {

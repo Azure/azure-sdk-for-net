@@ -153,16 +153,16 @@ namespace Azure.Storage.Queues.Test
             if (IsAsync)
             {
                 keyMock.Setup(k => k.WrapKeyAsync(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken))
-                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, key, cancellationToken) => Task.FromResult(Xor(userKeyBytes, key.ToArray())));
+                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, key, cancellationToken) => Task.FromResult(key.ToArray()/*Xor(userKeyBytes, key.ToArray())*/));
                 keyMock.Setup(k => k.UnwrapKeyAsync(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken))
-                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, wrappedKey, cancellationToken) => Task.FromResult(Xor(userKeyBytes, wrappedKey.ToArray())));
+                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, wrappedKey, cancellationToken) => Task.FromResult(wrappedKey.ToArray()/*Xor(userKeyBytes, wrappedKey.ToArray())*/));
             }
             else
             {
                 keyMock.Setup(k => k.WrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken))
-                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, key, cancellationToken) => Xor(userKeyBytes, key.ToArray()));
+                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, key, cancellationToken) => key.ToArray()); //Xor(userKeyBytes, key.ToArray()));
                 keyMock.Setup(k => k.UnwrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken))
-                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, wrappedKey, cancellationToken) => Xor(userKeyBytes, wrappedKey.ToArray()));
+                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, wrappedKey, cancellationToken) => wrappedKey.ToArray()); //Xor(userKeyBytes, wrappedKey.ToArray()));
             }
 
             return keyMock;
@@ -239,9 +239,11 @@ namespace Azure.Storage.Queues.Test
             // track one had async-only key wrapping
             keyMock.Setup(k => k.WrapKeyAsync(IsNotNull<byte[]>(), IsAny<string>(), IsNotNull<CancellationToken>())) // track 1 doesn't pass in the same cancellation token?
                 // track 1 doesn't pass in the algorithm name, it lets the implementation return the default algorithm it chose
-                .Returns<byte[], string, CancellationToken>((key, algorithm, cancellationToken) => Task.FromResult(Tuple.Create(Xor(userKeyBytes, key), s_algorithmName)));
+                .Returns<byte[], string, CancellationToken>((key, algorithm, cancellationToken) => Task.FromResult(
+                    Tuple.Create(/*Xor(userKeyBytes, key)*/key, s_algorithmName)));
             keyMock.Setup(k => k.UnwrapKeyAsync(IsNotNull<byte[]>(), s_algorithmName, IsNotNull<CancellationToken>())) // track 1 doesn't pass in the same cancellation token?
-                .Returns<byte[], string, CancellationToken>((wrappedKey, algorithm, cancellationToken) => Task.FromResult(Xor(userKeyBytes, wrappedKey)));
+                .Returns<byte[], string, CancellationToken>((wrappedKey, algorithm, cancellationToken) => Task.FromResult(
+                    /*Xor(userKeyBytes, wrappedKey)*/wrappedKey));
 
             return keyMock;
         }
@@ -362,9 +364,23 @@ namespace Azure.Storage.Queues.Test
                 // encrypt original data manually for comparison
                 EncryptionData encryptionMetadata = parsedEncryptedMessage.EncryptionData;
                 Assert.NotNull(encryptionMetadata, "Never encrypted data.");
-                var explicitlyUnwrappedKey = IsAsync
+
+                var explicitlyUnwrappedContent = IsAsync
                     ? await mockKey.UnwrapKeyAsync(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken).ConfigureAwait(false)
                     : mockKey.UnwrapKey(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken);
+                byte[] explicitlyUnwrappedKey;
+                switch (encryptionMetadata.EncryptionAgent.EncryptionVersion)
+                {
+                    case ClientSideEncryptionVersion.V1_0:
+                        explicitlyUnwrappedKey = explicitlyUnwrappedContent;
+                        break;
+                    case ClientSideEncryptionVersion.V2_0:
+                        explicitlyUnwrappedKey = new Span<byte>(explicitlyUnwrappedContent).Slice(8).ToArray();
+                        break;
+                    default:
+                        throw new Exception();
+                }
+
                 string expectedEncryptedMessage;
                 switch (version)
                 {

@@ -189,9 +189,11 @@ namespace Azure.Storage.Blobs.Test
             // track one had async-only key wrapping
             keyMock.Setup(k => k.WrapKeyAsync(IsNotNull<byte[]>(), IsAny<string>(), IsNotNull<CancellationToken>())) // track 1 doesn't pass in the same cancellation token?
                                                                                                                      // track 1 doesn't pass in the algorithm name, it lets the implementation return the default algorithm it chose
-                .Returns<byte[], string, CancellationToken>((key, algorithm, cancellationToken) => Task.FromResult(Tuple.Create(Xor(userKeyBytes, key), s_algorithmName)));
+                .Returns<byte[], string, CancellationToken>((key, algorithm, cancellationToken) => Task.FromResult(
+                    Tuple.Create(/*Xor(userKeyBytes, key)*/key, s_algorithmName)));
             keyMock.Setup(k => k.UnwrapKeyAsync(IsNotNull<byte[]>(), s_algorithmName, IsNotNull<CancellationToken>())) // track 1 doesn't pass in the same cancellation token?
-                .Returns<byte[], string, CancellationToken>((wrappedKey, algorithm, cancellationToken) => Task.FromResult(Xor(userKeyBytes, wrappedKey)));
+                .Returns<byte[], string, CancellationToken>((wrappedKey, algorithm, cancellationToken) => Task.FromResult(
+                    /*Xor(userKeyBytes, wrappedKey)*/wrappedKey));
 
             return keyMock;
         }
@@ -276,9 +278,14 @@ namespace Azure.Storage.Blobs.Test
             Assert.NotNull(encryptionMetadata, "Never encrypted data.");
             Assert.AreEqual(ClientSideEncryptionVersion.V2_0, encryptionMetadata.EncryptionAgent.EncryptionVersion);
 
-            var explicitlyUnwrappedKey = IsAsync // can't instrument this
+            var explicitlyUnwrappedContent = IsAsync // can't instrument this
                 ? await keyEncryptionKey.UnwrapKeyAsync(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken).ConfigureAwait(false)
                 : keyEncryptionKey.UnwrapKey(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken);
+
+            var explicitlyUnwrappedVersion = new ReadOnlySpan<byte>(explicitlyUnwrappedContent).Slice(0, V2.WrappedDataVersionLength).ToArray();
+            var explicitlyUnwrappedKey = new ReadOnlySpan<byte>(explicitlyUnwrappedContent).Slice(V2.WrappedDataVersionLength).ToArray();
+
+            Assert.AreEqual("2.0", Encoding.UTF8.GetString(explicitlyUnwrappedVersion).Trim('\0'));
 
             return EncryptDataV2_0(
                 plaintext,

@@ -650,6 +650,8 @@ namespace Azure.Storage
                 public const int NonceSize = 12;
                 public const int TagSize = 16;
                 public const int EncryptionRegionTotalSize = NonceSize + EncryptionRegionDataSize + TagSize;
+
+                public const int WrappedDataVersionLength = 8;
             }
 
             public const string BCRYPT_AES_ALGORITHM = "AES";

@@ -349,7 +349,7 @@ namespace Azure.Storage.Cryptography
         /// Exceptions thrown based on implementations of <see cref="IKeyEncryptionKey"/> and
         /// <see cref="IKeyEncryptionKeyResolver"/>.
         /// </exception>
-        private async Task<Memory<byte>> GetContentEncryptionKeyAsync(
+        internal async Task<Memory<byte>> GetContentEncryptionKeyAsync(
             EncryptionData encryptionData,
             bool async,
             CancellationToken cancellationToken)
@@ -400,14 +400,18 @@ namespace Azure.Storage.Cryptography
                 // v2.0 binds content encryption key with content encryption algorithm under a single keywrap.
                 // Separate key from algorithm ID and validate ID match
                 case ClientSideEncryptionVersion.V2_0:
-                    string unwrappedAlgorithmString = Encoding.UTF8.GetString(new ReadOnlySpan<byte>(unwrappedContent)
-                        .Slice(Constants.ClientSideEncryption.EncryptionKeySizeBits / 8).ToArray());
-                    if (new ClientSideEncryptionAlgorithm(unwrappedAlgorithmString) != encryptionData.EncryptionAgent.EncryptionAlgorithm)
+                    string unwrappedProtocolString = Encoding.UTF8.GetString(
+                        unwrappedContent,
+                        index: 0,
+                        count: Constants.ClientSideEncryption.V2.WrappedDataVersionLength)
+                        // remove empty padding from fixed-length space for version string
+                        .Trim('\0');
+                    if (unwrappedProtocolString != encryptionData.EncryptionAgent.EncryptionVersion.Serialize())
                     {
-                        throw new CryptographicException("Unexpected unwrapped content encryption algorithm.");
+                        throw new CryptographicException("Encryption metadata has been tampered.");
                     }
                     unwrappedKey = new Memory<byte>(unwrappedContent)
-                        .Slice(0, Constants.ClientSideEncryption.EncryptionKeySizeBits / 8).ToArray();
+                        .Slice(Constants.ClientSideEncryption.V2.WrappedDataVersionLength).ToArray();
                     break;
                 default:
                     throw Errors.InvalidArgument(nameof(encryptionData));
