@@ -37,6 +37,12 @@
       $(NoWarn);
       AZC0006;
       AZC0007;
+
+      <!--
+        Netstandard2.1 issues a warning to use the Memory<byte> overloads on Stream reads and writes, but netstandard2.0 does not have those overloads.
+        Unscalable to conditionally compile every read/write call, so just suppress.
+      -->
+      CA1835
     </NoWarn>
 
     <!--
