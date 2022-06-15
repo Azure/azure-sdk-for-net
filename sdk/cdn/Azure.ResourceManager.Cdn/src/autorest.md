@@ -225,6 +225,9 @@ directive:
   - from: afdx.json
     where: $.definitions
     transform: >
+      $.CustomerCertificateParameters.properties.expirationDate['format'] = 'date-time';
+      $.ManagedCertificateParameters.properties.expirationDate['format'] = 'date-time';
+      $.DomainValidationProperties.properties.expirationDate['format'] = 'date-time';
       $.ActivatedResourceReference.properties.id['x-ms-format'] = 'arm-id';
       $.Usage.properties.id['x-ms-format'] = 'arm-id';
       $.AfdPurgeParameters['x-ms-client-name'] = 'FrontDoorPurgeParameters';
@@ -250,6 +253,7 @@ directive:
       $.CheckEndpointNameAvailabilityInput['x-ms-client-name'] = 'EndpointNameAvailabilityContent';
       $.CheckEndpointNameAvailabilityOutput['x-ms-client-name'] = 'EndpointNameAvailabilityResult';
       $.SecurityPolicyWebApplicationFirewallParameters['x-ms-client-name'] = 'SecurityPolicyWebApplicationFirewall';
+      $.ActivatedResourceReference['x-ms-client-name'] = 'FrontDoorActivatedResourceData';
       $.AFDDomainUpdatePropertiesParameters.properties.azureDnsZone['x-ms-client-name'] = 'dnsZone';
       $.AFDOriginUpdatePropertiesParameters.properties.azureOrigin['x-ms-client-name'] = 'origin';
       $.AFDOriginGroupUpdatePropertiesParameters.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes['x-ms-client-name'] = 'trafficRestorationTimeInMinutes';

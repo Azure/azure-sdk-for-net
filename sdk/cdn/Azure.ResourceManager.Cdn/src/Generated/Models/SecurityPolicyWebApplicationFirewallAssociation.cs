@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of SecurityPolicyWebApplicationFirewallAssociation. </summary>
         public SecurityPolicyWebApplicationFirewallAssociation()
         {
-            Domains = new ChangeTrackingList<ActivatedResourceReference>();
+            Domains = new ChangeTrackingList<FrontDoorActivatedResourceData>();
             PatternsToMatch = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SecurityPolicyWebApplicationFirewallAssociation. </summary>
         /// <param name="domains"> List of domains. </param>
         /// <param name="patternsToMatch"> List of paths. </param>
-        internal SecurityPolicyWebApplicationFirewallAssociation(IList<ActivatedResourceReference> domains, IList<string> patternsToMatch)
+        internal SecurityPolicyWebApplicationFirewallAssociation(IList<FrontDoorActivatedResourceData> domains, IList<string> patternsToMatch)
         {
             Domains = domains;
             PatternsToMatch = patternsToMatch;
         }
 
         /// <summary> List of domains. </summary>
-        public IList<ActivatedResourceReference> Domains { get; }
+        public IList<FrontDoorActivatedResourceData> Domains { get; }
         /// <summary> List of paths. </summary>
         public IList<string> PatternsToMatch { get; }
     }
