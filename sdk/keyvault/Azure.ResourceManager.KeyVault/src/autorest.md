@@ -111,6 +111,7 @@ directive:
       $.VaultCheckNameAvailabilityParameters['x-ms-client-name'] = 'VaultNameAvailabilityParameters';
       $.NetworkRuleSet.properties.bypass['x-ms-enum']['name'] = 'NetworkRuleBypassOption';
       $.NetworkRuleSet['x-ms-client-name'] = 'VaultNetworkRuleSet';
+      $.AccessPolicyEntry['x-ms-client-name'] = 'AccessPolicyData';
   - rename-model:
       from: MHSMIPRule
       to: MhsmIPRule

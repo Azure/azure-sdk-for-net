@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             Guid tenantId = default;
             KeyVaultSku sku = default;
-            Optional<IList<AccessPolicyEntry>> accessPolicies = default;
+            Optional<IList<AccessPolicyData>> accessPolicies = default;
             Optional<Uri> vaultUri = default;
             Optional<string> hsmPoolResourceId = default;
             Optional<bool> enabledForDeployment = default;
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AccessPolicyEntry> array = new List<AccessPolicyEntry>();
+                    List<AccessPolicyData> array = new List<AccessPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessPolicyEntry.DeserializeAccessPolicyEntry(item));
+                        array.Add(AccessPolicyData.DeserializeAccessPolicyData(item));
                     }
                     accessPolicies = array;
                     continue;

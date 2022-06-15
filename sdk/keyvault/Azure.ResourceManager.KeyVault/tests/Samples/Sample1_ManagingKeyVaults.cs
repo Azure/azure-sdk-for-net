@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
                 Certificates = { new CertificatePermission("all") },
                 Storage = { new StoragePermission("all") },
             };
-            AccessPolicyEntry AccessPolicy = new AccessPolicyEntry(tenantIdGuid, objectId, permissions);
+            AccessPolicyData AccessPolicy = new AccessPolicyData(tenantIdGuid, objectId, permissions);
 
             VaultProperties VaultProperties = new VaultProperties(tenantIdGuid, new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
             VaultProperties.EnabledForDeployment = true;

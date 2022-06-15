@@ -262,9 +262,9 @@ namespace Azure.ResourceManager.KeyVault
 }
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class AccessPolicyEntry
+    public partial class AccessPolicyData
     {
-        public AccessPolicyEntry(System.Guid tenantId, string objectId, Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions permissions) { }
+        public AccessPolicyData(System.Guid tenantId, string objectId, Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions permissions) { }
         public System.Guid? ApplicationId { get { throw null; } set { } }
         public string ObjectId { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions Permissions { get { throw null; } set { } }
@@ -739,13 +739,13 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class VaultAccessPolicyParameters : Azure.ResourceManager.Models.ResourceData
     {
         public VaultAccessPolicyParameters(Azure.ResourceManager.KeyVault.Models.VaultAccessPolicyProperties properties) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.AccessPolicyEntry> AccessPolicies { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.AccessPolicyData> AccessPolicies { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
     }
     public partial class VaultAccessPolicyProperties
     {
-        public VaultAccessPolicyProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.AccessPolicyEntry> accessPolicies) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.AccessPolicyEntry> AccessPolicies { get { throw null; } }
+        public VaultAccessPolicyProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.AccessPolicyData> accessPolicies) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.AccessPolicyData> AccessPolicies { get { throw null; } }
     }
     public enum VaultCreateMode
     {
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class VaultPatchProperties
     {
         public VaultPatchProperties() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.AccessPolicyEntry> AccessPolicies { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.AccessPolicyData> AccessPolicies { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.VaultPatchMode? CreateMode { get { throw null; } set { } }
         public bool? EnabledForDeployment { get { throw null; } set { } }
         public bool? EnabledForDiskEncryption { get { throw null; } set { } }
@@ -816,7 +816,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class VaultProperties
     {
         public VaultProperties(System.Guid tenantId, Azure.ResourceManager.KeyVault.Models.KeyVaultSku sku) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.AccessPolicyEntry> AccessPolicies { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.AccessPolicyData> AccessPolicies { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.VaultCreateMode? CreateMode { get { throw null; } set { } }
         public bool? EnabledForDeployment { get { throw null; } set { } }
         public bool? EnabledForDiskEncryption { get { throw null; } set { } }

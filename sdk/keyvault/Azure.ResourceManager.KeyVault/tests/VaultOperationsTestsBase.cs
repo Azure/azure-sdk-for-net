@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public AzureLocation Location { get; set; }
 
         public SubscriptionResource Subscription { get; private set; }
-        public AccessPolicyEntry AccessPolicy { get; internal set; }
+        public AccessPolicyData AccessPolicy { get; internal set; }
         public string ResGroupName { get; internal set; }
         public Dictionary<string, string> Tags { get; internal set; }
         public Guid TenantIdGuid { get; internal set; }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Certificates = { new CertificatePermission("all") },
                 Storage = { new StoragePermission("all") },
             };
-            AccessPolicy = new AccessPolicyEntry(TenantIdGuid, ObjectId, permissions);
+            AccessPolicy = new AccessPolicyData(TenantIdGuid, ObjectId, permissions);
 
             VaultProperties = new VaultProperties(TenantIdGuid, new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
 
