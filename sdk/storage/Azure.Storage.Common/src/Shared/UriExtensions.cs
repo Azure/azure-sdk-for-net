@@ -113,7 +113,7 @@ namespace Azure.Storage
         /// <returns>True if using IP Endpoint style.</returns>
         public static bool IsHostIPEndPointStyle(this Uri uri) =>
             (!string.IsNullOrEmpty(uri.Host) &&
-            uri.Host.IndexOf(".", StringComparison.InvariantCulture) >= 0 &&
+            uri.Host.Contains(".") &&
             IPAddress.TryParse(uri.Host, out _)) ||
             Constants.Sas.PathStylePorts.Contains(uri.Port);
 

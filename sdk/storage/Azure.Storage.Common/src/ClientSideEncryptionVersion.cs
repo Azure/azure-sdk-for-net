@@ -12,7 +12,12 @@ namespace Azure.Storage
         /// <summary>
         /// 1.0
         /// </summary>
-        V1_0 = 1
+        V1_0 = 1,
+
+        /// <summary>
+        /// 2.0
+        /// </summary>
+        V2_0 = 2
     }
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 }
