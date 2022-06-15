@@ -60,7 +60,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // TODO: Iterate only interested fields. Ref: https://github.com/Azure/azure-sdk-for-net/pull/14254#discussion_r470907560
             for (int i = 0; i < UnMappedTags.Length; i++)
             {
-                destination.Add(UnMappedTags[i].Key, UnMappedTags[i].Value?.ToString());
+                var tag = UnMappedTags[i];
+                if (tag.Key.Length <= SchemaConstants.KVP_MaxKeyLength && tag.Value != null)
+                {
+                    // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
+
+                    destination.Add(tag.Key, tag.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength));
+                }
             }
         }
 

@@ -132,17 +132,17 @@
   {{/definition}}
 {{/implements}}
 
-{{#remarks}}
-<h5 id="{{id}}_remarks">{{__global.remarks}}</h5>
-<div class="markdown level1 remarks">{{{remarks}}}</div>
-{{/remarks}}
-
 {{#example.0}}
 <h5 id="{{id}}_examples">{{__global.examples}}</h5>
 {{/example.0}}
 {{#example}}
 {{{.}}}
 {{/example}}
+
+{{#remarks}}
+<h5 id="{{id}}_remarks">{{__global.remarks}}</h5>
+<div class="markdown level1 remarks">{{{remarks}}}</div>
+{{/remarks}}
 
 {{#exceptions.0}}
 <h5 class="exceptions">{{__global.exceptions}}</h5>
