@@ -13,7 +13,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Producer;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -659,6 +661,134 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public async Task ProducerCanPublishAfterIdle()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var partitionCount = 4;
+            var eventsPerPartition = 20;
+            var batchCount = (partitionCount * eventsPerPartition);
+            var expectedCount = (batchCount * 2);
+            var events = EventGenerator.CreateSmallEvents(expectedCount).ToList();
+            var handlerEvents = new ConcurrentBag<EventWithPartition>();
+            var readEvents = new List<EventWithPartition>();
+            var initialCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var idleCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var afterIdleCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var mockLogger = new Mock<EventHubsEventSource>();
+
+            mockLogger
+                .Setup(log => log.BufferedProducerIdleStart(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>()))
+                .Callback(() => idleCompletionSource.TrySetResult(true));
+
+            await using var scope = await EventHubScope.CreateAsync(partitionCount);
+            await using var producer = new EventHubBufferedProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName);
+
+            var partitions = await producer.GetPartitionIdsAsync(cancellationSource.Token);
+
+            producer.Logger = mockLogger.Object;
+
+            producer.SendEventBatchSucceededAsync += args =>
+            {
+                foreach (var item in args.EventBatch.Select(item => new EventWithPartition(args.PartitionId, item)))
+                {
+                    handlerEvents.Add(item);
+                }
+
+                if (handlerEvents.Count >= batchCount)
+                {
+                    initialCompletionSource.TrySetResult(true);
+                }
+
+                if (handlerEvents.Count >= expectedCount)
+                {
+                    afterIdleCompletionSource.TrySetResult(true);
+                }
+
+                return Task.CompletedTask;
+            };
+
+            producer.SendEventBatchFailedAsync += args =>
+            {
+                ExceptionDispatchInfo.Capture(args.Exception).Throw();
+                return Task.CompletedTask;
+            };
+
+            await producer.EnqueueEventsAsync(events.Take(batchCount), cancellationSource.Token);
+
+            // Avoid flushing and wait for publishing to complete naturally.
+
+            try
+            {
+                await initialCompletionSource.Task.AwaitWithCancellation(cancellationSource.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                Assert.Fail($"The handler did not receive all events.  {handlerEvents.Count} of {events.Count} were captured.");
+            }
+
+            // Wait for a short period to allow the producer to go idle and then
+            // enqueue all events again.
+
+            await idleCompletionSource.Task.AwaitWithCancellation(cancellationSource.Token);
+            await Task.Delay(TimeSpan.FromSeconds(2), cancellationSource.Token);
+            await producer.EnqueueEventsAsync(events.Skip(batchCount), cancellationSource.Token);
+
+            try
+            {
+                await afterIdleCompletionSource.Task.AwaitWithCancellation(cancellationSource.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                Assert.Fail($"The handler did not receive all events after it was idle.  {handlerEvents.Count} of {events.Count} were captured.");
+            }
+
+            // Ensure that publishing completed with the expected state.
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+            Assert.That(handlerEvents.Count, Is.EqualTo(expectedCount), "All events should have been sent.");
+
+            // Because the handlers are fired in the background before state is updated, it is possible that the buffered event count may not have been fully updated
+            // when the handler sets the completion source.  Allow for a short spin and back-off if needed to allow it to settle.
+
+            await PollForZeroBufferedEventCount(producer);
+            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
+
+            // Read back the events and ensure all were successfully published.
+
+            await using var consumerClient = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName);
+
+            await foreach (var partitionEvent in consumerClient.ReadEventsAsync(cancellationSource.Token))
+            {
+                readEvents.Add(new EventWithPartition(partitionEvent.Partition.PartitionId, partitionEvent.Data));
+
+                if (readEvents.Count >= expectedCount)
+                {
+                    break;
+                }
+            }
+
+            // Ensure that all sent events were read back.
+
+            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
+            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
+
+            for (var index = 0; index < readEvents.Count; ++index)
+            {
+                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubBufferedProducerClient" /> is able to publish events.
+        /// </summary>
+        ///
+        [Test]
         public async Task FlushSendsAllEventsAndWaitsForHandlersWithDefaultOptions()
         {
             using var cancellationSource = new CancellationTokenSource();
@@ -1110,6 +1240,192 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(producer.IsClosed, Is.True, "The producer should report that it is closed.");
             Assert.That(producer.IsPublishing, Is.False, "The producer should report that it is not publishing.");
             Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubBufferedProducerClient" /> is able to publish events.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CloseSendsEventsWhenFlushingAfterIdle()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var closeCount = 0;
+            var handlerInvokedAfterClose = false;
+            var partitionCount = 2;
+            var eventsPerPartition = 50;
+            var expectedEvents = (eventsPerPartition * partitionCount);
+            var events = EventGenerator.CreateSmallEvents(expectedEvents).ToList();
+            var finalEvent = EventGenerator.CreateSmallEvents(1).First();
+            var handlerEvents = new ConcurrentBag<EventWithPartition>();
+            var readEvents = new List<EventWithPartition>();
+            var initialSendCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var idleCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var options = new EventHubBufferedProducerClientOptions { MaximumConcurrentSends = partitionCount };
+            var mockLogger = new Mock<EventHubsEventSource>();
+
+            mockLogger
+                .Setup(log => log.BufferedProducerIdleStart(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>()))
+                .Callback(() => idleCompletionSource.TrySetResult(true));
+
+            await using var scope = await EventHubScope.CreateAsync(partitionCount);
+            await using var producer = new EventHubBufferedProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName, options);
+
+            producer.Logger = mockLogger.Object;
+
+            producer.SendEventBatchSucceededAsync += args =>
+            {
+                // If close was already completed, do not capture the
+                // events; the handler should not have been invoked.
+
+                if (closeCount > 0)
+                {
+                    handlerInvokedAfterClose = true;
+                    return Task.CompletedTask;
+                }
+
+                foreach (var item in args.EventBatch.Select(item => new EventWithPartition(args.PartitionId, item)))
+                {
+                    handlerEvents.Add(item);
+                }
+
+                if (handlerEvents.Count >= expectedEvents)
+                {
+                    initialSendCompletionSource.TrySetResult(true);
+                }
+
+                return Task.CompletedTask;
+            };
+
+            producer.SendEventBatchFailedAsync += args =>
+            {
+                ExceptionDispatchInfo.Capture(args.Exception).Throw();
+                return Task.CompletedTask;
+            };
+
+            // Enqueue and wait for the initial send to complete.
+
+            await producer.EnqueueEventsAsync(events, cancellationSource.Token);
+            await initialSendCompletionSource.Task.AwaitWithCancellation(cancellationSource.Token);
+
+            // Wait for the producer to go idle and then enqueue another event.
+
+            await idleCompletionSource.Task.AwaitWithCancellation(cancellationSource.Token);
+            await Task.Delay(TimeSpan.FromSeconds(2), cancellationSource.Token);
+
+            await producer.EnqueueEventAsync(finalEvent, cancellationSource.Token);
+            await producer.CloseAsync(flush: true, cancellationSource.Token);
+
+            Interlocked.Increment(ref closeCount);
+
+            // Ensure that publishing completed with the expected state.
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+            Assert.That(handlerInvokedAfterClose, Is.False, "The handler should not have been invoked after the CloseAsync call completed.");
+            Assert.That(producer.IsClosed, Is.True, "The producer should report that it is closed.");
+            Assert.That(producer.IsPublishing, Is.False, "The producer should report that it is not publishing.");
+            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
+            Assert.That(handlerEvents.Count, Is.EqualTo(events.Count + 1), "All events should have been sent.");
+
+            // Read back the events and ensure all were successfully published.
+
+            await using var consumerClient = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName);
+
+            await foreach (var partitionEvent in consumerClient.ReadEventsAsync(cancellationSource.Token))
+            {
+                readEvents.Add(new EventWithPartition(partitionEvent.Partition.PartitionId, partitionEvent.Data));
+
+                if (readEvents.Count >= events.Count + 1)
+                {
+                    break;
+                }
+            }
+
+            // Ensure that all sent events were read back.
+
+            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
+            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
+
+            for (var index = 0; index < readEvents.Count; ++index)
+            {
+                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubBufferedProducerClient" /> is able to publish events.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CloseIsSuccessfulWhileIdle()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var handlerEvents = 0;
+            var partitionCount = 2;
+            var eventsPerPartition = 50;
+            var expectedEvents = (eventsPerPartition * partitionCount);
+            var events = EventGenerator.CreateSmallEvents(expectedEvents).ToList();
+            var initialSendCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var idleCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var options = new EventHubBufferedProducerClientOptions { MaximumConcurrentSends = partitionCount };
+            var mockLogger = new Mock<EventHubsEventSource>();
+
+            mockLogger
+                .Setup(log => log.BufferedProducerIdleStart(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>()))
+                .Callback(() => idleCompletionSource.TrySetResult(true));
+
+            await using var scope = await EventHubScope.CreateAsync(partitionCount);
+            await using var producer = new EventHubBufferedProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName, options);
+
+            producer.Logger = mockLogger.Object;
+
+            producer.SendEventBatchSucceededAsync += args =>
+            {
+                handlerEvents += args.EventBatch.Count;
+
+                if (handlerEvents >= expectedEvents)
+                {
+                    initialSendCompletionSource.TrySetResult(true);
+                }
+
+                return Task.CompletedTask;
+            };
+
+            producer.SendEventBatchFailedAsync += args =>
+            {
+                ExceptionDispatchInfo.Capture(args.Exception).Throw();
+                return Task.CompletedTask;
+            };
+
+            // Enqueue and wait for the initial send to complete.
+
+            await producer.EnqueueEventsAsync(events, cancellationSource.Token);
+            await initialSendCompletionSource.Task.AwaitWithCancellation(cancellationSource.Token);
+
+            // Wait for the producer to go idle and then close.
+
+            await idleCompletionSource.Task.AwaitWithCancellation(cancellationSource.Token);
+            await Task.Delay(TimeSpan.FromSeconds(2), cancellationSource.Token);
+            await producer.CloseAsync(flush: true, cancellationSource.Token);
+
+            // Ensure that publishing completed with the expected state.
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+            Assert.That(producer.IsClosed, Is.True, "The producer should report that it is closed.");
+            Assert.That(producer.IsPublishing, Is.False, "The producer should report that it is not publishing.");
+            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
+            Assert.That(handlerEvents, Is.EqualTo(events.Count), "All events should have been sent.");
         }
 
         /// <summary>
