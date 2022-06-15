@@ -37,5 +37,12 @@ namespace Azure.ResourceManager.AppPlatform.Tests
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
         }
+
+        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgName)
+        {
+            ResourceGroupData input = new ResourceGroupData(AzureLocation.EastUS2);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
+            return lro.Value;
+        }
     }
 }
