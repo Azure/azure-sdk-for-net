@@ -5,68 +5,74 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "228",
+        "Content-Length": "195",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-213298de27f21648ada1d703e4ff10a0-efedca5b984e5b49-00",
-        "User-Agent": [
-          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
-          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
-        ],
+        "traceparent": "00-96ed019d6df9592898975f17b1a21999-509e29a62e0d5e3f-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20220414.1 (.NET 6.0.4; Microsoft Windows 10.0.22000)",
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "caa5d2d5d739444ef901f8a19c0e752f",
+        "x-ms-client-request-id": "7ff05b61ec385af3c2750bcdba94760a",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "{\u0022value\u0022:{\u0022commentValue\u0022:\u0022Feedback created in a .NET test.\u0022},\u0022feedbackType\u0022:\u0022Comment\u0022,\u0022metricId\u0022:\u0022390d1139-98fb-45af-b831-8d5ad61b150a\u0022,\u0022dimensionFilter\u0022:{\u0022dimension\u0022:{\u0022region\u0022:\u0022Cairo\u0022,\u0022category\u0022:\u0022Shoes Handbags \u0026 Sunglasses\u0022}}}",
+      "RequestBody": {
+        "value": {
+          "commentValue": "Feedback created in a .NET test."
+        },
+        "feedbackType": "Comment",
+        "metricId": "b6c0649c-0c51-4aa6-82b6-3c3b0aa55066",
+        "dimensionFilter": {
+          "dimension": {
+            "Dim1": "JPN",
+            "Dim2": "JP"
+          }
+        }
+      },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "apim-request-id": "506fbe56-c40d-43b3-90c6-acb0b092e877",
+        "apim-request-id": "f1d003a0-51ce-4948-942e-1879e02ffecc",
         "Content-Length": "0",
-        "Date": "Thu, 18 Nov 2021 17:48:47 GMT",
-        "Location": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/feedback/metric/320d750d-e0a0-4881-8427-0d9fcf3e0631",
+        "Date": "Tue, 19 Apr 2022 04:03:28 GMT",
+        "Location": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/feedback/metric/f0c9de0d-deb6-4ed8-8a36-cdd6796346f0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "348",
-        "X-Request-ID": "506fbe56-c40d-43b3-90c6-acb0b092e877"
+        "x-envoy-upstream-service-time": "434",
+        "X-Request-ID": "f1d003a0-51ce-4948-942e-1879e02ffecc"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/feedback/metric/320d750d-e0a0-4881-8427-0d9fcf3e0631",
+      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/feedback/metric/f0c9de0d-deb6-4ed8-8a36-cdd6796346f0",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-213298de27f21648ada1d703e4ff10a0-0587ebdb6885b142-00",
-        "User-Agent": [
-          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
-          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
-        ],
+        "traceparent": "00-96ed019d6df9592898975f17b1a21999-d5be1290b4d63181-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20220414.1 (.NET 6.0.4; Microsoft Windows 10.0.22000)",
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "d1cd5be8654931dd3ed930226411e309",
+        "x-ms-client-request-id": "3e3331134d9539cfd5b691e358f57f09",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "97eb6d81-5fa3-4d09-9001-648c43462310",
-        "Content-Length": "355",
+        "apim-request-id": "a7684bf5-c7d1-4c6e-802f-4acd5e8abddc",
+        "Content-Length": "322",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 17:48:47 GMT",
+        "Date": "Tue, 19 Apr 2022 04:03:28 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "108",
-        "X-Request-ID": "97eb6d81-5fa3-4d09-9001-648c43462310"
+        "x-envoy-upstream-service-time": "140",
+        "X-Request-ID": "a7684bf5-c7d1-4c6e-802f-4acd5e8abddc"
       },
       "ResponseBody": {
-        "feedbackId": "320d750d-e0a0-4881-8427-0d9fcf3e0631",
-        "createdTime": "2021-11-18T17:48:47.887Z",
+        "feedbackId": "f0c9de0d-deb6-4ed8-8a36-cdd6796346f0",
+        "createdTime": "2022-04-19T04:03:28.658Z",
         "userPrincipal": "foo@contoso.com",
-        "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
+        "metricId": "b6c0649c-0c51-4aa6-82b6-3c3b0aa55066",
         "dimensionFilter": {
           "dimension": {
-            "region": "Cairo",
-            "category": "Shoes Handbags \u0026 Sunglasses"
+            "Dim1": "JPN",
+            "Dim2": "JP"
           }
         },
         "feedbackType": "Comment",
@@ -77,11 +83,11 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-11-18T09:48:48.1387855-08:00",
+    "DateTimeOffsetNow": "2022-04-18T21:03:29.0439513-07:00",
     "METRICSADVISOR_ACCOUNT_NAME": "ga-metrics-advisor",
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
-    "RandomSeed": "1781739222"
+    "RandomSeed": "131066421"
   }
 }

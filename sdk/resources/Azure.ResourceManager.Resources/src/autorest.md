@@ -16,7 +16,6 @@ public-clients: false
 head-as-boolean: false
 
 request-path-to-parent:
-  /{scope}/providers/Microsoft.Resources/links: /{linkId}
   # setting these to the same parent will automatically merge these operations
   /providers/Microsoft.Resources/deployments/{deploymentName}/whatIf: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
   /subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
@@ -45,16 +44,11 @@ override-operation-name:
   Deployments_WhatIfAtSubscriptionScope: WhatIf
   Deployments_WhatIfAtTenantScope: WhatIf
   Deployments_CheckExistenceAtScope: CheckExistence
-  JitRequests_ListBySubscription: GetJitRequestDefinitions
+  jitRequests_ListBySubscription: GetJitRequestDefinitions
   Deployments_CalculateTemplateHash: CalculateDeploymentTemplateHash 
 
 operation-groups-to-omit:
    Providers;ProviderResourceTypes;Resources;ResourceGroups;Tags;Subscriptions;Tenants
-
-#needed until we finish https://github.com/Azure/autorest.csharp/issues/2157
-no-property-type-replacement:
-  ArmDeploymentScriptPropertiesBase;ArmDeploymentPropertiesExtended
-#end
 
 rename-rules:
   CPU: Cpu

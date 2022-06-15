@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Cdn.Tests
             ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdCustomDomainName = Recording.GenerateAssetName("AFDCustomDomain-");
             string afdHostName = "customdomain4afd-1.azuretest.net";
-            AfdCustomDomainResource afdCustomDomain = await CreateAfdCustomDomain(afdProfileResource, afdCustomDomainName, afdHostName);
+            FrontDoorCustomDomainResource afdCustomDomain = await CreateAfdCustomDomain(afdProfileResource, afdCustomDomainName, afdHostName);
             Assert.AreEqual(afdCustomDomainName, afdCustomDomain.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfileResource.GetAfdCustomDomains().CreateOrUpdateAsync(WaitUntil.Completed, null, afdCustomDomain.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfileResource.GetAfdCustomDomains().CreateOrUpdateAsync(WaitUntil.Completed, afdCustomDomainName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfileResource.GetFrontDoorCustomDomains().CreateOrUpdateAsync(WaitUntil.Completed, null, afdCustomDomain.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfileResource.GetFrontDoorCustomDomains().CreateOrUpdateAsync(WaitUntil.Completed, afdCustomDomainName, null));
         }
 
         [TestCase]
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdHostName = "customdomain4afd-2.azuretest.net";
             _ = await CreateAfdCustomDomain(afdProfileResource, afdCustomDomainName, afdHostName);
             int count = 0;
-            await foreach (var tempAfdCustomDomain in afdProfileResource.GetAfdCustomDomains().GetAllAsync())
+            await foreach (var tempAfdCustomDomain in afdProfileResource.GetFrontDoorCustomDomains().GetAllAsync())
             {
                 count++;
             }
@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.Cdn.Tests
             ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdCustomDomainName = Recording.GenerateAssetName("AFDCustomDomain-");
             string afdHostName = "customdomain4afd-3.azuretest.net";
-            AfdCustomDomainResource AfdCustomDomain = await CreateAfdCustomDomain(afdProfileResource, afdCustomDomainName, afdHostName);
-            AfdCustomDomainResource getAfdCustomDomain = await afdProfileResource.GetAfdCustomDomains().GetAsync(afdCustomDomainName);
+            FrontDoorCustomDomainResource AfdCustomDomain = await CreateAfdCustomDomain(afdProfileResource, afdCustomDomainName, afdHostName);
+            FrontDoorCustomDomainResource getAfdCustomDomain = await afdProfileResource.GetFrontDoorCustomDomains().GetAsync(afdCustomDomainName);
             ResourceDataHelper.AssertValidAfdCustomDomain(AfdCustomDomain, getAfdCustomDomain);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfileResource.GetAfdCustomDomains().GetAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfileResource.GetFrontDoorCustomDomains().GetAsync(null));
         }
     }
 }

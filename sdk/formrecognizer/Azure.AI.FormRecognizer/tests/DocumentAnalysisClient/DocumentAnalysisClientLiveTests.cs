@@ -20,8 +20,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
+    [IgnoreServiceError(400, "InvalidRequest", Message = "Content is not accessible: Invalid data URL", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28923")]
     [ClientTestFixture(
-     DocumentAnalysisClientOptions.ServiceVersion.V2022_01_30_preview)]
+     DocumentAnalysisClientOptions.ServiceVersion.V2022_06_30_preview)]
     public class DocumentAnalysisClientLiveTests : DocumentAnalysisLiveTestBase
     {
         /// <summary>
@@ -61,11 +62,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.IsTrue(operation.HasValue);
 
+            AnalyzeResult result = operation.Value;
+
             ValidateAnalyzeResult(
-                operation.Value,
+                result,
                 "prebuilt-businessCard",
                 expectedFirstPageNumber: 1,
                 expectedLastPageNumber: 1);
+
+            Assert.AreEqual(5, result.Paragraphs.Count);
+
+            // Check just one paragraph to make sure we're parsing them.
+
+            DocumentParagraph sampleParagraph = result.Paragraphs[0];
+
+            Assert.AreEqual("Dr. Avery Smith Senior Researcher Cloud & Al Department", sampleParagraph.Content);
+            Assert.IsNull(sampleParagraph.Role);
 
             AnalyzedDocument document = operation.Value.Documents.Single();
 
@@ -131,7 +143,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var addresses = document.Fields["Addresses"].AsList();
             Assert.AreEqual(1, addresses.Count);
-            Assert.AreEqual("2 Kingdom Street Paddington, London, W2 6BD", addresses.FirstOrDefault().AsString());
+            Assert.AreEqual("2 Kingdom Street\nPaddington, London, W2 6BD", addresses.FirstOrDefault().AsString());
 
             var companyNames = document.Fields["CompanyNames"].AsList();
             Assert.AreEqual(1, companyNames.Count);
@@ -246,6 +258,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual(1, page.PageNumber);
             Assert.AreEqual(LengthUnit.Pixel, page.Unit);
             Assert.AreEqual(1700, page.Width);
+            Assert.AreEqual(DocumentPageKind.Document, page.Kind);
 
             Assert.IsNotNull(document.Fields);
             var name = "PurchaseOrderNumber";
@@ -276,6 +289,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             AnalyzeResult result = operation.Value;
             AnalyzedDocument document = result.Documents.Single();
             DocumentPage page = result.Pages.Single();
+
+            Assert.AreEqual(DocumentPageKind.Document, page.Kind);
 
             ValidateAnalyzeResult(
                 result,
@@ -351,7 +366,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [Ignore("Service error. Issue https://github.com/Azure/azure-sdk-for-net/issues/24995")]
         [TestCase(true)]
         [TestCase(false)]
         public async Task StartAnalyzeDocumentWithCustomModelCanParseMultipageFormWithBlankPage(bool useStream)
@@ -400,12 +414,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentPage blankPage = result.Pages[1];
 
+            Assert.AreEqual(DocumentPageKind.Document, blankPage.Kind);
             Assert.AreEqual(0, blankPage.Lines.Count);
             Assert.AreEqual(0, blankPage.Words.Count);
         }
 
         [RecordedTest]
-        [Ignore("Service error. Issue https://github.com/Azure/azure-sdk-for-net/issues/24995")]
         public async Task StartAnalyzeDocumentWithCustomModelCanParseDifferentTypeOfForm()
         {
             var client = CreateDocumentAnalysisClient();
@@ -513,7 +527,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 expectedFirstPageNumber: 1,
                 expectedLastPageNumber: 1);
 
-            Assert.IsEmpty(result.Entities);
+            Assert.IsEmpty(result.Paragraphs);
             Assert.IsEmpty(result.KeyValuePairs);
             Assert.IsEmpty(result.Styles);
             Assert.IsEmpty(result.Tables);
@@ -524,6 +538,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentPage blankPage = result.Pages.Single();
 
+            Assert.AreEqual(DocumentPageKind.Document, blankPage.Kind);
             Assert.IsEmpty(blankPage.Lines);
             Assert.IsEmpty(blankPage.Words);
             Assert.IsEmpty(blankPage.SelectionMarks);
@@ -595,13 +610,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the form. We are not testing the service here, but the SDK.
 
+            Assert.AreEqual(DocumentPageKind.Document, page.Kind);
             Assert.AreEqual(LengthUnit.Pixel, page.Unit);
             Assert.AreEqual(1700, page.Width);
             Assert.AreEqual(2200, page.Height);
             Assert.AreEqual(0, page.Angle);
             Assert.AreEqual(54, page.Lines.Count);
-
-            var lines = page.Lines.ToList();
 
             foreach (DocumentLine line in page.Lines)
             {
@@ -614,25 +628,34 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 Assert.GreaterOrEqual(word.Confidence, 0);
             }
 
-            DocumentStyle style = result.Styles.First();
+            // TODO: re-enable once service-side issue is fixed (https://github.com/Azure/azure-sdk-for-net-pr/issues/1727).
+            //DocumentStyle style = result.Styles.First();
 
-            Assert.True(style.IsHandwritten);
+            //Assert.True(style.IsHandwritten);
+
+            Assert.AreEqual(41, result.Paragraphs.Count);
+
+            DocumentParagraph sampleParagraph = result.Paragraphs[1];
+
+            Assert.AreEqual("Hero Limited", sampleParagraph.Content);
+            Assert.AreEqual(ParagraphRole.Title, sampleParagraph.Role);
 
             Assert.AreEqual(2, result.Tables.Count);
 
             DocumentTable sampleTable = result.Tables[1];
 
-            Assert.AreEqual(3, sampleTable.RowCount);
+            Assert.AreEqual(4, sampleTable.RowCount);
             Assert.AreEqual(2, sampleTable.ColumnCount);
 
             var cells = sampleTable.Cells.ToList();
 
-            Assert.AreEqual(6, cells.Count);
+            Assert.AreEqual(8, cells.Count);
 
-            var expectedContent = new string[3, 2]
+            var expectedContent = new string[4, 2]
             {
                 { "SUBTOTAL", "$140.00" },
                 { "TAX", "$4.00" },
+                { string.Empty, string.Empty },
                 { "TOTAL", "$144.00" }
             };
 
@@ -713,7 +736,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.True(document.Fields.ContainsKey("Region"));
             Assert.True(document.Fields.ContainsKey("Sex"));
 
-            Assert.AreEqual("123 STREET ADDRESS YOUR CITY WA 99999-1234", document.Fields["Address"].AsString());
+            Assert.AreEqual("123 STREET ADDRESS\nYOUR CITY WA 99999-1234", document.Fields["Address"].AsString());
             Assert.AreEqual("WDLABCD456DG", document.Fields["DocumentNumber"].AsString());
             Assert.AreEqual("LIAM R.", document.Fields["FirstName"].AsString());
             Assert.AreEqual("TALBOT", document.Fields["LastName"].AsString());
@@ -809,9 +832,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.True(document.Fields.ContainsKey("VendorName"));
 
             ValidateCurrencyValue(document.Fields["AmountDue"].AsCurrency(), 610.00, "$");
-            Assert.AreEqual("123 Bill St, Redmond WA, 98052", document.Fields["BillingAddress"].AsString());
+            Assert.AreEqual("123 Bill St,\nRedmond WA, 98052", document.Fields["BillingAddress"].AsString());
             Assert.AreEqual("Microsoft Finance", document.Fields["BillingAddressRecipient"].AsString());
-            Assert.AreEqual("123 Other St, Redmond WA, 98052", document.Fields["CustomerAddress"].AsString());
+            Assert.AreEqual("123 Other St,\nRedmond WA, 98052", document.Fields["CustomerAddress"].AsString());
             Assert.AreEqual("Microsoft Corp", document.Fields["CustomerAddressRecipient"].AsString());
             Assert.AreEqual("CID-12345", document.Fields["CustomerId"].AsString());
             Assert.AreEqual("MICROSOFT CORPORATION", document.Fields["CustomerName"].AsString());
@@ -830,9 +853,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             ValidateCurrencyValue(document.Fields["InvoiceTotal"].AsCurrency(), 110.00, "$");
             ValidateCurrencyValue(document.Fields["PreviousUnpaidBalance"].AsCurrency(), 500.00, "$");
             Assert.AreEqual("PO-3333", document.Fields["PurchaseOrder"].AsString());
-            Assert.AreEqual("123 Remit St New York, NY, 10001", document.Fields["RemittanceAddress"].AsString());
+            Assert.AreEqual("123 Remit St\nNew York, NY, 10001", document.Fields["RemittanceAddress"].AsString());
             Assert.AreEqual("Contoso Billing", document.Fields["RemittanceAddressRecipient"].AsString());
-            Assert.AreEqual("123 Service St, Redmond WA, 98052", document.Fields["ServiceAddress"].AsString());
+            Assert.AreEqual("123 Service St,\nRedmond WA, 98052", document.Fields["ServiceAddress"].AsString());
             Assert.AreEqual("Microsoft Services", document.Fields["ServiceAddressRecipient"].AsString());
 
             var serviceEndDate = document.Fields["ServiceEndDate"].AsDate();
@@ -845,11 +868,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual(10, serviceStartDate.Month);
             Assert.AreEqual(2019, serviceStartDate.Year);
 
-            Assert.AreEqual("123 Ship St, Redmond WA, 98052", document.Fields["ShippingAddress"].AsString());
+            Assert.AreEqual("123 Ship St,\nRedmond WA, 98052", document.Fields["ShippingAddress"].AsString());
             Assert.AreEqual("Microsoft Delivery", document.Fields["ShippingAddressRecipient"].AsString());
             ValidateCurrencyValue(document.Fields["SubTotal"].AsCurrency(), 100.00, "$");
             ValidateCurrencyValue(document.Fields["TotalTax"].AsCurrency(), 10.00, "$");
-            Assert.AreEqual("123 456th St New York, NY, 10001", document.Fields["VendorAddress"].AsString());
+            Assert.AreEqual("123 456th St\nNew York, NY, 10001", document.Fields["VendorAddress"].AsString());
             Assert.AreEqual("Contoso Headquarters", document.Fields["VendorAddressRecipient"].AsString());
             Assert.AreEqual("CONTOSO LTD.", document.Fields["VendorName"].AsString());
 
@@ -955,7 +978,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentField address = document.Fields["RemittanceAddress"];
             Assert.AreEqual(1, address.BoundingRegions.First().PageNumber);
-            Assert.AreEqual("2345 Dogwood Lane Birch, Kansas 98123", address.AsString());
+            Assert.AreEqual("2345 Dogwood Lane\nBirch, Kansas 98123", address.AsString());
         }
 
         #endregion
@@ -1000,11 +1023,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the form. We are not testing the service here, but the SDK.
 
+            Assert.AreEqual(DocumentPageKind.Document, page.Kind);
             Assert.AreEqual(LengthUnit.Inch, page.Unit);
             Assert.AreEqual(8.5, page.Width);
             Assert.AreEqual(11, page.Height);
             Assert.AreEqual(0, page.Angle);
             Assert.AreEqual(18, page.Lines.Count);
+
+            DocumentParagraph sampleParagraph = result.Paragraphs[0];
+
+            Assert.AreEqual("Contoso", sampleParagraph.Content);
+            Assert.IsNull(sampleParagraph.Role);
 
             DocumentTable table = result.Tables.Single();
 
@@ -1184,6 +1213,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the form. We are not testing the service here, but the SDK.
 
+            Assert.AreEqual(DocumentPageKind.Document, page.Kind);
             Assert.AreEqual(LengthUnit.Inch, page.Unit);
             Assert.AreEqual(8.5, page.Width);
             Assert.AreEqual(11, page.Height);
@@ -1252,7 +1282,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.True(document.Fields.ContainsKey("Total"));
 
             Assert.AreEqual("Contoso", document.Fields["MerchantName"].AsString());
-            Assert.AreEqual("123 Main Street Redmond, WA 98052", document.Fields["MerchantAddress"].AsString());
+            Assert.AreEqual("123 Main Street\nRedmond, WA 98052", document.Fields["MerchantAddress"].AsString());
             Assert.AreEqual("123-456-7890", document.Fields["MerchantPhoneNumber"].Content);
 
             var date = document.Fields["TransactionDate"].AsDate();
@@ -1268,7 +1298,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var expectedItems = new List<(int? Quantity, string Description, double? Price, double? TotalPrice)>()
             {
-                (1, "Surface Pro 6", null, 999.00),
+                (1, "Surface Pro 6\n256GB /Intel Core i5 /\n8GB RAM (Black)", null, 999.00),
                 (1, "SurfacePen", null, 99.99)
             };
 
@@ -1359,6 +1389,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net-pr/issues/1728")]
         public async Task StartAnalyzeDocumentCanParseMultipageReceiptWithBlankPage()
         {
             var client = CreateDocumentAnalysisClient();
@@ -1420,6 +1451,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net-pr/issues/1726")]
         public async Task StartAnalyzeDocumentCanAuthenticateWithTokenCredential()
         {
             var client = CreateDocumentAnalysisClient(useTokenCredential: true);
@@ -1471,7 +1503,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 expectedFirstPageNumber: 1,
                 expectedLastPageNumber: 1);
 
-            Assert.IsEmpty(result.Entities);
             Assert.IsEmpty(result.KeyValuePairs);
             Assert.IsEmpty(result.Styles);
             Assert.IsEmpty(result.Tables);
@@ -1485,6 +1516,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentPage blankPage = result.Pages.Single();
 
+            Assert.AreEqual(DocumentPageKind.Document, blankPage.Kind);
             Assert.IsEmpty(blankPage.Lines);
             Assert.IsEmpty(blankPage.Words);
             Assert.IsEmpty(blankPage.SelectionMarks);
@@ -1562,13 +1594,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 ValidateAnalyzedDocument(document, expectedFirstPageNumber, expectedLastPageNumber);
             }
 
-            // Check Document Entities.
-
-            foreach (DocumentEntity entity in result.Entities)
-            {
-                ValidateEntity(entity, expectedFirstPageNumber, expectedLastPageNumber);
-            }
-
             // Check Document Key-Value Pairs.
 
             foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
@@ -1583,11 +1608,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                     ValidateBoundingRegion(region, expectedFirstPageNumber, expectedLastPageNumber);
                 }
 
-                Assert.NotNull(kvp.Value);
-
-                foreach (BoundingRegion region in kvp.Value.BoundingRegions)
+                if (kvp.Value != null)
                 {
-                    ValidateBoundingRegion(region, expectedFirstPageNumber, expectedLastPageNumber);
+                    foreach (BoundingRegion region in kvp.Value.BoundingRegions)
+                    {
+                        ValidateBoundingRegion(region, expectedFirstPageNumber, expectedLastPageNumber);
+                    }
                 }
             }
 
@@ -1601,6 +1627,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             }
 
             Assert.AreEqual(expectedLastPageNumber, currentPageNumber - 1);
+
+            // Check Paragraphs.
+
+            foreach (DocumentParagraph paragraph in result.Paragraphs)
+            {
+                foreach (BoundingRegion region in paragraph.BoundingRegions)
+                {
+                    ValidateBoundingRegion(region, expectedFirstPageNumber, expectedLastPageNumber);
+                }
+            }
 
             // Check Document Styles.
 
@@ -1623,7 +1659,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             {
                 Assert.That(language.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
                 Assert.That(language.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
-                Assert.NotNull(language.LanguageCode);
+                Assert.NotNull(language.Locale);
             }
         }
 
@@ -1663,34 +1699,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         private void ValidateBoundingRegion(BoundingRegion region, int expectedFirstPageNumber, int expectedLastPageNumber)
         {
             Assert.NotNull(region);
-            Assert.NotNull(region.BoundingBox.Points);
+            Assert.NotNull(region.BoundingPolygon.Points);
 
-            if (region.BoundingBox.Points.Length != 0)
+            if (region.BoundingPolygon.Points.Length != 0)
             {
-                Assert.AreEqual(4, region.BoundingBox.Points.Length);
+                Assert.AreEqual(4, region.BoundingPolygon.Points.Length);
             }
 
             Assert.That(region.PageNumber, Is.GreaterThanOrEqualTo(expectedFirstPageNumber).Or.LessThanOrEqualTo(expectedLastPageNumber));
         }
 
-        private void ValidateEntity(DocumentEntity entity, int expectedFirstPageNumber, int expectedLastPageNumber)
-        {
-            Assert.NotNull(entity);
-
-            foreach (BoundingRegion region in entity.BoundingRegions)
-            {
-                ValidateBoundingRegion(region, expectedFirstPageNumber, expectedLastPageNumber);
-            }
-
-            Assert.That(entity.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
-            Assert.That(entity.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
-
-            Assert.NotNull(entity.Category);
-        }
-
         private void ValidatePage(DocumentPage page, int expectedPageNumber)
         {
             Assert.AreEqual(expectedPageNumber, page.PageNumber);
+
+            Assert.AreNotEqual(default(DocumentPageKind), page.Kind);
 
             Assert.Greater(page.Width, 0.0);
             Assert.Greater(page.Height, 0.0);
@@ -1702,16 +1725,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             foreach (DocumentLine line in page.Lines)
             {
-                Assert.NotNull(line.BoundingBox.Points);
-                Assert.AreEqual(4, line.BoundingBox.Points.Length);
+                Assert.NotNull(line.BoundingPolygon.Points);
+                Assert.AreEqual(4, line.BoundingPolygon.Points.Length);
             }
 
             Assert.NotNull(page.Words);
 
             foreach (DocumentWord word in page.Words)
             {
-                Assert.NotNull(word.BoundingBox.Points);
-                Assert.AreEqual(4, word.BoundingBox.Points.Length);
+                Assert.NotNull(word.BoundingPolygon.Points);
+                Assert.AreEqual(4, word.BoundingPolygon.Points.Length);
 
                 Assert.That(word.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
                 Assert.That(word.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
@@ -1721,8 +1744,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             foreach (DocumentSelectionMark selectionMark in page.SelectionMarks)
             {
-                Assert.NotNull(selectionMark.BoundingBox.Points);
-                Assert.AreEqual(4, selectionMark.BoundingBox.Points.Length);
+                Assert.NotNull(selectionMark.BoundingPolygon.Points);
+                Assert.AreEqual(4, selectionMark.BoundingPolygon.Points.Length);
 
                 Assert.That(selectionMark.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
                 Assert.That(selectionMark.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));

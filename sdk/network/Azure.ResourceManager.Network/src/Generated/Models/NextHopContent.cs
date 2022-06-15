@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The destination IP address. </summary>
         public string DestinationIPAddress { get; }
         /// <summary> The NIC ID. (If VM has multiple NICs and IP forwarding is enabled on any of the nics, then this parameter must be specified. Otherwise optional). </summary>
-        public string TargetNicResourceId { get; set; }
+        public ResourceIdentifier TargetNicResourceId { get; set; }
     }
 }

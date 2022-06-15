@@ -25,16 +25,24 @@ namespace Azure.ResourceManager.Compute
         /// <param name="uniqueId"> The unique id of this shared gallery. </param>
         /// <param name="publishedOn"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="endOfLifeOn"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        internal SharedGalleryImageVersionData(string name, AzureLocation? location, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn) : base(name, location, uniqueId)
+        /// <param name="excludeFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won&apos;t use this Image Version. </param>
+        /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
+        internal SharedGalleryImageVersionData(string name, AzureLocation? location, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? excludeFromLatest, SharedGalleryImageVersionStorageProfile storageProfile) : base(name, location, uniqueId)
         {
             PublishedOn = publishedOn;
             EndOfLifeOn = endOfLifeOn;
+            ExcludeFromLatest = excludeFromLatest;
+            StorageProfile = storageProfile;
         }
 
         /// <summary> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
         public DateTimeOffset? PublishedOn { get; }
         /// <summary> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
         public DateTimeOffset? EndOfLifeOn { get; }
+        /// <summary> If set to true, Virtual Machines deployed from the latest version of the Image Definition won&apos;t use this Image Version. </summary>
+        public bool? ExcludeFromLatest { get; }
+        /// <summary> Describes the storage profile of the image version. </summary>
+        public SharedGalleryImageVersionStorageProfile StorageProfile { get; }
         /// <summary> The resource identifier. </summary>
         public ResourceIdentifier Id { get; internal set; }
     }

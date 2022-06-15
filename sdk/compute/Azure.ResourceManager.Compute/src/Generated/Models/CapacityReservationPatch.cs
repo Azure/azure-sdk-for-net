@@ -33,5 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string ProvisioningState { get; }
         /// <summary> The Capacity reservation instance view. </summary>
         public CapacityReservationInstanceView InstanceView { get; }
+        /// <summary> Specifies the time at which the Capacity Reservation resource was created.&lt;br&gt;&lt;br&gt;Minimum api-version: 2022-03-01. </summary>
+        public DateTimeOffset? TimeCreated { get; }
     }
 }

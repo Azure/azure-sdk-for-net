@@ -11,6 +11,7 @@ namespace Azure.Storage
     public enum ClientSideEncryptionVersion
     {
         V1_0 = 1,
+        V2_0 = 2,
     }
     public partial class StorageCrc64HashAlgorithm : System.IO.Hashing.NonCryptographicHashAlgorithm
     {
@@ -141,7 +142,7 @@ namespace Azure.Storage.Sas
     }
     public partial class SasQueryParameters
     {
-        public const string DefaultSasVersion = "2021-06-08";
+        public const string DefaultSasVersion = "2021-08-06";
         protected SasQueryParameters() { }
         protected SasQueryParameters(System.Collections.Generic.IDictionary<string, string> values) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

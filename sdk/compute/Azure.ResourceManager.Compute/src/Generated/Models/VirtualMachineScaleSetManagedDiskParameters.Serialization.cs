@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("diskEncryptionSet");
                 JsonSerializer.Serialize(writer, DiskEncryptionSet);
             }
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                writer.WritePropertyName("securityProfile");
+                writer.WriteObjectValue(SecurityProfile);
+            }
             writer.WriteEndObject();
         }
 
@@ -33,6 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<StorageAccountTypes> storageAccountType = default;
             Optional<WritableSubResource> diskEncryptionSet = default;
+            Optional<VmDiskSecurityProfile> securityProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountType"))
@@ -55,8 +61,18 @@ namespace Azure.ResourceManager.Compute.Models
                     diskEncryptionSet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
+                if (property.NameEquals("securityProfile"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    securityProfile = VmDiskSecurityProfile.DeserializeVmDiskSecurityProfile(property.Value);
+                    continue;
+                }
             }
-            return new VirtualMachineScaleSetManagedDiskParameters(Optional.ToNullable(storageAccountType), diskEncryptionSet);
+            return new VirtualMachineScaleSetManagedDiskParameters(Optional.ToNullable(storageAccountType), diskEncryptionSet, securityProfile.Value);
         }
     }
 }

@@ -54,7 +54,10 @@
     {
       "source": "./.content/testResource",
       "target": "./",
-      "condition": "(includeCI)"
+      "condition": "(includeCI)",
+      "rename": {
+        "ci-template.yml": "ci.yml"
+      }
     },
     {
       "source": "./.content/packageResource",
@@ -200,8 +203,6 @@
         "separator": "" 
       },
       "description": "Renames files containing 'TemplateClient'",
-      "valueSource": "Cl",
-      "valueTransform": "ServiceShortNameForm",
       "fileRename": "TemplateClient",
       "replaces": "TemplateClient"
     },
