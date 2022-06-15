@@ -68,6 +68,39 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetTillageDataAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new TillageDataClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetTillageDataAsync("farmerId", "tillageDataId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
+        /// Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -137,6 +170,39 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetTillageData and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new TillageDataClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetTillageData("farmerId", "tillageDataId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
+        /// Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -207,6 +273,84 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateAsync with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new TillageDataClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync("farmerId", "tillageDataId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new TillageDataClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     tillageDepth = new {
+        ///         unit = "MeasureUnit",
+        ///         value = 1234,
+        ///     },
+        ///     tillagePressure = new {
+        ///         unit = "MeasureUnit",
+        ///         value = 1234,
+        ///     },
+        ///     area = new {
+        ///         unit = "MeasureUnit",
+        ///         value = 1234,
+        ///     },
+        ///     source = "TillageDataSource",
+        ///     operationModifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     operationStartDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     operationEndDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     attachmentsLink = "TillageDataAttachmentsLink",
+        ///     associatedBoundaryId = "TillageDataAssociatedBoundaryId",
+        ///     operationBoundaryId = "TillageDataOperationBoundaryId",
+        ///     farmerId = "TillageDataFarmerId",
+        ///     id = "TillageDataId",
+        ///     eTag = "TillageDataETag",
+        ///     status = "TillageDataStatus",
+        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     modifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     name = "TillageDataName",
+        ///     description = "TillageDataDescription",
+        ///     properties = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync("farmerId", "tillageDataId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
+        /// Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -303,6 +447,84 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdate with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new TillageDataClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.CreateOrUpdate("farmerId", "tillageDataId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new TillageDataClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     tillageDepth = new {
+        ///         unit = "MeasureUnit",
+        ///         value = 1234,
+        ///     },
+        ///     tillagePressure = new {
+        ///         unit = "MeasureUnit",
+        ///         value = 1234,
+        ///     },
+        ///     area = new {
+        ///         unit = "MeasureUnit",
+        ///         value = 1234,
+        ///     },
+        ///     source = "TillageDataSource",
+        ///     operationModifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     operationStartDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     operationEndDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     attachmentsLink = "TillageDataAttachmentsLink",
+        ///     associatedBoundaryId = "TillageDataAssociatedBoundaryId",
+        ///     operationBoundaryId = "TillageDataOperationBoundaryId",
+        ///     farmerId = "TillageDataFarmerId",
+        ///     id = "TillageDataId",
+        ///     eTag = "TillageDataETag",
+        ///     status = "TillageDataStatus",
+        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     modifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     name = "TillageDataName",
+        ///     description = "TillageDataDescription",
+        ///     properties = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdate("farmerId", "tillageDataId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
+        /// Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -398,6 +620,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call DeleteAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new TillageDataClient(endpoint, credential);
+        /// 
+        /// Response response = await client.DeleteAsync("farmerId", "tillageDataId");
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -441,6 +674,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call Delete.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new TillageDataClient(endpoint, credential);
+        /// 
+        /// Response response = client.Delete("farmerId", "tillageDataId");
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -514,6 +758,51 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetAllTillageDataByFarmerIdAsync with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new TillageDataClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetAllTillageDataByFarmerIdAsync("farmerId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call GetAllTillageDataByFarmerIdAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new TillageDataClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetAllTillageDataByFarmerIdAsync("farmerId", 1234, 1234, 1234, 1234, new String[]{"sources"}, new String[]{"associatedBoundaryIds"}, new String[]{"operationBoundaryIds"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"ids"}, new String[]{"names"}, new String[]{"propertyFilters"}, new String[]{"statuses"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "skipToken");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillageDepth").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillageDepth").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillagePressure").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillagePressure").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationModifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationStartDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationEndDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("attachmentsLink").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("associatedBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -624,6 +913,51 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetAllTillageDataByFarmerId with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new TillageDataClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetAllTillageDataByFarmerId("farmerId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call GetAllTillageDataByFarmerId with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new TillageDataClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetAllTillageDataByFarmerId("farmerId", 1234, 1234, 1234, 1234, new String[]{"sources"}, new String[]{"associatedBoundaryIds"}, new String[]{"operationBoundaryIds"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"ids"}, new String[]{"names"}, new String[]{"propertyFilters"}, new String[]{"statuses"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "skipToken");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillageDepth").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillageDepth").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillagePressure").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillagePressure").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationModifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationStartDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationEndDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("attachmentsLink").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("associatedBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -731,6 +1065,41 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetAllTillageDataAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new TillageDataClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetAllTillageDataAsync(1234, 1234, 1234, 1234, new String[]{"sources"}, new String[]{"associatedBoundaryIds"}, new String[]{"operationBoundaryIds"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"ids"}, new String[]{"names"}, new String[]{"propertyFilters"}, new String[]{"statuses"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "skipToken");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillageDepth").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillageDepth").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillagePressure").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillagePressure").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationModifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationStartDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationEndDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("attachmentsLink").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("associatedBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -836,6 +1205,41 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetAllTillageData with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new TillageDataClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetAllTillageData(1234, 1234, 1234, 1234, new String[]{"sources"}, new String[]{"associatedBoundaryIds"}, new String[]{"operationBoundaryIds"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"ids"}, new String[]{"names"}, new String[]{"propertyFilters"}, new String[]{"statuses"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "skipToken");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillageDepth").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillageDepth").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillagePressure").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillagePressure").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationModifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationStartDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationEndDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("attachmentsLink").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("associatedBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{

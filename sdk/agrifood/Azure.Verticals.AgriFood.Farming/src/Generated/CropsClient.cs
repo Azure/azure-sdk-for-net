@@ -67,6 +67,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetCropAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new CropsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetCropAsync("cropId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("phenotype").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -121,6 +141,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetCrop and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new CropsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetCrop("cropId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("phenotype").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -176,6 +216,52 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateAsync with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new CropsClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync("cropId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new CropsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     phenotype = "CropPhenotype",
+        ///     id = "CropId",
+        ///     eTag = "CropETag",
+        ///     status = "CropStatus",
+        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     modifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     name = "CropName",
+        ///     description = "CropDescription",
+        ///     properties = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync("cropId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("phenotype").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -244,6 +330,52 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdate with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new CropsClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.CreateOrUpdate("cropId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new CropsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     phenotype = "CropPhenotype",
+        ///     id = "CropId",
+        ///     eTag = "CropETag",
+        ///     status = "CropStatus",
+        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     modifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     name = "CropName",
+        ///     description = "CropDescription",
+        ///     properties = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdate("cropId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("phenotype").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -311,6 +443,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call DeleteAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new CropsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.DeleteAsync("cropId");
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -352,6 +495,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cropId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call Delete.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new CropsClient(endpoint, credential);
+        /// 
+        /// Response response = client.Delete("cropId");
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -407,6 +561,28 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetCropsAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new CropsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetCropsAsync(new String[]{"phenotypes"}, new String[]{"ids"}, new String[]{"names"}, new String[]{"propertyFilters"}, new String[]{"statuses"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "skipToken");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("phenotype").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -485,6 +661,28 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetCrops with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new CropsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetCrops(new String[]{"phenotypes"}, new String[]{"ids"}, new String[]{"names"}, new String[]{"propertyFilters"}, new String[]{"statuses"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "skipToken");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("phenotype").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{

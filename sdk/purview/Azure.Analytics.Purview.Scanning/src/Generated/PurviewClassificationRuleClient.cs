@@ -71,6 +71,20 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Get a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetPropertiesAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetPropertiesAsync();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -116,6 +130,20 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Get a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetProperties and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetProperties();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -162,6 +190,40 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Creates or Updates a classification rule. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateAsync with required request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     kind = "System",
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call CreateOrUpdateAsync with all request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     id = "ProxyResourceId",
+        ///     name = "ProxyResourceName",
+        ///     kind = "System",
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -215,6 +277,40 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Creates or Updates a classification rule. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdate with required request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     kind = "System",
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdate(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call CreateOrUpdate with all request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     id = "ProxyResourceId",
+        ///     name = "ProxyResourceName",
+        ///     kind = "System",
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdate(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -267,6 +363,20 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Deletes a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call DeleteAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
+        /// 
+        /// Response response = await client.DeleteAsync();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -312,6 +422,20 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Deletes a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call Delete and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
+        /// 
+        /// Response response = client.Delete();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -360,6 +484,27 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="action"> The ClassificationAction to use. Allowed values: &quot;Keep&quot; | &quot;Delete&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
+        /// <example>
+        /// This sample shows how to call TagVersionAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
+        /// 
+        /// Response response = await client.TagVersionAsync(1234, "action");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("scanResultId").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -424,6 +569,27 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="action"> The ClassificationAction to use. Allowed values: &quot;Keep&quot; | &quot;Delete&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
+        /// <example>
+        /// This sample shows how to call TagVersion and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
+        /// 
+        /// Response response = client.TagVersion(1234, "action");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("scanResultId").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -485,6 +651,22 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Lists the rule versions of a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetVersionsAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetVersionsAsync();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// Console.WriteLine(result.GetProperty("count").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -542,6 +724,22 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Lists the rule versions of a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetVersions and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetVersions();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// Console.WriteLine(result.GetProperty("count").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{

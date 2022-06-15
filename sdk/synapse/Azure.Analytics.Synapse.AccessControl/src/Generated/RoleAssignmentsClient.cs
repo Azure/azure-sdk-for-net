@@ -64,6 +64,63 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <example>
+        /// This sample shows how to call CheckPrincipalAccessAsync with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     subject = new {
+        ///         principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     },
+        ///     actions = new[] {
+        ///         new {
+        ///             id = "RequiredActionId",
+        ///             isDataAction = true,
+        ///         }
+        ///     },
+        ///     scope = "CheckPrincipalAccessRequestScope",
+        /// };
+        /// 
+        /// Response response = await client.CheckPrincipalAccessAsync(RequestContent.Create(data), null);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call CheckPrincipalAccessAsync with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     subject = new {
+        ///         principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///         groupIds = new[] {
+        ///             "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
+        ///         },
+        ///     },
+        ///     actions = new[] {
+        ///         new {
+        ///             id = "RequiredActionId",
+        ///             isDataAction = true,
+        ///         }
+        ///     },
+        ///     scope = "CheckPrincipalAccessRequestScope",
+        /// };
+        /// 
+        /// Response response = await client.CheckPrincipalAccessAsync(RequestContent.Create(data), null);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("accessDecision").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("actionId").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("roleAssignment").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("roleAssignment").GetProperty("roleDefinitionId").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("roleAssignment").GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("roleAssignment").GetProperty("scope").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("roleAssignment").GetProperty("principalType").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -138,6 +195,63 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <example>
+        /// This sample shows how to call CheckPrincipalAccess with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     subject = new {
+        ///         principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     },
+        ///     actions = new[] {
+        ///         new {
+        ///             id = "RequiredActionId",
+        ///             isDataAction = true,
+        ///         }
+        ///     },
+        ///     scope = "CheckPrincipalAccessRequestScope",
+        /// };
+        /// 
+        /// Response response = client.CheckPrincipalAccess(RequestContent.Create(data), null);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call CheckPrincipalAccess with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     subject = new {
+        ///         principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///         groupIds = new[] {
+        ///             "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
+        ///         },
+        ///     },
+        ///     actions = new[] {
+        ///         new {
+        ///             id = "RequiredActionId",
+        ///             isDataAction = true,
+        ///         }
+        ///     },
+        ///     scope = "CheckPrincipalAccessRequestScope",
+        /// };
+        /// 
+        /// Response response = client.CheckPrincipalAccess(RequestContent.Create(data), null);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("accessDecision").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("actionId").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("roleAssignment").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("roleAssignment").GetProperty("roleDefinitionId").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("roleAssignment").GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("roleAssignment").GetProperty("scope").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("roleAssignment").GetProperty("principalType").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -213,6 +327,23 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="continuationToken"> Continuation token. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetRoleAssignmentsAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetRoleAssignmentsAsync("roleId", "principalId", "scope", "continuationToken");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("roleDefinitionId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scope").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("principalType").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -268,6 +399,23 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="continuationToken"> Continuation token. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetRoleAssignments with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetRoleAssignments("roleId", "principalId", "scope", "continuationToken");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("roleDefinitionId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scope").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("principalType").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -324,6 +472,45 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call CreateRoleAssignmentAsync with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     scope = "RoleAssignmentRequestScope",
+        /// };
+        /// 
+        /// Response response = await client.CreateRoleAssignmentAsync("roleAssignmentId", RequestContent.Create(data), null);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call CreateRoleAssignmentAsync with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     scope = "RoleAssignmentRequestScope",
+        ///     principalType = "RoleAssignmentRequestPrincipalType",
+        /// };
+        /// 
+        /// Response response = await client.CreateRoleAssignmentAsync("roleAssignmentId", RequestContent.Create(data), null);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("roleDefinitionId").ToString());
+        /// Console.WriteLine(result.GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("scope").ToString());
+        /// Console.WriteLine(result.GetProperty("principalType").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -386,6 +573,45 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call CreateRoleAssignment with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     scope = "RoleAssignmentRequestScope",
+        /// };
+        /// 
+        /// Response response = client.CreateRoleAssignment("roleAssignmentId", RequestContent.Create(data), null);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call CreateRoleAssignment with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     scope = "RoleAssignmentRequestScope",
+        ///     principalType = "RoleAssignmentRequestPrincipalType",
+        /// };
+        /// 
+        /// Response response = client.CreateRoleAssignment("roleAssignmentId", RequestContent.Create(data), null);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("roleDefinitionId").ToString());
+        /// Console.WriteLine(result.GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("scope").ToString());
+        /// Console.WriteLine(result.GetProperty("principalType").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -446,6 +672,22 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetRoleAssignmentByIdAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetRoleAssignmentByIdAsync("roleAssignmentId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("roleDefinitionId").ToString());
+        /// Console.WriteLine(result.GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("scope").ToString());
+        /// Console.WriteLine(result.GetProperty("principalType").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -497,6 +739,22 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetRoleAssignmentById and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetRoleAssignmentById("roleAssignmentId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("roleDefinitionId").ToString());
+        /// Console.WriteLine(result.GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("scope").ToString());
+        /// Console.WriteLine(result.GetProperty("principalType").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -549,6 +807,26 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call DeleteRoleAssignmentByIdAsync with required parameters.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.DeleteRoleAssignmentByIdAsync("roleAssignmentId");
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// This sample shows how to call DeleteRoleAssignmentByIdAsync with all parameters.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.DeleteRoleAssignmentByIdAsync("roleAssignmentId", "scope");
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -592,6 +870,26 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call DeleteRoleAssignmentById with required parameters.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// Response response = client.DeleteRoleAssignmentById("roleAssignmentId");
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// This sample shows how to call DeleteRoleAssignmentById with all parameters.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// Response response = client.DeleteRoleAssignmentById("roleAssignmentId", "scope");
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{

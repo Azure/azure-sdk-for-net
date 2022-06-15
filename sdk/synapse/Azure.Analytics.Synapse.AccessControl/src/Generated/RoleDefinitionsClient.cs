@@ -63,6 +63,27 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetRoleDefinitionsAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new RoleDefinitionsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetRoleDefinitionsAsync(true, "scope");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isBuiltIn").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("permissions").Item[0].GetProperty("actions").Item[0].ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("permissions").Item[0].GetProperty("notActions").Item[0].ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("permissions").Item[0].GetProperty("dataActions").Item[0].ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("permissions").Item[0].GetProperty("notDataActions").Item[0].ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("scopes").Item[0].ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("availabilityStatus").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -120,6 +141,27 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetRoleDefinitions with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new RoleDefinitionsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetRoleDefinitions(true, "scope");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isBuiltIn").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("permissions").Item[0].GetProperty("actions").Item[0].ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("permissions").Item[0].GetProperty("notActions").Item[0].ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("permissions").Item[0].GetProperty("dataActions").Item[0].ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("permissions").Item[0].GetProperty("notDataActions").Item[0].ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("scopes").Item[0].ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("availabilityStatus").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -178,6 +220,27 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetRoleDefinitionByIdAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new RoleDefinitionsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetRoleDefinitionByIdAsync("roleDefinitionId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("isBuiltIn").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("permissions").Item[0].GetProperty("actions").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("permissions").Item[0].GetProperty("notActions").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("permissions").Item[0].GetProperty("dataActions").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("permissions").Item[0].GetProperty("notDataActions").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("scopes").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("availabilityStatus").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -238,6 +301,27 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetRoleDefinitionById and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new RoleDefinitionsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetRoleDefinitionById("roleDefinitionId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("isBuiltIn").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("permissions").Item[0].GetProperty("actions").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("permissions").Item[0].GetProperty("notActions").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("permissions").Item[0].GetProperty("dataActions").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("permissions").Item[0].GetProperty("notDataActions").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("scopes").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("availabilityStatus").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -295,6 +379,18 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> List rbac scopes. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetScopesAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new RoleDefinitionsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetScopesAsync();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -332,6 +428,18 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> List rbac scopes. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetScopes and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new RoleDefinitionsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetScopes();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{

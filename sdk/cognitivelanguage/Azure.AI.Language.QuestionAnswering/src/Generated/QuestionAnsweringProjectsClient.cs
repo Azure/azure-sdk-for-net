@@ -68,6 +68,25 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetProjectDetailsAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetProjectDetailsAsync("projectName");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("projectName").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("multilingualResource").ToString());
+        /// Console.WriteLine(result.GetProperty("settings").GetProperty("defaultAnswer").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -125,6 +144,25 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetProjectDetails and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetProjectDetails("projectName");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("projectName").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("multilingualResource").ToString());
+        /// Console.WriteLine(result.GetProperty("settings").GetProperty("defaultAnswer").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -183,6 +221,48 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call CreateProjectAsync with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     language = "Language",
+        /// };
+        /// 
+        /// Response response = await client.CreateProjectAsync("projectName", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call CreateProjectAsync with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     description = "CreateProjectOptionsDescription",
+        ///     language = "Language",
+        ///     multilingualResource = true,
+        ///     settings = new {
+        ///         defaultAnswer = "ProjectSettingsDefaultAnswer",
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateProjectAsync("projectName", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("projectName").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("multilingualResource").ToString());
+        /// Console.WriteLine(result.GetProperty("settings").GetProperty("defaultAnswer").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -252,6 +332,48 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call CreateProject with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     language = "Language",
+        /// };
+        /// 
+        /// Response response = client.CreateProject("projectName", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call CreateProject with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     description = "CreateProjectOptionsDescription",
+        ///     language = "Language",
+        ///     multilingualResource = true,
+        ///     settings = new {
+        ///         defaultAnswer = "ProjectSettingsDefaultAnswer",
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateProject("projectName", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("projectName").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("multilingualResource").ToString());
+        /// Console.WriteLine(result.GetProperty("settings").GetProperty("defaultAnswer").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -320,6 +442,36 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDeleteStatusAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetDeleteStatusAsync("jobId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -387,6 +539,36 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDeleteStatus and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetDeleteStatus("jobId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -455,6 +637,37 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetExportStatusAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetExportStatusAsync("projectName", "jobId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -525,6 +738,37 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetExportStatus and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetExportStatus("projectName", "jobId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -595,6 +839,36 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetImportStatusAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetImportStatusAsync("projectName", "jobId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -664,6 +938,36 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetImportStatus and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetImportStatus("projectName", "jobId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -734,6 +1038,36 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDeployStatusAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetDeployStatusAsync("projectName", "deploymentName", "jobId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -805,6 +1139,36 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDeployStatus and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetDeployStatus("projectName", "deploymentName", "jobId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -875,6 +1239,37 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call UpdateSynonymsAsync with required parameters and request content.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.UpdateSynonymsAsync("projectName", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// This sample shows how to call UpdateSynonymsAsync with all parameters and request content.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     value = new[] {
+        ///         new {
+        ///             alterations = ,
+        ///         }
+        ///     },
+        ///     nextLink = "SynonymAssetsNextLink",
+        /// };
+        /// 
+        /// Response response = await client.UpdateSynonymsAsync("projectName", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -930,6 +1325,37 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call UpdateSynonyms with required parameters and request content.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.UpdateSynonyms("projectName", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// This sample shows how to call UpdateSynonyms with all parameters and request content.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     value = new[] {
+        ///         new {
+        ///             alterations = ,
+        ///         }
+        ///     },
+        ///     nextLink = "SynonymAssetsNextLink",
+        /// };
+        /// 
+        /// Response response = client.UpdateSynonyms("projectName", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -985,6 +1411,36 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetUpdateSourcesStatusAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetUpdateSourcesStatusAsync("projectName", "jobId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1054,6 +1510,36 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetUpdateSourcesStatus and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetUpdateSourcesStatus("projectName", "jobId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1123,6 +1609,36 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetUpdateQnasStatusAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetUpdateQnasStatusAsync("projectName", "jobId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1192,6 +1708,36 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetUpdateQnasStatus and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetUpdateQnasStatus("projectName", "jobId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1261,6 +1807,38 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call AddFeedbackAsync with required parameters and request content.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.AddFeedbackAsync("projectName", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// This sample shows how to call AddFeedbackAsync with all parameters and request content.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     records = new[] {
+        ///         new {
+        ///             userId = "FeedbackRecordUserId",
+        ///             userQuestion = "FeedbackRecordUserQuestion",
+        ///             qnaId = 1234,
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.AddFeedbackAsync("projectName", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1317,6 +1895,38 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call AddFeedback with required parameters and request content.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.AddFeedback("projectName", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// This sample shows how to call AddFeedback with all parameters and request content.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     records = new[] {
+        ///         new {
+        ///             userId = "FeedbackRecordUserId",
+        ///             userQuestion = "FeedbackRecordUserQuestion",
+        ///             qnaId = 1234,
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.AddFeedback("projectName", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1372,6 +1982,26 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetProjectsAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetProjectsAsync(1234, 1234, 1234);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("projectName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("multilingualResource").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("settings").GetProperty("defaultAnswer").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastModifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeployedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1438,6 +2068,26 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetProjects with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetProjects(1234, 1234, 1234);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("projectName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("multilingualResource").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("settings").GetProperty("defaultAnswer").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastModifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeployedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1507,6 +2157,30 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDeploymentsAsync with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetDeploymentsAsync("projectName");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call GetDeploymentsAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetDeploymentsAsync("projectName", 1234, 1234, 1234);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeployedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1570,6 +2244,30 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDeployments with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetDeployments("projectName");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call GetDeployments with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetDeployments("projectName", 1234, 1234, 1234);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeployedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1633,6 +2331,29 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetSynonymsAsync with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetSynonymsAsync("projectName");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call GetSynonymsAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetSynonymsAsync("projectName", 1234, 1234, 1234);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("alterations").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1695,6 +2416,29 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetSynonyms with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetSynonyms("projectName");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call GetSynonyms with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetSynonyms("projectName", 1234, 1234, 1234);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("alterations").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1757,6 +2501,34 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetSourcesAsync with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetSourcesAsync("projectName");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call GetSourcesAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetSourcesAsync("projectName", 1234, 1234, 1234);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sourceUri").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sourceKind").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("contentStructureKind").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1824,6 +2596,34 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetSources with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetSources("projectName");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call GetSources with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetSources("projectName", 1234, 1234, 1234);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sourceUri").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sourceKind").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("contentStructureKind").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1892,6 +2692,51 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetQnasAsync with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetQnasAsync("projectName");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call GetQnasAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetQnasAsync("projectName", "source", 1234, 1234, 1234);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("answer").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("questions").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("metadata").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("isContextOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("displayOrder").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qnaId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("answer").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("questions").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("metadata").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("clusterHead").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("question").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("userSuggestedCount").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("autoSuggestedCount").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("clusterHead").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("question").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("userSuggestedCount").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("autoSuggestedCount").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1991,6 +2836,51 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetQnas with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetQnas("projectName");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call GetQnas with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetQnas("projectName", "source", 1234, 1234, 1234);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("answer").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("questions").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("metadata").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("isContextOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("displayOrder").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qnaId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("answer").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("questions").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("metadata").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("clusterHead").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("question").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("userSuggestedCount").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("autoSuggestedCount").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("clusterHead").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("question").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("userSuggestedCount").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("autoSuggestedCount").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2087,6 +2977,17 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call DeleteProjectAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.DeleteProjectAsync(0, "projectName");
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -2107,7 +3008,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context = null)
+        public virtual async Task<Operation> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -2116,7 +3017,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2131,6 +3032,17 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call DeleteProject.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = client.DeleteProject(0, "projectName");
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -2151,7 +3063,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> DeleteProject(WaitUntil waitUntil, string projectName, RequestContext context = null)
+        public virtual Operation DeleteProject(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -2160,7 +3072,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2177,6 +3089,52 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call ExportAsync with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.ExportAsync(0, "projectName");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call ExportAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.ExportAsync(0, "projectName", "format", "assetKind");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2231,7 +3189,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateExportRequest(projectName, format, assetKind, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Export", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Export", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2248,6 +3206,52 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call Export with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = client.Export(0, "projectName");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call Export with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = client.Export(0, "projectName", "format", "assetKind");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2302,7 +3306,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateExportRequest(projectName, format, assetKind, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Export", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Export", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2320,6 +3324,108 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call ImportAsync with required parameters and request content.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.ImportAsync(0, "projectName", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// This sample shows how to call ImportAsync with all parameters and request content.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     metadata = new {
+        ///         description = "CreateProjectOptionsDescription",
+        ///         language = "Language",
+        ///         multilingualResource = true,
+        ///         settings = new {
+        ///             defaultAnswer = "ProjectSettingsDefaultAnswer",
+        ///         },
+        ///     },
+        ///     assets = new {
+        ///         synonyms = new[] {
+        ///             new {
+        ///                 alterations = ,
+        ///             }
+        ///         },
+        ///         qnas = new[] {
+        ///             new {
+        ///                 sourceDisplayName = "SourceDisplayNameParameterSourceDisplayName",
+        ///                 id = 1234,
+        ///                 answer = "QnaRecordAnswer",
+        ///                 source = "QnaRecordSource",
+        ///                 questions = new[] {
+        ///                     "QnaRecordQuestionsItem"
+        ///                 },
+        ///                 metadata = new {
+        ///                     key = "String",
+        ///                 },
+        ///                 dialog = new {
+        ///                     isContextOnly = true,
+        ///                     prompts = new[] {
+        ///                         new {
+        ///                             displayOrder = 1234,
+        ///                             qnaId = 1234,
+        ///                             qna = new {
+        ///                                 id = 1234,
+        ///                                 answer = "QnaRecordAnswer",
+        ///                                 source = "QnaRecordSource",
+        ///                                 questions = new[] {
+        ///                                     "QnaRecordQuestionsItem"
+        ///                                 },
+        ///                                 metadata = new {
+        ///                                     key = "String",
+        ///                                 },
+        ///                                 dialog = ,
+        ///                                 activeLearningSuggestions = new[] {
+        ///                                     new {
+        ///                                         clusterHead = "SuggestedQuestionsClusterHead",
+        ///                                         suggestedQuestions = new[] {
+        ///                                             new {
+        ///                                                 question = ,
+        ///                                                 userSuggestedCount = 1234,
+        ///                                                 autoSuggestedCount = 1234,
+        ///                                             }
+        ///                                         },
+        ///                                     }
+        ///                                 },
+        ///                             },
+        ///                             displayText = "QnaPromptDisplayText",
+        ///                         }
+        ///                     },
+        ///                 },
+        ///                 activeLearningSuggestions = new[] {
+        ///                     new {
+        ///                         clusterHead = "SuggestedQuestionsClusterHead",
+        ///                         suggestedQuestions = new[] {
+        ///                             new {
+        ///                                 question = ,
+        ///                                 userSuggestedCount = 1234,
+        ///                                 autoSuggestedCount = 1234,
+        ///                             }
+        ///                         },
+        ///                     }
+        ///                 },
+        ///                 lastUpdatedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///             }
+        ///         },
+        ///     },
+        ///     fileUri = "ImportJobOptionsFileUri",
+        /// };
+        /// 
+        /// Response response = await client.ImportAsync(0, "projectName", RequestContent.Create(data), "format", "assetKind");
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2402,7 +3508,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> ImportAsync(WaitUntil waitUntil, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
+        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -2411,7 +3517,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2429,6 +3535,108 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call Import with required parameters and request content.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.Import(0, "projectName", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// This sample shows how to call Import with all parameters and request content.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     metadata = new {
+        ///         description = "CreateProjectOptionsDescription",
+        ///         language = "Language",
+        ///         multilingualResource = true,
+        ///         settings = new {
+        ///             defaultAnswer = "ProjectSettingsDefaultAnswer",
+        ///         },
+        ///     },
+        ///     assets = new {
+        ///         synonyms = new[] {
+        ///             new {
+        ///                 alterations = ,
+        ///             }
+        ///         },
+        ///         qnas = new[] {
+        ///             new {
+        ///                 sourceDisplayName = "SourceDisplayNameParameterSourceDisplayName",
+        ///                 id = 1234,
+        ///                 answer = "QnaRecordAnswer",
+        ///                 source = "QnaRecordSource",
+        ///                 questions = new[] {
+        ///                     "QnaRecordQuestionsItem"
+        ///                 },
+        ///                 metadata = new {
+        ///                     key = "String",
+        ///                 },
+        ///                 dialog = new {
+        ///                     isContextOnly = true,
+        ///                     prompts = new[] {
+        ///                         new {
+        ///                             displayOrder = 1234,
+        ///                             qnaId = 1234,
+        ///                             qna = new {
+        ///                                 id = 1234,
+        ///                                 answer = "QnaRecordAnswer",
+        ///                                 source = "QnaRecordSource",
+        ///                                 questions = new[] {
+        ///                                     "QnaRecordQuestionsItem"
+        ///                                 },
+        ///                                 metadata = new {
+        ///                                     key = "String",
+        ///                                 },
+        ///                                 dialog = ,
+        ///                                 activeLearningSuggestions = new[] {
+        ///                                     new {
+        ///                                         clusterHead = "SuggestedQuestionsClusterHead",
+        ///                                         suggestedQuestions = new[] {
+        ///                                             new {
+        ///                                                 question = ,
+        ///                                                 userSuggestedCount = 1234,
+        ///                                                 autoSuggestedCount = 1234,
+        ///                                             }
+        ///                                         },
+        ///                                     }
+        ///                                 },
+        ///                             },
+        ///                             displayText = "QnaPromptDisplayText",
+        ///                         }
+        ///                     },
+        ///                 },
+        ///                 activeLearningSuggestions = new[] {
+        ///                     new {
+        ///                         clusterHead = "SuggestedQuestionsClusterHead",
+        ///                         suggestedQuestions = new[] {
+        ///                             new {
+        ///                                 question = ,
+        ///                                 userSuggestedCount = 1234,
+        ///                                 autoSuggestedCount = 1234,
+        ///                             }
+        ///                         },
+        ///                     }
+        ///                 },
+        ///                 lastUpdatedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///             }
+        ///         },
+        ///     },
+        ///     fileUri = "ImportJobOptionsFileUri",
+        /// };
+        /// 
+        /// Response response = client.Import(0, "projectName", RequestContent.Create(data), "format", "assetKind");
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2511,7 +3719,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> Import(WaitUntil waitUntil, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
+        public virtual Operation Import(WaitUntil waitUntil, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -2520,7 +3728,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2536,6 +3744,17 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call DeployProjectAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.DeployProjectAsync(0, "projectName", "deploymentName");
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -2556,7 +3775,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
+        public virtual async Task<Operation> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -2566,7 +3785,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2582,6 +3801,17 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call DeployProject.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = client.DeployProject(0, "projectName", "deploymentName");
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -2602,7 +3832,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
+        public virtual Operation DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -2612,7 +3842,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2628,6 +3858,31 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call UpdateSourcesAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         op = "add",
+        ///         value = new {
+        ///             displayName = "QnaSourceMetadataDisplayName",
+        ///             source = "QnaSourceMetadataSource",
+        ///             sourceUri = "QnaSourceMetadataSourceUri",
+        ///             sourceKind = "file",
+        ///             contentStructureKind = "unstructured",
+        ///             refresh = true,
+        ///         },
+        ///     }
+        /// };
+        /// 
+        /// Response response = await client.UpdateSourcesAsync(0, "projectName", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2661,7 +3916,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> UpdateSourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation> UpdateSourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -2671,7 +3926,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2687,6 +3942,31 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call UpdateSources.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         op = "add",
+        ///         value = new {
+        ///             displayName = "QnaSourceMetadataDisplayName",
+        ///             source = "QnaSourceMetadataSource",
+        ///             sourceUri = "QnaSourceMetadataSourceUri",
+        ///             sourceKind = "file",
+        ///             contentStructureKind = "unstructured",
+        ///             refresh = true,
+        ///         },
+        ///     }
+        /// };
+        /// 
+        /// Response response = client.UpdateSources(0, "projectName", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2720,7 +4000,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> UpdateSources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual Operation UpdateSources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -2730,7 +4010,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2746,6 +4026,57 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call UpdateQnasAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         op = "add",
+        ///         value = new {
+        ///             id = 1234,
+        ///             answer = "QnaRecordAnswer",
+        ///             source = "QnaRecordSource",
+        ///             questions = new[] {
+        ///                 "QnaRecordQuestionsItem"
+        ///             },
+        ///             metadata = new {
+        ///                 key = "String",
+        ///             },
+        ///             dialog = new {
+        ///                 isContextOnly = true,
+        ///                 prompts = new[] {
+        ///                     new {
+        ///                         displayOrder = 1234,
+        ///                         qnaId = 1234,
+        ///                         qna = ,
+        ///                         displayText = "QnaPromptDisplayText",
+        ///                     }
+        ///                 },
+        ///             },
+        ///             activeLearningSuggestions = new[] {
+        ///                 new {
+        ///                     clusterHead = "SuggestedQuestionsClusterHead",
+        ///                     suggestedQuestions = new[] {
+        ///                         new {
+        ///                             question = ,
+        ///                             userSuggestedCount = 1234,
+        ///                             autoSuggestedCount = 1234,
+        ///                         }
+        ///                     },
+        ///                 }
+        ///             },
+        ///         },
+        ///     }
+        /// };
+        /// 
+        /// Response response = await client.UpdateQnasAsync(0, "projectName", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2801,7 +4132,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> UpdateQnasAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation> UpdateQnasAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -2811,7 +4142,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2827,6 +4158,57 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call UpdateQnas.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         op = "add",
+        ///         value = new {
+        ///             id = 1234,
+        ///             answer = "QnaRecordAnswer",
+        ///             source = "QnaRecordSource",
+        ///             questions = new[] {
+        ///                 "QnaRecordQuestionsItem"
+        ///             },
+        ///             metadata = new {
+        ///                 key = "String",
+        ///             },
+        ///             dialog = new {
+        ///                 isContextOnly = true,
+        ///                 prompts = new[] {
+        ///                     new {
+        ///                         displayOrder = 1234,
+        ///                         qnaId = 1234,
+        ///                         qna = ,
+        ///                         displayText = "QnaPromptDisplayText",
+        ///                     }
+        ///                 },
+        ///             },
+        ///             activeLearningSuggestions = new[] {
+        ///                 new {
+        ///                     clusterHead = "SuggestedQuestionsClusterHead",
+        ///                     suggestedQuestions = new[] {
+        ///                         new {
+        ///                             question = ,
+        ///                             userSuggestedCount = 1234,
+        ///                             autoSuggestedCount = 1234,
+        ///                         }
+        ///                     },
+        ///                 }
+        ///             },
+        ///         },
+        ///     }
+        /// };
+        /// 
+        /// Response response = client.UpdateQnas(0, "projectName", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2882,7 +4264,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> UpdateQnas(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual Operation UpdateQnas(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -2892,7 +4274,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {

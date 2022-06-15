@@ -54,6 +54,49 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetGlossariesAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossariesAsync(1234, 1234, "sort", true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("language").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("usage").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -138,6 +181,49 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetGlossaries with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaries(1234, 1234, "sort", true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("language").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("usage").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -220,6 +306,116 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <example>
+        /// This sample shows how to call CreateGlossaryAsync with required request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateGlossaryAsync(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call CreateGlossaryAsync with all request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     classifications = new[] {
+        ///         new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "AtlasStructTypeName",
+        ///             lastModifiedTS = "LastModifiedTS",
+        ///             entityGuid = "AtlasClassificationEntityGuid",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "TimeBoundaryEndTime",
+        ///                     startTime = "TimeBoundaryStartTime",
+        ///                     timeZone = "TimeBoundaryTimeZone",
+        ///                 }
+        ///             },
+        ///             source = "AtlasClassificationSource",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///         }
+        ///     },
+        ///     longDescription = "AtlasGlossaryBaseObjectLongDescription",
+        ///     name = "AtlasGlossaryBaseObjectName",
+        ///     qualifiedName = "AtlasGlossaryBaseObjectQualifiedName",
+        ///     shortDescription = "AtlasGlossaryBaseObjectShortDescription",
+        ///     lastModifiedTS = "LastModifiedTS",
+        ///     guid = "AtlasBaseModelObjectGuid",
+        ///     categories = new[] {
+        ///         new {
+        ///             categoryGuid = "AtlasRelatedCategoryHeaderCategoryGuid",
+        ///             description = "AtlasRelatedCategoryHeaderDescription",
+        ///             displayText = "AtlasRelatedCategoryHeaderDisplayText",
+        ///             parentCategoryGuid = "AtlasRelatedCategoryHeaderParentCategoryGuid",
+        ///             relationGuid = "AtlasRelatedCategoryHeaderRelationGuid",
+        ///         }
+        ///     },
+        ///     language = "AtlasGlossaryLanguage",
+        ///     terms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     usage = "AtlasGlossaryUsage",
+        /// };
+        /// 
+        /// Response response = await client.CreateGlossaryAsync(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -356,6 +552,116 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <example>
+        /// This sample shows how to call CreateGlossary with required request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.CreateGlossary(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call CreateGlossary with all request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     classifications = new[] {
+        ///         new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "AtlasStructTypeName",
+        ///             lastModifiedTS = "LastModifiedTS",
+        ///             entityGuid = "AtlasClassificationEntityGuid",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "TimeBoundaryEndTime",
+        ///                     startTime = "TimeBoundaryStartTime",
+        ///                     timeZone = "TimeBoundaryTimeZone",
+        ///                 }
+        ///             },
+        ///             source = "AtlasClassificationSource",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///         }
+        ///     },
+        ///     longDescription = "AtlasGlossaryBaseObjectLongDescription",
+        ///     name = "AtlasGlossaryBaseObjectName",
+        ///     qualifiedName = "AtlasGlossaryBaseObjectQualifiedName",
+        ///     shortDescription = "AtlasGlossaryBaseObjectShortDescription",
+        ///     lastModifiedTS = "LastModifiedTS",
+        ///     guid = "AtlasBaseModelObjectGuid",
+        ///     categories = new[] {
+        ///         new {
+        ///             categoryGuid = "AtlasRelatedCategoryHeaderCategoryGuid",
+        ///             description = "AtlasRelatedCategoryHeaderDescription",
+        ///             displayText = "AtlasRelatedCategoryHeaderDisplayText",
+        ///             parentCategoryGuid = "AtlasRelatedCategoryHeaderParentCategoryGuid",
+        ///             relationGuid = "AtlasRelatedCategoryHeaderRelationGuid",
+        ///         }
+        ///     },
+        ///     language = "AtlasGlossaryLanguage",
+        ///     terms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     usage = "AtlasGlossaryUsage",
+        /// };
+        /// 
+        /// Response response = client.CreateGlossary(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -492,6 +798,122 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <example>
+        /// This sample shows how to call CreateGlossaryCategoriesAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         classifications = new[] {
+        ///             new {
+        ///                 attributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 typeName = "AtlasStructTypeName",
+        ///                 lastModifiedTS = "LastModifiedTS",
+        ///                 entityGuid = "AtlasClassificationEntityGuid",
+        ///                 entityStatus = "ACTIVE",
+        ///                 removePropagationsOnEntityDelete = true,
+        ///                 validityPeriods = new[] {
+        ///                     new {
+        ///                         endTime = "TimeBoundaryEndTime",
+        ///                         startTime = "TimeBoundaryStartTime",
+        ///                         timeZone = "TimeBoundaryTimeZone",
+        ///                     }
+        ///                 },
+        ///                 source = "AtlasClassificationSource",
+        ///                 sourceDetails = new {
+        ///                     key = new {},
+        ///                 },
+        ///             }
+        ///         },
+        ///         longDescription = "AtlasGlossaryBaseObjectLongDescription",
+        ///         name = "AtlasGlossaryBaseObjectName",
+        ///         qualifiedName = "AtlasGlossaryBaseObjectQualifiedName",
+        ///         shortDescription = "AtlasGlossaryBaseObjectShortDescription",
+        ///         lastModifiedTS = "LastModifiedTS",
+        ///         guid = "AtlasBaseModelObjectGuid",
+        ///         anchor = new {
+        ///             displayText = "AtlasGlossaryHeaderDisplayText",
+        ///             glossaryGuid = "AtlasGlossaryHeaderGlossaryGuid",
+        ///             relationGuid = "AtlasGlossaryHeaderRelationGuid",
+        ///         },
+        ///         childrenCategories = new[] {
+        ///             new {
+        ///                 categoryGuid = "AtlasRelatedCategoryHeaderCategoryGuid",
+        ///                 description = "AtlasRelatedCategoryHeaderDescription",
+        ///                 displayText = "AtlasRelatedCategoryHeaderDisplayText",
+        ///                 parentCategoryGuid = "AtlasRelatedCategoryHeaderParentCategoryGuid",
+        ///                 relationGuid = "AtlasRelatedCategoryHeaderRelationGuid",
+        ///             }
+        ///         },
+        ///         parentCategory = new {
+        ///             categoryGuid = "AtlasRelatedCategoryHeaderCategoryGuid",
+        ///             description = "AtlasRelatedCategoryHeaderDescription",
+        ///             displayText = "AtlasRelatedCategoryHeaderDisplayText",
+        ///             parentCategoryGuid = "AtlasRelatedCategoryHeaderParentCategoryGuid",
+        ///             relationGuid = "AtlasRelatedCategoryHeaderRelationGuid",
+        ///         },
+        ///         terms = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///     }
+        /// };
+        /// 
+        /// Response response = await client.CreateGlossaryCategoriesAsync(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("childrenCategories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("childrenCategories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("childrenCategories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("childrenCategories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("childrenCategories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -636,6 +1058,122 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <example>
+        /// This sample shows how to call CreateGlossaryCategories and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         classifications = new[] {
+        ///             new {
+        ///                 attributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 typeName = "AtlasStructTypeName",
+        ///                 lastModifiedTS = "LastModifiedTS",
+        ///                 entityGuid = "AtlasClassificationEntityGuid",
+        ///                 entityStatus = "ACTIVE",
+        ///                 removePropagationsOnEntityDelete = true,
+        ///                 validityPeriods = new[] {
+        ///                     new {
+        ///                         endTime = "TimeBoundaryEndTime",
+        ///                         startTime = "TimeBoundaryStartTime",
+        ///                         timeZone = "TimeBoundaryTimeZone",
+        ///                     }
+        ///                 },
+        ///                 source = "AtlasClassificationSource",
+        ///                 sourceDetails = new {
+        ///                     key = new {},
+        ///                 },
+        ///             }
+        ///         },
+        ///         longDescription = "AtlasGlossaryBaseObjectLongDescription",
+        ///         name = "AtlasGlossaryBaseObjectName",
+        ///         qualifiedName = "AtlasGlossaryBaseObjectQualifiedName",
+        ///         shortDescription = "AtlasGlossaryBaseObjectShortDescription",
+        ///         lastModifiedTS = "LastModifiedTS",
+        ///         guid = "AtlasBaseModelObjectGuid",
+        ///         anchor = new {
+        ///             displayText = "AtlasGlossaryHeaderDisplayText",
+        ///             glossaryGuid = "AtlasGlossaryHeaderGlossaryGuid",
+        ///             relationGuid = "AtlasGlossaryHeaderRelationGuid",
+        ///         },
+        ///         childrenCategories = new[] {
+        ///             new {
+        ///                 categoryGuid = "AtlasRelatedCategoryHeaderCategoryGuid",
+        ///                 description = "AtlasRelatedCategoryHeaderDescription",
+        ///                 displayText = "AtlasRelatedCategoryHeaderDisplayText",
+        ///                 parentCategoryGuid = "AtlasRelatedCategoryHeaderParentCategoryGuid",
+        ///                 relationGuid = "AtlasRelatedCategoryHeaderRelationGuid",
+        ///             }
+        ///         },
+        ///         parentCategory = new {
+        ///             categoryGuid = "AtlasRelatedCategoryHeaderCategoryGuid",
+        ///             description = "AtlasRelatedCategoryHeaderDescription",
+        ///             displayText = "AtlasRelatedCategoryHeaderDisplayText",
+        ///             parentCategoryGuid = "AtlasRelatedCategoryHeaderParentCategoryGuid",
+        ///             relationGuid = "AtlasRelatedCategoryHeaderRelationGuid",
+        ///         },
+        ///         terms = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///     }
+        /// };
+        /// 
+        /// Response response = client.CreateGlossaryCategories(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("childrenCategories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("childrenCategories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("childrenCategories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("childrenCategories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("childrenCategories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -780,6 +1318,132 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <example>
+        /// This sample shows how to call CreateGlossaryCategoryAsync with required request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateGlossaryCategoryAsync(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call CreateGlossaryCategoryAsync with all request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     classifications = new[] {
+        ///         new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "AtlasStructTypeName",
+        ///             lastModifiedTS = "LastModifiedTS",
+        ///             entityGuid = "AtlasClassificationEntityGuid",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "TimeBoundaryEndTime",
+        ///                     startTime = "TimeBoundaryStartTime",
+        ///                     timeZone = "TimeBoundaryTimeZone",
+        ///                 }
+        ///             },
+        ///             source = "AtlasClassificationSource",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///         }
+        ///     },
+        ///     longDescription = "AtlasGlossaryBaseObjectLongDescription",
+        ///     name = "AtlasGlossaryBaseObjectName",
+        ///     qualifiedName = "AtlasGlossaryBaseObjectQualifiedName",
+        ///     shortDescription = "AtlasGlossaryBaseObjectShortDescription",
+        ///     lastModifiedTS = "LastModifiedTS",
+        ///     guid = "AtlasBaseModelObjectGuid",
+        ///     anchor = new {
+        ///         displayText = "AtlasGlossaryHeaderDisplayText",
+        ///         glossaryGuid = "AtlasGlossaryHeaderGlossaryGuid",
+        ///         relationGuid = "AtlasGlossaryHeaderRelationGuid",
+        ///     },
+        ///     childrenCategories = new[] {
+        ///         new {
+        ///             categoryGuid = "AtlasRelatedCategoryHeaderCategoryGuid",
+        ///             description = "AtlasRelatedCategoryHeaderDescription",
+        ///             displayText = "AtlasRelatedCategoryHeaderDisplayText",
+        ///             parentCategoryGuid = "AtlasRelatedCategoryHeaderParentCategoryGuid",
+        ///             relationGuid = "AtlasRelatedCategoryHeaderRelationGuid",
+        ///         }
+        ///     },
+        ///     parentCategory = new {
+        ///         categoryGuid = "AtlasRelatedCategoryHeaderCategoryGuid",
+        ///         description = "AtlasRelatedCategoryHeaderDescription",
+        ///         displayText = "AtlasRelatedCategoryHeaderDisplayText",
+        ///         parentCategoryGuid = "AtlasRelatedCategoryHeaderParentCategoryGuid",
+        ///         relationGuid = "AtlasRelatedCategoryHeaderRelationGuid",
+        ///     },
+        ///     terms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateGlossaryCategoryAsync(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -924,6 +1588,132 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <example>
+        /// This sample shows how to call CreateGlossaryCategory with required request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.CreateGlossaryCategory(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call CreateGlossaryCategory with all request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     classifications = new[] {
+        ///         new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "AtlasStructTypeName",
+        ///             lastModifiedTS = "LastModifiedTS",
+        ///             entityGuid = "AtlasClassificationEntityGuid",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "TimeBoundaryEndTime",
+        ///                     startTime = "TimeBoundaryStartTime",
+        ///                     timeZone = "TimeBoundaryTimeZone",
+        ///                 }
+        ///             },
+        ///             source = "AtlasClassificationSource",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///         }
+        ///     },
+        ///     longDescription = "AtlasGlossaryBaseObjectLongDescription",
+        ///     name = "AtlasGlossaryBaseObjectName",
+        ///     qualifiedName = "AtlasGlossaryBaseObjectQualifiedName",
+        ///     shortDescription = "AtlasGlossaryBaseObjectShortDescription",
+        ///     lastModifiedTS = "LastModifiedTS",
+        ///     guid = "AtlasBaseModelObjectGuid",
+        ///     anchor = new {
+        ///         displayText = "AtlasGlossaryHeaderDisplayText",
+        ///         glossaryGuid = "AtlasGlossaryHeaderGlossaryGuid",
+        ///         relationGuid = "AtlasGlossaryHeaderRelationGuid",
+        ///     },
+        ///     childrenCategories = new[] {
+        ///         new {
+        ///             categoryGuid = "AtlasRelatedCategoryHeaderCategoryGuid",
+        ///             description = "AtlasRelatedCategoryHeaderDescription",
+        ///             displayText = "AtlasRelatedCategoryHeaderDisplayText",
+        ///             parentCategoryGuid = "AtlasRelatedCategoryHeaderParentCategoryGuid",
+        ///             relationGuid = "AtlasRelatedCategoryHeaderRelationGuid",
+        ///         }
+        ///     },
+        ///     parentCategory = new {
+        ///         categoryGuid = "AtlasRelatedCategoryHeaderCategoryGuid",
+        ///         description = "AtlasRelatedCategoryHeaderDescription",
+        ///         displayText = "AtlasRelatedCategoryHeaderDisplayText",
+        ///         parentCategoryGuid = "AtlasRelatedCategoryHeaderParentCategoryGuid",
+        ///         relationGuid = "AtlasRelatedCategoryHeaderRelationGuid",
+        ///     },
+        ///     terms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateGlossaryCategory(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1069,6 +1859,55 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetGlossaryCategoryAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryCategoryAsync("categoryGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1158,6 +1997,55 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetGlossaryCategory and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaryCategory("categoryGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1248,6 +2136,132 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call UpdateGlossaryCategoryAsync with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.UpdateGlossaryCategoryAsync("categoryGuid", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call UpdateGlossaryCategoryAsync with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     classifications = new[] {
+        ///         new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "AtlasStructTypeName",
+        ///             lastModifiedTS = "LastModifiedTS",
+        ///             entityGuid = "AtlasClassificationEntityGuid",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "TimeBoundaryEndTime",
+        ///                     startTime = "TimeBoundaryStartTime",
+        ///                     timeZone = "TimeBoundaryTimeZone",
+        ///                 }
+        ///             },
+        ///             source = "AtlasClassificationSource",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///         }
+        ///     },
+        ///     longDescription = "AtlasGlossaryBaseObjectLongDescription",
+        ///     name = "AtlasGlossaryBaseObjectName",
+        ///     qualifiedName = "AtlasGlossaryBaseObjectQualifiedName",
+        ///     shortDescription = "AtlasGlossaryBaseObjectShortDescription",
+        ///     lastModifiedTS = "LastModifiedTS",
+        ///     guid = "AtlasBaseModelObjectGuid",
+        ///     anchor = new {
+        ///         displayText = "AtlasGlossaryHeaderDisplayText",
+        ///         glossaryGuid = "AtlasGlossaryHeaderGlossaryGuid",
+        ///         relationGuid = "AtlasGlossaryHeaderRelationGuid",
+        ///     },
+        ///     childrenCategories = new[] {
+        ///         new {
+        ///             categoryGuid = "AtlasRelatedCategoryHeaderCategoryGuid",
+        ///             description = "AtlasRelatedCategoryHeaderDescription",
+        ///             displayText = "AtlasRelatedCategoryHeaderDisplayText",
+        ///             parentCategoryGuid = "AtlasRelatedCategoryHeaderParentCategoryGuid",
+        ///             relationGuid = "AtlasRelatedCategoryHeaderRelationGuid",
+        ///         }
+        ///     },
+        ///     parentCategory = new {
+        ///         categoryGuid = "AtlasRelatedCategoryHeaderCategoryGuid",
+        ///         description = "AtlasRelatedCategoryHeaderDescription",
+        ///         displayText = "AtlasRelatedCategoryHeaderDisplayText",
+        ///         parentCategoryGuid = "AtlasRelatedCategoryHeaderParentCategoryGuid",
+        ///         relationGuid = "AtlasRelatedCategoryHeaderRelationGuid",
+        ///     },
+        ///     terms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.UpdateGlossaryCategoryAsync("categoryGuid", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1395,6 +2409,132 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call UpdateGlossaryCategory with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.UpdateGlossaryCategory("categoryGuid", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call UpdateGlossaryCategory with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     classifications = new[] {
+        ///         new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "AtlasStructTypeName",
+        ///             lastModifiedTS = "LastModifiedTS",
+        ///             entityGuid = "AtlasClassificationEntityGuid",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "TimeBoundaryEndTime",
+        ///                     startTime = "TimeBoundaryStartTime",
+        ///                     timeZone = "TimeBoundaryTimeZone",
+        ///                 }
+        ///             },
+        ///             source = "AtlasClassificationSource",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///         }
+        ///     },
+        ///     longDescription = "AtlasGlossaryBaseObjectLongDescription",
+        ///     name = "AtlasGlossaryBaseObjectName",
+        ///     qualifiedName = "AtlasGlossaryBaseObjectQualifiedName",
+        ///     shortDescription = "AtlasGlossaryBaseObjectShortDescription",
+        ///     lastModifiedTS = "LastModifiedTS",
+        ///     guid = "AtlasBaseModelObjectGuid",
+        ///     anchor = new {
+        ///         displayText = "AtlasGlossaryHeaderDisplayText",
+        ///         glossaryGuid = "AtlasGlossaryHeaderGlossaryGuid",
+        ///         relationGuid = "AtlasGlossaryHeaderRelationGuid",
+        ///     },
+        ///     childrenCategories = new[] {
+        ///         new {
+        ///             categoryGuid = "AtlasRelatedCategoryHeaderCategoryGuid",
+        ///             description = "AtlasRelatedCategoryHeaderDescription",
+        ///             displayText = "AtlasRelatedCategoryHeaderDisplayText",
+        ///             parentCategoryGuid = "AtlasRelatedCategoryHeaderParentCategoryGuid",
+        ///             relationGuid = "AtlasRelatedCategoryHeaderRelationGuid",
+        ///         }
+        ///     },
+        ///     parentCategory = new {
+        ///         categoryGuid = "AtlasRelatedCategoryHeaderCategoryGuid",
+        ///         description = "AtlasRelatedCategoryHeaderDescription",
+        ///         displayText = "AtlasRelatedCategoryHeaderDisplayText",
+        ///         parentCategoryGuid = "AtlasRelatedCategoryHeaderParentCategoryGuid",
+        ///         relationGuid = "AtlasRelatedCategoryHeaderRelationGuid",
+        ///     },
+        ///     terms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.UpdateGlossaryCategory("categoryGuid", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1541,6 +2681,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call DeleteGlossaryCategoryAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.DeleteGlossaryCategoryAsync("categoryGuid");
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1574,6 +2725,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call DeleteGlossaryCategory.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.DeleteGlossaryCategory("categoryGuid");
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1608,6 +2770,59 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call PartialUpdateGlossaryCategoryAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     key = "String",
+        /// };
+        /// 
+        /// Response response = await client.PartialUpdateGlossaryCategoryAsync("categoryGuid", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1699,6 +2914,59 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call PartialUpdateGlossaryCategory and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     key = "String",
+        /// };
+        /// 
+        /// Response response = client.PartialUpdateGlossaryCategory("categoryGuid", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1792,6 +3060,32 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetRelatedCategoriesAsync with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetRelatedCategoriesAsync("categoryGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("test").Item[0].ToString());
+        /// </code>
+        /// This sample shows how to call GetRelatedCategoriesAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetRelatedCategoriesAsync("categoryGuid", 1234, 1234, "sort");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("relationGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1837,6 +3131,32 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetRelatedCategories with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetRelatedCategories("categoryGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("test").Item[0].ToString());
+        /// </code>
+        /// This sample shows how to call GetRelatedCategories with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetRelatedCategories("categoryGuid", 1234, 1234, "sort");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("relationGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1882,6 +3202,35 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetCategoryTermsAsync with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetCategoryTermsAsync("categoryGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].ToString());
+        /// </code>
+        /// This sample shows how to call GetCategoryTermsAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetCategoryTermsAsync("categoryGuid", 1234, 1234, "sort");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1930,6 +3279,35 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetCategoryTerms with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetCategoryTerms("categoryGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].ToString());
+        /// </code>
+        /// This sample shows how to call GetCategoryTerms with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetCategoryTerms("categoryGuid", 1234, 1234, "sort");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1975,6 +3353,438 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <example>
+        /// This sample shows how to call CreateGlossaryTermAsync with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateGlossaryTermAsync(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call CreateGlossaryTermAsync with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     classifications = new[] {
+        ///         new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "AtlasStructTypeName",
+        ///             lastModifiedTS = "LastModifiedTS",
+        ///             entityGuid = "AtlasClassificationEntityGuid",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "TimeBoundaryEndTime",
+        ///                     startTime = "TimeBoundaryStartTime",
+        ///                     timeZone = "TimeBoundaryTimeZone",
+        ///                 }
+        ///             },
+        ///             source = "AtlasClassificationSource",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///         }
+        ///     },
+        ///     longDescription = "AtlasGlossaryBaseObjectLongDescription",
+        ///     name = "AtlasGlossaryBaseObjectName",
+        ///     qualifiedName = "AtlasGlossaryBaseObjectQualifiedName",
+        ///     shortDescription = "AtlasGlossaryBaseObjectShortDescription",
+        ///     lastModifiedTS = "LastModifiedTS",
+        ///     guid = "AtlasBaseModelObjectGuid",
+        ///     abbreviation = "AtlasGlossaryTermAbbreviation",
+        ///     templateName = new[] {
+        ///         new {}
+        ///     },
+        ///     anchor = new {
+        ///         displayText = "AtlasGlossaryHeaderDisplayText",
+        ///         glossaryGuid = "AtlasGlossaryHeaderGlossaryGuid",
+        ///         relationGuid = "AtlasGlossaryHeaderRelationGuid",
+        ///     },
+        ///     antonyms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     createTime = 1234,
+        ///     createdBy = "AtlasGlossaryTermCreatedBy",
+        ///     updateTime = 1234,
+        ///     updatedBy = "AtlasGlossaryTermUpdatedBy",
+        ///     status = "Draft",
+        ///     resources = new[] {
+        ///         new {
+        ///             displayName = "ResourceLinkDisplayName",
+        ///             url = "ResourceLinkUrl",
+        ///         }
+        ///     },
+        ///     contacts = new {
+        ///         key = new[] {
+        ///             new {
+        ///                 id = "ContactBasicId",
+        ///                 info = "ContactBasicInfo",
+        ///             }
+        ///         },
+        ///     },
+        ///     attributes = new {
+        ///         key = new {
+        ///             key = new {},
+        ///         },
+        ///     },
+        ///     assignedEntities = new[] {
+        ///         new {
+        ///             guid = "AtlasObjectIdGuid",
+        ///             typeName = "AtlasObjectIdTypeName",
+        ///             uniqueAttributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             displayText = "AtlasRelatedObjectIdDisplayText",
+        ///             entityStatus = "ACTIVE",
+        ///             relationshipType = "AtlasRelatedObjectIdRelationshipType",
+        ///             relationshipAttributes = new {
+        ///                 attributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 typeName = "AtlasStructTypeName",
+        ///                 lastModifiedTS = "LastModifiedTS",
+        ///             },
+        ///             relationshipGuid = "AtlasRelatedObjectIdRelationshipGuid",
+        ///             relationshipStatus = "ACTIVE",
+        ///         }
+        ///     },
+        ///     categories = new[] {
+        ///         new {
+        ///             categoryGuid = "AtlasTermCategorizationHeaderCategoryGuid",
+        ///             description = "AtlasTermCategorizationHeaderDescription",
+        ///             displayText = "AtlasTermCategorizationHeaderDisplayText",
+        ///             relationGuid = "AtlasTermCategorizationHeaderRelationGuid",
+        ///             status = "DRAFT",
+        ///         }
+        ///     },
+        ///     classifies = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     examples = new[] {
+        ///         "AtlasGlossaryTermExamplesItem"
+        ///     },
+        ///     isA = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     preferredTerms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     preferredToTerms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     replacedBy = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     replacementTerms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     seeAlso = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     synonyms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     translatedTerms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     translationTerms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     usage = "AtlasGlossaryTermUsage",
+        ///     validValues = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     validValuesFor = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateGlossaryTermAsync(RequestContent.Create(data), true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.GetProperty("templateName").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("resources").Item[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("resources").Item[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("test").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("test").Item[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("test").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("uniqueAttributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("examples").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2210,6 +4020,438 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <example>
+        /// This sample shows how to call CreateGlossaryTerm with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.CreateGlossaryTerm(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call CreateGlossaryTerm with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     classifications = new[] {
+        ///         new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "AtlasStructTypeName",
+        ///             lastModifiedTS = "LastModifiedTS",
+        ///             entityGuid = "AtlasClassificationEntityGuid",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "TimeBoundaryEndTime",
+        ///                     startTime = "TimeBoundaryStartTime",
+        ///                     timeZone = "TimeBoundaryTimeZone",
+        ///                 }
+        ///             },
+        ///             source = "AtlasClassificationSource",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///         }
+        ///     },
+        ///     longDescription = "AtlasGlossaryBaseObjectLongDescription",
+        ///     name = "AtlasGlossaryBaseObjectName",
+        ///     qualifiedName = "AtlasGlossaryBaseObjectQualifiedName",
+        ///     shortDescription = "AtlasGlossaryBaseObjectShortDescription",
+        ///     lastModifiedTS = "LastModifiedTS",
+        ///     guid = "AtlasBaseModelObjectGuid",
+        ///     abbreviation = "AtlasGlossaryTermAbbreviation",
+        ///     templateName = new[] {
+        ///         new {}
+        ///     },
+        ///     anchor = new {
+        ///         displayText = "AtlasGlossaryHeaderDisplayText",
+        ///         glossaryGuid = "AtlasGlossaryHeaderGlossaryGuid",
+        ///         relationGuid = "AtlasGlossaryHeaderRelationGuid",
+        ///     },
+        ///     antonyms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     createTime = 1234,
+        ///     createdBy = "AtlasGlossaryTermCreatedBy",
+        ///     updateTime = 1234,
+        ///     updatedBy = "AtlasGlossaryTermUpdatedBy",
+        ///     status = "Draft",
+        ///     resources = new[] {
+        ///         new {
+        ///             displayName = "ResourceLinkDisplayName",
+        ///             url = "ResourceLinkUrl",
+        ///         }
+        ///     },
+        ///     contacts = new {
+        ///         key = new[] {
+        ///             new {
+        ///                 id = "ContactBasicId",
+        ///                 info = "ContactBasicInfo",
+        ///             }
+        ///         },
+        ///     },
+        ///     attributes = new {
+        ///         key = new {
+        ///             key = new {},
+        ///         },
+        ///     },
+        ///     assignedEntities = new[] {
+        ///         new {
+        ///             guid = "AtlasObjectIdGuid",
+        ///             typeName = "AtlasObjectIdTypeName",
+        ///             uniqueAttributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             displayText = "AtlasRelatedObjectIdDisplayText",
+        ///             entityStatus = "ACTIVE",
+        ///             relationshipType = "AtlasRelatedObjectIdRelationshipType",
+        ///             relationshipAttributes = new {
+        ///                 attributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 typeName = "AtlasStructTypeName",
+        ///                 lastModifiedTS = "LastModifiedTS",
+        ///             },
+        ///             relationshipGuid = "AtlasRelatedObjectIdRelationshipGuid",
+        ///             relationshipStatus = "ACTIVE",
+        ///         }
+        ///     },
+        ///     categories = new[] {
+        ///         new {
+        ///             categoryGuid = "AtlasTermCategorizationHeaderCategoryGuid",
+        ///             description = "AtlasTermCategorizationHeaderDescription",
+        ///             displayText = "AtlasTermCategorizationHeaderDisplayText",
+        ///             relationGuid = "AtlasTermCategorizationHeaderRelationGuid",
+        ///             status = "DRAFT",
+        ///         }
+        ///     },
+        ///     classifies = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     examples = new[] {
+        ///         "AtlasGlossaryTermExamplesItem"
+        ///     },
+        ///     isA = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     preferredTerms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     preferredToTerms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     replacedBy = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     replacementTerms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     seeAlso = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     synonyms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     translatedTerms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     translationTerms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     usage = "AtlasGlossaryTermUsage",
+        ///     validValues = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     validValuesFor = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateGlossaryTerm(RequestContent.Create(data), true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.GetProperty("templateName").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("resources").Item[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("resources").Item[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("test").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("test").Item[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("test").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("uniqueAttributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("examples").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2446,6 +4688,181 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetGlossaryTermAsync with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryTermAsync("termGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call GetGlossaryTermAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryTermAsync("termGuid", true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.GetProperty("templateName").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("resources").Item[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("resources").Item[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("test").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("test").Item[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("test").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("uniqueAttributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("examples").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2581,6 +4998,181 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetGlossaryTerm with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaryTerm("termGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call GetGlossaryTerm with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaryTerm("termGuid", true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.GetProperty("templateName").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("resources").Item[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("resources").Item[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("test").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("test").Item[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("test").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("uniqueAttributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("examples").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2716,6 +5308,438 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call UpdateGlossaryTermAsync with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.UpdateGlossaryTermAsync("termGuid", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call UpdateGlossaryTermAsync with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     classifications = new[] {
+        ///         new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "AtlasStructTypeName",
+        ///             lastModifiedTS = "LastModifiedTS",
+        ///             entityGuid = "AtlasClassificationEntityGuid",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "TimeBoundaryEndTime",
+        ///                     startTime = "TimeBoundaryStartTime",
+        ///                     timeZone = "TimeBoundaryTimeZone",
+        ///                 }
+        ///             },
+        ///             source = "AtlasClassificationSource",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///         }
+        ///     },
+        ///     longDescription = "AtlasGlossaryBaseObjectLongDescription",
+        ///     name = "AtlasGlossaryBaseObjectName",
+        ///     qualifiedName = "AtlasGlossaryBaseObjectQualifiedName",
+        ///     shortDescription = "AtlasGlossaryBaseObjectShortDescription",
+        ///     lastModifiedTS = "LastModifiedTS",
+        ///     guid = "AtlasBaseModelObjectGuid",
+        ///     abbreviation = "AtlasGlossaryTermAbbreviation",
+        ///     templateName = new[] {
+        ///         new {}
+        ///     },
+        ///     anchor = new {
+        ///         displayText = "AtlasGlossaryHeaderDisplayText",
+        ///         glossaryGuid = "AtlasGlossaryHeaderGlossaryGuid",
+        ///         relationGuid = "AtlasGlossaryHeaderRelationGuid",
+        ///     },
+        ///     antonyms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     createTime = 1234,
+        ///     createdBy = "AtlasGlossaryTermCreatedBy",
+        ///     updateTime = 1234,
+        ///     updatedBy = "AtlasGlossaryTermUpdatedBy",
+        ///     status = "Draft",
+        ///     resources = new[] {
+        ///         new {
+        ///             displayName = "ResourceLinkDisplayName",
+        ///             url = "ResourceLinkUrl",
+        ///         }
+        ///     },
+        ///     contacts = new {
+        ///         key = new[] {
+        ///             new {
+        ///                 id = "ContactBasicId",
+        ///                 info = "ContactBasicInfo",
+        ///             }
+        ///         },
+        ///     },
+        ///     attributes = new {
+        ///         key = new {
+        ///             key = new {},
+        ///         },
+        ///     },
+        ///     assignedEntities = new[] {
+        ///         new {
+        ///             guid = "AtlasObjectIdGuid",
+        ///             typeName = "AtlasObjectIdTypeName",
+        ///             uniqueAttributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             displayText = "AtlasRelatedObjectIdDisplayText",
+        ///             entityStatus = "ACTIVE",
+        ///             relationshipType = "AtlasRelatedObjectIdRelationshipType",
+        ///             relationshipAttributes = new {
+        ///                 attributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 typeName = "AtlasStructTypeName",
+        ///                 lastModifiedTS = "LastModifiedTS",
+        ///             },
+        ///             relationshipGuid = "AtlasRelatedObjectIdRelationshipGuid",
+        ///             relationshipStatus = "ACTIVE",
+        ///         }
+        ///     },
+        ///     categories = new[] {
+        ///         new {
+        ///             categoryGuid = "AtlasTermCategorizationHeaderCategoryGuid",
+        ///             description = "AtlasTermCategorizationHeaderDescription",
+        ///             displayText = "AtlasTermCategorizationHeaderDisplayText",
+        ///             relationGuid = "AtlasTermCategorizationHeaderRelationGuid",
+        ///             status = "DRAFT",
+        ///         }
+        ///     },
+        ///     classifies = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     examples = new[] {
+        ///         "AtlasGlossaryTermExamplesItem"
+        ///     },
+        ///     isA = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     preferredTerms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     preferredToTerms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     replacedBy = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     replacementTerms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     seeAlso = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     synonyms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     translatedTerms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     translationTerms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     usage = "AtlasGlossaryTermUsage",
+        ///     validValues = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     validValuesFor = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.UpdateGlossaryTermAsync("termGuid", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.GetProperty("templateName").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("resources").Item[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("resources").Item[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("test").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("test").Item[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("test").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("uniqueAttributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("examples").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2953,6 +5977,438 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call UpdateGlossaryTerm with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.UpdateGlossaryTerm("termGuid", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call UpdateGlossaryTerm with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     classifications = new[] {
+        ///         new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "AtlasStructTypeName",
+        ///             lastModifiedTS = "LastModifiedTS",
+        ///             entityGuid = "AtlasClassificationEntityGuid",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "TimeBoundaryEndTime",
+        ///                     startTime = "TimeBoundaryStartTime",
+        ///                     timeZone = "TimeBoundaryTimeZone",
+        ///                 }
+        ///             },
+        ///             source = "AtlasClassificationSource",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///         }
+        ///     },
+        ///     longDescription = "AtlasGlossaryBaseObjectLongDescription",
+        ///     name = "AtlasGlossaryBaseObjectName",
+        ///     qualifiedName = "AtlasGlossaryBaseObjectQualifiedName",
+        ///     shortDescription = "AtlasGlossaryBaseObjectShortDescription",
+        ///     lastModifiedTS = "LastModifiedTS",
+        ///     guid = "AtlasBaseModelObjectGuid",
+        ///     abbreviation = "AtlasGlossaryTermAbbreviation",
+        ///     templateName = new[] {
+        ///         new {}
+        ///     },
+        ///     anchor = new {
+        ///         displayText = "AtlasGlossaryHeaderDisplayText",
+        ///         glossaryGuid = "AtlasGlossaryHeaderGlossaryGuid",
+        ///         relationGuid = "AtlasGlossaryHeaderRelationGuid",
+        ///     },
+        ///     antonyms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     createTime = 1234,
+        ///     createdBy = "AtlasGlossaryTermCreatedBy",
+        ///     updateTime = 1234,
+        ///     updatedBy = "AtlasGlossaryTermUpdatedBy",
+        ///     status = "Draft",
+        ///     resources = new[] {
+        ///         new {
+        ///             displayName = "ResourceLinkDisplayName",
+        ///             url = "ResourceLinkUrl",
+        ///         }
+        ///     },
+        ///     contacts = new {
+        ///         key = new[] {
+        ///             new {
+        ///                 id = "ContactBasicId",
+        ///                 info = "ContactBasicInfo",
+        ///             }
+        ///         },
+        ///     },
+        ///     attributes = new {
+        ///         key = new {
+        ///             key = new {},
+        ///         },
+        ///     },
+        ///     assignedEntities = new[] {
+        ///         new {
+        ///             guid = "AtlasObjectIdGuid",
+        ///             typeName = "AtlasObjectIdTypeName",
+        ///             uniqueAttributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             displayText = "AtlasRelatedObjectIdDisplayText",
+        ///             entityStatus = "ACTIVE",
+        ///             relationshipType = "AtlasRelatedObjectIdRelationshipType",
+        ///             relationshipAttributes = new {
+        ///                 attributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 typeName = "AtlasStructTypeName",
+        ///                 lastModifiedTS = "LastModifiedTS",
+        ///             },
+        ///             relationshipGuid = "AtlasRelatedObjectIdRelationshipGuid",
+        ///             relationshipStatus = "ACTIVE",
+        ///         }
+        ///     },
+        ///     categories = new[] {
+        ///         new {
+        ///             categoryGuid = "AtlasTermCategorizationHeaderCategoryGuid",
+        ///             description = "AtlasTermCategorizationHeaderDescription",
+        ///             displayText = "AtlasTermCategorizationHeaderDisplayText",
+        ///             relationGuid = "AtlasTermCategorizationHeaderRelationGuid",
+        ///             status = "DRAFT",
+        ///         }
+        ///     },
+        ///     classifies = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     examples = new[] {
+        ///         "AtlasGlossaryTermExamplesItem"
+        ///     },
+        ///     isA = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     preferredTerms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     preferredToTerms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     replacedBy = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     replacementTerms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     seeAlso = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     synonyms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     translatedTerms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     translationTerms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     usage = "AtlasGlossaryTermUsage",
+        ///     validValues = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     validValuesFor = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.UpdateGlossaryTerm("termGuid", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.GetProperty("templateName").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("resources").Item[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("resources").Item[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("test").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("test").Item[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("test").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("uniqueAttributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("examples").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -3189,6 +6645,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call DeleteGlossaryTermAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.DeleteGlossaryTermAsync("termGuid");
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -3222,6 +6689,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call DeleteGlossaryTerm.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.DeleteGlossaryTerm("termGuid");
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -3257,6 +6735,189 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call PartialUpdateGlossaryTermAsync with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     key = "String",
+        /// };
+        /// 
+        /// Response response = await client.PartialUpdateGlossaryTermAsync("termGuid", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call PartialUpdateGlossaryTermAsync with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     key = "String",
+        /// };
+        /// 
+        /// Response response = await client.PartialUpdateGlossaryTermAsync("termGuid", RequestContent.Create(data), true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.GetProperty("templateName").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("resources").Item[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("resources").Item[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("test").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("test").Item[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("test").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("uniqueAttributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("examples").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3394,6 +7055,189 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call PartialUpdateGlossaryTerm with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     key = "String",
+        /// };
+        /// 
+        /// Response response = client.PartialUpdateGlossaryTerm("termGuid", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call PartialUpdateGlossaryTerm with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     key = "String",
+        /// };
+        /// 
+        /// Response response = client.PartialUpdateGlossaryTerm("termGuid", RequestContent.Create(data), true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.GetProperty("templateName").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("resources").Item[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("resources").Item[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("test").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("test").Item[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("test").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("uniqueAttributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities").Item[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("examples").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("isA").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3529,6 +7373,442 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <example>
+        /// This sample shows how to call CreateGlossaryTermsAsync with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {}
+        /// };
+        /// 
+        /// Response response = await client.CreateGlossaryTermsAsync(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].ToString());
+        /// </code>
+        /// This sample shows how to call CreateGlossaryTermsAsync with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         classifications = new[] {
+        ///             new {
+        ///                 attributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 typeName = "AtlasStructTypeName",
+        ///                 lastModifiedTS = "LastModifiedTS",
+        ///                 entityGuid = "AtlasClassificationEntityGuid",
+        ///                 entityStatus = "ACTIVE",
+        ///                 removePropagationsOnEntityDelete = true,
+        ///                 validityPeriods = new[] {
+        ///                     new {
+        ///                         endTime = "TimeBoundaryEndTime",
+        ///                         startTime = "TimeBoundaryStartTime",
+        ///                         timeZone = "TimeBoundaryTimeZone",
+        ///                     }
+        ///                 },
+        ///                 source = "AtlasClassificationSource",
+        ///                 sourceDetails = new {
+        ///                     key = new {},
+        ///                 },
+        ///             }
+        ///         },
+        ///         longDescription = "AtlasGlossaryBaseObjectLongDescription",
+        ///         name = "AtlasGlossaryBaseObjectName",
+        ///         qualifiedName = "AtlasGlossaryBaseObjectQualifiedName",
+        ///         shortDescription = "AtlasGlossaryBaseObjectShortDescription",
+        ///         lastModifiedTS = "LastModifiedTS",
+        ///         guid = "AtlasBaseModelObjectGuid",
+        ///         abbreviation = "AtlasGlossaryTermAbbreviation",
+        ///         templateName = new[] {
+        ///             new {}
+        ///         },
+        ///         anchor = new {
+        ///             displayText = "AtlasGlossaryHeaderDisplayText",
+        ///             glossaryGuid = "AtlasGlossaryHeaderGlossaryGuid",
+        ///             relationGuid = "AtlasGlossaryHeaderRelationGuid",
+        ///         },
+        ///         antonyms = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         createTime = 1234,
+        ///         createdBy = "AtlasGlossaryTermCreatedBy",
+        ///         updateTime = 1234,
+        ///         updatedBy = "AtlasGlossaryTermUpdatedBy",
+        ///         status = "Draft",
+        ///         resources = new[] {
+        ///             new {
+        ///                 displayName = "ResourceLinkDisplayName",
+        ///                 url = "ResourceLinkUrl",
+        ///             }
+        ///         },
+        ///         contacts = new {
+        ///             key = new[] {
+        ///                 new {
+        ///                     id = "ContactBasicId",
+        ///                     info = "ContactBasicInfo",
+        ///                 }
+        ///             },
+        ///         },
+        ///         attributes = new {
+        ///             key = new {
+        ///                 key = new {},
+        ///             },
+        ///         },
+        ///         assignedEntities = new[] {
+        ///             new {
+        ///                 guid = "AtlasObjectIdGuid",
+        ///                 typeName = "AtlasObjectIdTypeName",
+        ///                 uniqueAttributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 displayText = "AtlasRelatedObjectIdDisplayText",
+        ///                 entityStatus = "ACTIVE",
+        ///                 relationshipType = "AtlasRelatedObjectIdRelationshipType",
+        ///                 relationshipAttributes = new {
+        ///                     attributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     typeName = "AtlasStructTypeName",
+        ///                     lastModifiedTS = "LastModifiedTS",
+        ///                 },
+        ///                 relationshipGuid = "AtlasRelatedObjectIdRelationshipGuid",
+        ///                 relationshipStatus = "ACTIVE",
+        ///             }
+        ///         },
+        ///         categories = new[] {
+        ///             new {
+        ///                 categoryGuid = "AtlasTermCategorizationHeaderCategoryGuid",
+        ///                 description = "AtlasTermCategorizationHeaderDescription",
+        ///                 displayText = "AtlasTermCategorizationHeaderDisplayText",
+        ///                 relationGuid = "AtlasTermCategorizationHeaderRelationGuid",
+        ///                 status = "DRAFT",
+        ///             }
+        ///         },
+        ///         classifies = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         examples = new[] {
+        ///             "AtlasGlossaryTermExamplesItem"
+        ///         },
+        ///         isA = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         preferredTerms = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         preferredToTerms = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         replacedBy = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         replacementTerms = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         seeAlso = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         synonyms = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         translatedTerms = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         translationTerms = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         usage = "AtlasGlossaryTermUsage",
+        ///         validValues = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         validValuesFor = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///     }
+        /// };
+        /// 
+        /// Response response = await client.CreateGlossaryTermsAsync(RequestContent.Create(data), true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("templateName").Item[0].ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("resources").Item[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("resources").Item[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("contacts").GetProperty("test").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("contacts").GetProperty("test").Item[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("attributes").GetProperty("test").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("uniqueAttributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("examples").Item[0].ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("usage").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -3764,6 +8044,442 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <example>
+        /// This sample shows how to call CreateGlossaryTerms with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {}
+        /// };
+        /// 
+        /// Response response = client.CreateGlossaryTerms(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].ToString());
+        /// </code>
+        /// This sample shows how to call CreateGlossaryTerms with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         classifications = new[] {
+        ///             new {
+        ///                 attributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 typeName = "AtlasStructTypeName",
+        ///                 lastModifiedTS = "LastModifiedTS",
+        ///                 entityGuid = "AtlasClassificationEntityGuid",
+        ///                 entityStatus = "ACTIVE",
+        ///                 removePropagationsOnEntityDelete = true,
+        ///                 validityPeriods = new[] {
+        ///                     new {
+        ///                         endTime = "TimeBoundaryEndTime",
+        ///                         startTime = "TimeBoundaryStartTime",
+        ///                         timeZone = "TimeBoundaryTimeZone",
+        ///                     }
+        ///                 },
+        ///                 source = "AtlasClassificationSource",
+        ///                 sourceDetails = new {
+        ///                     key = new {},
+        ///                 },
+        ///             }
+        ///         },
+        ///         longDescription = "AtlasGlossaryBaseObjectLongDescription",
+        ///         name = "AtlasGlossaryBaseObjectName",
+        ///         qualifiedName = "AtlasGlossaryBaseObjectQualifiedName",
+        ///         shortDescription = "AtlasGlossaryBaseObjectShortDescription",
+        ///         lastModifiedTS = "LastModifiedTS",
+        ///         guid = "AtlasBaseModelObjectGuid",
+        ///         abbreviation = "AtlasGlossaryTermAbbreviation",
+        ///         templateName = new[] {
+        ///             new {}
+        ///         },
+        ///         anchor = new {
+        ///             displayText = "AtlasGlossaryHeaderDisplayText",
+        ///             glossaryGuid = "AtlasGlossaryHeaderGlossaryGuid",
+        ///             relationGuid = "AtlasGlossaryHeaderRelationGuid",
+        ///         },
+        ///         antonyms = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         createTime = 1234,
+        ///         createdBy = "AtlasGlossaryTermCreatedBy",
+        ///         updateTime = 1234,
+        ///         updatedBy = "AtlasGlossaryTermUpdatedBy",
+        ///         status = "Draft",
+        ///         resources = new[] {
+        ///             new {
+        ///                 displayName = "ResourceLinkDisplayName",
+        ///                 url = "ResourceLinkUrl",
+        ///             }
+        ///         },
+        ///         contacts = new {
+        ///             key = new[] {
+        ///                 new {
+        ///                     id = "ContactBasicId",
+        ///                     info = "ContactBasicInfo",
+        ///                 }
+        ///             },
+        ///         },
+        ///         attributes = new {
+        ///             key = new {
+        ///                 key = new {},
+        ///             },
+        ///         },
+        ///         assignedEntities = new[] {
+        ///             new {
+        ///                 guid = "AtlasObjectIdGuid",
+        ///                 typeName = "AtlasObjectIdTypeName",
+        ///                 uniqueAttributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 displayText = "AtlasRelatedObjectIdDisplayText",
+        ///                 entityStatus = "ACTIVE",
+        ///                 relationshipType = "AtlasRelatedObjectIdRelationshipType",
+        ///                 relationshipAttributes = new {
+        ///                     attributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     typeName = "AtlasStructTypeName",
+        ///                     lastModifiedTS = "LastModifiedTS",
+        ///                 },
+        ///                 relationshipGuid = "AtlasRelatedObjectIdRelationshipGuid",
+        ///                 relationshipStatus = "ACTIVE",
+        ///             }
+        ///         },
+        ///         categories = new[] {
+        ///             new {
+        ///                 categoryGuid = "AtlasTermCategorizationHeaderCategoryGuid",
+        ///                 description = "AtlasTermCategorizationHeaderDescription",
+        ///                 displayText = "AtlasTermCategorizationHeaderDisplayText",
+        ///                 relationGuid = "AtlasTermCategorizationHeaderRelationGuid",
+        ///                 status = "DRAFT",
+        ///             }
+        ///         },
+        ///         classifies = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         examples = new[] {
+        ///             "AtlasGlossaryTermExamplesItem"
+        ///         },
+        ///         isA = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         preferredTerms = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         preferredToTerms = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         replacedBy = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         replacementTerms = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         seeAlso = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         synonyms = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         translatedTerms = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         translationTerms = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         usage = "AtlasGlossaryTermUsage",
+        ///         validValues = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///         validValuesFor = new[] {
+        ///             new {
+        ///                 description = "AtlasRelatedTermHeaderDescription",
+        ///                 displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///                 expression = "AtlasRelatedTermHeaderExpression",
+        ///                 relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///                 source = "AtlasRelatedTermHeaderSource",
+        ///                 status = "DRAFT",
+        ///                 steward = "AtlasRelatedTermHeaderSteward",
+        ///                 termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///             }
+        ///         },
+        ///     }
+        /// };
+        /// 
+        /// Response response = client.CreateGlossaryTerms(RequestContent.Create(data), true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("templateName").Item[0].ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("resources").Item[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("resources").Item[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("contacts").GetProperty("test").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("contacts").GetProperty("test").Item[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("attributes").GetProperty("test").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("uniqueAttributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("examples").Item[0].ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("usage").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4002,6 +8718,38 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetEntitiesAssignedWithTermAsync with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetEntitiesAssignedWithTermAsync("termGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].ToString());
+        /// </code>
+        /// This sample shows how to call GetEntitiesAssignedWithTermAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetEntitiesAssignedWithTermAsync("termGuid", 1234, 1234, "sort");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("uniqueAttributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("relationshipStatus").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -4055,6 +8803,38 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetEntitiesAssignedWithTerm with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetEntitiesAssignedWithTerm("termGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].ToString());
+        /// </code>
+        /// This sample shows how to call GetEntitiesAssignedWithTerm with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetEntitiesAssignedWithTerm("termGuid", 1234, 1234, "sort");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("uniqueAttributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("relationshipStatus").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -4106,6 +8886,39 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call AssignTermToEntitiesAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         guid = "AtlasObjectIdGuid",
+        ///         typeName = "AtlasObjectIdTypeName",
+        ///         uniqueAttributes = new {
+        ///             key = new {},
+        ///         },
+        ///         displayText = "AtlasRelatedObjectIdDisplayText",
+        ///         entityStatus = "ACTIVE",
+        ///         relationshipType = "AtlasRelatedObjectIdRelationshipType",
+        ///         relationshipAttributes = new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "AtlasStructTypeName",
+        ///             lastModifiedTS = "LastModifiedTS",
+        ///         },
+        ///         relationshipGuid = "AtlasRelatedObjectIdRelationshipGuid",
+        ///         relationshipStatus = "ACTIVE",
+        ///     }
+        /// };
+        /// 
+        /// Response response = await client.AssignTermToEntitiesAsync("termGuid", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4158,6 +8971,39 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call AssignTermToEntities.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         guid = "AtlasObjectIdGuid",
+        ///         typeName = "AtlasObjectIdTypeName",
+        ///         uniqueAttributes = new {
+        ///             key = new {},
+        ///         },
+        ///         displayText = "AtlasRelatedObjectIdDisplayText",
+        ///         entityStatus = "ACTIVE",
+        ///         relationshipType = "AtlasRelatedObjectIdRelationshipType",
+        ///         relationshipAttributes = new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "AtlasStructTypeName",
+        ///             lastModifiedTS = "LastModifiedTS",
+        ///         },
+        ///         relationshipGuid = "AtlasRelatedObjectIdRelationshipGuid",
+        ///         relationshipStatus = "ACTIVE",
+        ///     }
+        /// };
+        /// 
+        /// Response response = client.AssignTermToEntities("termGuid", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4210,6 +9056,39 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call RemoveTermAssignmentFromEntitiesAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         guid = "AtlasObjectIdGuid",
+        ///         typeName = "AtlasObjectIdTypeName",
+        ///         uniqueAttributes = new {
+        ///             key = new {},
+        ///         },
+        ///         displayText = "AtlasRelatedObjectIdDisplayText",
+        ///         entityStatus = "ACTIVE",
+        ///         relationshipType = "AtlasRelatedObjectIdRelationshipType",
+        ///         relationshipAttributes = new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "AtlasStructTypeName",
+        ///             lastModifiedTS = "LastModifiedTS",
+        ///         },
+        ///         relationshipGuid = "AtlasRelatedObjectIdRelationshipGuid",
+        ///         relationshipStatus = "ACTIVE",
+        ///     }
+        /// };
+        /// 
+        /// Response response = await client.RemoveTermAssignmentFromEntitiesAsync("termGuid", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4262,6 +9141,39 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call RemoveTermAssignmentFromEntities.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         guid = "AtlasObjectIdGuid",
+        ///         typeName = "AtlasObjectIdTypeName",
+        ///         uniqueAttributes = new {
+        ///             key = new {},
+        ///         },
+        ///         displayText = "AtlasRelatedObjectIdDisplayText",
+        ///         entityStatus = "ACTIVE",
+        ///         relationshipType = "AtlasRelatedObjectIdRelationshipType",
+        ///         relationshipAttributes = new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "AtlasStructTypeName",
+        ///             lastModifiedTS = "LastModifiedTS",
+        ///         },
+        ///         relationshipGuid = "AtlasRelatedObjectIdRelationshipGuid",
+        ///         relationshipStatus = "ACTIVE",
+        ///     }
+        /// };
+        /// 
+        /// Response response = client.RemoveTermAssignmentFromEntities("termGuid", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4314,6 +9226,39 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call DeleteTermAssignmentFromEntitiesAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         guid = "AtlasObjectIdGuid",
+        ///         typeName = "AtlasObjectIdTypeName",
+        ///         uniqueAttributes = new {
+        ///             key = new {},
+        ///         },
+        ///         displayText = "AtlasRelatedObjectIdDisplayText",
+        ///         entityStatus = "ACTIVE",
+        ///         relationshipType = "AtlasRelatedObjectIdRelationshipType",
+        ///         relationshipAttributes = new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "AtlasStructTypeName",
+        ///             lastModifiedTS = "LastModifiedTS",
+        ///         },
+        ///         relationshipGuid = "AtlasRelatedObjectIdRelationshipGuid",
+        ///         relationshipStatus = "ACTIVE",
+        ///     }
+        /// };
+        /// 
+        /// Response response = await client.DeleteTermAssignmentFromEntitiesAsync("termGuid", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4366,6 +9311,39 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call DeleteTermAssignmentFromEntities.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         guid = "AtlasObjectIdGuid",
+        ///         typeName = "AtlasObjectIdTypeName",
+        ///         uniqueAttributes = new {
+        ///             key = new {},
+        ///         },
+        ///         displayText = "AtlasRelatedObjectIdDisplayText",
+        ///         entityStatus = "ACTIVE",
+        ///         relationshipType = "AtlasRelatedObjectIdRelationshipType",
+        ///         relationshipAttributes = new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "AtlasStructTypeName",
+        ///             lastModifiedTS = "LastModifiedTS",
+        ///         },
+        ///         relationshipGuid = "AtlasRelatedObjectIdRelationshipGuid",
+        ///         relationshipStatus = "ACTIVE",
+        ///     }
+        /// };
+        /// 
+        /// Response response = client.DeleteTermAssignmentFromEntities("termGuid", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4420,6 +9398,35 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetRelatedTermsAsync with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetRelatedTermsAsync("termGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("test").Item[0].ToString());
+        /// </code>
+        /// This sample shows how to call GetRelatedTermsAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetRelatedTermsAsync("termGuid", 1234, 1234, "sort");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -4468,6 +9475,35 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetRelatedTerms with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetRelatedTerms("termGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("test").Item[0].ToString());
+        /// </code>
+        /// This sample shows how to call GetRelatedTerms with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetRelatedTerms("termGuid", 1234, 1234, "sort");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("test").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -4513,6 +9549,49 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetGlossaryAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryAsync("glossaryGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -4598,6 +9677,49 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetGlossary and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossary("glossaryGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -4684,6 +9806,116 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call UpdateGlossaryAsync with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.UpdateGlossaryAsync("glossaryGuid", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call UpdateGlossaryAsync with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     classifications = new[] {
+        ///         new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "AtlasStructTypeName",
+        ///             lastModifiedTS = "LastModifiedTS",
+        ///             entityGuid = "AtlasClassificationEntityGuid",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "TimeBoundaryEndTime",
+        ///                     startTime = "TimeBoundaryStartTime",
+        ///                     timeZone = "TimeBoundaryTimeZone",
+        ///                 }
+        ///             },
+        ///             source = "AtlasClassificationSource",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///         }
+        ///     },
+        ///     longDescription = "AtlasGlossaryBaseObjectLongDescription",
+        ///     name = "AtlasGlossaryBaseObjectName",
+        ///     qualifiedName = "AtlasGlossaryBaseObjectQualifiedName",
+        ///     shortDescription = "AtlasGlossaryBaseObjectShortDescription",
+        ///     lastModifiedTS = "LastModifiedTS",
+        ///     guid = "AtlasBaseModelObjectGuid",
+        ///     categories = new[] {
+        ///         new {
+        ///             categoryGuid = "AtlasRelatedCategoryHeaderCategoryGuid",
+        ///             description = "AtlasRelatedCategoryHeaderDescription",
+        ///             displayText = "AtlasRelatedCategoryHeaderDisplayText",
+        ///             parentCategoryGuid = "AtlasRelatedCategoryHeaderParentCategoryGuid",
+        ///             relationGuid = "AtlasRelatedCategoryHeaderRelationGuid",
+        ///         }
+        ///     },
+        ///     language = "AtlasGlossaryLanguage",
+        ///     terms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     usage = "AtlasGlossaryUsage",
+        /// };
+        /// 
+        /// Response response = await client.UpdateGlossaryAsync("glossaryGuid", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4823,6 +10055,116 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call UpdateGlossary with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.UpdateGlossary("glossaryGuid", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call UpdateGlossary with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     classifications = new[] {
+        ///         new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "AtlasStructTypeName",
+        ///             lastModifiedTS = "LastModifiedTS",
+        ///             entityGuid = "AtlasClassificationEntityGuid",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "TimeBoundaryEndTime",
+        ///                     startTime = "TimeBoundaryStartTime",
+        ///                     timeZone = "TimeBoundaryTimeZone",
+        ///                 }
+        ///             },
+        ///             source = "AtlasClassificationSource",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///         }
+        ///     },
+        ///     longDescription = "AtlasGlossaryBaseObjectLongDescription",
+        ///     name = "AtlasGlossaryBaseObjectName",
+        ///     qualifiedName = "AtlasGlossaryBaseObjectQualifiedName",
+        ///     shortDescription = "AtlasGlossaryBaseObjectShortDescription",
+        ///     lastModifiedTS = "LastModifiedTS",
+        ///     guid = "AtlasBaseModelObjectGuid",
+        ///     categories = new[] {
+        ///         new {
+        ///             categoryGuid = "AtlasRelatedCategoryHeaderCategoryGuid",
+        ///             description = "AtlasRelatedCategoryHeaderDescription",
+        ///             displayText = "AtlasRelatedCategoryHeaderDisplayText",
+        ///             parentCategoryGuid = "AtlasRelatedCategoryHeaderParentCategoryGuid",
+        ///             relationGuid = "AtlasRelatedCategoryHeaderRelationGuid",
+        ///         }
+        ///     },
+        ///     language = "AtlasGlossaryLanguage",
+        ///     terms = new[] {
+        ///         new {
+        ///             description = "AtlasRelatedTermHeaderDescription",
+        ///             displayText = "AtlasRelatedTermHeaderDisplayText",
+        ///             expression = "AtlasRelatedTermHeaderExpression",
+        ///             relationGuid = "AtlasRelatedTermHeaderRelationGuid",
+        ///             source = "AtlasRelatedTermHeaderSource",
+        ///             status = "DRAFT",
+        ///             steward = "AtlasRelatedTermHeaderSteward",
+        ///             termGuid = "AtlasRelatedTermHeaderTermGuid",
+        ///         }
+        ///     },
+        ///     usage = "AtlasGlossaryUsage",
+        /// };
+        /// 
+        /// Response response = client.UpdateGlossary("glossaryGuid", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4961,6 +10303,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call DeleteGlossaryAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.DeleteGlossaryAsync("glossaryGuid");
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -4994,6 +10347,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call DeleteGlossary.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.DeleteGlossary("glossaryGuid");
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -5030,6 +10394,65 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetGlossaryCategoriesAsync with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryCategoriesAsync("glossaryGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].ToString());
+        /// </code>
+        /// This sample shows how to call GetGlossaryCategoriesAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryCategoriesAsync("glossaryGuid", 1234, 1234, "sort");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("childrenCategories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("childrenCategories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("childrenCategories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("childrenCategories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("childrenCategories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5122,6 +10545,65 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetGlossaryCategories with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaryCategories("glossaryGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].ToString());
+        /// </code>
+        /// This sample shows how to call GetGlossaryCategories with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaryCategories("glossaryGuid", 1234, 1234, "sort");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("childrenCategories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("childrenCategories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("childrenCategories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("childrenCategories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("childrenCategories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5214,6 +10696,32 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetGlossaryCategoriesHeadersAsync with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryCategoriesHeadersAsync("glossaryGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].ToString());
+        /// </code>
+        /// This sample shows how to call GetGlossaryCategoriesHeadersAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryCategoriesHeadersAsync("glossaryGuid", 1234, 1234, "sort");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("relationGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5259,6 +10767,32 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetGlossaryCategoriesHeaders with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaryCategoriesHeaders("glossaryGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].ToString());
+        /// </code>
+        /// This sample shows how to call GetGlossaryCategoriesHeaders with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaryCategoriesHeaders("glossaryGuid", 1234, 1234, "sort");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("relationGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5302,6 +10836,251 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDetailedGlossaryAsync with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetDetailedGlossaryAsync("glossaryGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call GetDetailedGlossaryAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetDetailedGlossaryAsync("glossaryGuid", true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("childrenCategories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("childrenCategories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("childrenCategories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("childrenCategories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("childrenCategories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("templateName").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("antonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("antonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("antonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("antonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("antonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("antonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("antonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("antonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("resources").Item[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("resources").Item[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("contacts").GetProperty("test").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("contacts").GetProperty("test").Item[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("attributes").GetProperty("test").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("assignedEntities").Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("assignedEntities").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("assignedEntities").Item[0].GetProperty("uniqueAttributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("assignedEntities").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("assignedEntities").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("assignedEntities").Item[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("assignedEntities").Item[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("assignedEntities").Item[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("categories").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifies").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifies").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifies").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifies").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifies").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifies").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifies").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifies").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("examples").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("isA").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("isA").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("isA").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("isA").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("isA").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("isA").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("isA").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("isA").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredToTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredToTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredToTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredToTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredToTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredToTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredToTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredToTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacedBy").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacedBy").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacedBy").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacedBy").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacedBy").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacedBy").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacedBy").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacedBy").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacementTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacementTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacementTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacementTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacementTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacementTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacementTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacementTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("seeAlso").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("seeAlso").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("seeAlso").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("seeAlso").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("seeAlso").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("seeAlso").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("seeAlso").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("seeAlso").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("synonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("synonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("synonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("synonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("synonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("synonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("synonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("synonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translatedTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translatedTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translatedTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translatedTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translatedTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translatedTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translatedTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translatedTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translationTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translationTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translationTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translationTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translationTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translationTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translationTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translationTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValues").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValues").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValues").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValues").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValues").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValues").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValues").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValues").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValuesFor").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValuesFor").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValuesFor").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValuesFor").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValuesFor").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValuesFor").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValuesFor").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValuesFor").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5390,6 +11169,251 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDetailedGlossary with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetDetailedGlossary("glossaryGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call GetDetailedGlossary with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetDetailedGlossary("glossaryGuid", true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("childrenCategories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("childrenCategories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("childrenCategories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("childrenCategories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("childrenCategories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("test").GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("templateName").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("antonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("antonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("antonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("antonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("antonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("antonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("antonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("antonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("resources").Item[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("resources").Item[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("contacts").GetProperty("test").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("contacts").GetProperty("test").Item[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("attributes").GetProperty("test").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("assignedEntities").Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("assignedEntities").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("assignedEntities").Item[0].GetProperty("uniqueAttributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("assignedEntities").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("assignedEntities").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("assignedEntities").Item[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("assignedEntities").Item[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("assignedEntities").Item[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("categories").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifies").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifies").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifies").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifies").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifies").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifies").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifies").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("classifies").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("examples").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("isA").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("isA").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("isA").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("isA").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("isA").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("isA").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("isA").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("isA").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredToTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredToTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredToTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredToTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredToTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredToTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredToTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("preferredToTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacedBy").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacedBy").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacedBy").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacedBy").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacedBy").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacedBy").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacedBy").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacedBy").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacementTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacementTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacementTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacementTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacementTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacementTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacementTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("replacementTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("seeAlso").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("seeAlso").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("seeAlso").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("seeAlso").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("seeAlso").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("seeAlso").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("seeAlso").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("seeAlso").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("synonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("synonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("synonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("synonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("synonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("synonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("synonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("synonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translatedTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translatedTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translatedTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translatedTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translatedTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translatedTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translatedTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translatedTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translationTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translationTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translationTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translationTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translationTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translationTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translationTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("translationTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValues").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValues").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValues").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValues").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValues").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValues").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValues").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValues").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValuesFor").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValuesFor").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValuesFor").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValuesFor").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValuesFor").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValuesFor").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValuesFor").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("test").GetProperty("validValuesFor").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5479,6 +11503,67 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call PartialUpdateGlossaryAsync with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     key = "String",
+        /// };
+        /// 
+        /// Response response = await client.PartialUpdateGlossaryAsync("glossaryGuid", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call PartialUpdateGlossaryAsync with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     key = "String",
+        /// };
+        /// 
+        /// Response response = await client.PartialUpdateGlossaryAsync("glossaryGuid", RequestContent.Create(data), true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5567,6 +11652,67 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call PartialUpdateGlossary with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     key = "String",
+        /// };
+        /// 
+        /// Response response = client.PartialUpdateGlossary("glossaryGuid", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call PartialUpdateGlossary with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     key = "String",
+        /// };
+        /// 
+        /// Response response = client.PartialUpdateGlossary("glossaryGuid", RequestContent.Create(data), true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5657,6 +11803,181 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetGlossaryTermsAsync with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryTermsAsync("glossaryGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].ToString());
+        /// </code>
+        /// This sample shows how to call GetGlossaryTermsAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryTermsAsync("glossaryGuid", true, 1234, 1234, "sort");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("templateName").Item[0].ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("resources").Item[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("resources").Item[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("contacts").GetProperty("test").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("contacts").GetProperty("test").Item[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("attributes").GetProperty("test").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("uniqueAttributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("examples").Item[0].ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("usage").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5795,6 +12116,181 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetGlossaryTerms with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaryTerms("glossaryGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].ToString());
+        /// </code>
+        /// This sample shows how to call GetGlossaryTerms with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaryTerms("glossaryGuid", true, 1234, 1234, "sort");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("templateName").Item[0].ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("resources").Item[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("resources").Item[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("contacts").GetProperty("test").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("contacts").GetProperty("test").Item[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("attributes").GetProperty("test").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("uniqueAttributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("examples").Item[0].ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("usage").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5932,6 +12428,35 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetGlossaryTermHeadersAsync with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryTermHeadersAsync("glossaryGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].ToString());
+        /// </code>
+        /// This sample shows how to call GetGlossaryTermHeadersAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryTermHeadersAsync("glossaryGuid", 1234, 1234, "sort");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5980,6 +12505,35 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetGlossaryTermHeaders with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaryTermHeaders("glossaryGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].ToString());
+        /// </code>
+        /// This sample shows how to call GetGlossaryTermHeaders with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaryTermHeaders("glossaryGuid", 1234, 1234, "sort");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6025,6 +12579,25 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetImportCsvOperationStatusAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetImportCsvOperationStatusAsync("operationGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("importedTerms").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("totalTermsDetected").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorCode").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorMessage").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6074,6 +12647,25 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetImportCsvOperationStatus and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetImportCsvOperationStatus("operationGuid");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("importedTerms").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("totalTermsDetected").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorCode").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorMessage").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6125,6 +12717,36 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call ExportGlossaryTermsAsCsvAsync with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     "TermGuid"
+        /// };
+        /// 
+        /// Response response = await client.ExportGlossaryTermsAsCsvAsync("glossaryGuid", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call ExportGlossaryTermsAsCsvAsync with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     "TermGuid"
+        /// };
+        /// 
+        /// Response response = await client.ExportGlossaryTermsAsCsvAsync("glossaryGuid", RequestContent.Create(data), true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// </example>
         public virtual async Task<Response> ExportGlossaryTermsAsCsvAsync(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -6151,6 +12773,36 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call ExportGlossaryTermsAsCsv with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     "TermGuid"
+        /// };
+        /// 
+        /// Response response = client.ExportGlossaryTermsAsCsv("glossaryGuid", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call ExportGlossaryTermsAsCsv with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     "TermGuid"
+        /// };
+        /// 
+        /// Response response = client.ExportGlossaryTermsAsCsv("glossaryGuid", RequestContent.Create(data), true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// </example>
         public virtual Response ExportGlossaryTermsAsCsv(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -6178,6 +12830,181 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetTermsByGlossaryNameAsync with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetTermsByGlossaryNameAsync("glossaryName");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].ToString());
+        /// </code>
+        /// This sample shows how to call GetTermsByGlossaryNameAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetTermsByGlossaryNameAsync("glossaryName", 1234, 1234, true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("templateName").Item[0].ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("resources").Item[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("resources").Item[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("contacts").GetProperty("test").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("contacts").GetProperty("test").Item[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("attributes").GetProperty("test").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("uniqueAttributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("examples").Item[0].ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("usage").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6315,6 +13142,181 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetTermsByGlossaryName with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetTermsByGlossaryName("glossaryName");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].ToString());
+        /// </code>
+        /// This sample shows how to call GetTermsByGlossaryName with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetTermsByGlossaryName("glossaryName", 1234, 1234, true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("validityPeriods").Item[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("sourceDetails").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("templateName").Item[0].ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("antonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("resources").Item[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("resources").Item[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("contacts").GetProperty("test").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("contacts").GetProperty("test").Item[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("attributes").GetProperty("test").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("uniqueAttributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("assignedEntities").Item[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("categories").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("classifies").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("examples").Item[0].ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("isA").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("preferredToTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacedBy").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("replacementTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("seeAlso").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("synonyms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translatedTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("translationTerms").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("usage").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValues").Item[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.Item[0].GetProperty("validValuesFor").Item[0].GetProperty("termGuid").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6452,6 +13454,39 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call ImportGlossaryTermsViaCsvAsync with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.ImportGlossaryTermsViaCsvAsync(0, "glossaryGuid", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call ImportGlossaryTermsViaCsvAsync with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.ImportGlossaryTermsViaCsvAsync(0, "glossaryGuid", RequestContent.Create(data), true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("importedTerms").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("totalTermsDetected").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorCode").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorMessage").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6488,7 +13523,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsv", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsv", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -6505,6 +13540,39 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call ImportGlossaryTermsViaCsv with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.ImportGlossaryTermsViaCsv(0, "glossaryGuid", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call ImportGlossaryTermsViaCsv with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.ImportGlossaryTermsViaCsv(0, "glossaryGuid", RequestContent.Create(data), true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("importedTerms").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("totalTermsDetected").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorCode").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorMessage").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6541,7 +13609,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsv", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsv", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -6558,6 +13626,39 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call ImportGlossaryTermsViaCsvByGlossaryNameAsync with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(0, "glossaryName", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call ImportGlossaryTermsViaCsvByGlossaryNameAsync with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(0, "glossaryName", RequestContent.Create(data), true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("importedTerms").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("totalTermsDetected").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorCode").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorMessage").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6594,7 +13695,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -6611,6 +13712,39 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call ImportGlossaryTermsViaCsvByGlossaryName with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.ImportGlossaryTermsViaCsvByGlossaryName(0, "glossaryName", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call ImportGlossaryTermsViaCsvByGlossaryName with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.ImportGlossaryTermsViaCsvByGlossaryName(0, "glossaryName", RequestContent.Create(data), true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("importedTerms").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("totalTermsDetected").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorCode").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorMessage").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6647,7 +13781,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
             }
             catch (Exception e)
             {

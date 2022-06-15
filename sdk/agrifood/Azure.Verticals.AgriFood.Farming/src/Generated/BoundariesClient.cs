@@ -67,6 +67,31 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetCascadeDeleteJobDetailsAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetCascadeDeleteJobDetailsAsync("jobId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -126,6 +151,31 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetCascadeDeleteJobDetails and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetCascadeDeleteJobDetails("jobId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -186,6 +236,31 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetBoundaryAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetBoundaryAsync("farmerId", "boundaryId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("isPrimary").ToString());
+        /// Console.WriteLine(result.GetProperty("acreage").ToString());
+        /// Console.WriteLine(result.GetProperty("parentType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -249,6 +324,31 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetBoundary and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetBoundary("farmerId", "boundaryId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("isPrimary").ToString());
+        /// Console.WriteLine(result.GetProperty("acreage").ToString());
+        /// Console.WriteLine(result.GetProperty("parentType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -313,6 +413,64 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateAsync with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync("farmerId", "boundaryId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     farmerId = "BoundaryFarmerId",
+        ///     parentId = "BoundaryParentId",
+        ///     geometry = new {
+        ///         type = "Point",
+        ///     },
+        ///     isPrimary = true,
+        ///     acreage = 1234,
+        ///     parentType = "BoundaryParentType",
+        ///     id = "BoundaryId",
+        ///     eTag = "BoundaryETag",
+        ///     status = "BoundaryStatus",
+        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     modifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     name = "BoundaryName",
+        ///     description = "BoundaryDescription",
+        ///     properties = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync("farmerId", "boundaryId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("isPrimary").ToString());
+        /// Console.WriteLine(result.GetProperty("acreage").ToString());
+        /// Console.WriteLine(result.GetProperty("parentType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -397,6 +555,64 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdate with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.CreateOrUpdate("farmerId", "boundaryId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     farmerId = "BoundaryFarmerId",
+        ///     parentId = "BoundaryParentId",
+        ///     geometry = new {
+        ///         type = "Point",
+        ///     },
+        ///     isPrimary = true,
+        ///     acreage = 1234,
+        ///     parentType = "BoundaryParentType",
+        ///     id = "BoundaryId",
+        ///     eTag = "BoundaryETag",
+        ///     status = "BoundaryStatus",
+        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     modifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     name = "BoundaryName",
+        ///     description = "BoundaryDescription",
+        ///     properties = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdate("farmerId", "boundaryId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("isPrimary").ToString());
+        /// Console.WriteLine(result.GetProperty("acreage").ToString());
+        /// Console.WriteLine(result.GetProperty("parentType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -480,6 +696,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call DeleteAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// Response response = await client.DeleteAsync("farmerId", "boundaryId");
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -523,6 +750,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call Delete.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// Response response = client.Delete("farmerId", "boundaryId");
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -568,6 +806,20 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="otherFarmerId"/> or <paramref name="otherBoundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetOverlapAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetOverlapAsync("farmerId", "boundaryId", "otherFarmerId", "otherBoundaryId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("boundaryAcreage").ToString());
+        /// Console.WriteLine(result.GetProperty("otherBoundaryAcreage").ToString());
+        /// Console.WriteLine(result.GetProperty("intersectingAcreage").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -622,6 +874,20 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="otherFarmerId"/> or <paramref name="otherBoundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetOverlap and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetOverlap("farmerId", "boundaryId", "otherFarmerId", "otherBoundaryId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("boundaryAcreage").ToString());
+        /// Console.WriteLine(result.GetProperty("otherBoundaryAcreage").ToString());
+        /// Console.WriteLine(result.GetProperty("intersectingAcreage").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -694,6 +960,43 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetBoundariesByFarmerIdAsync with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetBoundariesByFarmerIdAsync("farmerId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call GetBoundariesByFarmerIdAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetBoundariesByFarmerIdAsync("farmerId", true, "parentType", new String[]{"parentIds"}, 1234, 1234, new String[]{"ids"}, new String[]{"names"}, new String[]{"propertyFilters"}, new String[]{"statuses"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "skipToken");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("geometry").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isPrimary").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("acreage").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentType").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -788,6 +1091,43 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetBoundariesByFarmerId with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetBoundariesByFarmerId("farmerId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call GetBoundariesByFarmerId with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetBoundariesByFarmerId("farmerId", true, "parentType", new String[]{"parentIds"}, 1234, 1234, new String[]{"ids"}, new String[]{"names"}, new String[]{"propertyFilters"}, new String[]{"statuses"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "skipToken");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("geometry").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isPrimary").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("acreage").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentType").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -862,6 +1202,76 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call SearchByFarmerIdAsync with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.SearchByFarmerIdAsync("farmerId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call SearchByFarmerIdAsync with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     ids = new[] {
+        ///         "SearchBoundaryQueryIdsItem"
+        ///     },
+        ///     names = new[] {
+        ///         "SearchBoundaryQueryNamesItem"
+        ///     },
+        ///     propertyFilters = new[] {
+        ///         "SearchBoundaryQueryPropertyFiltersItem"
+        ///     },
+        ///     statuses = new[] {
+        ///         "SearchBoundaryQueryStatusesItem"
+        ///     },
+        ///     minCreatedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     maxCreatedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     minLastModifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     maxLastModifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     $maxPageSize = 50,
+        ///     $skipToken = "SearchBoundaryQuerySkipToken",
+        ///     isPrimary = true,
+        ///     parentType = "SearchBoundaryQueryParentType",
+        ///     parentIds = new[] {
+        ///         "SearchBoundaryQueryParentIdsItem"
+        ///     },
+        ///     minAcreage = 1234,
+        ///     maxAcreage = 1234,
+        ///     intersectsWithGeometry = new {
+        ///         type = "Point",
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.SearchByFarmerIdAsync("farmerId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("geometry").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isPrimary").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("acreage").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentType").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -958,6 +1368,76 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call SearchByFarmerId with required parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.SearchByFarmerId("farmerId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call SearchByFarmerId with all parameters and request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     ids = new[] {
+        ///         "SearchBoundaryQueryIdsItem"
+        ///     },
+        ///     names = new[] {
+        ///         "SearchBoundaryQueryNamesItem"
+        ///     },
+        ///     propertyFilters = new[] {
+        ///         "SearchBoundaryQueryPropertyFiltersItem"
+        ///     },
+        ///     statuses = new[] {
+        ///         "SearchBoundaryQueryStatusesItem"
+        ///     },
+        ///     minCreatedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     maxCreatedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     minLastModifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     maxLastModifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     $maxPageSize = 50,
+        ///     $skipToken = "SearchBoundaryQuerySkipToken",
+        ///     isPrimary = true,
+        ///     parentType = "SearchBoundaryQueryParentType",
+        ///     parentIds = new[] {
+        ///         "SearchBoundaryQueryParentIdsItem"
+        ///     },
+        ///     minAcreage = 1234,
+        ///     maxAcreage = 1234,
+        ///     intersectsWithGeometry = new {
+        ///         type = "Point",
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.SearchByFarmerId("farmerId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("geometry").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isPrimary").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("acreage").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentType").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1071,6 +1551,33 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetBoundariesAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetBoundariesAsync(true, "parentType", new String[]{"parentIds"}, 1234, 1234, new String[]{"ids"}, new String[]{"names"}, new String[]{"propertyFilters"}, new String[]{"statuses"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "skipToken");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("geometry").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isPrimary").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("acreage").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentType").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1160,6 +1667,33 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetBoundaries with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetBoundaries(true, "parentType", new String[]{"parentIds"}, 1234, 1234, new String[]{"ids"}, new String[]{"names"}, new String[]{"propertyFilters"}, new String[]{"statuses"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "skipToken");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("geometry").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isPrimary").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("acreage").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentType").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1229,6 +1763,76 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Search for boundaries across all farmers by fields and intersecting geometry. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call SearchAsync with required request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.SearchAsync(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call SearchAsync with all request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     ids = new[] {
+        ///         "SearchBoundaryQueryIdsItem"
+        ///     },
+        ///     names = new[] {
+        ///         "SearchBoundaryQueryNamesItem"
+        ///     },
+        ///     propertyFilters = new[] {
+        ///         "SearchBoundaryQueryPropertyFiltersItem"
+        ///     },
+        ///     statuses = new[] {
+        ///         "SearchBoundaryQueryStatusesItem"
+        ///     },
+        ///     minCreatedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     maxCreatedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     minLastModifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     maxLastModifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     $maxPageSize = 50,
+        ///     $skipToken = "SearchBoundaryQuerySkipToken",
+        ///     isPrimary = true,
+        ///     parentType = "SearchBoundaryQueryParentType",
+        ///     parentIds = new[] {
+        ///         "SearchBoundaryQueryParentIdsItem"
+        ///     },
+        ///     minAcreage = 1234,
+        ///     maxAcreage = 1234,
+        ///     intersectsWithGeometry = new {
+        ///         type = "Point",
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.SearchAsync(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("geometry").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isPrimary").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("acreage").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentType").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1320,6 +1924,76 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Search for boundaries across all farmers by fields and intersecting geometry. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call Search with required request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.Search(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call Search with all request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     ids = new[] {
+        ///         "SearchBoundaryQueryIdsItem"
+        ///     },
+        ///     names = new[] {
+        ///         "SearchBoundaryQueryNamesItem"
+        ///     },
+        ///     propertyFilters = new[] {
+        ///         "SearchBoundaryQueryPropertyFiltersItem"
+        ///     },
+        ///     statuses = new[] {
+        ///         "SearchBoundaryQueryStatusesItem"
+        ///     },
+        ///     minCreatedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     maxCreatedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     minLastModifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     maxLastModifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     $maxPageSize = 50,
+        ///     $skipToken = "SearchBoundaryQuerySkipToken",
+        ///     isPrimary = true,
+        ///     parentType = "SearchBoundaryQueryParentType",
+        ///     parentIds = new[] {
+        ///         "SearchBoundaryQueryParentIdsItem"
+        ///     },
+        ///     minAcreage = 1234,
+        ///     maxAcreage = 1234,
+        ///     intersectsWithGeometry = new {
+        ///         type = "Point",
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.Search(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("geometry").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isPrimary").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("acreage").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentType").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1416,6 +2090,31 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call CreateCascadeDeleteJobAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// Response response = await client.CreateCascadeDeleteJobAsync(0, "jobId", "farmerId", "boundaryId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1463,7 +2162,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, boundaryId, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "BoundariesClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "BoundariesClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1480,6 +2179,31 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call CreateCascadeDeleteJob and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new BoundariesClient(endpoint, credential);
+        /// 
+        /// Response response = client.CreateCascadeDeleteJob(0, "jobId", "farmerId", "boundaryId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1527,7 +2251,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, boundaryId, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "BoundariesClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "BoundariesClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {

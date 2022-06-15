@@ -72,6 +72,121 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Creates or Updates a data source. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateAsync with required request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewDataSourceClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     kind = "None",
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call CreateOrUpdateAsync with all request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewDataSourceClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     id = "ProxyResourceId",
+        ///     name = "ProxyResourceName",
+        ///     kind = "None",
+        ///     scans = new[] {
+        ///         new {
+        ///             id = "ProxyResourceId",
+        ///             name = "ProxyResourceName",
+        ///             kind = "AzureSubscriptionCredential",
+        ///             scanResults = new[] {
+        ///                 new {
+        ///                     parentId = "ScanResultParentId",
+        ///                     id = "ScanResultId",
+        ///                     resourceId = "ScanResultResourceId",
+        ///                     status = "ScanResultStatus",
+        ///                     assetsDiscovered = 1234,
+        ///                     assetsClassified = 1234,
+        ///                     diagnostics = new {
+        ///                         notifications = new[] {
+        ///                             new {
+        ///                                 message = "NotificationMessage",
+        ///                                 code = 1234,
+        ///                             }
+        ///                         },
+        ///                         exceptionCountMap = new {
+        ///                             key = 1234,
+        ///                         },
+        ///                     },
+        ///                     startTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///                     queuedTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///                     pipelineStartTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///                     endTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///                     scanRulesetVersion = 1234,
+        ///                     scanRulesetType = "Custom",
+        ///                     scanLevelType = "Full",
+        ///                     errorMessage = "ScanResultErrorMessage",
+        ///                     error = new {
+        ///                         code = "ErrorModelCode",
+        ///                         message = "ErrorModelMessage",
+        ///                         target = "ErrorModelTarget",
+        ///                         details = new[] {
+        ///                             new {
+        ///                                 code = "ErrorModelCode",
+        ///                                 message = "ErrorModelMessage",
+        ///                                 target = "ErrorModelTarget",
+        ///                                 details = new[] {
+        ///                                     
+        ///                                 },
+        ///                             }
+        ///                         },
+        ///                     },
+        ///                     runType = "ScanResultRunType",
+        ///                     dataSourceType = "None",
+        ///                 }
+        ///             },
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsDiscovered").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsClassified").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("queuedTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("pipelineStartTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanRulesetVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanLevelType").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("errorMessage").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("runType").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("dataSourceType").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -223,6 +338,121 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Creates or Updates a data source. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdate with required request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewDataSourceClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     kind = "None",
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdate(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call CreateOrUpdate with all request content, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewDataSourceClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     id = "ProxyResourceId",
+        ///     name = "ProxyResourceName",
+        ///     kind = "None",
+        ///     scans = new[] {
+        ///         new {
+        ///             id = "ProxyResourceId",
+        ///             name = "ProxyResourceName",
+        ///             kind = "AzureSubscriptionCredential",
+        ///             scanResults = new[] {
+        ///                 new {
+        ///                     parentId = "ScanResultParentId",
+        ///                     id = "ScanResultId",
+        ///                     resourceId = "ScanResultResourceId",
+        ///                     status = "ScanResultStatus",
+        ///                     assetsDiscovered = 1234,
+        ///                     assetsClassified = 1234,
+        ///                     diagnostics = new {
+        ///                         notifications = new[] {
+        ///                             new {
+        ///                                 message = "NotificationMessage",
+        ///                                 code = 1234,
+        ///                             }
+        ///                         },
+        ///                         exceptionCountMap = new {
+        ///                             key = 1234,
+        ///                         },
+        ///                     },
+        ///                     startTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///                     queuedTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///                     pipelineStartTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///                     endTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///                     scanRulesetVersion = 1234,
+        ///                     scanRulesetType = "Custom",
+        ///                     scanLevelType = "Full",
+        ///                     errorMessage = "ScanResultErrorMessage",
+        ///                     error = new {
+        ///                         code = "ErrorModelCode",
+        ///                         message = "ErrorModelMessage",
+        ///                         target = "ErrorModelTarget",
+        ///                         details = new[] {
+        ///                             new {
+        ///                                 code = "ErrorModelCode",
+        ///                                 message = "ErrorModelMessage",
+        ///                                 target = "ErrorModelTarget",
+        ///                                 details = new[] {
+        ///                                     
+        ///                                 },
+        ///                             }
+        ///                         },
+        ///                     },
+        ///                     runType = "ScanResultRunType",
+        ///                     dataSourceType = "None",
+        ///                 }
+        ///             },
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdate(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsDiscovered").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsClassified").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("queuedTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("pipelineStartTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanRulesetVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanLevelType").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("errorMessage").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("runType").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("dataSourceType").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -373,6 +603,48 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Get a data source. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetPropertiesAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewDataSourceClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetPropertiesAsync();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsDiscovered").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsClassified").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("queuedTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("pipelineStartTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanRulesetVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanLevelType").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("errorMessage").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("runType").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("dataSourceType").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -467,6 +739,48 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Get a data source. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetProperties and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewDataSourceClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetProperties();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsDiscovered").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsClassified").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("queuedTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("pipelineStartTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanRulesetVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanLevelType").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("errorMessage").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("runType").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("dataSourceType").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -561,6 +875,48 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Deletes a data source. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call DeleteAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewDataSourceClient(endpoint, credential);
+        /// 
+        /// Response response = await client.DeleteAsync();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsDiscovered").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsClassified").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("queuedTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("pipelineStartTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanRulesetVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanLevelType").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("errorMessage").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("runType").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("dataSourceType").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -655,6 +1011,48 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Deletes a data source. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call Delete and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewDataSourceClient(endpoint, credential);
+        /// 
+        /// Response response = client.Delete();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsDiscovered").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsClassified").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("queuedTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("pipelineStartTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanRulesetVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanLevelType").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("errorMessage").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("runType").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("dataSourceType").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -749,6 +1147,47 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> List scans in data source. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetScansAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewDataSourceClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetScansAsync();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsDiscovered").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsClassified").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("queuedTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("pipelineStartTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanRulesetVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanLevelType").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("errorMessage").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("runType").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("dataSourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// Console.WriteLine(result.GetProperty("count").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -848,6 +1287,47 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> List scans in data source. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetScans and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new PurviewDataSourceClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetScans();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsDiscovered").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsClassified").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("queuedTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("pipelineStartTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanRulesetVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("scanLevelType").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("errorMessage").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("runType").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("dataSourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// Console.WriteLine(result.GetProperty("count").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{

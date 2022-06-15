@@ -32,6 +32,22 @@ namespace Azure.AI.Language.Conversations
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <example>
+        /// This sample shows how to call AnalyzeConversationAsync and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     kind = "Conversation",
+        /// };
+        /// 
+        /// Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -84,6 +100,22 @@ namespace Azure.AI.Language.Conversations
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <example>
+        /// This sample shows how to call AnalyzeConversation and parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     kind = "Conversation",
+        /// };
+        /// 
+        /// Response response = client.AnalyzeConversation(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -136,6 +168,68 @@ namespace Azure.AI.Language.Conversations
         /// <param name="jobId"> Job ID. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call JobStatusAsync with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// Response response = await client.JobStatusAsync(Guid.NewGuid());
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdateDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call JobStatusAsync with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// Response response = await client.JobStatusAsync(Guid.NewGuid(), true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdateDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items").Item[0].GetProperty("lastUpdateDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items").Item[0].GetProperty("taskName").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items").Item[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("conversationsCount").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversationsCount").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -222,6 +316,68 @@ namespace Azure.AI.Language.Conversations
         /// <param name="jobId"> Job ID. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call JobStatus with required parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// Response response = client.JobStatus(Guid.NewGuid());
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdateDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+        /// Console.WriteLine(result.ToString());
+        /// </code>
+        /// This sample shows how to call JobStatus with all parameters, and how to parse the result.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// Response response = client.JobStatus(Guid.NewGuid(), true);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdateDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items").Item[0].GetProperty("lastUpdateDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items").Item[0].GetProperty("taskName").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items").Item[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("conversationsCount").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversationsCount").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -309,6 +465,63 @@ namespace Azure.AI.Language.Conversations
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <example>
+        /// This sample shows how to call SubmitJobAsync with required parameters and request content.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     analysisInput = new {
+        ///         conversations = new[] {
+        ///             new {
+        ///                 id = "ConversationId",
+        ///                 language = "ConversationLanguage",
+        ///                 modality = "transcript",
+        ///             }
+        ///         },
+        ///     },
+        ///     tasks = new[] {
+        ///         new {
+        ///             kind = "ConversationalPIITask",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.SubmitJobAsync(0, RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// This sample shows how to call SubmitJobAsync with all parameters and request content.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     displayName = "AnalyzeConversationJobsInputDisplayName",
+        ///     analysisInput = new {
+        ///         conversations = new[] {
+        ///             new {
+        ///                 id = "ConversationId",
+        ///                 language = "ConversationLanguage",
+        ///                 modality = "transcript",
+        ///                 domain = "finance",
+        ///             }
+        ///         },
+        ///     },
+        ///     tasks = new[] {
+        ///         new {
+        ///             taskName = "TaskIdentifierTaskName",
+        ///             kind = "ConversationalPIITask",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.SubmitJobAsync(0, RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -350,7 +563,7 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> SubmitJobAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation> SubmitJobAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -359,7 +572,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateSubmitJobRequest(content, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.SubmitJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.SubmitJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -373,6 +586,63 @@ namespace Azure.AI.Language.Conversations
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <example>
+        /// This sample shows how to call SubmitJob with required parameters and request content.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     analysisInput = new {
+        ///         conversations = new[] {
+        ///             new {
+        ///                 id = "ConversationId",
+        ///                 language = "ConversationLanguage",
+        ///                 modality = "transcript",
+        ///             }
+        ///         },
+        ///     },
+        ///     tasks = new[] {
+        ///         new {
+        ///             kind = "ConversationalPIITask",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.SubmitJob(0, RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// This sample shows how to call SubmitJob with all parameters and request content.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     displayName = "AnalyzeConversationJobsInputDisplayName",
+        ///     analysisInput = new {
+        ///         conversations = new[] {
+        ///             new {
+        ///                 id = "ConversationId",
+        ///                 language = "ConversationLanguage",
+        ///                 modality = "transcript",
+        ///                 domain = "finance",
+        ///             }
+        ///         },
+        ///     },
+        ///     tasks = new[] {
+        ///         new {
+        ///             taskName = "TaskIdentifierTaskName",
+        ///             kind = "ConversationalPIITask",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.SubmitJob(0, RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -414,7 +684,7 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> SubmitJob(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        public virtual Operation SubmitJob(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -423,7 +693,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateSubmitJobRequest(content, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.SubmitJob", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.SubmitJob", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
