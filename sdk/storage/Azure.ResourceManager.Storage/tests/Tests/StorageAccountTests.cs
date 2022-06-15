@@ -29,9 +29,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //remove all storage accounts under current resource group
             if (_resourceGroup != null)
             {
-                StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-                List<StorageAccountResource> storageAccountList = await storageAccountCollection.GetAllAsync().ToEnumerableAsync();
-                foreach (StorageAccountResource account in storageAccountList)
+                await foreach (StorageAccountResource account in _resourceGroup.GetStorageAccounts())
                 {
                     await account.DeleteAsync(WaitUntil.Completed);
                 }
@@ -285,9 +283,13 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(account2.Data.Tags.Count, parameters.Tags.Count);
 
             //update encryption
-            parameters.Encryption = new Encryption(KeySource.MicrosoftStorage)
+            parameters.Encryption = new Encryption()
             {
-                Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } }
+                KeySource = KeySource.MicrosoftStorage,
+                Services = new EncryptionServices {
+                    Blob = new EncryptionService { Enabled = true },
+                    File = new EncryptionService { Enabled = true }
+                }
             };
             account1 = await account1.UpdateAsync(parameters);
             Assert.NotNull(account1.Data.Encryption);
@@ -460,9 +462,13 @@ namespace Azure.ResourceManager.Storage.Tests
             //update encryption
             var parameters = new StorageAccountPatch
             {
-                Encryption = new Encryption(KeySource.MicrosoftStorage)
+                Encryption = new Encryption()
                 {
-                    Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } }
+                    KeySource = KeySource.MicrosoftStorage,
+                    Services = new EncryptionServices {
+                        Blob = new EncryptionService { Enabled = true },
+                        File = new EncryptionService { Enabled = true }
+                    }
                 }
             };
             account1 = await account1.UpdateAsync(parameters);
@@ -481,9 +487,13 @@ namespace Azure.ResourceManager.Storage.Tests
             // 2. Restore storage encryption
             parameters = new StorageAccountPatch
             {
-                Encryption = new Encryption(KeySource.MicrosoftStorage)
+                Encryption = new Encryption()
                 {
-                    Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } }
+                    KeySource = KeySource.MicrosoftStorage,
+                    Services = new EncryptionServices {
+                        Blob = new EncryptionService { Enabled = true },
+                        File = new EncryptionService { Enabled = true }
+                    }
                 }
             };
             account1 = await account1.UpdateAsync(parameters);
@@ -502,8 +512,9 @@ namespace Azure.ResourceManager.Storage.Tests
             // 3. Remove file encryption service field.
             parameters = new StorageAccountPatch
             {
-                Encryption = new Encryption(KeySource.MicrosoftStorage)
+                Encryption = new Encryption()
                 {
+                    KeySource = KeySource.MicrosoftStorage,
                     Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true } }
                 }
             };
@@ -530,9 +541,13 @@ namespace Azure.ResourceManager.Storage.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters();
-            parameters.Encryption = new Encryption(KeySource.MicrosoftStorage)
+            parameters.Encryption = new Encryption()
             {
-                Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } },
+                KeySource = KeySource.MicrosoftStorage,
+                Services = new EncryptionServices {
+                    Blob = new EncryptionService { Enabled = true },
+                    File = new EncryptionService { Enabled = true }
+                },
             };
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
             VerifyAccountProperties(account1, true);
@@ -784,9 +799,13 @@ namespace Azure.ResourceManager.Storage.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters();
-            parameters.Encryption = new Encryption(KeySource.MicrosoftStorage)
+            parameters.Encryption = new Encryption()
             {
-                Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } }
+                KeySource = KeySource.MicrosoftStorage,
+                Services = new EncryptionServices {
+                    Blob = new EncryptionService { Enabled = true },
+                    File = new EncryptionService { Enabled = true }
+                }
             };
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
             VerifyAccountProperties(account, true);
@@ -825,8 +844,9 @@ namespace Azure.ResourceManager.Storage.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2);
-            parameters.Encryption = new Encryption(KeySource.MicrosoftStorage)
+            parameters.Encryption = new Encryption()
             {
+                KeySource = KeySource.MicrosoftStorage,
                 Services = new EncryptionServices()
                 {
                     Queue = new EncryptionService { KeyType = KeyType.Account },

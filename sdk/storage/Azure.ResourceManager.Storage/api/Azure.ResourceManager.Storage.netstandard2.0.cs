@@ -1089,9 +1089,9 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class Encryption
     {
-        public Encryption(Azure.ResourceManager.Storage.Models.KeySource keySource) { }
+        public Encryption() { }
         public Azure.ResourceManager.Storage.Models.EncryptionIdentity EncryptionIdentity { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.KeySource KeySource { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.KeySource? KeySource { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.KeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
         public bool? RequireInfrastructureEncryption { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.EncryptionServices Services { get { throw null; } set { } }
