@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("enablePurgeProtection");
                 writer.WriteBooleanValue(EnablePurgeProtection.Value);
             }
-            if (Optional.IsDefined(NetworkAcls))
+            if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkAcls");
-                writer.WriteObjectValue(NetworkAcls);
+                writer.WriteObjectValue(NetworkRuleSet);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<bool> enableRbacAuthorization = default;
             Optional<VaultCreateMode> createMode = default;
             Optional<bool> enablePurgeProtection = default;
-            Optional<NetworkRuleSet> networkAcls = default;
+            Optional<VaultNetworkRuleSet> networkAcls = default;
             Optional<VaultProvisioningState> provisioningState = default;
             Optional<IReadOnlyList<PrivateEndpointConnectionItemData>> privateEndpointConnections = default;
             Optional<string> publicNetworkAccess = default;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    networkAcls = NetworkRuleSet.DeserializeNetworkRuleSet(property.Value);
+                    networkAcls = VaultNetworkRuleSet.DeserializeVaultNetworkRuleSet(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"))

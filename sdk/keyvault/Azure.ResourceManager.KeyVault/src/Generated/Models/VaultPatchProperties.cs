@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> softDelete data retention days. It accepts &gt;=7 and &lt;=90. </summary>
         public int? SoftDeleteRetentionInDays { get; set; }
         /// <summary> The vault&apos;s create mode to indicate whether the vault need to be recovered or not. </summary>
-        public CreateMode? CreateMode { get; set; }
+        public VaultPatchMode? CreateMode { get; set; }
         /// <summary> Property specifying whether protection against purge is enabled for this vault. Setting this property to true activates protection against purge for this vault and its content - only the Key Vault service may initiate a hard, irrecoverable deletion. The setting is effective only if soft delete is also enabled. Enabling this functionality is irreversible - that is, the property does not accept false as its value. </summary>
         public bool? EnablePurgeProtection { get; set; }
         /// <summary> A collection of rules governing the accessibility of the vault from specific network locations. </summary>
-        public NetworkRuleSet NetworkAcls { get; set; }
+        public VaultNetworkRuleSet NetworkRuleSet { get; set; }
         /// <summary> Property to specify whether the vault will accept traffic from public internet. If set to &apos;disabled&apos; all traffic except private endpoint traffic and that that originates from trusted services will be blocked. This will override the set firewall rules, meaning that even if the firewall rules are present we will not honor the rules. </summary>
         public string PublicNetworkAccess { get; set; }
     }
