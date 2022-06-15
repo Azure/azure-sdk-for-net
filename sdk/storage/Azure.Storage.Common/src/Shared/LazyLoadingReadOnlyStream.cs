@@ -54,11 +54,21 @@ namespace Azure.Storage
         public delegate Task<Response<TProperties>> GetPropertiesAsync(bool async, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Delegate to replicate how a client will potentially alter the download range.
+        /// Delegate to replicate how a client will alter the download range.
+        /// Used to avoid requesting blob ranges that will result in error after transformation.
         /// </summary>
         /// <param name="range">Range this stream will request on download.</param>
-        /// <returns></returns>
+        /// <returns>Range the underlying client will adjust to.</returns>
+        /// <remarks>
+        /// Used by advanced features such as clientside encryption, which alters ranges to
+        /// ensure necessary info for decryption is downloaded.
+        /// </remarks>
         public delegate HttpRange PredictEncryptedRangeAdjustment(HttpRange range);
+
+        /// <summary>
+        /// No-op for range adjustment.
+        /// </summary>
+        public static PredictEncryptedRangeAdjustment NoRangeAdjustment => range => range;
 
         /// <summary>
         /// The current position within the blob or file.
