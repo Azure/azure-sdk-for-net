@@ -191,29 +191,13 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
-        /// This sample shows how to call CreateOrUpdateAsync with required request content, and how to parse the result.
+        /// This sample shows how to call CreateOrUpdateAsync and parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new PurviewClassificationRuleClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     kind = "System",
-        /// };
-        /// 
-        /// Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
-        /// This sample shows how to call CreateOrUpdateAsync with all request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     id = "ProxyResourceId",
-        ///     name = "ProxyResourceName",
         ///     kind = "System",
         /// };
         /// 
@@ -278,29 +262,13 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
-        /// This sample shows how to call CreateOrUpdate with required request content, and how to parse the result.
+        /// This sample shows how to call CreateOrUpdate and parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new PurviewClassificationRuleClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     kind = "System",
-        /// };
-        /// 
-        /// Response response = client.CreateOrUpdate(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
-        /// This sample shows how to call CreateOrUpdate with all request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     id = "ProxyResourceId",
-        ///     name = "ProxyResourceName",
         ///     kind = "System",
         /// };
         /// 

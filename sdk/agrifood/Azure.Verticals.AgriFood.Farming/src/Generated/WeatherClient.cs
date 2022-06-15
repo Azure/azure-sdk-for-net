@@ -802,7 +802,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = await client.CreateDataIngestionJobAsync(0, "jobId", RequestContent.Create(data));
+        /// Response response = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "jobId", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -826,14 +826,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         ///     extensionDataProviderAppId = "WeatherDataIngestionJobExtensionDataProviderAppId",
         ///     extensionDataProviderApiKey = "WeatherDataIngestionJobExtensionDataProviderApiKey",
-        ///     id = "WeatherDataIngestionJobId",
-        ///     status = "WeatherDataIngestionJobStatus",
-        ///     durationInSeconds = 1234,
-        ///     message = "WeatherDataIngestionJobMessage",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     lastActionDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     startTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     endTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "WeatherDataIngestionJobName",
         ///     description = "WeatherDataIngestionJobDescription",
         ///     properties = new {
@@ -841,7 +833,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = await client.CreateDataIngestionJobAsync(0, "jobId", RequestContent.Create(data));
+        /// Response response = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "jobId", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -967,7 +959,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = client.CreateDataIngestionJob(0, "jobId", RequestContent.Create(data));
+        /// Response response = client.CreateDataIngestionJob(WaitUntil.Completed, "jobId", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -991,14 +983,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         ///     extensionDataProviderAppId = "WeatherDataIngestionJobExtensionDataProviderAppId",
         ///     extensionDataProviderApiKey = "WeatherDataIngestionJobExtensionDataProviderApiKey",
-        ///     id = "WeatherDataIngestionJobId",
-        ///     status = "WeatherDataIngestionJobStatus",
-        ///     durationInSeconds = 1234,
-        ///     message = "WeatherDataIngestionJobMessage",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     lastActionDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     startTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     endTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "WeatherDataIngestionJobName",
         ///     description = "WeatherDataIngestionJobDescription",
         ///     properties = new {
@@ -1006,7 +990,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = client.CreateDataIngestionJob(0, "jobId", RequestContent.Create(data));
+        /// Response response = client.CreateDataIngestionJob(WaitUntil.Completed, "jobId", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -1128,7 +1112,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     boundaryId = "WeatherDataDeleteJobBoundaryId",
         /// };
         /// 
-        /// Response response = await client.CreateDataDeleteJobAsync(0, "jobId", RequestContent.Create(data));
+        /// Response response = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "jobId", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -1148,14 +1132,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     granularity = "WeatherDataDeleteJobGranularity",
         ///     startDateTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     endDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     id = "WeatherDataDeleteJobId",
-        ///     status = "WeatherDataDeleteJobStatus",
-        ///     durationInSeconds = 1234,
-        ///     message = "WeatherDataDeleteJobMessage",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     lastActionDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     startTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     endTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "WeatherDataDeleteJobName",
         ///     description = "WeatherDataDeleteJobDescription",
         ///     properties = new {
@@ -1163,7 +1139,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = await client.CreateDataDeleteJobAsync(0, "jobId", RequestContent.Create(data));
+        /// Response response = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "jobId", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -1285,7 +1261,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     boundaryId = "WeatherDataDeleteJobBoundaryId",
         /// };
         /// 
-        /// Response response = client.CreateDataDeleteJob(0, "jobId", RequestContent.Create(data));
+        /// Response response = client.CreateDataDeleteJob(WaitUntil.Completed, "jobId", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -1305,14 +1281,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     granularity = "WeatherDataDeleteJobGranularity",
         ///     startDateTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     endDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     id = "WeatherDataDeleteJobId",
-        ///     status = "WeatherDataDeleteJobStatus",
-        ///     durationInSeconds = 1234,
-        ///     message = "WeatherDataDeleteJobMessage",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     lastActionDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     startTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     endTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "WeatherDataDeleteJobName",
         ///     description = "WeatherDataDeleteJobDescription",
         ///     properties = new {
@@ -1320,7 +1288,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = client.CreateDataDeleteJob(0, "jobId", RequestContent.Create(data));
+        /// Response response = client.CreateDataDeleteJob(WaitUntil.Completed, "jobId", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());

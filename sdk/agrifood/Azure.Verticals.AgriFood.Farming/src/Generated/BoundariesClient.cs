@@ -433,19 +433,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "BoundaryFarmerId",
         ///     parentId = "BoundaryParentId",
         ///     geometry = new {
         ///         type = "Point",
         ///     },
         ///     isPrimary = true,
-        ///     acreage = 1234,
-        ///     parentType = "BoundaryParentType",
-        ///     id = "BoundaryId",
-        ///     eTag = "BoundaryETag",
         ///     status = "BoundaryStatus",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     modifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "BoundaryName",
         ///     description = "BoundaryDescription",
         ///     properties = new {
@@ -575,19 +568,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "BoundaryFarmerId",
         ///     parentId = "BoundaryParentId",
         ///     geometry = new {
         ///         type = "Point",
         ///     },
         ///     isPrimary = true,
-        ///     acreage = 1234,
-        ///     parentType = "BoundaryParentType",
-        ///     id = "BoundaryId",
-        ///     eTag = "BoundaryETag",
         ///     status = "BoundaryStatus",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     modifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "BoundaryName",
         ///     description = "BoundaryDescription",
         ///     properties = new {
@@ -2097,7 +2083,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
-        /// Response response = await client.CreateCascadeDeleteJobAsync(0, "jobId", "farmerId", "boundaryId");
+        /// Response response = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "jobId", "farmerId", "boundaryId");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -2186,7 +2172,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
-        /// Response response = client.CreateCascadeDeleteJob(0, "jobId", "farmerId", "boundaryId");
+        /// Response response = client.CreateCascadeDeleteJob(WaitUntil.Completed, "jobId", "farmerId", "boundaryId");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());

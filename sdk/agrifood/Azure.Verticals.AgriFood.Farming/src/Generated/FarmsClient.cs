@@ -241,12 +241,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FarmsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "FarmFarmerId",
-        ///     id = "FarmId",
-        ///     eTag = "FarmETag",
         ///     status = "FarmStatus",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     modifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "FarmName",
         ///     description = "FarmDescription",
         ///     properties = new {
@@ -357,12 +352,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FarmsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "FarmFarmerId",
-        ///     id = "FarmId",
-        ///     eTag = "FarmETag",
         ///     status = "FarmStatus",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     modifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "FarmName",
         ///     description = "FarmDescription",
         ///     properties = new {
@@ -1163,7 +1153,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new FarmsClient(endpoint, credential);
         /// 
-        /// Response response = await client.CreateCascadeDeleteJobAsync(0, "jobId", "farmerId", "farmId");
+        /// Response response = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "jobId", "farmerId", "farmId");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -1252,7 +1242,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new FarmsClient(endpoint, credential);
         /// 
-        /// Response response = client.CreateCascadeDeleteJob(0, "jobId", "farmerId", "farmId");
+        /// Response response = client.CreateCascadeDeleteJob(WaitUntil.Completed, "jobId", "farmerId", "farmId");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());

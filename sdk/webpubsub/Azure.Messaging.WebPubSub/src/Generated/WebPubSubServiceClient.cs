@@ -244,9 +244,9 @@ namespace Azure.Messaging.WebPubSub
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
         /// 
-        /// var data = new {};
+        /// var data = File.OpenRead("binary.data");
         /// 
-        /// Response response = await client.SendToAllAsync(RequestContent.Create(data), null);
+        /// Response response = await client.SendToAllAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// Console.WriteLine(response.Status);
         /// </code>
         /// This sample shows how to call SendToAllAsync with all parameters and request content.
@@ -255,9 +255,9 @@ namespace Azure.Messaging.WebPubSub
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
         /// 
-        /// var data = new {};
+        /// var data = File.OpenRead("binary.data");
         /// 
-        /// Response response = await client.SendToAllAsync(RequestContent.Create(data), null, new String[]{"excluded"});
+        /// Response response = await client.SendToAllAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream, new String[]{"excluded"});
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
@@ -307,9 +307,9 @@ namespace Azure.Messaging.WebPubSub
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
         /// 
-        /// var data = new {};
+        /// var data = File.OpenRead("binary.data");
         /// 
-        /// Response response = client.SendToAll(RequestContent.Create(data), null);
+        /// Response response = client.SendToAll(RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// Console.WriteLine(response.Status);
         /// </code>
         /// This sample shows how to call SendToAll with all parameters and request content.
@@ -318,9 +318,9 @@ namespace Azure.Messaging.WebPubSub
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
         /// 
-        /// var data = new {};
+        /// var data = File.OpenRead("binary.data");
         /// 
-        /// Response response = client.SendToAll(RequestContent.Create(data), null, new String[]{"excluded"});
+        /// Response response = client.SendToAll(RequestContent.Create(data), ContentType.ApplicationOctetStream, new String[]{"excluded"});
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
@@ -587,9 +587,9 @@ namespace Azure.Messaging.WebPubSub
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
         /// 
-        /// var data = new {};
+        /// var data = File.OpenRead("binary.data");
         /// 
-        /// Response response = await client.SendToConnectionAsync("connectionId", RequestContent.Create(data), null);
+        /// Response response = await client.SendToConnectionAsync("connectionId", RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
@@ -641,9 +641,9 @@ namespace Azure.Messaging.WebPubSub
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
         /// 
-        /// var data = new {};
+        /// var data = File.OpenRead("binary.data");
         /// 
-        /// Response response = client.SendToConnection("connectionId", RequestContent.Create(data), null);
+        /// Response response = client.SendToConnection("connectionId", RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
@@ -914,9 +914,9 @@ namespace Azure.Messaging.WebPubSub
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
         /// 
-        /// var data = new {};
+        /// var data = File.OpenRead("binary.data");
         /// 
-        /// Response response = await client.SendToGroupAsync("group", RequestContent.Create(data), null);
+        /// Response response = await client.SendToGroupAsync("group", RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// Console.WriteLine(response.Status);
         /// </code>
         /// This sample shows how to call SendToGroupAsync with all parameters and request content.
@@ -925,9 +925,9 @@ namespace Azure.Messaging.WebPubSub
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
         /// 
-        /// var data = new {};
+        /// var data = File.OpenRead("binary.data");
         /// 
-        /// Response response = await client.SendToGroupAsync("group", RequestContent.Create(data), null, new String[]{"excluded"});
+        /// Response response = await client.SendToGroupAsync("group", RequestContent.Create(data), ContentType.ApplicationOctetStream, new String[]{"excluded"});
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
@@ -980,9 +980,9 @@ namespace Azure.Messaging.WebPubSub
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
         /// 
-        /// var data = new {};
+        /// var data = File.OpenRead("binary.data");
         /// 
-        /// Response response = client.SendToGroup("group", RequestContent.Create(data), null);
+        /// Response response = client.SendToGroup("group", RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// Console.WriteLine(response.Status);
         /// </code>
         /// This sample shows how to call SendToGroup with all parameters and request content.
@@ -991,9 +991,9 @@ namespace Azure.Messaging.WebPubSub
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
         /// 
-        /// var data = new {};
+        /// var data = File.OpenRead("binary.data");
         /// 
-        /// Response response = client.SendToGroup("group", RequestContent.Create(data), null, new String[]{"excluded"});
+        /// Response response = client.SendToGroup("group", RequestContent.Create(data), ContentType.ApplicationOctetStream, new String[]{"excluded"});
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
@@ -1467,9 +1467,9 @@ namespace Azure.Messaging.WebPubSub
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
         /// 
-        /// var data = new {};
+        /// var data = File.OpenRead("binary.data");
         /// 
-        /// Response response = await client.SendToUserAsync("userId", RequestContent.Create(data), null);
+        /// Response response = await client.SendToUserAsync("userId", RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
@@ -1521,9 +1521,9 @@ namespace Azure.Messaging.WebPubSub
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
         /// 
-        /// var data = new {};
+        /// var data = File.OpenRead("binary.data");
         /// 
-        /// Response response = client.SendToUser("userId", RequestContent.Create(data), null);
+        /// Response response = client.SendToUser("userId", RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>

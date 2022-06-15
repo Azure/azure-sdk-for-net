@@ -251,7 +251,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     startYear = 1234,
         /// };
         /// 
-        /// Response response = await client.CreateDataIngestionJobAsync(0, "jobId", RequestContent.Create(data));
+        /// Response response = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "jobId", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
@@ -270,14 +270,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///         "FarmOperationDataIngestionJobOperationsItem"
         ///     },
         ///     startYear = 1234,
-        ///     id = "FarmOperationDataIngestionJobId",
-        ///     status = "FarmOperationDataIngestionJobStatus",
-        ///     durationInSeconds = 1234,
-        ///     message = "FarmOperationDataIngestionJobMessage",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     lastActionDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     startTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     endTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "FarmOperationDataIngestionJobName",
         ///     description = "FarmOperationDataIngestionJobDescription",
         ///     properties = new {
@@ -285,7 +277,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = await client.CreateDataIngestionJobAsync(0, "jobId", RequestContent.Create(data));
+        /// Response response = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "jobId", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
@@ -398,7 +390,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     startYear = 1234,
         /// };
         /// 
-        /// Response response = client.CreateDataIngestionJob(0, "jobId", RequestContent.Create(data));
+        /// Response response = client.CreateDataIngestionJob(WaitUntil.Completed, "jobId", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
@@ -417,14 +409,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///         "FarmOperationDataIngestionJobOperationsItem"
         ///     },
         ///     startYear = 1234,
-        ///     id = "FarmOperationDataIngestionJobId",
-        ///     status = "FarmOperationDataIngestionJobStatus",
-        ///     durationInSeconds = 1234,
-        ///     message = "FarmOperationDataIngestionJobMessage",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     lastActionDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     startTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     endTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "FarmOperationDataIngestionJobName",
         ///     description = "FarmOperationDataIngestionJobDescription",
         ///     properties = new {
@@ -432,7 +416,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = client.CreateDataIngestionJob(0, "jobId", RequestContent.Create(data));
+        /// Response response = client.CreateDataIngestionJob(WaitUntil.Completed, "jobId", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("authProviderId").ToString());

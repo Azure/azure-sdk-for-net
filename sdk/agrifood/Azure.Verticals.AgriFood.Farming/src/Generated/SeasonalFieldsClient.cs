@@ -289,11 +289,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonalFieldsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "SeasonalFieldFarmerId",
-        ///     primaryBoundaryId = "SeasonalFieldPrimaryBoundaryId",
-        ///     boundaryIds = new[] {
-        ///         "SeasonalFieldBoundaryIdsItem"
-        ///     },
         ///     farmId = "SeasonalFieldFarmId",
         ///     fieldId = "SeasonalFieldId",
         ///     seasonId = "SeasonalFieldSeasonId",
@@ -306,11 +301,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     avgSeedPopulationValue = 1234,
         ///     avgSeedPopulationUnit = "SeasonalFieldAvgSeedPopulationUnit",
         ///     plantingDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     id = "SeasonalFieldId",
-        ///     eTag = "SeasonalFieldETag",
         ///     status = "SeasonalFieldStatus",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     modifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "SeasonalFieldName",
         ///     description = "SeasonalFieldDescription",
         ///     properties = new {
@@ -457,11 +448,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonalFieldsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "SeasonalFieldFarmerId",
-        ///     primaryBoundaryId = "SeasonalFieldPrimaryBoundaryId",
-        ///     boundaryIds = new[] {
-        ///         "SeasonalFieldBoundaryIdsItem"
-        ///     },
         ///     farmId = "SeasonalFieldFarmId",
         ///     fieldId = "SeasonalFieldId",
         ///     seasonId = "SeasonalFieldSeasonId",
@@ -474,11 +460,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     avgSeedPopulationValue = 1234,
         ///     avgSeedPopulationUnit = "SeasonalFieldAvgSeedPopulationUnit",
         ///     plantingDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     id = "SeasonalFieldId",
-        ///     eTag = "SeasonalFieldETag",
         ///     status = "SeasonalFieldStatus",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     modifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "SeasonalFieldName",
         ///     description = "SeasonalFieldDescription",
         ///     properties = new {
@@ -1463,7 +1445,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new SeasonalFieldsClient(endpoint, credential);
         /// 
-        /// Response response = await client.CreateCascadeDeleteJobAsync(0, "jobId", "farmerId", "seasonalFieldId");
+        /// Response response = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "jobId", "farmerId", "seasonalFieldId");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -1552,7 +1534,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new SeasonalFieldsClient(endpoint, credential);
         /// 
-        /// Response response = client.CreateCascadeDeleteJob(0, "jobId", "farmerId", "seasonalFieldId");
+        /// Response response = client.CreateCascadeDeleteJob(WaitUntil.Completed, "jobId", "farmerId", "seasonalFieldId");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());

@@ -532,7 +532,6 @@ namespace Azure.Analytics.Purview.Account
         ///         modifiedAt = "2022-05-10T14:57:31.2311892-04:00",
         ///         resourceSetProcessing = "Default",
         ///     },
-        ///     name = "ResourceSetRuleConfigName",
         ///     pathPatternConfig = new {
         ///         acceptedPatterns = new[] {
         ///             new {
@@ -998,7 +997,6 @@ namespace Azure.Analytics.Purview.Account
         ///         modifiedAt = "2022-05-10T14:57:31.2311892-04:00",
         ///         resourceSetProcessing = "Default",
         ///     },
-        ///     name = "ResourceSetRuleConfigName",
         ///     pathPatternConfig = new {
         ///         acceptedPatterns = new[] {
         ///             new {

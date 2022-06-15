@@ -12729,8 +12729,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.ExportGlossaryTermsAsCsvAsync("glossaryGuid", RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// if (response.ContentStream != null)
+        /// {
+        ///     using(Stream outFileStream = File.OpenWrite("binary.data")
+        ///     {
+        ///         response.ContentStream.CopyTo(outFileStream);
+        ///     }
+        /// };
         /// </code>
         /// This sample shows how to call ExportGlossaryTermsAsCsvAsync with all parameters and request content, and how to parse the result.
         /// <code>
@@ -12743,8 +12748,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.ExportGlossaryTermsAsCsvAsync("glossaryGuid", RequestContent.Create(data), true);
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// if (response.ContentStream != null)
+        /// {
+        ///     using(Stream outFileStream = File.OpenWrite("binary.data")
+        ///     {
+        ///         response.ContentStream.CopyTo(outFileStream);
+        ///     }
+        /// };
         /// </code>
         /// </example>
         public virtual async Task<Response> ExportGlossaryTermsAsCsvAsync(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
@@ -12785,8 +12795,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.ExportGlossaryTermsAsCsv("glossaryGuid", RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// if (response.ContentStream != null)
+        /// {
+        ///     using(Stream outFileStream = File.OpenWrite("binary.data")
+        ///     {
+        ///         response.ContentStream.CopyTo(outFileStream);
+        ///     }
+        /// };
         /// </code>
         /// This sample shows how to call ExportGlossaryTermsAsCsv with all parameters and request content, and how to parse the result.
         /// <code>
@@ -12799,8 +12814,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.ExportGlossaryTermsAsCsv("glossaryGuid", RequestContent.Create(data), true);
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// if (response.ContentStream != null)
+        /// {
+        ///     using(Stream outFileStream = File.OpenWrite("binary.data")
+        ///     {
+        ///         response.ContentStream.CopyTo(outFileStream);
+        ///     }
+        /// };
         /// </code>
         /// </example>
         public virtual Response ExportGlossaryTermsAsCsv(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
@@ -13461,9 +13481,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
-        /// var data = new {};
+        /// var data = File.OpenRead("binary.data");
         /// 
-        /// Response response = await client.ImportGlossaryTermsViaCsvAsync(0, "glossaryGuid", RequestContent.Create(data));
+        /// Response response = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "glossaryGuid", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// </code>
@@ -13473,9 +13493,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
-        /// var data = new {};
+        /// var data = File.OpenRead("binary.data");
         /// 
-        /// Response response = await client.ImportGlossaryTermsViaCsvAsync(0, "glossaryGuid", RequestContent.Create(data), true);
+        /// Response response = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "glossaryGuid", RequestContent.Create(data), true);
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -13547,9 +13567,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
-        /// var data = new {};
+        /// var data = File.OpenRead("binary.data");
         /// 
-        /// Response response = client.ImportGlossaryTermsViaCsv(0, "glossaryGuid", RequestContent.Create(data));
+        /// Response response = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "glossaryGuid", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// </code>
@@ -13559,9 +13579,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
-        /// var data = new {};
+        /// var data = File.OpenRead("binary.data");
         /// 
-        /// Response response = client.ImportGlossaryTermsViaCsv(0, "glossaryGuid", RequestContent.Create(data), true);
+        /// Response response = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "glossaryGuid", RequestContent.Create(data), true);
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -13633,9 +13653,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
-        /// var data = new {};
+        /// var data = File.OpenRead("binary.data");
         /// 
-        /// Response response = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(0, "glossaryName", RequestContent.Create(data));
+        /// Response response = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "glossaryName", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// </code>
@@ -13645,9 +13665,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
-        /// var data = new {};
+        /// var data = File.OpenRead("binary.data");
         /// 
-        /// Response response = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(0, "glossaryName", RequestContent.Create(data), true);
+        /// Response response = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "glossaryName", RequestContent.Create(data), true);
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -13719,9 +13739,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
-        /// var data = new {};
+        /// var data = File.OpenRead("binary.data");
         /// 
-        /// Response response = client.ImportGlossaryTermsViaCsvByGlossaryName(0, "glossaryName", RequestContent.Create(data));
+        /// Response response = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "glossaryName", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// </code>
@@ -13731,9 +13751,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
-        /// var data = new {};
+        /// var data = File.OpenRead("binary.data");
         /// 
-        /// Response response = client.ImportGlossaryTermsViaCsvByGlossaryName(0, "glossaryName", RequestContent.Create(data), true);
+        /// Response response = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "glossaryName", RequestContent.Create(data), true);
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());

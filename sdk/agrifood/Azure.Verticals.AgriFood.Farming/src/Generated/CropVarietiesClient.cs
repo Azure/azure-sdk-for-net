@@ -249,14 +249,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new CropVarietiesClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     cropId = "CropVarietyCropId",
         ///     brand = "CropVarietyBrand",
         ///     product = "CropVarietyProduct",
-        ///     id = "CropVarietyId",
-        ///     eTag = "CropVarietyETag",
         ///     status = "CropVarietyStatus",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     modifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "CropVarietyName",
         ///     description = "CropVarietyDescription",
         ///     properties = new {
@@ -373,14 +368,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new CropVarietiesClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     cropId = "CropVarietyCropId",
         ///     brand = "CropVarietyBrand",
         ///     product = "CropVarietyProduct",
-        ///     id = "CropVarietyId",
-        ///     eTag = "CropVarietyETag",
         ///     status = "CropVarietyStatus",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     modifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "CropVarietyName",
         ///     description = "CropVarietyDescription",
         ///     properties = new {

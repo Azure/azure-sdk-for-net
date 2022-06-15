@@ -641,7 +641,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     endDateTime = "2022-05-10T14:57:31.2311892-04:00",
         /// };
         /// 
-        /// Response response = await client.CreateSatelliteDataIngestionJobAsync(0, "jobId", RequestContent.Create(data));
+        /// Response response = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "jobId", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -672,14 +672,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///             1234
         ///         },
         ///     },
-        ///     id = "SatelliteDataIngestionJobId",
-        ///     status = "SatelliteDataIngestionJobStatus",
-        ///     durationInSeconds = 1234,
-        ///     message = "SatelliteDataIngestionJobMessage",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     lastActionDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     startTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     endTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "SatelliteDataIngestionJobName",
         ///     description = "SatelliteDataIngestionJobDescription",
         ///     properties = new {
@@ -687,7 +679,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = await client.CreateSatelliteDataIngestionJobAsync(0, "jobId", RequestContent.Create(data));
+        /// Response response = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "jobId", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -820,7 +812,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     endDateTime = "2022-05-10T14:57:31.2311892-04:00",
         /// };
         /// 
-        /// Response response = client.CreateSatelliteDataIngestionJob(0, "jobId", RequestContent.Create(data));
+        /// Response response = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "jobId", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -851,14 +843,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///             1234
         ///         },
         ///     },
-        ///     id = "SatelliteDataIngestionJobId",
-        ///     status = "SatelliteDataIngestionJobStatus",
-        ///     durationInSeconds = 1234,
-        ///     message = "SatelliteDataIngestionJobMessage",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     lastActionDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     startTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     endTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "SatelliteDataIngestionJobName",
         ///     description = "SatelliteDataIngestionJobDescription",
         ///     properties = new {
@@ -866,7 +850,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = client.CreateSatelliteDataIngestionJob(0, "jobId", RequestContent.Create(data));
+        /// Response response = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "jobId", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());

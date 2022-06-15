@@ -69,7 +69,6 @@ namespace Azure.Analytics.Purview.Administration
         ///         description = "MetadataPolicyPropertiesDescription",
         ///         decisionRules = new[] {
         ///             new {
-        ///                 kind = "decisionrule",
         ///                 effect = "Deny",
         ///                 dnfCondition = new[] {
         ///                     new[] {
@@ -90,7 +89,6 @@ namespace Azure.Analytics.Purview.Administration
         ///         },
         ///         attributeRules = new[] {
         ///             new {
-        ///                 kind = "decisionrule",
         ///                 id = "AttributeRuleId",
         ///                 name = "AttributeRuleName",
         ///                 dnfCondition = new[] {
@@ -111,7 +109,6 @@ namespace Azure.Analytics.Purview.Administration
         ///             }
         ///         },
         ///         collection = new {
-        ///             type = "CollectionReferenceType",
         ///             referenceName = "CollectionReferenceName",
         ///         },
         ///         parentCollectionName = "MetadataPolicyPropertiesParentCollectionName",
@@ -268,7 +265,6 @@ namespace Azure.Analytics.Purview.Administration
         ///         description = "MetadataPolicyPropertiesDescription",
         ///         decisionRules = new[] {
         ///             new {
-        ///                 kind = "decisionrule",
         ///                 effect = "Deny",
         ///                 dnfCondition = new[] {
         ///                     new[] {
@@ -289,7 +285,6 @@ namespace Azure.Analytics.Purview.Administration
         ///         },
         ///         attributeRules = new[] {
         ///             new {
-        ///                 kind = "decisionrule",
         ///                 id = "AttributeRuleId",
         ///                 name = "AttributeRuleName",
         ///                 dnfCondition = new[] {
@@ -310,7 +305,6 @@ namespace Azure.Analytics.Purview.Administration
         ///             }
         ///         },
         ///         collection = new {
-        ///             type = "CollectionReferenceType",
         ///             referenceName = "CollectionReferenceName",
         ///         },
         ///         parentCollectionName = "MetadataPolicyPropertiesParentCollectionName",

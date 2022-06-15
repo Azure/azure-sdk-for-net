@@ -489,7 +489,7 @@ namespace Azure.AI.Language.Conversations
         ///     },
         /// };
         /// 
-        /// Response response = await client.SubmitJobAsync(0, RequestContent.Create(data));
+        /// Response response = await client.SubmitJobAsync(WaitUntil.Completed, RequestContent.Create(data));
         /// Console.WriteLine(response.Status);
         /// </code>
         /// This sample shows how to call SubmitJobAsync with all parameters and request content.
@@ -518,7 +518,7 @@ namespace Azure.AI.Language.Conversations
         ///     },
         /// };
         /// 
-        /// Response response = await client.SubmitJobAsync(0, RequestContent.Create(data));
+        /// Response response = await client.SubmitJobAsync(WaitUntil.Completed, RequestContent.Create(data));
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
@@ -610,7 +610,7 @@ namespace Azure.AI.Language.Conversations
         ///     },
         /// };
         /// 
-        /// Response response = client.SubmitJob(0, RequestContent.Create(data));
+        /// Response response = client.SubmitJob(WaitUntil.Completed, RequestContent.Create(data));
         /// Console.WriteLine(response.Status);
         /// </code>
         /// This sample shows how to call SubmitJob with all parameters and request content.
@@ -639,7 +639,7 @@ namespace Azure.AI.Language.Conversations
         ///     },
         /// };
         /// 
-        /// Response response = client.SubmitJob(0, RequestContent.Create(data));
+        /// Response response = client.SubmitJob(WaitUntil.Completed, RequestContent.Create(data));
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>

@@ -379,8 +379,6 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// var data = new {
         ///     contents = "LedgerEntryContents",
-        ///     subLedgerId = "SubLedgerId",
-        ///     transactionId = "TransactionId",
         /// };
         /// 
         /// Response response = await client.PostLedgerEntryAsync(RequestContent.Create(data), "subLedgerId");
@@ -455,8 +453,6 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// var data = new {
         ///     contents = "LedgerEntryContents",
-        ///     subLedgerId = "SubLedgerId",
-        ///     transactionId = "TransactionId",
         /// };
         /// 
         /// Response response = client.PostLedgerEntry(RequestContent.Create(data), "subLedgerId");
@@ -1209,7 +1205,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call CreateOrUpdateUserAsync with required parameters and request content, and how to parse the result.
+        /// This sample shows how to call CreateOrUpdateUserAsync and parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -1217,21 +1213,6 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// var data = new {
         ///     assignedRole = "Administrator",
-        /// };
-        /// 
-        /// Response response = await client.CreateOrUpdateUserAsync("userId", RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("assignedRole").ToString());
-        /// </code>
-        /// This sample shows how to call CreateOrUpdateUserAsync with all parameters and request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     assignedRole = "Administrator",
-        ///     userId = "UserId",
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateUserAsync("userId", RequestContent.Create(data));
@@ -1290,7 +1271,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call CreateOrUpdateUser with required parameters and request content, and how to parse the result.
+        /// This sample shows how to call CreateOrUpdateUser and parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -1298,21 +1279,6 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// var data = new {
         ///     assignedRole = "Administrator",
-        /// };
-        /// 
-        /// Response response = client.CreateOrUpdateUser("userId", RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("assignedRole").ToString());
-        /// </code>
-        /// This sample shows how to call CreateOrUpdateUser with all parameters and request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     assignedRole = "Administrator",
-        ///     userId = "UserId",
         /// };
         /// 
         /// Response response = client.CreateOrUpdateUser("userId", RequestContent.Create(data));

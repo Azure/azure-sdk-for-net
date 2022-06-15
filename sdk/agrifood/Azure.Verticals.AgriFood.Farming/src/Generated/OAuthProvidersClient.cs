@@ -248,10 +248,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     appSecret = "OAuthProviderAppSecret",
         ///     apiKey = "OAuthProviderApiKey",
         ///     isProductionApp = false,
-        ///     id = "OAuthProviderId",
-        ///     eTag = "OAuthProviderETag",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     modifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "OAuthProviderName",
         ///     description = "OAuthProviderDescription",
         ///     properties = new {
@@ -370,10 +366,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     appSecret = "OAuthProviderAppSecret",
         ///     apiKey = "OAuthProviderApiKey",
         ///     isProductionApp = false,
-        ///     id = "OAuthProviderId",
-        ///     eTag = "OAuthProviderETag",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     modifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "OAuthProviderName",
         ///     description = "OAuthProviderDescription",
         ///     properties = new {

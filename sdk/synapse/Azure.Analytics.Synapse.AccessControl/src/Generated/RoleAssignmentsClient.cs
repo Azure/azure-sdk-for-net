@@ -84,7 +84,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///     scope = "CheckPrincipalAccessRequestScope",
         /// };
         /// 
-        /// Response response = await client.CheckPrincipalAccessAsync(RequestContent.Create(data), null);
+        /// Response response = await client.CheckPrincipalAccessAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// </code>
@@ -110,7 +110,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///     scope = "CheckPrincipalAccessRequestScope",
         /// };
         /// 
-        /// Response response = await client.CheckPrincipalAccessAsync(RequestContent.Create(data), null);
+        /// Response response = await client.CheckPrincipalAccessAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("accessDecision").ToString());
         /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("actionId").ToString());
@@ -215,7 +215,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///     scope = "CheckPrincipalAccessRequestScope",
         /// };
         /// 
-        /// Response response = client.CheckPrincipalAccess(RequestContent.Create(data), null);
+        /// Response response = client.CheckPrincipalAccess(RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// </code>
@@ -241,7 +241,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///     scope = "CheckPrincipalAccessRequestScope",
         /// };
         /// 
-        /// Response response = client.CheckPrincipalAccess(RequestContent.Create(data), null);
+        /// Response response = client.CheckPrincipalAccess(RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("accessDecision").ToString());
         /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("actionId").ToString());
@@ -485,7 +485,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///     scope = "RoleAssignmentRequestScope",
         /// };
         /// 
-        /// Response response = await client.CreateRoleAssignmentAsync("roleAssignmentId", RequestContent.Create(data), null);
+        /// Response response = await client.CreateRoleAssignmentAsync("roleAssignmentId", RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// </code>
@@ -502,7 +502,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///     principalType = "RoleAssignmentRequestPrincipalType",
         /// };
         /// 
-        /// Response response = await client.CreateRoleAssignmentAsync("roleAssignmentId", RequestContent.Create(data), null);
+        /// Response response = await client.CreateRoleAssignmentAsync("roleAssignmentId", RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("roleDefinitionId").ToString());
@@ -586,7 +586,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///     scope = "RoleAssignmentRequestScope",
         /// };
         /// 
-        /// Response response = client.CreateRoleAssignment("roleAssignmentId", RequestContent.Create(data), null);
+        /// Response response = client.CreateRoleAssignment("roleAssignmentId", RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// </code>
@@ -603,7 +603,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///     principalType = "RoleAssignmentRequestPrincipalType",
         /// };
         /// 
-        /// Response response = client.CreateRoleAssignment("roleAssignmentId", RequestContent.Create(data), null);
+        /// Response response = client.CreateRoleAssignment("roleAssignmentId", RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("roleDefinitionId").ToString());

@@ -237,11 +237,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// var data = new {
         ///     phenotype = "CropPhenotype",
-        ///     id = "CropId",
-        ///     eTag = "CropETag",
         ///     status = "CropStatus",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     modifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "CropName",
         ///     description = "CropDescription",
         ///     properties = new {
@@ -351,11 +347,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// var data = new {
         ///     phenotype = "CropPhenotype",
-        ///     id = "CropId",
-        ///     eTag = "CropETag",
         ///     status = "CropStatus",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     modifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "CropName",
         ///     description = "CropDescription",
         ///     properties = new {

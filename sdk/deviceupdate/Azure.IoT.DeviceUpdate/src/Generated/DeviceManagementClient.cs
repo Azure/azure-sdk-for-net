@@ -2453,9 +2453,6 @@ namespace Azure.IoT.DeviceUpdate
         ///         }
         ///     },
         ///     description = "LogCollectionOperationDescription",
-        ///     createdDateTime = "LogCollectionOperationCreatedDateTime",
-        ///     lastActionDateTime = "LogCollectionOperationLastActionDateTime",
-        ///     status = "Undefined",
         /// };
         /// 
         /// Response response = await client.CollectLogsAsync("operationId", RequestContent.Create(data));
@@ -2578,9 +2575,6 @@ namespace Azure.IoT.DeviceUpdate
         ///         }
         ///     },
         ///     description = "LogCollectionOperationDescription",
-        ///     createdDateTime = "LogCollectionOperationCreatedDateTime",
-        ///     lastActionDateTime = "LogCollectionOperationLastActionDateTime",
-        ///     status = "Undefined",
         /// };
         /// 
         /// Response response = client.CollectLogs("operationId", RequestContent.Create(data));
@@ -5112,7 +5106,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// var data = "Devices";
         /// 
-        /// Response response = await client.ImportDevicesAsync(0, "action", RequestContent.Create(data));
+        /// Response response = await client.ImportDevicesAsync(WaitUntil.Completed, "action", RequestContent.Create(data));
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
@@ -5170,7 +5164,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// var data = "Devices";
         /// 
-        /// Response response = client.ImportDevices(0, "action", RequestContent.Create(data));
+        /// Response response = client.ImportDevices(WaitUntil.Completed, "action", RequestContent.Create(data));
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>

@@ -237,21 +237,10 @@ namespace Azure.Analytics.Purview.Administration
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("collectionName");
         /// 
         /// var data = new {
-        ///     collectionProvisioningState = "Unknown",
         ///     description = "CollectionDescription",
         ///     friendlyName = "CollectionFriendlyName",
-        ///     name = "CollectionName",
         ///     parentCollection = new {
         ///         referenceName = "CollectionReferenceName",
-        ///         type = "CollectionReferenceType",
-        ///     },
-        ///     systemData = new {
-        ///         createdAt = "2022-05-10T14:57:31.2311892-04:00",
-        ///         createdBy = "SystemDataCreatedBy",
-        ///         createdByType = "User",
-        ///         lastModifiedAt = "2022-05-10T14:57:31.2311892-04:00",
-        ///         lastModifiedBy = "SystemDataLastModifiedBy",
-        ///         lastModifiedByType = "User",
         ///     },
         /// };
         /// 
@@ -373,21 +362,10 @@ namespace Azure.Analytics.Purview.Administration
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("collectionName");
         /// 
         /// var data = new {
-        ///     collectionProvisioningState = "Unknown",
         ///     description = "CollectionDescription",
         ///     friendlyName = "CollectionFriendlyName",
-        ///     name = "CollectionName",
         ///     parentCollection = new {
         ///         referenceName = "CollectionReferenceName",
-        ///         type = "CollectionReferenceType",
-        ///     },
-        ///     systemData = new {
-        ///         createdAt = "2022-05-10T14:57:31.2311892-04:00",
-        ///         createdBy = "SystemDataCreatedBy",
-        ///         createdByType = "User",
-        ///         lastModifiedAt = "2022-05-10T14:57:31.2311892-04:00",
-        ///         lastModifiedBy = "SystemDataLastModifiedBy",
-        ///         lastModifiedByType = "User",
         ///     },
         /// };
         /// 

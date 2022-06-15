@@ -247,11 +247,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     startDateTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     endDateTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     year = 1234,
-        ///     id = "SeasonId",
-        ///     eTag = "SeasonETag",
         ///     status = "SeasonStatus",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     modifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "SeasonName",
         ///     description = "SeasonDescription",
         ///     properties = new {
@@ -369,11 +365,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     startDateTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     endDateTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     year = 1234,
-        ///     id = "SeasonId",
-        ///     eTag = "SeasonETag",
         ///     status = "SeasonStatus",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     modifiedDateTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "SeasonName",
         ///     description = "SeasonDescription",
         ///     properties = new {

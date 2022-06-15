@@ -219,7 +219,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = await client.CreateRasterizeJobAsync(0, "jobId", RequestContent.Create(data));
+        /// Response response = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "jobId", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
@@ -237,14 +237,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     shapefileColumnNames = new[] {
         ///         "ImageProcessingRasterizeJobShapefileColumnNamesItem"
         ///     },
-        ///     id = "ImageProcessingRasterizeJobId",
-        ///     status = "ImageProcessingRasterizeJobStatus",
-        ///     durationInSeconds = 1234,
-        ///     message = "ImageProcessingRasterizeJobMessage",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     lastActionDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     startTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     endTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "ImageProcessingRasterizeJobName",
         ///     description = "ImageProcessingRasterizeJobDescription",
         ///     properties = new {
@@ -252,7 +244,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = await client.CreateRasterizeJobAsync(0, "jobId", RequestContent.Create(data));
+        /// Response response = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "jobId", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
@@ -349,7 +341,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = client.CreateRasterizeJob(0, "jobId", RequestContent.Create(data));
+        /// Response response = client.CreateRasterizeJob(WaitUntil.Completed, "jobId", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
@@ -367,14 +359,6 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     shapefileColumnNames = new[] {
         ///         "ImageProcessingRasterizeJobShapefileColumnNamesItem"
         ///     },
-        ///     id = "ImageProcessingRasterizeJobId",
-        ///     status = "ImageProcessingRasterizeJobStatus",
-        ///     durationInSeconds = 1234,
-        ///     message = "ImageProcessingRasterizeJobMessage",
-        ///     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     lastActionDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     startTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     endTime = "2022-05-10T14:57:31.2311892-04:00",
         ///     name = "ImageProcessingRasterizeJobName",
         ///     description = "ImageProcessingRasterizeJobDescription",
         ///     properties = new {
@@ -382,7 +366,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = client.CreateRasterizeJob(0, "jobId", RequestContent.Create(data));
+        /// Response response = client.CreateRasterizeJob(WaitUntil.Completed, "jobId", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());

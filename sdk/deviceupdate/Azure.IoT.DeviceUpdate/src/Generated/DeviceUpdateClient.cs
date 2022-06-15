@@ -1809,7 +1809,7 @@ namespace Azure.IoT.DeviceUpdate
         ///     }
         /// };
         /// 
-        /// Response response = await client.ImportUpdateAsync(0, "action", RequestContent.Create(data));
+        /// Response response = await client.ImportUpdateAsync(WaitUntil.Completed, "action", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
@@ -1958,7 +1958,7 @@ namespace Azure.IoT.DeviceUpdate
         ///     }
         /// };
         /// 
-        /// Response response = client.ImportUpdate(0, "action", RequestContent.Create(data));
+        /// Response response = client.ImportUpdate(WaitUntil.Completed, "action", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
@@ -2090,7 +2090,7 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = await client.DeleteUpdateAsync(0, "provider", "name", "version");
+        /// Response response = await client.DeleteUpdateAsync(WaitUntil.Completed, "provider", "name", "version");
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
@@ -2149,7 +2149,7 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = client.DeleteUpdate(0, "provider", "name", "version");
+        /// Response response = client.DeleteUpdate(WaitUntil.Completed, "provider", "name", "version");
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>

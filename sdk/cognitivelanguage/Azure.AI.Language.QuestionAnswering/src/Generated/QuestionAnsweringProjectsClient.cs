@@ -2984,7 +2984,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = await client.DeleteProjectAsync(0, "projectName");
+        /// Response response = await client.DeleteProjectAsync(WaitUntil.Completed, "projectName");
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
@@ -3039,7 +3039,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = client.DeleteProject(0, "projectName");
+        /// Response response = client.DeleteProject(WaitUntil.Completed, "projectName");
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
@@ -3096,7 +3096,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = await client.ExportAsync(0, "projectName");
+        /// Response response = await client.ExportAsync(WaitUntil.Completed, "projectName");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -3111,7 +3111,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = await client.ExportAsync(0, "projectName", "format", "assetKind");
+        /// Response response = await client.ExportAsync(WaitUntil.Completed, "projectName", "format", "assetKind");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -3213,7 +3213,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = client.Export(0, "projectName");
+        /// Response response = client.Export(WaitUntil.Completed, "projectName");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -3228,7 +3228,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = client.Export(0, "projectName", "format", "assetKind");
+        /// Response response = client.Export(WaitUntil.Completed, "projectName", "format", "assetKind");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -3333,7 +3333,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var data = new {};
         /// 
-        /// Response response = await client.ImportAsync(0, "projectName", RequestContent.Create(data));
+        /// Response response = await client.ImportAsync(WaitUntil.Completed, "projectName", RequestContent.Create(data));
         /// Console.WriteLine(response.Status);
         /// </code>
         /// This sample shows how to call ImportAsync with all parameters and request content.
@@ -3422,7 +3422,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     fileUri = "ImportJobOptionsFileUri",
         /// };
         /// 
-        /// Response response = await client.ImportAsync(0, "projectName", RequestContent.Create(data), "format", "assetKind");
+        /// Response response = await client.ImportAsync(WaitUntil.Completed, "projectName", RequestContent.Create(data), "format", "assetKind");
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
@@ -3544,7 +3544,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var data = new {};
         /// 
-        /// Response response = client.Import(0, "projectName", RequestContent.Create(data));
+        /// Response response = client.Import(WaitUntil.Completed, "projectName", RequestContent.Create(data));
         /// Console.WriteLine(response.Status);
         /// </code>
         /// This sample shows how to call Import with all parameters and request content.
@@ -3633,7 +3633,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     fileUri = "ImportJobOptionsFileUri",
         /// };
         /// 
-        /// Response response = client.Import(0, "projectName", RequestContent.Create(data), "format", "assetKind");
+        /// Response response = client.Import(WaitUntil.Completed, "projectName", RequestContent.Create(data), "format", "assetKind");
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
@@ -3751,7 +3751,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = await client.DeployProjectAsync(0, "projectName", "deploymentName");
+        /// Response response = await client.DeployProjectAsync(WaitUntil.Completed, "projectName", "deploymentName");
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
@@ -3808,7 +3808,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = client.DeployProject(0, "projectName", "deploymentName");
+        /// Response response = client.DeployProject(WaitUntil.Completed, "projectName", "deploymentName");
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
@@ -3879,7 +3879,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     }
         /// };
         /// 
-        /// Response response = await client.UpdateSourcesAsync(0, "projectName", RequestContent.Create(data));
+        /// Response response = await client.UpdateSourcesAsync(WaitUntil.Completed, "projectName", RequestContent.Create(data));
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
@@ -3963,7 +3963,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     }
         /// };
         /// 
-        /// Response response = client.UpdateSources(0, "projectName", RequestContent.Create(data));
+        /// Response response = client.UpdateSources(WaitUntil.Completed, "projectName", RequestContent.Create(data));
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
@@ -4073,7 +4073,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     }
         /// };
         /// 
-        /// Response response = await client.UpdateQnasAsync(0, "projectName", RequestContent.Create(data));
+        /// Response response = await client.UpdateQnasAsync(WaitUntil.Completed, "projectName", RequestContent.Create(data));
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
@@ -4205,7 +4205,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     }
         /// };
         /// 
-        /// Response response = client.UpdateQnas(0, "projectName", RequestContent.Create(data));
+        /// Response response = client.UpdateQnas(WaitUntil.Completed, "projectName", RequestContent.Create(data));
         /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>

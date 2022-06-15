@@ -73,7 +73,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
-        /// This sample shows how to call CreateOrUpdateAsync with required request content, and how to parse the result.
+        /// This sample shows how to call CreateOrUpdateAsync and parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -81,75 +81,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// var data = new {
         ///     kind = "None",
-        /// };
-        /// 
-        /// Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
-        /// This sample shows how to call CreateOrUpdateAsync with all request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewDataSourceClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     id = "ProxyResourceId",
-        ///     name = "ProxyResourceName",
-        ///     kind = "None",
-        ///     scans = new[] {
-        ///         new {
-        ///             id = "ProxyResourceId",
-        ///             name = "ProxyResourceName",
-        ///             kind = "AzureSubscriptionCredential",
-        ///             scanResults = new[] {
-        ///                 new {
-        ///                     parentId = "ScanResultParentId",
-        ///                     id = "ScanResultId",
-        ///                     resourceId = "ScanResultResourceId",
-        ///                     status = "ScanResultStatus",
-        ///                     assetsDiscovered = 1234,
-        ///                     assetsClassified = 1234,
-        ///                     diagnostics = new {
-        ///                         notifications = new[] {
-        ///                             new {
-        ///                                 message = "NotificationMessage",
-        ///                                 code = 1234,
-        ///                             }
-        ///                         },
-        ///                         exceptionCountMap = new {
-        ///                             key = 1234,
-        ///                         },
-        ///                     },
-        ///                     startTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///                     queuedTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///                     pipelineStartTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///                     endTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///                     scanRulesetVersion = 1234,
-        ///                     scanRulesetType = "Custom",
-        ///                     scanLevelType = "Full",
-        ///                     errorMessage = "ScanResultErrorMessage",
-        ///                     error = new {
-        ///                         code = "ErrorModelCode",
-        ///                         message = "ErrorModelMessage",
-        ///                         target = "ErrorModelTarget",
-        ///                         details = new[] {
-        ///                             new {
-        ///                                 code = "ErrorModelCode",
-        ///                                 message = "ErrorModelMessage",
-        ///                                 target = "ErrorModelTarget",
-        ///                                 details = new[] {
-        ///                                     
-        ///                                 },
-        ///                             }
-        ///                         },
-        ///                     },
-        ///                     runType = "ScanResultRunType",
-        ///                     dataSourceType = "None",
-        ///                 }
-        ///             },
-        ///         }
-        ///     },
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
@@ -339,7 +270,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
-        /// This sample shows how to call CreateOrUpdate with required request content, and how to parse the result.
+        /// This sample shows how to call CreateOrUpdate and parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -347,75 +278,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// var data = new {
         ///     kind = "None",
-        /// };
-        /// 
-        /// Response response = client.CreateOrUpdate(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
-        /// This sample shows how to call CreateOrUpdate with all request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewDataSourceClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     id = "ProxyResourceId",
-        ///     name = "ProxyResourceName",
-        ///     kind = "None",
-        ///     scans = new[] {
-        ///         new {
-        ///             id = "ProxyResourceId",
-        ///             name = "ProxyResourceName",
-        ///             kind = "AzureSubscriptionCredential",
-        ///             scanResults = new[] {
-        ///                 new {
-        ///                     parentId = "ScanResultParentId",
-        ///                     id = "ScanResultId",
-        ///                     resourceId = "ScanResultResourceId",
-        ///                     status = "ScanResultStatus",
-        ///                     assetsDiscovered = 1234,
-        ///                     assetsClassified = 1234,
-        ///                     diagnostics = new {
-        ///                         notifications = new[] {
-        ///                             new {
-        ///                                 message = "NotificationMessage",
-        ///                                 code = 1234,
-        ///                             }
-        ///                         },
-        ///                         exceptionCountMap = new {
-        ///                             key = 1234,
-        ///                         },
-        ///                     },
-        ///                     startTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///                     queuedTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///                     pipelineStartTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///                     endTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///                     scanRulesetVersion = 1234,
-        ///                     scanRulesetType = "Custom",
-        ///                     scanLevelType = "Full",
-        ///                     errorMessage = "ScanResultErrorMessage",
-        ///                     error = new {
-        ///                         code = "ErrorModelCode",
-        ///                         message = "ErrorModelMessage",
-        ///                         target = "ErrorModelTarget",
-        ///                         details = new[] {
-        ///                             new {
-        ///                                 code = "ErrorModelCode",
-        ///                                 message = "ErrorModelMessage",
-        ///                                 target = "ErrorModelTarget",
-        ///                                 details = new[] {
-        ///                                     
-        ///                                 },
-        ///                             }
-        ///                         },
-        ///                     },
-        ///                     runType = "ScanResultRunType",
-        ///                     dataSourceType = "None",
-        ///                 }
-        ///             },
-        ///         }
-        ///     },
         /// };
         /// 
         /// Response response = client.CreateOrUpdate(RequestContent.Create(data));

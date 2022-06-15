@@ -583,7 +583,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new OAuthTokensClient(endpoint, credential);
         /// 
-        /// Response response = await client.CreateCascadeDeleteJobAsync(0, "jobId", "farmerId", "oauthProviderId");
+        /// Response response = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "jobId", "farmerId", "oauthProviderId");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -672,7 +672,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new OAuthTokensClient(endpoint, credential);
         /// 
-        /// Response response = client.CreateCascadeDeleteJob(0, "jobId", "farmerId", "oauthProviderId");
+        /// Response response = client.CreateCascadeDeleteJob(WaitUntil.Completed, "jobId", "farmerId", "oauthProviderId");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());

@@ -224,8 +224,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     id = "ProxyResourceId",
-        ///     name = "ProxyResourceName",
         ///     properties = new {
         ///         baseUrl = "AzureKeyVaultPropertiesBaseUrl",
         ///         description = "AzureKeyVaultPropertiesDescription",
@@ -325,8 +323,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     id = "ProxyResourceId",
-        ///     name = "ProxyResourceName",
         ///     properties = new {
         ///         baseUrl = "AzureKeyVaultPropertiesBaseUrl",
         ///         description = "AzureKeyVaultPropertiesDescription",
@@ -705,10 +701,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// var data = new {
         ///     scanRulesetType = "Custom",
-        ///     status = "Enabled",
-        ///     version = 1234,
-        ///     id = "ProxyResourceId",
-        ///     name = "ProxyResourceName",
         ///     kind = "None",
         /// };
         /// 
@@ -809,10 +801,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// var data = new {
         ///     scanRulesetType = "Custom",
-        ///     status = "Enabled",
-        ///     version = 1234,
-        ///     id = "ProxyResourceId",
-        ///     name = "ProxyResourceName",
         ///     kind = "None",
         /// };
         /// 
