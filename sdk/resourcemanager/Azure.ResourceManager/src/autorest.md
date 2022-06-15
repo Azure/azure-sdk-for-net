@@ -104,7 +104,7 @@ directive:
       $["x-namespace"] = "Azure.ResourceManager.Models";
       $["x-accessibility"] = "public";
       $["x-csharp-formats"] = "json";
-      $["x-csharp-usage"] = "model,input,output";
+      $["x-csharp-usage"] = "model,input,output,converter";
   - from: types.json
     where: $.definitions.*.properties[?(@.enum)]
     transform: >
