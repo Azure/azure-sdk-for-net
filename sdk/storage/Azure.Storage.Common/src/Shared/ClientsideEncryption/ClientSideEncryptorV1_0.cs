@@ -6,18 +6,25 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Cryptography;
 using Azure.Storage.Cryptography.Models;
 
 namespace Azure.Storage.Cryptography
 {
-    internal class ClientSideEncryptor
+    internal class ClientSideEncryptorV1_0 : IClientSideEncryptor
     {
         private readonly IKeyEncryptionKey _keyEncryptionKey;
         private readonly string _keyWrapAlgorithm;
 
-        public ClientSideEncryptor(ClientSideEncryptionOptions options)
+        public ClientSideEncryptorV1_0(ClientSideEncryptionOptions options)
         {
+            Argument.AssertNotNull(options, nameof(options));
+            if (options.EncryptionVersion != ClientSideEncryptionVersion.V1_0)
+            {
+                Errors.InvalidArgument(nameof(options.EncryptionVersion));
+            }
+
             _keyEncryptionKey = options.KeyEncryptionKey;
             _keyWrapAlgorithm = options.KeyWrapAlgorithm;
         }
@@ -30,7 +37,7 @@ namespace Azure.Storage.Cryptography
             }
         }
 
-        public static long ExpectedCiphertextLength(long plaintextLength)
+        public long ExpectedOutputContentLength(long plaintextLength)
         {
             const int aesBlockSizeBytes = 16;
 
@@ -101,7 +108,9 @@ namespace Azure.Storage.Cryptography
 
                 if (async)
                 {
-                    await plaintext.CopyToAsync(transformStream).ConfigureAwait(false);
+                    // constant comes from parameter documentation
+                    const int copyToAsyncDefaultBufferSize = 80 * Constants.KB;
+                    await plaintext.CopyToAsync(transformStream, copyToAsyncDefaultBufferSize, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class ActivatedResourceReference : IUtf8JsonSerializable
+    public partial class FrontDoorActivatedResourceInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static ActivatedResourceReference DeserializeActivatedResourceReference(JsonElement element)
+        internal static FrontDoorActivatedResourceInfo DeserializeFrontDoorActivatedResourceInfo(JsonElement element)
         {
             Optional<ResourceIdentifier> id = default;
             Optional<bool> isActive = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new ActivatedResourceReference(id.Value, Optional.ToNullable(isActive));
+            return new FrontDoorActivatedResourceInfo(id.Value, Optional.ToNullable(isActive));
         }
     }
 }

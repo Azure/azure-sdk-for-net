@@ -1,7 +1,20 @@
 # Release History
 
-## 12.13.0-beta.1 (Unreleased)
+## 12.13.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.13.0-beta.1 (2022-06-15)
 - Added support for service version 2021-08-06.
+- Added support for clientside encryption V2.0
+  - GCM support
+  - V2.0 is considered a security upgrade, and it is recommended applications switch to server-side encryption or upgrade to clientside V2.0.
 - Fixed bug where calling AppendBlockFromUri() without AppendBlobAppendBlockFromUriOptions throws a null exception error
 
 ## 12.12.0 (2022-05-02)

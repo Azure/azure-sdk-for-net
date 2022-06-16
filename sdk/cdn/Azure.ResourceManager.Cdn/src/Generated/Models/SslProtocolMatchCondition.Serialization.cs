@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WritePropertyName("typeName");
             writer.WriteStringValue(ConditionType.ToString());
             writer.WritePropertyName("operator");
-            writer.WriteStringValue(Operator.ToString());
+            writer.WriteStringValue(SslProtocolOperator.ToString());
             if (Optional.IsDefined(NegateCondition))
             {
                 writer.WritePropertyName("negateCondition");

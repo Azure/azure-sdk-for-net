@@ -83,4 +83,7 @@ directive:
               $.properties[key] = property;
           }
       }
+  - from: swagger-document
+    where: $.definitions.Encryption
+    transform: $.required = undefined; # this is a fix for swagger issue, and it should be resolved in azure-rest-api-specs/pull/19357 
 ```
