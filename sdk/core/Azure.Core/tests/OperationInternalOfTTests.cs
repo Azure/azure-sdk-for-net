@@ -17,7 +17,7 @@ namespace Azure.Core.Tests
     public class OperationInternalOfTTests
     {
         private static readonly string DiagnosticNamespace = "Azure.Core.Tests";
-        private static readonly ClientDiagnostics ClientDiagnostics = new(new TestClientOptions(), true);
+        private static readonly ClientDiagnostics ClientDiagnostics = new(new TestClientOptions());
         private static readonly RequestFailedException OriginalException = new("");
         private static readonly StackOverflowException CustomException = new();
         private static readonly MockResponse InitialResponse = new(200);
@@ -219,13 +219,13 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task WaitForCompletionResponseCreatesDiagnosticScope([Values(true, false)] bool async, [Values(null, "CustomTypeName")] string operationTypeName)
+        public async Task WaitForCompletionResponseCreatesDiagnosticScope([Values(true, false)] bool async, [Values(null, "CustomTypeName")] string operationTypeName, [Values(true, false)] bool suppressNestedClientActivities)
         {
             using ClientDiagnosticListener testListener = new(DiagnosticNamespace);
 
             string expectedTypeName = operationTypeName ?? nameof(TestOperation);
             KeyValuePair<string, string>[] expectedAttributes = { new("key1", "value1"), new("key2", "value2") };
-            var operationInternal = new OperationInternal<int>(ClientDiagnostics, TestOperation.Succeeded(1), InitialResponse, operationTypeName, expectedAttributes);
+            var operationInternal = new OperationInternal<int>(new(new TestClientOptions(), suppressNestedClientActivities), TestOperation.Succeeded(1), InitialResponse, operationTypeName, expectedAttributes);
 
             _ = async
                 ? await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None)
@@ -233,19 +233,22 @@ namespace Azure.Core.Tests
 
             testListener.AssertScope($"{expectedTypeName}.WaitForCompletionResponse", expectedAttributes);
 #if NET5_0_OR_GREATER
-            testListener.AssertAndRemoveScope($"{expectedTypeName}.WaitForCompletionResponse", expectedAttributes);
-            CollectionAssert.IsEmpty(testListener.Scopes);
+            if (suppressNestedClientActivities)
+            {
+                testListener.AssertAndRemoveScope($"{expectedTypeName}.WaitForCompletionResponse", expectedAttributes);
+                CollectionAssert.IsEmpty(testListener.Scopes);
+            }
 #endif
         }
 
         [Test]
-        public async Task WaitForCompletionCreatesDiagnosticScope([Values(true, false)] bool async, [Values(null, "CustomTypeName")] string operationTypeName)
+        public async Task WaitForCompletionCreatesDiagnosticScope([Values(true, false)] bool async, [Values(null, "CustomTypeName")] string operationTypeName, [Values(true, false)] bool suppressNestedClientActivities)
         {
             using ClientDiagnosticListener testListener = new(DiagnosticNamespace);
 
             string expectedTypeName = operationTypeName ?? nameof(TestOperation);
             KeyValuePair<string, string>[] expectedAttributes = { new("key1", "value1"), new("key2", "value2") };
-            var operationInternal = new OperationInternal<int>(ClientDiagnostics, TestOperation.Succeeded(1), InitialResponse, operationTypeName, expectedAttributes);
+            var operationInternal = new OperationInternal<int>(new(new TestClientOptions(), suppressNestedClientActivities), TestOperation.Succeeded(1), InitialResponse, operationTypeName, expectedAttributes);
 
             _ = async
                 ? await operationInternal.WaitForCompletionAsync(CancellationToken.None)
@@ -253,8 +256,11 @@ namespace Azure.Core.Tests
 
             testListener.AssertScope($"{expectedTypeName}.WaitForCompletion", expectedAttributes);
 #if NET5_0_OR_GREATER
-            testListener.AssertAndRemoveScope($"{expectedTypeName}.WaitForCompletion", expectedAttributes);
-            CollectionAssert.IsEmpty(testListener.Scopes);
+            if (suppressNestedClientActivities)
+            {
+                testListener.AssertAndRemoveScope($"{expectedTypeName}.WaitForCompletion", expectedAttributes);
+                CollectionAssert.IsEmpty(testListener.Scopes);
+            }
 #endif
         }
 
