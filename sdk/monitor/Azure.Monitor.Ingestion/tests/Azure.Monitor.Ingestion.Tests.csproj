@@ -22,4 +22,8 @@
   <ItemGroup>
     <Folder Include="SessionRecords\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Web.Mobile" />
+  </ItemGroup>
 </Project>
