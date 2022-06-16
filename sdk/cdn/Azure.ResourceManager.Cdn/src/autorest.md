@@ -257,6 +257,8 @@ directive:
       $.CheckEndpointNameAvailabilityOutput['x-ms-client-name'] = 'EndpointNameAvailabilityResult';
       $.SecurityPolicyWebApplicationFirewallParameters['x-ms-client-name'] = 'SecurityPolicyWebApplicationFirewall';
       $.ActivatedResourceReference['x-ms-client-name'] = 'FrontDoorActivatedResourceInfo';
+      $.CustomerCertificateParameters.properties.expirationDate['x-ms-client-name'] = 'expiresDate';
+      $.ManagedCertificateParameters.properties.expirationDate['x-ms-client-name'] = 'expiresDate';
       $.AFDDomainUpdatePropertiesParameters.properties.azureDnsZone['x-ms-client-name'] = 'dnsZone';
       $.AFDOriginUpdatePropertiesParameters.properties.azureOrigin['x-ms-client-name'] = 'origin';
       $.AFDOriginGroupUpdatePropertiesParameters.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes['x-ms-client-name'] = 'trafficRestorationTimeInMinutes';
