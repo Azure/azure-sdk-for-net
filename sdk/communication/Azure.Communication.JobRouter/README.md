@@ -80,8 +80,7 @@ A classification policy can be used to dynamically select a queue, determine job
 ### Exception policy
 An exception policy controls the behavior of a Job based on a trigger and executes a desired action. The exception policy is attached to a Queue so it can control the behavior of Jobs in the Queue.
 
-
-## Example
+## Examples
 
 ### Distribution Policy
 Before we can create a Queue, we need a Distribution Policy.
@@ -153,6 +152,10 @@ foreach (var offer in result.Value.Offers)
     Console.WriteLine($"Worker {worker.Value.Id} has an active offer for job {offer.JobId}");
 }
 ```
+
+## Troubleshooting
+
+Running into issues? This section should contain details as to what to do there.
 
 ## Next steps
 [Read more about JobRouter in Azure Communication Services][nextsteps]
