@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace Azure.Communication
@@ -95,6 +97,17 @@ namespace Azure.Communication
             AssertRoundtrip("4:112345556789");
             AssertRoundtrip("4:otherFormat");
             AssertRoundtrip("28:45ab2481-1c1c-4005-be24-0ffb879b1130");
+        }
+
+        [Test]
+        public void RawIdIsOverriddenBySubTypes()
+        {
+            var baseType = typeof(CommunicationIdentifier);
+            IEnumerable<Type>? implementations = baseType.Assembly.GetTypes().Where(type => type.IsSubclassOf(typeof(CommunicationIdentifier)));
+            foreach (Type implementation in implementations)
+            {
+                Assert.AreNotEqual(baseType, implementation.GetProperty(nameof(CommunicationIdentifier.RawId))?.DeclaringType);
+            }
         }
     }
 }
