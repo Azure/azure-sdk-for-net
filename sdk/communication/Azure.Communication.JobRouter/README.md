@@ -2,7 +2,7 @@
 
 This package contains a C# SDK for Azure Communication Services for JobRouter.
 
-[Source code][source] | [Package (NuGet)][package] | [Product documentation][product_docs]
+[Source code][source] | [Package (NuGet)]<!-- [package]--> | [Product documentation][product_docs]
 
 
 ## Getting started
@@ -178,7 +178,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [nextsteps]:https://docs.microsoft.com/azure/communication-services/concepts/router/concepts
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.JobRouter/src
 [product_docs]: https://docs.microsoft.com/azure/communication-services/overview
-[package]: https://www.nuget.org/packages/Azure.Communication.JobRouter
+<!-- [package]: https://www.nuget.org/packages/Azure.Communication.JobRouter -->
 [classification_concepts]: https://docs.microsoft.com/azure/communication-services/concepts/router/classification-concepts
 [subscribe_events]: https://docs.microsoft.com/azure/communication-services/how-tos/router-sdk/subscribe-events
 [offer_issued_event_schema]: https://docs.microsoft.com/azure/communication-services/how-tos/router-sdk/subscribe-events#microsoftcommunicationrouterworkerofferissued
