@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class NetworkRuleSet : IUtf8JsonSerializable
+    public partial class VaultNetworkRuleSet : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteEndObject();
         }
 
-        internal static NetworkRuleSet DeserializeNetworkRuleSet(JsonElement element)
+        internal static VaultNetworkRuleSet DeserializeVaultNetworkRuleSet(JsonElement element)
         {
             Optional<NetworkRuleBypassOption> bypass = default;
             Optional<NetworkRuleAction> defaultAction = default;
-            Optional<IList<IPRule>> ipRules = default;
+            Optional<IList<VaultIPRule>> ipRules = default;
             Optional<IList<VirtualNetworkRule>> virtualNetworkRules = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IPRule> array = new List<IPRule>();
+                    List<VaultIPRule> array = new List<VaultIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPRule.DeserializeIPRule(item));
+                        array.Add(VaultIPRule.DeserializeVaultIPRule(item));
                     }
                     ipRules = array;
                     continue;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new NetworkRuleSet(Optional.ToNullable(bypass), Optional.ToNullable(defaultAction), Optional.ToList(ipRules), Optional.ToList(virtualNetworkRules));
+            return new VaultNetworkRuleSet(Optional.ToNullable(bypass), Optional.ToNullable(defaultAction), Optional.ToList(ipRules), Optional.ToList(virtualNetworkRules));
         }
     }
 }

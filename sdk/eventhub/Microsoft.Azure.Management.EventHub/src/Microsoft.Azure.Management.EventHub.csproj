@@ -9,12 +9,12 @@
 			Provides developers with a library to create and manage all Azure Event Hubs resources. Note: This client library is for EventHub under Azure Resource Manager.
 			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.EventHubs" (https://www.nuget.org/packages/Azure.ResourceManager.EventHubs/). Please see the package changelog for more information.
 		</Description>
-		<Version>4.0.0</Version>
+		<Version>5.0.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.EventHub</AssemblyName>
 		<PackageTags>Microsoft Azure EventHubs Management;Event Hubs;Event Hubs management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-		EventHubs : 2021-11-01
+		EventHubs : 2022-01-01-preview
 			1) Dedicated Clusters
 			2) Namespaces
 			3) Eventhubs
@@ -24,6 +24,7 @@
 			7) Consumergroups
 			8) Managed Identiites
 			9) Schema Registry
+			10) Application Groups
 	  ]]>
 		</PackageReleaseNotes>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
