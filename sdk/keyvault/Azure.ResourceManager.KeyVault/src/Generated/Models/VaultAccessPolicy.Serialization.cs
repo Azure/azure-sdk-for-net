@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class AccessPolicyEntry : IUtf8JsonSerializable
+    public partial class VaultAccessPolicy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteEndObject();
         }
 
-        internal static AccessPolicyEntry DeserializeAccessPolicyEntry(JsonElement element)
+        internal static VaultAccessPolicy DeserializeVaultAccessPolicy(JsonElement element)
         {
             Guid tenantId = default;
             string objectId = default;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new AccessPolicyEntry(tenantId, objectId, Optional.ToNullable(applicationId), permissions);
+            return new VaultAccessPolicy(tenantId, objectId, Optional.ToNullable(applicationId), permissions);
         }
     }
 }

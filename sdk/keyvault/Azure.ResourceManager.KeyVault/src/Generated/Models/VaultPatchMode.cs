@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> The vault&apos;s create mode to indicate whether the vault need to be recovered or not. </summary>
-    public enum CreateMode
+    public enum VaultPatchMode
     {
         /// <summary> default. </summary>
         Default,

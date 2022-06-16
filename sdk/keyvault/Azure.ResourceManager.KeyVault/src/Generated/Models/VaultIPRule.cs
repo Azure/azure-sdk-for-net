@@ -10,12 +10,12 @@ using System;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> A rule governing the accessibility of a vault from a specific ip address or ip range. </summary>
-    public partial class IPRule
+    public partial class VaultIPRule
     {
-        /// <summary> Initializes a new instance of IPRule. </summary>
+        /// <summary> Initializes a new instance of VaultIPRule. </summary>
         /// <param name="addressRange"> An IPv4 address range in CIDR notation, such as &apos;124.56.78.91&apos; (simple IP address) or &apos;124.56.78.0/24&apos; (all addresses that start with 124.56.78). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="addressRange"/> is null. </exception>
-        public IPRule(string addressRange)
+        public VaultIPRule(string addressRange)
         {
             if (addressRange == null)
             {

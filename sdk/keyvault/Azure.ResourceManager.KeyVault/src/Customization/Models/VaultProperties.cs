@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Sku = sku;
             // This is a workaround to ensure the vault can be created successfully
             // See the details of the issue here: https://github.com/Azure/azure-rest-api-specs/issues/19022
-            AccessPolicies = new List<AccessPolicyEntry>();
+            AccessPolicies = new List<VaultAccessPolicy>();
             PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionItemData>();
         }
     }

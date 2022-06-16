@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("enablePurgeProtection");
                 writer.WriteBooleanValue(EnablePurgeProtection.Value);
             }
-            if (Optional.IsDefined(NetworkAcls))
+            if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkAcls");
-                writer.WriteObjectValue(NetworkAcls);
+                writer.WriteObjectValue(NetworkRuleSet);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             Guid tenantId = default;
             KeyVaultSku sku = default;
-            Optional<IList<AccessPolicyEntry>> accessPolicies = default;
+            Optional<IList<VaultAccessPolicy>> accessPolicies = default;
             Optional<Uri> vaultUri = default;
             Optional<string> hsmPoolResourceId = default;
             Optional<bool> enabledForDeployment = default;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<bool> enableRbacAuthorization = default;
             Optional<VaultCreateMode> createMode = default;
             Optional<bool> enablePurgeProtection = default;
-            Optional<NetworkRuleSet> networkAcls = default;
+            Optional<VaultNetworkRuleSet> networkAcls = default;
             Optional<VaultProvisioningState> provisioningState = default;
             Optional<IReadOnlyList<PrivateEndpointConnectionItemData>> privateEndpointConnections = default;
             Optional<string> publicNetworkAccess = default;
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AccessPolicyEntry> array = new List<AccessPolicyEntry>();
+                    List<VaultAccessPolicy> array = new List<VaultAccessPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessPolicyEntry.DeserializeAccessPolicyEntry(item));
+                        array.Add(VaultAccessPolicy.DeserializeVaultAccessPolicy(item));
                     }
                     accessPolicies = array;
                     continue;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    networkAcls = NetworkRuleSet.DeserializeNetworkRuleSet(property.Value);
+                    networkAcls = VaultNetworkRuleSet.DeserializeVaultNetworkRuleSet(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"))

@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static VaultAccessPolicyProperties DeserializeVaultAccessPolicyProperties(JsonElement element)
         {
-            IList<AccessPolicyEntry> accessPolicies = default;
+            IList<VaultAccessPolicy> accessPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accessPolicies"))
                 {
-                    List<AccessPolicyEntry> array = new List<AccessPolicyEntry>();
+                    List<VaultAccessPolicy> array = new List<VaultAccessPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessPolicyEntry.DeserializeAccessPolicyEntry(item));
+                        array.Add(VaultAccessPolicy.DeserializeVaultAccessPolicy(item));
                     }
                     accessPolicies = array;
                     continue;

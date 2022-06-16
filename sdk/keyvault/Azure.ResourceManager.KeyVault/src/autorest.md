@@ -41,7 +41,7 @@ rename-rules:
   URI: Uri
   Managecontacts: ManageContacts
   Getissuers: GetIssuers
-  Listissuers: Listissuers
+  Listissuers: ListIssuers
   Setissuers: SetIssuers
   Deleteissuers: DeleteIssuers
   Manageissuers: ManageIssuers
@@ -67,7 +67,7 @@ directive:
     transform: >
       $['x-ms-format'] = 'azure-location';
   - from: managedHsm.json
-    where: '$.definitions'
+    where: $.definitions
     transform: >
       $.ManagedHsmResource['x-ms-client-name'] = 'ManagedHsmTrackedResourceData';
       $.ManagedHsmResource.properties.location['x-ms-format'] = 'azure-location';
@@ -76,12 +76,13 @@ directive:
       $.DeletedManagedHsmProperties.properties.mhsmId['x-ms-format'] = 'arm-id';
       $.MHSMPrivateEndpointConnection.properties.etag['x-ms-format'] = 'etag';
       $.ManagedHsmProperties.properties.networkAcls['x-ms-client-name'] = 'NetworkRuleSet';
-      $.ManagedHsmProperties.properties.provisioningState['x-ms-enum']['name'] = 'HsmProvisioningState';
+      $.ManagedHsmProperties.properties.provisioningState['x-ms-enum']['name'] = 'ManagedHsmProvisioningState';
+      $.ManagedHsmProperties.properties.createMode['x-ms-enum']['name'] = 'ManagedHsmCreateMode';
       $.MHSMVirtualNetworkRule.properties.id['x-ms-client-name'] = 'SubnetId';
       $.MHSMVirtualNetworkRule.properties.id['x-ms-format'] = 'arm-id';
       $.MHSMNetworkRuleSet.properties.bypass['x-ms-enum']['name'] = 'NetworkRuleBypassOption';
   - from: keyvault.json
-    where: '$.definitions'
+    where: $.definitions
     transform: >
       $.CheckNameAvailabilityResult.properties.reason['x-ms-enum']['name'] = 'NameAvailabilityReason';
       $.CheckNameAvailabilityResult['x-ms-client-name'] = 'VaultNameAvailabilityResult';
@@ -91,6 +92,7 @@ directive:
       $.Permissions.properties.storage.items['x-ms-enum']['name'] = 'StoragePermission';
       $.Resource['x-ms-client-name'] = 'KeyVaultResourceData';
       $.IPRule.properties.value['x-ms-client-name'] = 'AddressRange';
+      $.IPRule['x-ms-client-name'] = 'VaultIPRule';
       $.DeletedVaultProperties.properties.location['x-ms-format'] = 'azure-location';
       $.DeletedVaultProperties.properties.vaultId['x-ms-format'] = 'arm-id';
       $.VaultCreateOrUpdateParameters.properties.location['x-ms-format'] = 'azure-location';
@@ -98,6 +100,9 @@ directive:
       $.Vault.properties.location['x-ms-format'] = 'azure-location';
       $.Vault['x-csharp-usage'] = 'model,input,output';
       $.VaultProperties.properties.createMode['x-ms-enum']['name'] = 'VaultCreateMode';
+      $.VaultProperties.properties.networkAcls['x-ms-client-name'] = 'NetworkRuleSet';
+      $.VaultPatchProperties.properties.createMode['x-ms-enum']['name'] = 'VaultPatchMode';
+      $.VaultPatchProperties.properties.networkAcls['x-ms-client-name'] = 'NetworkRuleSet';
       $.Resource.properties.location['x-ms-format'] = 'azure-location';
       $.PrivateEndpointConnectionItem.properties.etag['x-ms-format'] = 'etag';
       $.PrivateEndpointConnection.properties.etag['x-ms-format'] = 'etag';
@@ -105,6 +110,8 @@ directive:
       $.VaultCheckNameAvailabilityParameters.properties.type['x-ms-format'] = 'resource-type';
       $.VaultCheckNameAvailabilityParameters['x-ms-client-name'] = 'VaultNameAvailabilityParameters';
       $.NetworkRuleSet.properties.bypass['x-ms-enum']['name'] = 'NetworkRuleBypassOption';
+      $.NetworkRuleSet['x-ms-client-name'] = 'VaultNetworkRuleSet';
+      $.AccessPolicyEntry['x-ms-client-name'] = 'VaultAccessPolicy';
   - rename-model:
       from: MHSMIPRule
       to: MhsmIPRule
