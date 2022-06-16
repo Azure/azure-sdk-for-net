@@ -5572,18 +5572,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call CreateTypeDefinitionsAsync with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.CreateTypeDefinitionsAsync(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call CreateTypeDefinitionsAsync with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -6895,18 +6883,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call CreateTypeDefinitions with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.CreateTypeDefinitions(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call CreateTypeDefinitions with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -8215,18 +8191,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call UpdateAtlasTypeDefinitionsAsync with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.UpdateAtlasTypeDefinitionsAsync(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call UpdateAtlasTypeDefinitionsAsync with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -9535,18 +9499,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call UpdateAtlasTypeDefinitions with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.UpdateAtlasTypeDefinitions(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call UpdateAtlasTypeDefinitions with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -10855,17 +10807,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call DeleteTypeDefinitionsAsync with required request content.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.DeleteTypeDefinitionsAsync(RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
-        /// </code>
         /// This sample shows how to call DeleteTypeDefinitionsAsync with all request content.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -11672,17 +11613,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call DeleteTypeDefinitions with required request content.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.DeleteTypeDefinitions(RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
-        /// </code>
         /// This sample shows how to call DeleteTypeDefinitions with all request content.
         /// <code>
         /// var credential = new DefaultAzureCredential();

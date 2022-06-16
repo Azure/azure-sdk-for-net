@@ -373,18 +373,6 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call UpdateAccountPropertiesAsync with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewAccountClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.UpdateAccountPropertiesAsync(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call UpdateAccountPropertiesAsync with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -551,18 +539,6 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call UpdateAccountProperties with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewAccountClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.UpdateAccountProperties(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call UpdateAccountProperties with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -843,18 +819,6 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call RegenerateAccessKeyAsync with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewAccountClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.RegenerateAccessKeyAsync(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call RegenerateAccessKeyAsync with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -925,18 +889,6 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call RegenerateAccessKey with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewAccountClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.RegenerateAccessKey(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call RegenerateAccessKey with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();

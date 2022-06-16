@@ -204,18 +204,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
-        /// This sample shows how to call CreateOrUpdateFilterAsync with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewScanClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call CreateOrUpdateFilterAsync with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -301,18 +289,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
-        /// This sample shows how to call CreateOrUpdateFilter with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewScanClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.CreateOrUpdateFilter(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call CreateOrUpdateFilter with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -1841,18 +1817,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call CreateOrUpdateTriggerAsync with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewScanClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.CreateOrUpdateTriggerAsync(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call CreateOrUpdateTriggerAsync with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -2038,18 +2002,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call CreateOrUpdateTrigger with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewScanClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.CreateOrUpdateTrigger(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call CreateOrUpdateTrigger with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();

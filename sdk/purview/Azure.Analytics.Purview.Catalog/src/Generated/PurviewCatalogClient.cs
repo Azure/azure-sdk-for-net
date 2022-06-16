@@ -65,18 +65,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call SearchAsync with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.SearchAsync(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call SearchAsync with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -198,18 +186,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call Search with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.Search(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call Search with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -331,18 +307,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call SuggestAsync with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.SuggestAsync(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call SuggestAsync with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -404,18 +368,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call Suggest with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.Suggest(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call Suggest with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -477,18 +429,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call BrowseAsync with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.BrowseAsync(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call BrowseAsync with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -554,18 +494,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call Browse with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.Browse(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call Browse with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -631,18 +559,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call AutoCompleteAsync with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.AutoCompleteAsync(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call AutoCompleteAsync with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -704,18 +620,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call AutoComplete with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.AutoComplete(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call AutoComplete with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();

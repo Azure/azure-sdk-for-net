@@ -274,18 +274,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call CreateOrUpdateAsync with required parameters and request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new TillageDataClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.CreateOrUpdateAsync("farmerId", "tillageDataId", RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -442,18 +430,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call CreateOrUpdate with required parameters and request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new TillageDataClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.CreateOrUpdate("farmerId", "tillageDataId", RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();

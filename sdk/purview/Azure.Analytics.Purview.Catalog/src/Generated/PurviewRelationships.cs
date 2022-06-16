@@ -50,18 +50,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call CreateAsync with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.CreateAsync(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call CreateAsync with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -202,18 +190,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call Create with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.Create(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call Create with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -354,18 +330,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call UpdateAsync with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.UpdateAsync(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call UpdateAsync with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -506,18 +470,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call Update with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.Update(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call Update with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();

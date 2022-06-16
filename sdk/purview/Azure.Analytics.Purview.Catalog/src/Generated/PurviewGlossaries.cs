@@ -307,18 +307,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call CreateGlossaryAsync with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.CreateGlossaryAsync(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call CreateGlossaryAsync with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -553,18 +541,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call CreateGlossary with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.CreateGlossary(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call CreateGlossary with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -1319,18 +1295,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call CreateGlossaryCategoryAsync with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.CreateGlossaryCategoryAsync(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call CreateGlossaryCategoryAsync with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -1589,18 +1553,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call CreateGlossaryCategory with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.CreateGlossaryCategory(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call CreateGlossaryCategory with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -2137,18 +2089,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call UpdateGlossaryCategoryAsync with required parameters and request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.UpdateGlossaryCategoryAsync("categoryGuid", RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call UpdateGlossaryCategoryAsync with all parameters and request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -2410,18 +2350,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call UpdateGlossaryCategory with required parameters and request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.UpdateGlossaryCategory("categoryGuid", RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call UpdateGlossaryCategory with all parameters and request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -3354,18 +3282,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call CreateGlossaryTermAsync with required parameters and request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.CreateGlossaryTermAsync(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call CreateGlossaryTermAsync with all parameters and request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -4021,18 +3937,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call CreateGlossaryTerm with required parameters and request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.CreateGlossaryTerm(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call CreateGlossaryTerm with all parameters and request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -5309,18 +5213,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call UpdateGlossaryTermAsync with required parameters and request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.UpdateGlossaryTermAsync("termGuid", RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call UpdateGlossaryTermAsync with all parameters and request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -5978,18 +5870,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call UpdateGlossaryTerm with required parameters and request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.UpdateGlossaryTerm("termGuid", RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call UpdateGlossaryTerm with all parameters and request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -9807,18 +9687,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call UpdateGlossaryAsync with required parameters and request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.UpdateGlossaryAsync("glossaryGuid", RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call UpdateGlossaryAsync with all parameters and request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -10056,18 +9924,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call UpdateGlossary with required parameters and request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.UpdateGlossary("glossaryGuid", RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call UpdateGlossary with all parameters and request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();

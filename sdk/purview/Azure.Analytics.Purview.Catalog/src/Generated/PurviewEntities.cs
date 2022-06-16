@@ -55,18 +55,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call CreateOrUpdateAsync with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call CreateOrUpdateAsync with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -424,18 +412,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call CreateOrUpdate with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.CreateOrUpdate(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call CreateOrUpdate with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -1179,18 +1155,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call CreateOrUpdateEntitiesAsync with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.CreateOrUpdateEntitiesAsync(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call CreateOrUpdateEntitiesAsync with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -1552,18 +1516,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call CreateOrUpdateEntities with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.CreateOrUpdateEntities(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call CreateOrUpdateEntities with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -2227,17 +2179,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call AddClassificationAsync with required request content.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.AddClassificationAsync(RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
-        /// </code>
         /// This sample shows how to call AddClassificationAsync with all request content.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -2330,17 +2271,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call AddClassification with required request content.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.AddClassification(RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
-        /// </code>
         /// This sample shows how to call AddClassification with all request content.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -4583,18 +4513,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call PartialUpdateEntityByUniqueAttributesAsync with required parameters and request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.PartialUpdateEntityByUniqueAttributesAsync("typeName", RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call PartialUpdateEntityByUniqueAttributesAsync with all parameters and request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -4961,18 +4879,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call PartialUpdateEntityByUniqueAttributes with required parameters and request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.PartialUpdateEntityByUniqueAttributes("typeName", RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
         /// This sample shows how to call PartialUpdateEntityByUniqueAttributes with all parameters and request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -6195,18 +6101,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call SetClassificationsAsync with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.SetClassificationsAsync(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.Item[0].ToString());
-        /// </code>
         /// This sample shows how to call SetClassificationsAsync with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -6314,18 +6208,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call SetClassifications with required request content, and how to parse the result.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.SetClassifications(RequestContent.Create(data));
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.Item[0].ToString());
-        /// </code>
         /// This sample shows how to call SetClassifications with all request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
