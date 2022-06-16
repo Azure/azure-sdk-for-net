@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             bool expectedEnabledForTemplateDeployment,
             bool expectedEnabledForDiskEncryption,
             bool? expectedEnableSoftDelete,
-            AccessPolicyData[] expectedPolicies,
+            VaultAccessPolicy[] expectedPolicies,
             Dictionary<string, string> expectedTags)
         {
             Assert.NotNull(vaultData);
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             bool expectedEnabledForTemplateDeployment,
             bool expectedEnabledForDiskEncryption,
             bool? expectedEnableSoftDelete,
-            AccessPolicyData[] expectedPolicies,
+            VaultAccessPolicy[] expectedPolicies,
             VaultNetworkRuleSet networkRuleSet,
             Dictionary<string, string> expectedTags)
         {

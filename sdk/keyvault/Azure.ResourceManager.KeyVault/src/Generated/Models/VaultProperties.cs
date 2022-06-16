@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="provisioningState"> Provisioning state of the vault. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the key vault. </param>
         /// <param name="publicNetworkAccess"> Property to specify whether the vault will accept traffic from public internet. If set to &apos;disabled&apos; all traffic except private endpoint traffic and that that originates from trusted services will be blocked. This will override the set firewall rules, meaning that even if the firewall rules are present we will not honor the rules. </param>
-        internal VaultProperties(Guid tenantId, KeyVaultSku sku, IList<AccessPolicyData> accessPolicies, Uri vaultUri, string hsmPoolResourceId, bool? enabledForDeployment, bool? enabledForDiskEncryption, bool? enabledForTemplateDeployment, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enableRbacAuthorization, VaultCreateMode? createMode, bool? enablePurgeProtection, VaultNetworkRuleSet networkRuleSet, VaultProvisioningState? provisioningState, IReadOnlyList<PrivateEndpointConnectionItemData> privateEndpointConnections, string publicNetworkAccess)
+        internal VaultProperties(Guid tenantId, KeyVaultSku sku, IList<VaultAccessPolicy> accessPolicies, Uri vaultUri, string hsmPoolResourceId, bool? enabledForDeployment, bool? enabledForDiskEncryption, bool? enabledForTemplateDeployment, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enableRbacAuthorization, VaultCreateMode? createMode, bool? enablePurgeProtection, VaultNetworkRuleSet networkRuleSet, VaultProvisioningState? provisioningState, IReadOnlyList<PrivateEndpointConnectionItemData> privateEndpointConnections, string publicNetworkAccess)
         {
             TenantId = tenantId;
             Sku = sku;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> SKU details. </summary>
         public KeyVaultSku Sku { get; set; }
         /// <summary> An array of 0 to 1024 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault&apos;s tenant ID. When `createMode` is set to `recover`, access policies are not required. Otherwise, access policies are required. </summary>
-        public IList<AccessPolicyData> AccessPolicies { get; }
+        public IList<VaultAccessPolicy> AccessPolicies { get; }
         /// <summary> The URI of the vault for performing operations on keys and secrets. </summary>
         public Uri VaultUri { get; set; }
         /// <summary> The resource id of HSM Pool. </summary>

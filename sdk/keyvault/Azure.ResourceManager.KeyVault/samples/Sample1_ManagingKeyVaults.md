@@ -49,7 +49,7 @@ IdentityAccessPermissions permissions = new IdentityAccessPermissions
     Certificates = { new CertificatePermission("all") },
     Storage = { new StoragePermission("all") },
 };
-AccessPolicyData AccessPolicy = new AccessPolicyData(tenantIdGuid, objectId, permissions);
+VaultAccessPolicy AccessPolicy = new VaultAccessPolicy(tenantIdGuid, objectId, permissions);
 
 VaultProperties VaultProperties = new VaultProperties(tenantIdGuid, new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
 VaultProperties.EnabledForDeployment = true;
