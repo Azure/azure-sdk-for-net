@@ -28,8 +28,11 @@ namespace Azure.Communication.JobRouter
             Value = value;
         }
 
-        /// <inheritdoc />
 #pragma warning disable AZC0014 // Avoid using banned types in public API
+        /// <summary>
+        /// Write empty object.
+        /// </summary>
+        /// <param name="writer"></param>
         public void Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
