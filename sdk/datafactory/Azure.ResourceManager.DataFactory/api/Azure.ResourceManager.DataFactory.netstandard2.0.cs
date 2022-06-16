@@ -5154,7 +5154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.RestServiceAuthenticationType Anonymous { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.RestServiceAuthenticationType Basic { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.RestServiceAuthenticationType ManagedServiceIdentity { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.RestServiceAuthenticationType OAuth2 { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.RestServiceAuthenticationType OAuth2ClientCredential { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.RestServiceAuthenticationType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
