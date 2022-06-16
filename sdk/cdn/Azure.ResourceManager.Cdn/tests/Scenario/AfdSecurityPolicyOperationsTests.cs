@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Cdn.Tests
                 }
             };
             SecurityPolicyWebApplicationFirewallAssociation securityPolicyWebApplicationFirewallAssociation = new SecurityPolicyWebApplicationFirewallAssociation();
-            securityPolicyWebApplicationFirewallAssociation.Domains.Add(new ActivatedResourceReference
+            securityPolicyWebApplicationFirewallAssociation.Domains.Add(new FrontDoorActivatedResourceInfo
             {
                 Id = afdEndpointInstance1.Id
             });
-            securityPolicyWebApplicationFirewallAssociation.Domains.Add(new ActivatedResourceReference
+            securityPolicyWebApplicationFirewallAssociation.Domains.Add(new FrontDoorActivatedResourceInfo
             {
                 Id = afdEndpointInstance2.Id
             });
