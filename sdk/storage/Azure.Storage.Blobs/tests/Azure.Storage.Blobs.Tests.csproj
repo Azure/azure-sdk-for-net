@@ -28,6 +28,6 @@
     <ItemGroup> 
     <Content Include="Resources\**"> 
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> 
-    </Content> 
+    </Content>
   </ItemGroup>
 </Project>

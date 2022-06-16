@@ -19,7 +19,7 @@ namespace Azure.AI.Language.Conversations.Tests
             // TODO: Compare bodies again when https://github.com/Azure/azure-sdk-for-net/issues/22219 is resolved.
             CompareBodies = false;
 
-            SanitizedHeaders.Add(ConversationAnalysisClient.GetAuthorizationHeader());
+            SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
             ServiceVersion = serviceVersion;
         }
 

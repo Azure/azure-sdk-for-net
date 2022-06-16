@@ -33,7 +33,7 @@ namespace Azure.Communication.Identity
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CommunicationIdentityRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-10-31-preview")
+        public CommunicationIdentityRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2022-06-01")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -229,7 +229,7 @@ namespace Azure.Communication.Identity
             }
         }
 
-        internal HttpMessage CreateExchangeTeamsUserAccessTokenRequest(string token)
+        internal HttpMessage CreateExchangeTeamsUserAccessTokenRequest(string token, string appId, string userId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -241,25 +241,35 @@ namespace Azure.Communication.Identity
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new TeamsUserAccessTokenRequest(token);
+            var model = new TeamsUserExchangeTokenRequest(token, appId, userId);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
 
-        /// <summary> Exchange an AAD access token of a Teams user for a new Communication Identity access token with a matching expiration time. </summary>
-        /// <param name="token"> AAD access token of a Teams User to acquire a new Communication Identity access token. </param>
+        /// <summary> Exchange an Azure Active Directory (Azure AD) access token of a Teams user for a new Communication Identity access token with a matching expiration time. </summary>
+        /// <param name="token"> Azure AD access token of a Teams User to acquire a new Communication Identity access token. </param>
+        /// <param name="appId"> Client ID of an Azure AD application to be verified against the appid claim in the Azure AD access token. </param>
+        /// <param name="userId"> Object ID of an Azure AD user (Teams User) to be verified against the oid claim in the Azure AD access token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="token"/> is null. </exception>
-        public async Task<Response<CommunicationIdentityAccessToken>> ExchangeTeamsUserAccessTokenAsync(string token, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="token"/>, <paramref name="appId"/> or <paramref name="userId"/> is null. </exception>
+        public async Task<Response<CommunicationIdentityAccessToken>> ExchangeTeamsUserAccessTokenAsync(string token, string appId, string userId, CancellationToken cancellationToken = default)
         {
             if (token == null)
             {
                 throw new ArgumentNullException(nameof(token));
             }
+            if (appId == null)
+            {
+                throw new ArgumentNullException(nameof(appId));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
 
-            using var message = CreateExchangeTeamsUserAccessTokenRequest(token);
+            using var message = CreateExchangeTeamsUserAccessTokenRequest(token, appId, userId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -275,18 +285,28 @@ namespace Azure.Communication.Identity
             }
         }
 
-        /// <summary> Exchange an AAD access token of a Teams user for a new Communication Identity access token with a matching expiration time. </summary>
-        /// <param name="token"> AAD access token of a Teams User to acquire a new Communication Identity access token. </param>
+        /// <summary> Exchange an Azure Active Directory (Azure AD) access token of a Teams user for a new Communication Identity access token with a matching expiration time. </summary>
+        /// <param name="token"> Azure AD access token of a Teams User to acquire a new Communication Identity access token. </param>
+        /// <param name="appId"> Client ID of an Azure AD application to be verified against the appid claim in the Azure AD access token. </param>
+        /// <param name="userId"> Object ID of an Azure AD user (Teams User) to be verified against the oid claim in the Azure AD access token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="token"/> is null. </exception>
-        public Response<CommunicationIdentityAccessToken> ExchangeTeamsUserAccessToken(string token, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="token"/>, <paramref name="appId"/> or <paramref name="userId"/> is null. </exception>
+        public Response<CommunicationIdentityAccessToken> ExchangeTeamsUserAccessToken(string token, string appId, string userId, CancellationToken cancellationToken = default)
         {
             if (token == null)
             {
                 throw new ArgumentNullException(nameof(token));
             }
+            if (appId == null)
+            {
+                throw new ArgumentNullException(nameof(appId));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
 
-            using var message = CreateExchangeTeamsUserAccessTokenRequest(token);
+            using var message = CreateExchangeTeamsUserAccessTokenRequest(token, appId, userId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

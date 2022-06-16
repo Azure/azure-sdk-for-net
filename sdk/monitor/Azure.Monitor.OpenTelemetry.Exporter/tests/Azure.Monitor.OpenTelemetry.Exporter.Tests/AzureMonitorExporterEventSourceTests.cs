@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 
 using Azure.Core.Shared;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
 using Xunit;
 

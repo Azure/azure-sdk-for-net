@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Initializes a new instance of MatchCondition. </summary>
         /// <param name="matchVariable"> Match variable to compare against. </param>
-        /// <param name="operator"> Describes operator to be matched. </param>
+        /// <param name="matchOperator"> Describes operator to be matched. </param>
         /// <param name="matchValue"> List of possible match values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="matchValue"/> is null. </exception>
-        public MatchCondition(WafMatchVariable matchVariable, MatchOperator @operator, IEnumerable<string> matchValue)
+        public MatchCondition(WafMatchVariable matchVariable, MatchOperator matchOperator, IEnumerable<string> matchValue)
         {
             if (matchValue == null)
             {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             MatchVariable = matchVariable;
-            Operator = @operator;
+            MatchOperator = matchOperator;
             MatchValue = matchValue.ToList();
             Transforms = new ChangeTrackingList<TransformType>();
         }
@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of MatchCondition. </summary>
         /// <param name="matchVariable"> Match variable to compare against. </param>
         /// <param name="selector"> Selector can used to match a specific key for QueryString, Cookies, RequestHeader or PostArgs. </param>
-        /// <param name="operator"> Describes operator to be matched. </param>
+        /// <param name="matchOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if the result of this condition should be negated. </param>
         /// <param name="matchValue"> List of possible match values. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal MatchCondition(WafMatchVariable matchVariable, string selector, MatchOperator @operator, bool? negateCondition, IList<string> matchValue, IList<TransformType> transforms)
+        internal MatchCondition(WafMatchVariable matchVariable, string selector, MatchOperator matchOperator, bool? negateCondition, IList<string> matchValue, IList<TransformType> transforms)
         {
             MatchVariable = matchVariable;
             Selector = selector;
-            Operator = @operator;
+            MatchOperator = matchOperator;
             NegateCondition = negateCondition;
             MatchValue = matchValue;
             Transforms = transforms;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Selector can used to match a specific key for QueryString, Cookies, RequestHeader or PostArgs. </summary>
         public string Selector { get; set; }
         /// <summary> Describes operator to be matched. </summary>
-        public MatchOperator Operator { get; set; }
+        public MatchOperator MatchOperator { get; set; }
         /// <summary> Describes if the result of this condition should be negated. </summary>
         public bool? NegateCondition { get; set; }
         /// <summary> List of possible match values. </summary>

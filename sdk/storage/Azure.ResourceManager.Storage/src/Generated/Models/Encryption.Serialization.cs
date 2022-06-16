@@ -20,8 +20,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("services");
                 writer.WriteObjectValue(Services);
             }
-            writer.WritePropertyName("keySource");
-            writer.WriteStringValue(KeySource.ToString());
+            if (Optional.IsDefined(KeySource))
+            {
+                writer.WritePropertyName("keySource");
+                writer.WriteStringValue(KeySource.Value.ToString());
+            }
             if (Optional.IsDefined(RequireInfrastructureEncryption))
             {
                 writer.WritePropertyName("requireInfrastructureEncryption");
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
         internal static Encryption DeserializeEncryption(JsonElement element)
         {
             Optional<EncryptionServices> services = default;
-            KeySource keySource = default;
+            Optional<KeySource> keySource = default;
             Optional<bool> requireInfrastructureEncryption = default;
             Optional<KeyVaultProperties> keyvaultproperties = default;
             Optional<EncryptionIdentity> identity = default;
@@ -61,6 +64,11 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("keySource"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     keySource = new KeySource(property.Value.GetString());
                     continue;
                 }
@@ -95,7 +103,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new Encryption(services.Value, keySource, Optional.ToNullable(requireInfrastructureEncryption), keyvaultproperties.Value, identity.Value);
+            return new Encryption(services.Value, Optional.ToNullable(keySource), Optional.ToNullable(requireInfrastructureEncryption), keyvaultproperties.Value, identity.Value);
         }
     }
 }

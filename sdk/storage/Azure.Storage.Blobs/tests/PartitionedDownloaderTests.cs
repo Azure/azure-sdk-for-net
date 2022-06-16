@@ -170,20 +170,15 @@ namespace Azure.Storage.Blobs.Test
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
 
-            if (_async)
-            {
-                blockClient.Setup(c => c.DownloadStreamingAsync(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, s_cancellationToken))
-                    .ThrowsAsync(e);
-                blockClient.Setup(c => c.DownloadStreamingAsync(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, It.IsAny<IProgress<long>>(), s_cancellationToken))
-                    .ThrowsAsync(e);
-            }
-            else
-            {
-                blockClient.Setup(c => c.DownloadStreaming(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, s_cancellationToken))
-                    .Throws(e);
-                blockClient.Setup(c => c.DownloadStreaming(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, It.IsAny<IProgress<long>>(), s_cancellationToken))
-                    .Throws(e);
-            }
+            blockClient.SetupGet(c => c.UsingClientSideEncryption).Returns(false);
+            blockClient.Setup(c => c.DownloadStreamingInternal(
+                It.IsAny<HttpRange>(),
+                It.IsAny<BlobRequestConditions>(),
+                false,
+                It.IsAny<IProgress<long>>(),
+                $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
+                _async,
+                s_cancellationToken)).ThrowsAsync(e);
 
             PartitionedDownloader downloader = new PartitionedDownloader(blockClient.Object, new StorageTransferOptions() { MaximumTransferLength = 10});
 
@@ -205,32 +200,32 @@ namespace Azure.Storage.Blobs.Test
 
         private void SetupDownload(Mock<BlobBaseClient> blockClient, MockDataSource dataSource)
         {
-            if (_async)
-            {
-                blockClient.Setup(c => c.DownloadStreamingAsync(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, s_cancellationToken))
-                    .Returns<HttpRange, BlobRequestConditions, bool, CancellationToken>((range, conditions, rangeGetHash, cancellation) =>
-                        dataSource.GetStreamAsync(
+            blockClient.SetupGet(c => c.UsingClientSideEncryption).Returns(false);
+            blockClient.Setup(c => c.DownloadStreamingInternal(
+                It.IsAny<HttpRange>(),
+                It.IsAny<BlobRequestConditions>(),
+                false,
+                It.IsAny<IProgress<long>>(),
+                $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
+                _async,
+                s_cancellationToken)
+            ).Returns<HttpRange, BlobRequestConditions, bool, IProgress<long>, string, bool, CancellationToken>(
+                (range, conditions, rangeGetHash, progress, operationName, async, cancellation) =>
+                {
+                    return async
+                        ? dataSource.GetStreamAsync(
                             range,
                             conditions,
                             rangeGetHash,
-                            progress: default,
-                            cancellation));
-                blockClient.Setup(c => c.DownloadStreamingAsync(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, It.IsAny<IProgress<long>>(), s_cancellationToken))
-                    .Returns<HttpRange, BlobRequestConditions, bool, IProgress<long>, CancellationToken>(dataSource.GetStreamAsync);
-            }
-            else
-            {
-                blockClient.Setup(c => c.DownloadStreaming(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, s_cancellationToken))
-                    .Returns<HttpRange, BlobRequestConditions, bool, CancellationToken>((range, conditions, rangeGetHash, cancellation) =>
-                        dataSource.GetStream(
+                            progress: progress,
+                            cancellation)
+                        : Task.FromResult(dataSource.GetStream(
                             range,
                             conditions,
                             rangeGetHash,
-                            progress: default,
+                            progress: progress,
                             cancellation));
-                blockClient.Setup(c => c.DownloadStreaming(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, It.IsAny<IProgress<long>>(), s_cancellationToken))
-                    .Returns<HttpRange, BlobRequestConditions, bool, IProgress<long>, CancellationToken>(dataSource.GetStream);
-            }
+                });
         }
 
         private async Task<Response> InvokeDownloadToAsync(PartitionedDownloader downloader, Stream stream)
