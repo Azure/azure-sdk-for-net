@@ -4,7 +4,6 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -31,42 +30,73 @@ var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_CO
 // 1. Job1 is enqueued in Queue1
 // 2. Job2 is enqueued in Queue2
 
-var distributionPolicy = await routerClient.SetDistributionPolicyAsync(
+var distributionPolicy = await routerClient.CreateDistributionPolicyAsync(
     id: "distribution-policy-id-2",
-    name: "My LongestIdle Distribution Policy",
-    offerTTL: TimeSpan.FromSeconds(30),
-    mode: new LongestIdleMode()
+    offerTtlSeconds: 30,
+    mode: new LongestIdleMode(),
+    new CreateDistributionPolicyOptions()
+    {
+        Name = "My LongestIdle Distribution Policy",
+    }
     );
 
-var queue1 = await routerClient.SetQueueAsync(
+var queue1 = await routerClient.CreateQueueAsync(
     id: "Queue-1",
-    name: "Queue_365",
-    distributionPolicyId: distributionPolicy.Value.Id);
+    distributionPolicyId: distributionPolicy.Value.Id,
+    new CreateQueueOptions()
+    {
+        Name = "Queue_365",
+    });
 
-var queue2 = await routerClient.SetQueueAsync(
+var queue2 = await routerClient.CreateQueueAsync(
     id: "Queue-2",
-    name: "Queue_XBox",
-    distributionPolicyId: distributionPolicy.Value.Id);
+    distributionPolicyId: distributionPolicy.Value.Id,
+    new CreateQueueOptions()
+    {
+        Name = "Queue_XBox",
+    });
 
-var cp1 = await routerClient.SetClassificationPolicyAsync(
+var cp1QueueLabelAttachments = new List<QueueSelectorAttachment>()
+{
+    new StaticQueueSelector(new QueueSelector("Id", LabelOperator.Equal, queue1.Value.Id))
+};
+var cp1 = await routerClient.CreateClassificationPolicyAsync(
     id: "classification-policy-o365",
-    name: "Classification_Policy_O365",
-    queueSelector: new QueueIdSelector(new StaticRule(queue1.Value.Id)));
+    new CreateClassificationPolicyOptions()
+    {
+        Name = "Classification_Policy_O365",
+        QueueSelectors = cp1QueueLabelAttachments,
+    });
 
-var cp2 = await routerClient.SetClassificationPolicyAsync(
+var cp2QueueLabelAttachments = new List<QueueSelectorAttachment>()
+{
+    new StaticQueueSelector(new QueueSelector("Id", LabelOperator.Equal, queue2.Value.Id))
+};
+var cp2 = await routerClient.CreateClassificationPolicyAsync(
     id: "classification-policy-xbox",
-    name: "Classification_Policy_XBox",
-    queueSelector: new QueueIdSelector(new StaticRule(queue2.Value.Id)));
+    new CreateClassificationPolicyOptions()
+    {
+        Name = "Classification_Policy_XBox",
+        QueueSelectors = cp2QueueLabelAttachments,
+    });
 
 var jobO365 = await routerClient.CreateJobWithClassificationPolicyAsync(
+    id: "jobO365",
     channelId: "general",
     classificationPolicyId: cp1.Value.Id,
-    channelReference: "12345");
+    new CreateJobWithClassificationPolicyOptions()
+    {
+        ChannelReference = "12345",
+    });
 
 var jobXbox = await routerClient.CreateJobWithClassificationPolicyAsync(
+    id: "jobXbox",
     channelId: "general",
     classificationPolicyId: cp2.Value.Id,
-    channelReference: "12345");
+    new CreateJobWithClassificationPolicyOptions()
+    {
+        ChannelReference = "12345",
+    });
 
 
 var jobO365Result = await routerClient.GetJobAsync(jobO365.Value.Id);
@@ -98,73 +128,92 @@ Console.WriteLine($"XBox job has been enqueued in queue: {queue2.Value.Id}. Stat
 // 1. Job1 is enqueued in Queue1
 // 2. Job2 is enqueued in Queue2
 
-var distributionPolicy = await routerClient.SetDistributionPolicyAsync(
+var distributionPolicy = await routerClient.CreateDistributionPolicyAsync(
     id: "distribution-policy-id-3",
-    name: "My LongestIdle Distribution Policy",
-    offerTTL: TimeSpan.FromSeconds(30),
-    mode: new LongestIdleMode()
-    );
+    offerTtlSeconds: 30,
+    mode: new LongestIdleMode(),
+    new CreateDistributionPolicyOptions()
+    {
+        Name = "My LongestIdle Distribution Policy",
+    }
+);
 
-var queue1 = await routerClient.SetQueueAsync(
+var queue1 = await routerClient.CreateQueueAsync(
     id: "Queue-1",
-    name: "Queue_365",
     distributionPolicyId: distributionPolicy.Value.Id,
-    labels: new LabelCollection()
+    new CreateQueueOptions()
     {
-        ["ProductDetail"] = "Office_Support"
+        Name = "Queue_365",
+        Labels = new LabelCollection()
+        {
+            ["ProductDetail"] = "Office_Support"
+        }
     });
 
-var queue2 = await routerClient.SetQueueAsync(
+var queue2 = await routerClient.CreateQueueAsync(
     id: "Queue-2",
-    name: "Queue_XBox",
     distributionPolicyId: distributionPolicy.Value.Id,
-    labels: new LabelCollection()
+    new CreateQueueOptions()
     {
-        ["ProductDetail"] = "XBox_Support"
+        Name = "Queue_XBox",
+        Labels = new LabelCollection()
+        {
+            ["ProductDetail"] = "XBox_Support"
+        }
     });
 
-var labelSelectors = new List<LabelSelectorAttachment>()
+var queueSelectorAttachments = new List<QueueSelectorAttachment>()
 {
-    new ConditionalLabelSelector(
+    new ConditionalQueueSelector(
         condition: new ExpressionRule("If(job.Product = \"O365\", true, false)"),
-        labelSelectors: new List<LabelSelector>()
+        labelSelectors: new List<QueueSelector>()
         {
-            new LabelSelector("ProductDetail", LabelOperator.Equal, "Office_Support")
+            new QueueSelector("ProductDetail", LabelOperator.Equal, "Office_Support")
         }),
-    new ConditionalLabelSelector(
+    new ConditionalQueueSelector(
         condition: new ExpressionRule("If(job.Product = \"XBx\", true, false)"),
-        labelSelectors: new List<LabelSelector>()
+        labelSelectors: new List<QueueSelector>()
         {
-            new LabelSelector("ProductDetail", LabelOperator.Equal, "XBox_Support")
+            new QueueSelector("ProductDetail", LabelOperator.Equal, "XBox_Support")
         })
 };
 
-var classificationPolicy = await routerClient.SetClassificationPolicyAsync(
+var classificationPolicy = await routerClient.CreateClassificationPolicyAsync(
     id: "classification-policy",
-    name: "Classification_Policy_O365_And_XBox",
-    queueSelector: new QueueLabelSelector(labelSelectors)
-    );
+    new CreateClassificationPolicyOptions()
+    {
+        Name = "Classification_Policy_O365_And_XBox",
+        QueueSelectors = queueSelectorAttachments,
+    });
 
 var jobO365 = await routerClient.CreateJobWithClassificationPolicyAsync(
+    id: "jobO365",
     channelId: "general",
     classificationPolicyId: classificationPolicy.Value.Id,
-    channelReference: "12345",
-    labels: new LabelCollection()
+    new CreateJobWithClassificationPolicyOptions()
     {
-        ["Language"] = "en",
-        ["Product"] = "O365",
-        ["Geo"] = "North America",
+        ChannelReference = "12345",
+        Labels = new LabelCollection()
+        {
+            ["Language"] = "en",
+            ["Product"] = "O365",
+            ["Geo"] = "North America",
+        },
     });
 
 var jobXbox = await routerClient.CreateJobWithClassificationPolicyAsync(
+    id: "jobXbox",
     channelId: "general",
     classificationPolicyId: classificationPolicy.Value.Id,
-    channelReference: "12345",
-    labels: new LabelCollection()
+    new CreateJobWithClassificationPolicyOptions()
     {
-        ["Language"] = "en",
-        ["Product"] = "XBx",
-        ["Geo"] = "North America",
+        ChannelReference = "12345",
+        Labels = new LabelCollection()
+        {
+            ["Language"] = "en",
+            ["Product"] = "XBx",
+            ["Geo"] = "North America",
+        },
     });
 
 
@@ -199,96 +248,122 @@ Console.WriteLine($"XBox job has been enqueued in queue: {queue2.Value.Id}. Stat
 // 2. Job2 is enqueued in Queue2
 // 3. Job3 is enqueued in Queue3
 
-var distributionPolicy = await routerClient.SetDistributionPolicyAsync(
-    id: "distribution-policy-id-3",
-    name: "My LongestIdle Distribution Policy",
-    offerTTL: TimeSpan.FromSeconds(30),
-    mode: new LongestIdleMode()
+var distributionPolicy = await routerClient.CreateDistributionPolicyAsync(
+    id: "distribution-policy-id-4",
+    offerTtlSeconds: 30,
+    mode: new LongestIdleMode(),
+    new CreateDistributionPolicyOptions()
+    {
+        Name = "My LongestIdle Distribution Policy",
+    }
     );
 
-var queue1 = await routerClient.SetQueueAsync(
+var queue1 = await routerClient.CreateQueueAsync(
     id: "Queue-1",
-    name: "Queue_365_EN_EMEA",
     distributionPolicyId: distributionPolicy.Value.Id,
-    labels: new LabelCollection()
+    new CreateQueueOptions()
     {
-        ["ProductDetail"] = "Office_Support",
-        ["Language"] = "en",
-        ["Region"] = "EMEA",
+        Name = "Queue_365_EN_EMEA",
+        Labels = new LabelCollection()
+        {
+            ["ProductDetail"] = "Office_Support",
+            ["Language"] = "en",
+            ["Region"] = "EMEA",
+        },
     });
 
-var queue2 = await routerClient.SetQueueAsync(
+var queue2 = await routerClient.CreateQueueAsync(
     id: "Queue-2",
-    name: "Queue_365_FR_EMEA",
     distributionPolicyId: distributionPolicy.Value.Id,
-    labels: new LabelCollection()
+    new CreateQueueOptions()
     {
-        ["ProductDetail"] = "Office_Support",
-        ["Language"] = "fr",
-        ["Region"] = "EMEA",
+        Name = "Queue_365_FR_EMEA",
+        Labels = new LabelCollection()
+        {
+            ["ProductDetail"] = "Office_Support",
+            ["Language"] = "fr",
+            ["Region"] = "EMEA",
+        },
     });
 
-var queue3 = await routerClient.SetQueueAsync(
+var queue3 = await routerClient.CreateQueueAsync(
     id: "Queue-3",
-    name: "Queue_365_EN_NA",
     distributionPolicyId: distributionPolicy.Value.Id,
-    labels: new LabelCollection()
+    new CreateQueueOptions()
     {
-        ["ProductDetail"] = "Office_Support",
-        ["Language"] = "en",
-        ["Region"] = "NA",
+        Name = "Queue_365_EN_NA",
+        Labels = new LabelCollection()
+        {
+            ["ProductDetail"] = "Office_Support",
+            ["Language"] = "en",
+            ["Region"] = "NA",
+        },
     });
 
-var labelSelectors = new List<LabelSelectorAttachment>()
+var queueSelectorAttachments = new List<QueueSelectorAttachment>()
 {
-    new PassThroughLabelSelector("ProductDetail", LabelOperator.Equal),
-    new PassThroughLabelSelector("Language", LabelOperator.Equal),
-    new PassThroughLabelSelector("Region", LabelOperator.Equal),
+    new PassThroughQueueSelector("ProductDetail", LabelOperator.Equal),
+    new PassThroughQueueSelector("Language", LabelOperator.Equal),
+    new PassThroughQueueSelector("Region", LabelOperator.Equal),
 };
 
-var classificationPolicy = await routerClient.SetClassificationPolicyAsync(
+var classificationPolicy = await routerClient.CreateClassificationPolicyAsync(
     id: "classification-policy",
-    name: "Classification_Policy_O365_EMEA_NA",
-    queueSelector: new QueueLabelSelector(labelSelectors)
-    );
+    new CreateClassificationPolicyOptions()
+    {
+        Name = "Classification_Policy_O365_EMEA_NA",
+        QueueSelectors = queueSelectorAttachments,
+    });
 
 var jobENEmea = await routerClient.CreateJobWithClassificationPolicyAsync(
+    id: "jobENEmea",
     channelId: "general",
     classificationPolicyId: classificationPolicy.Value.Id,
-    channelReference: "12345",
-    labels: new LabelCollection()
+    new CreateJobWithClassificationPolicyOptions()
     {
-        ["Language"] = "en",
-        ["Product"] = "O365",
-        ["Geo"] = "Europe, Middle East, Africa",
-        ["ProductDetail"] = "Office_Support",
-        ["Region"] = "EMEA",
+        ChannelReference = "12345",
+        Labels = new LabelCollection()
+        {
+            ["Language"] = "en",
+            ["Product"] = "O365",
+            ["Geo"] = "Europe, Middle East, Africa",
+            ["ProductDetail"] = "Office_Support",
+            ["Region"] = "EMEA",
+        },
     });
 
 var jobFREmea = await routerClient.CreateJobWithClassificationPolicyAsync(
+    id: "jobFREmea",
     channelId: "general",
     classificationPolicyId: classificationPolicy.Value.Id,
-    channelReference: "12345",
-    labels: new LabelCollection()
+    new CreateJobWithClassificationPolicyOptions()
     {
-        ["Language"] = "fr",
-        ["Product"] = "O365",
-        ["Geo"] = "Europe, Middle East, Africa",
-        ["ProductDetail"] = "Office_Support",
-        ["Region"] = "EMEA",
+        ChannelReference = "12345",
+        Labels = new LabelCollection()
+        {
+            ["Language"] = "fr",
+            ["Product"] = "O365",
+            ["Geo"] = "Europe, Middle East, Africa",
+            ["ProductDetail"] = "Office_Support",
+            ["Region"] = "EMEA",
+        },
     });
 
 var jobENNa = await routerClient.CreateJobWithClassificationPolicyAsync(
+    id: "jobENNa",
     channelId: "general",
     classificationPolicyId: classificationPolicy.Value.Id,
-    channelReference: "12345",
-    labels: new LabelCollection()
+    new CreateJobWithClassificationPolicyOptions()
     {
-        ["Language"] = "en",
-        ["Product"] = "O365",
-        ["Geo"] = "North America",
-        ["ProductDetail"] = "Office_Support",
-        ["Region"] = "NA",
+        ChannelReference = "12345",
+        Labels = new LabelCollection()
+        {
+            ["Language"] = "en",
+            ["Product"] = "O365",
+            ["Geo"] = "North America",
+            ["ProductDetail"] = "Office_Support",
+            ["Region"] = "NA",
+        },
     });
 
 

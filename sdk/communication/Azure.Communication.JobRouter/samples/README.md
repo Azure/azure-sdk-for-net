@@ -11,7 +11,7 @@ description: Samples for the Azure.Communication.JobRouter client library
 ---
 
 # Azure Communication JobRouter client SDK Samples
-- [Basic scenario - Create Distribution Policy, Queue, Worker and Job](./Sample1_HelloWorld.md)
-- [Basic scenario Extended - Asynchronously Create Distribution Policy, Queue, Worker and Job](./Sample1_HelloWorldAsync.md)
+- [Basic scenario - Create Distribution Policy, Queue, Worker and Job]<!-- TODO: Update after merge to main - (./Sample1_HelloWorld.md)-->
+- [Basic scenario Extended - Asynchronously Create Distribution Policy, Queue, Worker and Job]<!-- TODO: Update after merge to main -  (./Sample1_HelloWorldAsync.md)-->
 - Routing using Classification Policy
-    - [Using QueueSelectors](./Sample2_ClassificationWithQueueSelector.md)
+    - [Using QueueSelectors]<!-- TODO: Update after merge to main - (./Sample2_ClassificationWithQueueSelector.md) -->

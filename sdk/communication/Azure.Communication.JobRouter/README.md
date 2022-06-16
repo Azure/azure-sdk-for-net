@@ -87,10 +87,9 @@ An exception policy controls the behavior of a Job based on a trigger and execut
 Before we can create a Queue, we need a Distribution Policy.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL1D_Async
-var distributionPolicy = await routerClient.SetDistributionPolicyAsync(
+var distributionPolicy = await routerClient.CreateDistributionPolicyAsync(
     id: "distribution-policy-1",
-    name: "My Distribution Policy",
-    offerTTL: TimeSpan.FromDays(1),
+    offerTtlSeconds: 24 * 60 * 60,
     mode: new LongestIdleMode()
 );
 ```
@@ -98,9 +97,8 @@ var distributionPolicy = await routerClient.SetDistributionPolicyAsync(
 ### Queue
 Next, we can create the queue.
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue_Async
-var queue = await routerClient.SetQueueAsync(
+var queue = await routerClient.CreateQueueAsync(
     id: "queue-1",
-    name: "My Queue",
     distributionPolicyId: distributionPolicy.Value.Id
 );
 ```
@@ -109,30 +107,38 @@ var queue = await routerClient.SetQueueAsync(
 Now, we can submit a job directly to that queue, with a worker selector the requires the worker to have the label `Some-Skill` greater than 10.
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateJobDirectQAssign_Async
 var job = await routerClient.CreateJobAsync(
+    id: "jobId-1",
     channelId: "my-channel",
-    channelReference: "12345",
     queueId: queue.Value.Id,
-    priority: 1,
-    workerSelectors: new List<LabelSelector>
+    new CreateJobOptions()
     {
-        new LabelSelector("Some-Skill", LabelOperator.GreaterThan, 10)
+        ChannelReference = "12345",
+        Priority = 1,
+        RequestedWorkerSelectors = new List<WorkerSelector>
+        {
+            new WorkerSelector("Some-Skill", LabelOperator.GreaterThan, 10)
+        }
     });
 ```
 
 ### Worker
 Now, we register a worker to receive work from that queue, with a label of `Some-Skill` equal to 11.
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_RegisterWorker_Async
-var worker = await routerClient.RegisterWorkerAsync(
+var worker = await routerClient.CreateWorkerAsync(
     id: "worker-1",
-    queueIds: new[] { queue.Value.Id },
     totalCapacity: 1,
-    labels: new LabelCollection()
+    new CreateWorkerOptions()
     {
-        ["Some-Skill"] = 11
-    },
-    channelConfigurations: new List<ChannelConfiguration>
-    {
-        new ChannelConfiguration("my-channel", 1)
+        QueueIds = new[] { queue.Value.Id },
+        Labels = new LabelCollection()
+        {
+            ["Some-Skill"] = 11
+        },
+        ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
+        {
+            ["my-channel"] = new ChannelConfiguration(1)
+        },
+        AvailableForOffers = true,
     }
 );
 ```
@@ -169,10 +175,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [communication_resource_create_portal]:  https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
 [communication_resource_create_power_shell]: https://docs.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
 [communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
-[nextsteps]:https://docs.microsoft.com/en-us/azure/communication-services/concepts/router/concepts
+[nextsteps]:https://docs.microsoft.com/azure/communication-services/concepts/router/concepts
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.JobRouter/src
 [product_docs]: https://docs.microsoft.com/azure/communication-services/overview
 [package]: https://www.nuget.org/packages/Azure.Communication.JobRouter
-[classification_concepts]: https://docs.microsoft.com/en-us/azure/communication-services/concepts/router/classification-concepts
-[subscribe_events]: https://docs.microsoft.com/en-us/azure/communication-services/how-tos/router-sdk/subscribe-events
-[offer_issued_event_schema]: https://docs.microsoft.com/en-us/azure/communication-services/how-tos/router-sdk/subscribe-events#microsoftcommunicationrouterworkerofferissued
+[classification_concepts]: https://docs.microsoft.com/azure/communication-services/concepts/router/classification-concepts
+[subscribe_events]: https://docs.microsoft.com/azure/communication-services/how-tos/router-sdk/subscribe-events
+[offer_issued_event_schema]: https://docs.microsoft.com/azure/communication-services/how-tos/router-sdk/subscribe-events#microsoftcommunicationrouterworkerofferissued

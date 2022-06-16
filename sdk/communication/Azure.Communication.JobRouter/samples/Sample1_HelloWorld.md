@@ -4,7 +4,6 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -17,44 +16,46 @@ var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_CO
 
 ## Create a Distribution Policy
 
-Use `RouterClient` to create a [Distribution Policy](https://docs.microsoft.com/en-us/azure/communication-services/concepts/router/concepts#distribution-policy) to control how jobs are to be distributed to workers with associated queue.
+Use `RouterClient` to create a [Distribution Policy](https://docs.microsoft.com/azure/communication-services/concepts/router/concepts#distribution-policy) to control how jobs are to be distributed to workers with associated queue.
 
 For this example, we are going to create a __Longest Idle__ policy with an offer TTL set to 1 day.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL1D
-var distributionPolicy = routerClient.SetDistributionPolicy(
+var distributionPolicy = routerClient.CreateDistributionPolicy(
     id: "distribution-policy-1",
-    name: "My Distribution Policy",
-    offerTTL: TimeSpan.FromDays(1),
+    offerTtlSeconds: 24 * 60 * 60,
     mode: new LongestIdleMode()
 );
 ```
 
 ## Create a Queue
 
-Use `RouterClient` to create a [Queue](https://docs.microsoft.com/en-us/azure/communication-services/concepts/router/concepts#queue).
+Use `RouterClient` to create a [Queue](https://docs.microsoft.com/azure/communication-services/concepts/router/concepts#queue).
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue
-var queue = routerClient.SetQueue(
+var queue = routerClient.CreateQueue(
     id: "queue-1",
-    name: "My Queue",
     distributionPolicyId: distributionPolicy.Value.Id
 );
 ```
 
 ## Create a Job
 
-Now, we can submit a [Job](https://docs.microsoft.com/en-us/azure/communication-services/concepts/router/concepts#job) directly to that queue, with a worker selector the requires the worker to have the label `Some-Skill` greater than 10.
+Now, we can submit a [Job](https://docs.microsoft.com/azure/communication-services/concepts/router/concepts#job) directly to that queue, with a worker selector the requires the worker to have the label `Some-Skill` greater than 10.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateJobDirectQAssign
 var job = routerClient.CreateJob(
+    id: "jobId-2",
     channelId: "my-channel",
-    channelReference: "12345",
     queueId: queue.Value.Id,
-    priority: 1,
-    workerSelectors: new List<LabelSelector>
+    new CreateJobOptions()
     {
-        new LabelSelector("Some-Skill", LabelOperator.GreaterThan, 10)
+        ChannelReference = "12345",
+        Priority = 1,
+        RequestedWorkerSelectors = new List<WorkerSelector>
+        {
+            new WorkerSelector("Some-Skill", LabelOperator.GreaterThan, 10)
+        },
     });
 ```
 
@@ -63,24 +64,28 @@ var job = routerClient.CreateJob(
 Register a worker associated with the queue that was just created. We will assign labels to the worker to include all relevant information for example, skills, which will be used to determine whether a job can be offered to a worker or not.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_RegisterWorker
-var worker = routerClient.RegisterWorker(
+var worker = routerClient.CreateWorker(
     id: "worker-1",
-    queueIds: new[] { queue.Value.Id },
     totalCapacity: 1,
-    labels: new LabelCollection()
+    new CreateWorkerOptions()
     {
-        ["Some-Skill"] = 11
-    },
-    channelConfigurations: new List<ChannelConfiguration>
-    {
-        new ChannelConfiguration("my-channel", 1)
+        QueueIds = new[] { queue.Value.Id },
+        Labels = new LabelCollection()
+        {
+            ["Some-Skill"] = 11
+        },
+        ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
+        {
+            ["my-channel"] = new ChannelConfiguration(1)
+        },
+        AvailableForOffers = true,
     }
 );
 ```
 
 ## Check offers to a Worker
 
-Once the worker has been registered, Router will send an offer to the worker if the worker satisfies requirements for a job. See [Offer flow](https://docs.microsoft.com/en-us/azure/communication-services/concepts/router/concepts#offer-flow)
+Once the worker has been registered, Router will send an offer to the worker if the worker satisfies requirements for a job. See [Offer flow](https://docs.microsoft.com/azure/communication-services/concepts/router/concepts#offer)
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_QueryWorker
 var result = routerClient.GetWorker(worker.Value.Id);
