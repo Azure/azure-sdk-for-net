@@ -90,6 +90,12 @@
                 "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/VerifyImportCertificatePemWithoutIssuerAsync.json"
             ],
             "_justification": "Files contain ephemeral keys or certificates used by test code during playback."
+        },
+        {
+            "file":[
+                "sdk/datafactory/Azure.ResourceManager.DataFactory/src/Generated/Models/RestServiceAuthenticationType.cs"
+            ],
+            "_justification": "File contains a string value that ends with credential, not a true credential."
         }
     ]
 }

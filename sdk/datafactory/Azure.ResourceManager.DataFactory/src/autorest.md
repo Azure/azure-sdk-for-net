@@ -45,30 +45,5 @@ directive:
       $.DatasetSchemaDataElement.properties.name['x-ms-client-name'] = 'schemaColumnName';
       $.DatasetSchemaDataElement.properties.type['x-ms-client-name'] = 'schemaColumnType';
       $.DatasetCompression.properties.type['x-ms-client-name'] = 'datasetCompressionType';
-  - from: LinkedService.json
-    where: $.definitions
-    transform: >
-      $.RestServiceLinkedServiceTypeProperties.properties.authenticationType['x-ms-enum'].values = [
-          {
-              "name": "Anonymous",
-              "value": "Anonymous"
-          },
-          {
-              "name": "Basic",
-              "value": "Basic"
-          },
-          {
-              "name": "AadServicePrincipal",
-              "value": "AadServicePrincipal"
-          },
-          {
-              "name": "ManagedServiceIdentity",
-              "value": "ManagedServiceIdentity"
-          },
-          {
-              "name": "OAuth2",
-              "value": "OAuth2Client"
-          }
-        ]
 
 ```
