@@ -38,8 +38,6 @@ namespace Azure.Core.TestFramework
 
         private DateTime _testStartTime;
 
-        private string VersionQualifier { get; }
-
         protected bool ValidateClientInstrumentation { get; set; }
 
         protected override DateTime TestStartTime => _testStartTime;
@@ -184,11 +182,9 @@ namespace Azure.Core.TestFramework
         /// </summary>
         /// <param name="isAsync">True if this instance is testing the async API variants false otherwise.</param>
         /// <param name="mode">Indicates which <see cref="RecordedTestMode" /> this instance should run under.</param>
-        /// <param name="versionQualifier">Indicates which version this instance is running against.</param>
-        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null, string versionQualifier = null) : base(isAsync)
+        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
         {
             Mode = mode ?? TestEnvironment.GlobalTestMode;
-            VersionQualifier = versionQualifier;
         }
 
         protected async Task<TestRecording> CreateTestRecordingAsync(RecordedTestMode mode, string sessionFile) =>
@@ -216,8 +212,10 @@ namespace Azure.Core.TestFramework
 
             string name = new string(testAdapter.Name.Select(c => s_invalidChars.Contains(c) ? '%' : c).ToArray());
 
+            string versionQualifier = testAdapter.Properties.Get(ClientTestFixtureAttribute.VersionQualifierProperty) as string;
+
             string async = IsAsync ? "Async" : string.Empty;
-            string version = VersionQualifier is null ? string.Empty : $"[{VersionQualifier}]";
+            string version = versionQualifier is null ? string.Empty : $"[{versionQualifier}]";
 
             string fileName = $"{name}{version}{async}.json";
 

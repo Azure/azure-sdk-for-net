@@ -16,6 +16,8 @@ namespace Azure.Core.TestFramework
 {
     public class ClientTestFixtureAttribute : NUnitAttribute, IFixtureBuilder2, IPreFilter
     {
+        public const string VersionQualifierProperty = "VersionQualifier";
+
         private readonly struct TestVersion : IComparable
         {
             private readonly IComparable _comparable;
@@ -318,6 +320,9 @@ namespace Azure.Core.TestFramework
             {
                 test.Properties.Set("RunsLive", "These tests would run in Live mode.");
             }
+
+            if (_recordAllVersions)
+                test.Properties.Set(VersionQualifierProperty, serviceVersion.ToString());
 
             return runsRecorded || runsLive;
         }

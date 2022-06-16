@@ -334,7 +334,7 @@ public abstract class BlobTestBase : StorageTestBase
 }
 ```
 
-The `ServiceVersion` must be either an Enum that is convertible to an int OR a string in the format of a date with an optional preview qualifier `yyyy-MM-dd[-preview]`.
+The `ServiceVersion` must be either an Enum that is convertible to an Int32 or a string in the format of a date with an optional preview qualifier `yyyy-MM-dd[-preview]`.
 The list passed into `ClientTestFixture` must be homogenous.
 
 By default these versions will only apply to live tests.  There is an overloaded constructor which adds a flag `recordAllVersions` to apply these versions to record and playback as well.
