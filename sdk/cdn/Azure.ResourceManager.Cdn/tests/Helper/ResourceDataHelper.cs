@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             CacheConfiguration = new CacheConfiguration()
             {
                 QueryStringCachingBehavior = RuleQueryStringCachingBehavior.IgnoreSpecifiedQueryStrings,
-                SpecifiedQueryStrings = "a=test",
+                QueryParameters = "a=test,b=test",
                 IsCompressionEnabled = RuleIsCompressionEnabled.Enabled,
                 CacheBehavior = RuleCacheBehavior.HonorOrigin
             }

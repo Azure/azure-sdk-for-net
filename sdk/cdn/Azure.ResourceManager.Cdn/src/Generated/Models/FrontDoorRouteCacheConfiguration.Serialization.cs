@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("queryStringCachingBehavior");
                 writer.WriteStringValue(QueryStringCachingBehavior.Value.ToString());
             }
-            if (Optional.IsDefined(SpecifiedQueryStrings))
+            if (Optional.IsDefined(QueryParameters))
             {
                 writer.WritePropertyName("queryParameters");
-                writer.WriteStringValue(SpecifiedQueryStrings);
+                writer.WriteStringValue(QueryParameters);
             }
             if (Optional.IsDefined(CompressionSettings))
             {
