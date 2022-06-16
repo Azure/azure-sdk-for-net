@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Initializes a new instance of HttpVersionMatchCondition. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="op"> Describes operator to be matched. </param>
-        public HttpVersionMatchCondition(HttpVersionMatchConditionType conditionType, HttpVersionOperator op)
+        /// <param name="httpVersionOperator"> Describes operator to be matched. </param>
+        public HttpVersionMatchCondition(HttpVersionMatchConditionType conditionType, HttpVersionOperator httpVersionOperator)
         {
             ConditionType = conditionType;
-            Op = op;
+            HttpVersionOperator = httpVersionOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
         /// <summary> Initializes a new instance of HttpVersionMatchCondition. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="op"> Describes operator to be matched. </param>
+        /// <param name="httpVersionOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal HttpVersionMatchCondition(HttpVersionMatchConditionType conditionType, HttpVersionOperator op, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
+        internal HttpVersionMatchCondition(HttpVersionMatchConditionType conditionType, HttpVersionOperator httpVersionOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
         {
             ConditionType = conditionType;
-            Op = op;
+            HttpVersionOperator = httpVersionOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Gets or sets the condition type. </summary>
         public HttpVersionMatchConditionType ConditionType { get; set; }
         /// <summary> Describes operator to be matched. </summary>
-        public HttpVersionOperator Op { get; set; }
+        public HttpVersionOperator HttpVersionOperator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>
         public bool? NegateCondition { get; set; }
         /// <summary> The match value for the condition of the delivery rule. </summary>

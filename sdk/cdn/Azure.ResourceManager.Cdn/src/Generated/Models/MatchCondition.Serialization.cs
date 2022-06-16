@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStringValue(Selector);
             }
             writer.WritePropertyName("operator");
-            writer.WriteStringValue(Op.ToString());
+            writer.WriteStringValue(MatchOperator.ToString());
             if (Optional.IsDefined(NegateCondition))
             {
                 writer.WritePropertyName("negateCondition");

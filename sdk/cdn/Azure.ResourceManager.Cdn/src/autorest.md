@@ -80,6 +80,10 @@ directive:
   - from: cdn.json
     where: $.definitions
     transform: >
+      $.SocketAddrMatchConditionParameters.properties.operator['x-ms-enum'].name = 'SocketAddressOperator';
+      $.RequestSchemeMatchConditionParameters.properties.operator['x-ms-enum'] = {
+          "name": "RequestSchemeOperator"
+        }
       for (var key in $) {
             if (key.endsWith('Parameters')) {
                 for (var property in $[key].properties) {
@@ -90,7 +94,7 @@ directive:
                              $[key]['x-ms-client-name'] = newKey + 'Properties';
                         }
                         if(key.endsWith('ConditionParameters')) {
-                            $[key].properties.operator['x-ms-client-name'] = 'op';
+                            $[key].properties.operator['x-ms-client-name'] = $[key].properties.operator['x-ms-enum'].name;
                         }
                         $[key].properties.typeName['x-ms-client-name'] = 'type';
                         $[key].properties.typeName['x-ms-enum'] = {
@@ -150,7 +154,6 @@ directive:
                             ]
       $.GeoFilter.properties.action['x-ms-enum'].name = 'GeoFilterAction';
       $.ResponseBasedOriginErrorDetectionParameters.properties.responseBasedDetectedErrorTypes['x-ms-enum'].name = 'ResponseBasedDetectedErrorType';
-      $.SocketAddrMatchConditionParameters.properties.operator['x-ms-enum'].name = 'SocketAddressOperator';
       $.SocketAddrMatchConditionParameters.properties.typeName['x-ms-enum'].name = 'SocketAddressMatchConditionType';
       $.SocketAddrMatchConditionParameters.properties.typeName['x-ms-enum'].values[0].name = 'SocketAddressCondition';
       $.transform['x-ms-enum'].name = 'preTransformCategory';
@@ -326,7 +329,7 @@ directive:
       $.CdnEndpoint['x-ms-client-name'] = 'CdnEndpointReference';
       $.CdnWebApplicationFirewallPolicyProperties.properties.rateLimitRules['x-ms-client-name'] = 'RateLimitSettings';
       $.CdnWebApplicationFirewallPolicyProperties.properties.customRules['x-ms-client-name'] = 'CustomSettings';
-      $.MatchCondition.properties.operator['x-ms-client-name'] = 'op';
+      $.MatchCondition.properties.operator['x-ms-client-name'] = 'matchOperator';
       $.MatchCondition.properties.operator['x-ms-enum'].name = 'matchOperator';
       $.policySettings.properties.defaultCustomBlockResponseStatusCode['x-nullable'] = true;
   - remove-operation: Validate_Secret

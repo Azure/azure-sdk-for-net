@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Initializes a new instance of RequestUriMatchCondition. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="op"> Describes operator to be matched. </param>
-        public RequestUriMatchCondition(RequestUriMatchConditionType conditionType, RequestUriOperator op)
+        /// <param name="requestUriOperator"> Describes operator to be matched. </param>
+        public RequestUriMatchCondition(RequestUriMatchConditionType conditionType, RequestUriOperator requestUriOperator)
         {
             ConditionType = conditionType;
-            Op = op;
+            RequestUriOperator = requestUriOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
         /// <summary> Initializes a new instance of RequestUriMatchCondition. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="op"> Describes operator to be matched. </param>
+        /// <param name="requestUriOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal RequestUriMatchCondition(RequestUriMatchConditionType conditionType, RequestUriOperator op, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
+        internal RequestUriMatchCondition(RequestUriMatchConditionType conditionType, RequestUriOperator requestUriOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
         {
             ConditionType = conditionType;
-            Op = op;
+            RequestUriOperator = requestUriOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Gets or sets the condition type. </summary>
         public RequestUriMatchConditionType ConditionType { get; set; }
         /// <summary> Describes operator to be matched. </summary>
-        public RequestUriOperator Op { get; set; }
+        public RequestUriOperator RequestUriOperator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>
         public bool? NegateCondition { get; set; }
         /// <summary> The match value for the condition of the delivery rule. </summary>

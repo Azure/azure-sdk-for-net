@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Initializes a new instance of PostArgsMatchCondition. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="op"> Describes operator to be matched. </param>
-        public PostArgsMatchCondition(PostArgsMatchConditionType conditionType, PostArgsOperator op)
+        /// <param name="postArgsOperator"> Describes operator to be matched. </param>
+        public PostArgsMatchCondition(PostArgsMatchConditionType conditionType, PostArgsOperator postArgsOperator)
         {
             ConditionType = conditionType;
-            Op = op;
+            PostArgsOperator = postArgsOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of PostArgsMatchCondition. </summary>
         /// <param name="conditionType"></param>
         /// <param name="selector"> Name of PostArg to be matched. </param>
-        /// <param name="op"> Describes operator to be matched. </param>
+        /// <param name="postArgsOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal PostArgsMatchCondition(PostArgsMatchConditionType conditionType, string selector, PostArgsOperator op, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
+        internal PostArgsMatchCondition(PostArgsMatchConditionType conditionType, string selector, PostArgsOperator postArgsOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
         {
             ConditionType = conditionType;
             Selector = selector;
-            Op = op;
+            PostArgsOperator = postArgsOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Name of PostArg to be matched. </summary>
         public string Selector { get; set; }
         /// <summary> Describes operator to be matched. </summary>
-        public PostArgsOperator Op { get; set; }
+        public PostArgsOperator PostArgsOperator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>
         public bool? NegateCondition { get; set; }
         /// <summary> The match value for the condition of the delivery rule. </summary>

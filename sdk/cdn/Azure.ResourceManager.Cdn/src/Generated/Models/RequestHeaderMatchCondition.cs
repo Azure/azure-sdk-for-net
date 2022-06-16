@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Initializes a new instance of RequestHeaderMatchCondition. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="op"> Describes operator to be matched. </param>
-        public RequestHeaderMatchCondition(RequestHeaderMatchConditionType conditionType, RequestHeaderOperator op)
+        /// <param name="requestHeaderOperator"> Describes operator to be matched. </param>
+        public RequestHeaderMatchCondition(RequestHeaderMatchConditionType conditionType, RequestHeaderOperator requestHeaderOperator)
         {
             ConditionType = conditionType;
-            Op = op;
+            RequestHeaderOperator = requestHeaderOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of RequestHeaderMatchCondition. </summary>
         /// <param name="conditionType"></param>
         /// <param name="selector"> Name of Header to be matched. </param>
-        /// <param name="op"> Describes operator to be matched. </param>
+        /// <param name="requestHeaderOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal RequestHeaderMatchCondition(RequestHeaderMatchConditionType conditionType, string selector, RequestHeaderOperator op, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
+        internal RequestHeaderMatchCondition(RequestHeaderMatchConditionType conditionType, string selector, RequestHeaderOperator requestHeaderOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
         {
             ConditionType = conditionType;
             Selector = selector;
-            Op = op;
+            RequestHeaderOperator = requestHeaderOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Name of Header to be matched. </summary>
         public string Selector { get; set; }
         /// <summary> Describes operator to be matched. </summary>
-        public RequestHeaderOperator Op { get; set; }
+        public RequestHeaderOperator RequestHeaderOperator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>
         public bool? NegateCondition { get; set; }
         /// <summary> The match value for the condition of the delivery rule. </summary>
