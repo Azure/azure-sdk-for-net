@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Cdn
             ResourceType type = default;
             SystemData systemData = default;
             Optional<string> endpointName = default;
-            Optional<IList<FrontDoorActivatedResourceData>> customDomains = default;
+            Optional<IList<FrontDoorActivatedResourceInfo>> customDomains = default;
             Optional<WritableSubResource> originGroup = default;
             Optional<string> originPath = default;
             Optional<IList<WritableSubResource>> ruleSets = default;
@@ -170,10 +170,10 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<FrontDoorActivatedResourceData> array = new List<FrontDoorActivatedResourceData>();
+                            List<FrontDoorActivatedResourceInfo> array = new List<FrontDoorActivatedResourceInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontDoorActivatedResourceData.DeserializeFrontDoorActivatedResourceData(item));
+                                array.Add(FrontDoorActivatedResourceInfo.DeserializeFrontDoorActivatedResourceInfo(item));
                             }
                             customDomains = array;
                             continue;

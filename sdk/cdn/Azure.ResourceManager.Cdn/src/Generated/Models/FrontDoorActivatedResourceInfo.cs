@@ -10,17 +10,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Reference to another resource along with its state. </summary>
-    public partial class FrontDoorActivatedResourceData
+    public partial class FrontDoorActivatedResourceInfo
     {
-        /// <summary> Initializes a new instance of FrontDoorActivatedResourceData. </summary>
-        public FrontDoorActivatedResourceData()
+        /// <summary> Initializes a new instance of FrontDoorActivatedResourceInfo. </summary>
+        public FrontDoorActivatedResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorActivatedResourceData. </summary>
+        /// <summary> Initializes a new instance of FrontDoorActivatedResourceInfo. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="isActive"> Whether the resource is active or inactive. </param>
-        internal FrontDoorActivatedResourceData(ResourceIdentifier id, bool? isActive)
+        internal FrontDoorActivatedResourceInfo(ResourceIdentifier id, bool? isActive)
         {
             Id = id;
             IsActive = isActive;
