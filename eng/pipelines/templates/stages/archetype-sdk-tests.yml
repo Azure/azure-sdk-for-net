@@ -116,8 +116,7 @@ stages:
           parameters:
             SparseCheckoutPaths:
               - "sdk/${{ parameters.ServiceDirectory }}/**/*.json"
-              - '!sdk/**/test-recordings/*'
-              - '!sdk/**/session-records/*'
+              - '!sdk/**/SessionRecords/*'
             JobTemplatePath: /eng/pipelines/templates/jobs/live.tests.yml
             AdditionalParameters:
               PreSteps:
