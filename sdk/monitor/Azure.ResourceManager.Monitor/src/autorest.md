@@ -16,6 +16,14 @@ modelerfour:
 modelerfour:
   lenient-model-deduplication: true
 
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'resourceType': 'resource-type'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
 directive:
   - from: autoscale_API.json
     where: $.definitions.MetricTrigger.properties.metricResourceUri

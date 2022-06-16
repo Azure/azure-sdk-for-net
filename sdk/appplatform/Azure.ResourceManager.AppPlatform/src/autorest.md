@@ -16,6 +16,13 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+format-by-name-rules:
+  'resourceType': 'resource-type'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus

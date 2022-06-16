@@ -18,6 +18,14 @@ public-clients: false
 head-as-boolean: false
 resource-model-requires-type: false
 
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'resourceType': 'resource-type'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus

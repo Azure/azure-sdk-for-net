@@ -12,9 +12,17 @@ output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
-  modelerfour:
   flatten-payloads: false
+
 no-property-type-replacement: RegenerateKeyContent
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'resourceType': 'resource-type'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu

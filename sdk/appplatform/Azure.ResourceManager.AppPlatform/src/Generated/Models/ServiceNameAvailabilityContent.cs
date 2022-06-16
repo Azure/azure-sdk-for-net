@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -15,13 +16,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of ServiceNameAvailabilityContent. </summary>
         /// <param name="resourceType"> Type of the resource to check name availability. </param>
         /// <param name="name"> Name to be checked. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> or <paramref name="name"/> is null. </exception>
-        public ServiceNameAvailabilityContent(string resourceType, string name)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public ServiceNameAvailabilityContent(ResourceType resourceType, string name)
         {
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
@@ -32,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         }
 
         /// <summary> Type of the resource to check name availability. </summary>
-        public string ResourceType { get; }
+        public ResourceType ResourceType { get; }
         /// <summary> Name to be checked. </summary>
         public string Name { get; }
     }

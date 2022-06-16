@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Output of check resource usage API. </summary>
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="unit"> Unit of the usage. e.g. count. </param>
         /// <param name="currentValue"> Actual value of usage on the specified resource type. </param>
         /// <param name="limit"> Quota of the specified resource type. </param>
-        internal ResourceUsage(string resourceType, ResourceUsageUnit? unit, int? currentValue, int? limit)
+        internal ResourceUsage(ResourceType? resourceType, ResourceUsageUnit? unit, int? currentValue, int? limit)
         {
             ResourceType = resourceType;
             Unit = unit;
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource type for which the usage is provided. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> Unit of the usage. e.g. count. </summary>
         public ResourceUsageUnit? Unit { get; }
         /// <summary> Actual value of usage on the specified resource type. </summary>

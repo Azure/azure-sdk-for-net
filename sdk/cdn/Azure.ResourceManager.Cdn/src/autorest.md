@@ -22,6 +22,15 @@ operation-id-mappings:
       profileName: Microsoft.Cdn/operationresults/profileresults
       endpointName: Microsoft.Cdn/operationresults/profileresults/endpointresults
       customDomainName: Microsoft.Cdn/operationresults/profileresults/endpointresults/customdomainresults
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'resourceType': 'resource-type'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -316,7 +325,6 @@ directive:
   - from: cdnwebapplicationfirewall.json
     where: $.definitions
     transform: >
-      $.CdnWebApplicationFirewallPolicy.properties.etag['x-ms-format'] = 'etag';
       $.CdnEndpoint['x-ms-client-name'] = 'CdnEndpointReference';
       $.CdnWebApplicationFirewallPolicyProperties.properties.rateLimitRules['x-ms-client-name'] = 'RateLimitSettings';
       $.CdnWebApplicationFirewallPolicyProperties.properties.customRules['x-ms-client-name'] = 'CustomSettings';

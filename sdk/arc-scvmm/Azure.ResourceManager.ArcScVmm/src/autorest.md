@@ -6,8 +6,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 azure-arm: true
 csharp: true
-library-name: scvmm
-namespace: Azure.ResourceManager.scvmm
+library-name: ArcScVmm
+namespace: Azure.ResourceManager.ArcScVmm
 require: https://github.com/Azure/azure-rest-api-specs/blob/ba936cf8f3b4720dc025837281241fdc903f7e4d/specification/scvmm/resource-manager/readme.md
 tag: package-2020-06-05-preview
 output-folder: $(this-folder)/Generated
@@ -15,6 +15,14 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'resourceType': 'resource-type'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu

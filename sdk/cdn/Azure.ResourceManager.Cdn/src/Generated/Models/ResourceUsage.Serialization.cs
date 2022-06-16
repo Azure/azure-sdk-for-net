@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static ResourceUsage DeserializeResourceUsage(JsonElement element)
         {
-            Optional<string> resourceType = default;
+            Optional<ResourceType> resourceType = default;
             Optional<ResourceUsageUnit> unit = default;
             Optional<int> currentValue = default;
             Optional<int> limit = default;
@@ -22,7 +22,12 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("resourceType"))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("unit"))
@@ -56,7 +61,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new ResourceUsage(resourceType.Value, Optional.ToNullable(unit), Optional.ToNullable(currentValue), Optional.ToNullable(limit));
+            return new ResourceUsage(Optional.ToNullable(resourceType), Optional.ToNullable(unit), Optional.ToNullable(currentValue), Optional.ToNullable(limit));
         }
     }
 }

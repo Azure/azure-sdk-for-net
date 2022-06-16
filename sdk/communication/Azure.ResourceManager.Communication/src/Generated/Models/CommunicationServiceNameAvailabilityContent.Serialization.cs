@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Communication.Models
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(ResourceType);
+                writer.WriteStringValue(ResourceType.Value);
             }
             writer.WriteEndObject();
         }

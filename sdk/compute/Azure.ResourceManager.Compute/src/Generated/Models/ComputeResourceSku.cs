@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="costs"> Metadata for retrieving price info. </param>
         /// <param name="capabilities"> A name value pair to describe the capability. </param>
         /// <param name="restrictions"> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </param>
-        internal ComputeResourceSku(string resourceType, string name, string tier, string size, string family, string kind, ComputeResourceSkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<ComputeResourceSkuLocationInfo> locationInfo, IReadOnlyList<string> apiVersions, IReadOnlyList<ResourceSkuCosts> costs, IReadOnlyList<ResourceSkuCapabilities> capabilities, IReadOnlyList<ResourceSkuRestrictions> restrictions)
+        internal ComputeResourceSku(ResourceType? resourceType, string name, string tier, string size, string family, string kind, ComputeResourceSkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<ComputeResourceSkuLocationInfo> locationInfo, IReadOnlyList<string> apiVersions, IReadOnlyList<ResourceSkuCosts> costs, IReadOnlyList<ResourceSkuCapabilities> capabilities, IReadOnlyList<ResourceSkuRestrictions> restrictions)
         {
             ResourceType = resourceType;
             Name = name;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The type of resource the SKU applies to. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> The name of SKU. </summary>
         public string Name { get; }
         /// <summary> Specifies the tier of virtual machines in a scale set.&lt;br /&gt;&lt;br /&gt; Possible Values:&lt;br /&gt;&lt;br /&gt; **Standard**&lt;br /&gt;&lt;br /&gt; **Basic**. </summary>
