@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.EventHub.Models
     {
         public const string Enabled = "Enabled";
         public const string Disabled = "Disabled";
+        public const string SecuredByPerimeter = "SecuredByPerimeter";
     }
 }

@@ -76,11 +76,6 @@ namespace Microsoft.Azure.Management.EventHub
         IClustersOperations Clusters { get; }
 
         /// <summary>
-        /// Gets the IConfigurationOperations.
-        /// </summary>
-        IConfigurationOperations Configuration { get; }
-
-        /// <summary>
         /// Gets the INamespacesOperations.
         /// </summary>
         INamespacesOperations Namespaces { get; }
@@ -96,14 +91,19 @@ namespace Microsoft.Azure.Management.EventHub
         IPrivateLinkResourcesOperations PrivateLinkResources { get; }
 
         /// <summary>
-        /// Gets the IOperations.
+        /// Gets the INetworkSecurityPerimeterConfigurationOperations.
         /// </summary>
-        IOperations Operations { get; }
+        INetworkSecurityPerimeterConfigurationOperations NetworkSecurityPerimeterConfiguration { get; }
 
         /// <summary>
-        /// Gets the IEventHubsOperations.
+        /// Gets the INetworkSecurityPerimeterConfigurationsOperations.
         /// </summary>
-        IEventHubsOperations EventHubs { get; }
+        INetworkSecurityPerimeterConfigurationsOperations NetworkSecurityPerimeterConfigurations { get; }
+
+        /// <summary>
+        /// Gets the IConfigurationOperations.
+        /// </summary>
+        IConfigurationOperations Configuration { get; }
 
         /// <summary>
         /// Gets the IDisasterRecoveryConfigsOperations.
@@ -111,14 +111,29 @@ namespace Microsoft.Azure.Management.EventHub
         IDisasterRecoveryConfigsOperations DisasterRecoveryConfigs { get; }
 
         /// <summary>
+        /// Gets the IEventHubsOperations.
+        /// </summary>
+        IEventHubsOperations EventHubs { get; }
+
+        /// <summary>
         /// Gets the IConsumerGroupsOperations.
         /// </summary>
         IConsumerGroupsOperations ConsumerGroups { get; }
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
+
+        /// <summary>
         /// Gets the ISchemaRegistryOperations.
         /// </summary>
         ISchemaRegistryOperations SchemaRegistry { get; }
+
+        /// <summary>
+        /// Gets the IApplicationGroupOperations.
+        /// </summary>
+        IApplicationGroupOperations ApplicationGroup { get; }
 
     }
 }
