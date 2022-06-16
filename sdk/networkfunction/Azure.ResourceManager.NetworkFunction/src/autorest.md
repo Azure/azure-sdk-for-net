@@ -15,6 +15,7 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus

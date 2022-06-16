@@ -11,10 +11,12 @@ namespace: Azure.ResourceManager.elasticsan
 require: https://github.com/Azure/azure-rest-api-specs/blob/50ed15bd61ac79f2368d769df0c207a00b9e099f/specification/elasticsan/resource-manager/readme.md
 tag: package-2021-11-20-preview
 output-folder: Generated/
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus

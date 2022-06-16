@@ -4,6 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
+csharp: true
 library-name: KeyVault
 namespace: Azure.ResourceManager.KeyVault
 tag: package-2021-10
@@ -12,6 +13,7 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
 override-operation-name:
   Vaults_CheckNameAvailability: CheckVaultNameAvailability
   MHSMPrivateLinkResources_ListByMhsmResource: GetMhsmPrivateLinkResources

@@ -12,9 +12,11 @@ library-name: Compute
 namespace: Azure.ResourceManager.Compute
 require: https://github.com/Azure/azure-rest-api-specs/blob/2d6cb29af754f48a08f94cb6113bb1f01a4e0eb9/specification/compute/resource-manager/readme.md
 tag: package-2022-03-02
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
-output-folder: ./Generated
+modelerfour:
+  flatten-payloads: false
 
 rename-rules:
   CPU: Cpu

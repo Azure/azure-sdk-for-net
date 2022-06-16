@@ -10,11 +10,12 @@ library-name: scvmm
 namespace: Azure.ResourceManager.scvmm
 require: https://github.com/Azure/azure-rest-api-specs/blob/ba936cf8f3b4720dc025837281241fdc903f7e4d/specification/scvmm/resource-manager/readme.md
 tag: package-2020-06-05-preview
-output-folder: Generated/
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus

@@ -8,9 +8,11 @@ azure-arm: true
 library-name: Monitor
 namespace: Azure.ResourceManager.Monitor
 require: https://github.com/Azure/azure-rest-api-specs/blob/35f8a4df47aedc1ce185c854595cba6b83fa6c71/specification/monitor/resource-manager/readme.md
-
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
+modelerfour:
+  flatten-payloads: false
 modelerfour:
   lenient-model-deduplication: true
 

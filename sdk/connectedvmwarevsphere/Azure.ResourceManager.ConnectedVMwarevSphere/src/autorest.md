@@ -7,9 +7,12 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 namespace: Azure.ResourceManager.ConnectedVMwarevSphere
 require: https://github.com/Azure/azure-rest-api-specs/blob/58891380ba22c3565ca884dee3831445f638b545/specification/connectedvmware/resource-manager/readme.md
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
-output-folder: Generated/
 skip-csproj: true
+modelerfour:
+  flatten-payloads: false
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus

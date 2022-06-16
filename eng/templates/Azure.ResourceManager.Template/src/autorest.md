@@ -12,6 +12,9 @@ require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/speci
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
+modelerfour:
+  flatten-payloads: false
+
 tagPrefix SwaggerVersionTag
 
 rename-rules:

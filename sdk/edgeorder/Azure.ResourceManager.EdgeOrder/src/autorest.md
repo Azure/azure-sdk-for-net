@@ -10,12 +10,17 @@ library-name: EdgeOrder
 namespace: Azure.ResourceManager.EdgeOrder
 require: https://github.com/Azure/azure-rest-api-specs/blob/58891380ba22c3565ca884dee3831445f638b545/specification/edgeorder/resource-manager/readme.md
 tag: package-2021-12
-output-folder: Generated/
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
+skip-csproj: true
+modelerfour:
+  flatten-payloads: false
+
 list-exception:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/locations/{location}/orders/{orderName}
 
 modelerfour:
+  modelerfour:
   flatten-payloads: false
 rename-rules:
   CPU: Cpu

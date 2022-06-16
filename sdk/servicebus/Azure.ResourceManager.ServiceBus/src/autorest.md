@@ -7,17 +7,17 @@ azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.ServiceBus
 require: https://github.com/Azure/azure-rest-api-specs/blob/a5f8ef67c8170e4081527e400473c6deddcfabfd/specification/servicebus/resource-manager/readme.md
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
+modelerfour:
+  flatten-payloads: false
+
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}: NamespaceDisasterRecoveryAuthorizationRule
 override-operation-name:
   Namespaces_CheckNameAvailability: CheckServiceBusNameAvailability
   DisasterRecoveryConfigs_CheckNameAvailability: CheckDisasterRecoveryNameAvailability
-
-# temporary enable this because of a bug in modeler v4: https://github.com/Azure/autorest/issues/4524
-modelerfour:
-  lenient-model-deduplication: true
 
 rename-rules:
   CPU: Cpu

@@ -12,7 +12,8 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/c767823fdfd9d5e96bad
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
- 
+modelerfour:
+  flatten-payloads: false
 
 rename-rules:
   CPU: Cpu

@@ -13,7 +13,8 @@ tag: package-2021-12-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
-flatten-payloads: false
+modelerfour:
+  flatten-payloads: false
 
 rename-rules:
   CPU: Cpu

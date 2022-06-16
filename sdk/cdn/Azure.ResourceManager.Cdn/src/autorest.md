@@ -8,9 +8,12 @@ library-name: Cdn
 namespace: Azure.ResourceManager.Cdn
 title: CdnManagementClient
 require: https://github.com/Azure/azure-rest-api-specs/blob/236c7ce93e9bcb875e1fbe1db8602a3a159ee2ae/specification/cdn/resource-manager/readme.md
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
-output-folder: Generated/
+modelerfour:
+  flatten-payloads: false
+
 operation-id-mappings:
   CdnEndpoint:
       profileName: Microsoft.Cdn/operationresults/profileresults

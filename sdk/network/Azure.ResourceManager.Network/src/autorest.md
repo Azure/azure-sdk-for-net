@@ -8,16 +8,14 @@ library-name: Network
 namespace: Azure.ResourceManager.Network
 require: https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/readme.md
 tag: package-track2-preview
-
-skip-csproj: true
-output-folder: Generated/
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
-
+skip-csproj: true
+modelerfour:
+  flatten-payloads: false
 model-namespace: true
 public-clients: false
 head-as-boolean: false
-flatten-payloads: false
-
 resource-model-requires-type: false
 
 rename-rules:

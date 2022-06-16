@@ -4,11 +4,16 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
+csharp: true
 library-name: AppConfiguration
 namespace: Azure.ResourceManager.AppConfiguration
 require: https://github.com/Azure/azure-rest-api-specs/blob/d0b5e9937f89a600dd25c1aa450b42fe911e067d/specification/appconfiguration/resource-manager/readme.md
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
+modelerfour:
+  modelerfour:
+  flatten-payloads: false
 no-property-type-replacement: RegenerateKeyContent
 
 rename-rules:
