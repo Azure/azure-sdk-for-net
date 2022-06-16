@@ -5,7 +5,7 @@ languages:
 products:
 - azure
 - azure-communication-services
-- azure-communication-services-job-router
+# - azure-communication-services-job-router
 name: Azure.Communication.JobRouter samples for .NET
 description: Samples for the Azure.Communication.JobRouter client library
 ---
