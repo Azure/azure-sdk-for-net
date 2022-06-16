@@ -121,7 +121,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                     Name = "Simple-Queue-Distribution",
                 });
             var fallbackQueueResponse = await client.CreateQueueAsync(
-                GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}-flbkQ"),
+                GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}-default_Q"),
                 distributionPolicyResponse.Value.Id,
                 new CreateQueueOptions()
                 {
@@ -134,14 +134,14 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             };
 
             var classificationPolicyResponse = await client.CreateClassificationPolicyAsync(
-                id: GenerateUniqueId($"Cp-FlbkQ-{IdPrefix}"),
+                id: GenerateUniqueId($"Cp-default_Q-{IdPrefix}"),
                 new CreateClassificationPolicyOptions()
                 {
                     QueueSelectors = queueSelector,
                     FallbackQueueId = fallbackQueueResponse.Value.Id,
                 });
 
-            var jobId = GenerateUniqueId($"JobId-FlbkQ-{nameof(QueueScenario)}");
+            var jobId = GenerateUniqueId($"JobId-default_Q-{nameof(QueueScenario)}");
             var createJob = await client.CreateJobWithClassificationPolicyAsync(
                 id: jobId,
                 channelId: channelResponse,
@@ -176,7 +176,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                     Name = "test",
                 });
             var fallbackQueueResponse = await client.CreateQueueAsync(
-                GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}-flbkQ"),
+                GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}-default_Q"),
                 distributionPolicyResponse.Value.Id,
                 new CreateQueueOptions()
                 {
@@ -194,7 +194,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             };
 
             var classificationPolicyResponse = await client.CreateClassificationPolicyAsync(
-                id: GenerateUniqueId($"{IdPrefix}-cp-cond"),
+                id: GenerateUniqueId($"{IdPrefix}-cp-conditional"),
                 new CreateClassificationPolicyOptions()
                 {
                     QueueSelectors = queueSelector,
@@ -243,7 +243,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                     Labels = queueLabels
                 });
             var fallbackQueueResponse = await client.CreateQueueAsync(
-                GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}-flbkQ"),
+                GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}-default_Q"),
                 distributionPolicyResponse.Value.Id,
                 new CreateQueueOptions()
                 {
@@ -259,7 +259,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             };
 
             var classificationPolicyResponse = await client.CreateClassificationPolicyAsync(
-                id: GenerateUniqueId($"{IdPrefix}-cp-psthr"),
+                id: GenerateUniqueId($"{IdPrefix}-cp-pass-through-selector"),
                 new CreateClassificationPolicyOptions()
                 {
                     QueueSelectors = queueSelector,
@@ -319,7 +319,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 });
 
             var fallbackQueueResponse = await client.CreateQueueAsync(
-                GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}-flbkQueue"),
+                GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}-default_Queue"),
                 distributionPolicyResponse.Value.Id,
                 new CreateQueueOptions()
                 {
@@ -346,7 +346,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             };
 
             var classificationPolicyResponse = await client.CreateClassificationPolicyAsync(
-                id: GenerateUniqueId($"{IdPrefix}-cmbo"),
+                id: GenerateUniqueId($"{IdPrefix}-combination"),
                 new CreateClassificationPolicyOptions()
                 {
                     QueueSelectors = queueSelector,

@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/distributionPolicies/27-F3-89-21-42-91-06-A1-69-3F-31-F2-0C-E6-CD-EA-5E?api-version=2021-10-20-preview2",
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/distributionPolicies/09-CD-6E-91-73-E1-AE-22-37-E4-23-F7-9F-F0-EA-8D-08?api-version=2021-10-20-preview2",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "479",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-01ecd1d994113d418483dd8877b0bf77-493f7fccbd346543-00",
+        "traceparent": "00-446ef886c20c2c498cf956ce23ba0d2f-9d02a50dbb1c2546-00",
         "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220615.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "4331248264c1bcbc276ef091b9f9b5ba",
+        "x-ms-client-request-id": "9ca1f26c1c28e074f30a4aa4218b5882",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 15 Jun 2022 23:45:00 GMT",
+        "x-ms-date": "Thu, 16 Jun 2022 01:20:41 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "name": "27-F3-89-21-42-91-06-A1-69-3F-31-F2-0C-E6-CD-EA-5E-Name",
+        "name": "09-CD-6E-91-73-E1-AE-22-37-E4-23-F7-9F-F0-EA-8D-08-Name",
         "offerTtlSeconds": 1,
         "mode": {
           "scoringRule": {
@@ -44,18 +44,18 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-04-07-preview1, 2021-10-20-preview2",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Jun 2022 23:45:00 GMT",
-        "ETag": "\u00229f026a0f-0000-0700-0000-62aa6efc0000\u0022",
-        "Last-Modified": "Wed, 15 Jun 2022 23:45:00 GMT",
+        "Date": "Thu, 16 Jun 2022 01:20:40 GMT",
+        "ETag": "\u00229f0244bb-0000-0700-0000-62aa85690000\u0022",
+        "Last-Modified": "Thu, 16 Jun 2022 01:20:41 GMT",
         "Request-Context": "appId=",
-        "trace-id": "01ecd1d994113d418483dd8877b0bf77",
+        "trace-id": "446ef886c20c2c498cf956ce23ba0d2f",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0/G6qYgAAAAC3iXfzG7jRSrASCsFYCDRDWVZSMzExMDAwMTE1MDUzAGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
+        "X-Azure-Ref": "0aYWqYgAAAAAtnxodZuMaQKw1ykQnbendWVZSMzExMDAwMTE1MDI1AGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": {
-        "id": "27-F3-89-21-42-91-06-A1-69-3F-31-F2-0C-E6-CD-EA-5E",
-        "name": "27-F3-89-21-42-91-06-A1-69-3F-31-F2-0C-E6-CD-EA-5E-Name",
+        "id": "09-CD-6E-91-73-E1-AE-22-37-E4-23-F7-9F-F0-EA-8D-08",
+        "name": "09-CD-6E-91-73-E1-AE-22-37-E4-23-F7-9F-F0-EA-8D-08-Name",
         "offerTtlSeconds": 1,
         "mode": {
           "kind": "best-worker",
@@ -81,18 +81,18 @@
       }
     },
     {
-      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/distributionPolicies/27-F3-89-21-42-91-06-A1-69-3F-31-F2-0C-E6-CD-EA-5E?api-version=2021-10-20-preview2",
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/distributionPolicies/09-CD-6E-91-73-E1-AE-22-37-E4-23-F7-9F-F0-EA-8D-08?api-version=2021-10-20-preview2",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "375",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-f46d3f31a734184cad87e4d8a467a2a3-1658d0530f721440-00",
+        "traceparent": "00-08e1a33e6140bc4d9857db5fda62ce93-b78dbecf8fddf940-00",
         "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220615.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "3a44c7dd6defbd477d4a2fed84b910c1",
+        "x-ms-client-request-id": "d9c8263ff09cd81672630c304f6feb52",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 15 Jun 2022 23:45:00 GMT",
+        "x-ms-date": "Thu, 16 Jun 2022 01:20:41 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -121,18 +121,18 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-04-07-preview1, 2021-10-20-preview2",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Jun 2022 23:45:00 GMT",
-        "ETag": "\u00229f02820f-0000-0700-0000-62aa6efc0000\u0022",
-        "Last-Modified": "Wed, 15 Jun 2022 23:45:00 GMT",
+        "Date": "Thu, 16 Jun 2022 01:20:41 GMT",
+        "ETag": "\u00229f0245bb-0000-0700-0000-62aa85690000\u0022",
+        "Last-Modified": "Thu, 16 Jun 2022 01:20:41 GMT",
         "Request-Context": "appId=",
-        "trace-id": "f46d3f31a734184cad87e4d8a467a2a3",
+        "trace-id": "08e1a33e6140bc4d9857db5fda62ce93",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0/G6qYgAAAABEttmlSFWMT7o\u002B6MNFXHAtWVZSMzExMDAwMTE1MDUzAGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
+        "X-Azure-Ref": "0aYWqYgAAAAB1KCxRmsFsRKzXOnSTyjC2WVZSMzExMDAwMTE1MDI1AGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": {
-        "id": "27-F3-89-21-42-91-06-A1-69-3F-31-F2-0C-E6-CD-EA-5E",
-        "name": "27-F3-89-21-42-91-06-A1-69-3F-31-F2-0C-E6-CD-EA-5E-Name",
+        "id": "09-CD-6E-91-73-E1-AE-22-37-E4-23-F7-9F-F0-EA-8D-08",
+        "name": "09-CD-6E-91-73-E1-AE-22-37-E4-23-F7-9F-F0-EA-8D-08-Name",
         "offerTtlSeconds": 1,
         "mode": {
           "kind": "best-worker",
@@ -161,7 +161,7 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://rsarkar-sdktest.int.communication.azure.net/;accesskey=Kg==",
-    "id-prefix": "sdk-PfiZEbDY7UaRI1lu1tv-6g-",
-    "RandomSeed": "1694276359"
+    "id-prefix": "sdk-pLO10BMCM0-4Z4hTJNdLAg-",
+    "RandomSeed": "1912582969"
   }
 }

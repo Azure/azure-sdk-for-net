@@ -58,7 +58,7 @@ A real-world example of this may be the ringing of an agent in a call center.
 
 ### Distribution Policy
 A Distribution Policy represents a configuration set that governs how jobs in a queue are distributed to workers registered with that queue.
-This configuration includes how long an Offer is valid before it expires and the dsitribution mode, which define the order in which workers are picked when there are multiple available.
+This configuration includes how long an Offer is valid before it expires and the distribution mode, which define the order in which workers are picked when there are multiple available.
 
 #### Distribution Mode
 The 3 types of modes are

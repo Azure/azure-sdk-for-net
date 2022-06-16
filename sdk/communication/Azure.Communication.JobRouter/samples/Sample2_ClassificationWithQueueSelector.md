@@ -227,6 +227,7 @@ Console.WriteLine($"XBox job has been enqueued in queue: {queue2.Value.Id}. Stat
 ## Enqueue job to a queue using classification policy and pass through label attachments
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_QueueSelectionByPassThroughLabelAttachments
+// cSpell:ignore EMEA, Emea
 // In this scenario we are going to use a classification policy while submitting a job.
 // We are going to utilize the 'QueueSelectors' attribute on the classification policy to determine
 // which queue a job should be enqueued in. For this scenario, we are going to demonstrate

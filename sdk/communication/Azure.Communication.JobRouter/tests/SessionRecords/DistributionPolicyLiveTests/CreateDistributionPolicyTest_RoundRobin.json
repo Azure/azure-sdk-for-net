@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/distributionPolicies/sdk-KMRfBoYY0EuSe1rqIiXR8Q--RR-DistributionPolicy?api-version=2021-10-20-preview2",
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/distributionPolicies/sdk-oHpUviX9QUaZR5q4japRFw--RR-DistributionPolicy?api-version=2021-10-20-preview2",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "187",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-98c3ff6e755600439030c299754c2f21-191a20da00cf0247-00",
+        "traceparent": "00-33f39f7408ac4f40825bd5ed4e71d22d-7478d12f35e13b4f-00",
         "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220615.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "1d8e82106fb04d8eb65d5cd14647aca5",
+        "x-ms-client-request-id": "1160ade296f7f30529d3c8a7a6139d1d",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 15 Jun 2022 23:44:59 GMT",
+        "x-ms-date": "Thu, 16 Jun 2022 01:20:40 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "name": "sdk-KMRfBoYY0EuSe1rqIiXR8Q--RR-DistributionPolicy-Name",
+        "name": "sdk-oHpUviX9QUaZR5q4japRFw--RR-DistributionPolicy-Name",
         "offerTtlSeconds": 1,
         "mode": {
           "kind": "round-robin",
@@ -29,18 +29,18 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-04-07-preview1, 2021-10-20-preview2",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Jun 2022 23:44:59 GMT",
-        "ETag": "\u00229f02610f-0000-0700-0000-62aa6efc0000\u0022",
-        "Last-Modified": "Wed, 15 Jun 2022 23:45:00 GMT",
+        "Date": "Thu, 16 Jun 2022 01:20:40 GMT",
+        "ETag": "\u00229f0242bb-0000-0700-0000-62aa85680000\u0022",
+        "Last-Modified": "Thu, 16 Jun 2022 01:20:40 GMT",
         "Request-Context": "appId=",
-        "trace-id": "98c3ff6e755600439030c299754c2f21",
+        "trace-id": "33f39f7408ac4f40825bd5ed4e71d22d",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0\u002B26qYgAAAACmU3LuaOt2T7xTDXfNwlBBWVZSMzExMDAwMTE1MDUzAGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
+        "X-Azure-Ref": "0aIWqYgAAAACH0AgXjUahS78MfktZY08NWVZSMzExMDAwMTE1MDI1AGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": {
-        "id": "sdk-KMRfBoYY0EuSe1rqIiXR8Q--RR-DistributionPolicy",
-        "name": "sdk-KMRfBoYY0EuSe1rqIiXR8Q--RR-DistributionPolicy-Name",
+        "id": "sdk-oHpUviX9QUaZR5q4japRFw--RR-DistributionPolicy",
+        "name": "sdk-oHpUviX9QUaZR5q4japRFw--RR-DistributionPolicy-Name",
         "offerTtlSeconds": 1,
         "mode": {
           "kind": "round-robin",
@@ -51,18 +51,18 @@
       }
     },
     {
-      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/distributionPolicies/sdk-KMRfBoYY0EuSe1rqIiXR8Q--RR-DistributionPolicy?api-version=2021-10-20-preview2",
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/distributionPolicies/sdk-oHpUviX9QUaZR5q4japRFw--RR-DistributionPolicy?api-version=2021-10-20-preview2",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "103",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-c2c2d165c6e7834e8b82e7599f5a8143-4450b5754535e942-00",
+        "traceparent": "00-5251dab3d2486544b89d84b83c075968-678cc78238f6c34d-00",
         "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220615.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "336fb64b9be865e5a2b9c35c60092968",
+        "x-ms-client-request-id": "b4f63cc542b8aeaf3b1ec40c0ceb5ef7",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 15 Jun 2022 23:45:00 GMT",
+        "x-ms-date": "Thu, 16 Jun 2022 01:20:40 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -77,18 +77,18 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-04-07-preview1, 2021-10-20-preview2",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Jun 2022 23:45:00 GMT",
-        "ETag": "\u00229f02670f-0000-0700-0000-62aa6efc0000\u0022",
-        "Last-Modified": "Wed, 15 Jun 2022 23:45:00 GMT",
+        "Date": "Thu, 16 Jun 2022 01:20:40 GMT",
+        "ETag": "\u00229f0243bb-0000-0700-0000-62aa85680000\u0022",
+        "Last-Modified": "Thu, 16 Jun 2022 01:20:40 GMT",
         "Request-Context": "appId=",
-        "trace-id": "c2c2d165c6e7834e8b82e7599f5a8143",
+        "trace-id": "5251dab3d2486544b89d84b83c075968",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0/G6qYgAAAAAcAAMOaPqxSq2fj2Jpkq8bWVZSMzExMDAwMTE1MDUzAGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
+        "X-Azure-Ref": "0aIWqYgAAAADs8ycGHKmvRaNEYZILm5TFWVZSMzExMDAwMTE1MDI1AGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": {
-        "id": "sdk-KMRfBoYY0EuSe1rqIiXR8Q--RR-DistributionPolicy",
-        "name": "sdk-KMRfBoYY0EuSe1rqIiXR8Q--RR-DistributionPolicy-Name",
+        "id": "sdk-oHpUviX9QUaZR5q4japRFw--RR-DistributionPolicy",
+        "name": "sdk-oHpUviX9QUaZR5q4japRFw--RR-DistributionPolicy-Name",
         "offerTtlSeconds": 1,
         "mode": {
           "kind": "longest-idle",
@@ -101,7 +101,7 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://rsarkar-sdktest.int.communication.azure.net/;accesskey=Kg==",
-    "id-prefix": "sdk-KMRfBoYY0EuSe1rqIiXR8Q-",
-    "RandomSeed": "886226835"
+    "id-prefix": "sdk-oHpUviX9QUaZR5q4japRFw-",
+    "RandomSeed": "1568302011"
   }
 }

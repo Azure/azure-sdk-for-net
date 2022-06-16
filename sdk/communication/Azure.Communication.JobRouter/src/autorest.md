@@ -5,7 +5,7 @@ When a new version of the swagger needs to be updated:
 2. Upload the Azure.Communication.JobRouter.dll to the apiview.dev tool.
 If any of the new objects needs to be overwritten, add the required changes to the 'Models' folder.
 
-3. Repeat 2 and 3 until the desided interface is reflected in the apiview.dev 
+3. Repeat 2 and 3 until the decided interface is reflected in the apiview.dev 
 
 > see [https://aka.ms/autorest](https://aka.ms/autorest)
 
