@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventHubs.Stress;
 internal class Processor
 {
     /// <summary>A unique identifier used to identify this processor instance.</summary>
-    private string _identifier { get; } = Convert.ToBase64String(Guid.NewGuid().ToByteArray()).TrimEnd('=').ToUpperInvariant();
+    public string Identifier { get; } = Convert.ToBase64String(Guid.NewGuid().ToByteArray()).TrimEnd('=').ToUpperInvariant();
 
     /// <summary>The number of current handler calls happening within the same partition.</summary>
     private int[] _partitionHandlerCalls { get; }
@@ -66,13 +66,15 @@ internal class Processor
     ///
     /// <param name="cancellationToken">The <see cref="CancellationToke"/> instance to signal the request to cancel the operation.</param>
     ///
-    public async Task Start(CancellationToken cancellationToken)
+    public async Task Start(Func<ProcessEventArgs, Task> processEventHandler, 
+                            Func<ProcessErrorEventArgs, Task> processErrorHandler, 
+                            CancellationToken cancellationToken)
     {
         while (!cancellationToken.IsCancellationRequested)
         {
             var options = new EventProcessorClientOptions
             {
-                Identifier = _identifier,
+                Identifier = Identifier,
                 LoadBalancingStrategy = LoadBalancingStrategy.Greedy,
 
                 RetryOptions = new EventHubsRetryOptions
@@ -88,8 +90,8 @@ internal class Processor
                 var storageClient = new BlobContainerClient(_testConfiguration.StorageConnectionString, _testConfiguration.BlobContainer);
                 processor = new EventProcessorClient(storageClient, EventHubConsumerClient.DefaultConsumerGroupName, _testConfiguration.EventHubsConnectionString, _testConfiguration.EventHub, options);
 
-                processor.ProcessEventAsync += ProcessEventHandler;
-                processor.ProcessErrorAsync += ProcessErrorHandler;
+                processor.ProcessEventAsync += processEventHandler;
+                processor.ProcessErrorAsync += processErrorHandler;
 
                 await processor.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
                 await Task.Delay(Timeout.Infinite, cancellationToken).ConfigureAwait(false);
@@ -131,71 +133,9 @@ internal class Processor
                     _metrics.Client.TrackException(ex);
                 }
 
-                processor.ProcessEventAsync -= ProcessEventHandler;
-                processor.ProcessErrorAsync -= ProcessErrorHandler;
+                processor.ProcessEventAsync -= processEventHandler;
+                processor.ProcessErrorAsync -= processErrorHandler;
             }
         }
-    }
-
-    /// <summary>
-    ///   The method to pass to the <see cref="EventProcessorClient" /> instance as the <see cref="EventProcessorClient.ProcessEventAsync" />
-    ///   event handler.
-    /// </summary>
-    ///
-    /// <param name="args">The <see cref="ProcessEventArgs" /> used to pass information to the event handler.</param>
-    ///
-    private Task ProcessEventHandler(ProcessEventArgs args)
-    {
-        var partitionIndex = int.Parse(args.Partition.PartitionId);
-
-        try
-        {
-            // There should only be one active call for a given partition; track any concurrent calls for this partition
-            // and report them as an error.
-
-            var activeCalls = Interlocked.Increment(ref _partitionHandlerCalls[partitionIndex]);
-
-            if (activeCalls > 1)
-            {
-                if (!args.Data.Properties.TryGetValue(nameof(EventGenerator), out var duplicateId))
-                {
-                    duplicateId = "(unknown)";
-                }
-
-                _metrics.Client.TrackException(new InvalidOperationException($"The handler for processing events was invoked concurrently for processor: `{ _identifier }`,  partition: `{ args.Partition.PartitionId }`, event: `{ duplicateId }`.  Count: `{ activeCalls }`"));
-            }
-
-            // Increment total service operations metric
-            if (args.HasEvent)
-            {
-                _metrics.Client.GetMetric(Metrics.EventsRead).TrackValue(1);
-                _metrics.Client.GetMetric(Metrics.EventsProcessed).TrackValue(1);
-            }
-        }
-        catch (Exception ex)
-        {
-            _metrics.Client.TrackException(ex);
-        }
-        finally
-        {
-            _metrics.Client.GetMetric(Metrics.EventHandlerCalls, Metrics.Identifier).TrackValue(1, _identifier);
-            Interlocked.Decrement(ref _partitionHandlerCalls[partitionIndex]);
-        }
-
-        return Task.CompletedTask;
-    }
-
-    /// <summary>
-    ///   The method to pass to the <see cref="EventProcessorClient" /> instance as the <see cref="EventProcessorClient.ProcessErrorAsync" />
-    ///   event handler.
-    /// </summary>
-    ///
-    /// <param name="args">The <see cref="ProcessErrorEventArgs" /> used to pass information to the errpr handler.</param>
-    ///
-    private Task ProcessErrorHandler(ProcessErrorEventArgs args)
-    {
-        var exceptionProperties = new Dictionary<string, string>();
-        _metrics.Client.TrackException(args.Exception);
-        return Task.CompletedTask;
     }
 }
