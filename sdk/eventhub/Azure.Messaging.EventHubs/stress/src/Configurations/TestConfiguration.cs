@@ -68,4 +68,17 @@ public class TestConfiguration
 
         return partitionCount;
     }
+
+    public async Task<string[]> GetEventHubPartitionKeysAsync()
+    {
+        if (string.IsNullOrEmpty(EventHubsConnectionString) || string.IsNullOrEmpty(EventHub))
+        {
+            return new string[0];
+        }
+
+        await using (var producerClient = new EventHubProducerClient(EventHubsConnectionString, EventHub))
+        {
+            return (await producerClient.GetPartitionIdsAsync().ConfigureAwait(false));
+        }
+    }
 }

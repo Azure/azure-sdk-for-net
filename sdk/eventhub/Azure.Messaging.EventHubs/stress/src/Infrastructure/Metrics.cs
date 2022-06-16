@@ -157,6 +157,10 @@ public class Metrics
 
     public const string DuplicateEventsDiscarded = "DuplicateEventsDiscarded";
 
+    public const string EventsFailedToPublish = "EventsFailedToPublish";
+
+    public const string PublisherAssignedSequenceValue = "PublisherAssignedSequenceValue";
+
     /// <summary>
     ///   Initializes a new instance of the <see cref="Metrics" /> class.
     /// </summary>

@@ -15,22 +15,22 @@ public class EventTracking
     public static readonly string PublishTimePropertyName = "PublishTime";
     public static readonly string PartitionPropertyName = "Partition";
     public static readonly string IdPropertyName = "Identifier";
+    public static readonly string EventDataHashPropertyName = "EventDataHash";
 
     private ConcurrentDictionary<string, byte> ReadEvents { get; } = new ConcurrentDictionary<string, byte>();
     private ConcurrentDictionary<string, int> LastReadPartitionSequence { get; } = new ConcurrentDictionary<string, int>();
 
-    public static EventData AugmentEvent(EventData eventData, int sequenceNumber, int lastSeenSequenceNumber, string partition=null)
+    public static void AugmentEvent(EventData eventData, int sequenceNumber, string partition=null)
     {
         eventData.Properties.Add(SequencePropertyName, sequenceNumber);
         eventData.Properties.Add(PublishTimePropertyName, DateTimeOffset.UtcNow);
         eventData.Properties.Add(IdPropertyName, Guid.NewGuid().ToString());
+        //eventData.Properties.Add(EventDataHashPropertyName, ) TODO
 
         if (!string.IsNullOrEmpty(partition))
         {
             eventData.Properties.Add(PartitionPropertyName, partition);
         }
-
-        return eventData;
     }
 
     public async Task ProcessEvent(ProcessEventArgs args, Metrics metrics)

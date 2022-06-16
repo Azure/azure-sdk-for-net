@@ -7,6 +7,7 @@ public enum Role
 {
     Publisher,
     BufferedPublisher,
+    PartitionPublisher,
     Processor,
     Consumer
 }

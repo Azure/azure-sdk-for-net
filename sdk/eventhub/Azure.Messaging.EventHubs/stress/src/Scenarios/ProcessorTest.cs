@@ -57,6 +57,7 @@ public class ProcessorTest
 
     public async Task RunRoleAsync(Role role, CancellationToken cancellationToken)
     {
+        //GetEventHubPartitionKeysAsync
         switch (role)
         {
             case Role.Publisher:
@@ -146,7 +147,7 @@ public class ProcessorTest
         return Task.CompletedTask;
     }
 
-    private List<string> _getAssignedPartitions(int partitionCount, int roleIndex)
+    private List<string> _getAssignedPartitions(int partitionCount, int roleIndex, string[] partitionIds)
     {
         var roleList = new List<Role>(_roles);
 
@@ -174,7 +175,7 @@ public class ProcessorTest
 
         for (int i = startPartition; i < endPartition; i++)
         {
-            assignedPartitions.Add(i.ToString());
+            assignedPartitions.Add(partitionIds[i]);
         }
 
         return assignedPartitions;
