@@ -1,0 +1,3150 @@
+﻿{
+    "swagger": "2.0",
+    "info": {
+        "title": "Microsoft Cognitive Language Service - Analyze Conversations Authoring",
+        "version": "2022-05-01",
+        "description": "The language service API is a suite of natural language processing (NLP) skills built with best-in-class Microsoft machine learning algorithms. The API can be used to analyze unstructured text for tasks such as sentiment analysis, key phrase extraction, language detection and question answering. Further documentation can be found in <a href=\"https://docs.microsoft.com/en-us/azure/cognitive-services/language-service/overview\">https://docs.microsoft.com/en-us/azure/cognitive-services/language-service/overview</a>."
+    },
+    "securityDefinitions": {
+        "apim_key": {
+            "type": "apiKey",
+            "description": "A subscription key for a Language service resource.",
+            "name": "Ocp-Apim-Subscription-Key",
+            "in": "header"
+        }
+    },
+    "security": [
+        {
+            "apim_key": []
+        }
+    ],
+    "x-ms-parameterized-host": {
+        "hostTemplate": "{Endpoint}/language",
+        "useSchemePrefix": false,
+        "parameters": [
+            {
+                "$ref": "common.json#/parameters/Endpoint"
+            }
+        ]
+    },
+    "paths": {
+        "/authoring/analyze-conversations/projects": {
+            "get": {
+                "description": "Lists the existing projects.",
+                "operationId": "ConversationalAnalysisAuthoring_ListProjects",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/TopParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/SkipParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/MaxPageSizeParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The metadata of projects.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringProjectsMetadata"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful List Projects": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulListProjects.json"
+                    }
+                },
+                "x-ms-pageable": {
+                    "nextLinkName": "nextLink",
+                    "itemName": "value"
+                }
+            }
+        },
+        "/authoring/analyze-conversations/projects/{projectName}": {
+            "patch": {
+                "description": "Creates a new project or updates an existing one.",
+                "operationId": "ConversationalAnalysisAuthoring_CreateProject",
+                "consumes": [
+                    "application/merge-patch+json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/ProjectNamePathParameter"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "The project parameters.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringCreateProjectOptions"
+                        }
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The metadata of the updated project, if it already exists.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringProjectMetadata"
+                        }
+                    },
+                    "201": {
+                        "description": "The metadata of the created project.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringProjectMetadata"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Create Project": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulCreateProject.json"
+                    }
+                }
+            },
+            "get": {
+                "description": "Gets the details of a project.",
+                "operationId": "ConversationalAnalysisAuthoring_GetProject",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/ProjectNamePathParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The metadata of the project.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringProjectMetadata"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Get Project": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulGetProject.json"
+                    }
+                }
+            },
+            "delete": {
+                "description": "Deletes a project.",
+                "operationId": "ConversationalAnalysisAuthoring_DeleteProject",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/ProjectNamePathParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The project deletion job result.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringProjectDeletionJobState"
+                        }
+                    },
+                    "202": {
+                        "description": "A successful call results with an Operation-Location header used to check the status of the job.",
+                        "headers": {
+                            "operation-location": {
+                                "description": "The location of the status API for monitoring the created job.",
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Delete Project": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulDeleteProject.json"
+                    }
+                },
+                "x-ms-long-running-operation": true
+            }
+        },
+        "/authoring/analyze-conversations/projects/{projectName}/:export": {
+            "post": {
+                "description": "Triggers a job to export a project's data.",
+                "operationId": "ConversationalAnalysisAuthoring_Export",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/ProjectNamePathParameter"
+                    },
+                    {
+                        "$ref": "#/parameters/ConversationalAnalysisAuthoringFormatQueryParameter"
+                    },
+                    {
+                        "$ref": "#/parameters/ConversationalAnalysisAuthoringStringIndexTypeQueryParameter"
+                    },
+                    {
+                        "in": "query",
+                        "name": "assetKind",
+                        "description": "Kind of asset to export.",
+                        "type": "string",
+                        "x-ms-parameter-location": "method"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The status of the long running operation.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringExportProjectJobState"
+                        }
+                    },
+                    "202": {
+                        "description": "A successful call results with an Operation-Location header used to check the status of the job.",
+                        "headers": {
+                            "operation-location": {
+                                "description": "The location of the status API for monitoring the created job.",
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Export Project": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulExportProject.json"
+                    }
+                },
+                "x-ms-long-running-operation": true
+            }
+        },
+        "/authoring/analyze-conversations/projects/{projectName}/:import": {
+            "post": {
+                "description": "Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced.",
+                "operationId": "ConversationalAnalysisAuthoring_Import",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/ProjectNamePathParameter"
+                    },
+                    {
+                        "$ref": "#/parameters/ConversationalAnalysisAuthoringFormatQueryParameter"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "The project data to import.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringExportedProject"
+                        }
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The details of the long running operation.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringImportProjectJobState"
+                        }
+                    },
+                    "202": {
+                        "description": "A successful call results with an Operation-Location header used to check the status of the job.",
+                        "headers": {
+                            "operation-location": {
+                                "description": "The location of the status API for monitoring the created job.",
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Import Project": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulImportProject.json"
+                    }
+                },
+                "x-ms-long-running-operation": true
+            }
+        },
+        "/authoring/analyze-conversations/projects/{projectName}/:train": {
+            "post": {
+                "description": "Triggers a training job for a project.",
+                "operationId": "ConversationalAnalysisAuthoring_Train",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/ProjectNamePathParameter"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "The training input parameters.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringTrainingJobOptions"
+                        }
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The training job result.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringTrainingJobState"
+                        }
+                    },
+                    "202": {
+                        "description": "A successful call results with an Operation-Location header used to check the status of the job.",
+                        "headers": {
+                            "operation-location": {
+                                "description": "The location of the status API for monitoring the created job.",
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Train Project": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulTrainProject.json"
+                    }
+                },
+                "x-ms-long-running-operation": true
+            }
+        },
+        "/authoring/analyze-conversations/projects/{projectName}/deployments": {
+            "get": {
+                "description": "Lists the deployments belonging to a project.",
+                "operationId": "ConversationalAnalysisAuthoring_ListDeployments",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/ProjectNamePathParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/TopParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/SkipParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/MaxPageSizeParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of all deployments.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringProjectDeployments"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful List Deployments": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulListDeployments.json"
+                    }
+                },
+                "x-ms-pageable": {
+                    "nextLinkName": "nextLink",
+                    "itemName": "value"
+                }
+            }
+        },
+        "/authoring/analyze-conversations/projects/{projectName}/deployments/:swap": {
+            "post": {
+                "description": "Swaps two existing deployments with each other.",
+                "operationId": "ConversationalAnalysisAuthoring_SwapDeployments",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/ProjectNamePathParameter"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "The job object to swap two deployments.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringSwapDeploymentsOptions"
+                        }
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The swap deployment job result.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringDeploymentJobState"
+                        }
+                    },
+                    "202": {
+                        "description": "A successful call results with an Operation-Location header used to check the status of the job.",
+                        "headers": {
+                            "operation-location": {
+                                "description": "The location of the status API for monitoring the created job.",
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Swap Deployments": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulSwapDeployments.json"
+                    }
+                },
+                "x-ms-long-running-operation": true
+            }
+        },
+        "/authoring/analyze-conversations/projects/{projectName}/deployments/{deploymentName}": {
+            "get": {
+                "description": "Gets the details of a deployment.",
+                "operationId": "ConversationalAnalysisAuthoring_GetDeployment",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/ProjectNamePathParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/DeploymentNamePathParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The Deployment info.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringProjectDeployment"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Get Deployment": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulGetDeployment.json"
+                    }
+                }
+            },
+            "put": {
+                "description": "Creates a new deployment or replaces an existing one.",
+                "operationId": "ConversationalAnalysisAuthoring_DeployProject",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/ProjectNamePathParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/DeploymentNamePathParameter"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "The new deployment info.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringCreateDeploymentOptions"
+                        }
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The deployment job result.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringDeploymentJobState"
+                        }
+                    },
+                    "202": {
+                        "description": "A successful call results with an Operation-Location header used to check the status of the job.",
+                        "headers": {
+                            "operation-location": {
+                                "description": "The location of the status API for monitoring the created job.",
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Deploy Project": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulDeployProject.json"
+                    }
+                },
+                "x-ms-long-running-operation": true
+            },
+            "delete": {
+                "description": "Deletes a project deployment.",
+                "operationId": "ConversationalAnalysisAuthoring_DeleteDeployment",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/ProjectNamePathParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/DeploymentNamePathParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The deployment job result.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringDeploymentJobState"
+                        }
+                    },
+                    "202": {
+                        "description": "A successful call results with an Operation-Location header used to check the status of the job.",
+                        "headers": {
+                            "operation-location": {
+                                "description": "The location of the status API for monitoring the created job.",
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Delete Deployment": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulDeleteDeployment.json"
+                    }
+                },
+                "x-ms-long-running-operation": true
+            }
+        },
+        "/authoring/analyze-conversations/projects/{projectName}/deployments/{deploymentName}/jobs/{jobId}": {
+            "get": {
+                "description": "Gets the status of an existing deployment job.",
+                "operationId": "ConversationalAnalysisAuthoring_GetDeploymentStatus",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/ProjectNamePathParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/DeploymentNamePathParameter"
+                    },
+                    {
+                        "$ref": "#/parameters/ConversationalAnalysisAuthoringJobIdPathParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The deployment job result.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringDeploymentJobState"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Get Deployment Status": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulGetDeploymentStatus.json"
+                    }
+                }
+            }
+        },
+        "/authoring/analyze-conversations/projects/{projectName}/deployments/swap/jobs/{jobId}": {
+            "get": {
+                "description": "Gets the status of an existing swap deployment job.",
+                "operationId": "ConversationalAnalysisAuthoring_GetSwapDeploymentsStatus",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/ProjectNamePathParameter"
+                    },
+                    {
+                        "$ref": "#/parameters/ConversationalAnalysisAuthoringJobIdPathParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The swap deployment job result.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringDeploymentJobState"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Get Swap Deployments Status": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulGetSwapDeploymentsStatus.json"
+                    }
+                }
+            }
+        },
+        "/authoring/analyze-conversations/projects/{projectName}/export/jobs/{jobId}": {
+            "get": {
+                "description": "Gets the status of an export job. Once job completes, returns the project metadata, and assets.",
+                "operationId": "ConversationalAnalysisAuthoring_GetExportStatus",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/ProjectNamePathParameter"
+                    },
+                    {
+                        "$ref": "#/parameters/ConversationalAnalysisAuthoringJobIdPathParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The status of the long running operation.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringExportProjectJobState"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Get Export Status": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulGetExportStatus.json"
+                    }
+                }
+            }
+        },
+        "/authoring/analyze-conversations/projects/{projectName}/import/jobs/{jobId}": {
+            "get": {
+                "description": "Gets the status for an import.",
+                "operationId": "ConversationalAnalysisAuthoring_GetImportStatus",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/ProjectNamePathParameter"
+                    },
+                    {
+                        "$ref": "#/parameters/ConversationalAnalysisAuthoringJobIdPathParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The details of the long running operation.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringImportProjectJobState"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Get Import Status": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulGetImportStatus.json"
+                    }
+                }
+            }
+        },
+        "/authoring/analyze-conversations/projects/{projectName}/models": {
+            "get": {
+                "description": "Lists the trained models belonging to a project.",
+                "operationId": "ConversationalAnalysisAuthoring_ListTrainedModels",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/ProjectNamePathParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/TopParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/SkipParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/MaxPageSizeParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of all trained models.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringProjectTrainedModels"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful List Models": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulListModels.json"
+                    }
+                },
+                "x-ms-pageable": {
+                    "nextLinkName": "nextLink",
+                    "itemName": "value"
+                }
+            }
+        },
+        "/authoring/analyze-conversations/projects/{projectName}/models/{trainedModelLabel}": {
+            "get": {
+                "description": "Gets the details of a trained model.",
+                "operationId": "ConversationalAnalysisAuthoring_GetTrainedModel",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/ProjectNamePathParameter"
+                    },
+                    {
+                        "$ref": "#/parameters/ConversationalAnalysisAuthoringTrainedModelLabelPathParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trained model info",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringProjectTrainedModel"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Get Model": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulGetModel.json"
+                    }
+                }
+            },
+            "delete": {
+                "description": "Deletes an existing trained model.",
+                "operationId": "ConversationalAnalysisAuthoring_DeleteTrainedModel",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/ProjectNamePathParameter"
+                    },
+                    {
+                        "$ref": "#/parameters/ConversationalAnalysisAuthoringTrainedModelLabelPathParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Deleted successfully."
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Delete Model": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulDeleteModel.json"
+                    }
+                }
+            }
+        },
+        "/authoring/analyze-conversations/projects/{projectName}/models/{trainedModelLabel}/evaluation/result": {
+            "get": {
+                "description": "Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process.",
+                "operationId": "ConversationalAnalysisAuthoring_GetModelEvaluationResults",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/ProjectNamePathParameter"
+                    },
+                    {
+                        "$ref": "#/parameters/ConversationalAnalysisAuthoringTrainedModelLabelPathParameter"
+                    },
+                    {
+                        "$ref": "#/parameters/ConversationalAnalysisAuthoringStringIndexTypeQueryParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/TopParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/SkipParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/MaxPageSizeParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of the evaluation predictions.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringEvaluationResults"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Get Model Evaluation": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulGetModelEvaluation.json"
+                    }
+                },
+                "x-ms-pageable": {
+                    "nextLinkName": "nextLink",
+                    "itemName": "value"
+                }
+            }
+        },
+        "/authoring/analyze-conversations/projects/{projectName}/models/{trainedModelLabel}/evaluation/summary-result": {
+            "get": {
+                "description": "Gets the evaluation summary of a trained model. The summary includes high level performance measurements of the model e.g., F1, Precision, Recall, etc.",
+                "operationId": "ConversationalAnalysisAuthoring_GetModelEvaluationSummary",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/ProjectNamePathParameter"
+                    },
+                    {
+                        "$ref": "#/parameters/ConversationalAnalysisAuthoringTrainedModelLabelPathParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of all evaluation results.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringEvaluationSummary"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Get Model Evaluation Summary": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulGetModelEvaluationSummary.json"
+                    }
+                }
+            }
+        },
+        "/authoring/analyze-conversations/projects/{projectName}/train/jobs": {
+            "get": {
+                "description": "Lists the non-expired training jobs created for a project.",
+                "operationId": "ConversationalAnalysisAuthoring_ListTrainingJobs",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/ProjectNamePathParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/TopParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/SkipParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/MaxPageSizeParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of the training jobs.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringTrainingJobs"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful List Training Jobs": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulListTrainingJobs.json"
+                    }
+                },
+                "x-ms-pageable": {
+                    "nextLinkName": "nextLink",
+                    "itemName": "value"
+                }
+            }
+        },
+        "/authoring/analyze-conversations/projects/{projectName}/train/jobs/{jobId}": {
+            "get": {
+                "description": "Gets the status for a training job.",
+                "operationId": "ConversationalAnalysisAuthoring_GetTrainingStatus",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/ProjectNamePathParameter"
+                    },
+                    {
+                        "$ref": "#/parameters/ConversationalAnalysisAuthoringJobIdPathParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The training job result.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringTrainingJobState"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Get Train Status": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulGetTrainStatus.json"
+                    }
+                }
+            }
+        },
+        "/authoring/analyze-conversations/projects/{projectName}/train/jobs/{jobId}/:cancel": {
+            "post": {
+                "description": "Triggers a cancellation for a running training job.",
+                "operationId": "ConversationalAnalysisAuthoring_CancelTrainingJob",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "common.json#/parameters/ProjectNamePathParameter"
+                    },
+                    {
+                        "$ref": "#/parameters/ConversationalAnalysisAuthoringJobIdPathParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The training job result.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringTrainingJobState"
+                        }
+                    },
+                    "202": {
+                        "description": "A successful call results with an Operation-Location header used to check the status of the job.",
+                        "headers": {
+                            "operation-location": {
+                                "description": "The location of the status API for monitoring the job cancellation.",
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Cancel Training Job": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulCancelTrainingJob.json"
+                    }
+                },
+                "x-ms-long-running-operation": true
+            }
+        },
+        "/authoring/analyze-conversations/projects/global/deletion-jobs/{jobId}": {
+            "get": {
+                "description": "Gets the status for a project deletion job.",
+                "operationId": "ConversationalAnalysisAuthoring_GetProjectDeletionStatus",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/ConversationalAnalysisAuthoringJobIdPathParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The project deletion job result.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringProjectDeletionJobState"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Get Project Deletion Status": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulGetProjectDeletionStatus.json"
+                    }
+                }
+            }
+        },
+        "/authoring/analyze-conversations/projects/global/languages": {
+            "get": {
+                "description": "Lists the supported languages for the given project type.",
+                "operationId": "ConversationalAnalysisAuthoring_GetSupportedLanguages",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/ConversationalAnalysisAuthoringProjectKindQueryParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/TopParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/SkipParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/MaxPageSizeParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The list of supported languages.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringSupportedLanguages"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Supported Languages": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulGetSupportedLanguages.json"
+                    }
+                },
+                "x-ms-pageable": {
+                    "nextLinkName": "nextLink",
+                    "itemName": "value"
+                }
+            }
+        },
+        "/authoring/analyze-conversations/projects/global/prebuilt-entities": {
+            "get": {
+                "description": "Lists the supported prebuilt entities that can be used while creating composed entities.",
+                "operationId": "ConversationalAnalysisAuthoring_GetSupportedPrebuiltEntities",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "language",
+                        "description": "The language to get supported prebuilt entities for. Required if multilingual is false. This is BCP-47 representation of a language. For example, use \"en\" for English, \"en-gb\" for English (UK), \"es\" for Spanish etc.",
+                        "type": "string",
+                        "x-ms-parameter-location": "method"
+                    },
+                    {
+                        "in": "query",
+                        "name": "multilingual",
+                        "description": "Whether to get the support prebuilt entities for multilingual or monolingual projects. If true, the language parameter is ignored.",
+                        "type": "string",
+                        "x-ms-parameter-location": "method"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/TopParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/SkipParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/MaxPageSizeParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The list of supported prebuilt entities.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringPrebuiltEntities"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Get Supported Prebuilt Entities": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulGetSupportedPrebuiltEntities.json"
+                    }
+                },
+                "x-ms-pageable": {
+                    "nextLinkName": "nextLink",
+                    "itemName": "value"
+                }
+            }
+        },
+        "/authoring/analyze-conversations/projects/global/training-config-versions": {
+            "get": {
+                "description": "Lists the support training config version for a given project type.",
+                "operationId": "ConversationalAnalysisAuthoring_ListTrainingConfigVersions",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/ConversationalAnalysisAuthoringProjectKindQueryParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/TopParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/SkipParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/MaxPageSizeParameter"
+                    },
+                    {
+                        "$ref": "common.json#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of config versions.",
+                        "schema": {
+                            "$ref": "#/definitions/ConversationalAnalysisAuthoringTrainingConfigVersions"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "common.json#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful Get Supported Training Config Versions": {
+                        "$ref": "./examples/analyzeconversations-authoring/SuccessfulGetSupportedTrainingConfigVersions.json"
+                    }
+                },
+                "x-ms-pageable": {
+                    "nextLinkName": "nextLink",
+                    "itemName": "value"
+                }
+            }
+        }
+    },
+    "definitions": {
+        "ConversationalAnalysisAuthoringCompositionSetting": {
+            "enum": [
+                "returnLongestOverlap",
+                "requireExactOverlap",
+                "separateComponents",
+                "combineComponents"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "CompositionSetting",
+                "modelAsString": true,
+                "values": [
+                    {
+                        "value": "returnLongestOverlap",
+                        "description": "When two or more components are found in the text and overlap, the component with the longest set of characters is returned."
+                    },
+                    {
+                        "value": "requireExactOverlap",
+                        "description": "All components must overlap at the exact same characters in the text for the entity to return. If one of the defined components is not matched or predicted, the entity will not return."
+                    },
+                    {
+                        "value": "separateComponents",
+                        "description": "Every component's match or prediction is returned as a separate instance of the entity."
+                    },
+                    {
+                        "value": "combineComponents",
+                        "description": "When two or more components are found in the text and overlap, the components' spans are merged together into one span combining all of them."
+                    }
+                ]
+            },
+            "x-ms-client-name": "CompositionSetting"
+        },
+        "ConversationalAnalysisAuthoringConfusionMatrix": {
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#/definitions/ConversationalAnalysisAuthoringConfusionMatrixRow"
+            },
+            "x-ms-client-name": "ConfusionMatrix"
+        },
+        "ConversationalAnalysisAuthoringConfusionMatrixCell": {
+            "description": "Represents a cell in a confusion matrix.",
+            "required": [
+                "normalizedValue",
+                "rawValue"
+            ],
+            "type": "object",
+            "properties": {
+                "normalizedValue": {
+                    "format": "float",
+                    "description": "Represents normalized value in percentages.",
+                    "type": "number"
+                },
+                "rawValue": {
+                    "format": "float",
+                    "description": "Represents raw value.",
+                    "type": "number"
+                }
+            },
+            "x-ms-client-name": "ConfusionMatrixCell"
+        },
+        "ConversationalAnalysisAuthoringConfusionMatrixRow": {
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#/definitions/ConversationalAnalysisAuthoringConfusionMatrixCell"
+            },
+            "x-ms-client-name": "ConfusionMatrixRow"
+        },
+        "ConversationalAnalysisAuthoringConversationExportedEntity": {
+            "description": "Represents an entity with its components.",
+            "required": [
+                "category"
+            ],
+            "type": "object",
+            "properties": {
+                "category": {
+                    "description": "The category of the entity.",
+                    "type": "string"
+                },
+                "compositionSetting": {
+                    "description": "The behavior to follow when the entity's components overlap with each other.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringCompositionSetting"
+                },
+                "list": {
+                    "description": "The list component of the entity.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringExportedEntityList"
+                },
+                "prebuilts": {
+                    "description": "The prebuilt entities components.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConversationalAnalysisAuthoringExportedPrebuiltEntity"
+                    }
+                }
+            },
+            "x-ms-client-name": "ConversationExportedEntity"
+        },
+        "ConversationalAnalysisAuthoringConversationExportedIntent": {
+            "description": "Represents an exported intent of a conversational project.",
+            "required": [
+                "category"
+            ],
+            "type": "object",
+            "properties": {
+                "category": {
+                    "description": "The intent category.",
+                    "type": "string"
+                }
+            },
+            "x-ms-client-name": "ConversationExportedIntent"
+        },
+        "ConversationalAnalysisAuthoringConversationExportedProjectAssets": {
+            "description": "Represents the exported assets of a conversational project.",
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringExportedProjectAssets"
+                }
+            ],
+            "properties": {
+                "intents": {
+                    "description": "The intents defined in the project.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConversationalAnalysisAuthoringConversationExportedIntent"
+                    }
+                },
+                "entities": {
+                    "description": "The entities defined in the project.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConversationalAnalysisAuthoringConversationExportedEntity"
+                    }
+                },
+                "utterances": {
+                    "description": "The utterances defined in the project.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConversationalAnalysisAuthoringConversationExportedUtterance"
+                    }
+                }
+            },
+            "x-ms-discriminator-value": "Conversation",
+            "x-ms-client-name": "ConversationExportedProjectAssets"
+        },
+        "ConversationalAnalysisAuthoringConversationExportedUtterance": {
+            "description": "Represents an exported utterance for a conversational project.",
+            "required": [
+                "text",
+                "intent"
+            ],
+            "type": "object",
+            "properties": {
+                "entities": {
+                    "description": "Represents the entity labels of the utterance.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConversationalAnalysisAuthoringExportedUtteranceEntityLabel"
+                    }
+                },
+                "text": {
+                    "description": "The utterance text.",
+                    "type": "string"
+                },
+                "language": {
+                    "description": "Represents the utterance's language. This is BCP-47 representation of a language. For example, use \"en\" for English, \"en-gb\" for English (UK), \"es\" for Spanish etc.",
+                    "type": "string"
+                },
+                "intent": {
+                    "description": "The intent of the utterance.",
+                    "type": "string"
+                },
+                "dataset": {
+                    "description": "The dataset for this utterance. Allowed values are 'Train' and 'Test'.",
+                    "type": "string"
+                }
+            },
+            "x-ms-client-name": "ConversationExportedUtterance"
+        },
+        "ConversationalAnalysisAuthoringCreateDeploymentOptions": {
+            "description": "Represents the options for creating or updating a project deployment.",
+            "required": [
+                "trainedModelLabel"
+            ],
+            "type": "object",
+            "properties": {
+                "trainedModelLabel": {
+                    "description": "Represents the trained model label.",
+                    "type": "string"
+                }
+            },
+            "x-ms-client-name": "CreateDeploymentOptions"
+        },
+        "ConversationalAnalysisAuthoringCreateProjectOptions": {
+            "description": "Represents the options used to create or update a project.",
+            "required": [
+                "projectKind",
+                "projectName",
+                "language"
+            ],
+            "type": "object",
+            "properties": {
+                "projectKind": {
+                    "description": "Represents the project kind.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringProjectKind"
+                },
+                "settings": {
+                    "description": "The project settings.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringProjectSettings"
+                },
+                "projectName": {
+                    "description": "The new project name.",
+                    "type": "string"
+                },
+                "multilingual": {
+                    "description": "Whether the project would be used for multiple languages or not.",
+                    "type": "boolean"
+                },
+                "description": {
+                    "description": "The project description.",
+                    "type": "string"
+                },
+                "language": {
+                    "description": "The project language. This is BCP-47 representation of a language. For example, use \"en\" for English, \"en-gb\" for English (UK), \"es\" for Spanish etc.",
+                    "type": "string"
+                }
+            },
+            "x-ms-client-name": "CreateProjectOptions"
+        },
+        "ConversationalAnalysisAuthoringDeploymentJobState": {
+            "description": "Represents the state of a deployment job.",
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringJobState"
+                }
+            ],
+            "x-ms-client-name": "DeploymentJobState"
+        },
+        "ConversationalAnalysisAuthoringEntitiesEvaluationSummary": {
+            "description": "Represents the evaluation result summary for the project's entities.",
+            "required": [
+                "confusionMatrix",
+                "entities",
+                "microF1",
+                "microPrecision",
+                "microRecall",
+                "macroF1",
+                "macroPrecision",
+                "macroRecall"
+            ],
+            "type": "object",
+            "properties": {
+                "confusionMatrix": {
+                    "description": "Represents the confusion matrix between two entities (the two entities can be the same). The matrix is between the entity that was labelled and the entity that was predicted.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringConfusionMatrix"
+                },
+                "entities": {
+                    "description": "Represents the entities evaluation summary.",
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/ConversationalAnalysisAuthoringEntityEvaluationSummary"
+                    }
+                },
+                "microF1": {
+                    "format": "float",
+                    "description": "Represents the micro F1",
+                    "type": "number"
+                },
+                "microPrecision": {
+                    "format": "float",
+                    "description": "Represents the micro precision",
+                    "type": "number"
+                },
+                "microRecall": {
+                    "format": "float",
+                    "description": "Represents the micro recall",
+                    "type": "number"
+                },
+                "macroF1": {
+                    "format": "float",
+                    "description": "Represents the macro F1",
+                    "type": "number"
+                },
+                "macroPrecision": {
+                    "format": "float",
+                    "description": "Represents the macro precision",
+                    "type": "number"
+                },
+                "macroRecall": {
+                    "format": "float",
+                    "description": "Represents the macro recall",
+                    "type": "number"
+                }
+            },
+            "x-ms-client-name": "EntitiesEvaluationSummary"
+        },
+        "ConversationalAnalysisAuthoringEntityEvaluationSummary": {
+            "description": "Represents the evaluation result for an entity.",
+            "required": [
+                "f1",
+                "precision",
+                "recall",
+                "truePositiveCount",
+                "trueNegativeCount",
+                "falsePositiveCount",
+                "falseNegativeCount"
+            ],
+            "type": "object",
+            "properties": {
+                "f1": {
+                    "format": "double",
+                    "description": "Represents the model precision",
+                    "type": "number"
+                },
+                "precision": {
+                    "format": "double",
+                    "description": "Represents the model recall",
+                    "type": "number"
+                },
+                "recall": {
+                    "format": "double",
+                    "description": "Represents the model F1 score",
+                    "type": "number"
+                },
+                "truePositiveCount": {
+                    "format": "int32",
+                    "description": "Represents the count of true positive",
+                    "type": "integer"
+                },
+                "trueNegativeCount": {
+                    "format": "int32",
+                    "description": "Represents the count of true negative",
+                    "type": "integer"
+                },
+                "falsePositiveCount": {
+                    "format": "int32",
+                    "description": "Represents the count of false positive",
+                    "type": "integer"
+                },
+                "falseNegativeCount": {
+                    "format": "int32",
+                    "description": "Represents the count of false negative",
+                    "type": "integer"
+                }
+            },
+            "x-ms-client-name": "EntityEvaluationSummary"
+        },
+        "ConversationalAnalysisAuthoringEvaluationKind": {
+            "enum": [
+                "percentage",
+                "manual"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "EvaluationKind",
+                "modelAsString": true,
+                "values": [
+                    {
+                        "value": "percentage",
+                        "description": "Split the data into training and test sets according to user-defined percentages."
+                    },
+                    {
+                        "value": "manual",
+                        "description": "Split the data according to the chosen dataset for every example in the data."
+                    }
+                ]
+            },
+            "x-ms-client-name": "EvaluationKind"
+        },
+        "ConversationalAnalysisAuthoringEvaluationOptions": {
+            "description": "Represents the options used running the evaluation.",
+            "type": "object",
+            "properties": {
+                "kind": {
+                    "description": "Represents the evaluation kind. By default, the evaluation kind is set to percentage.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringEvaluationKind"
+                },
+                "trainingSplitPercentage": {
+                    "format": "int32",
+                    "description": "Represents the training dataset split percentage. Only needed in case the evaluation kind is percentage.",
+                    "type": "integer"
+                },
+                "testingSplitPercentage": {
+                    "format": "int32",
+                    "description": "Represents the testing dataset split percentage. Only needed in case the evaluation kind is percentage.",
+                    "type": "integer"
+                }
+            },
+            "x-ms-client-name": "EvaluationOptions"
+        },
+        "ConversationalAnalysisAuthoringEvaluationResults": {
+            "description": "Represent a list of utterances' evaluation results.",
+            "required": [
+                "value",
+                "nextLink"
+            ],
+            "type": "object",
+            "properties": {
+                "value": {
+                    "description": "The utterances evaluation results.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConversationalAnalysisAuthoringUtteranceEvaluationResult"
+                    }
+                },
+                "nextLink": {
+                    "description": "The next page link.",
+                    "type": "string",
+                    "x-nullable": true
+                }
+            },
+            "x-ms-client-name": "EvaluationResults"
+        },
+        "ConversationalAnalysisAuthoringEvaluationSummary": {
+            "description": "Represents the evaluation result summary.",
+            "required": [
+                "entitiesEvaluation",
+                "intentsEvaluation"
+            ],
+            "type": "object",
+            "properties": {
+                "entitiesEvaluation": {
+                    "description": "Contains the data related to entities evaluation.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringEntitiesEvaluationSummary"
+                },
+                "intentsEvaluation": {
+                    "description": "Contains the data related to intents evaluation.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringIntentsEvaluationSummary"
+                },
+                "evaluationOptions": {
+                    "description": "The options that were used while running the evaluation.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringEvaluationOptions"
+                }
+            },
+            "x-ms-client-name": "EvaluationSummary"
+        },
+        "ConversationalAnalysisAuthoringExportedConversationOrchestration": {
+            "description": "Defines the orchestration details for a Conversational project target.",
+            "required": [
+                "projectName",
+                "deploymentName"
+            ],
+            "type": "object",
+            "properties": {
+                "projectName": {
+                    "description": "The name of the targeted project.",
+                    "type": "string"
+                },
+                "deploymentName": {
+                    "description": "The name of the targeted deployment.",
+                    "type": "string"
+                }
+            },
+            "x-ms-client-name": "ExportedConversationOrchestration"
+        },
+        "ConversationalAnalysisAuthoringExportedConversationOrchestrationOptions": {
+            "description": "Represents the orchestration options for a Conversational project target.",
+            "required": [
+                "conversationOrchestration"
+            ],
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringExportedOrchestrationOptions"
+                }
+            ],
+            "properties": {
+                "conversationOrchestration": {
+                    "description": "The Conversational project target details.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringExportedConversationOrchestration"
+                }
+            },
+            "x-ms-discriminator-value": "Conversation",
+            "x-ms-client-name": "ExportedConversationOrchestrationOptions"
+        },
+        "ConversationalAnalysisAuthoringExportedEntityList": {
+            "description": "Represents a list component of an entity.",
+            "type": "object",
+            "properties": {
+                "sublists": {
+                    "description": "The sub-lists of the list component.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConversationalAnalysisAuthoringExportedEntitySublist"
+                    }
+                }
+            },
+            "x-ms-client-name": "ExportedEntityList"
+        },
+        "ConversationalAnalysisAuthoringExportedEntityListSynonym": {
+            "description": "Represents a list of synonyms inside a list component",
+            "type": "object",
+            "properties": {
+                "language": {
+                    "description": "Represents the language of the synonyms. This is BCP-47 representation of a language. For example, use \"en\" for English, \"en-gb\" for English (UK), \"es\" for Spanish etc.",
+                    "type": "string"
+                },
+                "values": {
+                    "description": "The list of synonyms.",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "x-ms-client-name": "ExportedEntityListSynonym"
+        },
+        "ConversationalAnalysisAuthoringExportedEntitySublist": {
+            "description": "Represents a sub-list inside a list component.",
+            "type": "object",
+            "properties": {
+                "listKey": {
+                    "description": "The key of the sub-list.",
+                    "type": "string"
+                },
+                "synonyms": {
+                    "description": "The phrases of that correspond to the sub-list.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConversationalAnalysisAuthoringExportedEntityListSynonym"
+                    }
+                }
+            },
+            "x-ms-client-name": "ExportedEntitySublist"
+        },
+        "ConversationalAnalysisAuthoringExportedLuisOrchestration": {
+            "description": "Defines the orchestration details for a LUIS application target.",
+            "required": [
+                "appId"
+            ],
+            "type": "object",
+            "properties": {
+                "appId": {
+                    "format": "uuid",
+                    "description": "The LUIS application ID.",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "appVersion": {
+                    "description": "The targeted version Id.",
+                    "type": "string"
+                },
+                "slotName": {
+                    "description": "The targeted slot name.",
+                    "type": "string"
+                }
+            },
+            "x-ms-client-name": "ExportedLuisOrchestration"
+        },
+        "ConversationalAnalysisAuthoringExportedLuisOrchestrationOptions": {
+            "description": "Represents the orchestration options for a LUIS application target.",
+            "required": [
+                "luisOrchestration"
+            ],
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringExportedOrchestrationOptions"
+                }
+            ],
+            "properties": {
+                "luisOrchestration": {
+                    "description": "The LUIS application target details.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringExportedLuisOrchestration"
+                }
+            },
+            "x-ms-discriminator-value": "Luis",
+            "x-ms-client-name": "ExportedLuisOrchestrationOptions"
+        },
+        "ConversationalAnalysisAuthoringExportedOrchestrationOptions": {
+            "description": "Represents the options used to define the orchestration behavior of an intent.",
+            "required": [
+                "targetProjectKind"
+            ],
+            "type": "object",
+            "properties": {
+                "targetProjectKind": {
+                    "description": "The kind of the target used in the orchestration flow.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringOrchestrationTargetProjectKind"
+                }
+            },
+            "discriminator": "targetProjectKind",
+            "x-ms-client-name": "ExportedOrchestrationOptions"
+        },
+        "ConversationalAnalysisAuthoringExportedPrebuiltEntity": {
+            "description": "Represents an exported prebuilt entity component",
+            "required": [
+                "category"
+            ],
+            "type": "object",
+            "properties": {
+                "category": {
+                    "description": "The prebuilt entity category.",
+                    "type": "string"
+                }
+            },
+            "x-ms-client-name": "ExportedPrebuiltEntity"
+        },
+        "ConversationalAnalysisAuthoringExportedProject": {
+            "description": "Represents an exported project.",
+            "required": [
+                "projectFileVersion",
+                "stringIndexType",
+                "metadata"
+            ],
+            "type": "object",
+            "properties": {
+                "projectFileVersion": {
+                    "description": "The version of the exported file.",
+                    "type": "string"
+                },
+                "stringIndexType": {
+                    "description": "Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringStringIndexType"
+                },
+                "metadata": {
+                    "description": "Represents the project metadata.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringCreateProjectOptions"
+                },
+                "assets": {
+                    "description": "Represents the project assets.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringExportedProjectAssets"
+                }
+            },
+            "x-ms-client-name": "ExportedProject"
+        },
+        "ConversationalAnalysisAuthoringExportedProjectAssets": {
+            "description": "Represents the assets of an exported project.",
+            "required": [
+                "projectKind"
+            ],
+            "type": "object",
+            "properties": {
+                "projectKind": {
+                    "description": "The type of project containing the assets.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringProjectKind"
+                }
+            },
+            "discriminator": "projectKind",
+            "x-ms-client-name": "ExportedProjectAssets"
+        },
+        "ConversationalAnalysisAuthoringExportedProjectFormat": {
+            "enum": [
+                "Conversation",
+                "Luis"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "ExportedProjectFormat",
+                "modelAsString": true,
+                "values": [
+                    {
+                        "value": "Conversation",
+                        "description": "Specifies the format for a conversational project."
+                    },
+                    {
+                        "value": "Luis",
+                        "description": "Specifies the format for an application that was exported from LUIS."
+                    }
+                ]
+            },
+            "x-ms-client-name": "ExportedProjectFormat"
+        },
+        "ConversationalAnalysisAuthoringExportedQuestionAnsweringOrchestration": {
+            "description": "Defines the orchestration details for a Question Answering project target.",
+            "required": [
+                "projectName"
+            ],
+            "type": "object",
+            "properties": {
+                "projectName": {
+                    "description": "The name of the target project.",
+                    "type": "string"
+                }
+            },
+            "x-ms-client-name": "ExportedQuestionAnsweringOrchestration"
+        },
+        "ConversationalAnalysisAuthoringExportedQuestionAnsweringOrchestrationOptions": {
+            "description": "Represents the orchestration options for a Question Answering project target.",
+            "required": [
+                "questionAnsweringOrchestration"
+            ],
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringExportedOrchestrationOptions"
+                }
+            ],
+            "properties": {
+                "questionAnsweringOrchestration": {
+                    "description": "The Question Answering project details.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringExportedQuestionAnsweringOrchestration"
+                }
+            },
+            "x-ms-discriminator-value": "QuestionAnswering",
+            "x-ms-client-name": "ExportedQuestionAnsweringOrchestrationOptions"
+        },
+        "ConversationalAnalysisAuthoringExportedUtteranceEntityLabel": {
+            "description": "Represents an entity label for an utterance.",
+            "required": [
+                "category",
+                "offset",
+                "length"
+            ],
+            "type": "object",
+            "properties": {
+                "category": {
+                    "description": "The category of the entity label.",
+                    "type": "string"
+                },
+                "offset": {
+                    "format": "int32",
+                    "description": "Start position for the entity text.",
+                    "type": "integer"
+                },
+                "length": {
+                    "format": "int32",
+                    "description": "Length for the entity text.",
+                    "type": "integer"
+                }
+            },
+            "x-ms-client-name": "ExportedUtteranceEntityLabel"
+        },
+        "ConversationalAnalysisAuthoringExportProjectJobState": {
+            "description": "Represents the state of an export job.",
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringJobState"
+                }
+            ],
+            "properties": {
+                "resultUrl": {
+                    "description": "The URL to use in order to download the exported project.",
+                    "type": "string"
+                }
+            },
+            "x-ms-client-name": "ExportProjectJobState"
+        },
+        "ConversationalAnalysisAuthoringImportProjectJobState": {
+            "description": "Represents the state of an import job.",
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringJobState"
+                }
+            ],
+            "x-ms-client-name": "ImportProjectJobState"
+        },
+        "ConversationalAnalysisAuthoringIntentEvaluationSummary": {
+            "description": "The evaluation summary for an intent.",
+            "required": [
+                "f1",
+                "precision",
+                "recall",
+                "truePositiveCount",
+                "trueNegativeCount",
+                "falsePositiveCount",
+                "falseNegativeCount"
+            ],
+            "type": "object",
+            "properties": {
+                "f1": {
+                    "format": "double",
+                    "description": "Represents the model precision",
+                    "type": "number"
+                },
+                "precision": {
+                    "format": "double",
+                    "description": "Represents the model recall",
+                    "type": "number"
+                },
+                "recall": {
+                    "format": "double",
+                    "description": "Represents the model F1 score",
+                    "type": "number"
+                },
+                "truePositiveCount": {
+                    "format": "int32",
+                    "description": "Represents the count of true positive",
+                    "type": "integer"
+                },
+                "trueNegativeCount": {
+                    "format": "int32",
+                    "description": "Represents the count of true negative",
+                    "type": "integer"
+                },
+                "falsePositiveCount": {
+                    "format": "int32",
+                    "description": "Represents the count of false positive",
+                    "type": "integer"
+                },
+                "falseNegativeCount": {
+                    "format": "int32",
+                    "description": "Represents the count of false negative",
+                    "type": "integer"
+                }
+            },
+            "x-ms-client-name": "IntentEvaluationSummary"
+        },
+        "ConversationalAnalysisAuthoringIntentsEvaluationSummary": {
+            "description": "Represents the evaluation summary for the project's intents.",
+            "required": [
+                "confusionMatrix",
+                "intents",
+                "microF1",
+                "microPrecision",
+                "microRecall",
+                "macroF1",
+                "macroPrecision",
+                "macroRecall"
+            ],
+            "type": "object",
+            "properties": {
+                "confusionMatrix": {
+                    "description": "Represents the confusion matrix between two intents (the two intents can be the same). The matrix is between the intent that was labelled and the intent that was predicted.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringConfusionMatrix"
+                },
+                "intents": {
+                    "description": "Represents the intents evaluation summary.",
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/ConversationalAnalysisAuthoringIntentEvaluationSummary"
+                    }
+                },
+                "microF1": {
+                    "format": "float",
+                    "description": "Represents the micro F1",
+                    "type": "number"
+                },
+                "microPrecision": {
+                    "format": "float",
+                    "description": "Represents the micro precision",
+                    "type": "number"
+                },
+                "microRecall": {
+                    "format": "float",
+                    "description": "Represents the micro recall",
+                    "type": "number"
+                },
+                "macroF1": {
+                    "format": "float",
+                    "description": "Represents the macro F1",
+                    "type": "number"
+                },
+                "macroPrecision": {
+                    "format": "float",
+                    "description": "Represents the macro precision",
+                    "type": "number"
+                },
+                "macroRecall": {
+                    "format": "float",
+                    "description": "Represents the macro recall",
+                    "type": "number"
+                }
+            },
+            "x-ms-client-name": "IntentsEvaluationSummary"
+        },
+        "ConversationalAnalysisAuthoringJobState": {
+            "description": "Represents a job's state.",
+            "required": [
+                "jobId",
+                "createdDateTime",
+                "lastUpdatedDateTime",
+                "status"
+            ],
+            "type": "object",
+            "properties": {
+                "jobId": {
+                    "description": "The job ID.",
+                    "type": "string"
+                },
+                "createdDateTime": {
+                    "format": "date-time",
+                    "description": "The creation date time of the job.",
+                    "type": "string"
+                },
+                "lastUpdatedDateTime": {
+                    "format": "date-time",
+                    "description": "The last date time the job was updated.",
+                    "type": "string"
+                },
+                "expirationDateTime": {
+                    "format": "date-time",
+                    "description": "The expiration date time of the job.",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "The job status.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringJobStatus"
+                },
+                "warnings": {
+                    "description": "The warnings that were encountered while executing the job.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConversationalAnalysisAuthoringWarning"
+                    }
+                },
+                "errors": {
+                    "description": "The errors encountered while executing the job.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "common.json#/definitions/Error"
+                    }
+                }
+            },
+            "x-ms-client-name": "JobState"
+        },
+        "ConversationalAnalysisAuthoringJobStatus": {
+            "enum": [
+                "notStarted",
+                "running",
+                "succeeded",
+                "failed",
+                "cancelled",
+                "cancelling",
+                "partiallyCompleted"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "JobStatus",
+                "modelAsString": true
+            },
+            "x-ms-client-name": "JobStatus"
+        },
+        "ConversationalAnalysisAuthoringOrchestrationExportedIntent": {
+            "description": "Represents an exported intent for an orchestration project.",
+            "required": [
+                "category"
+            ],
+            "type": "object",
+            "properties": {
+                "orchestration": {
+                    "description": "Specifies the behavior of this intent in the orchestration flow.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringExportedOrchestrationOptions"
+                },
+                "category": {
+                    "description": "The intent category.",
+                    "type": "string"
+                }
+            },
+            "x-ms-client-name": "OrchestrationExportedIntent"
+        },
+        "ConversationalAnalysisAuthoringOrchestrationExportedProjectAssets": {
+            "description": "Represents the assets of an orchestration project.",
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringExportedProjectAssets"
+                }
+            ],
+            "properties": {
+                "intents": {
+                    "description": "Represents the intents of the project.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConversationalAnalysisAuthoringOrchestrationExportedIntent"
+                    }
+                },
+                "utterances": {
+                    "description": "Represents the utterances of the project.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConversationalAnalysisAuthoringOrchestrationExportedUtterance"
+                    }
+                }
+            },
+            "x-ms-discriminator-value": "Orchestration",
+            "x-ms-client-name": "OrchestrationExportedProjectAssets"
+        },
+        "ConversationalAnalysisAuthoringOrchestrationExportedUtterance": {
+            "description": "Represents an utterance of an orchestration project.",
+            "required": [
+                "text",
+                "intent"
+            ],
+            "type": "object",
+            "properties": {
+                "text": {
+                    "description": "The utterance text.",
+                    "type": "string"
+                },
+                "language": {
+                    "description": "Represents the utterance's language. This is BCP-47 representation of a language. For example, use \"en\" for English, \"en-gb\" for English (UK), \"es\" for Spanish etc.",
+                    "type": "string"
+                },
+                "intent": {
+                    "description": "The intent of the utterance.",
+                    "type": "string"
+                },
+                "dataset": {
+                    "description": "The dataset for this utterance. Allowed values are 'Train' and 'Test'.",
+                    "type": "string"
+                }
+            },
+            "x-ms-client-name": "OrchestrationExportedUtterance"
+        },
+        "ConversationalAnalysisAuthoringOrchestrationTargetProjectKind": {
+            "enum": [
+                "Luis",
+                "Conversation",
+                "QuestionAnswering"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "OrchestrationTargetProjectKind",
+                "modelAsString": true
+            },
+            "x-ms-client-name": "OrchestrationTargetProjectKind"
+        },
+        "ConversationalAnalysisAuthoringPrebuiltEntities": {
+            "description": "Represents a list of the retrieved supported prebuilt entities.",
+            "required": [
+                "value",
+                "nextLink"
+            ],
+            "type": "object",
+            "properties": {
+                "value": {
+                    "description": "The supported prebuilt entities.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConversationalAnalysisAuthoringPrebuiltEntity"
+                    }
+                },
+                "nextLink": {
+                    "description": "The next page link.",
+                    "type": "string",
+                    "x-nullable": true
+                }
+            },
+            "x-ms-client-name": "PrebuiltEntities"
+        },
+        "ConversationalAnalysisAuthoringPrebuiltEntity": {
+            "description": "Represents a supported prebuilt entity.",
+            "required": [
+                "category",
+                "description",
+                "examples"
+            ],
+            "type": "object",
+            "properties": {
+                "category": {
+                    "description": "The prebuilt entity category.",
+                    "type": "string"
+                },
+                "description": {
+                    "description": "The description.",
+                    "type": "string"
+                },
+                "examples": {
+                    "description": "English examples for the entity.",
+                    "type": "string"
+                }
+            },
+            "x-ms-client-name": "PrebuiltEntity"
+        },
+        "ConversationalAnalysisAuthoringProjectDeletionJobState": {
+            "description": "Represents the state of a project deletion job.",
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringJobState"
+                }
+            ],
+            "x-ms-client-name": "ProjectDeletionJobState"
+        },
+        "ConversationalAnalysisAuthoringProjectDeployment": {
+            "description": "Represents a project deployment.",
+            "required": [
+                "deploymentName",
+                "modelId",
+                "lastTrainedDateTime",
+                "lastDeployedDateTime",
+                "deploymentExpirationDate",
+                "modelTrainingConfigVersion"
+            ],
+            "type": "object",
+            "properties": {
+                "deploymentName": {
+                    "description": "Represents deployment name.",
+                    "type": "string"
+                },
+                "modelId": {
+                    "description": "Represents deployment modelId.",
+                    "type": "string"
+                },
+                "lastTrainedDateTime": {
+                    "format": "date-time",
+                    "description": "Represents deployment last trained time.",
+                    "type": "string"
+                },
+                "lastDeployedDateTime": {
+                    "format": "date-time",
+                    "description": "Represents deployment last deployed time.",
+                    "type": "string"
+                },
+                "deploymentExpirationDate": {
+                    "format": "date",
+                    "description": "Represents deployment expiration date in the runtime.",
+                    "type": "string"
+                },
+                "modelTrainingConfigVersion": {
+                    "description": "Represents model training config version.",
+                    "type": "string"
+                }
+            },
+            "x-ms-client-name": "ProjectDeployment"
+        },
+        "ConversationalAnalysisAuthoringProjectDeployments": {
+            "description": "Represents a list of retrieved deployments.",
+            "required": [
+                "value",
+                "nextLink"
+            ],
+            "type": "object",
+            "properties": {
+                "value": {
+                    "description": "The list of retrieved deployments.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConversationalAnalysisAuthoringProjectDeployment"
+                    }
+                },
+                "nextLink": {
+                    "description": "The next page link.",
+                    "type": "string",
+                    "x-nullable": true
+                }
+            },
+            "x-ms-client-name": "ProjectDeployments"
+        },
+        "ConversationalAnalysisAuthoringProjectKind": {
+            "enum": [
+                "Conversation",
+                "Orchestration"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "ProjectKind",
+                "modelAsString": true,
+                "values": [
+                    {
+                        "value": "Conversation",
+                        "description": "A project to build natural language into apps, bots, and IoT devices."
+                    },
+                    {
+                        "value": "Orchestration",
+                        "description": "A project to connect and orchestrate Conversation, Custom question answering and LUIS projects together in one single project."
+                    }
+                ]
+            },
+            "x-ms-client-name": "ProjectKind"
+        },
+        "ConversationalAnalysisAuthoringProjectMetadata": {
+            "description": "Represents the metadata of a project.",
+            "required": [
+                "createdDateTime",
+                "lastModifiedDateTime",
+                "projectKind",
+                "projectName",
+                "language"
+            ],
+            "type": "object",
+            "properties": {
+                "createdDateTime": {
+                    "format": "date-time",
+                    "description": "Represents the project creation datetime.",
+                    "type": "string"
+                },
+                "lastModifiedDateTime": {
+                    "format": "date-time",
+                    "description": "Represents the project creation datetime.",
+                    "type": "string"
+                },
+                "lastTrainedDateTime": {
+                    "format": "date-time",
+                    "description": "Represents the project last trained datetime.",
+                    "type": "string"
+                },
+                "lastDeployedDateTime": {
+                    "format": "date-time",
+                    "description": "Represents the project last deployed datetime.",
+                    "type": "string"
+                },
+                "projectKind": {
+                    "description": "Represents the project kind.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringProjectKind"
+                },
+                "settings": {
+                    "description": "The project settings.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringProjectSettings"
+                },
+                "projectName": {
+                    "description": "The new project name.",
+                    "type": "string"
+                },
+                "multilingual": {
+                    "description": "Whether the project would be used for multiple languages or not.",
+                    "type": "boolean"
+                },
+                "description": {
+                    "description": "The project description.",
+                    "type": "string"
+                },
+                "language": {
+                    "description": "The project language. This is BCP-47 representation of a language. For example, use \"en\" for English, \"en-gb\" for English (UK), \"es\" for Spanish etc.",
+                    "type": "string"
+                }
+            },
+            "x-ms-client-name": "ProjectMetadata"
+        },
+        "ConversationalAnalysisAuthoringProjectSettings": {
+            "description": "Represents the settings used to define the project behavior.",
+            "required": [
+                "confidenceThreshold"
+            ],
+            "type": "object",
+            "properties": {
+                "confidenceThreshold": {
+                    "format": "float",
+                    "description": "The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to \"None\".",
+                    "type": "number"
+                }
+            },
+            "x-ms-client-name": "ProjectSettings"
+        },
+        "ConversationalAnalysisAuthoringProjectsMetadata": {
+            "description": "Represents a list of retrieved projects' metadata.",
+            "required": [
+                "value",
+                "nextLink"
+            ],
+            "type": "object",
+            "properties": {
+                "value": {
+                    "description": "The list of projects.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConversationalAnalysisAuthoringProjectMetadata"
+                    }
+                },
+                "nextLink": {
+                    "description": "The next page link.",
+                    "type": "string",
+                    "x-nullable": true
+                }
+            },
+            "x-ms-client-name": "ProjectsMetadata"
+        },
+        "ConversationalAnalysisAuthoringProjectTrainedModel": {
+            "description": "Represents a trained model.",
+            "required": [
+                "label",
+                "modelId",
+                "lastTrainedDateTime",
+                "lastTrainingDurationInSeconds",
+                "modelExpirationDate",
+                "modelTrainingConfigVersion"
+            ],
+            "type": "object",
+            "properties": {
+                "label": {
+                    "description": "The trained model label.",
+                    "type": "string"
+                },
+                "modelId": {
+                    "description": "The model ID.",
+                    "type": "string"
+                },
+                "lastTrainedDateTime": {
+                    "format": "date-time",
+                    "description": "The last trained date time of the model.",
+                    "type": "string"
+                },
+                "lastTrainingDurationInSeconds": {
+                    "format": "int32",
+                    "description": "The duration of the model's last training request in seconds.",
+                    "type": "integer"
+                },
+                "modelExpirationDate": {
+                    "format": "date",
+                    "description": "The model expiration date.",
+                    "type": "string"
+                },
+                "modelTrainingConfigVersion": {
+                    "description": "The model training config version.",
+                    "type": "string"
+                }
+            },
+            "x-ms-client-name": "ProjectTrainedModel"
+        },
+        "ConversationalAnalysisAuthoringProjectTrainedModels": {
+            "description": "Represents a list of retrieved trained models.",
+            "required": [
+                "value",
+                "nextLink"
+            ],
+            "type": "object",
+            "properties": {
+                "value": {
+                    "description": "The list of retrieved jobs.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConversationalAnalysisAuthoringProjectTrainedModel"
+                    }
+                },
+                "nextLink": {
+                    "description": "The next page link.",
+                    "type": "string",
+                    "x-nullable": true
+                }
+            },
+            "x-ms-client-name": "ProjectTrainedModels"
+        },
+        "ConversationalAnalysisAuthoringStringIndexType": {
+            "enum": [
+                "Utf16CodeUnit"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "StringIndexType",
+                "modelAsString": true,
+                "values": [
+                    {
+                        "value": "Utf16CodeUnit",
+                        "description": "The offset and length values will correspond to UTF-16 code units. Use this option if your application is written in a language that support Unicode, for example Java, JavaScript."
+                    }
+                ]
+            },
+            "x-ms-client-name": "StringIndexType"
+        },
+        "ConversationalAnalysisAuthoringSubTrainingJobState": {
+            "description": "Represents the detailed state of a training sub-operation.",
+            "required": [
+                "percentComplete",
+                "status"
+            ],
+            "type": "object",
+            "properties": {
+                "percentComplete": {
+                    "format": "int32",
+                    "description": "Represents progress percentage.",
+                    "type": "integer"
+                },
+                "startDateTime": {
+                    "format": "date-time",
+                    "description": "Represents the start date time.",
+                    "type": "string"
+                },
+                "endDateTime": {
+                    "format": "date-time",
+                    "description": "Represents the end date time.",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "Represents the status of the sub-operation.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringJobStatus"
+                }
+            },
+            "x-ms-client-name": "SubTrainingJobState"
+        },
+        "ConversationalAnalysisAuthoringSupportedLanguage": {
+            "description": "Represents a supported language.",
+            "required": [
+                "languageName",
+                "languageCode"
+            ],
+            "type": "object",
+            "properties": {
+                "languageName": {
+                    "description": "The language name.",
+                    "type": "string"
+                },
+                "languageCode": {
+                    "description": "The language code. This is BCP-47 representation of a language. For example, \"en\" for English, \"en-gb\" for English (UK), \"es\" for Spanish etc.",
+                    "type": "string"
+                }
+            },
+            "x-ms-client-name": "SupportedLanguage"
+        },
+        "ConversationalAnalysisAuthoringSupportedLanguages": {
+            "description": "Represents a list of retrieved languages.",
+            "required": [
+                "value",
+                "nextLink"
+            ],
+            "type": "object",
+            "properties": {
+                "value": {
+                    "description": "The list of the languages.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConversationalAnalysisAuthoringSupportedLanguage"
+                    }
+                },
+                "nextLink": {
+                    "description": "The next page link.",
+                    "type": "string",
+                    "x-nullable": true
+                }
+            },
+            "x-ms-client-name": "SupportedLanguages"
+        },
+        "ConversationalAnalysisAuthoringSwapDeploymentsOptions": {
+            "description": "Represents the options for swapping two deployments together.",
+            "required": [
+                "firstDeploymentName",
+                "secondDeploymentName"
+            ],
+            "type": "object",
+            "properties": {
+                "firstDeploymentName": {
+                    "description": "Represents the first deployment name.",
+                    "type": "string"
+                },
+                "secondDeploymentName": {
+                    "description": "Represents the second deployment name.",
+                    "type": "string"
+                }
+            },
+            "x-ms-client-name": "SwapDeploymentsOptions"
+        },
+        "ConversationalAnalysisAuthoringTrainingConfigVersion": {
+            "description": "Represents a training config version.",
+            "required": [
+                "trainingConfigVersion",
+                "modelExpirationDate"
+            ],
+            "type": "object",
+            "properties": {
+                "trainingConfigVersion": {
+                    "description": "Represents the version of the config.",
+                    "type": "string"
+                },
+                "modelExpirationDate": {
+                    "format": "date",
+                    "description": "Represents the training config version expiration date.",
+                    "type": "string"
+                }
+            },
+            "x-ms-client-name": "TrainingConfigVersion"
+        },
+        "ConversationalAnalysisAuthoringTrainingConfigVersions": {
+            "description": "Represents a list of training config versions.",
+            "required": [
+                "value",
+                "nextLink"
+            ],
+            "type": "object",
+            "properties": {
+                "value": {
+                    "description": "The list of the training config versions.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConversationalAnalysisAuthoringTrainingConfigVersion"
+                    }
+                },
+                "nextLink": {
+                    "description": "The next page link.",
+                    "type": "string",
+                    "x-nullable": true
+                }
+            },
+            "x-ms-client-name": "TrainingConfigVersions"
+        },
+        "ConversationalAnalysisAuthoringTrainingJobOptions": {
+            "description": "Represents the options for starting a new training job.",
+            "required": [
+                "modelLabel",
+                "trainingMode"
+            ],
+            "type": "object",
+            "properties": {
+                "modelLabel": {
+                    "description": "Represents the output model label.",
+                    "type": "string"
+                },
+                "trainingConfigVersion": {
+                    "description": "Represents training config version. By default, \"latest\" value is used which uses the latest released training config version.",
+                    "type": "string"
+                },
+                "trainingMode": {
+                    "description": "Represents the mode of the training operation.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringTrainingMode"
+                },
+                "evaluationOptions": {
+                    "description": "Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringEvaluationOptions"
+                }
+            },
+            "x-ms-client-name": "TrainingJobOptions"
+        },
+        "ConversationalAnalysisAuthoringTrainingJobResult": {
+            "description": "Represents the output of a training job.",
+            "required": [
+                "modelLabel",
+                "trainingConfigVersion",
+                "trainingStatus"
+            ],
+            "type": "object",
+            "properties": {
+                "modelLabel": {
+                    "description": "Represents trained model label.",
+                    "type": "string"
+                },
+                "trainingConfigVersion": {
+                    "description": "Represents training config version.",
+                    "type": "string"
+                },
+                "trainingMode": {
+                    "description": "Represents the mode of the training operation.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringTrainingMode"
+                },
+                "trainingStatus": {
+                    "description": "Represents the model training status.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringSubTrainingJobState"
+                },
+                "evaluationStatus": {
+                    "description": "Represents model evaluation status.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringSubTrainingJobState"
+                },
+                "estimatedEndDateTime": {
+                    "format": "date-time",
+                    "description": "Represents the estimated end date time for training and evaluation.",
+                    "type": "string"
+                }
+            },
+            "x-ms-client-name": "TrainingJobResult"
+        },
+        "ConversationalAnalysisAuthoringTrainingJobs": {
+            "description": "Represents a list of retrieved training jobs.",
+            "required": [
+                "value",
+                "nextLink"
+            ],
+            "type": "object",
+            "properties": {
+                "value": {
+                    "description": "The list of jobs.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConversationalAnalysisAuthoringTrainingJobState"
+                    }
+                },
+                "nextLink": {
+                    "description": "The next page link.",
+                    "type": "string",
+                    "x-nullable": true
+                }
+            },
+            "x-ms-client-name": "TrainingJobs"
+        },
+        "ConversationalAnalysisAuthoringTrainingJobState": {
+            "description": "Represents the state of a training job.",
+            "required": [
+                "result"
+            ],
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringJobState"
+                }
+            ],
+            "properties": {
+                "result": {
+                    "description": "Represents training tasks detailed result.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringTrainingJobResult"
+                }
+            },
+            "x-ms-client-name": "TrainingJobState"
+        },
+        "ConversationalAnalysisAuthoringTrainingMode": {
+            "enum": [
+                "advanced",
+                "standard"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "TrainingMode",
+                "modelAsString": true,
+                "values": [
+                    {
+                        "value": "advanced",
+                        "description": "Trains using fine-tuned neural network transformer models. Can train multilingual projects."
+                    },
+                    {
+                        "value": "standard",
+                        "description": "Faster training times for quicker iterations."
+                    }
+                ]
+            },
+            "x-ms-client-name": "TrainingMode"
+        },
+        "ConversationalAnalysisAuthoringUtteranceEntitiesEvaluationResult": {
+            "description": "Represents the comparison between the expected and predicted entities for an utterance.",
+            "required": [
+                "expectedEntities",
+                "predictedEntities"
+            ],
+            "type": "object",
+            "properties": {
+                "expectedEntities": {
+                    "description": "Represents the expected entity labels.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConversationalAnalysisAuthoringUtteranceEntityEvaluationResult"
+                    }
+                },
+                "predictedEntities": {
+                    "description": "Represents the predicted entity labels.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConversationalAnalysisAuthoringUtteranceEntityEvaluationResult"
+                    }
+                }
+            },
+            "x-ms-client-name": "UtteranceEntitiesEvaluationResult"
+        },
+        "ConversationalAnalysisAuthoringUtteranceEntityEvaluationResult": {
+            "description": "Represents the evaluation output of an entity label or prediction.",
+            "required": [
+                "category",
+                "offset",
+                "length"
+            ],
+            "type": "object",
+            "properties": {
+                "category": {
+                    "description": "Represents the entity category.",
+                    "type": "string"
+                },
+                "offset": {
+                    "format": "int32",
+                    "description": "Represents the entity offset index relative to the original text.",
+                    "type": "integer"
+                },
+                "length": {
+                    "format": "int32",
+                    "description": "Represents the entity length.",
+                    "type": "integer"
+                }
+            },
+            "x-ms-client-name": "UtteranceEntityEvaluationResult"
+        },
+        "ConversationalAnalysisAuthoringUtteranceEvaluationResult": {
+            "description": "Represents the evaluation result for an utterance.",
+            "required": [
+                "text",
+                "language",
+                "entitiesResult",
+                "intentsResult"
+            ],
+            "type": "object",
+            "properties": {
+                "text": {
+                    "description": "Represents the utterance text.",
+                    "type": "string"
+                },
+                "language": {
+                    "description": "Represents the utterance language. This is BCP-47 representation of a language. For example, use \"en\" for English, \"en-gb\" for English (UK), \"es\" for Spanish etc.",
+                    "type": "string"
+                },
+                "entitiesResult": {
+                    "description": "Represents the entities results for the utterance.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringUtteranceEntitiesEvaluationResult"
+                },
+                "intentsResult": {
+                    "description": "Represents the intents results for the utterance.",
+                    "$ref": "#/definitions/ConversationalAnalysisAuthoringUtteranceIntentsEvaluationResult"
+                }
+            },
+            "x-ms-client-name": "UtteranceEvaluationResult"
+        },
+        "ConversationalAnalysisAuthoringUtteranceIntentsEvaluationResult": {
+            "description": "Represents the comparison between the expected and the predicted intent for an utterance.",
+            "required": [
+                "expectedIntent",
+                "predictedIntent"
+            ],
+            "type": "object",
+            "properties": {
+                "expectedIntent": {
+                    "description": "Represents the utterance's expected intent.",
+                    "type": "string"
+                },
+                "predictedIntent": {
+                    "description": "Represents the utterance's predicted intent.",
+                    "type": "string"
+                }
+            },
+            "x-ms-client-name": "UtteranceIntentsEvaluationResult"
+        },
+        "ConversationalAnalysisAuthoringWarning": {
+            "description": "Represents a warning that was encountered while executing the request.",
+            "required": [
+                "code",
+                "message"
+            ],
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "The warning code.",
+                    "type": "string"
+                },
+                "message": {
+                    "description": "The warning message.",
+                    "type": "string"
+                }
+            },
+            "x-ms-client-name": "Warning"
+        }
+    },
+    "parameters": {
+        "ConversationalAnalysisAuthoringFormatQueryParameter": {
+            "in": "query",
+            "name": "format",
+            "description": "The format of the exported project file to use.",
+            "type": "string",
+            "enum": [
+                "Conversation",
+                "Luis"
+            ],
+            "x-ms-enum": {
+                "name": "ExportedProjectFormat",
+                "modelAsString": true,
+                "values": [
+                    {
+                        "value": "Conversation",
+                        "description": "Specifies the format for a conversational project."
+                    },
+                    {
+                        "value": "Luis",
+                        "description": "Specifies the format for an application that was exported from LUIS."
+                    }
+                ]
+            },
+            "x-ms-parameter-location": "method"
+        },
+        "ConversationalAnalysisAuthoringStringIndexTypeQueryParameter": {
+            "in": "query",
+            "name": "stringIndexType",
+            "description": "Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets.",
+            "required": true,
+            "type": "string",
+            "enum": [
+                "Utf16CodeUnit"
+            ],
+            "x-ms-enum": {
+                "name": "StringIndexType",
+                "modelAsString": true,
+                "values": [
+                    {
+                        "value": "Utf16CodeUnit",
+                        "description": "The offset and length values will correspond to UTF-16 code units. Use this option if your application is written in a language that support Unicode, for example Java, JavaScript."
+                    }
+                ]
+            },
+            "x-ms-parameter-location": "method"
+        },
+        "ConversationalAnalysisAuthoringJobIdPathParameter": {
+            "in": "path",
+            "name": "jobId",
+            "description": "The job ID.",
+            "required": true,
+            "type": "string",
+            "x-ms-parameter-location": "method"
+        },
+        "ConversationalAnalysisAuthoringTrainedModelLabelPathParameter": {
+            "in": "path",
+            "name": "trainedModelLabel",
+            "description": "The trained model label.",
+            "required": true,
+            "type": "string",
+            "x-ms-parameter-location": "method"
+        },
+        "ConversationalAnalysisAuthoringProjectKindQueryParameter": {
+            "in": "query",
+            "name": "projectKind",
+            "description": "The project kind.",
+            "required": true,
+            "type": "string",
+            "enum": [
+                "Conversation",
+                "Orchestration"
+            ],
+            "x-ms-enum": {
+                "name": "ProjectKind",
+                "modelAsString": true,
+                "values": [
+                    {
+                        "value": "Conversation",
+                        "description": "A project to build natural language into apps, bots, and IoT devices."
+                    },
+                    {
+                        "value": "Orchestration",
+                        "description": "A project to connect and orchestrate Conversation, Custom question answering and LUIS projects together in one single project."
+                    }
+                ]
+            },
+            "x-ms-parameter-location": "method"
+        }
+    }
+}

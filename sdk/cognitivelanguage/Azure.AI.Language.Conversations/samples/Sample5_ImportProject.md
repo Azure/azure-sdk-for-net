@@ -18,7 +18,7 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ```C# Snippet:ConversationAnalysisProjectsClient_ImportProject
 string projectName = "Menu";
 
-// Define our project assets and import.
+// Define our project assets and import. In practice this would most often be read from a file.
 var importData = new
 {
     projectFileVersion = "2022-05-01",
@@ -111,8 +111,11 @@ var trainData = new
     trainingMode = "standard",
 };
 
-Operation<BinaryData> trainOperation = client.Train(WaitUntil.Started, projectName, RequestContent.Create(trainData));
-trainOperation.WaitForCompletion();
+Console.WriteLine($"Training project {projectName}...");
+Operation<BinaryData> trainOperation = client.Train(
+    WaitUntil.Completed,
+    projectName,
+    RequestContent.Create(trainData));
 
 // Deploy the model.
 var deployData = new
@@ -120,11 +123,19 @@ var deployData = new
     trainedModelLabel = "Sample5",
 };
 
-Operation<BinaryData> deployOperation = client.DeployProject(WaitUntil.Started, projectName, "production", RequestContent.Create(deployData));
-deployOperation.WaitForCompletion();
+Console.WriteLine($"Deploying project {projectName} to production...");
+Operation<BinaryData> deployOperation = client.DeployProject(
+    WaitUntil.Started,
+    projectName,
+    "production",
+    RequestContent.Create(deployData));
+
+Console.WriteLine("Import complete");
 ```
 
-# Asynchronous
+## Asynchronous
+
+Using the same `importData` definition above, you can make an asynchronous request by calling `ImportProjectAsync`:
 
 ```C# Snippet:ConversationAnalysisProjectsClient_ImportProjectAsync
 string projectName = "Menu";
@@ -223,8 +234,11 @@ var trainData = new
     trainingMode = "standard",
 };
 
-Operation<BinaryData> trainOperation = await client.TrainAsync(WaitUntil.Started, projectName, RequestContent.Create(trainData));
-await trainOperation.WaitForCompletionAsync();
+Console.WriteLine($"Training project {projectName}...");
+Operation<BinaryData> trainOperation = await client.TrainAsync(
+    WaitUntil.Completed,
+    projectName,
+    RequestContent.Create(trainData));
 
 // Deploy the model.
 var deployData = new
@@ -232,6 +246,12 @@ var deployData = new
     trainedModelLabel = "Sample5",
 };
 
-Operation<BinaryData> deployOperation = await client.DeployProjectAsync(WaitUntil.Started, projectName, "production", RequestContent.Create(deployData));
-await deployOperation.WaitForCompletionAsync();
+Console.WriteLine($"Deploying project {projectName} to production...");
+Operation<BinaryData> deployOperation = await client.DeployProjectAsync(
+    WaitUntil.Started,
+    projectName,
+    "production",
+    RequestContent.Create(deployData));
+
+Console.WriteLine("Import complete");
 ```

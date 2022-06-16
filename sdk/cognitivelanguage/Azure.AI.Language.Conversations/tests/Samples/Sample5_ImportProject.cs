@@ -38,7 +38,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             projectName = Recording.GenerateId("net-conv-", 100);
 #endif
 
-            // Define our project assets and import.
+            // Define our project assets and import. In practice this would most often be read from a file.
             var importData = new
             {
                 projectFileVersion = "2022-05-01",
@@ -124,9 +124,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Operation<BinaryData> importOperation = client.ImportProject(WaitUntil.Started, projectName, RequestContent.Create(importData));
 #if !SNIPPET
             _projects.Add(projectName);
+
             importOperation = InstrumentOperation(importOperation);
-#endif
             importOperation.WaitForCompletion();
+#endif
 
             // Train the model.
             var trainData = new
@@ -135,11 +136,18 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 trainingMode = "standard",
             };
 
+            Console.WriteLine($"Training project {projectName}...");
+#if SNIPPET
+            Operation<BinaryData> trainOperation = client.Train(
+                WaitUntil.Completed,
+                projectName,
+                RequestContent.Create(trainData));
+#else
             Operation<BinaryData> trainOperation = client.Train(WaitUntil.Started, projectName, RequestContent.Create(trainData));
-#if !SNIPPET
+
             trainOperation = InstrumentOperation(trainOperation);
-#endif
             trainOperation.WaitForCompletion();
+#endif
 
             // Deploy the model.
             var deployData = new
@@ -147,11 +155,21 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 trainedModelLabel = "Sample5",
             };
 
+            Console.WriteLine($"Deploying project {projectName} to production...");
+#if SNIPPET
+            Operation<BinaryData> deployOperation = client.DeployProject(
+                WaitUntil.Started,
+                projectName,
+                "production",
+                RequestContent.Create(deployData));
+#else
             Operation<BinaryData> deployOperation = client.DeployProject(WaitUntil.Started, projectName, "production", RequestContent.Create(deployData));
-#if !SNIPPET
+
             deployOperation = InstrumentOperation(deployOperation);
-#endif
             deployOperation.WaitForCompletion();
+#endif
+
+            Console.WriteLine("Import complete");
 #endregion
 
             using JsonDocument doc = JsonDocument.Parse(deployOperation.Value);
@@ -164,11 +182,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisProjectsClient client = ProjectsClient;
 
-            #region Snippet:ConversationAnalysisProjectsClient_ImportProjectAsync
-            string projectName = "Menu";
-#if !SNIPPET
-            projectName = Recording.GenerateId("net-conv-", 100);
-#endif
+            string projectName = Recording.GenerateId("net-conv-", 100);
 
             // Define our project assets and import.
             var importData = new
@@ -257,9 +271,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Operation<BinaryData> importOperation = await client.ImportProjectAsync(WaitUntil.Started, projectName, RequestContent.Create(importData));
 #if !SNIPPET
             _projects.Add(projectName);
-            //importOperation = InstrumentOperation(importOperation);
-#endif
+
+            importOperation = InstrumentOperation(importOperation);
             await importOperation.WaitForCompletionAsync();
+#endif
 
             // Train the model.
             var trainData = new
@@ -268,11 +283,18 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 trainingMode = "standard",
             };
 
+            Console.WriteLine($"Training project {projectName}...");
+#if SNIPPET
+            Operation<BinaryData> trainOperation = await client.TrainAsync(
+                WaitUntil.Completed,
+                projectName,
+                RequestContent.Create(trainData));
+#else
             Operation<BinaryData> trainOperation = await client.TrainAsync(WaitUntil.Started, projectName, RequestContent.Create(trainData));
-#if !SNIPPET
-            //trainOperation = InstrumentOperation(trainOperation);
-#endif
+
+            trainOperation = InstrumentOperation(trainOperation);
             await trainOperation.WaitForCompletionAsync();
+#endif
 
             // Deploy the model.
             var deployData = new
@@ -280,11 +302,21 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 trainedModelLabel = "Sample5",
             };
 
+            Console.WriteLine($"Deploying project {projectName} to production...");
+#if SNIPPET
+            Operation<BinaryData> deployOperation = await client.DeployProjectAsync(
+                WaitUntil.Started,
+                projectName,
+                "production",
+                RequestContent.Create(deployData));
+#else
             Operation<BinaryData> deployOperation = await client.DeployProjectAsync(WaitUntil.Started, projectName, "production", RequestContent.Create(deployData));
-#if !SNIPPET
-            //deployOperation = InstrumentOperation(deployOperation);
-#endif
+
+            deployOperation = InstrumentOperation(deployOperation);
             await deployOperation.WaitForCompletionAsync();
+#endif
+
+            Console.WriteLine("Import complete");
             #endregion
 
             using JsonDocument doc = JsonDocument.Parse(deployOperation.Value);
