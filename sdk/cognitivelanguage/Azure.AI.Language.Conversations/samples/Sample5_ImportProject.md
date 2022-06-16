@@ -125,7 +125,7 @@ var deployData = new
 
 Console.WriteLine($"Deploying project {projectName} to production...");
 Operation<BinaryData> deployOperation = client.DeployProject(
-    WaitUntil.Started,
+    WaitUntil.Completed,
     projectName,
     "production",
     RequestContent.Create(deployData));
@@ -248,7 +248,7 @@ var deployData = new
 
 Console.WriteLine($"Deploying project {projectName} to production...");
 Operation<BinaryData> deployOperation = await client.DeployProjectAsync(
-    WaitUntil.Started,
+    WaitUntil.Completed,
     projectName,
     "production",
     RequestContent.Create(deployData));

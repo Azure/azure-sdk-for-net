@@ -158,7 +158,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Console.WriteLine($"Deploying project {projectName} to production...");
 #if SNIPPET
             Operation<BinaryData> deployOperation = client.DeployProject(
-                WaitUntil.Started,
+                WaitUntil.Completed,
                 projectName,
                 "production",
                 RequestContent.Create(deployData));
@@ -305,7 +305,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Console.WriteLine($"Deploying project {projectName} to production...");
 #if SNIPPET
             Operation<BinaryData> deployOperation = await client.DeployProjectAsync(
-                WaitUntil.Started,
+                WaitUntil.Completed,
                 projectName,
                 "production",
                 RequestContent.Create(deployData));
