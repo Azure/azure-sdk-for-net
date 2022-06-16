@@ -11,7 +11,7 @@ This package contains a C# SDK for Azure Communication Services for JobRouter.
 Install the Azure Communication JobRouter client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.Communication.JobRouter 
+dotnet add package Azure.Communication.JobRouter --version 1.0.0-beta.1
 ``` 
 
 ### Prerequisites
