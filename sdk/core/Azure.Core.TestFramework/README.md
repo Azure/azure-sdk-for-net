@@ -347,7 +347,7 @@ public BlobClientOptions GetOptions() =>
     new BlobClientOptions(_serviceVersion) { /* ... */ };
 ```
 
-For Management plane this is handled by default in the `ManagementRecordedTestBase` class by calling the new constructor which takes in the ResourceType and apiVersion to use.
+For Management plane setting this in the client options is handled by default in the `ManagementRecordedTestBase` class by calling the new constructor which takes in the ResourceType and apiVersion to use.
 
 ```C#
         public ResourceGroupOperationsTests(bool isAsync, string apiVersion)
