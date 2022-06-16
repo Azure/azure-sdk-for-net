@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Initializes a new instance of HostNameMatchCondition. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="operator"> Describes operator to be matched. </param>
-        public HostNameMatchCondition(HostNameMatchConditionType conditionType, HostNameOperator @operator)
+        /// <param name="hostNameOperator"> Describes operator to be matched. </param>
+        public HostNameMatchCondition(HostNameMatchConditionType conditionType, HostNameOperator hostNameOperator)
         {
             ConditionType = conditionType;
-            Operator = @operator;
+            HostNameOperator = hostNameOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
         /// <summary> Initializes a new instance of HostNameMatchCondition. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="operator"> Describes operator to be matched. </param>
+        /// <param name="hostNameOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal HostNameMatchCondition(HostNameMatchConditionType conditionType, HostNameOperator @operator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
+        internal HostNameMatchCondition(HostNameMatchConditionType conditionType, HostNameOperator hostNameOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
         {
             ConditionType = conditionType;
-            Operator = @operator;
+            HostNameOperator = hostNameOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Gets or sets the condition type. </summary>
         public HostNameMatchConditionType ConditionType { get; set; }
         /// <summary> Describes operator to be matched. </summary>
-        public HostNameOperator Operator { get; set; }
+        public HostNameOperator HostNameOperator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>
         public bool? NegateCondition { get; set; }
         /// <summary> The match value for the condition of the delivery rule. </summary>

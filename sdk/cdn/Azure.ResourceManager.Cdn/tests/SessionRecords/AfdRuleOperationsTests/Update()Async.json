@@ -1447,7 +1447,7 @@
                 "typeName": "DeliveryRuleRouteConfigurationOverrideActionParameters",
                 "cacheConfiguration": {
                   "queryStringCachingBehavior": "IgnoreSpecifiedQueryStrings",
-                  "queryParameters": "a=test",
+                  "queryParameters": "a=test,b=test",
                   "isCompressionEnabled": "Enabled",
                   "cacheBehavior": "HonorOrigin"
                 }
@@ -1502,7 +1502,7 @@
                 "cacheConfiguration": {
                   "isCompressionEnabled": "Enabled",
                   "queryStringCachingBehavior": "IgnoreSpecifiedQueryStrings",
-                  "queryParameters": "a=test",
+                  "queryParameters": "a=test,b=test",
                   "cacheBehavior": "HonorOrigin",
                   "cacheDuration": null
                 },
@@ -2129,7 +2129,7 @@
                 "cacheConfiguration": {
                   "isCompressionEnabled": "Enabled",
                   "queryStringCachingBehavior": "IgnoreSpecifiedQueryStrings",
-                  "queryParameters": "a=test",
+                  "queryParameters": "a=test,b=test",
                   "cacheBehavior": "HonorOrigin",
                   "cacheDuration": null
                 },
@@ -2173,7 +2173,7 @@
                 "typeName": "DeliveryRuleRouteConfigurationOverrideActionParameters",
                 "cacheConfiguration": {
                   "queryStringCachingBehavior": "IgnoreSpecifiedQueryStrings",
-                  "queryParameters": "a=test",
+                  "queryParameters": "a=test,b=test",
                   "isCompressionEnabled": "Enabled",
                   "cacheBehavior": "HonorOrigin"
                 }
@@ -2229,7 +2229,7 @@
                 "cacheConfiguration": {
                   "isCompressionEnabled": "Enabled",
                   "queryStringCachingBehavior": "IgnoreSpecifiedQueryStrings",
-                  "queryParameters": "a=test",
+                  "queryParameters": "a=test,b=test",
                   "cacheBehavior": "HonorOrigin",
                   "cacheDuration": null
                 },
@@ -3066,7 +3066,7 @@
                 "cacheConfiguration": {
                   "isCompressionEnabled": "Enabled",
                   "queryStringCachingBehavior": "IgnoreSpecifiedQueryStrings",
-                  "queryParameters": "a=test",
+                  "queryParameters": "a=test,b=test",
                   "cacheBehavior": "HonorOrigin",
                   "cacheDuration": null
                 },

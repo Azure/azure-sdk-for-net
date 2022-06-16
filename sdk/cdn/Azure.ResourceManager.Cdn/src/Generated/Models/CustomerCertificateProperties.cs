@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="secretVersion"> Version of the secret to be used. </param>
         /// <param name="useLatestVersion"> Whether to use the latest version for the certificate. </param>
         /// <param name="subject"> Subject name in the certificate. </param>
-        /// <param name="expirationDate"> Certificate expiration date. </param>
+        /// <param name="expiresOn"> Certificate expiration date. </param>
         /// <param name="certificateAuthority"> Certificate issuing authority. </param>
         /// <param name="subjectAlternativeNames"> The list of SANs. </param>
         /// <param name="thumbprint"> Certificate thumbprint. </param>
-        internal CustomerCertificateProperties(SecretType secretType, WritableSubResource secretSource, string secretVersion, bool? useLatestVersion, string subject, string expirationDate, string certificateAuthority, IList<string> subjectAlternativeNames, string thumbprint) : base(secretType)
+        internal CustomerCertificateProperties(SecretType secretType, WritableSubResource secretSource, string secretVersion, bool? useLatestVersion, string subject, DateTimeOffset? expiresOn, string certificateAuthority, IList<string> subjectAlternativeNames, string thumbprint) : base(secretType)
         {
             SecretSource = secretSource;
             SecretVersion = secretVersion;
             UseLatestVersion = useLatestVersion;
             Subject = subject;
-            ExpirationDate = expirationDate;
+            ExpiresOn = expiresOn;
             CertificateAuthority = certificateAuthority;
             SubjectAlternativeNames = subjectAlternativeNames;
             Thumbprint = thumbprint;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Subject name in the certificate. </summary>
         public string Subject { get; }
         /// <summary> Certificate expiration date. </summary>
-        public string ExpirationDate { get; }
+        public DateTimeOffset? ExpiresOn { get; }
         /// <summary> Certificate issuing authority. </summary>
         public string CertificateAuthority { get; }
         /// <summary> The list of SANs. </summary>
