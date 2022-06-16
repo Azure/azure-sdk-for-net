@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string BasicValue = "Basic";
         private const string AadServicePrincipalValue = "AadServicePrincipal";
         private const string ManagedServiceIdentityValue = "ManagedServiceIdentity";
-        private const string OAuth2Value = "OAuth2ClientCredential";
+        private const string OAuth2Value = "OAuth2Client";
 
         /// <summary> Anonymous. </summary>
         public static RestServiceAuthenticationType Anonymous { get; } = new RestServiceAuthenticationType(AnonymousValue);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static RestServiceAuthenticationType AadServicePrincipal { get; } = new RestServiceAuthenticationType(AadServicePrincipalValue);
         /// <summary> ManagedServiceIdentity. </summary>
         public static RestServiceAuthenticationType ManagedServiceIdentity { get; } = new RestServiceAuthenticationType(ManagedServiceIdentityValue);
-        /// <summary> OAuth2ClientCredential. </summary>
+        /// <summary> OAuth2Client. </summary>
         public static RestServiceAuthenticationType OAuth2 { get; } = new RestServiceAuthenticationType(OAuth2Value);
         /// <summary> Determines if two <see cref="RestServiceAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(RestServiceAuthenticationType left, RestServiceAuthenticationType right) => left.Equals(right);

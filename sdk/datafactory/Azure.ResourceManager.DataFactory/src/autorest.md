@@ -67,7 +67,7 @@ directive:
           },
           {
               "name": "OAuth2",
-              "value": "OAuth2ClientCredential"
+              "value": "OAuth2Client"
           }
         ]
 
