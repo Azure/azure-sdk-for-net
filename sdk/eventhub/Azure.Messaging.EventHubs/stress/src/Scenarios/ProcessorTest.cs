@@ -73,7 +73,8 @@ public class ProcessorTest
 
             case Role.Processor:
                 var processorConfiguration = new ProcessorConfiguration();
-                var processor = new Processor(_testConfiguration, processorConfiguration, _metrics);
+                var partitionCount = await _testConfiguration.GetEventHubPartitionCount().ConfigureAwait(false);
+                var processor = new Processor(_testConfiguration, processorConfiguration, _metrics, partitionCount);
                 _identifier = processor.Identifier;
                 await processor.Start(ProcessEventHandler, ProcessErrorHandler, cancellationToken).ConfigureAwait(false);
                 break;
