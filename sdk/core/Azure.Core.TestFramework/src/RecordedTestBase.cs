@@ -179,10 +179,16 @@ namespace Azure.Core.TestFramework
         {
         };
 
-        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null, string apiVersion = null) : base(isAsync)
+        /// <summary>
+        /// Creats a new instance of <see cref="RecordedTestBase"/>.
+        /// </summary>
+        /// <param name="isAsync">True if this instance is testing the async API variants false otherwise.</param>
+        /// <param name="mode">Indicates which <see cref="RecordedTestMode" /> this instance should run under.</param>
+        /// <param name="versionQualifier">Indicates which version this instance is running against.</param>
+        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null, string versionQualifier = null) : base(isAsync)
         {
             Mode = mode ?? TestEnvironment.GlobalTestMode;
-            VersionQualifier = apiVersion;
+            VersionQualifier = versionQualifier;
         }
 
         protected async Task<TestRecording> CreateTestRecordingAsync(RecordedTestMode mode, string sessionFile) =>

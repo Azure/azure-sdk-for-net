@@ -7,6 +7,9 @@ namespace Azure.Core.TestFramework
 {
     internal readonly struct VersionString : IComparable
     {
+        //length of yyyy-MM-dd string
+        private const int DateStringSize = 10;
+
         private bool IsGa { get; }
         private string PreviewString { get; }
         private string RawVersion { get; }
@@ -21,7 +24,7 @@ namespace Azure.Core.TestFramework
             IsGa = true;
             int index = -1;
             PreviewString = null;
-            if (chars.Length > 10)
+            if (chars.Length > DateStringSize)
             {
                 index = chars.LastIndexOf('-');
                 IsGa = false;

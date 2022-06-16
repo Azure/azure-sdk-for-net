@@ -18,18 +18,18 @@ namespace Azure.Core.TestFramework
     {
         private readonly struct TestVersion : IComparable
         {
-            public IComparable Comparable { get; }
+            private readonly IComparable _comparable;
             public object Object { get; }
             public TestVersion(object obj)
             {
                 Object = obj;
                 if (obj.GetType().IsEnum)
                 {
-                    Comparable = Convert.ToInt32(obj);
+                    _comparable = Convert.ToInt32(obj);
                 }
                 else if (obj is string)
                 {
-                    Comparable = new VersionString(obj as string);
+                    _comparable = new VersionString(obj as string);
                 }
                 else
                 {
@@ -38,7 +38,7 @@ namespace Azure.Core.TestFramework
             }
             public TestVersion(IComparable comparable, object obj)
             {
-                Comparable = comparable;
+                _comparable = comparable;
                 Object = obj;
             }
 
@@ -47,7 +47,7 @@ namespace Azure.Core.TestFramework
                 if (obj is not TestVersion other)
                     return 1;
 
-                return Comparable.CompareTo(other.Comparable);
+                return _comparable.CompareTo(other._comparable);
             }
         }
 
@@ -89,6 +89,7 @@ namespace Azure.Core.TestFramework
         /// </summary>
         /// <param name="serviceVersions">The set of service versions that will be passed to the test suite.</param>
         /// <param name="additionalParameters">An array of additional parameters that will be passed to the test suite.</param>
+        /// <param name="recordAllVersions">True if you want all versions in serviceVersions to be recorded and used for playback, false otherwise.</param>
         public ClientTestFixtureAttribute(object[] serviceVersions, object[] additionalParameters, bool recordAllVersions = false)
         {
             _additionalParameters = additionalParameters ?? new object[] { };
@@ -97,7 +98,7 @@ namespace Azure.Core.TestFramework
             {
                 var first = _serviceVersions[0];
                 if (!_serviceVersions.All(x => x.GetType() == first.GetType()))
-                    throw new InvalidOperationException("All service versions must be the same type");
+                    throw new InvalidOperationException("All service versions must be the same type and must be an enum convertable to Int32 or a string in date format with an optional preview string");
             }
             _recordAllVersions = recordAllVersions;
         }
