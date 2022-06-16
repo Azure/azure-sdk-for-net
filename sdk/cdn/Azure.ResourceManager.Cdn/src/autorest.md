@@ -262,6 +262,7 @@ directive:
       $.ActivatedResourceReference['x-ms-client-name'] = 'FrontDoorActivatedResourceInfo';
       $.CustomerCertificateParameters.properties.expirationDate['x-ms-client-name'] = 'expiresDate';
       $.ManagedCertificateParameters.properties.expirationDate['x-ms-client-name'] = 'expiresDate';
+      $.DomainValidationProperties.properties.expirationDate['x-ms-client-name'] = 'expiresDate';
       $.AFDDomainUpdatePropertiesParameters.properties.azureDnsZone['x-ms-client-name'] = 'dnsZone';
       $.AFDOriginUpdatePropertiesParameters.properties.azureOrigin['x-ms-client-name'] = 'origin';
       $.AFDOriginGroupUpdatePropertiesParameters.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes['x-ms-client-name'] = 'trafficRestorationTimeInMinutes';

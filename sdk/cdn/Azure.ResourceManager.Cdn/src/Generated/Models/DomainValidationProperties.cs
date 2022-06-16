@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of DomainValidationProperties. </summary>
         /// <param name="validationToken"> Challenge used for DNS TXT record or file based validation. </param>
-        /// <param name="expirationOn"> The date time that the token expires. </param>
-        internal DomainValidationProperties(string validationToken, DateTimeOffset? expirationOn)
+        /// <param name="expiresOn"> The date time that the token expires. </param>
+        internal DomainValidationProperties(string validationToken, DateTimeOffset? expiresOn)
         {
             ValidationToken = validationToken;
-            ExpirationOn = expirationOn;
+            ExpiresOn = expiresOn;
         }
 
         /// <summary> Challenge used for DNS TXT record or file based validation. </summary>
         public string ValidationToken { get; }
         /// <summary> The date time that the token expires. </summary>
-        public DateTimeOffset? ExpirationOn { get; }
+        public DateTimeOffset? ExpiresOn { get; }
     }
 }

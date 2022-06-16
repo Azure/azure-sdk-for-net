@@ -1572,7 +1572,7 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class DomainValidationProperties
     {
         internal DomainValidationProperties() { }
-        public System.DateTimeOffset? ExpirationOn { get { throw null; } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string ValidationToken { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

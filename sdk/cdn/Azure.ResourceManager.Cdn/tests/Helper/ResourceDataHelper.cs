@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
                 Assert.NotNull(model.Data.ValidationProperties);
                 Assert.NotNull(getResult.Data.ValidationProperties);
                 Assert.AreEqual(model.Data.ValidationProperties.ValidationToken, getResult.Data.ValidationProperties.ValidationToken);
-                Assert.AreEqual(model.Data.ValidationProperties.ExpirationOn, getResult.Data.ValidationProperties.ExpirationOn);
+                Assert.AreEqual(model.Data.ValidationProperties.ExpiresOn, getResult.Data.ValidationProperties.ExpiresOn);
             }
         }
 
