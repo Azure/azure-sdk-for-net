@@ -356,8 +356,8 @@ When filing GitHub issues, the following details are requested for all scenarios
   - 88 (Buffered Producer Publish Start)
   - 89 (Buffered Producer Publish Complete)
   - 90 (Buffered Producer Publish Error)
-  - 124 (Buffered Producer Idle Start)
-  - 125 (Buffered PRoducer Idle Complete)
+  - 126 (Buffered Producer Idle Start)
+  - 127 (Buffered Producer Idle Complete)
 
 ### Event processor issues
 
