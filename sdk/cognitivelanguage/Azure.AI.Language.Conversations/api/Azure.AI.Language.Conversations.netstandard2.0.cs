@@ -18,11 +18,14 @@ namespace Azure.AI.Language.Conversations
             V2022_05_01 = 1,
         }
     }
-    public partial class ConversationAnalysisProjectsClient
+}
+namespace Azure.AI.Language.Conversations.Authoring
+{
+    public partial class ConversationAuthoringClient
     {
-        protected ConversationAnalysisProjectsClient() { }
-        public ConversationAnalysisProjectsClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public ConversationAnalysisProjectsClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.Conversations.ConversationAnalysisClientOptions options) { }
+        protected ConversationAuthoringClient() { }
+        public ConversationAuthoringClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
+        public ConversationAuthoringClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.Conversations.ConversationAnalysisClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Operation<System.BinaryData> CancelTrainingJob(Azure.WaitUntil waitUntil, string projectName, string jobId, Azure.RequestContext context = null) { throw null; }

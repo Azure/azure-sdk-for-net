@@ -11,13 +11,14 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.AI.Language.Conversations;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.Language.Conversations
+namespace Azure.AI.Language.Conversations.Authoring
 {
-    /// <summary> The ConversationAnalysisProjects service client. </summary>
-    public partial class ConversationAnalysisProjectsClient
+    /// <summary> The ConversationAuthoring service client. </summary>
+    public partial class ConversationAuthoringClient
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
@@ -31,8 +32,8 @@ namespace Azure.AI.Language.Conversations
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of ConversationAnalysisProjectsClient for mocking. </summary>
-        protected ConversationAnalysisProjectsClient()
+        /// <summary> Initializes a new instance of ConversationAuthoringClient for mocking. </summary>
+        protected ConversationAuthoringClient()
         {
         }
 
@@ -95,7 +96,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.CreateProject");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.CreateProject");
             scope.Start();
             try
             {
@@ -168,7 +169,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.CreateProject");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.CreateProject");
             scope.Start();
             try
             {
@@ -227,7 +228,7 @@ namespace Azure.AI.Language.Conversations
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.GetProject");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetProject");
             scope.Start();
             try
             {
@@ -286,7 +287,7 @@ namespace Azure.AI.Language.Conversations
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.GetProject");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetProject");
             scope.Start();
             try
             {
@@ -341,7 +342,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.GetDeployment");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetDeployment");
             scope.Start();
             try
             {
@@ -396,7 +397,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.GetDeployment");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetDeployment");
             scope.Start();
             try
             {
@@ -473,7 +474,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.GetDeploymentJobStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetDeploymentJobStatus");
             scope.Start();
             try
             {
@@ -550,7 +551,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.GetDeploymentJobStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetDeploymentJobStatus");
             scope.Start();
             try
             {
@@ -625,7 +626,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.GetSwapDeploymentsJobStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetSwapDeploymentsJobStatus");
             scope.Start();
             try
             {
@@ -700,7 +701,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.GetSwapDeploymentsJobStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetSwapDeploymentsJobStatus");
             scope.Start();
             try
             {
@@ -776,7 +777,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.GetExportProjectJobStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetExportProjectJobStatus");
             scope.Start();
             try
             {
@@ -852,7 +853,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.GetExportProjectJobStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetExportProjectJobStatus");
             scope.Start();
             try
             {
@@ -927,7 +928,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.GetImportProjectJobStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetImportProjectJobStatus");
             scope.Start();
             try
             {
@@ -1002,7 +1003,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.GetImportProjectJobStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetImportProjectJobStatus");
             scope.Start();
             try
             {
@@ -1057,7 +1058,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.GetTrainedModel");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetTrainedModel");
             scope.Start();
             try
             {
@@ -1112,7 +1113,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.GetTrainedModel");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetTrainedModel");
             scope.Start();
             try
             {
@@ -1157,7 +1158,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.DeleteTrainedModel");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.DeleteTrainedModel");
             scope.Start();
             try
             {
@@ -1202,7 +1203,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.DeleteTrainedModel");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.DeleteTrainedModel");
             scope.Start();
             try
             {
@@ -1276,7 +1277,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.GetModelEvaluationSummary");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetModelEvaluationSummary");
             scope.Start();
             try
             {
@@ -1350,7 +1351,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.GetModelEvaluationSummary");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetModelEvaluationSummary");
             scope.Start();
             try
             {
@@ -1438,7 +1439,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.GetTrainingJobStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetTrainingJobStatus");
             scope.Start();
             try
             {
@@ -1526,7 +1527,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.GetTrainingJobStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetTrainingJobStatus");
             scope.Start();
             try
             {
@@ -1599,7 +1600,7 @@ namespace Azure.AI.Language.Conversations
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.GetProjectDeletionJobStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetProjectDeletionJobStatus");
             scope.Start();
             try
             {
@@ -1672,7 +1673,7 @@ namespace Azure.AI.Language.Conversations
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.GetProjectDeletionJobStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetProjectDeletionJobStatus");
             scope.Start();
             try
             {
@@ -1734,7 +1735,7 @@ namespace Azure.AI.Language.Conversations
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetProjectsAsync(int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return GetProjectsImplementationAsync("ConversationAnalysisProjectsClient.GetProjects", top, skip, maxpagesize, context);
+            return GetProjectsImplementationAsync("ConversationAuthoringClient.GetProjects", top, skip, maxpagesize, context);
         }
 
         private AsyncPageable<BinaryData> GetProjectsImplementationAsync(string diagnosticsScopeName, int? top, int? skip, int? maxpagesize, RequestContext context)
@@ -1802,7 +1803,7 @@ namespace Azure.AI.Language.Conversations
         /// </remarks>
         public virtual Pageable<BinaryData> GetProjects(int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return GetProjectsImplementation("ConversationAnalysisProjectsClient.GetProjects", top, skip, maxpagesize, context);
+            return GetProjectsImplementation("ConversationAuthoringClient.GetProjects", top, skip, maxpagesize, context);
         }
 
         private Pageable<BinaryData> GetProjectsImplementation(string diagnosticsScopeName, int? top, int? skip, int? maxpagesize, RequestContext context)
@@ -1869,7 +1870,7 @@ namespace Azure.AI.Language.Conversations
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetDeploymentsImplementationAsync("ConversationAnalysisProjectsClient.GetDeployments", projectName, top, skip, maxpagesize, context);
+            return GetDeploymentsImplementationAsync("ConversationAuthoringClient.GetDeployments", projectName, top, skip, maxpagesize, context);
         }
 
         private AsyncPageable<BinaryData> GetDeploymentsImplementationAsync(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
@@ -1936,7 +1937,7 @@ namespace Azure.AI.Language.Conversations
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetDeploymentsImplementation("ConversationAnalysisProjectsClient.GetDeployments", projectName, top, skip, maxpagesize, context);
+            return GetDeploymentsImplementation("ConversationAuthoringClient.GetDeployments", projectName, top, skip, maxpagesize, context);
         }
 
         private Pageable<BinaryData> GetDeploymentsImplementation(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
@@ -2003,7 +2004,7 @@ namespace Azure.AI.Language.Conversations
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetTrainedModelsImplementationAsync("ConversationAnalysisProjectsClient.GetTrainedModels", projectName, top, skip, maxpagesize, context);
+            return GetTrainedModelsImplementationAsync("ConversationAuthoringClient.GetTrainedModels", projectName, top, skip, maxpagesize, context);
         }
 
         private AsyncPageable<BinaryData> GetTrainedModelsImplementationAsync(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
@@ -2070,7 +2071,7 @@ namespace Azure.AI.Language.Conversations
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetTrainedModelsImplementation("ConversationAnalysisProjectsClient.GetTrainedModels", projectName, top, skip, maxpagesize, context);
+            return GetTrainedModelsImplementation("ConversationAuthoringClient.GetTrainedModels", projectName, top, skip, maxpagesize, context);
         }
 
         private Pageable<BinaryData> GetTrainedModelsImplementation(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
@@ -2151,7 +2152,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
             Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
 
-            return GetModelEvaluationResultsImplementationAsync("ConversationAnalysisProjectsClient.GetModelEvaluationResults", projectName, trainedModelLabel, stringIndexType, top, skip, maxpagesize, context);
+            return GetModelEvaluationResultsImplementationAsync("ConversationAuthoringClient.GetModelEvaluationResults", projectName, trainedModelLabel, stringIndexType, top, skip, maxpagesize, context);
         }
 
         private AsyncPageable<BinaryData> GetModelEvaluationResultsImplementationAsync(string diagnosticsScopeName, string projectName, string trainedModelLabel, string stringIndexType, int? top, int? skip, int? maxpagesize, RequestContext context)
@@ -2232,7 +2233,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
             Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
 
-            return GetModelEvaluationResultsImplementation("ConversationAnalysisProjectsClient.GetModelEvaluationResults", projectName, trainedModelLabel, stringIndexType, top, skip, maxpagesize, context);
+            return GetModelEvaluationResultsImplementation("ConversationAuthoringClient.GetModelEvaluationResults", projectName, trainedModelLabel, stringIndexType, top, skip, maxpagesize, context);
         }
 
         private Pageable<BinaryData> GetModelEvaluationResultsImplementation(string diagnosticsScopeName, string projectName, string trainedModelLabel, string stringIndexType, int? top, int? skip, int? maxpagesize, RequestContext context)
@@ -2332,7 +2333,7 @@ namespace Azure.AI.Language.Conversations
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetTrainingJobsImplementationAsync("ConversationAnalysisProjectsClient.GetTrainingJobs", projectName, top, skip, maxpagesize, context);
+            return GetTrainingJobsImplementationAsync("ConversationAuthoringClient.GetTrainingJobs", projectName, top, skip, maxpagesize, context);
         }
 
         private AsyncPageable<BinaryData> GetTrainingJobsImplementationAsync(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
@@ -2432,7 +2433,7 @@ namespace Azure.AI.Language.Conversations
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetTrainingJobsImplementation("ConversationAnalysisProjectsClient.GetTrainingJobs", projectName, top, skip, maxpagesize, context);
+            return GetTrainingJobsImplementation("ConversationAuthoringClient.GetTrainingJobs", projectName, top, skip, maxpagesize, context);
         }
 
         private Pageable<BinaryData> GetTrainingJobsImplementation(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
@@ -2494,7 +2495,7 @@ namespace Azure.AI.Language.Conversations
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
 
-            return GetSupportedLanguagesImplementationAsync("ConversationAnalysisProjectsClient.GetSupportedLanguages", projectKind, top, skip, maxpagesize, context);
+            return GetSupportedLanguagesImplementationAsync("ConversationAuthoringClient.GetSupportedLanguages", projectKind, top, skip, maxpagesize, context);
         }
 
         private AsyncPageable<BinaryData> GetSupportedLanguagesImplementationAsync(string diagnosticsScopeName, string projectKind, int? top, int? skip, int? maxpagesize, RequestContext context)
@@ -2556,7 +2557,7 @@ namespace Azure.AI.Language.Conversations
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
 
-            return GetSupportedLanguagesImplementation("ConversationAnalysisProjectsClient.GetSupportedLanguages", projectKind, top, skip, maxpagesize, context);
+            return GetSupportedLanguagesImplementation("ConversationAuthoringClient.GetSupportedLanguages", projectKind, top, skip, maxpagesize, context);
         }
 
         private Pageable<BinaryData> GetSupportedLanguagesImplementation(string diagnosticsScopeName, string projectKind, int? top, int? skip, int? maxpagesize, RequestContext context)
@@ -2617,7 +2618,7 @@ namespace Azure.AI.Language.Conversations
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetSupportedPrebuiltEntitiesAsync(string language = null, bool? multilingual = null, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return GetSupportedPrebuiltEntitiesImplementationAsync("ConversationAnalysisProjectsClient.GetSupportedPrebuiltEntities", language, multilingual, top, skip, maxpagesize, context);
+            return GetSupportedPrebuiltEntitiesImplementationAsync("ConversationAuthoringClient.GetSupportedPrebuiltEntities", language, multilingual, top, skip, maxpagesize, context);
         }
 
         private AsyncPageable<BinaryData> GetSupportedPrebuiltEntitiesImplementationAsync(string diagnosticsScopeName, string language, bool? multilingual, int? top, int? skip, int? maxpagesize, RequestContext context)
@@ -2678,7 +2679,7 @@ namespace Azure.AI.Language.Conversations
         /// </remarks>
         public virtual Pageable<BinaryData> GetSupportedPrebuiltEntities(string language = null, bool? multilingual = null, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return GetSupportedPrebuiltEntitiesImplementation("ConversationAnalysisProjectsClient.GetSupportedPrebuiltEntities", language, multilingual, top, skip, maxpagesize, context);
+            return GetSupportedPrebuiltEntitiesImplementation("ConversationAuthoringClient.GetSupportedPrebuiltEntities", language, multilingual, top, skip, maxpagesize, context);
         }
 
         private Pageable<BinaryData> GetSupportedPrebuiltEntitiesImplementation(string diagnosticsScopeName, string language, bool? multilingual, int? top, int? skip, int? maxpagesize, RequestContext context)
@@ -2740,7 +2741,7 @@ namespace Azure.AI.Language.Conversations
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
 
-            return GetTrainingConfigVersionsImplementationAsync("ConversationAnalysisProjectsClient.GetTrainingConfigVersions", projectKind, top, skip, maxpagesize, context);
+            return GetTrainingConfigVersionsImplementationAsync("ConversationAuthoringClient.GetTrainingConfigVersions", projectKind, top, skip, maxpagesize, context);
         }
 
         private AsyncPageable<BinaryData> GetTrainingConfigVersionsImplementationAsync(string diagnosticsScopeName, string projectKind, int? top, int? skip, int? maxpagesize, RequestContext context)
@@ -2802,7 +2803,7 @@ namespace Azure.AI.Language.Conversations
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
 
-            return GetTrainingConfigVersionsImplementation("ConversationAnalysisProjectsClient.GetTrainingConfigVersions", projectKind, top, skip, maxpagesize, context);
+            return GetTrainingConfigVersionsImplementation("ConversationAuthoringClient.GetTrainingConfigVersions", projectKind, top, skip, maxpagesize, context);
         }
 
         private Pageable<BinaryData> GetTrainingConfigVersionsImplementation(string diagnosticsScopeName, string projectKind, int? top, int? skip, int? maxpagesize, RequestContext context)
@@ -2882,12 +2883,12 @@ namespace Azure.AI.Language.Conversations
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.DeleteProject");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.DeleteProject");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2956,12 +2957,12 @@ namespace Azure.AI.Language.Conversations
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.DeleteProject");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.DeleteProject");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -3035,12 +3036,12 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.ExportProject");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.ExportProject");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateExportProjectRequest(projectName, exportedProjectFormat, assetKind, stringIndexType, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.ExportProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.ExportProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3114,12 +3115,12 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.ExportProject");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.ExportProject");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateExportProjectRequest(projectName, exportedProjectFormat, assetKind, stringIndexType, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.ExportProject", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.ExportProject", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -3210,12 +3211,12 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.ImportProject");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.ImportProject");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateImportProjectRequest(projectName, content, exportedProjectFormat, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.ImportProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.ImportProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3306,12 +3307,12 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.ImportProject");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.ImportProject");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateImportProjectRequest(projectName, content, exportedProjectFormat, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.ImportProject", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.ImportProject", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -3407,12 +3408,12 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.Train");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.Train");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateTrainRequest(projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.Train", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.Train", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3508,12 +3509,12 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.Train");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.Train");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateTrainRequest(projectName, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.Train", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.Train", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -3590,12 +3591,12 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.SwapDeployments");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.SwapDeployments");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateSwapDeploymentsRequest(projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.SwapDeployments", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.SwapDeployments", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3672,12 +3673,12 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.SwapDeployments");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.SwapDeployments");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateSwapDeploymentsRequest(projectName, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.SwapDeployments", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.SwapDeployments", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -3735,12 +3736,12 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.DeployProject");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.DeployProject");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3798,12 +3799,12 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.DeployProject");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.DeployProject");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -3874,12 +3875,12 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.DeleteDeployment");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.DeleteDeployment");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteDeploymentRequest(projectName, deploymentName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.DeleteDeployment", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.DeleteDeployment", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3950,12 +3951,12 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.DeleteDeployment");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.DeleteDeployment");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteDeploymentRequest(projectName, deploymentName, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.DeleteDeployment", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.DeleteDeployment", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -4039,12 +4040,12 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.CancelTrainingJob");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.CancelTrainingJob");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCancelTrainingJobRequest(projectName, jobId, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.CancelTrainingJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.CancelTrainingJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -4128,12 +4129,12 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisProjectsClient.CancelTrainingJob");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.CancelTrainingJob");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCancelTrainingJobRequest(projectName, jobId, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.CancelTrainingJob", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.CancelTrainingJob", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {

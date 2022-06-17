@@ -5,9 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+
+#region Snippet:ConversationAuthoringClient_Namespaces
+using Azure.Core;
+using Azure.AI.Language.Conversations.Authoring;
+#endregion
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
 {
@@ -15,13 +19,13 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         private readonly List<string> _projects = new();
 
-        public void CreateConversationAnalysisProjectsClient()
+        public void CreateConversationAuthoringClient()
         {
-            #region Snippet:ConversationAnalysisProjectsClient_Create
+            #region Snippet:ConversationAuthoringClient_Create
             Uri endpoint = new Uri("https://myaccount.cognitive.microsoft.com");
             AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
-            ConversationAnalysisProjectsClient client = new ConversationAnalysisProjectsClient(endpoint, credential);
+            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
             #endregion
         }
 
@@ -30,9 +34,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/29140")]
         public void ImportProject()
         {
-            ConversationAnalysisProjectsClient client = ProjectsClient;
+            ConversationAuthoringClient client = ProjectsClient;
 
-            #region Snippet:ConversationAnalysisProjectsClient_ImportProject
+            #region Snippet:ConversationAuthoringClient_ImportProject
             string projectName = "Menu";
 #if !SNIPPET
             projectName = Recording.GenerateId("net-conv-", 100);
@@ -180,7 +184,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         [RecordedTest]
         public async Task ImportProjectAsync()
         {
-            ConversationAnalysisProjectsClient client = ProjectsClient;
+            ConversationAuthoringClient client = ProjectsClient;
 
             string projectName = Recording.GenerateId("net-conv-", 100);
 
@@ -268,7 +272,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 stringIndexType = "Utf16CodeUnit",
             };
 
-            #region Snippet:ConversationAnalysisProjectsClient_ImportProjectAsync
+            #region Snippet:ConversationAuthoringClient_ImportProjectAsync
             Operation<BinaryData> importOperation = await client.ImportProjectAsync(WaitUntil.Started, projectName, RequestContent.Create(importData));
 #if !SNIPPET
             _projects.Add(projectName);

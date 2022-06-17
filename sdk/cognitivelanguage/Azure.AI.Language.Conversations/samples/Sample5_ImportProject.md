@@ -2,20 +2,28 @@
 
 This sample demonstrates how to import a project. To get started, you'll need to create a Cognitive Language service endpoint and an API key. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/README.md) for links and instructions.
 
-To import a project, you'll need to first create a `ConversationAnalysisProjectsClient` using an endpoint and an API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
-```C# Snippet:ConversationAnalysisProjectsClient_Create
+Start by importing the namespace for the `ConversationAuthoringClient` and related classes:
+
+```C# Snippet:ConversationAuthoringClient_Namespaces
+using Azure.Core;
+using Azure.AI.Language.Conversations.Authoring;
+```
+
+To import a project, you'll need to first create a `ConversationAuthoringClient` using an endpoint and an API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
+
+```C# Snippet:ConversationAuthoringClient_Create
 Uri endpoint = new Uri("https://myaccount.cognitive.microsoft.com");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
-ConversationAnalysisProjectsClient client = new ConversationAnalysisProjectsClient(endpoint, credential);
+ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 ```
 
 Once you have created a client, you can call synchronous or asynchronous methods. Typically, the content would come from a file but a small sample is shown here for demonstration purposes.
 
 ## Synchronous
 
-```C# Snippet:ConversationAnalysisProjectsClient_ImportProject
+```C# Snippet:ConversationAuthoringClient_ImportProject
 string projectName = "Menu";
 
 // Define our project assets and import. In practice this would most often be read from a file.
@@ -136,7 +144,7 @@ Console.WriteLine("Import complete");
 
 Using the same `importData` definition above, you can make an asynchronous request by calling `ImportProjectAsync`:
 
-```C# Snippet:ConversationAnalysisProjectsClient_ImportProjectAsync
+```C# Snippet:ConversationAuthoringClient_ImportProjectAsync
 Operation<BinaryData> importOperation = await client.ImportProjectAsync(WaitUntil.Started, projectName, RequestContent.Create(importData));
 
 // Train the model.

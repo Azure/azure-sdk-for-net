@@ -38,6 +38,15 @@ Alternatively, use the [Azure CLI][azure_cli] command shown below to get the API
 az cognitiveservices account keys list --resource-group <resource-group-name> --name <resource-name>
 ```
 
+#### Namespaces
+
+Start by importing the namespace for the [`ConversationAnalysisClient`][conversationanalysis_client_class] and related class:
+
+```C# Snippet:ConversationAnalysisClient_Namespaces
+using Azure.Core;
+using Azure.AI.Language.Conversations;
+```
+
 #### Create a ConversationAnalysisClient
 
 Once you've determined your **endpoint** and **API key** you can instantiate a `ConversationAnalysisClient`:

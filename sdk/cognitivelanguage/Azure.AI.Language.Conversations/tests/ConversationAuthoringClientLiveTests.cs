@@ -3,14 +3,15 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.AI.Language.Conversations.Authoring;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests
 {
-    public class ConversationAnalysisProjectsClientLiveTests : ConversationAnalysisTestBase<ConversationAnalysisProjectsClient>
+    public class ConversationAuthoringClientLiveTests : ConversationAnalysisTestBase<ConversationAuthoringClient>
     {
-        public ConversationAnalysisProjectsClientLiveTests(bool isAsync, ConversationAnalysisClientOptions.ServiceVersion serviceVersion)
+        public ConversationAuthoringClientLiveTests(bool isAsync, ConversationAnalysisClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to record */)
         {
         }
