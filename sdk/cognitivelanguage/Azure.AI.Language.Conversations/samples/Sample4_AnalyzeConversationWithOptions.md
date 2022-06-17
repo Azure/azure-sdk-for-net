@@ -16,71 +16,54 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
-string projectName = "Menu";
-string deploymentName = "production";
-
-var data = new
+TextConversationItem input = new TextConversationItem(
+    participantId: "1",
+    id: "1",
+    text: "Send an email to Carol about the tomorrow's demo.");
+AnalyzeConversationOptions options = new AnalyzeConversationOptions(input)
 {
-    analysisInput = new
-    {
-        conversationItem = new
-        {
-            text = "Send an email to Carol about tomorrow's demo",
-            id = "1",
-            participantId = "1",
-        }
-    },
-    parameters = new
-    {
-        projectName,
-        deploymentName,
-        verbose = true,
-
-        // Use Utf16CodeUnit for strings in .NET.
-        stringIndexType = "Utf16CodeUnit",
-    },
-    kind = "Conversation",
+    IsLoggingEnabled = true,
+    Verbose = true
 };
 
-Response response = client.AnalyzeConversation(RequestContent.Create(data));
+ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
-using JsonDocument result = JsonDocument.Parse(response.ContentStream);
-JsonElement conversationalTaskResult = result.RootElement;
-JsonElement conversationPrediction = conversationalTaskResult.GetProperty("result").GetProperty("prediction");
+Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
+    "Send an email to Carol about the tomorrow's demo.",
+    conversationsProject,
+    options);
 
-Console.WriteLine($"Project Kind: {conversationPrediction.GetProperty("projectKind").GetString()}");
-Console.WriteLine($"Top intent: {conversationPrediction.GetProperty("topIntent").GetString()}");
+ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+ConversationPrediction conversationPrediction = conversationalTaskResult.Result.Prediction as ConversationPrediction;
+
+Console.WriteLine($"Project Kind: {conversationalTaskResult.Result.Prediction.ProjectKind}");
+Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
 Console.WriteLine("Intents:");
-foreach (JsonElement intent in conversationPrediction.GetProperty("intents").EnumerateArray())
+foreach (ConversationIntent intent in conversationPrediction.Intents)
 {
-    Console.WriteLine($"Category: {intent.GetProperty("category").GetString()}");
-    Console.WriteLine($"Confidence: {intent.GetProperty("confidenceScore").GetSingle()}");
+    Console.WriteLine($"Category: {intent.Category}");
+    Console.WriteLine($"Confidence: {intent.Confidence}");
     Console.WriteLine();
 }
 
 Console.WriteLine("Entities:");
-foreach (JsonElement entity in conversationPrediction.GetProperty("entities").EnumerateArray())
+foreach (ConversationEntity entity in conversationPrediction.Entities)
 {
-    Console.WriteLine($"Category: {entity.GetProperty("category").GetString()}");
-    Console.WriteLine($"Text: {entity.GetProperty("text").GetString()}");
-    Console.WriteLine($"Offset: {entity.GetProperty("offset").GetInt32()}");
-    Console.WriteLine($"Length: {entity.GetProperty("length").GetInt32()}");
-    Console.WriteLine($"Confidence: {entity.GetProperty("confidenceScore").GetSingle()}");
+    Console.WriteLine($"Category: {entity.Category}");
+    Console.WriteLine($"Text: {entity.Text}");
+    Console.WriteLine($"Offset: {entity.Offset}");
+    Console.WriteLine($"Length: {entity.Length}");
+    Console.WriteLine($"Confidence: {entity.Confidence}");
     Console.WriteLine();
 
-    if (!entity.TryGetProperty("resolutions", out JsonElement resolutions))
+    foreach (BaseResolution resolution in entity.Resolutions)
     {
-        continue;
-    }
-
-    foreach (JsonElement resolution in resolutions.EnumerateArray())
-    {
-        if (resolution.GetProperty("resolutionKind").GetString() == "DateTimeResolution")
+        if (resolution is DateTimeResolution dateTimeResolution)
         {
-            Console.WriteLine($"Datetime Sub Kind: {resolution.GetProperty("dateTimeSubKind").GetString()}");
-            Console.WriteLine($"Timex: {resolution.GetProperty("timex").GetString()}");
-            Console.WriteLine($"Value: {resolution.GetProperty("value").GetString()}");
+            Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+            Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+            Console.WriteLine($"Value: {dateTimeResolution.Value}");
             Console.WriteLine();
         }
     }
@@ -90,71 +73,54 @@ foreach (JsonElement entity in conversationPrediction.GetProperty("entities").En
 ## Asynchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptionsAsync
-string projectName = "Menu";
-string deploymentName = "production";
-
-var data = new
+TextConversationItem input = new TextConversationItem(
+    participantId: "1",
+    id: "1",
+    text: "Send an email to Carol about the tomorrow's demo.");
+AnalyzeConversationOptions options = new AnalyzeConversationOptions(input)
 {
-    analysisInput = new
-    {
-        conversationItem = new
-        {
-            text = "Send an email to Carol about tomorrow's demo",
-            id = "1",
-            participantId = "1",
-        }
-    },
-    parameters = new
-    {
-        projectName,
-        deploymentName,
-        verbose = true,
-
-        // Use Utf16CodeUnit for strings in .NET.
-        stringIndexType = "Utf16CodeUnit",
-    },
-    kind = "Conversation",
+    IsLoggingEnabled = true,
+    Verbose = true
 };
 
-Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
+ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
-using JsonDocument result = await JsonDocument.ParseAsync(response.ContentStream);
-JsonElement conversationalTaskResult = result.RootElement;
-JsonElement conversationPrediction = conversationalTaskResult.GetProperty("result").GetProperty("prediction");
+Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
+    "Send an email to Carol about the tomorrow's demo.",
+    conversationsProject,
+    options);
 
-Console.WriteLine($"Project Kind: {conversationPrediction.GetProperty("projectKind").GetString()}");
-Console.WriteLine($"Top intent: {conversationPrediction.GetProperty("topIntent").GetString()}");
+ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+ConversationPrediction conversationPrediction = conversationalTaskResult.Result.Prediction as ConversationPrediction;
+
+Console.WriteLine($"Project Kind: {conversationalTaskResult.Result.Prediction.ProjectKind}");
+Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
 Console.WriteLine("Intents:");
-foreach (JsonElement intent in conversationPrediction.GetProperty("intents").EnumerateArray())
+foreach (ConversationIntent intent in conversationPrediction.Intents)
 {
-    Console.WriteLine($"Category: {intent.GetProperty("category").GetString()}");
-    Console.WriteLine($"Confidence: {intent.GetProperty("confidenceScore").GetSingle()}");
+    Console.WriteLine($"Category: {intent.Category}");
+    Console.WriteLine($"Confidence: {intent.Confidence}");
     Console.WriteLine();
 }
 
 Console.WriteLine("Entities:");
-foreach (JsonElement entity in conversationPrediction.GetProperty("entities").EnumerateArray())
+foreach (ConversationEntity entity in conversationPrediction.Entities)
 {
-    Console.WriteLine($"Category: {entity.GetProperty("category").GetString()}");
-    Console.WriteLine($"Text: {entity.GetProperty("text").GetString()}");
-    Console.WriteLine($"Offset: {entity.GetProperty("offset").GetInt32()}");
-    Console.WriteLine($"Length: {entity.GetProperty("length").GetInt32()}");
-    Console.WriteLine($"Confidence: {entity.GetProperty("confidenceScore").GetSingle()}");
+    Console.WriteLine($"Category: {entity.Category}");
+    Console.WriteLine($"Text: {entity.Text}");
+    Console.WriteLine($"Offset: {entity.Offset}");
+    Console.WriteLine($"Length: {entity.Length}");
+    Console.WriteLine($"Confidence: {entity.Confidence}");
     Console.WriteLine();
 
-    if (!entity.TryGetProperty("resolutions", out JsonElement resolutions))
+    foreach (BaseResolution resolution in entity.Resolutions)
     {
-        continue;
-    }
-
-    foreach (JsonElement resolution in resolutions.EnumerateArray())
-    {
-        if (resolution.GetProperty("resolutionKind").GetString() == "DateTimeResolution")
+        if (resolution is DateTimeResolution dateTimeResolution)
         {
-            Console.WriteLine($"Datetime Sub Kind: {resolution.GetProperty("dateTimeSubKind").GetString()}");
-            Console.WriteLine($"Timex: {resolution.GetProperty("timex").GetString()}");
-            Console.WriteLine($"Value: {resolution.GetProperty("value").GetString()}");
+            Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+            Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+            Console.WriteLine($"Value: {dateTimeResolution.Value}");
             Console.WriteLine();
         }
     }

@@ -1,21 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-15-preview",
+      "RequestUri": "https://languagesdktest.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "261",
+        "Content-Length": "265",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220610.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "881fed9b11d1c90b7cc91568c9ae6bfa",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220525.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "836cd8f083d5517d235ae8cd726b6539",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "analysisInput": {
           "conversationItem": {
-            "text": "Send an email to Carol about tomorrow\u0027s demo",
+            "text": "Send an email to Carol about the tomorrow\u0027s demo",
             "id": "1",
             "participantId": "1"
           }
@@ -29,16 +29,16 @@
       },
       "StatusCode": 404,
       "ResponseHeaders": {
-        "apim-request-id": "5f8d5ce9-37cd-43bd-97d9-705d74acacdb",
+        "apim-request-id": "ed5bff03-7cd1-41e5-bf1e-770750b0ce46",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json",
-        "Date": "Fri, 10 Jun 2022 22:53:49 GMT",
+        "Date": "Wed, 25 May 2022 20:44:29 GMT",
         "Pragma": "no-cache",
-        "request-id": "5f8d5ce9-37cd-43bd-97d9-705d74acacdb",
+        "request-id": "ed5bff03-7cd1-41e5-bf1e-770750b0ce46",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "156"
+        "x-envoy-upstream-service-time": "21"
       },
       "ResponseBody": {
         "error": {
@@ -49,8 +49,8 @@
     }
   ],
   "Variables": {
-    "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
+    "CONVERSATIONS_ENDPOINT": "https://languagesdktest.cognitiveservices.azure.com",
     "CONVERSATIONS_KEY": "Sanitized",
-    "RandomSeed": "303379496"
+    "RandomSeed": "721501773"
   }
 }

@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-15-preview",
+      "RequestUri": "https://languagesdktest.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "267",
+        "Content-Length": "268",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-2601a830c26dbda5405f38c2f3b90fd2-32da676551b4d4b1-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220606.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "fa44ba40355811e1c847dded95f6ca09",
+        "traceparent": "00-d4d192dffff19b7a7004f5c4174bcc46-5d852fd2a042f462-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220525.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "005141fb6487ef98338e2398ffdf2a11",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -22,7 +22,7 @@
           }
         },
         "parameters": {
-          "projectName": "CLUScriptDeployed",
+          "projectName": "CluScriptDeployed1",
           "deploymentName": "production",
           "stringIndexType": "Utf16CodeUnit"
         },
@@ -30,61 +30,61 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "5538f0c9-dd69-43ed-bb9d-f320cd4c1940",
+        "apim-request-id": "6b6df6d6-2527-4469-907b-04d1c13579f2",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.ConversationalLanguageUnderstanding.Prediction=1",
-        "Date": "Mon, 06 Jun 2022 21:01:49 GMT",
+        "Date": "Wed, 25 May 2022 20:43:47 GMT",
         "Pragma": "no-cache",
-        "request-id": "5538f0c9-dd69-43ed-bb9d-f320cd4c1940",
+        "request-id": "6b6df6d6-2527-4469-907b-04d1c13579f2",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "190"
+        "x-envoy-upstream-service-time": "168"
       },
       "ResponseBody": {
         "kind": "ConversationResult",
         "result": {
           "query": "Send an email to Carol about the tomorrow\u0027s demo",
           "prediction": {
-            "topIntent": "Send",
+            "topIntent": "Setup",
             "projectKind": "Conversation",
             "intents": [
               {
-                "category": "Send",
-                "confidenceScore": 0.9053172
-              },
-              {
-                "category": "Read",
-                "confidenceScore": 0.44011447
-              },
-              {
                 "category": "Setup",
-                "confidenceScore": 0.41303915
-              },
-              {
-                "category": "Set",
-                "confidenceScore": 0.21186642
-              },
-              {
-                "category": "None",
-                "confidenceScore": 0.20198277
-              },
-              {
-                "category": "Find",
-                "confidenceScore": 0.19216746
-              },
-              {
-                "category": "Call",
-                "confidenceScore": 0.16446844
+                "confidenceScore": 0.6254007
               },
               {
                 "category": "Play",
-                "confidenceScore": 0.15655291
+                "confidenceScore": 0.20336723
+              },
+              {
+                "category": "Send",
+                "confidenceScore": 0.13618475
+              },
+              {
+                "category": "Read",
+                "confidenceScore": 0.01904324
+              },
+              {
+                "category": "Call",
+                "confidenceScore": 0.00859508
+              },
+              {
+                "category": "Set",
+                "confidenceScore": 0.0033787973
+              },
+              {
+                "category": "Find",
+                "confidenceScore": 0.0028723886
               },
               {
                 "category": "Open",
-                "confidenceScore": 0.08699014
+                "confidenceScore": 0.0010411387
+              },
+              {
+                "category": "None",
+                "confidenceScore": 0.00011662581
               }
             ],
             "entities": [
@@ -111,8 +111,8 @@
                   {
                     "resolutionKind": "DateTimeResolution",
                     "dateTimeSubKind": "Date",
-                    "timex": "2022-06-07",
-                    "value": "2022-06-07"
+                    "timex": "2022-05-26",
+                    "value": "2022-05-26"
                   }
                 ],
                 "extraInformation": [
@@ -130,9 +130,9 @@
   ],
   "Variables": {
     "CONVERSATIONS_DEPLOYMENT_NAME": "production",
-    "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
+    "CONVERSATIONS_ENDPOINT": "https://languagesdktest.cognitiveservices.azure.com",
     "CONVERSATIONS_KEY": "Sanitized",
-    "CONVERSATIONS_PROJECT_NAME": "CLUScriptDeployed",
-    "RandomSeed": "1639792782"
+    "CONVERSATIONS_PROJECT_NAME": "CluScriptDeployed1",
+    "RandomSeed": "543698882"
   }
 }

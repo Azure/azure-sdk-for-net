@@ -8,13 +8,15 @@ title: Conversations
 license-header: MICROSOFT_MIT_NO_VERSION
 
 batch:
-- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e7f37e4e43b1d12fd1988fda3ed39624c4b23303/specification/cognitiveservices/data-plane/Language/preview/2022-05-15-preview/analyzeconversations.json
+- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/9be5d475168131b188f254f5d14b23086512a9d3/specification/cognitiveservices/data-plane/Language/stable/2022-05-01/analyzeconversations.json
   clear-output-folder: true
+  model-namespace: false
+  generation1-convenience-client: true
 
-- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e7f37e4e43b1d12fd1988fda3ed39624c4b23303/specification/cognitiveservices/data-plane/Language/preview/2022-05-15-preview/analyzeconversations-authoring.json
-
-data-plane: true
-model-namespace: false
+# TODO: Uncomment when we ship authoring support and remove ./ConversationsClientOptions.cs.
+# - input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/9be5d475168131b188f254f5d14b23086512a9d3/specification/cognitiveservices/data-plane/Language/stable/2022-05-01/analyzeconversations-authoring.json
+#   add-credentials: true
+#   data-plane: true
 
 modelerfour:
   lenient-model-deduplication: true
@@ -53,47 +55,4 @@ directive:
 - from: swagger-document
   where: $.parameters.Endpoint
   transform: $["format"] = "url"
-
-- rename-operation:
-    from: AnalyzeConversation_SubmitJob
-    to: ConversationAnalysis_SubmitJob
-
-- rename-operation:
-    from: AnalyzeConversation_JobStatus
-    to: ConversationAnalysis_JobStatus
-
-- rename-operation:
-    from: AnalyzeConversation_CancelJob
-    to: ConversationAnalysis_CancelJob
-
-# Work around https://github.com/Azure/autorest.csharp/issues/2248
-- from: swagger-document
-  where: $["info"]
-  transform: >
-    $["version"] = "2022_05_15_Preview";
-
-# Always default to UTF16 string indices.
-- from: swagger-document
-  where: $.definitions.StringIndexType
-  transform: >
-    $["description"] = "Specifies the method used to interpret string offsets. Set this to \"Utf16CodeUnit\" for .NET strings, which are encoded as UTF-16.";
-    $["x-ms-client-default"] = "Utf16CodeUnit";
-
-- from: swagger-document
-  where: $.definitions.ConversationalAnalysisAuthoringStringIndexType
-  transform: >
-    $["description"] = "Specifies the method used to interpret string offsets. Set this to \"Utf16CodeUnit\" for .NET strings, which are encoded as UTF-16.";
-    $["x-ms-client-default"] = "Utf16CodeUnit";
-
-- from: swagger-document
-  where: $.parameters.ConversationalAnalysisAuthoringStringIndexTypeQueryParameter
-  transform: >
-    $["description"] = "Specifies the method used to interpret string offsets. Set this to \"Utf16CodeUnit\" for .NET strings, which are encoded as UTF-16.";
-    $["x-ms-client-default"] = "Utf16CodeUnit";
-
-# Correct Endpoint parameter description to reference right domain suffix.
-- from: swagger-document
-  where: $.parameters.Endpoint
-  transform: >
-    $["description"] = "Supported Cognitive Services endpoint (e.g., https://<resource-name>.cognitiveservices.azure.com)."
 ```
