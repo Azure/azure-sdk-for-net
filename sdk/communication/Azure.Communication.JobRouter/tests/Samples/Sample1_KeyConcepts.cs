@@ -84,6 +84,68 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 Console.WriteLine($"Worker {worker.Value.Id} has an active offer for job {offer.JobId}");
             }
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_QueryWorker
+
+            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_AcceptOffer
+
+            // fetching the offer id
+            var jobOffer = result.Value.Offers.FirstOrDefault(x => x.JobId == job.Value.Id);
+
+            // accepting the offer sent to `worker-1`
+            var acceptJobOfferResult = routerClient.AcceptJobOffer(worker.Value.Id, jobOffer!.Id);
+
+            Console.WriteLine($"Offer: {jobOffer.Id} sent to worker: {worker.Value.Id} has been accepted");
+            Console.WriteLine($"Job has been assigned to worker: {worker.Value.Id} with assignment: {acceptJobOfferResult.Value.AssignmentId}");
+
+            // verify job assignment is populated when querying job
+            var updatedJob = routerClient.GetJob(job.Value.Id);
+            Console.WriteLine($"Job assignment has been successful: {updatedJob.Value.JobStatus == JobStatus.Assigned && updatedJob.Value.Assignments.ContainsKey(acceptJobOfferResult.Value.AssignmentId)}");
+
+            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_AcceptOffer
+
+            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CompleteJob
+
+            var completeJob = routerClient.CompleteJob(
+                jobId: job.Value.Id,
+                assignmentId: acceptJobOfferResult.Value.AssignmentId,
+                options: new CompleteJobOptions() // this is optional
+                {
+                    Note = $"Job has been completed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
+                });
+
+            Console.WriteLine($"Job has been successfully completed: {completeJob.GetRawResponse().Status == 200}");
+
+            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CompleteJob
+
+            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJob
+
+            var closeJob = routerClient.CloseJob(
+                jobId: job.Value.Id,
+                assignmentId: acceptJobOfferResult.Value.AssignmentId,
+                options: new CloseJobOptions()  // this is optional
+                {
+                    Note = $"Job has been closed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
+                });
+            Console.WriteLine($"Job has been successfully closed: {closeJob.GetRawResponse().Status == 200}");
+
+            /*
+            // Optionally, a job can also be set up to be marked as closed in the future.
+            var closeJobInFuture = routerClient.CloseJob(
+                jobId: job.Value.Id,
+                assignmentId: acceptJobOfferResult.Value.AssignmentId,
+                options: new CloseJobOptions()  // this is optional
+                {
+                    CloseTime = DateTimeOffset.UtcNow.AddSeconds(2), // this will mark the job as closed after 2 seconds
+                    Note = $"Job has been marked to close in the future by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
+                });
+            Console.WriteLine($"Job has been marked to close: {closeJob.GetRawResponse().Status == 202}"); // You'll received a 202 in that case
+
+            await Task.Delay(TimeSpan.FromSeconds(2));
+            */
+
+            updatedJob = routerClient.GetJob(job.Value.Id);
+            Console.WriteLine($"Updated job status: {updatedJob.Value.JobStatus == JobStatus.Closed}");
+
+            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJob
         }
     }
 }

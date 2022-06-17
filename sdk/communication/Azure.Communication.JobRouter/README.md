@@ -153,6 +153,68 @@ foreach (var offer in result.Value.Offers)
 }
 ```
 
+### Accept an offer
+Once a worker receives an offer, it can take two possible actions: accept or decline. We are going to accept the offer.
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_AcceptOffer_Async
+// fetching the offer id
+var jobOffer = result.Value.Offers.FirstOrDefault(x => x.JobId == job.Value.Id);
+
+// accepting the offer sent to `worker-1`
+var acceptJobOfferResult = await routerClient.AcceptJobOfferAsync(worker.Value.Id, jobOffer.Id);
+
+Console.WriteLine($"Offer: {jobOffer.Id} sent to worker: {worker.Value.Id} has been accepted");
+Console.WriteLine($"Job has been assigned to worker: {worker.Value.Id} with assignment: {acceptJobOfferResult.Value.AssignmentId}");
+
+// verify job assignment is populated when querying job
+var updatedJob = await routerClient.GetJobAsync(job.Value.Id);
+Console.WriteLine($"Job assignment has been successful: {updatedJob.Value.JobStatus == JobStatus.Assigned && updatedJob.Value.Assignments.ContainsKey(acceptJobOfferResult.Value.AssignmentId)}");
+```
+
+### Completing a job
+Once the worker is done with the job, the worker has to mark the job as `completed`.
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CompleteJob_Async
+var completeJob = await routerClient.CompleteJobAsync(
+    jobId: job.Value.Id,
+    assignmentId: acceptJobOfferResult.Value.AssignmentId,
+    options: new CompleteJobOptions() // this is optional
+    {
+        Note = $"Job has been completed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
+    });
+
+Console.WriteLine($"Job has been successfully completed: {completeJob.GetRawResponse().Status == 200}");
+```
+
+### Closing a job
+After a job has been completed, the worker can perform wrap up actions to the job before closing the job and finally releasing its capacity to accept more incoming jobs
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJob_Async
+var closeJob = await routerClient.CloseJobAsync(
+    jobId: job.Value.Id,
+    assignmentId: acceptJobOfferResult.Value.AssignmentId,
+    options: new CloseJobOptions()  // this is optional
+    {
+        Note = $"Job has been closed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
+    });
+Console.WriteLine($"Job has been successfully closed: {closeJob.GetRawResponse().Status == 200}");
+
+/*
+// Optionally, a job can also be set up to be marked as closed in the future.
+var closeJobInFuture = await routerClient.CloseJobAsync(
+    jobId: job.Value.Id,
+    assignmentId: acceptJobOfferResult.Value.AssignmentId,
+    options: new CloseJobOptions()  // this is optional
+    {
+        CloseTime = DateTimeOffset.UtcNow.AddSeconds(2), // this will mark the job as closed after 2 seconds
+        Note = $"Job has been marked to close in the future by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
+    });
+Console.WriteLine($"Job has been marked to close: {closeJob.GetRawResponse().Status == 202}"); // You'll received a 202 in that case
+
+await Task.Delay(TimeSpan.FromSeconds(2));
+*/
+
+updatedJob = await routerClient.GetJobAsync(job.Value.Id);
+Console.WriteLine($"Updated job status: {updatedJob.Value.JobStatus == JobStatus.Closed}");
+```
+
 ## Troubleshooting
 
 Running into issues? This section should contain details as to what to do there.
