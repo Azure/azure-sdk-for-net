@@ -7,7 +7,7 @@ using System.Resources;
 [assembly: AssemblyTitle("Microsoft Azure ServiceBus Management Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure ServiceBus management functions for managing the Microsoft Azure ServiceBus service.")]
 
-[assembly: AssemblyVersion("3.0.0.0")]
+[assembly: AssemblyVersion("4.0.0.0")]
 [assembly: AssemblyFileVersion("4.0.0.0")]
 
 [assembly: AssemblyConfiguration("")]
