@@ -16,71 +16,23 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPrediction
-string projectName = "DomainOrchestrator";
-string deploymentName = "production";
-
-var data = new
-{
-    analysisInput = new
-    {
-        conversationItem = new
-        {
-            text = "How are you?",
-            id = "1",
-            participantId = "1",
-        }
-    },
-    parameters = new
-    {
-        projectName,
-        deploymentName,
-
-        // Use Utf16CodeUnit for strings in .NET.
-        stringIndexType = "Utf16CodeUnit",
-    },
-    kind = "Conversation",
-};
-
-Response response = client.AnalyzeConversation(RequestContent.Create(data));
-
-using JsonDocument result = JsonDocument.Parse(response.ContentStream);
-JsonElement conversationalTaskResult = result.RootElement;
-JsonElement orchestrationPrediction = conversationalTaskResult.GetProperty("result").GetProperty("prediction");
+ConversationsProject orchestrationProject = new ConversationsProject("DomainOrchestrator", "production");
+Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+    "How are you?",
+    orchestrationProject);
+ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+var orchestrationPrediction = conversationalTaskResult.Result.Prediction as OrchestrationPrediction;
 ```
 
 ## Asynchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionAsync
-string projectName = "DomainOrchestrator";
-string deploymentName = "production";
-
-var data = new
-{
-    analysisInput = new
-    {
-        conversationItem = new
-        {
-            text = "How are you?",
-            id = "1",
-            participantId = "1",
-        }
-    },
-    parameters = new
-    {
-        projectName,
-        deploymentName,
-
-        // Use Utf16CodeUnit for strings in .NET.
-        stringIndexType = "Utf16CodeUnit",
-    },
-    kind = "Conversation",
-};
-
-Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
-
-using JsonDocument result = await JsonDocument.ParseAsync(response.ContentStream);
-JsonElement conversationalTaskResult = result.RootElement;
-JsonElement orchestrationPrediction = conversationalTaskResult.GetProperty("result").GetProperty("prediction");
+ConversationsProject orchestrationProject = new ConversationsProject("DomainOrchestrator", "production");
+Response<AnalyzeConversationResult> response =  await client.AnalyzeConversationAsync(
+    "How are you?",
+    orchestrationProject);
+ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+var orchestrationPrediction = conversationalTaskResult.Result.Prediction as OrchestrationPrediction;
 ```
 
 ## Accessing project specific results
@@ -90,18 +42,24 @@ Depending on the project chosen by your orchestration model, you may get results
 ### Question Answering
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionQnA
-string respondingProjectName = orchestrationPrediction.GetProperty("topIntent").GetString();
-JsonElement targetIntentResult = orchestrationPrediction.GetProperty("intents").GetProperty(respondingProjectName);
+string respondingProjectName = orchestrationPrediction.TopIntent;
+TargetIntentResult targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
 
-if (targetIntentResult.GetProperty("targetProjectKind").GetString() == "QuestionAnswering")
+if (targetIntentResult.TargetProjectKind == TargetProjectKind.QuestionAnswering)
 {
     Console.WriteLine($"Top intent: {respondingProjectName}");
 
-    JsonElement questionAnsweringResponse = targetIntentResult.GetProperty("result");
-    Console.WriteLine($"Question Answering Response:");
-    foreach (JsonElement answer in questionAnsweringResponse.GetProperty("answers").EnumerateArray())
+    QuestionAnsweringTargetIntentResult qnaTargetIntentResult = targetIntentResult as QuestionAnsweringTargetIntentResult;
+
+    AnswersResult qnaAnswers = qnaTargetIntentResult.Result;
+
+    Console.WriteLine("Answers: \n");
+    foreach (KnowledgeBaseAnswer answer in qnaAnswers.Answers)
     {
-        Console.WriteLine(answer.GetProperty("answer").GetString());
+        Console.WriteLine($"Answer: {answer.Answer}");
+        Console.WriteLine($"Confidence: {answer.Confidence}");
+        Console.WriteLine($"Source: {answer.Source}");
+        Console.WriteLine();
     }
 }
 ```
@@ -109,45 +67,42 @@ if (targetIntentResult.GetProperty("targetProjectKind").GetString() == "Question
 ### Conversation
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionConversation
-string respondingProjectName = orchestrationPrediction.GetProperty("topIntent").GetString();
-JsonElement targetIntentResult = orchestrationPrediction.GetProperty("intents").GetProperty(respondingProjectName);
+string respondingProjectName = orchestrationPrediction.TopIntent;
+TargetIntentResult targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
 
-if (targetIntentResult.GetProperty("targetProjectKind").GetString() == "Conversation")
+if (targetIntentResult.TargetProjectKind == TargetProjectKind.Conversation)
 {
-    JsonElement conversationResult = targetIntentResult.GetProperty("result");
-    JsonElement conversationPrediction = conversationResult.GetProperty("prediction");
+    ConversationTargetIntentResult cluTargetIntentResult = targetIntentResult as ConversationTargetIntentResult;
 
-    Console.WriteLine($"Top Intent: {conversationPrediction.GetProperty("topIntent").GetString()}");
+    ConversationResult conversationResult = cluTargetIntentResult.Result;
+    ConversationPrediction conversationPrediction = conversationResult.Prediction;
+
+    Console.WriteLine($"Top Intent: {conversationResult.Prediction.TopIntent}");
     Console.WriteLine($"Intents:");
-    foreach (JsonElement intent in conversationPrediction.GetProperty("intents").EnumerateArray())
+    foreach (ConversationIntent intent in conversationPrediction.Intents)
     {
-        Console.WriteLine($"Intent Category: {intent.GetProperty("category").GetString()}");
-        Console.WriteLine($"Confidence: {intent.GetProperty("confidenceScore").GetSingle()}");
+        Console.WriteLine($"Intent Category: {intent.Category}");
+        Console.WriteLine($"Confidence: {intent.Confidence}");
         Console.WriteLine();
     }
 
     Console.WriteLine($"Entities:");
-    foreach (JsonElement entity in conversationPrediction.GetProperty("entities").EnumerateArray())
+    foreach (ConversationEntity entity in conversationPrediction.Entities)
     {
-        Console.WriteLine($"Entity Text: {entity.GetProperty("text").GetString()}");
-        Console.WriteLine($"Entity Category: {entity.GetProperty("category").GetString()}");
-        Console.WriteLine($"Confidence: {entity.GetProperty("confidenceScore").GetSingle()}");
-        Console.WriteLine($"Starting Position: {entity.GetProperty("offset").GetInt32()}");
-        Console.WriteLine($"Length: {entity.GetProperty("length").GetInt32()}");
+        Console.WriteLine($"Entity Text: {entity.Text}");
+        Console.WriteLine($"Entity Category: {entity.Category}");
+        Console.WriteLine($"Confidence: {entity.Confidence}");
+        Console.WriteLine($"Starting Position: {entity.Offset}");
+        Console.WriteLine($"Length: {entity.Length}");
         Console.WriteLine();
 
-        if (!entity.TryGetProperty("resolutions", out JsonElement resolutions))
+        foreach (BaseResolution resolution in entity.Resolutions)
         {
-            continue;
-        }
-
-        foreach (JsonElement resolution in resolutions.EnumerateArray())
-        {
-            if (resolution.GetProperty("resolutionKind").GetString() == "DateTimeResolution")
+            if (resolution is DateTimeResolution dateTimeResolution)
             {
-                Console.WriteLine($"Datetime Sub Kind: {resolution.GetProperty("dateTimeSubKind").GetString()}");
-                Console.WriteLine($"Timex: {resolution.GetProperty("timex").GetString()}");
-                Console.WriteLine($"Value: {resolution.GetProperty("value").GetString()}");
+                Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+                Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+                Console.WriteLine($"Value: {dateTimeResolution.Value}");
                 Console.WriteLine();
             }
         }
@@ -158,12 +113,14 @@ if (targetIntentResult.GetProperty("targetProjectKind").GetString() == "Conversa
 ### LUIS
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionLuis
-string respondingProjectName = orchestrationPrediction.GetProperty("topIntent").GetString();
-JsonElement targetIntentResult = orchestrationPrediction.GetProperty("intents").GetProperty(respondingProjectName);
+string respondingProjectName = orchestrationPrediction.TopIntent;
+TargetIntentResult targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
 
-if (targetIntentResult.GetProperty("targetProjectKind").GetString() == "Luis")
+if (targetIntentResult.TargetProjectKind == TargetProjectKind.Luis)
 {
-    JsonElement luisResponse = targetIntentResult.GetProperty("result");
-    Console.WriteLine($"LUIS Response: {luisResponse.GetRawText()}");
+    LuisTargetIntentResult luisTargetIntentResult = targetIntentResult as LuisTargetIntentResult;
+    BinaryData luisResponse = luisTargetIntentResult.Result;
+
+    Console.WriteLine($"LUIS Response: {luisResponse.ToString()}");
 }
 ```
