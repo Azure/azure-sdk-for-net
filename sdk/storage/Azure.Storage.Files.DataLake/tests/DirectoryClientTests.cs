@@ -11,8 +11,10 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Files.DataLake.Models;
+using Azure.Storage.Files.DataLake.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Microsoft.Diagnostics.Symbols;
 using Moq;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.TestConstants;
@@ -1199,6 +1201,149 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<PathProperties> response = await destDirectory.GetPropertiesAsync();
             Assert.IsTrue(response.Value.IsServerEncrypted);
             Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+        }
+
+        [RecordedTest]
+        public async Task RenameAsync_SasCredentialFromFileSystem()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials().ToString();
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string sourceDirectoryName = GetNewDirectoryName();
+            await test.FileSystem.CreateDirectoryAsync(sourceDirectoryName);
+
+            string destDirectoryName = GetNewDirectoryName();
+
+            var sasFileSystemClient = InstrumentClient(new DataLakeFileSystemClient(test.FileSystem.Uri, new AzureSasCredential(sas), GetOptions()));
+            DataLakeDirectoryClient sasSourceDirectoryClient = sasFileSystemClient.GetDirectoryClient(sourceDirectoryName);
+
+            // Act
+            DataLakeDirectoryClient destDirectory = await sasSourceDirectoryClient.RenameAsync(destinationPath: destDirectoryName);
+
+            // Assert
+            Response<PathProperties> response = await destDirectory.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        public async Task RenameAsync_SasCredentialFromDirectory()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials().ToString();
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string sourceDirectoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient directoryClient = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            await directoryClient.CreateSubDirectoryAsync(sourceDirectoryName);
+
+            string destDirectoryName = GetNewDirectoryName();
+
+            var sasDirectoryClient = InstrumentClient(new DataLakeDirectoryClient(directoryClient.Uri, new AzureSasCredential(sas), GetOptions()));
+            DataLakeDirectoryClient sasSourceDirectoryClient = sasDirectoryClient.GetSubDirectoryClient(sourceDirectoryName);
+
+            // Act
+            DataLakeDirectoryClient destDirectory = await sasSourceDirectoryClient.RenameAsync(destinationPath: destDirectoryName);
+
+            // Assert
+            Response<PathProperties> response = await destDirectory.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        public async Task RenameAsync_SasCredentialFromFile()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials().ToString();
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string sourceDirectoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient directoryClient = await test.FileSystem.CreateDirectoryAsync(sourceDirectoryName);
+            DataLakeFileClient sourceFile = await directoryClient.CreateFileAsync(sourceDirectoryName);
+
+            string destDirectoryName = GetNewDirectoryName();
+
+            var sasFileClient = InstrumentClient(new DataLakeFileClient(sourceFile.Uri, new AzureSasCredential(sas), GetOptions()));
+            DataLakeDirectoryClient sasSourceDirectoryClient = sasFileClient.GetParentDirectoryClient();
+
+            // Act
+            DataLakeDirectoryClient destDirectory = await sasSourceDirectoryClient.RenameAsync(destinationPath: destDirectoryName);
+
+            // Assert
+            Response<PathProperties> response = await destDirectory.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        public async Task RenameAsync_DifferentSasUri()
+        {
+            // Arrange
+            string fileSystemName = GetNewFileSystemName();
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            string sourceDirectoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient directoryClient = await test.FileSystem.CreateDirectoryAsync(sourceDirectoryName);
+            DataLakeFileClient sourceFile = await directoryClient.CreateFileAsync(sourceDirectoryName);
+
+            // Make unique source sas
+            DataLakeSasQueryParameters sourceSas = GetNewDataLakeServiceSasCredentialsPath(fileSystemName, directoryClient.Path, isDirectory: true);
+            DataLakeUriBuilder sourceUriBuilder= new DataLakeUriBuilder(directoryClient.Uri)
+            {
+                Sas = sourceSas
+            };
+
+            string destDirectoryName = GetNewDirectoryName();
+
+            var sasFileClient = InstrumentClient(new DataLakeFileClient(sourceUriBuilder.ToUri(), GetOptions()));
+            DataLakeDirectoryClient sasSourceDirectoryClient = sasFileClient.GetParentDirectoryClient();
+
+            // Make unique destination sas
+            string destSas = GetNewDataLakeServiceSasCredentialsPath(test.FileSystem.Name, destDirectoryName, isDirectory:true).ToString();
+
+            // Act
+            DataLakeDirectoryClient destDirectory = await sasSourceDirectoryClient.RenameAsync(destinationPath: destDirectoryName + "?" + destSas);
+
+            // Assert
+            Response<PathProperties> response = await destDirectory.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        public async Task RenameAsync_SasUriSasCredential()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials().ToString();
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string sourceDirectoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient directoryClient = await test.FileSystem.CreateDirectoryAsync(sourceDirectoryName);
+            DataLakeFileClient sourceFile = await directoryClient.CreateFileAsync(sourceDirectoryName);
+
+            string destDirectoryName = GetNewDirectoryName();
+
+            // Act
+            var sasFileClient = InstrumentClient(new DataLakeFileClient(sourceFile.Uri, new AzureSasCredential(sas), GetOptions()));
+            DataLakeDirectoryClient sasSourceDirectoryClient = sasFileClient.GetParentDirectoryClient();
+
+            // Act
+            DataLakeDirectoryClient destDirectory = await sasSourceDirectoryClient.RenameAsync(destinationPath: destDirectoryName);
+
+            // Assert
+            Response<PathProperties> response = await destDirectory.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        public async Task RenameAsync_DifferentSasCredential()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials().ToString();
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string sourceDirectoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient directoryClient = await test.FileSystem.CreateDirectoryAsync(sourceDirectoryName);
+            DataLakeFileClient sourceFile = await directoryClient.CreateFileAsync(sourceDirectoryName);
+
+            string destDirectoryName = GetNewDirectoryName();
+
+            // Act
+            var sasFileClient = InstrumentClient(new DataLakeFileClient(sourceFile.Uri, new AzureSasCredential(sas), GetOptions()));
+            DataLakeDirectoryClient sasSourceDirectoryClient = sasFileClient.GetParentDirectoryClient();
+
+            // Act
+            DataLakeDirectoryClient destDirectory = await sasSourceDirectoryClient.RenameAsync(destinationPath: destDirectoryName);
+
+            // Assert
+            Response<PathProperties> response = await destDirectory.GetPropertiesAsync();
         }
 
         [RecordedTest]

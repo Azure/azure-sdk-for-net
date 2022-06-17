@@ -440,8 +440,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="fileSystemClient"><see cref="DataLakeFileSystemClient"/> of the path's File System.</param>
         /// <param name="path">The path to the <see cref="DataLakePathClient"/>.</param>
         public DataLakePathClient(DataLakeFileSystemClient fileSystemClient, string path)
-            : this(
-                  (new DataLakeUriBuilder(fileSystemClient.Uri) { DirectoryOrFilePath = path }).ToDfsUri(),
+            : this((new DataLakeUriBuilder(fileSystemClient.Uri) { DirectoryOrFilePath = path }).ToDfsUri(),
                   fileSystemClient.ClientConfiguration)
         {
         }
@@ -616,114 +615,6 @@ namespace Azure.Storage.Files.DataLake
         /// name of the account, the name of the file system, and the path to the
         /// resource.
         /// </param>
-        /// <param name="pipeline">
-        /// The transport pipeline used to send every request.
-        /// </param>
-        /// <param name="storageSharedKeyCredential">
-        /// The shared key credential used to sign requests.
-        /// </param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        internal DataLakePathClient(
-            Uri pathUri,
-            HttpPipeline pipeline,
-            StorageSharedKeyCredential storageSharedKeyCredential,
-            DataLakeClientOptions options = default)
-        {
-            options ??= new DataLakeClientOptions();
-            var uriBuilder = new DataLakeUriBuilder(pathUri);
-            _uri = pathUri;
-            _blobUri = uriBuilder.ToBlobUri();
-            _dfsUri = uriBuilder.ToDfsUri();
-
-            _clientConfiguration = new DataLakeClientConfiguration(
-                pipeline: pipeline,
-                sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version,
-                customerProvidedKey: options.CustomerProvidedKey);
-
-            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _clientConfiguration);
-
-            uriBuilder.DirectoryOrFilePath = null;
-
-            _fileSystemClient = new DataLakeFileSystemClient(
-                uriBuilder.ToDfsUri(),
-                _clientConfiguration);
-
-            (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_dfsUri, _blobUri);
-            _pathRestClient = dfsPathRestClient;
-            _blobPathRestClient = blobPathRestClient;
-
-            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="pathUri">
-        /// A <see cref="Uri"/> referencing the directory that includes the
-        /// name of the account, the name of the file system, and the path to the
-        /// resource.
-        /// </param>
-        /// <param name="pipeline">
-        /// The transport pipeline used to send every request.
-        /// </param>
-        /// <param name="sasCredential">
-        /// The shared key credential used to sign requests.
-        /// </param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        internal DataLakePathClient(
-            Uri pathUri,
-            HttpPipeline pipeline,
-            AzureSasCredential sasCredential,
-            DataLakeClientOptions options = default)
-        {
-            options ??= new DataLakeClientOptions();
-            var uriBuilder = new DataLakeUriBuilder(pathUri);
-            _uri = pathUri;
-            _blobUri = uriBuilder.ToBlobUri();
-            _dfsUri = uriBuilder.ToDfsUri();
-
-            _clientConfiguration = new DataLakeClientConfiguration(
-                pipeline: pipeline,
-                sasCredential: sasCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version,
-                customerProvidedKey: options.CustomerProvidedKey);
-
-            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _clientConfiguration);
-
-            uriBuilder.DirectoryOrFilePath = null;
-
-            _fileSystemClient = new DataLakeFileSystemClient(
-                uriBuilder.ToDfsUri(),
-                _clientConfiguration);
-
-            (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_dfsUri, _blobUri);
-            _pathRestClient = dfsPathRestClient;
-            _blobPathRestClient = blobPathRestClient;
-
-            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="pathUri">
-        /// A <see cref="Uri"/> referencing the directory that includes the
-        /// name of the account, the name of the file system, and the path to the
-        /// resource.
-        /// </param>
         /// <param name="clientConfiguration">
         /// <see cref="DataLakeClientConfiguration"/>.
         /// </param>
@@ -735,7 +626,6 @@ namespace Azure.Storage.Files.DataLake
             _uri = pathUri;
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
-
             _clientConfiguration = clientConfiguration;
 
             _blockBlobClient = BlockBlobClientInternals.Create(
@@ -2320,7 +2210,7 @@ namespace Azure.Storage.Files.DataLake
                     }
                     if (_clientConfiguration.SasCredential != null)
                     {
-                        renameSource += Constants.QueryDelimiter + _clientConfiguration.SasCredential.Signature;
+                        renameSource += Constants.QueryDelimiter + ClientConfiguration.SasCredential.Signature;
                     }
 
                     // Build destination URI
@@ -2333,19 +2223,43 @@ namespace Azure.Storage.Files.DataLake
 
                     // DataLakeUriBuider will encode the DirectoryOrFilePath.  We don't want the query parameters,
                     // especially SAS, to be encoded.
+                    DataLakePathClient destPathClient;
                     string[] split = destinationPath.Split('?');
                     if (split.Length == 2)
                     {
                         destUriBuilder.DirectoryOrFilePath = split[0];
                         destUriBuilder.Query = split[1];
+                        // If the destination already has a SAS, then let's not further add to the Uri if it contains
+                        // AzureSasCredential on the source.
+                        var paramsMap = new UriQueryParamsCollection(split[1]);
+                        if (!paramsMap.ContainsKey(Constants.Sas.Parameters.Version) &&
+                            ClientConfiguration.SasCredential != default)
+                        {
+                            destPathClient = new DataLakePathClient(destUriBuilder.ToUri(), ClientConfiguration);
+                        }
+                        else
+                        {
+                            destPathClient = new DataLakePathClient(
+                                destUriBuilder.ToUri(),
+                                new DataLakeClientConfiguration(
+                                    pipeline: ClientConfiguration.Pipeline,
+                                    sasCredential: ClientConfiguration.SasCredential,
+                                    ClientConfiguration.ClientDiagnostics,
+                                    ClientConfiguration.Version,
+                                    ClientConfiguration.CustomerProvidedKey));
+                        }
                     }
                     else
                     {
+                        // No SAS in the destination, use the source credentials as a default
                         destUriBuilder.DirectoryOrFilePath = destinationPath;
+                        destPathClient = new DataLakePathClient(
+                            destUriBuilder.ToUri(),
+                            ClientConfiguration);
                     }
 
                     // Build destPathClient
-                    DataLakePathClient destPathClient = new DataLakePathClient(destUriBuilder.ToUri(), ClientConfiguration);
+                    //DataLakePathClient destPathClient = new DataLakePathClient(destUriBuilder.ToUri(), destCredentials);
 
                     ResponseWithHeaders<PathCreateHeaders> response;
 

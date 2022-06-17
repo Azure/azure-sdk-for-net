@@ -272,11 +272,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             return builder.ToSasQueryParameters(userDelegationKey, accountName);
         }
 
-        public DataLakeSasQueryParameters GetNewDataLakeServiceSasCredentialsPath(string fileSystemName, string path, StorageSharedKeyCredential sharedKeyCredentials = default)
+        public DataLakeSasQueryParameters GetNewDataLakeServiceSasCredentialsPath(string fileSystemName, string path, bool isDirectory = false, StorageSharedKeyCredential sharedKeyCredentials = default)
         {
             var builder = new DataLakeSasBuilder
             {
                 FileSystemName = fileSystemName,
+                IsDirectory = isDirectory,
                 Path = path,
                 Protocol = SasProtocol.None,
                 StartsOn = Recording.UtcNow.AddHours(-1),

@@ -1189,33 +1189,20 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             string sas = GetNewAccountSasCredentials().ToString();
             await using DisposingFileSystem test = await GetNewFileSystem();
-            var client = test.FileSystem.GetRootDirectoryClient().GetFileClient(GetNewFileName());
-            await client.CreateIfNotExistsAsync();
-            Uri uri = client.Uri;
-            string directoryName = GetNewDirectoryName();
+            string sourceFileName = GetNewFileName();
+            await test.FileSystem.CreateFileAsync(sourceFileName);
+
+            string destFilename = GetNewFileName();
 
             // Act
-            var sasClient = InstrumentClient(new DataLakeFileSystemClient(uri, new AzureSasCredential(sas), GetOptions()));
-            DataLakeFileClient sourcefileClient = sasClient.GetDirectoryClient(directoryName).GetFileClient(GetNewFileName());
-
-            string destFileName = GetNewFileName();
-
-            await sourcefileClient.CreateAsync();
-
-            byte[] data = GetRandomBuffer(Constants.KB);
-            using Stream stream = new MemoryStream(data);
-            await sourcefileClient.UploadAsync(stream);
+            var sasFileSystemClient = InstrumentClient(new DataLakeFileSystemClient(test.FileSystem.Uri, new AzureSasCredential(sas), GetOptions()));
+            DataLakeFileClient sasSourcefileClient = sasFileSystemClient.GetFileClient(sourceFileName);
 
             // Act
-            DataLakeFileClient destFile = await sourcefileClient.RenameAsync(destinationPath: directoryName + "/" + destFileName);
+            DataLakeFileClient destFile = await sasSourcefileClient.RenameAsync(destinationPath: destFilename);
 
             // Assert
-            Response<FileDownloadInfo> downloadResponse = await destFile.ReadAsync();
-
-            Assert.AreEqual(data.Length, downloadResponse.Value.ContentLength);
-            var actual = new MemoryStream();
-            await downloadResponse.Value.Content.CopyToAsync(actual);
-            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+            Response<PathProperties> response = await destFile.GetPropertiesAsync();
         }
 
         [RecordedTest]
@@ -1224,33 +1211,22 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             string sas = GetNewAccountSasCredentials().ToString();
             await using DisposingFileSystem test = await GetNewFileSystem();
-            var client = test.FileSystem.GetRootDirectoryClient().GetFileClient(GetNewFileName());
-            await client.CreateIfNotExistsAsync();
-            Uri uri = client.Uri;
-            string directoryName = GetNewDirectoryName();
+            string sourceDirectoryName = GetNewDirectoryName();
+            string sourceFileName = GetNewFileName();
+            DataLakeDirectoryClient directoryClient = await test.FileSystem.CreateDirectoryAsync(sourceDirectoryName);
+            await directoryClient.CreateFileAsync(sourceFileName);
+
+            string destFilename = GetNewFileName();
 
             // Act
-            var sasClient = InstrumentClient(new DataLakeDirectoryClient(uri, new AzureSasCredential(sas), GetOptions()));
-            DataLakeFileClient sourcefileClient = sasClient.GetFileClient(GetNewFileName());
-
-            string destFileName = GetNewFileName();
-
-            await sourcefileClient.CreateAsync();
-
-            byte[] data = GetRandomBuffer(Constants.KB);
-            using Stream stream = new MemoryStream(data);
-            await sourcefileClient.UploadAsync(stream);
+            var sasFileSystemClient = InstrumentClient(new DataLakeDirectoryClient(directoryClient.Uri, new AzureSasCredential(sas), GetOptions()));
+            DataLakeFileClient sasSourcefileClient = sasFileSystemClient.GetFileClient(sourceFileName);
 
             // Act
-            DataLakeFileClient destFile = await sourcefileClient.RenameAsync(destinationPath: directoryName + "/" + destFileName);
+            DataLakeFileClient destFile = await sasSourcefileClient.RenameAsync(destinationPath: sourceDirectoryName + "/" + destFilename);
 
             // Assert
-            Response<FileDownloadInfo> downloadResponse = await destFile.ReadAsync();
-
-            Assert.AreEqual(data.Length, downloadResponse.Value.ContentLength);
-            var actual = new MemoryStream();
-            await downloadResponse.Value.Content.CopyToAsync(actual);
-            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+            Response<PathProperties> response = await destFile.GetPropertiesAsync();
         }
 
         [RecordedTest]
