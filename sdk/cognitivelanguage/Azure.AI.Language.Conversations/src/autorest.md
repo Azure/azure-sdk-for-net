@@ -8,15 +8,13 @@ title: Conversations
 license-header: MICROSOFT_MIT_NO_VERSION
 
 batch:
-- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/9be5d475168131b188f254f5d14b23086512a9d3/specification/cognitiveservices/data-plane/Language/stable/2022-05-01/analyzeconversations.json
+- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/725f4ca360426a32d20e81eb945065e62c285d6a/specification/cognitiveservices/data-plane/Language/stable/2022-05-01/analyzeconversations.json
   clear-output-folder: true
-  model-namespace: false
-  generation1-convenience-client: true
 
-# TODO: Uncomment when we ship authoring support and remove ./ConversationsClientOptions.cs.
-# - input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/9be5d475168131b188f254f5d14b23086512a9d3/specification/cognitiveservices/data-plane/Language/stable/2022-05-01/analyzeconversations-authoring.json
-#   add-credentials: true
-#   data-plane: true
+- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/725f4ca360426a32d20e81eb945065e62c285d6a/specification/cognitiveservices/data-plane/Language/stable/2022-05-01/analyzeconversations-authoring.json
+
+data-plane: true
+model-namespace: false
 
 modelerfour:
   lenient-model-deduplication: true
@@ -55,4 +53,29 @@ directive:
 - from: swagger-document
   where: $.parameters.Endpoint
   transform: $["format"] = "url"
+
+# Always default to UTF16 string indices.
+- from: swagger-document
+  where: $.definitions.StringIndexType
+  transform: >
+    $["description"] = "Specifies the method used to interpret string offsets. Set this to \"Utf16CodeUnit\" for .NET strings, which are encoded as UTF-16.";
+    $["x-ms-client-default"] = "Utf16CodeUnit";
+
+- from: swagger-document
+  where: $.definitions.ConversationalAnalysisAuthoringStringIndexType
+  transform: >
+    $["description"] = "Specifies the method used to interpret string offsets. Set this to \"Utf16CodeUnit\" for .NET strings, which are encoded as UTF-16.";
+    $["x-ms-client-default"] = "Utf16CodeUnit";
+
+- from: swagger-document
+  where: $.parameters.ConversationalAnalysisAuthoringStringIndexTypeQueryParameter
+  transform: >
+    $["description"] = "Specifies the method used to interpret string offsets. Set this to \"Utf16CodeUnit\" for .NET strings, which are encoded as UTF-16.";
+    $["x-ms-client-default"] = "Utf16CodeUnit";
+
+# Correct Endpoint parameter description to reference right domain suffix.
+- from: swagger-document
+  where: $.parameters.Endpoint
+  transform: >
+    $["description"] = "Supported Cognitive Services endpoint (e.g., https://<resource-name>.cognitiveservices.azure.com)."
 ```
