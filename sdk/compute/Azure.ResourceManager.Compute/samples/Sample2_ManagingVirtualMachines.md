@@ -53,7 +53,7 @@ var input = new VirtualMachineData(resourceGroup.Data.Location)
 {
     HardwareProfile = new HardwareProfile()
     {
-        VmSize = VirtualMachineSizeTypes.StandardF2
+        VmSize = VirtualMachineSizeType.StandardF2
     },
     OSProfile = new OSProfile()
     {
@@ -84,13 +84,13 @@ var input = new VirtualMachineData(resourceGroup.Data.Location)
     },
     StorageProfile = new StorageProfile()
     {
-        OSDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+        OSDisk = new OSDisk(DiskCreateOptionType.FromImage)
         {
-            OSType = OperatingSystemTypes.Linux,
-            Caching = CachingTypes.ReadWrite,
+            OSType = SupportedOperatingSystemType.Linux,
+            Caching = CachingType.ReadWrite,
             ManagedDisk = new ManagedDiskParameters()
             {
-                StorageAccountType = StorageAccountTypes.StandardLRS
+                StorageAccountType = StorageAccountType.StandardLRS
             }
         },
         ImageReference = new ImageReference()
