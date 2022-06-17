@@ -1,0 +1,194 @@
+{
+  "homepages": [],
+  "source_base_path": "C:/Users/mingzhehuang/Tools/Azure.Security.ConfidentialLedger/docfx-output/docfx_project",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.Security.ConfidentialLedger.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.Security.ConfidentialLedger.html",
+          "hash": "Ria1AouQKO1skRcvaHdllzEMDKGi97V3NlUvrA5x9d0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "UidNotFound"
+      ],
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.Security.ConfidentialLedger/Azure.Security.ConfidentialLedger.ConfidentialLedgerClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.Security.ConfidentialLedger/Azure.Security.ConfidentialLedger.ConfidentialLedgerClient.html",
+          "hash": "+03H5E3Bmi/oQfk/u1jIuDBlggz/V6bsDpVlAie8Mec="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.Security.ConfidentialLedger/Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.Security.ConfidentialLedger/Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion.html",
+          "hash": "PVROOr/K5RyLFNmnM4DUrb4Qyq6QjLe8qdOHQiRaGdY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.Security.ConfidentialLedger/Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.Security.ConfidentialLedger/Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.html",
+          "hash": "HyLJRryX2ccyE2h6+bSaAYml0wyqNOFDbBCJ6tDmbZE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.Security.ConfidentialLedger/Azure.Security.ConfidentialLedger.ConfidentialLedgerConstants.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.Security.ConfidentialLedger/Azure.Security.ConfidentialLedger.ConfidentialLedgerConstants.html",
+          "hash": "Ag3m5nwABUsIMuo4BYUPkkbG0841p9oQBvmydnBTMDA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.Security.ConfidentialLedger/Azure.Security.ConfidentialLedger.ConfidentialLedgerIdentityServiceClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.Security.ConfidentialLedger/Azure.Security.ConfidentialLedger.ConfidentialLedgerIdentityServiceClient.html",
+          "hash": "wQb91gosbq3ewcfO0Csrs2KUnHASXFrXRaZTIWeem58="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "UidNotFound"
+      ],
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.Security.ConfidentialLedger/Azure.Security.ConfidentialLedger.PostLedgerEntryOperation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.Security.ConfidentialLedger/Azure.Security.ConfidentialLedger.PostLedgerEntryOperation.html",
+          "hash": "DeziBOq/GcNlw/Nsp83zSnZ0MoWWbZ48pgsNvJ06mOo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "wLlbxSZ8Dm2NpqWUNFZCBF4GfjlOVPNQdSgVtfheZ2w="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "4xDbHOJXEfn67gj80jzMuL47sY7gStbQoQCyQAv/0Rc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "N7Rk4lzTK7FU8wCZVXu+7gGikIwZkk0tXg6eROCZUu0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "wKG5Vhc0cvGgZ7oOVZdUAxjq9VP2TBQyXV+ZfFxX+OU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0,
+        "full_build_reason_code": "NoAvailableBuildCache"
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 2,
+          "skipped_file_count": 0
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 7,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: last post processor info is null.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
