@@ -20,9 +20,11 @@ resource-model-requires-type: false
 
 format-by-name-rules:
   'tenantId': 'uuid'
-  'resourceType': 'resource-type'
   'etag': 'etag'
   'location': 'azure-location'
+  'locations': 'azure-location'
+  'azureLocation': 'azure-location'
+  'azureLocations': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
@@ -98,7 +100,6 @@ directive:
     transform: >
       $.Resource['x-ms-client-name'] = 'NetworkTrackedResourceData';
       $.Resource.properties.id['x-ms-format'] = 'arm-id';
-      $.Resource.properties.location['x-ms-format'] = 'azure-location';
       $.Resource.properties.type['x-ms-format'] = 'resource-type';
       $.SubResource['x-ms-client-name'] = 'NetworkSubResource';
       $.SubResource.properties.id['x-ms-format'] = 'arm-id';
@@ -205,18 +206,6 @@ directive:
     where: $.definitions..resourceId
     transform: >
       $['x-ms-format'] = 'arm-id';
-  - from: swagger-document
-    where: $.definitions..etag
-    transform: >
-      $['x-ms-format'] = 'etag';
-  - from: swagger-document
-    where: $.definitions..location
-    transform: >
-      $['x-ms-format'] = 'azure-location';
-  - from: swagger-document
-    where: $.paths..parameters[?(@.name === "location")]
-    transform: >
-      $["x-ms-format"] = 'azure-location';
   - from: azureFirewall.json
     where: $.definitions.AzureFirewallIpGroups.properties.id
     transform: >
@@ -229,9 +218,6 @@ directive:
       $.SubnetAssociation.properties.id['x-ms-format'] = 'arm-id';
       $.Topology['x-ms-client-name'] = 'NetworkTopology';
       $.TopologyResource['x-ms-client-name'] = 'TopologyResourceInfo';
-      $.AvailableProvidersListParameters.properties.azureLocations.items['x-ms-format'] = 'azure-location';
-      $.AzureReachabilityReportParameters.properties.azureLocations.items['x-ms-format'] = 'azure-location';
-      $.AzureReachabilityReportItem.properties.azureLocation['x-ms-format'] = 'azure-location';
       $.PacketCapture.properties.type = {
         "readOnly": true,
         "type": "string",
@@ -243,11 +229,6 @@ directive:
       $.VerificationIPFlowParameters.properties.targetNicResourceId['x-ms-format'] = 'arm-id';
       $.NextHopParameters.properties.targetNicResourceId['x-ms-format'] = 'arm-id';
       $.NextHopResult.properties.routeTableId['x-ms-format'] = 'arm-id';
-  - from: virtualNetwork.json
-    where: $.definitions
-    transform: >
-      $.ServiceAssociationLinkPropertiesFormat.properties.locations.items['x-ms-format'] = 'azure-location';
-      $.ServiceEndpointPropertiesFormat.properties.locations.items['x-ms-format'] = 'azure-location';
   - from: usage.json
     where: $.definitions.Usage.properties.id
     transform: >

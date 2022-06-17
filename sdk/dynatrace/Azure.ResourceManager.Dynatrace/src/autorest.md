@@ -17,7 +17,6 @@ modelerfour:
 
 format-by-name-rules:
   'tenantId': 'uuid'
-  'resourceType': 'resource-type'
   'etag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
@@ -55,8 +54,6 @@ directive:
       $.MonitoredResource['x-ms-client-name'] = 'MonitoredResourceDetails';
       $.MonitoredResource.properties.sendingMetrics['x-ms-client-name'] = 'sendingMetricsStatus';
       $.MonitoredResource.properties.sendingLogs['x-ms-client-name'] = 'sendingLogsStatus';
-      $.LinkableEnvironmentRequest.properties.tenantId['format'] = 'uuid';
-      $.IdentityProperties.properties.tenantId['format'] = 'uuid';
       $.DynatraceSingleSignOnProperties.properties.enterpriseAppId['format'] = 'uuid';
       $.LinkableEnvironmentRequest.properties.region['x-ms-format'] = 'azure-location';
 ```

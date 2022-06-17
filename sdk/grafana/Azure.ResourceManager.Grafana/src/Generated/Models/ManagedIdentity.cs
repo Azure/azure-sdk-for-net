@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="principalId"> The principal id of the system assigned identity. </param>
         /// <param name="tenantId"> The tenant id of the system assigned identity. </param>
         /// <param name="userAssignedIdentities"> Dictionary of user assigned identities. </param>
-        internal ManagedIdentity(IdentityType? identityType, string principalId, string tenantId, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
+        internal ManagedIdentity(IdentityType? identityType, string principalId, Guid? tenantId, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
         {
             IdentityType = identityType;
             PrincipalId = principalId;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <summary> The principal id of the system assigned identity. </summary>
         public string PrincipalId { get; }
         /// <summary> The tenant id of the system assigned identity. </summary>
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
         /// <summary> Dictionary of user assigned identities. </summary>
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }

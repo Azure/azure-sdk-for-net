@@ -18,7 +18,6 @@ modelerfour:
 
 format-by-name-rules:
   'tenantId': 'uuid'
-  'resourceType': 'resource-type'
   'etag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
@@ -111,10 +110,7 @@ directive:
   - from: machineLearningServices.json
     where: $.definitions
     transform: >
-      $.PrivateEndpointConnection.properties.location["x-ms-format"] = "azure-location";
       $.Workspace["x-ms-client-name"] = "MachineLearningWorkspace";
-      $.Workspace.properties.location["x-ms-format"] = "azure-location";
-      $.WorkspaceProperties.properties.tenantId["format"] = "uuid";
       $.ComputeResource["x-ms-client-name"] = "MachineLearningCompute";
       $.Compute.properties.resourceId["x-ms-format"] = "arm-id";
       $.AKS["x-ms-client-name"] = "AksCompute";
@@ -133,7 +129,6 @@ directive:
       $.CodeContainer["x-ms-client-name"] = "CodeContainerProperties";
       $.BatchDeploymentTrackedResource["x-ms-client-name"] = "BatchDeployment";
       $.BatchDeployment["x-ms-client-name"] = "BatchDeploymentProperties";
-      $.PartialBatchDeploymentPartialTrackedResource.properties.location["x-ms-format"] = "azure-location";
       $.BatchEndpointTrackedResource["x-ms-client-name"] = "BatchEndpoint";
       $.BatchEndpoint["x-ms-client-name"] = "BatchEndpointProperties";
       $.CodeVersionResource["x-ms-client-name"] = "CodeVersion";

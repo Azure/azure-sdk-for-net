@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             Optional<DataCollectionEndpointProperties> properties = default;
             Optional<KnownDataCollectionEndpointResourceKind> kind = default;
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -75,7 +76,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -114,7 +120,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new DataCollectionEndpointProperties(id, name, type, systemData, tags, location, properties.Value, Optional.ToNullable(kind), etag.Value);
+            return new DataCollectionEndpointProperties(id, name, type, systemData, tags, location, properties.Value, Optional.ToNullable(kind), Optional.ToNullable(etag));
         }
     }
 }

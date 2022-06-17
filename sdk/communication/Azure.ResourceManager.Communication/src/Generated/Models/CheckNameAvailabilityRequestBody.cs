@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> The check availability request body. </summary>
@@ -20,6 +18,6 @@ namespace Azure.ResourceManager.Communication.Models
         /// <summary> The name of the resource for which availability needs to be checked. </summary>
         public string Name { get; set; }
         /// <summary> The resource type. </summary>
-        public ResourceType? ResourceType { get; set; }
+        public string ResourceType { get; set; }
     }
 }

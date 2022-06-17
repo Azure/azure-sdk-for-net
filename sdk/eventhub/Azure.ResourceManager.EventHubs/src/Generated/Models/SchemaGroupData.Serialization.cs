@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EventHubs
 
         internal static SchemaGroupData DeserializeSchemaGroupData(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -63,7 +63,12 @@ namespace Azure.ResourceManager.EventHubs
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -164,7 +169,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new SchemaGroupData(id, name, type, systemData, location.Value, Optional.ToNullable(updatedAtUtc), Optional.ToNullable(createdAtUtc), Optional.ToNullable(eTag), Optional.ToDictionary(groupProperties), Optional.ToNullable(schemaCompatibility), Optional.ToNullable(schemaType));
+            return new SchemaGroupData(id, name, type, systemData, Optional.ToNullable(location), Optional.ToNullable(updatedAtUtc), Optional.ToNullable(createdAtUtc), Optional.ToNullable(eTag), Optional.ToDictionary(groupProperties), Optional.ToNullable(schemaCompatibility), Optional.ToNullable(schemaType));
         }
     }
 }

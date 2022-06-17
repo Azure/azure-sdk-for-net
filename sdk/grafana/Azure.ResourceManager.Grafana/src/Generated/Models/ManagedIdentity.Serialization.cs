@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Grafana.Models
         {
             Optional<IdentityType> type = default;
             Optional<string> principalId = default;
-            Optional<string> tenantId = default;
+            Optional<Guid> tenantId = default;
             Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -61,7 +62,12 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
                 if (property.NameEquals("tenantId"))
                 {
-                    tenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentities"))
@@ -80,7 +86,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     continue;
                 }
             }
-            return new ManagedIdentity(Optional.ToNullable(type), principalId.Value, tenantId.Value, Optional.ToDictionary(userAssignedIdentities));
+            return new ManagedIdentity(Optional.ToNullable(type), principalId.Value, Optional.ToNullable(tenantId), Optional.ToDictionary(userAssignedIdentities));
         }
     }
 }

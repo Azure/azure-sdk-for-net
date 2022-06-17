@@ -18,9 +18,10 @@ modelerfour:
 
 format-by-name-rules:
   'tenantId': 'uuid'
-  'resourceType': 'resource-type'
   'etag': 'etag'
   'location': 'azure-location'
+  'locations': 'azure-location'
+  'appLocation': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
@@ -58,10 +59,6 @@ rename-rules:
 
 directive:
   - from: swagger-document
-    where: $.definitions..appLocation
-    transform: >
-      $['x-ms-format'] = 'azure-location';
-  - from: swagger-document
     where: $.definitions..subnetId
     transform: >
       $['x-ms-format'] = 'arm-id';
@@ -77,9 +74,6 @@ directive:
   - from: skus.json
     where: $.definitions
     transform: >
-      $.RestrictionInfo.properties.locations.items['x-ms-format'] = 'azure-location';
-      $.SkuDefinition.properties.locations.items['x-ms-format'] = 'azure-location';
-      $.SkuLocationAndZones.properties.location['x-ms-format'] = 'azure-location';
       $.SkuRestriction.properties.restrictionInfo = {
             '$ref': '#/definitions/RestrictionInfo',
             'description': 'The restriction information.'

@@ -18,7 +18,6 @@ modelerfour:
 
 format-by-name-rules:
   'tenantId': 'uuid'
-  'resourceType': 'resource-type'
   'etag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
@@ -46,10 +45,6 @@ rename-rules:
   URI: Uri
 directive:
   - remove-operation: NetworkFunction_ListOperations
-  - from: swagger-document
-    where: $.definitions..etag
-    transform: >
-      $['x-ms-format'] = 'etag';
   - from: swagger-document
     where: $.definitions
     transform: >

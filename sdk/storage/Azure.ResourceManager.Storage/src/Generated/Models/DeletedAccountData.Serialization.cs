@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Storage
             ResourceType type = default;
             SystemData systemData = default;
             Optional<string> storageAccountResourceId = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<string> restoreReference = default;
             Optional<string> creationTime = default;
             Optional<string> deletionTime = default;
@@ -71,7 +71,12 @@ namespace Azure.ResourceManager.Storage
                         }
                         if (property0.NameEquals("location"))
                         {
-                            location = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            location = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("restoreReference"))
@@ -93,7 +98,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new DeletedAccountData(id, name, type, systemData, storageAccountResourceId.Value, location.Value, restoreReference.Value, creationTime.Value, deletionTime.Value);
+            return new DeletedAccountData(id, name, type, systemData, storageAccountResourceId.Value, Optional.ToNullable(location), restoreReference.Value, creationTime.Value, deletionTime.Value);
         }
     }
 }

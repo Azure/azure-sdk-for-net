@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.Monitor
         internal static LogSearchRuleData DeserializeLogSearchRuleData(JsonElement element)
         {
             Optional<string> kind = default;
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -94,7 +95,12 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -230,7 +236,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new LogSearchRuleData(id, name, type, systemData, tags, location, kind.Value, etag.Value, createdWithApiVersion.Value, Optional.ToNullable(isLegacyLogAnalyticsRule), description.Value, displayName.Value, Optional.ToNullable(autoMitigate), Optional.ToNullable(enabled), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), source, schedule.Value, action);
+            return new LogSearchRuleData(id, name, type, systemData, tags, location, kind.Value, Optional.ToNullable(etag), createdWithApiVersion.Value, Optional.ToNullable(isLegacyLogAnalyticsRule), description.Value, displayName.Value, Optional.ToNullable(autoMitigate), Optional.ToNullable(enabled), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), source, schedule.Value, action);
         }
     }
 }

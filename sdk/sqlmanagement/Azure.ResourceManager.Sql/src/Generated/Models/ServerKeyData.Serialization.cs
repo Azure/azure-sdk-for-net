@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         internal static ServerKeyData DeserializeServerKeyData(JsonElement element)
         {
             Optional<string> kind = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -57,7 +57,12 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -143,7 +148,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ServerKeyData(id, name, type, systemData, kind.Value, location.Value, subregion.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(creationDate), Optional.ToNullable(autoRotationEnabled));
+            return new ServerKeyData(id, name, type, systemData, kind.Value, Optional.ToNullable(location), subregion.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(creationDate), Optional.ToNullable(autoRotationEnabled));
         }
     }
 }

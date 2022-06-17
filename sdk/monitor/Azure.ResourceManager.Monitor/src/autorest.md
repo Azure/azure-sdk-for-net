@@ -13,12 +13,10 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-modelerfour:
   lenient-model-deduplication: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
-  'resourceType': 'resource-type'
   'etag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'

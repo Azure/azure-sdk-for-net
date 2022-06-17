@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static ProxyResource DeserializeProxyResource(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -30,7 +30,12 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -54,7 +59,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new ProxyResource(id, name, type, systemData, location.Value);
+            return new ProxyResource(id, name, type, systemData, Optional.ToNullable(location));
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Reservations
         private readonly ClientDiagnostics _quotaRequestDetailsQuotaRequestStatusClientDiagnostics;
         private readonly QuotaRequestStatusRestOperations _quotaRequestDetailsQuotaRequestStatusRestClient;
         private readonly string _providerId;
-        private readonly string _location;
+        private readonly AzureLocation _location;
 
         /// <summary> Initializes a new instance of the <see cref="QuotaRequestDetailsCollection"/> class for mocking. </summary>
         protected QuotaRequestDetailsCollection()
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="providerId"> Azure resource provider ID. </param>
         /// <param name="location"> Azure region. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> or <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="providerId"/> or <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        internal QuotaRequestDetailsCollection(ArmClient client, ResourceIdentifier id, string providerId, string location) : base(client, id)
+        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal QuotaRequestDetailsCollection(ArmClient client, ResourceIdentifier id, string providerId, AzureLocation location) : base(client, id)
         {
             _providerId = providerId;
             _location = location;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = await _quotaRequestDetailsQuotaRequestStatusRestClient.GetAsync(Id.SubscriptionId, _providerId, _location, id, cancellationToken).ConfigureAwait(false);
+                var response = await _quotaRequestDetailsQuotaRequestStatusRestClient.GetAsync(Id.SubscriptionId, _providerId, new AzureLocation(_location), id, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new QuotaRequestDetailsResource(Client, response.Value), response.GetRawResponse());
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = _quotaRequestDetailsQuotaRequestStatusRestClient.Get(Id.SubscriptionId, _providerId, _location, id, cancellationToken);
+                var response = _quotaRequestDetailsQuotaRequestStatusRestClient.Get(Id.SubscriptionId, _providerId, new AzureLocation(_location), id, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new QuotaRequestDetailsResource(Client, response.Value), response.GetRawResponse());
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Reservations
                 scope.Start();
                 try
                 {
-                    var response = await _quotaRequestDetailsQuotaRequestStatusRestClient.ListAsync(Id.SubscriptionId, _providerId, _location, filter, top, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _quotaRequestDetailsQuotaRequestStatusRestClient.ListAsync(Id.SubscriptionId, _providerId, new AzureLocation(_location), filter, top, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new QuotaRequestDetailsResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Reservations
                 scope.Start();
                 try
                 {
-                    var response = await _quotaRequestDetailsQuotaRequestStatusRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, _providerId, _location, filter, top, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _quotaRequestDetailsQuotaRequestStatusRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, _providerId, new AzureLocation(_location), filter, top, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new QuotaRequestDetailsResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Reservations
                 scope.Start();
                 try
                 {
-                    var response = _quotaRequestDetailsQuotaRequestStatusRestClient.List(Id.SubscriptionId, _providerId, _location, filter, top, skiptoken, cancellationToken: cancellationToken);
+                    var response = _quotaRequestDetailsQuotaRequestStatusRestClient.List(Id.SubscriptionId, _providerId, new AzureLocation(_location), filter, top, skiptoken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new QuotaRequestDetailsResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Reservations
                 scope.Start();
                 try
                 {
-                    var response = _quotaRequestDetailsQuotaRequestStatusRestClient.ListNextPage(nextLink, Id.SubscriptionId, _providerId, _location, filter, top, skiptoken, cancellationToken: cancellationToken);
+                    var response = _quotaRequestDetailsQuotaRequestStatusRestClient.ListNextPage(nextLink, Id.SubscriptionId, _providerId, new AzureLocation(_location), filter, top, skiptoken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new QuotaRequestDetailsResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = await _quotaRequestDetailsQuotaRequestStatusRestClient.GetAsync(Id.SubscriptionId, _providerId, _location, id, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _quotaRequestDetailsQuotaRequestStatusRestClient.GetAsync(Id.SubscriptionId, _providerId, new AzureLocation(_location), id, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = _quotaRequestDetailsQuotaRequestStatusRestClient.Get(Id.SubscriptionId, _providerId, _location, id, cancellationToken: cancellationToken);
+                var response = _quotaRequestDetailsQuotaRequestStatusRestClient.Get(Id.SubscriptionId, _providerId, new AzureLocation(_location), id, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

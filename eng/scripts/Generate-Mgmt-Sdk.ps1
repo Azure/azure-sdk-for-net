@@ -6,7 +6,13 @@ param (
     [string] $AutorestPath
 )
 
-$sdkRootPath = Resolve-Path "$PSScriptRoot/../../sdk/$ServiceDirectory"
+$ErrorActionPreference = "Stop"
+try {
+    $sdkRootPath = Resolve-Path "$PSScriptRoot/../../sdk/$ServiceDirectory"
+} catch {
+    Write-Error -Message "Invalid '$ServiceDirectory' service."
+}
+
 
 $currentPath = Get-Location
 $files = Get-ChildItem -Path $sdkRootPath -Recurse -Filter autorest.md | %{$_.FullName}

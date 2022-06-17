@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EventHubs
 
         internal static EventHubData DeserializeEventHubData(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -63,7 +63,12 @@ namespace Azure.ResourceManager.EventHubs
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -174,7 +179,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventHubData(id, name, type, systemData, location.Value, Optional.ToList(partitionIds), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(messageRetentionInDays), Optional.ToNullable(partitionCount), Optional.ToNullable(status), captureDescription.Value);
+            return new EventHubData(id, name, type, systemData, Optional.ToNullable(location), Optional.ToList(partitionIds), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(messageRetentionInDays), Optional.ToNullable(partitionCount), Optional.ToNullable(status), captureDescription.Value);
         }
     }
 }

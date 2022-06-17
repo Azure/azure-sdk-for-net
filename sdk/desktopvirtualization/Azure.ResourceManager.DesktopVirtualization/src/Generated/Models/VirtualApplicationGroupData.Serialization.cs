@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Models;
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             Optional<string> managedBy = default;
             Optional<string> kind = default;
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<SystemAssignedServiceIdentity> identity = default;
             Optional<ResourceModelWithAllowedPropertySetSku> sku = default;
             Optional<ArmPlan> plan = default;
@@ -114,7 +115,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -245,7 +251,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new VirtualApplicationGroupData(id, name, type, systemData, tags, location, managedBy.Value, kind.Value, etag.Value, identity, sku.Value, plan, objectId.Value, description.Value, friendlyName.Value, hostPoolArmPath, workspaceArmPath.Value, applicationGroupType, migrationRequest.Value, Optional.ToNullable(cloudPcResource));
+            return new VirtualApplicationGroupData(id, name, type, systemData, tags, location, managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan, objectId.Value, description.Value, friendlyName.Value, hostPoolArmPath, workspaceArmPath.Value, applicationGroupType, migrationRequest.Value, Optional.ToNullable(cloudPcResource));
         }
     }
 }

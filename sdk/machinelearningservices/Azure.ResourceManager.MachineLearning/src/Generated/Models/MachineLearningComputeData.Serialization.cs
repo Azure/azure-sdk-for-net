@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning
         internal static MachineLearningComputeData DeserializeMachineLearningComputeData(JsonElement element)
         {
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<MachineLearningSku> sku = default;
             Optional<Compute> properties = default;
@@ -79,7 +79,12 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -138,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning
                     continue;
                 }
             }
-            return new MachineLearningComputeData(id, name, type, systemData, identity, location.Value, Optional.ToDictionary(tags), sku.Value, properties.Value);
+            return new MachineLearningComputeData(id, name, type, systemData, identity, Optional.ToNullable(location), Optional.ToDictionary(tags), sku.Value, properties.Value);
         }
     }
 }

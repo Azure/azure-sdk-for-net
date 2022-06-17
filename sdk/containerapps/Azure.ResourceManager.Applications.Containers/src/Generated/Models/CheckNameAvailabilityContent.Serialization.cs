@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(ResourceType.Value);
+                writer.WriteStringValue(ResourceType);
             }
             writer.WriteEndObject();
         }
