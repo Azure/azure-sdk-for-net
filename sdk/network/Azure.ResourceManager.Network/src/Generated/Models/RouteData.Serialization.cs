@@ -8,7 +8,6 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -31,7 +30,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(ResourceType);
+                writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -65,7 +64,6 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
-            Optional<SystemData> systemData = default;
             Optional<string> addressPrefix = default;
             Optional<RouteNextHopType> nextHopType = default;
             Optional<string> nextHopIpAddress = default;
@@ -106,16 +104,6 @@ namespace Azure.ResourceManager.Network
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -171,7 +159,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new RouteData(id.Value, name.Value, Optional.ToNullable(type), systemData.Value, Optional.ToNullable(etag), addressPrefix.Value, Optional.ToNullable(nextHopType), nextHopIpAddress.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(hasBgpOverride));
+            return new RouteData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), addressPrefix.Value, Optional.ToNullable(nextHopType), nextHopIpAddress.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(hasBgpOverride));
         }
     }
 }
