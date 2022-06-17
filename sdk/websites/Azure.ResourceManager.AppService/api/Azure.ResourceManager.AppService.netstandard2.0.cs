@@ -317,8 +317,8 @@ namespace Azure.ResourceManager.AppService
     }
     public static partial class AppServiceExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.AppService.Models.ResourceNameAvailability> CheckAppServiceNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string name, Azure.ResourceManager.AppService.Models.CheckNameResourceTypes type, bool? isFqdn = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.ResourceNameAvailability>> CheckAppServiceNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string name, Azure.ResourceManager.AppService.Models.CheckNameResourceTypes type, bool? isFqdn = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.AppService.Models.ResourceNameAvailability> CheckAppServiceNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string name, Azure.ResourceManager.AppService.Models.CheckNameResourceType type, bool? isFqdn = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.ResourceNameAvailability>> CheckAppServiceNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string name, Azure.ResourceManager.AppService.Models.CheckNameResourceType type, bool? isFqdn = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.AppService.Models.DomainAvailabilityCheckResult> CheckAvailabilityDomain(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.AppService.Models.NameIdentifier identifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.DomainAvailabilityCheckResult>> CheckAvailabilityDomainAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.AppService.Models.NameIdentifier identifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response DisableRecommendationForSubscriptionRecommendation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.AppService
         public string ResourceGroup { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.SkuDescription Sku { get { throw null; } set { } }
         public System.DateTimeOffset? SpotExpirationOn { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.StatusOptions? Status { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.StatusOption? Status { get { throw null; } }
         public string Subscription { get { throw null; } }
         public int? TargetWorkerCount { get { throw null; } set { } }
         public int? TargetWorkerSizeId { get { throw null; } set { } }
@@ -1292,7 +1292,7 @@ namespace Azure.ResourceManager.AppService
         public string ActionName { get { throw null; } set { } }
         public string BladeName { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> CategoryTags { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.Channels? Channels { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.Channel? Channels { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string ExtensionName { get { throw null; } set { } }
@@ -1547,7 +1547,7 @@ namespace Azure.ResourceManager.AppService
         public Azure.ResourceManager.AppService.Models.ManagedPipelineMode? ManagedPipelineMode { get { throw null; } set { } }
         public int? ManagedServiceIdentityId { get { throw null; } set { } }
         public int? MinimumElasticInstanceCount { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.SupportedTlsVersions? MinTlsVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.SupportedTlsVersion? MinTlsVersion { get { throw null; } set { } }
         public string NetFrameworkVersion { get { throw null; } set { } }
         public string NodeVersion { get { throw null; } set { } }
         public int? NumberOfWorkers { get { throw null; } set { } }
@@ -1564,7 +1564,7 @@ namespace Azure.ResourceManager.AppService
         public System.DateTimeOffset? RequestTracingExpirationOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.IPSecurityRestriction> ScmIPSecurityRestrictions { get { throw null; } set { } }
         public bool? ScmIPSecurityRestrictionsUseMain { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.SupportedTlsVersions? ScmMinTlsVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.SupportedTlsVersion? ScmMinTlsVersion { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ScmType? ScmType { get { throw null; } set { } }
         public string TracingOptions { get { throw null; } set { } }
         public bool? Use32BitWorkerProcess { get { throw null; } set { } }
@@ -4337,7 +4337,7 @@ namespace Azure.ResourceManager.AppService
     public partial class WorkerPoolResourceData : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
         public WorkerPoolResourceData() { }
-        public Azure.ResourceManager.AppService.Models.ComputeModeOptions? ComputeMode { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.ComputeModeOption? ComputeMode { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> InstanceNames { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.SkuDescription Sku { get { throw null; } set { } }
         public int? WorkerCount { get { throw null; } set { } }
@@ -4516,7 +4516,7 @@ namespace Azure.ResourceManager.AppService.Models
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.DnsType? DnsType { get { throw null; } set { } }
         public string DnsZoneId { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.DomainNotRenewableReasons> DomainNotRenewableReasons { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.DomainNotRenewableReason> DomainNotRenewableReasons { get { throw null; } }
         public System.DateTimeOffset? ExpirationOn { get { throw null; } }
         public System.DateTimeOffset? LastRenewedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.HostName> ManagedHostNames { get { throw null; } }
@@ -4605,14 +4605,14 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? Reserved { get { throw null; } set { } }
         public string ResourceGroup { get { throw null; } }
         public System.DateTimeOffset? SpotExpirationOn { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.StatusOptions? Status { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.StatusOption? Status { get { throw null; } }
         public string Subscription { get { throw null; } }
         public int? TargetWorkerCount { get { throw null; } set { } }
         public int? TargetWorkerSizeId { get { throw null; } set { } }
         public string WorkerTierName { get { throw null; } set { } }
         public bool? ZoneRedundant { get { throw null; } set { } }
     }
-    public enum AppServicePlanRestrictions
+    public enum AppServicePlanRestriction
     {
         None = 0,
         Free = 1,
@@ -4639,7 +4639,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string ActionName { get { throw null; } set { } }
         public string BladeName { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> CategoryTags { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.Channels? Channels { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.Channel? Channels { get { throw null; } set { } }
         public System.DateTimeOffset? CreationOn { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public int? Enabled { get { throw null; } set { } }
@@ -4697,7 +4697,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class AppServiceUsage : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
         public AppServiceUsage() { }
-        public Azure.ResourceManager.AppService.Models.ComputeModeOptions? ComputeMode { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.ComputeModeOption? ComputeMode { get { throw null; } }
         public long? CurrentValue { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public long? Limit { get { throw null; } }
@@ -5040,7 +5040,7 @@ namespace Azure.ResourceManager.AppService.Models
         StandardDomainValidatedSsl = 0,
         StandardDomainValidatedWildCardSsl = 1,
     }
-    public enum Channels
+    public enum Channel
     {
         Notification = 0,
         Api = 1,
@@ -5049,27 +5049,27 @@ namespace Azure.ResourceManager.AppService.Models
         All = 4,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CheckNameResourceTypes : System.IEquatable<Azure.ResourceManager.AppService.Models.CheckNameResourceTypes>
+    public readonly partial struct CheckNameResourceType : System.IEquatable<Azure.ResourceManager.AppService.Models.CheckNameResourceType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public CheckNameResourceTypes(string value) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.CheckNameResourceTypes HostingEnvironment { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.CheckNameResourceTypes MicrosoftWebHostingEnvironments { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.CheckNameResourceTypes MicrosoftWebPublishingUsers { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.CheckNameResourceTypes MicrosoftWebSites { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.CheckNameResourceTypes MicrosoftWebSitesSlots { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.CheckNameResourceTypes PublishingUser { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.CheckNameResourceTypes Slot { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.CheckNameResourceTypes WebSite { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppService.Models.CheckNameResourceTypes other) { throw null; }
+        public CheckNameResourceType(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.CheckNameResourceType HostingEnvironment { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.CheckNameResourceType MicrosoftWebHostingEnvironments { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.CheckNameResourceType MicrosoftWebPublishingUsers { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.CheckNameResourceType MicrosoftWebSites { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.CheckNameResourceType MicrosoftWebSitesSlots { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.CheckNameResourceType PublishingUser { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.CheckNameResourceType Slot { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.CheckNameResourceType WebSite { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.CheckNameResourceType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppService.Models.CheckNameResourceTypes left, Azure.ResourceManager.AppService.Models.CheckNameResourceTypes right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppService.Models.CheckNameResourceTypes (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppService.Models.CheckNameResourceTypes left, Azure.ResourceManager.AppService.Models.CheckNameResourceTypes right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.CheckNameResourceType left, Azure.ResourceManager.AppService.Models.CheckNameResourceType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.CheckNameResourceType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.CheckNameResourceType left, Azure.ResourceManager.AppService.Models.CheckNameResourceType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public enum ClientCertMode
@@ -5105,7 +5105,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string TrafficManagerProfileId { get { throw null; } set { } }
         public string TrafficManagerProfileName { get { throw null; } set { } }
     }
-    public enum ComputeModeOptions
+    public enum ComputeModeOption
     {
         Shared = 0,
         Dedicated = 1,
@@ -5523,22 +5523,22 @@ namespace Azure.ResourceManager.AppService.Models
         public System.Uri Uri { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DomainNotRenewableReasons : System.IEquatable<Azure.ResourceManager.AppService.Models.DomainNotRenewableReasons>
+    public readonly partial struct DomainNotRenewableReason : System.IEquatable<Azure.ResourceManager.AppService.Models.DomainNotRenewableReason>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public DomainNotRenewableReasons(string value) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.DomainNotRenewableReasons ExpirationNotInRenewalTimeRange { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.DomainNotRenewableReasons RegistrationStatusNotSupportedForRenewal { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.DomainNotRenewableReasons SubscriptionNotActive { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppService.Models.DomainNotRenewableReasons other) { throw null; }
+        public DomainNotRenewableReason(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.DomainNotRenewableReason ExpirationNotInRenewalTimeRange { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.DomainNotRenewableReason RegistrationStatusNotSupportedForRenewal { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.DomainNotRenewableReason SubscriptionNotActive { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.DomainNotRenewableReason other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppService.Models.DomainNotRenewableReasons left, Azure.ResourceManager.AppService.Models.DomainNotRenewableReasons right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppService.Models.DomainNotRenewableReasons (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppService.Models.DomainNotRenewableReasons left, Azure.ResourceManager.AppService.Models.DomainNotRenewableReasons right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.DomainNotRenewableReason left, Azure.ResourceManager.AppService.Models.DomainNotRenewableReason right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.DomainNotRenewableReason (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.DomainNotRenewableReason left, Azure.ResourceManager.AppService.Models.DomainNotRenewableReason right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class DomainPurchaseConsent
@@ -6310,7 +6310,7 @@ namespace Azure.ResourceManager.AppService.Models
         public int? Quota { get { throw null; } set { } }
         public string Sku { get { throw null; } set { } }
         public string Vendor { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.AppServicePlanRestrictions? WebHostingPlanRestrictions { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AppServicePlanRestriction? WebHostingPlanRestrictions { get { throw null; } set { } }
     }
     public partial class PremierAddOnPatchResource : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
@@ -6802,7 +6802,7 @@ namespace Azure.ResourceManager.AppService.Models
         public Azure.ResourceManager.AppService.Models.ManagedPipelineMode? ManagedPipelineMode { get { throw null; } set { } }
         public int? ManagedServiceIdentityId { get { throw null; } set { } }
         public int? MinimumElasticInstanceCount { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.SupportedTlsVersions? MinTlsVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.SupportedTlsVersion? MinTlsVersion { get { throw null; } set { } }
         public string NetFrameworkVersion { get { throw null; } set { } }
         public string NodeVersion { get { throw null; } set { } }
         public int? NumberOfWorkers { get { throw null; } set { } }
@@ -6819,7 +6819,7 @@ namespace Azure.ResourceManager.AppService.Models
         public System.DateTimeOffset? RequestTracingExpirationOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.IPSecurityRestriction> ScmIPSecurityRestrictions { get { throw null; } set { } }
         public bool? ScmIPSecurityRestrictionsUseMain { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.SupportedTlsVersions? ScmMinTlsVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.SupportedTlsVersion? ScmMinTlsVersion { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ScmType? ScmType { get { throw null; } set { } }
         public string TracingOptions { get { throw null; } set { } }
         public bool? Use32BitWorkerProcess { get { throw null; } set { } }
@@ -7086,7 +7086,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal StampCapacity() { }
         public long? AvailableCapacity { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.ComputeModeOptions? ComputeMode { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.ComputeModeOption? ComputeMode { get { throw null; } }
         public bool? ExcludeFromCapacityAllocation { get { throw null; } }
         public bool? IsApplicableForAllComputeModes { get { throw null; } }
         public bool? IsLinux { get { throw null; } }
@@ -7094,7 +7094,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string SiteMode { get { throw null; } }
         public long? TotalCapacity { get { throw null; } }
         public string Unit { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.WorkerSizeOptions? WorkerSize { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkerSizeOption? WorkerSize { get { throw null; } }
         public int? WorkerSizeId { get { throw null; } }
     }
     public partial class StaticSiteARMResourcePatch : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
@@ -7136,7 +7136,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public StaticSiteFunctionOverviewARMResource() { }
         public string FunctionName { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.TriggerTypes? TriggerType { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.TriggerType? TriggerType { get { throw null; } }
     }
     public partial class StaticSiteResetPropertiesARMResource : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
@@ -7223,7 +7223,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string StatusCodes { get { throw null; } set { } }
         public string TimeInterval { get { throw null; } set { } }
     }
-    public enum StatusOptions
+    public enum StatusOption
     {
         Ready = 0,
         Pending = 1,
@@ -7258,22 +7258,22 @@ namespace Azure.ResourceManager.AppService.Models
         public System.Collections.Generic.IList<string> Properties { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SupportedTlsVersions : System.IEquatable<Azure.ResourceManager.AppService.Models.SupportedTlsVersions>
+    public readonly partial struct SupportedTlsVersion : System.IEquatable<Azure.ResourceManager.AppService.Models.SupportedTlsVersion>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SupportedTlsVersions(string value) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.SupportedTlsVersions One0 { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.SupportedTlsVersions One1 { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.SupportedTlsVersions One2 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppService.Models.SupportedTlsVersions other) { throw null; }
+        public SupportedTlsVersion(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.SupportedTlsVersion One0 { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.SupportedTlsVersion One1 { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.SupportedTlsVersion One2 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.SupportedTlsVersion other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppService.Models.SupportedTlsVersions left, Azure.ResourceManager.AppService.Models.SupportedTlsVersions right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppService.Models.SupportedTlsVersions (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppService.Models.SupportedTlsVersions left, Azure.ResourceManager.AppService.Models.SupportedTlsVersions right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.SupportedTlsVersion left, Azure.ResourceManager.AppService.Models.SupportedTlsVersion right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.SupportedTlsVersion (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.SupportedTlsVersion left, Azure.ResourceManager.AppService.Models.SupportedTlsVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SupportTopic
@@ -7326,21 +7326,21 @@ namespace Azure.ResourceManager.AppService.Models
         Error = 2,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TriggerTypes : System.IEquatable<Azure.ResourceManager.AppService.Models.TriggerTypes>
+    public readonly partial struct TriggerType : System.IEquatable<Azure.ResourceManager.AppService.Models.TriggerType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public TriggerTypes(string value) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.TriggerTypes HttpTrigger { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.TriggerTypes Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppService.Models.TriggerTypes other) { throw null; }
+        public TriggerType(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.TriggerType HttpTrigger { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.TriggerType Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.TriggerType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppService.Models.TriggerTypes left, Azure.ResourceManager.AppService.Models.TriggerTypes right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppService.Models.TriggerTypes (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppService.Models.TriggerTypes left, Azure.ResourceManager.AppService.Models.TriggerTypes right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.TriggerType left, Azure.ResourceManager.AppService.Models.TriggerType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.TriggerType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.TriggerType left, Azure.ResourceManager.AppService.Models.TriggerType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class Twitter
@@ -7374,7 +7374,7 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class ValidateContent
     {
-        public ValidateContent(string name, Azure.ResourceManager.AppService.Models.ValidateResourceTypes validateResourceType, string location) { }
+        public ValidateContent(string name, Azure.ResourceManager.AppService.Models.ValidateResourceType validateResourceType, string location) { }
         public Azure.ResourceManager.AppService.Models.AppServiceEnvironmentAutoGenerated AppServiceEnvironment { get { throw null; } set { } }
         public int? Capacity { get { throw null; } set { } }
         public string ContainerImagePlatform { get { throw null; } set { } }
@@ -7391,25 +7391,25 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? NeedLinuxWorkers { get { throw null; } set { } }
         public string ServerFarmId { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.ValidateResourceTypes ValidateResourceType { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.ValidateResourceType ValidateResourceType { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ValidateResourceTypes : System.IEquatable<Azure.ResourceManager.AppService.Models.ValidateResourceTypes>
+    public readonly partial struct ValidateResourceType : System.IEquatable<Azure.ResourceManager.AppService.Models.ValidateResourceType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ValidateResourceTypes(string value) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.ValidateResourceTypes MicrosoftWebHostingEnvironments { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.ValidateResourceTypes ServerFarm { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.ValidateResourceTypes WebSite { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppService.Models.ValidateResourceTypes other) { throw null; }
+        public ValidateResourceType(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.ValidateResourceType MicrosoftWebHostingEnvironments { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.ValidateResourceType ServerFarm { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.ValidateResourceType WebSite { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.ValidateResourceType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppService.Models.ValidateResourceTypes left, Azure.ResourceManager.AppService.Models.ValidateResourceTypes right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppService.Models.ValidateResourceTypes (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppService.Models.ValidateResourceTypes left, Azure.ResourceManager.AppService.Models.ValidateResourceTypes right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.ValidateResourceType left, Azure.ResourceManager.AppService.Models.ValidateResourceType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.ValidateResourceType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.ValidateResourceType left, Azure.ResourceManager.AppService.Models.ValidateResourceType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ValidateResponse
@@ -7557,7 +7557,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string JavaContainer { get { throw null; } }
         public string JavaContainerVersion { get { throw null; } }
     }
-    public enum WorkerSizeOptions
+    public enum WorkerSizeOption
     {
         Small = 0,
         Medium = 1,

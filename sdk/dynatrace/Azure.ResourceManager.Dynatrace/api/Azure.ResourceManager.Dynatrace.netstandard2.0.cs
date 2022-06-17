@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Dynatrace
         public System.Collections.Generic.IList<string> AadDomains { get { throw null; } }
         public System.Guid? EnterpriseAppId { get { throw null; } set { } }
         public Azure.ResourceManager.Dynatrace.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.SingleSignOnStates? SingleSignOnState { get { throw null; } set { } }
+        public Azure.ResourceManager.Dynatrace.Models.SingleSignOnState? SingleSignOnState { get { throw null; } set { } }
         public System.Uri SingleSignOnUri { get { throw null; } set { } }
     }
     public partial class MonitorResource : Azure.ResourceManager.ArmResource
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Dynatrace
         public MonitorResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentProperties DynatraceEnvironmentProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Dynatrace.Models.IdentityProperties Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategories? LiftrResourceCategory { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory? LiftrResourceCategory { get { throw null; } }
         public int? LiftrResourcePreference { get { throw null; } }
         public Azure.ResourceManager.Dynatrace.Models.MarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get { throw null; } set { } }
         public Azure.ResourceManager.Dynatrace.Models.MonitoringStatus? MonitoringStatus { get { throw null; } set { } }
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public System.Collections.Generic.IList<string> AadDomains { get { throw null; } }
         public System.Guid? EnterpriseAppId { get { throw null; } set { } }
         public Azure.ResourceManager.Dynatrace.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.SingleSignOnStates? SingleSignOnState { get { throw null; } set { } }
+        public Azure.ResourceManager.Dynatrace.Models.SingleSignOnState? SingleSignOnState { get { throw null; } set { } }
         public System.Uri SingleSignOnUri { get { throw null; } set { } }
     }
     public partial class EnvironmentInfo
@@ -263,21 +263,21 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LiftrResourceCategories : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategories>
+    public readonly partial struct LiftrResourceCategory : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public LiftrResourceCategories(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategories MonitorLogs { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategories Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategories other) { throw null; }
+        public LiftrResourceCategory(string value) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory MonitorLogs { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategories left, Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategories right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategories (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategories left, Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategories right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory left, Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory left, Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class LinkableEnvironmentContent
@@ -536,23 +536,23 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SingleSignOnStates : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.SingleSignOnStates>
+    public readonly partial struct SingleSignOnState : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.SingleSignOnState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SingleSignOnStates(string value) { throw null; }
-        public static Azure.ResourceManager.Dynatrace.Models.SingleSignOnStates Disable { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.SingleSignOnStates Enable { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.SingleSignOnStates Existing { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.SingleSignOnStates Initial { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Dynatrace.Models.SingleSignOnStates other) { throw null; }
+        public SingleSignOnState(string value) { throw null; }
+        public static Azure.ResourceManager.Dynatrace.Models.SingleSignOnState Disable { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.SingleSignOnState Enable { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.SingleSignOnState Existing { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.SingleSignOnState Initial { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Dynatrace.Models.SingleSignOnState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.SingleSignOnStates left, Azure.ResourceManager.Dynatrace.Models.SingleSignOnStates right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Dynatrace.Models.SingleSignOnStates (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.SingleSignOnStates left, Azure.ResourceManager.Dynatrace.Models.SingleSignOnStates right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Dynatrace.Models.SingleSignOnState left, Azure.ResourceManager.Dynatrace.Models.SingleSignOnState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Dynatrace.Models.SingleSignOnState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.SingleSignOnState left, Azure.ResourceManager.Dynatrace.Models.SingleSignOnState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SsoDetailsContent

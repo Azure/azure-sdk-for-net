@@ -408,8 +408,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     }
     public partial class FilterableProperty
     {
-        public FilterableProperty(Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes supportedFilterType, System.Collections.Generic.IEnumerable<string> supportedValues) { }
-        public Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes SupportedFilterType { get { throw null; } set { } }
+        public FilterableProperty(Azure.ResourceManager.EdgeOrder.Models.SupportedFilterType supportedFilterType, System.Collections.Generic.IEnumerable<string> supportedValues) { }
+        public Azure.ResourceManager.EdgeOrder.Models.SupportedFilterType SupportedFilterType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SupportedValues { get { throw null; } }
     }
     public partial class ForwardShippingDetails
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public Azure.ResourceManager.EdgeOrder.Models.DoubleEncryptionStatus? DoubleEncryptionStatus { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EdgeOrder.Models.NotificationPreference> NotificationPreferences { get { throw null; } }
         public string PreferredManagementResourceId { get { throw null; } set { } }
-        public Azure.ResourceManager.EdgeOrder.Models.TransportShipmentTypes? TransportPreferencesPreferredShipmentType { get { throw null; } set { } }
+        public Azure.ResourceManager.EdgeOrder.Models.TransportShipmentType? TransportPreferencesPreferredShipmentType { get { throw null; } set { } }
     }
     public partial class OrderItemResourcePatch
     {
@@ -840,39 +840,39 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SupportedFilterTypes : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes>
+    public readonly partial struct SupportedFilterType : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.SupportedFilterType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SupportedFilterTypes(string value) { throw null; }
-        public static Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes DoubleEncryptionStatus { get { throw null; } }
-        public static Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes ShipToCountries { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes other) { throw null; }
+        public SupportedFilterType(string value) { throw null; }
+        public static Azure.ResourceManager.EdgeOrder.Models.SupportedFilterType DoubleEncryptionStatus { get { throw null; } }
+        public static Azure.ResourceManager.EdgeOrder.Models.SupportedFilterType ShipToCountries { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EdgeOrder.Models.SupportedFilterType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes left, Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes right) { throw null; }
-        public static implicit operator Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes left, Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EdgeOrder.Models.SupportedFilterType left, Azure.ResourceManager.EdgeOrder.Models.SupportedFilterType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EdgeOrder.Models.SupportedFilterType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.SupportedFilterType left, Azure.ResourceManager.EdgeOrder.Models.SupportedFilterType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TransportShipmentTypes : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.TransportShipmentTypes>
+    public readonly partial struct TransportShipmentType : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.TransportShipmentType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public TransportShipmentTypes(string value) { throw null; }
-        public static Azure.ResourceManager.EdgeOrder.Models.TransportShipmentTypes CustomerManaged { get { throw null; } }
-        public static Azure.ResourceManager.EdgeOrder.Models.TransportShipmentTypes MicrosoftManaged { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.EdgeOrder.Models.TransportShipmentTypes other) { throw null; }
+        public TransportShipmentType(string value) { throw null; }
+        public static Azure.ResourceManager.EdgeOrder.Models.TransportShipmentType CustomerManaged { get { throw null; } }
+        public static Azure.ResourceManager.EdgeOrder.Models.TransportShipmentType MicrosoftManaged { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EdgeOrder.Models.TransportShipmentType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.EdgeOrder.Models.TransportShipmentTypes left, Azure.ResourceManager.EdgeOrder.Models.TransportShipmentTypes right) { throw null; }
-        public static implicit operator Azure.ResourceManager.EdgeOrder.Models.TransportShipmentTypes (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.TransportShipmentTypes left, Azure.ResourceManager.EdgeOrder.Models.TransportShipmentTypes right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EdgeOrder.Models.TransportShipmentType left, Azure.ResourceManager.EdgeOrder.Models.TransportShipmentType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EdgeOrder.Models.TransportShipmentType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.TransportShipmentType left, Azure.ResourceManager.EdgeOrder.Models.TransportShipmentType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

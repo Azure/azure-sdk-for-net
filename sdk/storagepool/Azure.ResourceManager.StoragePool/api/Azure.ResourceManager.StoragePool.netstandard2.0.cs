@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.StoragePool
     }
     public partial class DiskPoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DiskPoolData(Azure.Core.AzureLocation location, Azure.ResourceManager.StoragePool.Models.ProvisioningStates provisioningState, System.Collections.Generic.IEnumerable<string> availabilityZones, Azure.ResourceManager.StoragePool.Models.OperationalStatus status, string subnetId) : base (default(Azure.Core.AzureLocation)) { }
+        public DiskPoolData(Azure.Core.AzureLocation location, Azure.ResourceManager.StoragePool.Models.ProvisioningState provisioningState, System.Collections.Generic.IEnumerable<string> availabilityZones, Azure.ResourceManager.StoragePool.Models.OperationalStatus status, string subnetId) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IList<string> AdditionalCapabilities { get { throw null; } }
         public System.Collections.Generic.IList<string> AvailabilityZones { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> Disks { get { throw null; } }
         public string ManagedBy { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ManagedByExtended { get { throw null; } }
-        public Azure.ResourceManager.StoragePool.Models.ProvisioningStates ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.StoragePool.Models.ProvisioningState ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.StoragePool.Models.StoragePoolSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.StoragePool.Models.OperationalStatus Status { get { throw null; } set { } }
         public string SubnetId { get { throw null; } set { } }
@@ -76,14 +76,14 @@ namespace Azure.ResourceManager.StoragePool
     }
     public partial class IscsiTargetData : Azure.ResourceManager.Models.ResourceData
     {
-        public IscsiTargetData(Azure.ResourceManager.StoragePool.Models.IscsiTargetAclMode aclMode, string targetIqn, Azure.ResourceManager.StoragePool.Models.ProvisioningStates provisioningState, Azure.ResourceManager.StoragePool.Models.OperationalStatus status) { }
+        public IscsiTargetData(Azure.ResourceManager.StoragePool.Models.IscsiTargetAclMode aclMode, string targetIqn, Azure.ResourceManager.StoragePool.Models.ProvisioningState provisioningState, Azure.ResourceManager.StoragePool.Models.OperationalStatus status) { }
         public Azure.ResourceManager.StoragePool.Models.IscsiTargetAclMode AclMode { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Endpoints { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.StoragePool.Models.IscsiLun> Luns { get { throw null; } }
         public string ManagedBy { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ManagedByExtended { get { throw null; } }
         public int? Port { get { throw null; } set { } }
-        public Azure.ResourceManager.StoragePool.Models.ProvisioningStates ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.StoragePool.Models.ProvisioningState ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Sessions { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.StoragePool.Models.Acl> StaticAcls { get { throw null; } }
         public Azure.ResourceManager.StoragePool.Models.OperationalStatus Status { get { throw null; } set { } }
@@ -243,27 +243,27 @@ namespace Azure.ResourceManager.StoragePool.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StoragePool.Models.EndpointDependency> Endpoints { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningStates : System.IEquatable<Azure.ResourceManager.StoragePool.Models.ProvisioningStates>
+    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.StoragePool.Models.ProvisioningState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ProvisioningStates(string value) { throw null; }
-        public static Azure.ResourceManager.StoragePool.Models.ProvisioningStates Canceled { get { throw null; } }
-        public static Azure.ResourceManager.StoragePool.Models.ProvisioningStates Creating { get { throw null; } }
-        public static Azure.ResourceManager.StoragePool.Models.ProvisioningStates Deleting { get { throw null; } }
-        public static Azure.ResourceManager.StoragePool.Models.ProvisioningStates Failed { get { throw null; } }
-        public static Azure.ResourceManager.StoragePool.Models.ProvisioningStates Invalid { get { throw null; } }
-        public static Azure.ResourceManager.StoragePool.Models.ProvisioningStates Pending { get { throw null; } }
-        public static Azure.ResourceManager.StoragePool.Models.ProvisioningStates Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.StoragePool.Models.ProvisioningStates Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.StoragePool.Models.ProvisioningStates other) { throw null; }
+        public ProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.StoragePool.Models.ProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.StoragePool.Models.ProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.StoragePool.Models.ProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.StoragePool.Models.ProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.StoragePool.Models.ProvisioningState Invalid { get { throw null; } }
+        public static Azure.ResourceManager.StoragePool.Models.ProvisioningState Pending { get { throw null; } }
+        public static Azure.ResourceManager.StoragePool.Models.ProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.StoragePool.Models.ProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.StoragePool.Models.ProvisioningState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.StoragePool.Models.ProvisioningStates left, Azure.ResourceManager.StoragePool.Models.ProvisioningStates right) { throw null; }
-        public static implicit operator Azure.ResourceManager.StoragePool.Models.ProvisioningStates (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.StoragePool.Models.ProvisioningStates left, Azure.ResourceManager.StoragePool.Models.ProvisioningStates right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.StoragePool.Models.ProvisioningState left, Azure.ResourceManager.StoragePool.Models.ProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.StoragePool.Models.ProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.StoragePool.Models.ProvisioningState left, Azure.ResourceManager.StoragePool.Models.ProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ResourceSkuCapability
