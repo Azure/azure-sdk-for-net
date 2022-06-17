@@ -24,39 +24,39 @@
         // Developers should define the following environment variables to run tests locally.
         // Live test CIs will use environment variables defined via tests.yml.
 
-        // "CONVERSATIONS_ENDPOINT": {
+        // "AZURE_CONVERSATIONS_ENDPOINT": {
         //     "type": "string",
         //     "value": ""
         // },
-        // "CONVERSATIONS_KEY": {
+        // "AZURE_CONVERSATIONS_KEY": {
         //     "type": "string",
         //     "value": ""
         // },
-        // "CONVERSATIONS_PROJECT_NAME": {
+        // "AZURE_CONVERSATIONS_PROJECT_NAME": {
         //     "type": "string",
         //     "value": "antischOne"
         // },
-        // "CONVERSATIONS_DEPLOYMENT_NAME": {
+        // "AZURE_CONVERSATIONS_DEPLOYMENT_NAME": {
         //     "type": "string",
         //     "value": "production"
         // },
-        // "CONVERSATIONS_WORKFLOW_PROJECT_NAME": {
+        // "AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME": {
         //     "type": "string",
         //     "value": "antischTwo"
         // },
-        // "CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": {
+        // "AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": {
         //     "type": "string",
         //     "value": "production"
         // },
-        // "QUESTIONANSWERING_ENDPOINT": {
+        // "AZURE_QUESTIONANSWERING_ENDPOINT": {
         //     "type": "string",
         //     "value": "https://wuppe.api.cognitive.microsoft.com"
         // },
-        // "QUESTIONANSWERING_KEY": {
+        // "AZURE_QUESTIONANSWERING_KEY": {
         //     "type": "string",
         //     "value": ""
         // },
-        // "QUESTIONANSWERING_PROJECT": {
+        // "AZURE_QUESTIONANSWERING_PROJECT": {
         //     "type": "string",
         //     "value": "190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c"
         // }
