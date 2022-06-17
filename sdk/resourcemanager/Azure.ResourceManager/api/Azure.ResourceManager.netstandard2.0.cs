@@ -483,15 +483,6 @@ namespace Azure.ResourceManager.Models
         public System.Guid? ClientId { get { throw null; } }
         public System.Guid? PrincipalId { get { throw null; } }
     }
-    public abstract partial class WritableResourceData
-    {
-        protected WritableResourceData() { }
-        protected WritableResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ResourceManager.Models.SystemData systemData) { }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
-    }
 }
 namespace Azure.ResourceManager.Resources
 {
