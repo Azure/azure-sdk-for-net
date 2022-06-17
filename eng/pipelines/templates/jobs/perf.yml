@@ -40,7 +40,6 @@ resources:
     type: github
     endpoint: Azure
     name: Azure/azure-sdk-tools
-    ref: perf-automation
 
 jobs:
 - job: Perf
