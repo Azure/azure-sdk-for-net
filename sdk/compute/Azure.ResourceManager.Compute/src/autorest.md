@@ -20,7 +20,6 @@ modelerfour:
 
 format-by-name-rules:
   'tenantId': 'uuid'
-  'resourceType': 'resource-type'
   'etag': 'etag'
   'location': 'azure-location'
   'locations': 'azure-location'
@@ -133,6 +132,7 @@ directive:
       $.VirtualMachineScaleSetVMExtension.properties.type["x-ms-format"] = "resource-type";
       $.VirtualMachineScaleSetVMExtensionUpdate.properties.type["x-ms-format"] = "resource-type";
       $.RollingUpgradeStatusInfo["x-ms-client-name"] = "VirtualMachineScaleSetRollingUpgrade";
+      $.VirtualMachineScaleSetSku.properties.resourceType["x-ms-format"] = "resource-type";
       $.VirtualMachineScaleSetVMInstanceView.properties.assignedHost["x-ms-format"] = "arm-id";
   - from: restorePoint.json
     where: $.definitions
@@ -247,6 +247,7 @@ directive:
     transform: >
       $.PirCommunityGalleryResource["x-ms-client-name"] = "PirCommunityGalleryResourceData";
       $.PirCommunityGalleryResource.properties.type["x-ms-client-name"] = "ResourceType";
+      $.PirCommunityGalleryResource.properties.type["x-ms-format"] = "resource-type";
   - from: cloudService.json
     where: $.definitions.LoadBalancerConfigurationProperties
     transform: >

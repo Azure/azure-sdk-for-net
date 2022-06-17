@@ -53,9 +53,7 @@ directive:
   - from: confidentialledger.json
     where: $.definitions
     transform: >
-      $.ResourceLocation.properties.location['x-ms-format'] = 'azure-location';
       $.ProvisioningState['x-ms-enum']['name'] = 'LedgerProvisioningState';
-      $.AADBasedSecurityPrincipal.properties.tenantId['format'] = 'uuid';
   - from: types.json
     where: $.definitions
     transform: >

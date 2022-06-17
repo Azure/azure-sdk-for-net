@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     /// <summary> The check availability request body. </summary>
@@ -18,6 +20,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <summary> The name of the resource for which availability needs to be checked. </summary>
         public string Name { get; set; }
         /// <summary> The resource type. </summary>
-        public string ResourceType { get; set; }
+        public ResourceType? ResourceType { get; set; }
     }
 }
