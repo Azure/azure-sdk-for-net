@@ -1,6 +1,6 @@
 <Project>
   <ItemGroup>
-    <!-- Remove deprecated track 1 packages from builds and live testing. -->
-    <ProjectReference Remove="$(MSBuildThisFileDirectory)Azure.*\**\*.csproj" />
+    <!-- Remove below project to unblock other SDKs -->
+    <ProjectReference Remove="$(MSBuildThisFileDirectory)Azure.AI.Language.Conversations\**\*.csproj" />
   </ItemGroup>
 </Project>
