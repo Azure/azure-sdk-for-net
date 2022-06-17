@@ -1,0 +1,186 @@
+{
+  "homepages": [],
+  "source_base_path": "C:/Users/mingzhehuang/Tools/Azure.Analytics.Purview.Scanning/docfx-output/docfx_project",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.Analytics.Purview.Scanning.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.Analytics.Purview.Scanning.html",
+          "hash": "I6k+bywj1E+g+s20IVefeAkpTRJxGHuTrDR7ZdcGfQw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html",
+          "hash": "MW4fQ/VZ9HO/DOy0toBJUOyO4kw1Or0xbD0nFBQLPX4="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html",
+          "hash": "ClW4yAgviAaGmxq1lA8SLIYh1GojNST0RbgCJ9iNgJc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html",
+          "hash": "iCxiqAVJNVBQNTbHfN1C8Svf+hDgiqmKsk6GhlX0/FI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.html",
+          "hash": "KjSrshWsYuCQld+FQR91MIKXa7/1VOCE0lwye1E+gcM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion.html",
+          "hash": "TuXnbnALSnTjn0a9kC4/W9pSaQlNAo9gURRDRmzRQFk="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.html",
+          "hash": "FuYKAGmMLhcbJZStga5ip8wi7wzc9GAawkoVLM/U1X4="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "ZMSp+FrVuvzclfbzrL3IFLaYsqOJYPWICeD0WJcBBw4="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "IMo7uXK8d517riUNGIEP+mqgQRm8LX1Zyf916dwsJqc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "N7Rk4lzTK7FU8wCZVXu+7gGikIwZkk0tXg6eROCZUu0="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "VBwkIMIF3KjihGf/A1oepB+HpVEy42+z+e7ylJqGTHI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": true,
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 2,
+          "skipped_file_count": 2
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 7,
+          "skipped_file_count": 5
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": true,
+        "details": "Can support incremental post processing.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

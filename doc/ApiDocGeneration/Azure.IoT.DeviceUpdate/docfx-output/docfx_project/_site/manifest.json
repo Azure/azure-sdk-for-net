@@ -1,0 +1,170 @@
+{
+  "homepages": [],
+  "source_base_path": "C:/Users/mingzhehuang/Tools/Azure.IoT.DeviceUpdate/docfx-output/docfx_project",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.IoT.DeviceUpdate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.IoT.DeviceUpdate.html",
+          "hash": "ZKh5IUdl0wG1MtUWndgh9NXSGO0r4j2NGnOzBUV4/DQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "UidNotFound"
+      ],
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.IoT.DeviceUpdate/Azure.IoT.DeviceUpdate.DeviceManagementClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.IoT.DeviceUpdate/Azure.IoT.DeviceUpdate.DeviceManagementClient.html",
+          "hash": "64BIcadm987Xu4ziRrD8x8jnh4bRlioFXSult8bGPi8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "UidNotFound"
+      ],
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.IoT.DeviceUpdate/Azure.IoT.DeviceUpdate.DeviceUpdateClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.IoT.DeviceUpdate/Azure.IoT.DeviceUpdate.DeviceUpdateClient.html",
+          "hash": "YMfdadW750qkHAeGBG5gpfmRlXI8iW4VljlapJWEdOI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.IoT.DeviceUpdate/Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions.ServiceVersion.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.IoT.DeviceUpdate/Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions.ServiceVersion.html",
+          "hash": "ODQuknN0sUjg6vBMGjWT+umL1/rJ2QHoUWLv48zo5Ws="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.IoT.DeviceUpdate/Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.IoT.DeviceUpdate/Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions.html",
+          "hash": "p35A+8l7sHAUlyyjoezb+0kZ5MeMOTsLkqJX5iRE7gM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "KY3NMeI1TA1/8AiGR7duzt5DEMwOcT62EqGkBX6N0Ew="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "rYCZFBUm2O3E68G+GxUsmrQpPAoXbzAezyFdxFX489Y="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "N7Rk4lzTK7FU8wCZVXu+7gGikIwZkk0tXg6eROCZUu0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "qAjor7Lh50bo79LgB5eNbbkKLf/+lM6WaXSqLX+oDEs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0,
+        "full_build_reason_code": "NoAvailableBuildCache"
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 2,
+          "skipped_file_count": 0
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 5,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: last post processor info is null.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

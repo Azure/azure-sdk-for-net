@@ -1,0 +1,188 @@
+{
+  "homepages": [],
+  "source_base_path": "C:/Users/mingzhehuang/Tools/Azure.Messaging.WebPubSub/docfx-output/docfx_project",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.Messaging.WebPubSub.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.Messaging.WebPubSub.html",
+          "hash": "K7CkyieXTerjwIHFTdYTpRK/a9KQ0Isn6zC3Tod52dU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.Messaging.WebPubSub/Azure.Messaging.WebPubSub.WebPubSubPermission.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.Messaging.WebPubSub/Azure.Messaging.WebPubSub.WebPubSubPermission.html",
+          "hash": "voK2+urXZyi8FDlq6/vSc5bwo+ehHWetc+6qkJrc+Oc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.Messaging.WebPubSub/Azure.Messaging.WebPubSub.WebPubSubServiceClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.Messaging.WebPubSub/Azure.Messaging.WebPubSub.WebPubSubServiceClient.html",
+          "hash": "CCgsp5O8NNkfrTc4+KWw3n5Zgru03RoeoyyXTTwD2Zs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.Messaging.WebPubSub/Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.Messaging.WebPubSub/Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion.html",
+          "hash": "mo/024ZHNeoDUxMqigNliKxfl3uaPwGeZYM2NrhNNOg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Azure.Messaging.WebPubSub/Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Azure.Messaging.WebPubSub/Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.html",
+          "hash": "V3qhx60yt3qne5yhfcBiN0rwedLmvzMkPuRZfL+lhqQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Extensions.Azure.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Extensions.Azure.html",
+          "hash": "itHIVMiQEZKAF820C7HPC+559U/uaZG+NHbteu9b1ZQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Extensions.Azure/Microsoft.Extensions.Azure.WebPubSubServiceClientBuilderExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Extensions.Azure/Microsoft.Extensions.Azure.WebPubSubServiceClientBuilderExtensions.html",
+          "hash": "CSk4K3KtxjZpao5+lWl4Lh07how6lzsfAuduW/oc214="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "B8/evv4wb2PBY/zzEZIOvt5FVrCQeZyMOGFNoEiMXv0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "NGJYNqxGGZN2Vin3+++eEqALb4HL5R8TbMJbQVJd2As="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "N7Rk4lzTK7FU8wCZVXu+7gGikIwZkk0tXg6eROCZUu0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "CSoLgL2gb1jXA7ziqbzlkjR/KvcKKQGVQ/4ukGGmNas="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0,
+        "full_build_reason_code": "NoAvailableBuildCache"
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 2,
+          "skipped_file_count": 0
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 7,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: last post processor info is null.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
