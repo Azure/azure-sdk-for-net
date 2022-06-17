@@ -357,6 +357,7 @@ namespace Azure.ResourceManager.Models
         public override string ToString() { throw null; }
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.", false)]
     public partial class EncryptionProperties
     {
         public EncryptionProperties() { }
@@ -364,6 +365,7 @@ namespace Azure.ResourceManager.Models
         public Azure.ResourceManager.Models.EncryptionStatus? Status { get { throw null; } set { } }
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.", false)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EncryptionStatus : System.IEquatable<Azure.ResourceManager.Models.EncryptionStatus>
     {
@@ -383,6 +385,7 @@ namespace Azure.ResourceManager.Models
         public override string ToString() { throw null; }
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.", false)]
     public partial class KeyVaultProperties
     {
         public KeyVaultProperties() { }

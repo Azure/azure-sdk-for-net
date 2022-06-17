@@ -107,7 +107,7 @@ directive:
       $["x-csharp-formats"] = "json";
       $["x-csharp-usage"] = "model,input,output";
   - from: types.json
-    where: $.definitions.keyVaultProperties
+    where: $.definitions.KeyVaultProperties
     transform: >
       $["x-ms-mgmt-propertyReferenceType"] = true;
       $["x-namespace"] = "Azure.ResourceManager.Models";
