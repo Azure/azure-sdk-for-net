@@ -1,8 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.DeviceUpdate.csproj" />
-    <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <PackageReference Include="Azure.Identity" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SessionRecords\" />
