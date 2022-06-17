@@ -55,15 +55,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetClassificationDefByGuidAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = await client.GetClassificationDefByGuidAsync("guid");
+        /// Response response = await client.GetClassificationDefByGuidAsync("<guid>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -99,7 +99,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -109,7 +109,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("superTypes").Item[0].ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -221,15 +221,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetClassificationDefByGuid with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = client.GetClassificationDefByGuid("guid");
+        /// Response response = client.GetClassificationDefByGuid("<guid>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -238,7 +238,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -265,7 +265,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -275,7 +275,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("superTypes").Item[0].ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -387,15 +387,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetClassificationDefByNameAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = await client.GetClassificationDefByNameAsync("name");
+        /// Response response = await client.GetClassificationDefByNameAsync("<name>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -404,7 +404,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -431,7 +431,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -441,7 +441,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("superTypes").Item[0].ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -553,15 +553,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetClassificationDefByName with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = client.GetClassificationDefByName("name");
+        /// Response response = client.GetClassificationDefByName("<name>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -570,7 +570,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -597,7 +597,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -607,7 +607,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("superTypes").Item[0].ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -719,15 +719,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetEntityDefinitionByGuidAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = await client.GetEntityDefinitionByGuidAsync("guid");
+        /// Response response = await client.GetEntityDefinitionByGuidAsync("<guid>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -736,7 +736,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -763,7 +763,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -773,7 +773,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("superTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("description").ToString());
@@ -782,13 +782,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isLegacyAttribute").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("relationshipTypeName").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -918,15 +918,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetEntityDefinitionByGuid with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = client.GetEntityDefinitionByGuid("guid");
+        /// Response response = client.GetEntityDefinitionByGuid("<guid>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -935,7 +935,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -962,7 +962,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -972,7 +972,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("superTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("description").ToString());
@@ -981,13 +981,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isLegacyAttribute").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("relationshipTypeName").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1117,15 +1117,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetEntityDefinitionByNameAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = await client.GetEntityDefinitionByNameAsync("name");
+        /// Response response = await client.GetEntityDefinitionByNameAsync("<name>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -1134,7 +1134,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -1161,7 +1161,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -1171,7 +1171,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("superTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("description").ToString());
@@ -1180,13 +1180,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isLegacyAttribute").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("relationshipTypeName").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1316,15 +1316,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetEntityDefinitionByName with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = client.GetEntityDefinitionByName("name");
+        /// Response response = client.GetEntityDefinitionByName("<name>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -1333,7 +1333,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -1360,7 +1360,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -1370,7 +1370,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("superTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("description").ToString());
@@ -1379,13 +1379,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isLegacyAttribute").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("relationshipTypeName").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1515,12 +1515,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetEnumDefByGuidAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = await client.GetEnumDefByGuidAsync("guid");
+        /// Response response = await client.GetEnumDefByGuidAsync("<guid>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());
@@ -1545,7 +1545,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -1556,7 +1556,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("elementDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("elementDefs").Item[0].GetProperty("ordinal").ToString());
         /// Console.WriteLine(result.GetProperty("elementDefs").Item[0].GetProperty("value").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1651,12 +1651,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetEnumDefByGuid with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = client.GetEnumDefByGuid("guid");
+        /// Response response = client.GetEnumDefByGuid("<guid>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());
@@ -1681,7 +1681,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -1692,7 +1692,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("elementDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("elementDefs").Item[0].GetProperty("ordinal").ToString());
         /// Console.WriteLine(result.GetProperty("elementDefs").Item[0].GetProperty("value").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1787,12 +1787,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetEnumDefByNameAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = await client.GetEnumDefByNameAsync("name");
+        /// Response response = await client.GetEnumDefByNameAsync("<name>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());
@@ -1817,7 +1817,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -1828,7 +1828,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("elementDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("elementDefs").Item[0].GetProperty("ordinal").ToString());
         /// Console.WriteLine(result.GetProperty("elementDefs").Item[0].GetProperty("value").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1923,12 +1923,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetEnumDefByName with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = client.GetEnumDefByName("name");
+        /// Response response = client.GetEnumDefByName("<name>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());
@@ -1953,7 +1953,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -1964,7 +1964,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("elementDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("elementDefs").Item[0].GetProperty("ordinal").ToString());
         /// Console.WriteLine(result.GetProperty("elementDefs").Item[0].GetProperty("value").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2059,15 +2059,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetRelationshipDefByGuidAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = await client.GetRelationshipDefByGuidAsync("guid");
+        /// Response response = await client.GetRelationshipDefByGuidAsync("<guid>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -2076,7 +2076,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -2103,7 +2103,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -2124,7 +2124,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2244,15 +2244,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetRelationshipDefByGuid with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = client.GetRelationshipDefByGuid("guid");
+        /// Response response = client.GetRelationshipDefByGuid("<guid>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -2261,7 +2261,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -2288,7 +2288,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -2309,7 +2309,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2429,15 +2429,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetRelationshipDefByNameAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = await client.GetRelationshipDefByNameAsync("name");
+        /// Response response = await client.GetRelationshipDefByNameAsync("<name>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -2446,7 +2446,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -2473,7 +2473,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -2494,7 +2494,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2614,15 +2614,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetRelationshipDefByName with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = client.GetRelationshipDefByName("name");
+        /// Response response = client.GetRelationshipDefByName("<name>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -2631,7 +2631,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -2658,7 +2658,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -2679,7 +2679,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2799,12 +2799,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetStructDefByGuidAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = await client.GetStructDefByGuidAsync("guid");
+        /// Response response = await client.GetStructDefByGuidAsync("<guid>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());
@@ -2829,7 +2829,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -2837,7 +2837,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -2846,11 +2846,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2959,12 +2959,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetStructDefByGuid with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = client.GetStructDefByGuid("guid");
+        /// Response response = client.GetStructDefByGuid("<guid>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());
@@ -2989,7 +2989,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -2997,7 +2997,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -3006,11 +3006,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -3119,12 +3119,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetStructDefByNameAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = await client.GetStructDefByNameAsync("name");
+        /// Response response = await client.GetStructDefByNameAsync("<name>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());
@@ -3149,7 +3149,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -3157,7 +3157,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -3166,11 +3166,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -3279,12 +3279,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetStructDefByName with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = client.GetStructDefByName("name");
+        /// Response response = client.GetStructDefByName("<name>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());
@@ -3309,7 +3309,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -3317,7 +3317,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -3326,11 +3326,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -3439,12 +3439,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetTypeDefinitionByGuidAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = await client.GetTypeDefinitionByGuidAsync("guid");
+        /// Response response = await client.GetTypeDefinitionByGuidAsync("<guid>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());
@@ -3469,7 +3469,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -3480,7 +3480,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("superTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("description").ToString());
@@ -3489,7 +3489,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -3514,7 +3514,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -3523,11 +3523,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -3677,12 +3677,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetTypeDefinitionByGuid with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = client.GetTypeDefinitionByGuid("guid");
+        /// Response response = client.GetTypeDefinitionByGuid("<guid>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());
@@ -3707,7 +3707,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -3718,7 +3718,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("superTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("description").ToString());
@@ -3727,7 +3727,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -3752,7 +3752,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -3761,11 +3761,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -3915,12 +3915,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetTypeDefinitionByNameAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = await client.GetTypeDefinitionByNameAsync("name");
+        /// Response response = await client.GetTypeDefinitionByNameAsync("<name>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());
@@ -3945,7 +3945,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -3956,7 +3956,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("superTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("description").ToString());
@@ -3965,7 +3965,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -3990,7 +3990,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -3999,11 +3999,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -4153,12 +4153,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetTypeDefinitionByName with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = client.GetTypeDefinitionByName("name");
+        /// Response response = client.GetTypeDefinitionByName("<name>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("category").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());
@@ -4183,7 +4183,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -4194,7 +4194,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("superTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("description").ToString());
@@ -4203,7 +4203,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -4228,7 +4228,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -4237,11 +4237,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -4391,14 +4391,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call DeleteTypeByNameAsync with required parameters.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = await client.DeleteTypeByNameAsync("name");
+        /// Response response = await client.DeleteTypeByNameAsync("<name>");
         /// Console.WriteLine(response.Status);
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -4435,14 +4435,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call DeleteTypeByName with required parameters.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = client.DeleteTypeByName("name");
+        /// Response response = client.DeleteTypeByName("<name>");
         /// Console.WriteLine(response.Status);
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -4481,15 +4481,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetAllTypeDefinitionsAsync with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = await client.GetAllTypeDefinitionsAsync(true, "type");
+        /// Response response = await client.GetAllTypeDefinitionsAsync(true, "<type>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -4498,7 +4498,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -4525,7 +4525,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("updateTime").ToString());
@@ -4536,7 +4536,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("superTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -4545,7 +4545,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -4572,7 +4572,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("updateTime").ToString());
@@ -4582,7 +4582,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("superTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("description").ToString());
@@ -4591,7 +4591,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -4620,7 +4620,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("updateTime").ToString());
@@ -4632,7 +4632,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("elementDefs").Item[0].GetProperty("ordinal").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("elementDefs").Item[0].GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -4641,7 +4641,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -4668,7 +4668,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("updateTime").ToString());
@@ -4712,7 +4712,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("updateTime").ToString());
@@ -4720,7 +4720,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -4729,12 +4729,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -4743,7 +4743,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -4770,14 +4770,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("updateTime").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("lastModifiedTS").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -5027,15 +5027,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetAllTypeDefinitions with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = client.GetAllTypeDefinitions(true, "type");
+        /// Response response = client.GetAllTypeDefinitions(true, "<type>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -5044,7 +5044,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -5071,7 +5071,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("updateTime").ToString());
@@ -5082,7 +5082,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("superTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -5091,7 +5091,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -5118,7 +5118,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("updateTime").ToString());
@@ -5128,7 +5128,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("superTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("description").ToString());
@@ -5137,7 +5137,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -5166,7 +5166,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("updateTime").ToString());
@@ -5178,7 +5178,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("elementDefs").Item[0].GetProperty("ordinal").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("elementDefs").Item[0].GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -5187,7 +5187,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -5214,7 +5214,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("updateTime").ToString());
@@ -5258,7 +5258,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("updateTime").ToString());
@@ -5266,7 +5266,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -5275,12 +5275,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -5289,7 +5289,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -5316,14 +5316,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("updateTime").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("lastModifiedTS").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -5573,9 +5573,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
         /// This sample shows how to call CreateTypeDefinitionsAsync with all request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// var data = new {
@@ -5583,36 +5583,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -5621,9 +5621,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -5635,40 +5635,40 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             entityTypes = new[] {
-        ///                 "AtlasClassificationDefEntityTypesItem"
+        ///                 "<AtlasClassificationDefEntityTypesItem>"
         ///             },
         ///             subTypes = new[] {
-        ///                 "AtlasClassificationDefSubTypesItem"
+        ///                 "<AtlasClassificationDefSubTypesItem>"
         ///             },
         ///             superTypes = new[] {
-        ///                 "AtlasClassificationDefSuperTypesItem"
+        ///                 "<AtlasClassificationDefSuperTypesItem>"
         ///             },
         ///         }
         ///     },
@@ -5676,36 +5676,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -5714,9 +5714,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -5728,76 +5728,76 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             subTypes = new[] {
-        ///                 "AtlasEntityDefSubTypesItem"
+        ///                 "<AtlasEntityDefSubTypesItem>"
         ///             },
         ///             superTypes = new[] {
-        ///                 "AtlasEntityDefSuperTypesItem"
+        ///                 "<AtlasEntityDefSuperTypesItem>"
         ///             },
         ///             relationshipAttributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "AtlasRelationshipAttributeDefRelationshipTypeName",
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
         ///         }
         ///     },
         ///     enumDefs = new[] {
         ///         new {
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -5806,9 +5806,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -5820,38 +5820,38 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
-        ///             defaultValue = "AtlasEnumDefDefaultValue",
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             defaultValue = "<AtlasEnumDefDefaultValue>",
         ///             elementDefs = new[] {
         ///                 new {
-        ///                     description = "AtlasEnumElementDefDescription",
+        ///                     description = "<AtlasEnumElementDefDescription>",
         ///                     ordinal = 1234,
-        ///                     value = "AtlasEnumElementDefValue",
+        ///                     value = "<AtlasEnumElementDefValue>",
         ///                 }
         ///             },
         ///         }
@@ -5860,36 +5860,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -5898,9 +5898,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -5912,60 +5912,60 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             endDef1 = new {
-        ///                 cardinality = "SINGLE",
-        ///                 description = "AtlasRelationshipEndDefDescription",
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
         ///                 isContainer = true,
         ///                 isLegacyAttribute = true,
-        ///                 name = "AtlasRelationshipEndDefName",
-        ///                 type = "AtlasRelationshipEndDefType",
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
         ///             },
         ///             endDef2 = new {
-        ///                 cardinality = "SINGLE",
-        ///                 description = "AtlasRelationshipEndDefDescription",
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
         ///                 isContainer = true,
         ///                 isLegacyAttribute = true,
-        ///                 name = "AtlasRelationshipEndDefName",
-        ///                 type = "AtlasRelationshipEndDefType",
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
         ///             },
-        ///             relationshipCategory = "ASSOCIATION",
-        ///             relationshipLabel = "AtlasRelationshipDefRelationshipLabel",
+        ///             relationshipCategory = "<ASSOCIATION>",
+        ///             relationshipLabel = "<AtlasRelationshipDefRelationshipLabel>",
         ///         }
         ///     },
         ///     structDefs = new[] {
         ///         new {
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -5974,9 +5974,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -5988,54 +5988,54 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
@@ -6046,36 +6046,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -6084,9 +6084,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -6098,32 +6098,32 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///         }
         ///     },
         /// };
@@ -6131,7 +6131,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = await client.CreateTypeDefinitionsAsync(RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -6140,7 +6140,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -6167,7 +6167,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("updateTime").ToString());
@@ -6178,7 +6178,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("superTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -6187,7 +6187,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -6214,7 +6214,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("updateTime").ToString());
@@ -6224,7 +6224,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("superTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("description").ToString());
@@ -6233,7 +6233,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -6262,7 +6262,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("updateTime").ToString());
@@ -6274,7 +6274,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("elementDefs").Item[0].GetProperty("ordinal").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("elementDefs").Item[0].GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -6283,7 +6283,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -6310,7 +6310,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("updateTime").ToString());
@@ -6354,7 +6354,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("updateTime").ToString());
@@ -6362,7 +6362,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -6371,12 +6371,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -6385,7 +6385,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -6412,14 +6412,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("updateTime").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("lastModifiedTS").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -6884,9 +6884,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
         /// This sample shows how to call CreateTypeDefinitions with all request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// var data = new {
@@ -6894,36 +6894,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -6932,9 +6932,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -6946,40 +6946,40 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             entityTypes = new[] {
-        ///                 "AtlasClassificationDefEntityTypesItem"
+        ///                 "<AtlasClassificationDefEntityTypesItem>"
         ///             },
         ///             subTypes = new[] {
-        ///                 "AtlasClassificationDefSubTypesItem"
+        ///                 "<AtlasClassificationDefSubTypesItem>"
         ///             },
         ///             superTypes = new[] {
-        ///                 "AtlasClassificationDefSuperTypesItem"
+        ///                 "<AtlasClassificationDefSuperTypesItem>"
         ///             },
         ///         }
         ///     },
@@ -6987,36 +6987,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -7025,9 +7025,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -7039,76 +7039,76 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             subTypes = new[] {
-        ///                 "AtlasEntityDefSubTypesItem"
+        ///                 "<AtlasEntityDefSubTypesItem>"
         ///             },
         ///             superTypes = new[] {
-        ///                 "AtlasEntityDefSuperTypesItem"
+        ///                 "<AtlasEntityDefSuperTypesItem>"
         ///             },
         ///             relationshipAttributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "AtlasRelationshipAttributeDefRelationshipTypeName",
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
         ///         }
         ///     },
         ///     enumDefs = new[] {
         ///         new {
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -7117,9 +7117,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -7131,38 +7131,38 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
-        ///             defaultValue = "AtlasEnumDefDefaultValue",
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             defaultValue = "<AtlasEnumDefDefaultValue>",
         ///             elementDefs = new[] {
         ///                 new {
-        ///                     description = "AtlasEnumElementDefDescription",
+        ///                     description = "<AtlasEnumElementDefDescription>",
         ///                     ordinal = 1234,
-        ///                     value = "AtlasEnumElementDefValue",
+        ///                     value = "<AtlasEnumElementDefValue>",
         ///                 }
         ///             },
         ///         }
@@ -7171,36 +7171,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -7209,9 +7209,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -7223,60 +7223,60 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             endDef1 = new {
-        ///                 cardinality = "SINGLE",
-        ///                 description = "AtlasRelationshipEndDefDescription",
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
         ///                 isContainer = true,
         ///                 isLegacyAttribute = true,
-        ///                 name = "AtlasRelationshipEndDefName",
-        ///                 type = "AtlasRelationshipEndDefType",
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
         ///             },
         ///             endDef2 = new {
-        ///                 cardinality = "SINGLE",
-        ///                 description = "AtlasRelationshipEndDefDescription",
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
         ///                 isContainer = true,
         ///                 isLegacyAttribute = true,
-        ///                 name = "AtlasRelationshipEndDefName",
-        ///                 type = "AtlasRelationshipEndDefType",
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
         ///             },
-        ///             relationshipCategory = "ASSOCIATION",
-        ///             relationshipLabel = "AtlasRelationshipDefRelationshipLabel",
+        ///             relationshipCategory = "<ASSOCIATION>",
+        ///             relationshipLabel = "<AtlasRelationshipDefRelationshipLabel>",
         ///         }
         ///     },
         ///     structDefs = new[] {
         ///         new {
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -7285,9 +7285,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -7299,54 +7299,54 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
@@ -7357,36 +7357,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -7395,9 +7395,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -7409,32 +7409,32 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///         }
         ///     },
         /// };
@@ -7442,7 +7442,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = client.CreateTypeDefinitions(RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -7451,7 +7451,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -7478,7 +7478,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("updateTime").ToString());
@@ -7489,7 +7489,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("superTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -7498,7 +7498,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -7525,7 +7525,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("updateTime").ToString());
@@ -7535,7 +7535,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("superTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("description").ToString());
@@ -7544,7 +7544,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -7573,7 +7573,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("updateTime").ToString());
@@ -7585,7 +7585,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("elementDefs").Item[0].GetProperty("ordinal").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("elementDefs").Item[0].GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -7594,7 +7594,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -7621,7 +7621,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("updateTime").ToString());
@@ -7665,7 +7665,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("updateTime").ToString());
@@ -7673,7 +7673,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -7682,12 +7682,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -7696,7 +7696,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -7723,14 +7723,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("updateTime").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("lastModifiedTS").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -8192,9 +8192,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
         /// This sample shows how to call UpdateAtlasTypeDefinitionsAsync with all request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// var data = new {
@@ -8202,36 +8202,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -8240,9 +8240,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -8254,40 +8254,40 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             entityTypes = new[] {
-        ///                 "AtlasClassificationDefEntityTypesItem"
+        ///                 "<AtlasClassificationDefEntityTypesItem>"
         ///             },
         ///             subTypes = new[] {
-        ///                 "AtlasClassificationDefSubTypesItem"
+        ///                 "<AtlasClassificationDefSubTypesItem>"
         ///             },
         ///             superTypes = new[] {
-        ///                 "AtlasClassificationDefSuperTypesItem"
+        ///                 "<AtlasClassificationDefSuperTypesItem>"
         ///             },
         ///         }
         ///     },
@@ -8295,36 +8295,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -8333,9 +8333,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -8347,76 +8347,76 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             subTypes = new[] {
-        ///                 "AtlasEntityDefSubTypesItem"
+        ///                 "<AtlasEntityDefSubTypesItem>"
         ///             },
         ///             superTypes = new[] {
-        ///                 "AtlasEntityDefSuperTypesItem"
+        ///                 "<AtlasEntityDefSuperTypesItem>"
         ///             },
         ///             relationshipAttributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "AtlasRelationshipAttributeDefRelationshipTypeName",
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
         ///         }
         ///     },
         ///     enumDefs = new[] {
         ///         new {
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -8425,9 +8425,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -8439,38 +8439,38 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
-        ///             defaultValue = "AtlasEnumDefDefaultValue",
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             defaultValue = "<AtlasEnumDefDefaultValue>",
         ///             elementDefs = new[] {
         ///                 new {
-        ///                     description = "AtlasEnumElementDefDescription",
+        ///                     description = "<AtlasEnumElementDefDescription>",
         ///                     ordinal = 1234,
-        ///                     value = "AtlasEnumElementDefValue",
+        ///                     value = "<AtlasEnumElementDefValue>",
         ///                 }
         ///             },
         ///         }
@@ -8479,36 +8479,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -8517,9 +8517,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -8531,60 +8531,60 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             endDef1 = new {
-        ///                 cardinality = "SINGLE",
-        ///                 description = "AtlasRelationshipEndDefDescription",
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
         ///                 isContainer = true,
         ///                 isLegacyAttribute = true,
-        ///                 name = "AtlasRelationshipEndDefName",
-        ///                 type = "AtlasRelationshipEndDefType",
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
         ///             },
         ///             endDef2 = new {
-        ///                 cardinality = "SINGLE",
-        ///                 description = "AtlasRelationshipEndDefDescription",
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
         ///                 isContainer = true,
         ///                 isLegacyAttribute = true,
-        ///                 name = "AtlasRelationshipEndDefName",
-        ///                 type = "AtlasRelationshipEndDefType",
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
         ///             },
-        ///             relationshipCategory = "ASSOCIATION",
-        ///             relationshipLabel = "AtlasRelationshipDefRelationshipLabel",
+        ///             relationshipCategory = "<ASSOCIATION>",
+        ///             relationshipLabel = "<AtlasRelationshipDefRelationshipLabel>",
         ///         }
         ///     },
         ///     structDefs = new[] {
         ///         new {
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -8593,9 +8593,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -8607,54 +8607,54 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
@@ -8665,36 +8665,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -8703,9 +8703,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -8717,32 +8717,32 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///         }
         ///     },
         /// };
@@ -8750,7 +8750,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = await client.UpdateAtlasTypeDefinitionsAsync(RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -8759,7 +8759,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -8786,7 +8786,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("updateTime").ToString());
@@ -8797,7 +8797,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("superTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -8806,7 +8806,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -8833,7 +8833,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("updateTime").ToString());
@@ -8843,7 +8843,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("superTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("description").ToString());
@@ -8852,7 +8852,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -8881,7 +8881,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("updateTime").ToString());
@@ -8893,7 +8893,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("elementDefs").Item[0].GetProperty("ordinal").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("elementDefs").Item[0].GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -8902,7 +8902,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -8929,7 +8929,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("updateTime").ToString());
@@ -8973,7 +8973,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("updateTime").ToString());
@@ -8981,7 +8981,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -8990,12 +8990,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -9004,7 +9004,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -9031,14 +9031,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("updateTime").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("lastModifiedTS").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -9500,9 +9500,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
         /// This sample shows how to call UpdateAtlasTypeDefinitions with all request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// var data = new {
@@ -9510,36 +9510,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -9548,9 +9548,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -9562,40 +9562,40 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             entityTypes = new[] {
-        ///                 "AtlasClassificationDefEntityTypesItem"
+        ///                 "<AtlasClassificationDefEntityTypesItem>"
         ///             },
         ///             subTypes = new[] {
-        ///                 "AtlasClassificationDefSubTypesItem"
+        ///                 "<AtlasClassificationDefSubTypesItem>"
         ///             },
         ///             superTypes = new[] {
-        ///                 "AtlasClassificationDefSuperTypesItem"
+        ///                 "<AtlasClassificationDefSuperTypesItem>"
         ///             },
         ///         }
         ///     },
@@ -9603,36 +9603,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -9641,9 +9641,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -9655,76 +9655,76 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             subTypes = new[] {
-        ///                 "AtlasEntityDefSubTypesItem"
+        ///                 "<AtlasEntityDefSubTypesItem>"
         ///             },
         ///             superTypes = new[] {
-        ///                 "AtlasEntityDefSuperTypesItem"
+        ///                 "<AtlasEntityDefSuperTypesItem>"
         ///             },
         ///             relationshipAttributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "AtlasRelationshipAttributeDefRelationshipTypeName",
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
         ///         }
         ///     },
         ///     enumDefs = new[] {
         ///         new {
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -9733,9 +9733,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -9747,38 +9747,38 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
-        ///             defaultValue = "AtlasEnumDefDefaultValue",
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             defaultValue = "<AtlasEnumDefDefaultValue>",
         ///             elementDefs = new[] {
         ///                 new {
-        ///                     description = "AtlasEnumElementDefDescription",
+        ///                     description = "<AtlasEnumElementDefDescription>",
         ///                     ordinal = 1234,
-        ///                     value = "AtlasEnumElementDefValue",
+        ///                     value = "<AtlasEnumElementDefValue>",
         ///                 }
         ///             },
         ///         }
@@ -9787,36 +9787,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -9825,9 +9825,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -9839,60 +9839,60 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             endDef1 = new {
-        ///                 cardinality = "SINGLE",
-        ///                 description = "AtlasRelationshipEndDefDescription",
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
         ///                 isContainer = true,
         ///                 isLegacyAttribute = true,
-        ///                 name = "AtlasRelationshipEndDefName",
-        ///                 type = "AtlasRelationshipEndDefType",
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
         ///             },
         ///             endDef2 = new {
-        ///                 cardinality = "SINGLE",
-        ///                 description = "AtlasRelationshipEndDefDescription",
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
         ///                 isContainer = true,
         ///                 isLegacyAttribute = true,
-        ///                 name = "AtlasRelationshipEndDefName",
-        ///                 type = "AtlasRelationshipEndDefType",
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
         ///             },
-        ///             relationshipCategory = "ASSOCIATION",
-        ///             relationshipLabel = "AtlasRelationshipDefRelationshipLabel",
+        ///             relationshipCategory = "<ASSOCIATION>",
+        ///             relationshipLabel = "<AtlasRelationshipDefRelationshipLabel>",
         ///         }
         ///     },
         ///     structDefs = new[] {
         ///         new {
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -9901,9 +9901,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -9915,54 +9915,54 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
@@ -9973,36 +9973,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -10011,9 +10011,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -10025,32 +10025,32 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///         }
         ///     },
         /// };
@@ -10058,7 +10058,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = client.UpdateAtlasTypeDefinitions(RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -10067,7 +10067,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -10094,7 +10094,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("updateTime").ToString());
@@ -10105,7 +10105,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("classificationDefs").Item[0].GetProperty("superTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -10114,7 +10114,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -10141,7 +10141,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("updateTime").ToString());
@@ -10151,7 +10151,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("subTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("superTypes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("description").ToString());
@@ -10160,7 +10160,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("entityDefs").Item[0].GetProperty("relationshipAttributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -10189,7 +10189,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("updateTime").ToString());
@@ -10201,7 +10201,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("elementDefs").Item[0].GetProperty("ordinal").ToString());
         /// Console.WriteLine(result.GetProperty("enumDefs").Item[0].GetProperty("elementDefs").Item[0].GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -10210,7 +10210,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -10237,7 +10237,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("relationshipDefs").Item[0].GetProperty("updateTime").ToString());
@@ -10281,7 +10281,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("updateTime").ToString());
@@ -10289,7 +10289,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -10298,12 +10298,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("structDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -10312,7 +10312,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -10339,14 +10339,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("updateTime").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("termTemplateDefs").Item[0].GetProperty("lastModifiedTS").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -10808,9 +10808,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
         /// This sample shows how to call DeleteTypeDefinitionsAsync with all request content.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// var data = new {
@@ -10818,36 +10818,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -10856,9 +10856,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -10870,40 +10870,40 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             entityTypes = new[] {
-        ///                 "AtlasClassificationDefEntityTypesItem"
+        ///                 "<AtlasClassificationDefEntityTypesItem>"
         ///             },
         ///             subTypes = new[] {
-        ///                 "AtlasClassificationDefSubTypesItem"
+        ///                 "<AtlasClassificationDefSubTypesItem>"
         ///             },
         ///             superTypes = new[] {
-        ///                 "AtlasClassificationDefSuperTypesItem"
+        ///                 "<AtlasClassificationDefSuperTypesItem>"
         ///             },
         ///         }
         ///     },
@@ -10911,36 +10911,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -10949,9 +10949,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -10963,76 +10963,76 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             subTypes = new[] {
-        ///                 "AtlasEntityDefSubTypesItem"
+        ///                 "<AtlasEntityDefSubTypesItem>"
         ///             },
         ///             superTypes = new[] {
-        ///                 "AtlasEntityDefSuperTypesItem"
+        ///                 "<AtlasEntityDefSuperTypesItem>"
         ///             },
         ///             relationshipAttributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "AtlasRelationshipAttributeDefRelationshipTypeName",
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
         ///         }
         ///     },
         ///     enumDefs = new[] {
         ///         new {
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -11041,9 +11041,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -11055,38 +11055,38 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
-        ///             defaultValue = "AtlasEnumDefDefaultValue",
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             defaultValue = "<AtlasEnumDefDefaultValue>",
         ///             elementDefs = new[] {
         ///                 new {
-        ///                     description = "AtlasEnumElementDefDescription",
+        ///                     description = "<AtlasEnumElementDefDescription>",
         ///                     ordinal = 1234,
-        ///                     value = "AtlasEnumElementDefValue",
+        ///                     value = "<AtlasEnumElementDefValue>",
         ///                 }
         ///             },
         ///         }
@@ -11095,36 +11095,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -11133,9 +11133,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -11147,60 +11147,60 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             endDef1 = new {
-        ///                 cardinality = "SINGLE",
-        ///                 description = "AtlasRelationshipEndDefDescription",
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
         ///                 isContainer = true,
         ///                 isLegacyAttribute = true,
-        ///                 name = "AtlasRelationshipEndDefName",
-        ///                 type = "AtlasRelationshipEndDefType",
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
         ///             },
         ///             endDef2 = new {
-        ///                 cardinality = "SINGLE",
-        ///                 description = "AtlasRelationshipEndDefDescription",
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
         ///                 isContainer = true,
         ///                 isLegacyAttribute = true,
-        ///                 name = "AtlasRelationshipEndDefName",
-        ///                 type = "AtlasRelationshipEndDefType",
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
         ///             },
-        ///             relationshipCategory = "ASSOCIATION",
-        ///             relationshipLabel = "AtlasRelationshipDefRelationshipLabel",
+        ///             relationshipCategory = "<ASSOCIATION>",
+        ///             relationshipLabel = "<AtlasRelationshipDefRelationshipLabel>",
         ///         }
         ///     },
         ///     structDefs = new[] {
         ///         new {
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -11209,9 +11209,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -11223,54 +11223,54 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
@@ -11281,36 +11281,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -11319,9 +11319,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -11333,39 +11333,39 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///         }
         ///     },
         /// };
         /// 
         /// Response response = await client.DeleteTypeDefinitionsAsync(RequestContent.Create(data));
         /// Console.WriteLine(response.Status);
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -11614,9 +11614,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
         /// This sample shows how to call DeleteTypeDefinitions with all request content.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// var data = new {
@@ -11624,36 +11624,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -11662,9 +11662,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -11676,40 +11676,40 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             entityTypes = new[] {
-        ///                 "AtlasClassificationDefEntityTypesItem"
+        ///                 "<AtlasClassificationDefEntityTypesItem>"
         ///             },
         ///             subTypes = new[] {
-        ///                 "AtlasClassificationDefSubTypesItem"
+        ///                 "<AtlasClassificationDefSubTypesItem>"
         ///             },
         ///             superTypes = new[] {
-        ///                 "AtlasClassificationDefSuperTypesItem"
+        ///                 "<AtlasClassificationDefSuperTypesItem>"
         ///             },
         ///         }
         ///     },
@@ -11717,36 +11717,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -11755,9 +11755,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -11769,76 +11769,76 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             subTypes = new[] {
-        ///                 "AtlasEntityDefSubTypesItem"
+        ///                 "<AtlasEntityDefSubTypesItem>"
         ///             },
         ///             superTypes = new[] {
-        ///                 "AtlasEntityDefSuperTypesItem"
+        ///                 "<AtlasEntityDefSuperTypesItem>"
         ///             },
         ///             relationshipAttributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                     isLegacyAttribute = true,
-        ///                     relationshipTypeName = "AtlasRelationshipAttributeDefRelationshipTypeName",
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
         ///                 }
         ///             },
         ///         }
         ///     },
         ///     enumDefs = new[] {
         ///         new {
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -11847,9 +11847,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -11861,38 +11861,38 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
-        ///             defaultValue = "AtlasEnumDefDefaultValue",
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             defaultValue = "<AtlasEnumDefDefaultValue>",
         ///             elementDefs = new[] {
         ///                 new {
-        ///                     description = "AtlasEnumElementDefDescription",
+        ///                     description = "<AtlasEnumElementDefDescription>",
         ///                     ordinal = 1234,
-        ///                     value = "AtlasEnumElementDefValue",
+        ///                     value = "<AtlasEnumElementDefValue>",
         ///                 }
         ///             },
         ///         }
@@ -11901,36 +11901,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -11939,9 +11939,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -11953,60 +11953,60 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             endDef1 = new {
-        ///                 cardinality = "SINGLE",
-        ///                 description = "AtlasRelationshipEndDefDescription",
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
         ///                 isContainer = true,
         ///                 isLegacyAttribute = true,
-        ///                 name = "AtlasRelationshipEndDefName",
-        ///                 type = "AtlasRelationshipEndDefType",
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
         ///             },
         ///             endDef2 = new {
-        ///                 cardinality = "SINGLE",
-        ///                 description = "AtlasRelationshipEndDefDescription",
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
         ///                 isContainer = true,
         ///                 isLegacyAttribute = true,
-        ///                 name = "AtlasRelationshipEndDefName",
-        ///                 type = "AtlasRelationshipEndDefType",
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
         ///             },
-        ///             relationshipCategory = "ASSOCIATION",
-        ///             relationshipLabel = "AtlasRelationshipDefRelationshipLabel",
+        ///             relationshipCategory = "<ASSOCIATION>",
+        ///             relationshipLabel = "<AtlasRelationshipDefRelationshipLabel>",
         ///         }
         ///     },
         ///     structDefs = new[] {
         ///         new {
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -12015,9 +12015,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -12029,54 +12029,54 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
@@ -12087,36 +12087,36 @@ namespace Azure.Analytics.Purview.Catalog
         ///         new {
         ///             attributeDefs = new[] {
         ///                 new {
-        ///                     cardinality = "SINGLE",
+        ///                     cardinality = "<SINGLE>",
         ///                     constraints = new[] {
         ///                         new {
         ///                             params = new {
         ///                                 key = new {},
         ///                             },
-        ///                             type = "AtlasConstraintDefType",
+        ///                             type = "<AtlasConstraintDefType>",
         ///                         }
         ///                     },
-        ///                     defaultValue = "AtlasAttributeDefDefaultValue",
-        ///                     description = "AtlasAttributeDefDescription",
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
         ///                     includeInNotification = true,
         ///                     isIndexable = true,
         ///                     isOptional = true,
         ///                     isUnique = true,
-        ///                     name = "AtlasAttributeDefName",
+        ///                     name = "<AtlasAttributeDefName>",
         ///                     options = new {
-        ///                         key = "String",
+        ///                         key = "<String>",
         ///                     },
-        ///                     typeName = "AtlasAttributeDefTypeName",
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
         ///                     valuesMaxCount = 1234,
         ///                     valuesMinCount = 1234,
         ///                 }
         ///             },
-        ///             category = "PRIMITIVE",
+        ///             category = "<PRIMITIVE>",
         ///             createTime = 1234,
-        ///             createdBy = "AtlasBaseTypeDefCreatedBy",
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
         ///             dateFormatter = new {
         ///                 availableLocales = new[] {
-        ///                     "DateFormatAvailableLocalesItem"
+        ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
         ///                 dateInstance = ,
@@ -12125,9 +12125,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
-        ///                         "NumberFormatAvailableLocalesItem"
+        ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
-        ///                     currency = "NumberFormatCurrency",
+        ///                     currency = "<NumberFormatCurrency>",
         ///                     currencyInstance = ,
         ///                     groupingUsed = true,
         ///                     instance = ,
@@ -12139,39 +12139,39 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
         ///                     percentInstance = ,
-        ///                     roundingMode = "UP",
+        ///                     roundingMode = "<UP>",
         ///                 },
         ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
-        ///                     id = "TimeZoneId",
+        ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
-        ///                         "TimeZoneAvailableIdsItem"
+        ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
         ///                     default = ,
-        ///                     displayName = "TimeZoneDisplayName",
+        ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
         ///             },
-        ///             description = "AtlasBaseTypeDefDescription",
-        ///             guid = "AtlasBaseTypeDefGuid",
-        ///             name = "AtlasBaseTypeDefName",
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
         ///             options = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
-        ///             serviceType = "AtlasBaseTypeDefServiceType",
-        ///             typeVersion = "AtlasBaseTypeDefTypeVersion",
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
         ///             updateTime = 1234,
-        ///             updatedBy = "AtlasBaseTypeDefUpdatedBy",
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
         ///             version = 1234,
-        ///             lastModifiedTS = "LastModifiedTS",
+        ///             lastModifiedTS = "<LastModifiedTS>",
         ///         }
         ///     },
         /// };
         /// 
         /// Response response = client.DeleteTypeDefinitions(RequestContent.Create(data));
         /// Console.WriteLine(response.Status);
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -12423,17 +12423,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetTypeDefinitionHeadersAsync with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = await client.GetTypeDefinitionHeadersAsync(true, "type");
+        /// Response response = await client.GetTypeDefinitionHeadersAsync(true, "<type>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("category").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("name").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -12477,17 +12477,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetTypeDefinitionHeaders with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = client.GetTypeDefinitionHeaders(true, "type");
+        /// Response response = client.GetTypeDefinitionHeaders(true, "<type>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("category").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("name").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -12529,15 +12529,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetTermTemplateDefByGuidAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = await client.GetTermTemplateDefByGuidAsync("guid");
+        /// Response response = await client.GetTermTemplateDefByGuidAsync("<guid>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -12546,7 +12546,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -12573,14 +12573,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -12689,15 +12689,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetTermTemplateDefByGuid with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = client.GetTermTemplateDefByGuid("guid");
+        /// Response response = client.GetTermTemplateDefByGuid("<guid>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -12706,7 +12706,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -12733,14 +12733,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -12849,15 +12849,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetTermTemplateDefByNameAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = await client.GetTermTemplateDefByNameAsync("name");
+        /// Response response = await client.GetTermTemplateDefByNameAsync("<name>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -12866,7 +12866,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -12893,14 +12893,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -13009,15 +13009,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetTermTemplateDefByName with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
-        /// Response response = client.GetTermTemplateDefByName("name");
+        /// Response response = client.GetTermTemplateDefByName("<name>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("cardinality").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("params").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("constraints").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("defaultValue").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("description").ToString());
@@ -13026,7 +13026,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isOptional").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("isUnique").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMaxCount").ToString());
         /// Console.WriteLine(result.GetProperty("attributeDefs").Item[0].GetProperty("valuesMinCount").ToString());
@@ -13053,14 +13053,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("options").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("serviceType").ToString());
         /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
         /// Console.WriteLine(result.GetProperty("updateTime").ToString());
         /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:

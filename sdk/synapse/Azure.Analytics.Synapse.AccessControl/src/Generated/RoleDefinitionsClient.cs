@@ -65,12 +65,12 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetRoleDefinitionsAsync with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new RoleDefinitionsClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetRoleDefinitionsAsync(true, "scope");
+        /// Response response = await client.GetRoleDefinitionsAsync(true, "<scope>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("name").ToString());
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Console.WriteLine(result.Item[0].GetProperty("permissions").Item[0].GetProperty("notDataActions").Item[0].ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("scopes").Item[0].ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("availabilityStatus").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -143,12 +143,12 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetRoleDefinitions with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new RoleDefinitionsClient(endpoint, credential);
         /// 
-        /// Response response = client.GetRoleDefinitions(true, "scope");
+        /// Response response = client.GetRoleDefinitions(true, "<scope>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("name").ToString());
@@ -160,7 +160,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Console.WriteLine(result.Item[0].GetProperty("permissions").Item[0].GetProperty("notDataActions").Item[0].ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("scopes").Item[0].ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("availabilityStatus").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -222,12 +222,12 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetRoleDefinitionByIdAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new RoleDefinitionsClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetRoleDefinitionByIdAsync("roleDefinitionId");
+        /// Response response = await client.GetRoleDefinitionByIdAsync("<roleDefinitionId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
@@ -239,7 +239,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Console.WriteLine(result.GetProperty("permissions").Item[0].GetProperty("notDataActions").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("scopes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("availabilityStatus").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -303,12 +303,12 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetRoleDefinitionById with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new RoleDefinitionsClient(endpoint, credential);
         /// 
-        /// Response response = client.GetRoleDefinitionById("roleDefinitionId");
+        /// Response response = client.GetRoleDefinitionById("<roleDefinitionId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
@@ -320,7 +320,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Console.WriteLine(result.GetProperty("permissions").Item[0].GetProperty("notDataActions").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("scopes").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("availabilityStatus").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -381,15 +381,15 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetScopesAsync and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new RoleDefinitionsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetScopesAsync();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -430,15 +430,15 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetScopes and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new RoleDefinitionsClient(endpoint, credential);
         /// 
         /// Response response = client.GetScopes();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:

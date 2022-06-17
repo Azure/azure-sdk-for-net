@@ -44,31 +44,31 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call UpdateMetadataPolicyAsync with all parameters and request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewMetadataPolicyClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     name = "MetadataPolicyName",
-        ///     id = "MetadataPolicyId",
+        ///     name = "<MetadataPolicyName>",
+        ///     id = "<MetadataPolicyId>",
         ///     version = 1234,
         ///     properties = new {
-        ///         description = "MetadataPolicyPropertiesDescription",
+        ///         description = "<MetadataPolicyPropertiesDescription>",
         ///         decisionRules = new[] {
         ///             new {
-        ///                 effect = "Deny",
+        ///                 effect = "<Deny>",
         ///                 dnfCondition = new[] {
         ///                     new[] {
         ///                         new {
-        ///                             attributeName = "AttributeMatcherAttributeName",
-        ///                             attributeValueIncludes = "AttributeMatcherAttributeValueIncludes",
+        ///                             attributeName = "<AttributeMatcherAttributeName>",
+        ///                             attributeValueIncludes = "<AttributeMatcherAttributeValueIncludes>",
         ///                             attributeValueIncludedIn = new[] {
-        ///                                 "AttributeMatcherAttributeValueIncludedInItem"
+        ///                                 "<AttributeMatcherAttributeValueIncludedInItem>"
         ///                             },
-        ///                             attributeValueExcludes = "AttributeMatcherAttributeValueExcludes",
+        ///                             attributeValueExcludes = "<AttributeMatcherAttributeValueExcludes>",
         ///                             attributeValueExcludedIn = new[] {
-        ///                                 "AttributeMatcherAttributeValueExcludedInItem"
+        ///                                 "<AttributeMatcherAttributeValueExcludedInItem>"
         ///                             },
         ///                         }
         ///                     }
@@ -77,19 +77,19 @@ namespace Azure.Analytics.Purview.Administration
         ///         },
         ///         attributeRules = new[] {
         ///             new {
-        ///                 id = "AttributeRuleId",
-        ///                 name = "AttributeRuleName",
+        ///                 id = "<AttributeRuleId>",
+        ///                 name = "<AttributeRuleName>",
         ///                 dnfCondition = new[] {
         ///                     new[] {
         ///                         new {
-        ///                             attributeName = "AttributeMatcherAttributeName",
-        ///                             attributeValueIncludes = "AttributeMatcherAttributeValueIncludes",
+        ///                             attributeName = "<AttributeMatcherAttributeName>",
+        ///                             attributeValueIncludes = "<AttributeMatcherAttributeValueIncludes>",
         ///                             attributeValueIncludedIn = new[] {
-        ///                                 "AttributeMatcherAttributeValueIncludedInItem"
+        ///                                 "<AttributeMatcherAttributeValueIncludedInItem>"
         ///                             },
-        ///                             attributeValueExcludes = "AttributeMatcherAttributeValueExcludes",
+        ///                             attributeValueExcludes = "<AttributeMatcherAttributeValueExcludes>",
         ///                             attributeValueExcludedIn = new[] {
-        ///                                 "AttributeMatcherAttributeValueExcludedInItem"
+        ///                                 "<AttributeMatcherAttributeValueExcludedInItem>"
         ///                             },
         ///                         }
         ///                     }
@@ -97,13 +97,13 @@ namespace Azure.Analytics.Purview.Administration
         ///             }
         ///         },
         ///         collection = new {
-        ///             referenceName = "CollectionReferenceName",
+        ///             referenceName = "<CollectionReferenceName>",
         ///         },
-        ///         parentCollectionName = "MetadataPolicyPropertiesParentCollectionName",
+        ///         parentCollectionName = "<MetadataPolicyPropertiesParentCollectionName>",
         ///     },
         /// };
         /// 
-        /// Response response = await client.UpdateMetadataPolicyAsync("policyId", RequestContent.Create(data));
+        /// Response response = await client.UpdateMetadataPolicyAsync("<policyId>", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -127,7 +127,7 @@ namespace Azure.Analytics.Purview.Administration
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -228,31 +228,31 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call UpdateMetadataPolicy with all parameters and request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewMetadataPolicyClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     name = "MetadataPolicyName",
-        ///     id = "MetadataPolicyId",
+        ///     name = "<MetadataPolicyName>",
+        ///     id = "<MetadataPolicyId>",
         ///     version = 1234,
         ///     properties = new {
-        ///         description = "MetadataPolicyPropertiesDescription",
+        ///         description = "<MetadataPolicyPropertiesDescription>",
         ///         decisionRules = new[] {
         ///             new {
-        ///                 effect = "Deny",
+        ///                 effect = "<Deny>",
         ///                 dnfCondition = new[] {
         ///                     new[] {
         ///                         new {
-        ///                             attributeName = "AttributeMatcherAttributeName",
-        ///                             attributeValueIncludes = "AttributeMatcherAttributeValueIncludes",
+        ///                             attributeName = "<AttributeMatcherAttributeName>",
+        ///                             attributeValueIncludes = "<AttributeMatcherAttributeValueIncludes>",
         ///                             attributeValueIncludedIn = new[] {
-        ///                                 "AttributeMatcherAttributeValueIncludedInItem"
+        ///                                 "<AttributeMatcherAttributeValueIncludedInItem>"
         ///                             },
-        ///                             attributeValueExcludes = "AttributeMatcherAttributeValueExcludes",
+        ///                             attributeValueExcludes = "<AttributeMatcherAttributeValueExcludes>",
         ///                             attributeValueExcludedIn = new[] {
-        ///                                 "AttributeMatcherAttributeValueExcludedInItem"
+        ///                                 "<AttributeMatcherAttributeValueExcludedInItem>"
         ///                             },
         ///                         }
         ///                     }
@@ -261,19 +261,19 @@ namespace Azure.Analytics.Purview.Administration
         ///         },
         ///         attributeRules = new[] {
         ///             new {
-        ///                 id = "AttributeRuleId",
-        ///                 name = "AttributeRuleName",
+        ///                 id = "<AttributeRuleId>",
+        ///                 name = "<AttributeRuleName>",
         ///                 dnfCondition = new[] {
         ///                     new[] {
         ///                         new {
-        ///                             attributeName = "AttributeMatcherAttributeName",
-        ///                             attributeValueIncludes = "AttributeMatcherAttributeValueIncludes",
+        ///                             attributeName = "<AttributeMatcherAttributeName>",
+        ///                             attributeValueIncludes = "<AttributeMatcherAttributeValueIncludes>",
         ///                             attributeValueIncludedIn = new[] {
-        ///                                 "AttributeMatcherAttributeValueIncludedInItem"
+        ///                                 "<AttributeMatcherAttributeValueIncludedInItem>"
         ///                             },
-        ///                             attributeValueExcludes = "AttributeMatcherAttributeValueExcludes",
+        ///                             attributeValueExcludes = "<AttributeMatcherAttributeValueExcludes>",
         ///                             attributeValueExcludedIn = new[] {
-        ///                                 "AttributeMatcherAttributeValueExcludedInItem"
+        ///                                 "<AttributeMatcherAttributeValueExcludedInItem>"
         ///                             },
         ///                         }
         ///                     }
@@ -281,13 +281,13 @@ namespace Azure.Analytics.Purview.Administration
         ///             }
         ///         },
         ///         collection = new {
-        ///             referenceName = "CollectionReferenceName",
+        ///             referenceName = "<CollectionReferenceName>",
         ///         },
-        ///         parentCollectionName = "MetadataPolicyPropertiesParentCollectionName",
+        ///         parentCollectionName = "<MetadataPolicyPropertiesParentCollectionName>",
         ///     },
         /// };
         /// 
-        /// Response response = client.UpdateMetadataPolicy("policyId", RequestContent.Create(data));
+        /// Response response = client.UpdateMetadataPolicy("<policyId>", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -311,7 +311,7 @@ namespace Azure.Analytics.Purview.Administration
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -411,12 +411,12 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetMetadataPolicyAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewMetadataPolicyClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetMetadataPolicyAsync("policyId");
+        /// Response response = await client.GetMetadataPolicyAsync("<policyId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -440,7 +440,7 @@ namespace Azure.Analytics.Purview.Administration
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -510,12 +510,12 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetMetadataPolicy with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewMetadataPolicyClient(endpoint, credential);
         /// 
-        /// Response response = client.GetMetadataPolicy("policyId");
+        /// Response response = client.GetMetadataPolicy("<policyId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -539,7 +539,7 @@ namespace Azure.Analytics.Purview.Administration
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -606,9 +606,9 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetMetadataPoliciesAsync and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewMetadataPolicyClient(endpoint, credential);
         /// 
         /// Response response = await client.GetMetadataPoliciesAsync();
@@ -636,7 +636,7 @@ namespace Azure.Analytics.Purview.Administration
         /// Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
         /// Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("parentCollectionName").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -712,9 +712,9 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetMetadataPolicies and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewMetadataPolicyClient(endpoint, credential);
         /// 
         /// Response response = client.GetMetadataPolicies();
@@ -742,7 +742,7 @@ namespace Azure.Analytics.Purview.Administration
         /// Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
         /// Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("parentCollectionName").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:

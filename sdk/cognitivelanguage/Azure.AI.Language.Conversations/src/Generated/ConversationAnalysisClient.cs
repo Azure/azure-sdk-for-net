@@ -34,19 +34,19 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
         /// This sample shows how to call AnalyzeConversationAsync with required request content and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     kind = "Conversation",
+        ///     kind = "<Conversation>",
         /// };
         /// 
         /// Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("kind").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -102,19 +102,19 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
         /// This sample shows how to call AnalyzeConversation with required request content and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     kind = "Conversation",
+        ///     kind = "<Conversation>",
         /// };
         /// 
         /// Response response = client.AnalyzeConversation(RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("kind").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -170,9 +170,9 @@ namespace Azure.AI.Language.Conversations
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call JobStatusAsync with required parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// Response response = await client.JobStatusAsync(Guid.NewGuid());
@@ -186,11 +186,11 @@ namespace Azure.AI.Language.Conversations
         /// Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
         /// Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
         /// Console.WriteLine(result.ToString());
-        /// </code>
+        /// ]]></code>
         /// This sample shows how to call JobStatusAsync with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// Response response = await client.JobStatusAsync(Guid.NewGuid(), true);
@@ -209,11 +209,11 @@ namespace Azure.AI.Language.Conversations
         /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
         /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
         /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
         /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
         /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
         /// Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
@@ -228,7 +228,7 @@ namespace Azure.AI.Language.Conversations
         /// Console.WriteLine(result.GetProperty("statistics").GetProperty("conversationsCount").ToString());
         /// Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversationsCount").ToString());
         /// Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -318,9 +318,9 @@ namespace Azure.AI.Language.Conversations
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call JobStatus with required parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// Response response = client.JobStatus(Guid.NewGuid());
@@ -334,11 +334,11 @@ namespace Azure.AI.Language.Conversations
         /// Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
         /// Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
         /// Console.WriteLine(result.ToString());
-        /// </code>
+        /// ]]></code>
         /// This sample shows how to call JobStatus with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// Response response = client.JobStatus(Guid.NewGuid(), true);
@@ -357,11 +357,11 @@ namespace Azure.AI.Language.Conversations
         /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
         /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
         /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
         /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
         /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
         /// Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
@@ -376,7 +376,7 @@ namespace Azure.AI.Language.Conversations
         /// Console.WriteLine(result.GetProperty("statistics").GetProperty("conversationsCount").ToString());
         /// Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversationsCount").ToString());
         /// Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -467,60 +467,60 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
         /// This sample shows how to call SubmitJobAsync with required parameters and request content.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     analysisInput = new {
         ///         conversations = new[] {
         ///             new {
-        ///                 id = "ConversationId",
-        ///                 language = "ConversationLanguage",
-        ///                 modality = "transcript",
+        ///                 id = "<ConversationId>",
+        ///                 language = "<ConversationLanguage>",
+        ///                 modality = "<transcript>",
         ///             }
         ///         },
         ///     },
         ///     tasks = new[] {
         ///         new {
-        ///             kind = "ConversationalPIITask",
+        ///             kind = "<ConversationalPIITask>",
         ///         }
         ///     },
         /// };
         /// 
         /// Response response = await client.SubmitJobAsync(WaitUntil.Completed, RequestContent.Create(data));
         /// Console.WriteLine(response.Status);
-        /// </code>
+        /// ]]></code>
         /// This sample shows how to call SubmitJobAsync with all parameters and request content.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     displayName = "AnalyzeConversationJobsInputDisplayName",
+        ///     displayName = "<AnalyzeConversationJobsInputDisplayName>",
         ///     analysisInput = new {
         ///         conversations = new[] {
         ///             new {
-        ///                 id = "ConversationId",
-        ///                 language = "ConversationLanguage",
-        ///                 modality = "transcript",
-        ///                 domain = "finance",
+        ///                 id = "<ConversationId>",
+        ///                 language = "<ConversationLanguage>",
+        ///                 modality = "<transcript>",
+        ///                 domain = "<finance>",
         ///             }
         ///         },
         ///     },
         ///     tasks = new[] {
         ///         new {
-        ///             taskName = "TaskIdentifierTaskName",
-        ///             kind = "ConversationalPIITask",
+        ///             taskName = "<TaskIdentifierTaskName>",
+        ///             kind = "<ConversationalPIITask>",
         ///         }
         ///     },
         /// };
         /// 
         /// Response response = await client.SubmitJobAsync(WaitUntil.Completed, RequestContent.Create(data));
         /// Console.WriteLine(response.Status);
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -588,60 +588,60 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
         /// This sample shows how to call SubmitJob with required parameters and request content.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     analysisInput = new {
         ///         conversations = new[] {
         ///             new {
-        ///                 id = "ConversationId",
-        ///                 language = "ConversationLanguage",
-        ///                 modality = "transcript",
+        ///                 id = "<ConversationId>",
+        ///                 language = "<ConversationLanguage>",
+        ///                 modality = "<transcript>",
         ///             }
         ///         },
         ///     },
         ///     tasks = new[] {
         ///         new {
-        ///             kind = "ConversationalPIITask",
+        ///             kind = "<ConversationalPIITask>",
         ///         }
         ///     },
         /// };
         /// 
         /// Response response = client.SubmitJob(WaitUntil.Completed, RequestContent.Create(data));
         /// Console.WriteLine(response.Status);
-        /// </code>
+        /// ]]></code>
         /// This sample shows how to call SubmitJob with all parameters and request content.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     displayName = "AnalyzeConversationJobsInputDisplayName",
+        ///     displayName = "<AnalyzeConversationJobsInputDisplayName>",
         ///     analysisInput = new {
         ///         conversations = new[] {
         ///             new {
-        ///                 id = "ConversationId",
-        ///                 language = "ConversationLanguage",
-        ///                 modality = "transcript",
-        ///                 domain = "finance",
+        ///                 id = "<ConversationId>",
+        ///                 language = "<ConversationLanguage>",
+        ///                 modality = "<transcript>",
+        ///                 domain = "<finance>",
         ///             }
         ///         },
         ///     },
         ///     tasks = new[] {
         ///         new {
-        ///             taskName = "TaskIdentifierTaskName",
-        ///             kind = "ConversationalPIITask",
+        ///             taskName = "<TaskIdentifierTaskName>",
+        ///             kind = "<ConversationalPIITask>",
         ///         }
         ///     },
         /// };
         /// 
         /// Response response = client.SubmitJob(WaitUntil.Completed, RequestContent.Create(data));
         /// Console.WriteLine(response.Status);
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:

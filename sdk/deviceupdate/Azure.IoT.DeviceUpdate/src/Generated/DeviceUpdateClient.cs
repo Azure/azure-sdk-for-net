@@ -77,28 +77,28 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetUpdateAsync with required parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetUpdateAsync("provider", "name", "version");
+        /// Response response = await client.GetUpdateAsync("<provider>", "<name>", "<version>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("compatibility").Item[0].GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("compatibility").Item[0].GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("manifestVersion").ToString());
         /// Console.WriteLine(result.GetProperty("importedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// </code>
+        /// ]]></code>
         /// This sample shows how to call GetUpdateAsync with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetUpdateAsync("provider", "name", "version", null);
+        /// Response response = await client.GetUpdateAsync("<provider>", "<name>", "<version>", null);
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
@@ -108,7 +108,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("isDeployable").ToString());
         /// Console.WriteLine(result.GetProperty("updateType").ToString());
         /// Console.WriteLine(result.GetProperty("installedCriteria").ToString());
-        /// Console.WriteLine(result.GetProperty("compatibility").Item[0].GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("compatibility").Item[0].GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps").Item[0].GetProperty("handler").ToString());
@@ -125,7 +125,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("importedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("etag").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -210,28 +210,28 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetUpdate with required parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = client.GetUpdate("provider", "name", "version");
+        /// Response response = client.GetUpdate("<provider>", "<name>", "<version>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("compatibility").Item[0].GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("compatibility").Item[0].GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("manifestVersion").ToString());
         /// Console.WriteLine(result.GetProperty("importedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// </code>
+        /// ]]></code>
         /// This sample shows how to call GetUpdate with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = client.GetUpdate("provider", "name", "version", null);
+        /// Response response = client.GetUpdate("<provider>", "<name>", "<version>", null);
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
@@ -241,7 +241,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("isDeployable").ToString());
         /// Console.WriteLine(result.GetProperty("updateType").ToString());
         /// Console.WriteLine(result.GetProperty("installedCriteria").ToString());
-        /// Console.WriteLine(result.GetProperty("compatibility").Item[0].GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("compatibility").Item[0].GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps").Item[0].GetProperty("handler").ToString());
@@ -258,7 +258,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("importedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("etag").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -344,35 +344,35 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetFileAsync with required parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetFileAsync("provider", "name", "version", "fileId");
+        /// Response response = await client.GetFileAsync("<provider>", "<name>", "<version>", "<fileId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("fileId").ToString());
         /// Console.WriteLine(result.GetProperty("fileName").ToString());
         /// Console.WriteLine(result.GetProperty("sizeInBytes").ToString());
-        /// Console.WriteLine(result.GetProperty("hashes").GetProperty("test").ToString());
-        /// </code>
+        /// Console.WriteLine(result.GetProperty("hashes").GetProperty("<test>").ToString());
+        /// ]]></code>
         /// This sample shows how to call GetFileAsync with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetFileAsync("provider", "name", "version", "fileId", null);
+        /// Response response = await client.GetFileAsync("<provider>", "<name>", "<version>", "<fileId>", null);
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("fileId").ToString());
         /// Console.WriteLine(result.GetProperty("fileName").ToString());
         /// Console.WriteLine(result.GetProperty("sizeInBytes").ToString());
-        /// Console.WriteLine(result.GetProperty("hashes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("hashes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mimeType").ToString());
         /// Console.WriteLine(result.GetProperty("scanResult").ToString());
         /// Console.WriteLine(result.GetProperty("scanDetails").ToString());
         /// Console.WriteLine(result.GetProperty("etag").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -438,35 +438,35 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetFile with required parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = client.GetFile("provider", "name", "version", "fileId");
+        /// Response response = client.GetFile("<provider>", "<name>", "<version>", "<fileId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("fileId").ToString());
         /// Console.WriteLine(result.GetProperty("fileName").ToString());
         /// Console.WriteLine(result.GetProperty("sizeInBytes").ToString());
-        /// Console.WriteLine(result.GetProperty("hashes").GetProperty("test").ToString());
-        /// </code>
+        /// Console.WriteLine(result.GetProperty("hashes").GetProperty("<test>").ToString());
+        /// ]]></code>
         /// This sample shows how to call GetFile with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = client.GetFile("provider", "name", "version", "fileId", null);
+        /// Response response = client.GetFile("<provider>", "<name>", "<version>", "<fileId>", null);
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("fileId").ToString());
         /// Console.WriteLine(result.GetProperty("fileName").ToString());
         /// Console.WriteLine(result.GetProperty("sizeInBytes").ToString());
-        /// Console.WriteLine(result.GetProperty("hashes").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("hashes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mimeType").ToString());
         /// Console.WriteLine(result.GetProperty("scanResult").ToString());
         /// Console.WriteLine(result.GetProperty("scanDetails").ToString());
         /// Console.WriteLine(result.GetProperty("etag").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -529,25 +529,25 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetOperationAsync with required parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetOperationAsync("operationId");
+        /// Response response = await client.GetOperationAsync("<operationId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("operationId").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// </code>
+        /// ]]></code>
         /// This sample shows how to call GetOperationAsync with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetOperationAsync("operationId", null);
+        /// Response response = await client.GetOperationAsync("<operationId>", null);
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("operationId").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -566,7 +566,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("etag").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -643,25 +643,25 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetOperation with required parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = client.GetOperation("operationId");
+        /// Response response = client.GetOperation("<operationId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("operationId").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// </code>
+        /// ]]></code>
         /// This sample shows how to call GetOperation with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = client.GetOperation("operationId", null);
+        /// Response response = client.GetOperation("<operationId>", null);
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("operationId").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -680,7 +680,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("etag").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -755,12 +755,12 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetUpdatesAsync with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetUpdatesAsync("search", "filter");
+        /// Response response = await client.GetUpdatesAsync("<search>", "<filter>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
@@ -770,7 +770,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isDeployable").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateType").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("installedCriteria").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("compatibility").Item[0].GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("compatibility").Item[0].GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("instructions").GetProperty("steps").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("instructions").GetProperty("steps").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("instructions").GetProperty("steps").Item[0].GetProperty("handler").ToString());
@@ -788,7 +788,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("etag").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -876,12 +876,12 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetUpdates with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = client.GetUpdates("search", "filter");
+        /// Response response = client.GetUpdates("<search>", "<filter>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
@@ -891,7 +891,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isDeployable").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateType").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("installedCriteria").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("compatibility").Item[0].GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("compatibility").Item[0].GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("instructions").GetProperty("steps").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("instructions").GetProperty("steps").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("instructions").GetProperty("steps").Item[0].GetProperty("handler").ToString());
@@ -909,7 +909,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("etag").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -995,16 +995,16 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetProvidersAsync and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
         /// Response response = await client.GetProvidersAsync();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1058,16 +1058,16 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetProviders and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
         /// Response response = client.GetProviders();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1124,16 +1124,16 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetNamesAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetNamesAsync("provider");
+        /// Response response = await client.GetNamesAsync("<provider>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1192,16 +1192,16 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetNames with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = client.GetNames("provider");
+        /// Response response = client.GetNames("<provider>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1262,26 +1262,26 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetVersionsAsync with required parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetVersionsAsync("provider", "name");
+        /// Response response = await client.GetVersionsAsync("<provider>", "<name>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].ToString());
-        /// </code>
+        /// ]]></code>
         /// This sample shows how to call GetVersionsAsync with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetVersionsAsync("provider", "name", "filter");
+        /// Response response = await client.GetVersionsAsync("<provider>", "<name>", "<filter>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1343,26 +1343,26 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetVersions with required parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = client.GetVersions("provider", "name");
+        /// Response response = client.GetVersions("<provider>", "<name>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].ToString());
-        /// </code>
+        /// ]]></code>
         /// This sample shows how to call GetVersions with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = client.GetVersions("provider", "name", "filter");
+        /// Response response = client.GetVersions("<provider>", "<name>", "<filter>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1424,16 +1424,16 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetFilesAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetFilesAsync("provider", "name", "version");
+        /// Response response = await client.GetFilesAsync("<provider>", "<name>", "<version>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1496,16 +1496,16 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetFiles with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = client.GetFiles("provider", "name", "version");
+        /// Response response = client.GetFiles("<provider>", "<name>", "<version>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1565,12 +1565,12 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetOperationsAsync with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetOperationsAsync("filter", 1234);
+        /// Response response = await client.GetOperationsAsync("<filter>", 1234);
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationId").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
@@ -1590,7 +1590,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("etag").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1674,12 +1674,12 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetOperations with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = client.GetOperations("filter", 1234);
+        /// Response response = client.GetOperations("<filter>", 1234);
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationId").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
@@ -1699,7 +1699,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("etag").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1785,31 +1785,31 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="content"/> is null. </exception>
         /// <example>
         /// This sample shows how to call ImportUpdateAsync with required parameters and request content and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
         /// var data = new[] {
         ///     new {
         ///         importManifest = new {
-        ///             url = "ImportManifestMetadataUrl",
+        ///             url = "<ImportManifestMetadataUrl>",
         ///             sizeInBytes = 1234,
         ///             hashes = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
         ///         },
-        ///         friendlyName = "ImportUpdateInputItemFriendlyName",
+        ///         friendlyName = "<ImportUpdateInputItemFriendlyName>",
         ///         files = new[] {
         ///             new {
-        ///                 filename = "FileImportMetadataFilename",
-        ///                 url = "FileImportMetadataUrl",
+        ///                 filename = "<FileImportMetadataFilename>",
+        ///                 url = "<FileImportMetadataUrl>",
         ///             }
         ///         },
         ///     }
         /// };
         /// 
-        /// Response response = await client.ImportUpdateAsync(WaitUntil.Completed, "action", RequestContent.Create(data));
+        /// Response response = await client.ImportUpdateAsync(WaitUntil.Completed, "<action>", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
@@ -1819,7 +1819,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("isDeployable").ToString());
         /// Console.WriteLine(result.GetProperty("updateType").ToString());
         /// Console.WriteLine(result.GetProperty("installedCriteria").ToString());
-        /// Console.WriteLine(result.GetProperty("compatibility").Item[0].GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("compatibility").Item[0].GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps").Item[0].GetProperty("handler").ToString());
@@ -1836,7 +1836,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("importedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("etag").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -1934,31 +1934,31 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="content"/> is null. </exception>
         /// <example>
         /// This sample shows how to call ImportUpdate with required parameters and request content and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
         /// var data = new[] {
         ///     new {
         ///         importManifest = new {
-        ///             url = "ImportManifestMetadataUrl",
+        ///             url = "<ImportManifestMetadataUrl>",
         ///             sizeInBytes = 1234,
         ///             hashes = new {
-        ///                 key = "String",
+        ///                 key = "<String>",
         ///             },
         ///         },
-        ///         friendlyName = "ImportUpdateInputItemFriendlyName",
+        ///         friendlyName = "<ImportUpdateInputItemFriendlyName>",
         ///         files = new[] {
         ///             new {
-        ///                 filename = "FileImportMetadataFilename",
-        ///                 url = "FileImportMetadataUrl",
+        ///                 filename = "<FileImportMetadataFilename>",
+        ///                 url = "<FileImportMetadataUrl>",
         ///             }
         ///         },
         ///     }
         /// };
         /// 
-        /// Response response = client.ImportUpdate(WaitUntil.Completed, "action", RequestContent.Create(data));
+        /// Response response = client.ImportUpdate(WaitUntil.Completed, "<action>", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
@@ -1968,7 +1968,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("isDeployable").ToString());
         /// Console.WriteLine(result.GetProperty("updateType").ToString());
         /// Console.WriteLine(result.GetProperty("installedCriteria").ToString());
-        /// Console.WriteLine(result.GetProperty("compatibility").Item[0].GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("compatibility").Item[0].GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps").Item[0].GetProperty("type").ToString());
         /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("instructions").GetProperty("steps").Item[0].GetProperty("handler").ToString());
@@ -1985,7 +1985,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("importedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("etag").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -2085,14 +2085,14 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call DeleteUpdateAsync with required parameters.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = await client.DeleteUpdateAsync(WaitUntil.Completed, "provider", "name", "version");
+        /// Response response = await client.DeleteUpdateAsync(WaitUntil.Completed, "<provider>", "<name>", "<version>");
         /// Console.WriteLine(response.Status);
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -2144,14 +2144,14 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call DeleteUpdate with required parameters.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, credential);
         /// 
-        /// Response response = client.DeleteUpdate(WaitUntil.Completed, "provider", "name", "version");
+        /// Response response = client.DeleteUpdate(WaitUntil.Completed, "<provider>", "<name>", "<version>");
         /// Console.WriteLine(response.Status);
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:

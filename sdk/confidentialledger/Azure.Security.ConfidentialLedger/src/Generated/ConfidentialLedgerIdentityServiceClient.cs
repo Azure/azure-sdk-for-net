@@ -40,16 +40,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="ledgerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetLedgerIdentityAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerIdentityServiceClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetLedgerIdentityAsync("ledgerId");
+        /// Response response = await client.GetLedgerIdentityAsync("<ledgerId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("ledgerId").ToString());
         /// Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -94,16 +94,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="ledgerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetLedgerIdentity with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerIdentityServiceClient(endpoint, credential);
         /// 
-        /// Response response = client.GetLedgerIdentity("ledgerId");
+        /// Response response = client.GetLedgerIdentity("<ledgerId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("ledgerId").ToString());
         /// Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:

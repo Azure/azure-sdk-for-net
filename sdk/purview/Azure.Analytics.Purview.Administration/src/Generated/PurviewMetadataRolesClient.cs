@@ -38,9 +38,9 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetMetadataRolesAsync and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewMetadataRolesClient(endpoint, credential);
         /// 
         /// Response response = await client.GetMetadataRolesAsync();
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Purview.Administration
         /// Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("dnfCondition").Item[0].Item[0].GetProperty("attributeValueExcludedIn").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -126,9 +126,9 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetMetadataRoles and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewMetadataRolesClient(endpoint, credential);
         /// 
         /// Response response = client.GetMetadataRoles();
@@ -152,7 +152,7 @@ namespace Azure.Analytics.Purview.Administration
         /// Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("dnfCondition").Item[0].Item[0].GetProperty("attributeValueExcludedIn").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:

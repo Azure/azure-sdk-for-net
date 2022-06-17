@@ -64,9 +64,9 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetAccountPropertiesAsync and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAccountPropertiesAsync();
@@ -107,9 +107,9 @@ namespace Azure.Analytics.Purview.Administration
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
-        /// Console.WriteLine(result.GetProperty("tags").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -217,9 +217,9 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetAccountProperties and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// Response response = client.GetAccountProperties();
@@ -260,9 +260,9 @@ namespace Azure.Analytics.Purview.Administration
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
-        /// Console.WriteLine(result.GetProperty("tags").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -372,13 +372,13 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
         /// This sample shows how to call UpdateAccountPropertiesAsync with all request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     friendlyName = "DataPlaneAccountUpdateParametersFriendlyName",
+        ///     friendlyName = "<DataPlaneAccountUpdateParametersFriendlyName>",
         /// };
         /// 
         /// Response response = await client.UpdateAccountPropertiesAsync(RequestContent.Create(data));
@@ -419,9 +419,9 @@ namespace Azure.Analytics.Purview.Administration
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
-        /// Console.WriteLine(result.GetProperty("tags").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -538,13 +538,13 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
         /// This sample shows how to call UpdateAccountProperties with all request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     friendlyName = "DataPlaneAccountUpdateParametersFriendlyName",
+        ///     friendlyName = "<DataPlaneAccountUpdateParametersFriendlyName>",
         /// };
         /// 
         /// Response response = client.UpdateAccountProperties(RequestContent.Create(data));
@@ -585,9 +585,9 @@ namespace Azure.Analytics.Purview.Administration
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
-        /// Console.WriteLine(result.GetProperty("tags").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -702,16 +702,16 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetAccessKeysAsync and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAccessKeysAsync();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
         /// Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -759,16 +759,16 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetAccessKeys and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// Response response = client.GetAccessKeys();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
         /// Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -818,20 +818,20 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
         /// This sample shows how to call RegenerateAccessKeyAsync with all request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     keyType = "PrimaryAtlasKafkaKey",
+        ///     keyType = "<PrimaryAtlasKafkaKey>",
         /// };
         /// 
         /// Response response = await client.RegenerateAccessKeyAsync(RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
         /// Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -888,20 +888,20 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
         /// This sample shows how to call RegenerateAccessKey with all request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     keyType = "PrimaryAtlasKafkaKey",
+        ///     keyType = "<PrimaryAtlasKafkaKey>",
         /// };
         /// 
         /// Response response = client.RegenerateAccessKey(RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
         /// Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -957,12 +957,12 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetCollectionsAsync with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetCollectionsAsync("skipToken");
+        /// Response response = await client.GetCollectionsAsync("<skipToken>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("count").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
@@ -978,7 +978,7 @@ namespace Azure.Analytics.Purview.Administration
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1053,12 +1053,12 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetCollections with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
-        /// Response response = client.GetCollections("skipToken");
+        /// Response response = client.GetCollections("<skipToken>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("count").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
@@ -1074,7 +1074,7 @@ namespace Azure.Analytics.Purview.Administration
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1149,12 +1149,12 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetResourceSetRulesAsync with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetResourceSetRulesAsync("skipToken");
+        /// Response response = await client.GetResourceSetRulesAsync("<skipToken>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("count").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
@@ -1243,7 +1243,7 @@ namespace Azure.Analytics.Purview.Administration
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("rules").Item[0].GetProperty("qualifiedName").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("storeType").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("version").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1392,12 +1392,12 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetResourceSetRules with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
-        /// Response response = client.GetResourceSetRules("skipToken");
+        /// Response response = client.GetResourceSetRules("<skipToken>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("count").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
@@ -1486,7 +1486,7 @@ namespace Azure.Analytics.Purview.Administration
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("rules").Item[0].GetProperty("qualifiedName").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("storeType").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("version").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:

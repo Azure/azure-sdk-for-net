@@ -74,13 +74,13 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call CreateOrUpdateAsync with required request content and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewDataSourceClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     kind = "None",
+        ///     kind = "<None>",
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
@@ -99,7 +99,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsClassified").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("startTime").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("queuedTime").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("pipelineStartTime").ToString());
@@ -116,7 +116,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("runType").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("dataSourceType").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -271,13 +271,13 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call CreateOrUpdate with required request content and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewDataSourceClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     kind = "None",
+        ///     kind = "<None>",
         /// };
         /// 
         /// Response response = client.CreateOrUpdate(RequestContent.Create(data));
@@ -296,7 +296,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsClassified").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("startTime").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("queuedTime").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("pipelineStartTime").ToString());
@@ -313,7 +313,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("runType").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("dataSourceType").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -467,9 +467,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetPropertiesAsync and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewDataSourceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetPropertiesAsync();
@@ -488,7 +488,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsClassified").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("startTime").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("queuedTime").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("pipelineStartTime").ToString());
@@ -505,7 +505,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("runType").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("dataSourceType").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -603,9 +603,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetProperties and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewDataSourceClient(endpoint, credential);
         /// 
         /// Response response = client.GetProperties();
@@ -624,7 +624,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsClassified").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("startTime").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("queuedTime").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("pipelineStartTime").ToString());
@@ -641,7 +641,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("runType").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("dataSourceType").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -739,9 +739,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call DeleteAsync and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewDataSourceClient(endpoint, credential);
         /// 
         /// Response response = await client.DeleteAsync();
@@ -760,7 +760,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsClassified").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("startTime").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("queuedTime").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("pipelineStartTime").ToString());
@@ -777,7 +777,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("runType").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("dataSourceType").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -875,9 +875,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call Delete and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewDataSourceClient(endpoint, credential);
         /// 
         /// Response response = client.Delete();
@@ -896,7 +896,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsClassified").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("startTime").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("queuedTime").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("pipelineStartTime").ToString());
@@ -913,7 +913,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("runType").ToString());
         /// Console.WriteLine(result.GetProperty("scans").Item[0].GetProperty("scanResults").Item[0].GetProperty("dataSourceType").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1011,9 +1011,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetScansAsync and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewDataSourceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetScansAsync();
@@ -1029,7 +1029,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsClassified").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("startTime").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("queuedTime").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("pipelineStartTime").ToString());
@@ -1048,7 +1048,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("dataSourceType").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
         /// Console.WriteLine(result.GetProperty("count").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1151,9 +1151,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetScans and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewDataSourceClient(endpoint, credential);
         /// 
         /// Response response = client.GetScans();
@@ -1169,7 +1169,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("assetsClassified").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("notifications").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("startTime").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("queuedTime").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("pipelineStartTime").ToString());
@@ -1188,7 +1188,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanResults").Item[0].GetProperty("dataSourceType").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
         /// Console.WriteLine(result.GetProperty("count").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:

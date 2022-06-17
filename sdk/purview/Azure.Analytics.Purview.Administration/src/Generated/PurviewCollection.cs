@@ -55,10 +55,10 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetCollectionAsync and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("collectionName");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// Response response = await client.GetCollectionAsync();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -74,7 +74,7 @@ namespace Azure.Analytics.Purview.Administration
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -136,10 +136,10 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetCollection and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("collectionName");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// Response response = client.GetCollection();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -155,7 +155,7 @@ namespace Azure.Analytics.Purview.Administration
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -219,16 +219,16 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
         /// This sample shows how to call CreateOrUpdateCollectionAsync with all request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("collectionName");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// var data = new {
-        ///     description = "CollectionDescription",
-        ///     friendlyName = "CollectionFriendlyName",
+        ///     description = "<CollectionDescription>",
+        ///     friendlyName = "<CollectionFriendlyName>",
         ///     parentCollection = new {
-        ///         referenceName = "CollectionReferenceName",
+        ///         referenceName = "<CollectionReferenceName>",
         ///     },
         /// };
         /// 
@@ -246,7 +246,7 @@ namespace Azure.Analytics.Purview.Administration
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -332,16 +332,16 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
         /// This sample shows how to call CreateOrUpdateCollection with all request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("collectionName");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// var data = new {
-        ///     description = "CollectionDescription",
-        ///     friendlyName = "CollectionFriendlyName",
+        ///     description = "<CollectionDescription>",
+        ///     friendlyName = "<CollectionFriendlyName>",
         ///     parentCollection = new {
-        ///         referenceName = "CollectionReferenceName",
+        ///         referenceName = "<CollectionReferenceName>",
         ///     },
         /// };
         /// 
@@ -359,7 +359,7 @@ namespace Azure.Analytics.Purview.Administration
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
         /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -443,14 +443,14 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call DeleteCollectionAsync.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("collectionName");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// Response response = await client.DeleteCollectionAsync();
         /// Console.WriteLine(response.Status);
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -492,14 +492,14 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call DeleteCollection.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("collectionName");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// Response response = client.DeleteCollection();
         /// Console.WriteLine(response.Status);
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -541,16 +541,16 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetCollectionPathAsync and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("collectionName");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// Response response = await client.GetCollectionPathAsync();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("parentFriendlyNameChain").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("parentNameChain").Item[0].ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -598,16 +598,16 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetCollectionPath and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("collectionName");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// Response response = client.GetCollectionPath();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("parentFriendlyNameChain").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("parentNameChain").Item[0].ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -656,18 +656,18 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetChildCollectionNamesAsync with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("collectionName");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
-        /// Response response = await client.GetChildCollectionNamesAsync("skipToken");
+        /// Response response = await client.GetChildCollectionNamesAsync("<skipToken>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("count").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("friendlyName").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -728,18 +728,18 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetChildCollectionNames with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("collectionName");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
-        /// Response response = client.GetChildCollectionNames("skipToken");
+        /// Response response = client.GetChildCollectionNames("<skipToken>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("count").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("friendlyName").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:

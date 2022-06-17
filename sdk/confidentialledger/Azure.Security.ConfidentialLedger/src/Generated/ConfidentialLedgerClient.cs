@@ -48,16 +48,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetConstitutionAsync and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetConstitutionAsync();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("digest").ToString());
         /// Console.WriteLine(result.GetProperty("script").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -97,16 +97,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetConstitution and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetConstitution();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("digest").ToString());
         /// Console.WriteLine(result.GetProperty("script").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -146,16 +146,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetConsortiumMembersAsync and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetConsortiumMembersAsync();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("members").Item[0].GetProperty("certificate").ToString());
         /// Console.WriteLine(result.GetProperty("members").Item[0].GetProperty("id").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -199,16 +199,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetConsortiumMembers and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetConsortiumMembers();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("members").Item[0].GetProperty("certificate").ToString());
         /// Console.WriteLine(result.GetProperty("members").Item[0].GetProperty("id").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -252,19 +252,19 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetEnclaveQuotesAsync and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetEnclaveQuotesAsync();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("currentNodeId").ToString());
-        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("test").GetProperty("nodeId").ToString());
-        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("test").GetProperty("mrenclave").ToString());
-        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("test").GetProperty("quoteVersion").ToString());
-        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("test").GetProperty("raw").ToString());
-        /// </code>
+        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("nodeId").ToString());
+        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("mrenclave").ToString());
+        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("quoteVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("raw").ToString());
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -304,19 +304,19 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetEnclaveQuotes and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetEnclaveQuotes();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("currentNodeId").ToString());
-        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("test").GetProperty("nodeId").ToString());
-        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("test").GetProperty("mrenclave").ToString());
-        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("test").GetProperty("quoteVersion").ToString());
-        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("test").GetProperty("raw").ToString());
-        /// </code>
+        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("nodeId").ToString());
+        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("mrenclave").ToString());
+        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("quoteVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("raw").ToString());
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -358,33 +358,33 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call PostLedgerEntryAsync with required parameters and request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     contents = "LedgerEntryContents",
+        ///     contents = "<LedgerEntryContents>",
         /// };
         /// 
         /// Response response = await client.PostLedgerEntryAsync(RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("subLedgerId").ToString());
-        /// </code>
+        /// ]]></code>
         /// This sample shows how to call PostLedgerEntryAsync with all parameters and request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     contents = "LedgerEntryContents",
+        ///     contents = "<LedgerEntryContents>",
         /// };
         /// 
-        /// Response response = await client.PostLedgerEntryAsync(RequestContent.Create(data), "subLedgerId");
+        /// Response response = await client.PostLedgerEntryAsync(RequestContent.Create(data), "<subLedgerId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("subLedgerId").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -432,33 +432,33 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call PostLedgerEntry with required parameters and request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     contents = "LedgerEntryContents",
+        ///     contents = "<LedgerEntryContents>",
         /// };
         /// 
         /// Response response = client.PostLedgerEntry(RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("subLedgerId").ToString());
-        /// </code>
+        /// ]]></code>
         /// This sample shows how to call PostLedgerEntry with all parameters and request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     contents = "LedgerEntryContents",
+        ///     contents = "<LedgerEntryContents>",
         /// };
         /// 
-        /// Response response = client.PostLedgerEntry(RequestContent.Create(data), "subLedgerId");
+        /// Response response = client.PostLedgerEntry(RequestContent.Create(data), "<subLedgerId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("subLedgerId").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -508,28 +508,28 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetLedgerEntryAsync with required parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetLedgerEntryAsync("transactionId");
+        /// Response response = await client.GetLedgerEntryAsync("<transactionId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
-        /// </code>
+        /// ]]></code>
         /// This sample shows how to call GetLedgerEntryAsync with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetLedgerEntryAsync("transactionId", "subLedgerId");
+        /// Response response = await client.GetLedgerEntryAsync("<transactionId>", "<subLedgerId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// Console.WriteLine(result.GetProperty("entry").GetProperty("contents").ToString());
         /// Console.WriteLine(result.GetProperty("entry").GetProperty("subLedgerId").ToString());
         /// Console.WriteLine(result.GetProperty("entry").GetProperty("transactionId").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -579,28 +579,28 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetLedgerEntry with required parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
-        /// Response response = client.GetLedgerEntry("transactionId");
+        /// Response response = client.GetLedgerEntry("<transactionId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
-        /// </code>
+        /// ]]></code>
         /// This sample shows how to call GetLedgerEntry with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
-        /// Response response = client.GetLedgerEntry("transactionId", "subLedgerId");
+        /// Response response = client.GetLedgerEntry("<transactionId>", "<subLedgerId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// Console.WriteLine(result.GetProperty("entry").GetProperty("contents").ToString());
         /// Console.WriteLine(result.GetProperty("entry").GetProperty("subLedgerId").ToString());
         /// Console.WriteLine(result.GetProperty("entry").GetProperty("transactionId").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -649,12 +649,12 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetReceiptAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetReceiptAsync("transactionId");
+        /// Response response = await client.GetReceiptAsync("<transactionId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("leaf").ToString());
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("nodeId").ToString());
@@ -664,7 +664,7 @@ namespace Azure.Security.ConfidentialLedger
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("signature").ToString());
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// Console.WriteLine(result.GetProperty("transactionId").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -721,12 +721,12 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetReceipt with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
-        /// Response response = client.GetReceipt("transactionId");
+        /// Response response = client.GetReceipt("<transactionId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("leaf").ToString());
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("nodeId").ToString());
@@ -736,7 +736,7 @@ namespace Azure.Security.ConfidentialLedger
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("signature").ToString());
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// Console.WriteLine(result.GetProperty("transactionId").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -793,16 +793,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetTransactionStatusAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetTransactionStatusAsync("transactionId");
+        /// Response response = await client.GetTransactionStatusAsync("<transactionId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// Console.WriteLine(result.GetProperty("transactionId").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -847,16 +847,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetTransactionStatus with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
-        /// Response response = client.GetTransactionStatus("transactionId");
+        /// Response response = client.GetTransactionStatus("<transactionId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// Console.WriteLine(result.GetProperty("transactionId").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -899,17 +899,17 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetCurrentLedgerEntryAsync with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetCurrentLedgerEntryAsync("subLedgerId");
+        /// Response response = await client.GetCurrentLedgerEntryAsync("<subLedgerId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("contents").ToString());
         /// Console.WriteLine(result.GetProperty("subLedgerId").ToString());
         /// Console.WriteLine(result.GetProperty("transactionId").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -951,17 +951,17 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetCurrentLedgerEntry with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
-        /// Response response = client.GetCurrentLedgerEntry("subLedgerId");
+        /// Response response = client.GetCurrentLedgerEntry("<subLedgerId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("contents").ToString());
         /// Console.WriteLine(result.GetProperty("subLedgerId").ToString());
         /// Console.WriteLine(result.GetProperty("transactionId").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1005,14 +1005,14 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call DeleteUserAsync with required parameters.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
-        /// Response response = await client.DeleteUserAsync("userId");
+        /// Response response = await client.DeleteUserAsync("<userId>");
         /// Console.WriteLine(response.Status);
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -1051,14 +1051,14 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call DeleteUser with required parameters.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
-        /// Response response = client.DeleteUser("userId");
+        /// Response response = client.DeleteUser("<userId>");
         /// Console.WriteLine(response.Status);
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -1097,16 +1097,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetUserAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetUserAsync("userId");
+        /// Response response = await client.GetUserAsync("<userId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("assignedRole").ToString());
         /// Console.WriteLine(result.GetProperty("userId").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1151,16 +1151,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetUser with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
-        /// Response response = client.GetUser("userId");
+        /// Response response = client.GetUser("<userId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("assignedRole").ToString());
         /// Console.WriteLine(result.GetProperty("userId").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1206,20 +1206,20 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call CreateOrUpdateUserAsync with required parameters and request content and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     assignedRole = "Administrator",
+        ///     assignedRole = "<Administrator>",
         /// };
         /// 
-        /// Response response = await client.CreateOrUpdateUserAsync("userId", RequestContent.Create(data));
+        /// Response response = await client.CreateOrUpdateUserAsync("<userId>", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("assignedRole").ToString());
         /// Console.WriteLine(result.GetProperty("userId").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -1272,20 +1272,20 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call CreateOrUpdateUser with required parameters and request content and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     assignedRole = "Administrator",
+        ///     assignedRole = "<Administrator>",
         /// };
         /// 
-        /// Response response = client.CreateOrUpdateUser("userId", RequestContent.Create(data));
+        /// Response response = client.CreateOrUpdateUser("<userId>", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("assignedRole").ToString());
         /// Console.WriteLine(result.GetProperty("userId").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -1337,19 +1337,19 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetLedgerEntriesAsync with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetLedgerEntriesAsync("subLedgerId", "fromTransactionId", "toTransactionId");
+        /// Response response = await client.GetLedgerEntriesAsync("<subLedgerId>", "<fromTransactionId>", "<toTransactionId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// Console.WriteLine(result.GetProperty("@nextLink").ToString());
         /// Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("contents").ToString());
         /// Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("subLedgerId").ToString());
         /// Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("transactionId").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1405,19 +1405,19 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
         /// This sample shows how to call GetLedgerEntries with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
-        /// Response response = client.GetLedgerEntries("subLedgerId", "fromTransactionId", "toTransactionId");
+        /// Response response = client.GetLedgerEntries("<subLedgerId>", "<fromTransactionId>", "<toTransactionId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// Console.WriteLine(result.GetProperty("@nextLink").ToString());
         /// Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("contents").ToString());
         /// Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("subLedgerId").ToString());
         /// Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("transactionId").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:

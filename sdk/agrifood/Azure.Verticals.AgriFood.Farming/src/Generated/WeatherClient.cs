@@ -69,18 +69,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetDataIngestionJobDetailsAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetDataIngestionJobDetailsAsync("jobId");
+        /// Response response = await client.GetDataIngestionJobDetailsAsync("<jobId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("extensionApiName").ToString());
-        /// Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("extensionDataProviderAppId").ToString());
         /// Console.WriteLine(result.GetProperty("extensionDataProviderApiKey").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -93,8 +93,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
-        /// </code>
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -161,18 +161,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetDataIngestionJobDetails with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
-        /// Response response = client.GetDataIngestionJobDetails("jobId");
+        /// Response response = client.GetDataIngestionJobDetails("<jobId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("extensionApiName").ToString());
-        /// Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("extensionDataProviderAppId").ToString());
         /// Console.WriteLine(result.GetProperty("extensionDataProviderApiKey").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -185,8 +185,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
-        /// </code>
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -253,12 +253,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetDataDeleteJobDetailsAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetDataDeleteJobDetailsAsync("jobId");
+        /// Response response = await client.GetDataDeleteJobDetailsAsync("<jobId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -277,8 +277,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
-        /// </code>
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -345,12 +345,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetDataDeleteJobDetails with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
-        /// Response response = client.GetDataDeleteJobDetails("jobId");
+        /// Response response = client.GetDataDeleteJobDetails("<jobId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -369,8 +369,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
-        /// </code>
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -447,22 +447,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="extensionId"/>, <paramref name="weatherDataType"/> or <paramref name="granularity"/> is null. </exception>
         /// <example>
         /// This sample shows how to call GetWeathersAsync with required parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetWeathersAsync("farmerId", "boundaryId", "extensionId", "weatherDataType", "granularity");
+        /// Response response = await client.GetWeathersAsync("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
-        /// </code>
+        /// ]]></code>
         /// This sample shows how to call GetWeathersAsync with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetWeathersAsync("farmerId", "boundaryId", "extensionId", "weatherDataType", "granularity", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "skipToken");
+        /// Response response = await client.GetWeathersAsync("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("boundaryId").ToString());
@@ -508,10 +508,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -621,22 +621,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="extensionId"/>, <paramref name="weatherDataType"/> or <paramref name="granularity"/> is null. </exception>
         /// <example>
         /// This sample shows how to call GetWeathers with required parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
-        /// Response response = client.GetWeathers("farmerId", "boundaryId", "extensionId", "weatherDataType", "granularity");
+        /// Response response = client.GetWeathers("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
-        /// </code>
+        /// ]]></code>
         /// This sample shows how to call GetWeathers with all parameters, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
-        /// Response response = client.GetWeathers("farmerId", "boundaryId", "extensionId", "weatherDataType", "granularity", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "skipToken");
+        /// Response response = client.GetWeathers("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("boundaryId").ToString());
@@ -682,10 +682,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// </code>
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -787,59 +787,59 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call CreateDataIngestionJobAsync with required parameters and request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     boundaryId = "WeatherDataIngestionJobBoundaryId",
-        ///     farmerId = "WeatherDataIngestionJobFarmerId",
-        ///     extensionId = "WeatherDataIngestionJobExtensionId",
-        ///     extensionApiName = "WeatherDataIngestionJobExtensionApiName",
+        ///     boundaryId = "<WeatherDataIngestionJobBoundaryId>",
+        ///     farmerId = "<WeatherDataIngestionJobFarmerId>",
+        ///     extensionId = "<WeatherDataIngestionJobExtensionId>",
+        ///     extensionApiName = "<WeatherDataIngestionJobExtensionApiName>",
         ///     extensionApiInput = new {
         ///         key = new {},
         ///     },
         /// };
         /// 
-        /// Response response = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "jobId", RequestContent.Create(data));
+        /// Response response = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("extensionApiName").ToString());
-        /// Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("test").ToString());
-        /// </code>
+        /// Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<test>").ToString());
+        /// ]]></code>
         /// This sample shows how to call CreateDataIngestionJobAsync with all parameters and request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     boundaryId = "WeatherDataIngestionJobBoundaryId",
-        ///     farmerId = "WeatherDataIngestionJobFarmerId",
-        ///     extensionId = "WeatherDataIngestionJobExtensionId",
-        ///     extensionApiName = "WeatherDataIngestionJobExtensionApiName",
+        ///     boundaryId = "<WeatherDataIngestionJobBoundaryId>",
+        ///     farmerId = "<WeatherDataIngestionJobFarmerId>",
+        ///     extensionId = "<WeatherDataIngestionJobExtensionId>",
+        ///     extensionApiName = "<WeatherDataIngestionJobExtensionApiName>",
         ///     extensionApiInput = new {
         ///         key = new {},
         ///     },
-        ///     extensionDataProviderAppId = "WeatherDataIngestionJobExtensionDataProviderAppId",
-        ///     extensionDataProviderApiKey = "WeatherDataIngestionJobExtensionDataProviderApiKey",
-        ///     name = "WeatherDataIngestionJobName",
-        ///     description = "WeatherDataIngestionJobDescription",
+        ///     extensionDataProviderAppId = "<WeatherDataIngestionJobExtensionDataProviderAppId>",
+        ///     extensionDataProviderApiKey = "<WeatherDataIngestionJobExtensionDataProviderApiKey>",
+        ///     name = "<WeatherDataIngestionJobName>",
+        ///     description = "<WeatherDataIngestionJobDescription>",
         ///     properties = new {
         ///         key = new {},
         ///     },
         /// };
         /// 
-        /// Response response = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "jobId", RequestContent.Create(data));
+        /// Response response = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("extensionApiName").ToString());
-        /// Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("extensionDataProviderAppId").ToString());
         /// Console.WriteLine(result.GetProperty("extensionDataProviderApiKey").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -852,8 +852,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
-        /// </code>
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -944,59 +944,59 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call CreateDataIngestionJob with required parameters and request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     boundaryId = "WeatherDataIngestionJobBoundaryId",
-        ///     farmerId = "WeatherDataIngestionJobFarmerId",
-        ///     extensionId = "WeatherDataIngestionJobExtensionId",
-        ///     extensionApiName = "WeatherDataIngestionJobExtensionApiName",
+        ///     boundaryId = "<WeatherDataIngestionJobBoundaryId>",
+        ///     farmerId = "<WeatherDataIngestionJobFarmerId>",
+        ///     extensionId = "<WeatherDataIngestionJobExtensionId>",
+        ///     extensionApiName = "<WeatherDataIngestionJobExtensionApiName>",
         ///     extensionApiInput = new {
         ///         key = new {},
         ///     },
         /// };
         /// 
-        /// Response response = client.CreateDataIngestionJob(WaitUntil.Completed, "jobId", RequestContent.Create(data));
+        /// Response response = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("extensionApiName").ToString());
-        /// Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("test").ToString());
-        /// </code>
+        /// Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<test>").ToString());
+        /// ]]></code>
         /// This sample shows how to call CreateDataIngestionJob with all parameters and request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     boundaryId = "WeatherDataIngestionJobBoundaryId",
-        ///     farmerId = "WeatherDataIngestionJobFarmerId",
-        ///     extensionId = "WeatherDataIngestionJobExtensionId",
-        ///     extensionApiName = "WeatherDataIngestionJobExtensionApiName",
+        ///     boundaryId = "<WeatherDataIngestionJobBoundaryId>",
+        ///     farmerId = "<WeatherDataIngestionJobFarmerId>",
+        ///     extensionId = "<WeatherDataIngestionJobExtensionId>",
+        ///     extensionApiName = "<WeatherDataIngestionJobExtensionApiName>",
         ///     extensionApiInput = new {
         ///         key = new {},
         ///     },
-        ///     extensionDataProviderAppId = "WeatherDataIngestionJobExtensionDataProviderAppId",
-        ///     extensionDataProviderApiKey = "WeatherDataIngestionJobExtensionDataProviderApiKey",
-        ///     name = "WeatherDataIngestionJobName",
-        ///     description = "WeatherDataIngestionJobDescription",
+        ///     extensionDataProviderAppId = "<WeatherDataIngestionJobExtensionDataProviderAppId>",
+        ///     extensionDataProviderApiKey = "<WeatherDataIngestionJobExtensionDataProviderApiKey>",
+        ///     name = "<WeatherDataIngestionJobName>",
+        ///     description = "<WeatherDataIngestionJobDescription>",
         ///     properties = new {
         ///         key = new {},
         ///     },
         /// };
         /// 
-        /// Response response = client.CreateDataIngestionJob(WaitUntil.Completed, "jobId", RequestContent.Create(data));
+        /// Response response = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("extensionApiName").ToString());
-        /// Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("extensionDataProviderAppId").ToString());
         /// Console.WriteLine(result.GetProperty("extensionDataProviderApiKey").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -1009,8 +1009,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
-        /// </code>
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -1101,45 +1101,45 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call CreateDataDeleteJobAsync with required parameters and request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     extensionId = "WeatherDataDeleteJobExtensionId",
-        ///     farmerId = "WeatherDataDeleteJobFarmerId",
-        ///     boundaryId = "WeatherDataDeleteJobBoundaryId",
+        ///     extensionId = "<WeatherDataDeleteJobExtensionId>",
+        ///     farmerId = "<WeatherDataDeleteJobFarmerId>",
+        ///     boundaryId = "<WeatherDataDeleteJobBoundaryId>",
         /// };
         /// 
-        /// Response response = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "jobId", RequestContent.Create(data));
+        /// Response response = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
-        /// </code>
+        /// ]]></code>
         /// This sample shows how to call CreateDataDeleteJobAsync with all parameters and request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     extensionId = "WeatherDataDeleteJobExtensionId",
-        ///     farmerId = "WeatherDataDeleteJobFarmerId",
-        ///     boundaryId = "WeatherDataDeleteJobBoundaryId",
-        ///     weatherDataType = "WeatherDataDeleteJobWeatherDataType",
-        ///     granularity = "WeatherDataDeleteJobGranularity",
-        ///     startDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     endDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     name = "WeatherDataDeleteJobName",
-        ///     description = "WeatherDataDeleteJobDescription",
+        ///     extensionId = "<WeatherDataDeleteJobExtensionId>",
+        ///     farmerId = "<WeatherDataDeleteJobFarmerId>",
+        ///     boundaryId = "<WeatherDataDeleteJobBoundaryId>",
+        ///     weatherDataType = "<WeatherDataDeleteJobWeatherDataType>",
+        ///     granularity = "<WeatherDataDeleteJobGranularity>",
+        ///     startDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     endDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     name = "<WeatherDataDeleteJobName>",
+        ///     description = "<WeatherDataDeleteJobDescription>",
         ///     properties = new {
         ///         key = new {},
         ///     },
         /// };
         /// 
-        /// Response response = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "jobId", RequestContent.Create(data));
+        /// Response response = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -1158,8 +1158,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
-        /// </code>
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -1250,45 +1250,45 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call CreateDataDeleteJob with required parameters and request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     extensionId = "WeatherDataDeleteJobExtensionId",
-        ///     farmerId = "WeatherDataDeleteJobFarmerId",
-        ///     boundaryId = "WeatherDataDeleteJobBoundaryId",
+        ///     extensionId = "<WeatherDataDeleteJobExtensionId>",
+        ///     farmerId = "<WeatherDataDeleteJobFarmerId>",
+        ///     boundaryId = "<WeatherDataDeleteJobBoundaryId>",
         /// };
         /// 
-        /// Response response = client.CreateDataDeleteJob(WaitUntil.Completed, "jobId", RequestContent.Create(data));
+        /// Response response = client.CreateDataDeleteJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
-        /// </code>
+        /// ]]></code>
         /// This sample shows how to call CreateDataDeleteJob with all parameters and request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     extensionId = "WeatherDataDeleteJobExtensionId",
-        ///     farmerId = "WeatherDataDeleteJobFarmerId",
-        ///     boundaryId = "WeatherDataDeleteJobBoundaryId",
-        ///     weatherDataType = "WeatherDataDeleteJobWeatherDataType",
-        ///     granularity = "WeatherDataDeleteJobGranularity",
-        ///     startDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     endDateTime = "2022-05-10T14:57:31.2311892-04:00",
-        ///     name = "WeatherDataDeleteJobName",
-        ///     description = "WeatherDataDeleteJobDescription",
+        ///     extensionId = "<WeatherDataDeleteJobExtensionId>",
+        ///     farmerId = "<WeatherDataDeleteJobFarmerId>",
+        ///     boundaryId = "<WeatherDataDeleteJobBoundaryId>",
+        ///     weatherDataType = "<WeatherDataDeleteJobWeatherDataType>",
+        ///     granularity = "<WeatherDataDeleteJobGranularity>",
+        ///     startDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     endDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     name = "<WeatherDataDeleteJobName>",
+        ///     description = "<WeatherDataDeleteJobDescription>",
         ///     properties = new {
         ///         key = new {},
         ///     },
         /// };
         /// 
-        /// Response response = client.CreateDataDeleteJob(WaitUntil.Completed, "jobId", RequestContent.Create(data));
+        /// Response response = client.CreateDataDeleteJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -1307,8 +1307,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
-        /// </code>
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:

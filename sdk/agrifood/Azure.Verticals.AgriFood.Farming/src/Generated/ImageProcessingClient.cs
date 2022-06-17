@@ -66,12 +66,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetRasterizeJobAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ImageProcessingClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetRasterizeJobAsync("jobId");
+        /// Response response = await client.GetRasterizeJobAsync("<jobId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
@@ -86,8 +86,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
-        /// </code>
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -135,12 +135,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetRasterizeJob with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ImageProcessingClient(endpoint, credential);
         /// 
-        /// Response response = client.GetRasterizeJob("jobId");
+        /// Response response = client.GetRasterizeJob("<jobId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
@@ -155,8 +155,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
-        /// </code>
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -206,45 +206,45 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call CreateRasterizeJobAsync with required parameters and request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ImageProcessingClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "ImageProcessingRasterizeJobFarmerId",
-        ///     shapefileAttachmentId = "ImageProcessingRasterizeJobShapefileAttachmentId",
+        ///     farmerId = "<ImageProcessingRasterizeJobFarmerId>",
+        ///     shapefileAttachmentId = "<ImageProcessingRasterizeJobShapefileAttachmentId>",
         ///     shapefileColumnNames = new[] {
-        ///         "ImageProcessingRasterizeJobShapefileColumnNamesItem"
+        ///         "<ImageProcessingRasterizeJobShapefileColumnNamesItem>"
         ///     },
         /// };
         /// 
-        /// Response response = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "jobId", RequestContent.Create(data));
+        /// Response response = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileColumnNames").Item[0].ToString());
-        /// </code>
+        /// ]]></code>
         /// This sample shows how to call CreateRasterizeJobAsync with all parameters and request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ImageProcessingClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "ImageProcessingRasterizeJobFarmerId",
-        ///     shapefileAttachmentId = "ImageProcessingRasterizeJobShapefileAttachmentId",
+        ///     farmerId = "<ImageProcessingRasterizeJobFarmerId>",
+        ///     shapefileAttachmentId = "<ImageProcessingRasterizeJobShapefileAttachmentId>",
         ///     shapefileColumnNames = new[] {
-        ///         "ImageProcessingRasterizeJobShapefileColumnNamesItem"
+        ///         "<ImageProcessingRasterizeJobShapefileColumnNamesItem>"
         ///     },
-        ///     name = "ImageProcessingRasterizeJobName",
-        ///     description = "ImageProcessingRasterizeJobDescription",
+        ///     name = "<ImageProcessingRasterizeJobName>",
+        ///     description = "<ImageProcessingRasterizeJobDescription>",
         ///     properties = new {
         ///         key = new {},
         ///     },
         /// };
         /// 
-        /// Response response = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "jobId", RequestContent.Create(data));
+        /// Response response = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
@@ -259,8 +259,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
-        /// </code>
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -328,45 +328,45 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call CreateRasterizeJob with required parameters and request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ImageProcessingClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "ImageProcessingRasterizeJobFarmerId",
-        ///     shapefileAttachmentId = "ImageProcessingRasterizeJobShapefileAttachmentId",
+        ///     farmerId = "<ImageProcessingRasterizeJobFarmerId>",
+        ///     shapefileAttachmentId = "<ImageProcessingRasterizeJobShapefileAttachmentId>",
         ///     shapefileColumnNames = new[] {
-        ///         "ImageProcessingRasterizeJobShapefileColumnNamesItem"
+        ///         "<ImageProcessingRasterizeJobShapefileColumnNamesItem>"
         ///     },
         /// };
         /// 
-        /// Response response = client.CreateRasterizeJob(WaitUntil.Completed, "jobId", RequestContent.Create(data));
+        /// Response response = client.CreateRasterizeJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileColumnNames").Item[0].ToString());
-        /// </code>
+        /// ]]></code>
         /// This sample shows how to call CreateRasterizeJob with all parameters and request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ImageProcessingClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "ImageProcessingRasterizeJobFarmerId",
-        ///     shapefileAttachmentId = "ImageProcessingRasterizeJobShapefileAttachmentId",
+        ///     farmerId = "<ImageProcessingRasterizeJobFarmerId>",
+        ///     shapefileAttachmentId = "<ImageProcessingRasterizeJobShapefileAttachmentId>",
         ///     shapefileColumnNames = new[] {
-        ///         "ImageProcessingRasterizeJobShapefileColumnNamesItem"
+        ///         "<ImageProcessingRasterizeJobShapefileColumnNamesItem>"
         ///     },
-        ///     name = "ImageProcessingRasterizeJobName",
-        ///     description = "ImageProcessingRasterizeJobDescription",
+        ///     name = "<ImageProcessingRasterizeJobName>",
+        ///     description = "<ImageProcessingRasterizeJobDescription>",
         ///     properties = new {
         ///         key = new {},
         ///     },
         /// };
         /// 
-        /// Response response = client.CreateRasterizeJob(WaitUntil.Completed, "jobId", RequestContent.Create(data));
+        /// Response response = client.CreateRasterizeJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
@@ -381,8 +381,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
-        /// </code>
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:

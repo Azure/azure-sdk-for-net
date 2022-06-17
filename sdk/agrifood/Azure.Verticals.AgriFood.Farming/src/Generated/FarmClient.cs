@@ -66,12 +66,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetDataIngestionJobDetailsAsync with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new FarmClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetDataIngestionJobDetailsAsync("jobId");
+        /// Response response = await client.GetDataIngestionJobDetailsAsync("<jobId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
@@ -87,8 +87,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
-        /// </code>
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -152,12 +152,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call GetDataIngestionJobDetails with required parameters and parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new FarmClient(endpoint, credential);
         /// 
-        /// Response response = client.GetDataIngestionJobDetails("jobId");
+        /// Response response = client.GetDataIngestionJobDetails("<jobId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
@@ -173,8 +173,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
-        /// </code>
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -240,44 +240,44 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call CreateDataIngestionJobAsync with required parameters and request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new FarmClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "FarmOperationDataIngestionJobFarmerId",
-        ///     authProviderId = "FarmOperationDataIngestionJobAuthProviderId",
+        ///     farmerId = "<FarmOperationDataIngestionJobFarmerId>",
+        ///     authProviderId = "<FarmOperationDataIngestionJobAuthProviderId>",
         ///     startYear = 1234,
         /// };
         /// 
-        /// Response response = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "jobId", RequestContent.Create(data));
+        /// Response response = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
         /// Console.WriteLine(result.GetProperty("startYear").ToString());
-        /// </code>
+        /// ]]></code>
         /// This sample shows how to call CreateDataIngestionJobAsync with all parameters and request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new FarmClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "FarmOperationDataIngestionJobFarmerId",
-        ///     authProviderId = "FarmOperationDataIngestionJobAuthProviderId",
+        ///     farmerId = "<FarmOperationDataIngestionJobFarmerId>",
+        ///     authProviderId = "<FarmOperationDataIngestionJobAuthProviderId>",
         ///     operations = new[] {
-        ///         "FarmOperationDataIngestionJobOperationsItem"
+        ///         "<FarmOperationDataIngestionJobOperationsItem>"
         ///     },
         ///     startYear = 1234,
-        ///     name = "FarmOperationDataIngestionJobName",
-        ///     description = "FarmOperationDataIngestionJobDescription",
+        ///     name = "<FarmOperationDataIngestionJobName>",
+        ///     description = "<FarmOperationDataIngestionJobDescription>",
         ///     properties = new {
         ///         key = new {},
         ///     },
         /// };
         /// 
-        /// Response response = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "jobId", RequestContent.Create(data));
+        /// Response response = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
@@ -293,8 +293,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
-        /// </code>
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -379,44 +379,44 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
         /// This sample shows how to call CreateDataIngestionJob with required parameters and request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new FarmClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "FarmOperationDataIngestionJobFarmerId",
-        ///     authProviderId = "FarmOperationDataIngestionJobAuthProviderId",
+        ///     farmerId = "<FarmOperationDataIngestionJobFarmerId>",
+        ///     authProviderId = "<FarmOperationDataIngestionJobAuthProviderId>",
         ///     startYear = 1234,
         /// };
         /// 
-        /// Response response = client.CreateDataIngestionJob(WaitUntil.Completed, "jobId", RequestContent.Create(data));
+        /// Response response = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
         /// Console.WriteLine(result.GetProperty("startYear").ToString());
-        /// </code>
+        /// ]]></code>
         /// This sample shows how to call CreateDataIngestionJob with all parameters and request content, and how to parse the result.
-        /// <code>
+        /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new FarmClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "FarmOperationDataIngestionJobFarmerId",
-        ///     authProviderId = "FarmOperationDataIngestionJobAuthProviderId",
+        ///     farmerId = "<FarmOperationDataIngestionJobFarmerId>",
+        ///     authProviderId = "<FarmOperationDataIngestionJobAuthProviderId>",
         ///     operations = new[] {
-        ///         "FarmOperationDataIngestionJobOperationsItem"
+        ///         "<FarmOperationDataIngestionJobOperationsItem>"
         ///     },
         ///     startYear = 1234,
-        ///     name = "FarmOperationDataIngestionJobName",
-        ///     description = "FarmOperationDataIngestionJobDescription",
+        ///     name = "<FarmOperationDataIngestionJobName>",
+        ///     description = "<FarmOperationDataIngestionJobDescription>",
         ///     properties = new {
         ///         key = new {},
         ///     },
         /// };
         /// 
-        /// Response response = client.CreateDataIngestionJob(WaitUntil.Completed, "jobId", RequestContent.Create(data));
+        /// Response response = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
@@ -432,8 +432,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("test").ToString());
-        /// </code>
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
         /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
