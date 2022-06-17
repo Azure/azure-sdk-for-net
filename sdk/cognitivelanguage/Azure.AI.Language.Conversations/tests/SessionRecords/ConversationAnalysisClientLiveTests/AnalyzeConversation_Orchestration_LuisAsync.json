@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://languagesdktest.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-15-preview",
+      "RequestUri": "https://languagesdktest.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "263",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-1a167bd5a79a82039edd709e686e37ff-089ee071a1f825cd-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220606.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "ae5dde758b734f692b1dc45950719ab9",
+        "traceparent": "00-6b5b87e0eeff30256b552d1a45963ffc-86bb67a3e264d235-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220525.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "f1fdccfefe8878a1a7f2f04fc88a92df",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,17 +30,17 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "5c79eeb6-9c0d-43bd-8e96-4072417c4470",
+        "apim-request-id": "e1357116-eb74-401f-9ed9-12f17d438c9b",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.OrchestrationWorkflow.Prediction=1",
-        "Date": "Mon, 06 Jun 2022 20:17:33 GMT",
+        "Date": "Wed, 25 May 2022 20:43:48 GMT",
         "Pragma": "no-cache",
-        "request-id": "5c79eeb6-9c0d-43bd-8e96-4072417c4470",
+        "request-id": "e1357116-eb74-401f-9ed9-12f17d438c9b",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "332"
+        "x-envoy-upstream-service-time": "588"
       },
       "ResponseBody": {
         "kind": "ConversationResult",
@@ -150,6 +150,6 @@
     "CONVERSATIONS_KEY": "Sanitized",
     "CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
     "CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchScriptDeployed1",
-    "RandomSeed": "1638286526"
+    "RandomSeed": "1266353033"
   }
 }
