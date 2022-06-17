@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. </summary>
         public DiskSku Sku { get; set; }
         /// <summary> the Operating System type. </summary>
-        public OperatingSystemTypes? OSType { get; set; }
+        public SupportedOperatingSystemType? OSType { get; set; }
         /// <summary> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk&apos;s size. </summary>
         public int? DiskSizeGB { get; set; }
         /// <summary> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </summary>

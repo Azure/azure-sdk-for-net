@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static Forecasting DeserializeForecasting(JsonElement element)
         {
-            Optional<IList<ForecastingModels>> allowedModels = default;
-            Optional<IList<ForecastingModels>> blockedModels = default;
+            Optional<IList<ForecastingModel>> allowedModels = default;
+            Optional<IList<ForecastingModel>> blockedModels = default;
             Optional<ForecastingSettings> forecastingSettings = default;
-            Optional<ForecastingPrimaryMetrics> primaryMetric = default;
+            Optional<ForecastingPrimaryMetric> primaryMetric = default;
             Optional<TableVerticalDataSettings> dataSettings = default;
             Optional<TableVerticalFeaturizationSettings> featurizationSettings = default;
             Optional<TableVerticalLimitSettings> limitSettings = default;
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         allowedModels = null;
                         continue;
                     }
-                    List<ForecastingModels> array = new List<ForecastingModels>();
+                    List<ForecastingModel> array = new List<ForecastingModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ForecastingModels(item.GetString()));
+                        array.Add(new ForecastingModel(item.GetString()));
                     }
                     allowedModels = array;
                     continue;
@@ -161,10 +161,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         blockedModels = null;
                         continue;
                     }
-                    List<ForecastingModels> array = new List<ForecastingModels>();
+                    List<ForecastingModel> array = new List<ForecastingModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ForecastingModels(item.GetString()));
+                        array.Add(new ForecastingModel(item.GetString()));
                     }
                     blockedModels = array;
                     continue;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    primaryMetric = new ForecastingPrimaryMetrics(property.Value.GetString());
+                    primaryMetric = new ForecastingPrimaryMetric(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataSettings"))

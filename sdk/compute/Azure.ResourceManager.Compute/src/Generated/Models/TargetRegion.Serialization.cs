@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             string name = default;
             Optional<int> regionalReplicaCount = default;
-            Optional<StorageAccountType> storageAccountType = default;
+            Optional<ImageStorageAccountType> storageAccountType = default;
             Optional<EncryptionImages> encryption = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    storageAccountType = new StorageAccountType(property.Value.GetString());
+                    storageAccountType = new ImageStorageAccountType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("encryption"))

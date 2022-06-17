@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.StoragePool
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            ProvisioningStates provisioningState = default;
+            ProvisioningState provisioningState = default;
             IList<string> availabilityZones = default;
             OperationalStatus status = default;
             Optional<IList<WritableSubResource>> disks = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.StoragePool
                     {
                         if (property0.NameEquals("provisioningState"))
                         {
-                            provisioningState = new ProvisioningStates(property0.Value.GetString());
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("availabilityZones"))

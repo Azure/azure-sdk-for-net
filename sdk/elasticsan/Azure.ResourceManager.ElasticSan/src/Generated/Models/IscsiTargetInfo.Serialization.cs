@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             Optional<string> targetIqn = default;
             Optional<string> targetPortalHostname = default;
             Optional<int> targetPortalPort = default;
-            Optional<ProvisioningStates> provisioningState = default;
+            Optional<ProvisioningState> provisioningState = default;
             Optional<OperationalStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningStates(property.Value.GetString());
+                    provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"))

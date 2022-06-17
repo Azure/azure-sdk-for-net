@@ -194,8 +194,8 @@ namespace Azure.ResourceManager.Compute
             Optional<WritableSubResource> availabilitySet = default;
             Optional<WritableSubResource> virtualMachineScaleSet = default;
             Optional<WritableSubResource> proximityPlacementGroup = default;
-            Optional<VirtualMachinePriorityTypes> priority = default;
-            Optional<VirtualMachineEvictionPolicyTypes> evictionPolicy = default;
+            Optional<VirtualMachinePriorityType> priority = default;
+            Optional<VirtualMachineEvictionPolicyType> evictionPolicy = default;
             Optional<BillingProfile> billingProfile = default;
             Optional<WritableSubResource> host = default;
             Optional<WritableSubResource> hostGroup = default;
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            priority = new VirtualMachinePriorityTypes(property0.Value.GetString());
+                            priority = new VirtualMachinePriorityType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("evictionPolicy"))
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            evictionPolicy = new VirtualMachineEvictionPolicyTypes(property0.Value.GetString());
+                            evictionPolicy = new VirtualMachineEvictionPolicyType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("billingProfile"))

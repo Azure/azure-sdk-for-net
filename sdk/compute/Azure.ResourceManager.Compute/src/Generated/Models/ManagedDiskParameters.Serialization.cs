@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ManagedDiskParameters DeserializeManagedDiskParameters(JsonElement element)
         {
-            Optional<StorageAccountTypes> storageAccountType = default;
+            Optional<StorageAccountType> storageAccountType = default;
             Optional<WritableSubResource> diskEncryptionSet = default;
             Optional<VmDiskSecurityProfile> securityProfile = default;
             Optional<ResourceIdentifier> id = default;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    storageAccountType = new StorageAccountTypes(property.Value.GetString());
+                    storageAccountType = new StorageAccountType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("diskEncryptionSet"))

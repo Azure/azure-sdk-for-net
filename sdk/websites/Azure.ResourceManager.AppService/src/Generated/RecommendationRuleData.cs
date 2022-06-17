@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="extensionName"> Extension name of the portal if exists. Applicable to dynamic rule only. </param>
         /// <param name="bladeName"> Deep link to a blade on the portal. Applicable to dynamic rule only. </param>
         /// <param name="forwardLink"> Forward link to an external document associated with the rule. Applicable to dynamic rule only. </param>
-        internal RecommendationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string recommendationName, string displayName, string message, Guid? recommendationId, string description, string actionName, NotificationLevel? level, Channels? channels, IReadOnlyList<string> categoryTags, bool? isDynamic, string extensionName, string bladeName, string forwardLink) : base(id, name, resourceType, systemData, kind)
+        internal RecommendationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string recommendationName, string displayName, string message, Guid? recommendationId, string description, string actionName, NotificationLevel? level, Channel? channels, IReadOnlyList<string> categoryTags, bool? isDynamic, string extensionName, string bladeName, string forwardLink) : base(id, name, resourceType, systemData, kind)
         {
             RecommendationName = recommendationName;
             DisplayName = displayName;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Level of impact indicating how critical this rule is. </summary>
         public NotificationLevel? Level { get; set; }
         /// <summary> List of available channels that this rule applies. </summary>
-        public Channels? Channels { get; set; }
+        public Channel? Channels { get; set; }
         /// <summary> The list of category tags that this recommendation rule belongs to. </summary>
         public IReadOnlyList<string> CategoryTags { get; }
         /// <summary> True if this is associated with a dynamically added rule. </summary>

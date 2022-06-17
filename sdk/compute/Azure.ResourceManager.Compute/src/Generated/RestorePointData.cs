@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="timeCreated"> Gets the creation time of the restore point. </param>
         /// <param name="sourceRestorePoint"> Resource Id of the source restore point from which a copy needs to be created. </param>
         /// <param name="instanceView"> The restore point instance view. </param>
-        internal RestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<WritableSubResource> excludeDisks, RestorePointSourceMetadata sourceMetadata, string provisioningState, ConsistencyModeTypes? consistencyMode, DateTimeOffset? timeCreated, WritableSubResource sourceRestorePoint, RestorePointInstanceView instanceView) : base(id, name, resourceType, systemData)
+        internal RestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<WritableSubResource> excludeDisks, RestorePointSourceMetadata sourceMetadata, string provisioningState, ConsistencyModeType? consistencyMode, DateTimeOffset? timeCreated, WritableSubResource sourceRestorePoint, RestorePointInstanceView instanceView) : base(id, name, resourceType, systemData)
         {
             ExcludeDisks = excludeDisks;
             SourceMetadata = sourceMetadata;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets the provisioning state of the restore point. </summary>
         public string ProvisioningState { get; }
         /// <summary> ConsistencyMode of the RestorePoint. Can be specified in the input while creating a restore point. For now, only CrashConsistent is accepted as a valid input. Please refer to https://aka.ms/RestorePoints for more details. </summary>
-        public ConsistencyModeTypes? ConsistencyMode { get; set; }
+        public ConsistencyModeType? ConsistencyMode { get; set; }
         /// <summary> Gets the creation time of the restore point. </summary>
         public DateTimeOffset? TimeCreated { get; set; }
         /// <summary> Resource Id of the source restore point from which a copy needs to be created. </summary>

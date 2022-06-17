@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ImageClassification DeserializeImageClassification(JsonElement element)
         {
-            Optional<ClassificationPrimaryMetrics> primaryMetric = default;
+            Optional<ClassificationPrimaryMetric> primaryMetric = default;
             Optional<ImageModelSettingsClassification> modelSettings = default;
             Optional<IList<ImageModelDistributionSettingsClassification>> searchSpace = default;
             ImageVerticalDataSettings dataSettings = default;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    primaryMetric = new ClassificationPrimaryMetrics(property.Value.GetString());
+                    primaryMetric = new ClassificationPrimaryMetric(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("modelSettings"))

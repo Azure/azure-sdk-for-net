@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventHubs
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<IList<AccessRights>> rights = default;
+            Optional<IList<AccessRight>> rights = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AccessRights> array = new List<AccessRights>();
+                            List<AccessRight> array = new List<AccessRight>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new AccessRights(item.GetString()));
+                                array.Add(new AccessRight(item.GetString()));
                             }
                             rights = array;
                             continue;

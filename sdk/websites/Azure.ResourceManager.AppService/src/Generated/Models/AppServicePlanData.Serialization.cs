@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService
             ResourceType type = default;
             SystemData systemData = default;
             Optional<string> workerTierName = default;
-            Optional<StatusOptions> status = default;
+            Optional<StatusOption> status = default;
             Optional<string> subscription = default;
             Optional<HostingEnvironmentProfile> hostingEnvironmentProfile = default;
             Optional<int> maximumNumberOfWorkers = default;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = property0.Value.GetString().ToStatusOptions();
+                            status = property0.Value.GetString().ToStatusOption();
                             continue;
                         }
                         if (property0.NameEquals("subscription"))

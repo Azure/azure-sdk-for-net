@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DisallowedConfiguration DeserializeDisallowedConfiguration(JsonElement element)
         {
-            Optional<VmDiskTypes> vmDiskType = default;
+            Optional<VmDiskType> vmDiskType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmDiskType"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vmDiskType = new VmDiskTypes(property.Value.GetString());
+                    vmDiskType = new VmDiskType(property.Value.GetString());
                     continue;
                 }
             }

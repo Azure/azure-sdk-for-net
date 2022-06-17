@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="functionName"> The name for the function. </param>
         /// <param name="triggerType"> The trigger type of the function. </param>
-        internal StaticSiteFunctionOverviewARMResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string functionName, TriggerTypes? triggerType) : base(id, name, resourceType, systemData, kind)
+        internal StaticSiteFunctionOverviewARMResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string functionName, TriggerType? triggerType) : base(id, name, resourceType, systemData, kind)
         {
             FunctionName = functionName;
             TriggerType = triggerType;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> The name for the function. </summary>
         public string FunctionName { get; }
         /// <summary> The trigger type of the function. </summary>
-        public TriggerTypes? TriggerType { get; }
+        public TriggerType? TriggerType { get; }
     }
 }

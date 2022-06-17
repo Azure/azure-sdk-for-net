@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="architecture"> The architecture of the image. Applicable to OS disks only. </param>
         /// <param name="privacyStatementUri"> Privacy statement uri for the current community gallery image. </param>
         /// <param name="eula"> End-user license agreement for the current community gallery image. </param>
-        internal CommunityGalleryImageData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, OperatingSystemTypes? osType, OperatingSystemStateTypes? osState, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IReadOnlyList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, ArchitectureTypes? architecture, Uri privacyStatementUri, string eula) : base(name, location, resourceType, uniqueId)
+        internal CommunityGalleryImageData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IReadOnlyList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, ArchitectureType? architecture, Uri privacyStatementUri, string eula) : base(name, location, resourceType, uniqueId)
         {
             OSType = osType;
             OSState = osState;
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </summary>
-        public OperatingSystemTypes? OSType { get; }
+        public SupportedOperatingSystemType? OSType { get; }
         /// <summary> This property allows the user to specify whether the virtual machines created under this image are &apos;Generalized&apos; or &apos;Specialized&apos;. </summary>
-        public OperatingSystemStateTypes? OSState { get; }
+        public OperatingSystemStateType? OSState { get; }
         /// <summary> The end of life date of the gallery image definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
         public DateTimeOffset? EndOfLifeOn { get; }
         /// <summary> This is the gallery image definition identifier. </summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Describes the gallery image definition purchase plan. This is used by marketplace images. </summary>
         public ImagePurchasePlan PurchasePlan { get; }
         /// <summary> The architecture of the image. Applicable to OS disks only. </summary>
-        public ArchitectureTypes? Architecture { get; }
+        public ArchitectureType? Architecture { get; }
         /// <summary> Privacy statement uri for the current community gallery image. </summary>
         public Uri PrivacyStatementUri { get; }
         /// <summary> End-user license agreement for the current community gallery image. </summary>

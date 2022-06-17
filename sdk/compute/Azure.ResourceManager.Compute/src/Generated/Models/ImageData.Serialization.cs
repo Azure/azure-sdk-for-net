@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute
             Optional<WritableSubResource> sourceVirtualMachine = default;
             Optional<ImageStorageProfile> storageProfile = default;
             Optional<string> provisioningState = default;
-            Optional<HyperVGenerationTypes> hyperVGeneration = default;
+            Optional<HyperVGenerationType> hyperVGeneration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hyperVGeneration = new HyperVGenerationTypes(property0.Value.GetString());
+                            hyperVGeneration = new HyperVGenerationType(property0.Value.GetString());
                             continue;
                         }
                     }

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ImageClassificationMultilabel DeserializeImageClassificationMultilabel(JsonElement element)
         {
-            Optional<ClassificationMultilabelPrimaryMetrics> primaryMetric = default;
+            Optional<ClassificationMultilabelPrimaryMetric> primaryMetric = default;
             Optional<ImageModelSettingsClassification> modelSettings = default;
             Optional<IList<ImageModelDistributionSettingsClassification>> searchSpace = default;
             ImageVerticalDataSettings dataSettings = default;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    primaryMetric = new ClassificationMultilabelPrimaryMetrics(property.Value.GetString());
+                    primaryMetric = new ClassificationMultilabelPrimaryMetric(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("modelSettings"))

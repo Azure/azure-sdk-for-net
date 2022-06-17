@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<string> passName = default;
             Optional<string> componentName = default;
-            Optional<SettingNames> settingName = default;
+            Optional<SettingName> settingName = default;
             Optional<string> content = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    settingName = property.Value.GetString().ToSettingNames();
+                    settingName = property.Value.GetString().ToSettingName();
                     continue;
                 }
                 if (property.NameEquals("content"))

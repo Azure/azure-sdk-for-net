@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Compute
         {
             Optional<string> name = default;
             Optional<AzureLocation> location = default;
-            Optional<OperatingSystemTypes> osType = default;
-            Optional<OperatingSystemStateTypes> osState = default;
+            Optional<SupportedOperatingSystemType> osType = default;
+            Optional<OperatingSystemStateType> osState = default;
             Optional<DateTimeOffset> endOfLifeDate = default;
             Optional<GalleryImageIdentifier> identifier = default;
             Optional<RecommendedMachineConfiguration> recommended = default;
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
             Optional<HyperVGeneration> hyperVGeneration = default;
             Optional<IReadOnlyList<GalleryImageFeature>> features = default;
             Optional<ImagePurchasePlan> purchasePlan = default;
-            Optional<ArchitectureTypes> architecture = default;
+            Optional<ArchitectureType> architecture = default;
             Optional<string> uniqueId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            osType = property0.Value.GetString().ToOperatingSystemTypes();
+                            osType = property0.Value.GetString().ToSupportedOperatingSystemType();
                             continue;
                         }
                         if (property0.NameEquals("osState"))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            osState = property0.Value.GetString().ToOperatingSystemStateTypes();
+                            osState = property0.Value.GetString().ToOperatingSystemStateType();
                             continue;
                         }
                         if (property0.NameEquals("endOfLifeDate"))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            architecture = new ArchitectureTypes(property0.Value.GetString());
+                            architecture = new ArchitectureType(property0.Value.GetString());
                             continue;
                         }
                     }

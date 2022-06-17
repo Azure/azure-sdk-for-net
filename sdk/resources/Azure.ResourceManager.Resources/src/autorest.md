@@ -50,6 +50,9 @@ override-operation-name:
 operation-groups-to-omit:
    Providers;ProviderResourceTypes;Resources;ResourceGroups;Tags;Subscriptions;Tenants
 
+keep-plural-enums:
+  - ScriptCleanupOptions
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus

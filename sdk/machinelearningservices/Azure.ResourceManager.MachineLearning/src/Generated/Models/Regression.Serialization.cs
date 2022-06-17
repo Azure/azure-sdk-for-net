@@ -115,9 +115,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static Regression DeserializeRegression(JsonElement element)
         {
-            Optional<IList<RegressionModels>> allowedModels = default;
-            Optional<IList<RegressionModels>> blockedModels = default;
-            Optional<RegressionPrimaryMetrics> primaryMetric = default;
+            Optional<IList<RegressionModel>> allowedModels = default;
+            Optional<IList<RegressionModel>> blockedModels = default;
+            Optional<RegressionPrimaryMetric> primaryMetric = default;
             Optional<TableVerticalDataSettings> dataSettings = default;
             Optional<TableVerticalFeaturizationSettings> featurizationSettings = default;
             Optional<TableVerticalLimitSettings> limitSettings = default;
@@ -133,10 +133,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         allowedModels = null;
                         continue;
                     }
-                    List<RegressionModels> array = new List<RegressionModels>();
+                    List<RegressionModel> array = new List<RegressionModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new RegressionModels(item.GetString()));
+                        array.Add(new RegressionModel(item.GetString()));
                     }
                     allowedModels = array;
                     continue;
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         blockedModels = null;
                         continue;
                     }
-                    List<RegressionModels> array = new List<RegressionModels>();
+                    List<RegressionModel> array = new List<RegressionModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new RegressionModels(item.GetString()));
+                        array.Add(new RegressionModel(item.GetString()));
                     }
                     blockedModels = array;
                     continue;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    primaryMetric = new RegressionPrimaryMetrics(property.Value.GetString());
+                    primaryMetric = new RegressionPrimaryMetric(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataSettings"))

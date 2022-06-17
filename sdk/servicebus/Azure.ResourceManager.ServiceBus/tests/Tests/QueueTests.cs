@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             NamespaceQueueAuthorizationRuleCollection ruleCollection = queue.GetNamespaceQueueAuthorizationRules();
             ServiceBusAuthorizationRuleData parameter = new ServiceBusAuthorizationRuleData()
             {
-                Rights = { AccessRights.Listen, AccessRights.Send }
+                Rights = { AccessRight.Listen, AccessRight.Send }
             };
             NamespaceQueueAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.True(isContainAuthorizationRuleName);
 
             //update authorization rule
-            parameter.Rights.Add(AccessRights.Manage);
+            parameter.Rights.Add(AccessRight.Manage);
             authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             string ruleName = Recording.GenerateAssetName("authorizationrule");
             ServiceBusAuthorizationRuleData parameter = new ServiceBusAuthorizationRuleData()
             {
-                Rights = { AccessRights.Listen, AccessRights.Send }
+                Rights = { AccessRight.Listen, AccessRight.Send }
             };
             NamespaceQueueAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);

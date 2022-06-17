@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DiffDiskSettings DeserializeDiffDiskSettings(JsonElement element)
         {
-            Optional<DiffDiskOptions> option = default;
+            Optional<DiffDiskOption> option = default;
             Optional<DiffDiskPlacement> placement = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    option = new DiffDiskOptions(property.Value.GetString());
+                    option = new DiffDiskOption(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("placement"))

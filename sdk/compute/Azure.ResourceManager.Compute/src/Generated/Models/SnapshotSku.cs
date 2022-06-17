@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of SnapshotSku. </summary>
         /// <param name="name"> The sku name. </param>
         /// <param name="tier"> The sku tier. </param>
-        internal SnapshotSku(SnapshotStorageAccountTypes? name, string tier)
+        internal SnapshotSku(SnapshotStorageAccountType? name, string tier)
         {
             Name = name;
             Tier = tier;
         }
 
         /// <summary> The sku name. </summary>
-        public SnapshotStorageAccountTypes? Name { get; set; }
+        public SnapshotStorageAccountType? Name { get; set; }
         /// <summary> The sku tier. </summary>
         public string Tier { get; }
     }

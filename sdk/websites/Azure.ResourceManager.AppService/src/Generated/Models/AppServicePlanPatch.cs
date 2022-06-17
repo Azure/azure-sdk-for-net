@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will perform availability zone balancing.
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </param>
-        internal AppServicePlanPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string workerTierName, StatusOptions? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, string geoRegion, bool? perSiteScaling, bool? elasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpirationOn, DateTimeOffset? freeOfferExpirationOn, string resourceGroup, bool? reserved, bool? isXenon, bool? hyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? zoneRedundant) : base(id, name, resourceType, systemData, kind)
+        internal AppServicePlanPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string workerTierName, StatusOption? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, string geoRegion, bool? perSiteScaling, bool? elasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpirationOn, DateTimeOffset? freeOfferExpirationOn, string resourceGroup, bool? reserved, bool? isXenon, bool? hyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? zoneRedundant) : base(id, name, resourceType, systemData, kind)
         {
             WorkerTierName = workerTierName;
             Status = status;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Target worker tier assigned to the App Service plan. </summary>
         public string WorkerTierName { get; set; }
         /// <summary> App Service plan status. </summary>
-        public StatusOptions? Status { get; }
+        public StatusOption? Status { get; }
         /// <summary> App Service plan subscription. </summary>
         public string Subscription { get; }
         /// <summary> Specification for the App Service Environment to use for the App Service plan. </summary>

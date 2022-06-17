@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<OSDiskImage> osDiskImage = default;
             Optional<IList<DataDiskImage>> dataDiskImages = default;
             Optional<AutomaticOSUpgradeProperties> automaticOSUpgradeProperties = default;
-            Optional<HyperVGenerationTypes> hyperVGeneration = default;
+            Optional<HyperVGenerationType> hyperVGeneration = default;
             Optional<DisallowedConfiguration> disallowed = default;
             Optional<IList<VirtualMachineImageFeature>> features = default;
-            Optional<ArchitectureTypes> architecture = default;
+            Optional<ArchitectureType> architecture = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Compute.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hyperVGeneration = new HyperVGenerationTypes(property0.Value.GetString());
+                            hyperVGeneration = new HyperVGenerationType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("disallowed"))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Compute.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            architecture = new ArchitectureTypes(property0.Value.GetString());
+                            architecture = new ArchitectureType(property0.Value.GetString());
                             continue;
                         }
                     }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Initializes a new instance of AuthorizationRuleData. </summary>
         public AuthorizationRuleData()
         {
-            Rights = new ChangeTrackingList<AccessRights>();
+            Rights = new ChangeTrackingList<AccessRight>();
         }
 
         /// <summary> Initializes a new instance of AuthorizationRuleData. </summary>
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="rights"> The rights associated with the rule. </param>
-        internal AuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, IList<AccessRights> rights) : base(id, name, resourceType, systemData, location)
+        internal AuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, IList<AccessRight> rights) : base(id, name, resourceType, systemData, location)
         {
             Rights = rights;
         }
 
         /// <summary> The rights associated with the rule. </summary>
-        public IList<AccessRights> Rights { get; }
+        public IList<AccessRight> Rights { get; }
     }
 }

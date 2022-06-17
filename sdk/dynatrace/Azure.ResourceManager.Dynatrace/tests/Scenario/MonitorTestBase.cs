@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Dynatrace.Tests
                 DynatraceEnvironmentProperties = new DynatraceEnvironmentProperties
                 {
                     SingleSignOnProperties = new DynatraceSingleSignOnProperties(
-                        SingleSignOnStates.Disable,
+                        SingleSignOnState.Disable,
                         null,
                         new System.Uri("http://www.contoso.com/"),
                         aadDomains,

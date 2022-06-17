@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static AzureFilesIdentityBasedAuthentication DeserializeAzureFilesIdentityBasedAuthentication(JsonElement element)
         {
-            DirectoryServiceOptions directoryServiceOptions = default;
+            DirectoryServiceOption directoryServiceOptions = default;
             Optional<ActiveDirectoryProperties> activeDirectoryProperties = default;
             Optional<DefaultSharePermission> defaultSharePermission = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("directoryServiceOptions"))
                 {
-                    directoryServiceOptions = new DirectoryServiceOptions(property.Value.GetString());
+                    directoryServiceOptions = new DirectoryServiceOption(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("activeDirectoryProperties"))

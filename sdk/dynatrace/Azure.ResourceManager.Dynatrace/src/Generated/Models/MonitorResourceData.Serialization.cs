@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Dynatrace
             Optional<DynatraceEnvironmentProperties> dynatraceEnvironmentProperties = default;
             Optional<UserInfo> userInfo = default;
             Optional<PlanData> planData = default;
-            Optional<LiftrResourceCategories> liftrResourceCategory = default;
+            Optional<LiftrResourceCategory> liftrResourceCategory = default;
             Optional<int> liftrResourcePreference = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Dynatrace
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            liftrResourceCategory = new LiftrResourceCategories(property0.Value.GetString());
+                            liftrResourceCategory = new LiftrResourceCategory(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("liftrResourcePreference"))

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ImageObjectDetection DeserializeImageObjectDetection(JsonElement element)
         {
-            Optional<ObjectDetectionPrimaryMetrics> primaryMetric = default;
+            Optional<ObjectDetectionPrimaryMetric> primaryMetric = default;
             Optional<ImageModelSettingsObjectDetection> modelSettings = default;
             Optional<IList<ImageModelDistributionSettingsObjectDetection>> searchSpace = default;
             ImageVerticalDataSettings dataSettings = default;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    primaryMetric = new ObjectDetectionPrimaryMetrics(property.Value.GetString());
+                    primaryMetric = new ObjectDetectionPrimaryMetric(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("modelSettings"))

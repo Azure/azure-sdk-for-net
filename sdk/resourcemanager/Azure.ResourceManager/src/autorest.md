@@ -175,6 +175,9 @@ override-operation-name:
 
 no-property-type-replacement: ResourceProviderData;ResourceProvider;
 
+keep-plural-enums:
+  - ResourceTypeAliasPathAttributes
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus

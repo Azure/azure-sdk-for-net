@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             {
                 Sku = new DiskSku()
                 {
-                    Name = DiskStorageAccountTypes.StandardLRS
+                    Name = DiskStorageAccountType.StandardLRS
                 },
                 CreationData = new DiskCreationData(DiskCreateOption.Empty),
                 DiskSizeGB = 1,
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             Assert.AreEqual(image1.Description, image2.Description);
         }
 
-        public static GalleryImageData GetBasicGalleryImageData(AzureLocation location, OperatingSystemTypes osType, GalleryImageIdentifier identifier)
+        public static GalleryImageData GetBasicGalleryImageData(AzureLocation location, SupportedOperatingSystemType osType, GalleryImageIdentifier identifier)
         {
             var data = new GalleryImageData(location)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             {
                 HardwareProfile = new HardwareProfile()
                 {
-                    VmSize = VirtualMachineSizeTypes.StandardF2
+                    VmSize = VirtualMachineSizeType.StandardF2
                 },
                 OSProfile = new OSProfile()
                 {
@@ -234,13 +234,13 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                 },
                 StorageProfile = new StorageProfile()
                 {
-                    OSDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+                    OSDisk = new OSDisk(DiskCreateOptionType.FromImage)
                     {
-                        OSType = OperatingSystemTypes.Linux,
-                        Caching = CachingTypes.ReadWrite,
+                        OSType = SupportedOperatingSystemType.Linux,
+                        Caching = CachingType.ReadWrite,
                         ManagedDisk = new ManagedDiskParameters()
                         {
-                            StorageAccountType = StorageAccountTypes.StandardLRS
+                            StorageAccountType = StorageAccountType.StandardLRS
                         }
                     },
                     ImageReference = new ImageReference()
@@ -300,12 +300,12 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                     },
                     StorageProfile = new VirtualMachineScaleSetStorageProfile()
                     {
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionTypes.FromImage)
+                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
                         {
-                            Caching = CachingTypes.ReadWrite,
+                            Caching = CachingType.ReadWrite,
                             ManagedDisk = new VirtualMachineScaleSetManagedDiskParameters()
                             {
-                                StorageAccountType = StorageAccountTypes.StandardLRS
+                                StorageAccountType = StorageAccountType.StandardLRS
                             }
                         },
                         ImageReference = new ImageReference()

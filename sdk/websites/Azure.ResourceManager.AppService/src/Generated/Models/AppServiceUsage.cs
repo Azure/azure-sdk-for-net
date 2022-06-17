@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="nextResetOn"> Next reset time for the resource counter. </param>
         /// <param name="computeMode"> Compute mode used for this usage. </param>
         /// <param name="siteMode"> Site mode used for this usage. </param>
-        internal AppServiceUsage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string displayName, string resourceName, string unit, long? currentValue, long? limit, DateTimeOffset? nextResetOn, ComputeModeOptions? computeMode, string siteMode) : base(id, name, resourceType, systemData, kind)
+        internal AppServiceUsage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string displayName, string resourceName, string unit, long? currentValue, long? limit, DateTimeOffset? nextResetOn, ComputeModeOption? computeMode, string siteMode) : base(id, name, resourceType, systemData, kind)
         {
             DisplayName = displayName;
             ResourceName = resourceName;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Next reset time for the resource counter. </summary>
         public DateTimeOffset? NextResetOn { get; }
         /// <summary> Compute mode used for this usage. </summary>
-        public ComputeModeOptions? ComputeMode { get; }
+        public ComputeModeOption? ComputeMode { get; }
         /// <summary> Site mode used for this usage. </summary>
         public string SiteMode { get; }
     }

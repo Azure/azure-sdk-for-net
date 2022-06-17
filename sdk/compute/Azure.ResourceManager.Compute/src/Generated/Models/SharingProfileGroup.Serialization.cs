@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SharingProfileGroup DeserializeSharingProfileGroup(JsonElement element)
         {
-            Optional<SharingProfileGroupTypes> type = default;
+            Optional<SharingProfileGroupType> type = default;
             Optional<IList<string>> ids = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new SharingProfileGroupTypes(property.Value.GetString());
+                    type = new SharingProfileGroupType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ids"))

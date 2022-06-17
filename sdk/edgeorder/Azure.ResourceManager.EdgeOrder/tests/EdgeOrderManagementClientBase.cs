@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests
             {
                 Preferences = new OrderItemPreferences
                 {
-                    TransportPreferences = new TransportPreferences(TransportShipmentTypes.MicrosoftManaged)
+                    TransportPreferences = new TransportPreferences(TransportShipmentType.MicrosoftManaged)
                 }
             };
         }

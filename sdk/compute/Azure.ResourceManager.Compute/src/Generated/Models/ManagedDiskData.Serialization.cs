@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Compute
             ResourceType type = default;
             SystemData systemData = default;
             Optional<DateTimeOffset> timeCreated = default;
-            Optional<OperatingSystemTypes> osType = default;
+            Optional<SupportedOperatingSystemType> osType = default;
             Optional<HyperVGeneration> hyperVGeneration = default;
             Optional<DiskPurchasePlan> purchasePlan = default;
             Optional<SupportedCapabilities> supportedCapabilities = default;
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            osType = property0.Value.GetString().ToOperatingSystemTypes();
+                            osType = property0.Value.GetString().ToSupportedOperatingSystemType();
                             continue;
                         }
                         if (property0.NameEquals("hyperVGeneration"))

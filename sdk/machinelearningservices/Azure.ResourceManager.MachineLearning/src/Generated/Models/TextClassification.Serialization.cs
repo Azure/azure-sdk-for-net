@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static TextClassification DeserializeTextClassification(JsonElement element)
         {
-            Optional<ClassificationPrimaryMetrics> primaryMetric = default;
+            Optional<ClassificationPrimaryMetric> primaryMetric = default;
             Optional<NlpVerticalDataSettings> dataSettings = default;
             Optional<NlpVerticalFeaturizationSettings> featurizationSettings = default;
             Optional<NlpVerticalLimitSettings> limitSettings = default;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    primaryMetric = new ClassificationPrimaryMetrics(property.Value.GetString());
+                    primaryMetric = new ClassificationPrimaryMetric(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataSettings"))

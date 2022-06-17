@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VmDiskSecurityProfile DeserializeVmDiskSecurityProfile(JsonElement element)
         {
-            Optional<SecurityEncryptionTypes> securityEncryptionType = default;
+            Optional<SecurityEncryptionType> securityEncryptionType = default;
             Optional<WritableSubResource> diskEncryptionSet = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    securityEncryptionType = new SecurityEncryptionTypes(property.Value.GetString());
+                    securityEncryptionType = new SecurityEncryptionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("diskEncryptionSet"))

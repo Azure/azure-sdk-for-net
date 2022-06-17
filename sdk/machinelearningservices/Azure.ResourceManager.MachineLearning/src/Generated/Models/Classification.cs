@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of Classification. </summary>
         public Classification()
         {
-            AllowedModels = new ChangeTrackingList<ClassificationModels>();
-            BlockedModels = new ChangeTrackingList<ClassificationModels>();
+            AllowedModels = new ChangeTrackingList<ClassificationModel>();
+            BlockedModels = new ChangeTrackingList<ClassificationModel>();
             TaskType = TaskType.Classification;
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
         /// <param name="trainingSettings"> Inputs for training phase for an AutoML Job. </param>
-        internal Classification(LogVerbosity? logVerbosity, TaskType taskType, IList<ClassificationModels> allowedModels, IList<ClassificationModels> blockedModels, ClassificationPrimaryMetrics? primaryMetric, TableVerticalDataSettings dataSettings, TableVerticalFeaturizationSettings featurizationSettings, TableVerticalLimitSettings limitSettings, TrainingSettings trainingSettings) : base(logVerbosity, taskType)
+        internal Classification(LogVerbosity? logVerbosity, TaskType taskType, IList<ClassificationModel> allowedModels, IList<ClassificationModel> blockedModels, ClassificationPrimaryMetric? primaryMetric, TableVerticalDataSettings dataSettings, TableVerticalFeaturizationSettings featurizationSettings, TableVerticalLimitSettings limitSettings, TrainingSettings trainingSettings) : base(logVerbosity, taskType)
         {
             AllowedModels = allowedModels;
             BlockedModels = blockedModels;
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Allowed models for classification task. </summary>
-        public IList<ClassificationModels> AllowedModels { get; set; }
+        public IList<ClassificationModel> AllowedModels { get; set; }
         /// <summary> Blocked models for classification task. </summary>
-        public IList<ClassificationModels> BlockedModels { get; set; }
+        public IList<ClassificationModel> BlockedModels { get; set; }
         /// <summary> Primary metric for the task. </summary>
-        public ClassificationPrimaryMetrics? PrimaryMetric { get; set; }
+        public ClassificationPrimaryMetric? PrimaryMetric { get; set; }
         /// <summary> Data inputs for AutoMLJob. </summary>
         public TableVerticalDataSettings DataSettings { get; set; }
         /// <summary> Featurization inputs needed for AutoML job. </summary>

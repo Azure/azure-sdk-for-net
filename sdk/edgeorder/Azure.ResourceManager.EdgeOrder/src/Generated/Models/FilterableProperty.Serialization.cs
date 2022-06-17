@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static FilterableProperty DeserializeFilterableProperty(JsonElement element)
         {
-            SupportedFilterTypes type = default;
+            SupportedFilterType type = default;
             IList<string> supportedValues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    type = new SupportedFilterTypes(property.Value.GetString());
+                    type = new SupportedFilterType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("supportedValues"))

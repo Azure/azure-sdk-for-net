@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="dataSettings"> [Required] Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </param>
         /// <param name="limitSettings"> [Required] Limit settings for the AutoML job. </param>
         /// <param name="sweepSettings"> Model sweeping and hyperparameter sweeping related settings. </param>
-        internal ImageInstanceSegmentation(LogVerbosity? logVerbosity, TaskType taskType, InstanceSegmentationPrimaryMetrics? primaryMetric, ImageModelSettingsObjectDetection modelSettings, IList<ImageModelDistributionSettingsObjectDetection> searchSpace, ImageVerticalDataSettings dataSettings, ImageLimitSettings limitSettings, ImageSweepSettings sweepSettings) : base(logVerbosity, taskType)
+        internal ImageInstanceSegmentation(LogVerbosity? logVerbosity, TaskType taskType, InstanceSegmentationPrimaryMetric? primaryMetric, ImageModelSettingsObjectDetection modelSettings, IList<ImageModelDistributionSettingsObjectDetection> searchSpace, ImageVerticalDataSettings dataSettings, ImageLimitSettings limitSettings, ImageSweepSettings sweepSettings) : base(logVerbosity, taskType)
         {
             PrimaryMetric = primaryMetric;
             ModelSettings = modelSettings;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Primary metric to optimize for this task. </summary>
-        public InstanceSegmentationPrimaryMetrics? PrimaryMetric { get; set; }
+        public InstanceSegmentationPrimaryMetric? PrimaryMetric { get; set; }
         /// <summary> Settings used for training the model. </summary>
         public ImageModelSettingsObjectDetection ModelSettings { get; set; }
         /// <summary> Search space for sampling different combinations of models and their hyperparameters. </summary>

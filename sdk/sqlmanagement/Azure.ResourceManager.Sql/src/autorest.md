@@ -12,6 +12,8 @@ public-clients: false
 head-as-boolean: false
 clear-output-folder: true
 skip-csproj: true
+keep-plural-enums:
+  - DiffBackupIntervalInHours
 
 rename-rules:
   CPU: Cpu

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static TextClassificationMultilabel DeserializeTextClassificationMultilabel(JsonElement element)
         {
-            Optional<ClassificationMultilabelPrimaryMetrics> primaryMetric = default;
+            Optional<ClassificationMultilabelPrimaryMetric> primaryMetric = default;
             Optional<NlpVerticalDataSettings> dataSettings = default;
             Optional<NlpVerticalFeaturizationSettings> featurizationSettings = default;
             Optional<NlpVerticalLimitSettings> limitSettings = default;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    primaryMetric = new ClassificationMultilabelPrimaryMetrics(property.Value.GetString());
+                    primaryMetric = new ClassificationMultilabelPrimaryMetric(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataSettings"))

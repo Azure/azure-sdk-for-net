@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="totalIops"> Total Provisioned IOPS of the Elastic San appliance. </param>
         /// <param name="totalMbps"> Total Provisioned MBps Elastic San appliance. </param>
         /// <param name="provisionedMbps"> Provisioned MBps Elastic San appliance. </param>
-        internal ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanSku sku, IList<string> availabilityZones, ProvisioningStates? provisioningState, long? baseSizeTiB, long? extendedCapacitySizeTiB, long? totalElasticSanVolumeSizeGiB, long? elasticSanVolumeGroupCount, long? totalIops, long? totalMbps, long? provisionedMbps) : base(id, name, resourceType, systemData, tags, location)
+        internal ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanSku sku, IList<string> availabilityZones, ProvisioningState? provisioningState, long? baseSizeTiB, long? extendedCapacitySizeTiB, long? totalElasticSanVolumeSizeGiB, long? elasticSanVolumeGroupCount, long? totalIops, long? totalMbps, long? provisionedMbps) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             AvailabilityZones = availabilityZones;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <summary> Logical zone for Elastic San resource; example: [&quot;1&quot;]. </summary>
         public IList<string> AvailabilityZones { get; }
         /// <summary> State of the operation on the resource. </summary>
-        public ProvisioningStates? ProvisioningState { get; }
+        public ProvisioningState? ProvisioningState { get; }
         /// <summary> Base size of the Elastic San appliance in TiB. </summary>
         public long? BaseSizeTiB { get; set; }
         /// <summary> Extended size of the Elastic San appliance in TiB. </summary>
