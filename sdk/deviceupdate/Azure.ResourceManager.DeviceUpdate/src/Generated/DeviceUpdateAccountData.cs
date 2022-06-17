@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         public DeviceUpdateAccountData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionData>();
-            Locations = new ChangeTrackingList<Location>();
+            Locations = new ChangeTrackingList<DeviceUpdateAccountLocationDetail>();
         }
 
         /// <summary> Initializes a new instance of DeviceUpdateAccountData. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the account. </param>
         /// <param name="sku"> Device Update Sku. </param>
         /// <param name="locations"> Device Update account primary and failover location details. </param>
-        internal DeviceUpdateAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ProvisioningState? provisioningState, string hostName, PublicNetworkAccess? publicNetworkAccess, IList<DeviceUpdatePrivateEndpointConnectionData> privateEndpointConnections, SKU? sku, IReadOnlyList<Location> locations) : base(id, name, resourceType, systemData, tags, location)
+        internal DeviceUpdateAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ProvisioningState? provisioningState, string hostName, PublicNetworkAccess? publicNetworkAccess, IList<DeviceUpdatePrivateEndpointConnectionData> privateEndpointConnections, DeviceUpdateSku? sku, IReadOnlyList<DeviceUpdateAccountLocationDetail> locations) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> List of private endpoint connections associated with the account. </summary>
         public IList<DeviceUpdatePrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Device Update Sku. </summary>
-        public SKU? Sku { get; set; }
+        public DeviceUpdateSku? Sku { get; set; }
         /// <summary> Device Update account primary and failover location details. </summary>
-        public IReadOnlyList<Location> Locations { get; }
+        public IReadOnlyList<DeviceUpdateAccountLocationDetail> Locations { get; }
     }
 }

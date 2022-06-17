@@ -7,18 +7,18 @@
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
-    /// <summary> The Location. </summary>
-    public partial class Location
+    /// <summary> The DeviceUpdateAccountLocationDetail. </summary>
+    public partial class DeviceUpdateAccountLocationDetail
     {
-        /// <summary> Initializes a new instance of Location. </summary>
-        internal Location()
+        /// <summary> Initializes a new instance of DeviceUpdateAccountLocationDetail. </summary>
+        internal DeviceUpdateAccountLocationDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of Location. </summary>
+        /// <summary> Initializes a new instance of DeviceUpdateAccountLocationDetail. </summary>
         /// <param name="name"></param>
         /// <param name="role"> Whether the location is primary or failover. </param>
-        internal Location(string name, Role? role)
+        internal DeviceUpdateAccountLocationDetail(string name, DeviceUpdateAccountLocationRole? role)
         {
             Name = name;
             Role = role;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> Gets the name. </summary>
         public string Name { get; }
         /// <summary> Whether the location is primary or failover. </summary>
-        public Role? Role { get; }
+        public DeviceUpdateAccountLocationRole? Role { get; }
     }
 }

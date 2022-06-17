@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
         {
             var account = new DeviceUpdateAccountData(AzureLocation.WestUS2)
             {
-                Sku = SKU.Standard
+                Sku = DeviceUpdateSku.Standard
             };
             return account;
         }

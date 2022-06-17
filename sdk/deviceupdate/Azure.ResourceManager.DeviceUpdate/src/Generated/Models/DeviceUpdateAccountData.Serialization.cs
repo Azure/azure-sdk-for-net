@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.DeviceUpdate
             Optional<string> hostName = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
             Optional<IList<DeviceUpdatePrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<SKU> sku = default;
-            Optional<IReadOnlyList<Location>> locations = default;
+            Optional<DeviceUpdateSku> sku = default;
+            Optional<IReadOnlyList<DeviceUpdateAccountLocationDetail>> locations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sku = new SKU(property0.Value.GetString());
+                            sku = new DeviceUpdateSku(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("locations"))
@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.DeviceUpdate
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Location> array = new List<Location>();
+                            List<DeviceUpdateAccountLocationDetail> array = new List<DeviceUpdateAccountLocationDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.Location.DeserializeLocation(item));
+                                array.Add(DeviceUpdateAccountLocationDetail.DeserializeDeviceUpdateAccountLocationDetail(item));
                             }
                             locations = array;
                             continue;

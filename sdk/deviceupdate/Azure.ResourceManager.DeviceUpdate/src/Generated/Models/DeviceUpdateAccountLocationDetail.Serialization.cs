@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
-    public partial class Location
+    public partial class DeviceUpdateAccountLocationDetail
     {
-        internal static Location DeserializeLocation(JsonElement element)
+        internal static DeviceUpdateAccountLocationDetail DeserializeDeviceUpdateAccountLocationDetail(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<Role> role = default;
+            Optional<DeviceUpdateAccountLocationRole> role = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    role = new Role(property.Value.GetString());
+                    role = new DeviceUpdateAccountLocationRole(property.Value.GetString());
                     continue;
                 }
             }
-            return new Location(name.Value, Optional.ToNullable(role));
+            return new DeviceUpdateAccountLocationDetail(name.Value, Optional.ToNullable(role));
         }
     }
 }

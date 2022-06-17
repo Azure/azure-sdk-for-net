@@ -64,4 +64,10 @@ directive:
           "type": "string"
         }
       }
+  - from: deviceupdate.json
+    where: $.definitions
+    transform: >
+      $.Location['x-ms-client-name'] = 'DeviceUpdateAccountLocationDetail';
+      $.Location.properties.role['x-ms-enum'].name = 'DeviceUpdateAccountLocationRole';
+      $.Account.properties.properties.properties.sku['x-ms-enum'].name = 'Sku';
 ```
