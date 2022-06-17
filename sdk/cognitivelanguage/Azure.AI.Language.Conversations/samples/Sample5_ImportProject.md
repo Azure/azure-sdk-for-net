@@ -101,7 +101,7 @@ var importData = new
     stringIndexType = "Utf16CodeUnit",
 };
 
-Operation<BinaryData> importOperation = client.Import(WaitUntil.Started, projectName, RequestContent.Create(importData));
+Operation<BinaryData> importOperation = client.ImportProject(WaitUntil.Started, projectName, RequestContent.Create(importData));
 importOperation.WaitForCompletion();
 
 // Train the model.
@@ -213,7 +213,7 @@ var importData = new
     stringIndexType = "Utf16CodeUnit",
 };
 
-Operation<BinaryData> importOperation = await client.ImportAsync(WaitUntil.Started, projectName, RequestContent.Create(importData));
+Operation<BinaryData> importOperation = await client.ImportProjectAsync(WaitUntil.Started, projectName, RequestContent.Create(importData));
 await importOperation.WaitForCompletionAsync();
 
 // Train the model.

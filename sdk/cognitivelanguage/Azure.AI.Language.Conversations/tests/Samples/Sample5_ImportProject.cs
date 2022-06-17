@@ -121,7 +121,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 stringIndexType = "Utf16CodeUnit",
             };
 
-            Operation<BinaryData> importOperation = client.Import(WaitUntil.Started, projectName, RequestContent.Create(importData));
+            Operation<BinaryData> importOperation = client.ImportProject(WaitUntil.Started, projectName, RequestContent.Create(importData));
 #if !SNIPPET
             _projects.Add(projectName);
             importOperation = InstrumentOperation(importOperation);
@@ -254,7 +254,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 stringIndexType = "Utf16CodeUnit",
             };
 
-            Operation<BinaryData> importOperation = await client.ImportAsync(WaitUntil.Started, projectName, RequestContent.Create(importData));
+            Operation<BinaryData> importOperation = await client.ImportProjectAsync(WaitUntil.Started, projectName, RequestContent.Create(importData));
 #if !SNIPPET
             _projects.Add(projectName);
             //importOperation = InstrumentOperation(importOperation);
