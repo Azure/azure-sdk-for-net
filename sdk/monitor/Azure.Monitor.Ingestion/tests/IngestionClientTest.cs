@@ -44,8 +44,8 @@ namespace Azure.Monitor.Ingestion.Tests
         [Test]
         public async Task ValidInputFromObjectAsJson()
         {
-            // var clientSecretCrendential = <ClientSecretCredential>;
-            // var dcrImmutableId = <dcrImmutableId>;
+            ClientSecretCredential clientSecretCrendential = new ClientSecretCredential("<tenantId>", "<cliendId>",  "<clientSecret>");
+            var dcrImmutableId = "<dcrImmutableId>";
             var dcrEndpoint = "https://nibhati-dce-ku6s.westus2-1.ingest.monitor.azure.com";
             var currentTime = DateTimeOffset.UtcNow.ToString("O");
 
@@ -110,8 +110,8 @@ namespace Azure.Monitor.Ingestion.Tests
         [Test]
         public async Task ValidInputFromStreamAsync() //need Workspace id
         {
-            // var clientSecretCrendential = <ClientSecretCredential>;
-            // var dcrImmutableId = <dcrImmutableId>;
+            ClientSecretCredential clientSecretCrendential = new ClientSecretCredential("<tenantId>", "<cliendId>", "<clientSecret>");
+            var dcrImmutableId = "<dcrImmutableId>";
             var dcrEndpoint = "https://nibhati-dce-ku6s.westus2-1.ingest.monitor.azure.com";
             var currentTime = DateTimeOffset.UtcNow.ToString("O");
 
@@ -148,8 +148,8 @@ namespace Azure.Monitor.Ingestion.Tests
         [Test]
         public void NullInput()
         {
-            // var clientSecretCrendential = <ClientSecretCredential>;
-            // var dcrImmutableId = <dcrImmutableId>;
+            ClientSecretCredential clientSecretCrendential = new ClientSecretCredential("<tenantId>", "<cliendId>", "<clientSecret>");
+            var dcrImmutableId = "<dcrImmutableId>";
             var dcrEndpoint = "https://nibhati-dce-ku6s.westus2-1.ingest.monitor.azure.com";
 
             //var data = BinaryData.FromString(null).ToStream();
@@ -168,8 +168,8 @@ namespace Azure.Monitor.Ingestion.Tests
         [Test]
         public void GreaterThan1MbData() //Should fail when we don't have batching
         {
-            // var clientSecretCrendential = <ClientSecretCredential>;
-            // var dcrImmutableId = <dcrImmutableId>;
+            ClientSecretCredential clientSecretCrendential = new ClientSecretCredential("<tenantId>", "<cliendId>", "<clientSecret>");
+            var dcrImmutableId = "<dcrImmutableId>";
             var dcrEndpoint = "https://nibhati-dce-ku6s.westus2-1.ingest.monitor.azure.com";
 
             var currentTime = DateTimeOffset.UtcNow.ToString("O");
@@ -190,8 +190,8 @@ namespace Azure.Monitor.Ingestion.Tests
         [Test]
         public void EmptyData()
         {
-            // var clientSecretCrendential = <ClientSecretCredential>;
-            // var dcrImmutableId = <dcrImmutableId>;
+            ClientSecretCredential clientSecretCrendential = new ClientSecretCredential("<tenantId>", "<cliendId>", "<clientSecret>");
+            var dcrImmutableId = "<dcrImmutableId>";
             var dcrEndpoint = "https://nibhati-dce-ku6s.westus2-1.ingest.monitor.azure.com";
 
             var data = BinaryData.FromString("").ToStream();
@@ -209,8 +209,8 @@ namespace Azure.Monitor.Ingestion.Tests
 
         public void NullStream()
         {
-            // var clientSecretCrendential = <ClientSecretCredential>;
-            // var dcrImmutableId = <dcrImmutableId>;
+            ClientSecretCredential clientSecretCrendential = new ClientSecretCredential("<tenantId>", "<cliendId>", "<clientSecret>");
+            var dcrImmutableId = "<dcrImmutableId>";
             var dcrEndpoint = "https://nibhati-dce-ku6s.westus2-1.ingest.monitor.azure.com";
 
             LogsIngestionClient client = new(
