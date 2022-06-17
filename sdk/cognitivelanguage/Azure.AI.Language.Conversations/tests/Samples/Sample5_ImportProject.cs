@@ -268,6 +268,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 stringIndexType = "Utf16CodeUnit",
             };
 
+            #region Snippet:ConversationAnalysisProjectsClient_ImportProjectAsync
             Operation<BinaryData> importOperation = await client.ImportProjectAsync(WaitUntil.Started, projectName, RequestContent.Create(importData));
 #if !SNIPPET
             _projects.Add(projectName);

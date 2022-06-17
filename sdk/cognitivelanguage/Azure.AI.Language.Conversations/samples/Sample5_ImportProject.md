@@ -102,7 +102,6 @@ var importData = new
 };
 
 Operation<BinaryData> importOperation = client.ImportProject(WaitUntil.Started, projectName, RequestContent.Create(importData));
-importOperation.WaitForCompletion();
 
 // Train the model.
 var trainData = new
@@ -138,94 +137,7 @@ Console.WriteLine("Import complete");
 Using the same `importData` definition above, you can make an asynchronous request by calling `ImportProjectAsync`:
 
 ```C# Snippet:ConversationAnalysisProjectsClient_ImportProjectAsync
-string projectName = "Menu";
-
-// Define our project assets and import.
-var importData = new
-{
-    projectFileVersion = "2022-05-01",
-    metadata = new
-    {
-        projectName,
-        projectKind = "Conversation",
-        multilingual = true,
-        language = "en",
-    },
-
-    assets = new
-    {
-        projectKind = "Conversation",
-        entities = new[] // ConversationalAnalysisAuthoringConversationExportedEntity
-        {
-            new
-            {
-                category = "Contact",
-                compositionSetting = "combineComponents",
-                prebuilts = new[]
-                {
-                    new
-                    {
-                        category = "Person.Name",
-                    },
-                },
-
-                // ... more entities.
-            }
-        },
-
-        intents = new[] // ConversationalAnalysisAuthoringConversationExportedIntent
-        {
-            new
-            {
-                category = "Send",
-            },
-
-            // ... more intents.
-        },
-
-        utterances = new[] // ConversationalAnalysisAuthoringConversationExportedUtterance
-        {
-            new
-            {
-                text = "Send an email to Johnson",
-                language = "en",
-                intent = "Send",
-                entities = new[]
-                {
-                    new
-                    {
-                        category = "Contact",
-                        offset = 17,
-                        length = 7,
-                    },
-                },
-            },
-            new
-            {
-                text = "Send Kathy a calendar invite",
-                language = "en",
-                intent = "Send",
-                entities = new[]
-                {
-                    new
-                    {
-                        category = "Contact",
-                        offset = 5,
-                        length = 5,
-                    },
-                },
-            },
-
-            // ... more utterances.
-        },
-    },
-
-    // Use Utf16CodeUnit for strings in .NET.
-    stringIndexType = "Utf16CodeUnit",
-};
-
 Operation<BinaryData> importOperation = await client.ImportProjectAsync(WaitUntil.Started, projectName, RequestContent.Create(importData));
-await importOperation.WaitForCompletionAsync();
 
 // Train the model.
 var trainData = new
