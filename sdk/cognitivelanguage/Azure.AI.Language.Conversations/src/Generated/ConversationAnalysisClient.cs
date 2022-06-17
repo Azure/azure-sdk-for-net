@@ -381,7 +381,7 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> SubmitJobAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation> SubmitJobAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -390,7 +390,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateSubmitJobRequest(content, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.SubmitJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.SubmitJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -445,7 +445,7 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> SubmitJob(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        public virtual Operation SubmitJob(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -454,7 +454,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateSubmitJobRequest(content, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.SubmitJob", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.SubmitJob", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -487,14 +487,14 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> CancelJobAsync(WaitUntil waitUntil, Guid jobId, RequestContext context = null)
+        public virtual async Task<Operation> CancelJobAsync(WaitUntil waitUntil, Guid jobId, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.CancelJob");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCancelJobRequest(jobId, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.CancelJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.CancelJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -527,14 +527,14 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> CancelJob(WaitUntil waitUntil, Guid jobId, RequestContext context = null)
+        public virtual Operation CancelJob(WaitUntil waitUntil, Guid jobId, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.CancelJob");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCancelJobRequest(jobId, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.CancelJob", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.CancelJob", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
