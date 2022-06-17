@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.GeoJson;
 
 namespace Azure.Maps.Search.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.Maps.Search.Models
             Optional<int> offset = default;
             Optional<int> totalResults = default;
             Optional<int> fuzzyLevel = default;
-            Optional<GeoPosition> geoBias = default;
+            Optional<LatLongPairAbbreviated> geoBias = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("query"))
@@ -108,11 +107,11 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    geoBias = property.Value.();
+                    geoBias = LatLongPairAbbreviated.DeserializeLatLongPairAbbreviated(property.Value);
                     continue;
                 }
             }
-            return new SearchSummary(query.Value, Optional.ToNullable(queryType), Optional.ToNullable(queryTime), Optional.ToNullable(numResults), Optional.ToNullable(limit), Optional.ToNullable(offset), Optional.ToNullable(totalResults), Optional.ToNullable(fuzzyLevel), geoBias);
+            return new SearchSummary(query.Value, Optional.ToNullable(queryType), Optional.ToNullable(queryTime), Optional.ToNullable(numResults), Optional.ToNullable(limit), Optional.ToNullable(offset), Optional.ToNullable(totalResults), Optional.ToNullable(fuzzyLevel), geoBias.Value);
         }
     }
 }

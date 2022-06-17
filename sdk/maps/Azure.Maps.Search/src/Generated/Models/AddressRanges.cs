@@ -18,23 +18,19 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of AddressRanges. </summary>
         /// <param name="rangeLeft"> Address range on the left side of the street. </param>
         /// <param name="rangeRight"> Address range on the right side of the street. </param>
-        /// <param name="from"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
-        /// <param name="to"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
-        internal AddressRanges(string rangeLeft, string rangeRight, LatLongPairAbbreviated @from, LatLongPairAbbreviated to)
+        /// <param name="fromInternal"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
+        /// <param name="toInternal"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
+        internal AddressRanges(string rangeLeft, string rangeRight, LatLongPairAbbreviated fromInternal, LatLongPairAbbreviated toInternal)
         {
             RangeLeft = rangeLeft;
             RangeRight = rangeRight;
-            From = @from;
-            To = to;
+            FromInternal = fromInternal;
+            ToInternal = toInternal;
         }
 
         /// <summary> Address range on the left side of the street. </summary>
         public string RangeLeft { get; }
         /// <summary> Address range on the right side of the street. </summary>
         public string RangeRight { get; }
-        /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
-        public LatLongPairAbbreviated From { get; }
-        /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
-        public LatLongPairAbbreviated To { get; }
     }
 }

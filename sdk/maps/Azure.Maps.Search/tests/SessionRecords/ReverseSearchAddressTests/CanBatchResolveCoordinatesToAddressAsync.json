@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "258",
         "Content-Type": "application/json",
-        "traceparent": "00-1189f64f133f779f18a159c31f4b8097-5aae660b482f8cc6-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220615.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-ff5aae2ed8de083910a36bcdcfdda1a3-44e74b79e54a484a-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220617.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "846be6061e494cf2b0a12c1402b36c86",
+        "x-ms-client-request-id": "16a126c79542dd35824d1a668bf7d3b5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -27,13 +27,13 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Wed, 15 Jun 2022 15:23:22 GMT",
+        "Date": "Fri, 17 Jun 2022 01:05:25 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: A18C715FF8724364985DE1C82B2A0CEC Ref B: TPE30EDGE0915 Ref C: 2022-06-15T15:23:22Z"
+        "X-MSEdge-Ref": "Ref A: 908FF98F7658413DB76630F3A393DDCB Ref B: TPE30EDGE0613 Ref C: 2022-06-17T01:05:26Z"
       },
       "ResponseBody": {
         "batchItems": [
@@ -78,7 +78,7 @@
             "statusCode": 200,
             "response": {
               "summary": {
-                "queryTime": 2,
+                "queryTime": 3,
                 "numResults": 1
               },
               "addresses": [
@@ -124,6 +124,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1371350459"
+    "RandomSeed": "91325750"
   }
 }

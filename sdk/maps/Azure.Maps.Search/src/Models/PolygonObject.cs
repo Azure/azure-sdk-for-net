@@ -7,7 +7,7 @@ namespace Azure.Maps.Search.Models
 {
     /// <summary> The classification for the POI being returned. </summary>
     [CodeGenModel("Polygon")]
-    public partial class Polygon
+    public partial class PolygonObject
     {
         /// <summary> ID of the returned entity. </summary>
         [CodeGenMember("ProviderID")]

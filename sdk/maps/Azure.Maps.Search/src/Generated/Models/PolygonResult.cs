@@ -16,17 +16,17 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of PolygonResult. </summary>
         internal PolygonResult()
         {
-            Polygons = new ChangeTrackingList<Polygon>();
+            Polygons = new ChangeTrackingList<PolygonObject>();
         }
 
         /// <summary> Initializes a new instance of PolygonResult. </summary>
         /// <param name="polygons"> Results array. </param>
-        internal PolygonResult(IReadOnlyList<Polygon> polygons)
+        internal PolygonResult(IReadOnlyList<PolygonObject> polygons)
         {
             Polygons = polygons;
         }
 
         /// <summary> Results array. </summary>
-        public IReadOnlyList<Polygon> Polygons { get; }
+        public IReadOnlyList<PolygonObject> Polygons { get; }
     }
 }

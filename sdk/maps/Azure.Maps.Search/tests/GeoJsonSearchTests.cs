@@ -67,17 +67,6 @@ namespace Azure.Maps.Search.Tests
                 ]
             }";
             GeoPolygon polygon = JsonSerializer.Deserialize<GeoPolygon>(polygonString);
-            // var json = JsonSerializer.Deserialize<JsonElement>(polygonString, new JsonSerializerOptions {});
-            // List<List<List<double>>> coordinates = FromPolygonJsonElement(polygonString);
-            // var polygon = new GeoJsonPolygon(new[] {
-            //     new[] {
-            //         new[] { -122.43576049804686, 37.7524152343544 },
-            //         new[] { -122.43301391601563, 37.706604725423119 },
-            //         new[] { -122.36434936523438, 37.712059855877314 },
-            //         new[] { -122.43576049804686, 37.7524152343544 }
-            //     }
-            // });
-
             var searchResponse = await client.SearchInsideGeometryAsync("coffee", polygon);
             Assert.AreEqual("San Francisco", searchResponse.Value.Results.First().Address.Municipality);
             Assert.IsNotNull("CAFE_PUB", searchResponse.Value.Results.First().PointOfInterest.Classifications.First().Code);
@@ -111,9 +100,6 @@ namespace Azure.Maps.Search.Tests
                     ]
                 ]}
             ";
-
-            // var json = JsonSerializer.Deserialize<JsonElement>(polygonString, new JsonSerializerOptions {});
-            // var polygon = GeoJsonPolygon.FromJsonElement(json);
             GeoPolygon polygon = JsonSerializer.Deserialize<GeoPolygon>(polygonString);
             var searchResponse = await client.SearchInsideGeometryAsync("coffee", polygon);
             Assert.AreEqual("San Francisco", searchResponse.Value.Results.First().Address.Municipality);
@@ -125,15 +111,6 @@ namespace Azure.Maps.Search.Tests
         {
             var client = CreateClient();
 
-            // var sfPolygon = new GeoJsonPolygon(new[] {
-            //     new[] {
-            //         new[] { -122.43576049804686, 37.7524152343544 },
-            //         new[] { -122.43301391601563, 37.706604725423119 },
-            //         new[] { -122.36434936523438, 37.712059855877314 },
-            //         new[] { -122.43576049804686, 37.7524152343544 }
-            //     }
-            // });
-
             var sfPolygon = new GeoPolygon(new[]
             {
                 new GeoPosition(-122.43576049804686, 37.7524152343544),
@@ -141,16 +118,6 @@ namespace Azure.Maps.Search.Tests
                 new GeoPosition(-122.36434936523438, 37.712059855877314),
                 new GeoPosition(-122.43576049804686, 37.7524152343544)
             });
-
-            // var taipeiPolygon = new GeoJsonPolygon(new[] {
-            //     new[] {
-            //         new[] { 121.56, 25.04 },
-            //         new[] { 121.565, 25.04 },
-            //         new[] { 121.565, 25.045 },
-            //         new[] { 121.56, 25.045 },
-            //         new[] { 121.56, 25.04 },
-            //     }
-            // });
 
             var taipeiPolygon = new GeoPolygon(new[]
             {
@@ -160,6 +127,7 @@ namespace Azure.Maps.Search.Tests
                 new GeoPosition(121.56, 25.045),
                 new GeoPosition(121.56, 25.04)
             });
+
             var searchResponse = await client.SearchInsideGeometryAsync("coffee", new GeoCollection(new[] { sfPolygon, taipeiPolygon }), new SearchInsideGeometryOptions {
                 Language = "en"
             });
@@ -173,21 +141,6 @@ namespace Azure.Maps.Search.Tests
         public async Task CanSearchInsideRawGeoJsonGeometryCollection()
         {
             var client = CreateClient();
-
-            // var polygonCollectionString = @"
-            // {
-            //     ""type"": ""MultiPolygon"",
-            //     ""coordinates"": [[[
-            //         [-122.43576049804686,37.7524152343544],
-            //         [-122.43301391601563,37.706604725423119],
-            //         [-122.36434936523438,37.712059855877314],
-            //         [-122.43576049804686,37.7524152343544]]],
-            //         [[[121.56,25.04],
-            //         [121.565,25.04],
-            //         [121.565,25.045],
-            //         [121.56,25.045],
-            //         [121.56,25.04]]]]
-            // }";
             var geometricCollectionString = @"
             {
                 ""type"": ""GeometryCollection"",

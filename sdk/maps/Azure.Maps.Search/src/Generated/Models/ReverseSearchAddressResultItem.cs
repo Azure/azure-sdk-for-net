@@ -31,7 +31,7 @@ namespace Azure.Maps.Search.Models
         ///   * HouseNumberRange
         ///   * Street
         /// </param>
-        internal ReverseSearchAddressResultItem(Address address, string position, IReadOnlyList<RoadUseType> roadUse, MatchType? matchType)
+        internal ReverseSearchAddressResultItem(AddressDetails address, string position, IReadOnlyList<RoadUseType> roadUse, MatchType? matchType)
         {
             Address = address;
             Position = position;
@@ -40,7 +40,7 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> The address of the result. </summary>
-        public Address Address { get; }
+        public AddressDetails Address { get; }
         /// <summary> Position property in the form of &quot;{latitude},{longitude}&quot;. </summary>
         public string Position { get; }
         /// <summary> Gets the road use. </summary>

@@ -15,7 +15,7 @@ namespace Azure.Maps.Search.Models
     {
         internal static ReverseSearchAddressResultItem DeserializeReverseSearchAddressResultItem(JsonElement element)
         {
-            Optional<Address> address = default;
+            Optional<AddressDetails> address = default;
             Optional<string> position = default;
             Optional<IReadOnlyList<RoadUseType>> roadUse = default;
             Optional<MatchType> matchType = default;
@@ -28,7 +28,7 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    address = Address.DeserializeAddress(property.Value);
+                    address = AddressDetails.DeserializeAddressDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("position"))

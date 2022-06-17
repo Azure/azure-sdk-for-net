@@ -6,10 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c20506b4cb7295874641bb8646ec5a12-f51c6f53fc49af56-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220615.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-7c33749ab27b66da6cae4e7c293b571d-ba7a2f033182645e-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220617.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "487abf009d5d5d3116d83969eb9f48d4",
+        "x-ms-client-request-id": "dd22541c23bda443a7b318f2027d5554",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,19 +17,19 @@
       "ResponseHeaders": {
         "Content-Length": "834",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Jun 2022 15:23:27 GMT",
+        "Date": "Fri, 17 Jun 2022 01:05:32 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: D99F28D1F9844F3A8D5B7E8D8BC7185B Ref B: TPE30EDGE0915 Ref C: 2022-06-15T15:23:27Z"
+        "X-MSEdge-Ref": "Ref A: B51E8570C5DE4725AC3219ECE89D56C7 Ref B: TPE30EDGE0613 Ref C: 2022-06-17T01:05:33Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "closeburn",
           "queryType": "NON_NEAR",
-          "queryTime": 3,
+          "queryTime": 9,
           "numResults": 1,
           "offset": 0,
           "totalResults": 1,
@@ -38,7 +38,7 @@
         "results": [
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/3063",
+            "id": "NZ/GEO/p0/1364",
             "score": 2.382011652,
             "entityType": "Municipality",
             "address": {
@@ -88,6 +88,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "226265884"
+    "RandomSeed": "1938981596"
   }
 }

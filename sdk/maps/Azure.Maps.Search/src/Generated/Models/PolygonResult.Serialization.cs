@@ -15,7 +15,7 @@ namespace Azure.Maps.Search.Models
     {
         internal static PolygonResult DeserializePolygonResult(JsonElement element)
         {
-            Optional<IReadOnlyList<Polygon>> additionalData = default;
+            Optional<IReadOnlyList<PolygonObject>> additionalData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("additionalData"))
@@ -25,10 +25,10 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Polygon> array = new List<Polygon>();
+                    List<PolygonObject> array = new List<PolygonObject>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Polygon.DeserializePolygon(item));
+                        array.Add(PolygonObject.DeserializePolygonObject(item));
                     }
                     additionalData = array;
                     continue;

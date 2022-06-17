@@ -8,7 +8,7 @@
 namespace Azure.Maps.Search.Models
 {
     /// <summary> The viewport that covers the result represented by the top-left and bottom-right coordinates of the viewport. </summary>
-    public partial class BoundingBox
+    internal partial class BoundingBox
     {
         /// <summary> Initializes a new instance of BoundingBox. </summary>
         internal BoundingBox()

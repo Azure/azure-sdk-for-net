@@ -6,30 +6,30 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-90cf352109e01b9da01a30e98e54b595-dd9378951cf3b3c8-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220615.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-146dd7cd75e3d9fb33ca00b14ac32873-668032bb92ddef6b-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220617.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "f9c0facdfee82406723673dd9f593cf7",
+        "x-ms-client-request-id": "289640db02475505b7c24ca5a66f11c0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "4420",
+        "Content-Length": "4418",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Jun 2022 15:23:26 GMT",
+        "Date": "Fri, 17 Jun 2022 01:05:31 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 0F0D596AD8E4490B87F2C273CABA2785 Ref B: TPE30EDGE0915 Ref C: 2022-06-15T15:23:26Z"
+        "X-MSEdge-Ref": "Ref A: 95587DD0B67D42A3951C37545C980F06 Ref B: TPE30EDGE0613 Ref C: 2022-06-17T01:05:32Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "redmond",
           "queryType": "NON_NEAR",
-          "queryTime": 29,
+          "queryTime": 5,
           "numResults": 6,
           "offset": 0,
           "totalResults": 6,
@@ -38,7 +38,7 @@
         "results": [
           {
             "type": "Geography",
-            "id": "US/GEO/p0/44761",
+            "id": "US/GEO/p0/66290",
             "score": 2.4457623959,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -86,7 +86,7 @@
           },
           {
             "type": "Geography",
-            "id": "US/GEO/p0/71900",
+            "id": "US/GEO/p0/71393",
             "score": 2.4161009789,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -134,7 +134,7 @@
           },
           {
             "type": "Geography",
-            "id": "US/GEO/p0/89228",
+            "id": "US/GEO/p0/72227",
             "score": 2.3835597038,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -182,7 +182,7 @@
           },
           {
             "type": "Geography",
-            "id": "US/GEO/p0/67778",
+            "id": "US/GEO/p0/48826",
             "score": 2.3822901249,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -230,7 +230,7 @@
           },
           {
             "type": "Geography",
-            "id": "AU/GEO/p0/4527",
+            "id": "AU/GEO/p0/5241",
             "score": 2.3822283745,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -277,7 +277,7 @@
           },
           {
             "type": "Geography",
-            "id": "AU/GEO/p0/14315",
+            "id": "AU/GEO/p0/8190",
             "score": 2.3586585522,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -329,6 +329,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "946783794"
+    "RandomSeed": "192314187"
   }
 }

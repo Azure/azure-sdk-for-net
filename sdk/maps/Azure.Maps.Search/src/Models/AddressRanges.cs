@@ -14,18 +14,22 @@ namespace Azure.Maps.Search.Models
     [CodeGenModel("AddressRanges")]
     public partial class AddressRanges
     {
-        // /// <param name="from"> </param>
-        // /// <param name="to"> </param>
-        // public AddressRanges(GeoPosition from, GeoPosition to) {
-        //     this.From = new LatLon(from.Latitude, from.Longitude);
-        //     this.To = new LatLon(to.Latitude, to.Longitude);
-        // }
+        /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
+        [CodeGenMember("From")]
+        internal LatLongPairAbbreviated FromInternal { get; }
 
-        // /// Comment
-        // [CodeGenMember("From")]
-        // public LatLon From { get; }
-        // /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
-        // [CodeGenMember("To")]
-        // public LatLon To { get; }
+        /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
+        [CodeGenMember("To")]
+        internal LatLongPairAbbreviated ToInternal { get; }
+
+        /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
+        public GeoPosition From {
+            get { return new GeoPosition((double) FromInternal.Lon, (double) FromInternal.Lat); }
+        }
+
+        /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
+        public GeoPosition To {
+            get { return new GeoPosition((double) ToInternal.Lon, (double) ToInternal.Lat); }
+        }
     }
 }

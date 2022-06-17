@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Core.GeoJson;
-
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Summary object for a Search API response. </summary>
@@ -26,8 +24,8 @@ namespace Azure.Maps.Search.Models
         /// <param name="skip"> The starting offset of the returned Results within the full Result set. </param>
         /// <param name="totalResults"> The total number of Results found. </param>
         /// <param name="fuzzyLevel"> The maximum fuzzy level required to provide Results. </param>
-        /// <param name="geoBias"> Indication when the internal search engine has applied a geospatial bias to improve the ranking of results.  In  some methods, this can be affected by setting the lat and lon parameters where available.  In other cases it is  purely internal. </param>
-        internal SearchSummary(string query, QueryType? queryType, int? queryTime, int? numResults, int? top, int? skip, int? totalResults, int? fuzzyLevel, GeoPosition geoBias)
+        /// <param name="geoBiasInternal"> Indication when the internal search engine has applied a geospatial bias to improve the ranking of results.  In  some methods, this can be affected by setting the lat and lon parameters where available.  In other cases it is  purely internal. </param>
+        internal SearchSummary(string query, QueryType? queryType, int? queryTime, int? numResults, int? top, int? skip, int? totalResults, int? fuzzyLevel, LatLongPairAbbreviated geoBiasInternal)
         {
             Query = query;
             QueryType = queryType;
@@ -37,7 +35,7 @@ namespace Azure.Maps.Search.Models
             Skip = skip;
             TotalResults = totalResults;
             FuzzyLevel = fuzzyLevel;
-            GeoBias = geoBias;
+            GeoBiasInternal = geoBiasInternal;
         }
 
         /// <summary> The query parameter that was used to produce these search results. </summary>

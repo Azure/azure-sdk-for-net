@@ -11,15 +11,15 @@ using Azure.Core;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> The address of the result. </summary>
-    public partial class Address
+    public partial class AddressDetails
     {
-        /// <summary> Initializes a new instance of Address. </summary>
-        internal Address()
+        /// <summary> Initializes a new instance of AddressDetails. </summary>
+        internal AddressDetails()
         {
             RouteNumbers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of Address. </summary>
+        /// <summary> Initializes a new instance of AddressDetails. </summary>
         /// <param name="buildingNumber"> The building number on the street. DEPRECATED, use streetNumber instead. </param>
         /// <param name="street"> The street name. DEPRECATED, use streetName instead. </param>
         /// <param name="crossStreet"> The name of the street being crossed. </param>
@@ -41,7 +41,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="countrySubdivisionName"> The full name of a first level of country administrative hierarchy. This field appears only in case countrySubdivision is presented in an abbreviated form. Only supported for USA, Canada, and Great Britain. </param>
         /// <param name="localName"> An address component which represents the name of a geographic area or locality that groups a number of addressable objects for addressing purposes, without being an administrative unit. This field is used to build the `freeformAddress` property. </param>
         /// <param name="boundingBox"> The bounding box of the location. </param>
-        internal Address(string buildingNumber, string street, string crossStreet, string streetNumber, IReadOnlyList<string> routeNumbers, string streetName, string streetNameAndNumber, string municipality, string municipalitySubdivision, string countryTertiarySubdivision, string countrySecondarySubdivision, string countrySubdivision, string postalCode, string extendedPostalCode, string countryCode, string country, string countryCodeISO3, string freeformAddress, string countrySubdivisionName, string localName, BoundingBoxCompassNotation boundingBox)
+        internal AddressDetails(string buildingNumber, string street, string crossStreet, string streetNumber, IReadOnlyList<string> routeNumbers, string streetName, string streetNameAndNumber, string municipality, string municipalitySubdivision, string countryTertiarySubdivision, string countrySecondarySubdivision, string countrySubdivision, string postalCode, string extendedPostalCode, string countryCode, string country, string countryCodeISO3, string freeformAddress, string countrySubdivisionName, string localName, BoundingBoxCompassNotation boundingBox)
         {
             BuildingNumber = buildingNumber;
             Street = street;

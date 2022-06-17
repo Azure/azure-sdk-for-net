@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class BoundingBox
+    internal partial class BoundingBox
     {
         internal static BoundingBox DeserializeBoundingBox(JsonElement element)
         {

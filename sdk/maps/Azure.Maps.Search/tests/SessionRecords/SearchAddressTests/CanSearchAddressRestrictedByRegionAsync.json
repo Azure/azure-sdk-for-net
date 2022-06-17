@@ -6,30 +6,30 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-88a074d19c9615cb8b9f557c66dc19ec-eb5f82e81c27acd9-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220615.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-3140ec5171c4f43b7ec026189f794f86-c7a3275434fa1c5d-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220617.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "0077ecd659d44d86f4ffca7a11425979",
+        "x-ms-client-request-id": "7e2c3ba1dd6cd18c37b91e69b7c52c9b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "4855",
+        "Content-Length": "4856",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Jun 2022 15:23:29 GMT",
+        "Date": "Fri, 17 Jun 2022 01:05:36 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 75FBB0B65500404AAA01CBF3F0674022 Ref B: TPE30EDGE0915 Ref C: 2022-06-15T15:23:29Z"
+        "X-MSEdge-Ref": "Ref A: 79D02CE16D874D1CB0365CF5F8D6BE27 Ref B: TPE30EDGE0613 Ref C: 2022-06-17T01:05:37Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "road",
           "queryType": "NON_NEAR",
-          "queryTime": 7,
+          "queryTime": 10,
           "numResults": 10,
           "offset": 0,
           "totalResults": 386,
@@ -355,39 +355,39 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-e160e7162c5430bf3254593c932d8f37-23f4a575a6136eb0-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220615.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-3d85e50bc9dc6a44ed8c71bb78780d92-127a23585c86865f-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220617.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "34b5fb44981eeb4d2c62554cce64f4ad",
+        "x-ms-client-request-id": "64adea874e084b128986867f0ef796ad",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "6760",
+        "Content-Length": "6985",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Jun 2022 15:23:29 GMT",
+        "Date": "Fri, 17 Jun 2022 01:05:36 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 3AAFEEC27063420CBDD99A3A474CDEF2 Ref B: TPE30EDGE0915 Ref C: 2022-06-15T15:23:29Z"
+        "X-MSEdge-Ref": "Ref A: 9A20FCB0B99F4DAEABC040718CAF803D Ref B: TPE30EDGE0613 Ref C: 2022-06-17T01:05:37Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "road",
           "queryType": "NON_NEAR",
-          "queryTime": 5,
+          "queryTime": 6,
           "numResults": 10,
           "offset": 0,
-          "totalResults": 25948,
+          "totalResults": 25956,
           "fuzzyLevel": 1
         },
         "results": [
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/3655",
+            "id": "NZ/GEO/p0/3553",
             "score": 2.3589038849,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -435,7 +435,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/638",
+            "id": "NZ/GEO/p0/3883",
             "score": 2.3587200642,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -531,7 +531,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/4453",
+            "id": "NZ/GEO/p0/1573",
             "score": 2.3585665226,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -579,7 +579,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/2945",
+            "id": "NZ/GEO/p0/3147",
             "score": 2.3584132195,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -627,7 +627,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/1371",
+            "id": "NZ/GEO/p0/3043",
             "score": 2.0992157459,
             "entityType": "Neighbourhood",
             "matchConfidence": {
@@ -676,129 +676,135 @@
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/7116",
+            "id": "NZ/STR/p0/6361",
             "score": 2.0962057114,
             "matchConfidence": {
-              "score": 0.7754023817821617
+              "score": 0.7763272166993227
             },
             "address": {
-              "streetName": "Middlemiss Road",
-              "countrySecondarySubdivision": "Canterbury",
-              "countryTertiarySubdivision": "Timaru",
+              "streetName": "Conroys Road",
+              "countrySecondarySubdivision": "Otago",
+              "countryTertiarySubdivision": "Central Otago",
               "countrySubdivision": "South Island",
               "countryCode": "NZ",
               "country": "New Zealand",
               "countryCodeISO3": "NZL",
-              "freeformAddress": "Middlemiss Road, Timaru"
+              "freeformAddress": "Conroys Road, Central Otago"
             },
             "position": {
-              "lat": -44.05374,
-              "lon": 171.21314
+              "lat": -45.27032,
+              "lon": 169.33167
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -44.04525,
-                "lon": 171.20346
+                "lat": -45.26169,
+                "lon": 169.32178
               },
               "btmRightPoint": {
-                "lat": -44.06324,
-                "lon": 171.22848
+                "lat": -45.27967,
+                "lon": 169.34734
               }
             }
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/7121",
+            "id": "NZ/STR/p0/6364",
             "score": 2.0962057114,
             "matchConfidence": {
-              "score": 0.7759031899734428
+              "score": 0.7770253336854853
             },
             "address": {
-              "streetName": "Kaparu Road",
-              "countrySecondarySubdivision": "Marlborough",
-              "countryTertiarySubdivision": "Marlborough",
+              "streetName": "Radcliffe Road",
+              "municipality": "Christchurch",
+              "countrySecondarySubdivision": "Canterbury",
+              "countryTertiarySubdivision": "Christchurch",
               "countrySubdivision": "South Island",
               "countryCode": "NZ",
               "country": "New Zealand",
               "countryCodeISO3": "NZL",
-              "freeformAddress": "Kaparu Road, Marlborough"
+              "freeformAddress": "Radcliffe Road, Christchurch, Christchurch",
+              "localName": "Christchurch"
             },
             "position": {
-              "lat": -41.71415,
-              "lon": 174.14085
+              "lat": -43.46324,
+              "lon": 172.63714
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -41.71014,
-                "lon": 174.14207
+                "lat": -43.45468,
+                "lon": 172.62452
               },
               "btmRightPoint": {
-                "lat": -41.72812,
-                "lon": 174.16616
+                "lat": -43.47267,
+                "lon": 172.64931
               }
             }
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/7126",
+            "id": "NZ/STR/p0/6381",
             "score": 2.0962057114,
             "matchConfidence": {
-              "score": 0.7759031899734428
+              "score": 0.7842035090316161
             },
             "address": {
-              "streetName": "Tondros Road",
-              "countrySecondarySubdivision": "Canterbury",
-              "countryTertiarySubdivision": "Mackenzie",
-              "countrySubdivision": "South Island",
+              "streetName": "Harris Road",
+              "municipalitySubdivision": "Mount Wellington",
+              "municipality": "Auckland",
+              "countrySecondarySubdivision": "Auckland",
+              "countryTertiarySubdivision": "Auckland",
+              "countrySubdivision": "North Island",
+              "postalCode": "1051, 1060",
               "countryCode": "NZ",
               "country": "New Zealand",
               "countryCodeISO3": "NZL",
-              "freeformAddress": "Tondros Road, Mackenzie"
+              "freeformAddress": "Harris Road, Mount Wellington, Auckland 1051, 1060",
+              "localName": "Mount Wellington"
             },
             "position": {
-              "lat": -44.09562,
-              "lon": 170.8686
+              "lat": -36.8952,
+              "lon": 174.83311
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -44.08933,
-                "lon": 170.86216
+                "lat": -36.89329,
+                "lon": 174.831
               },
               "btmRightPoint": {
-                "lat": -44.10732,
-                "lon": 170.8872
+                "lat": -36.89681,
+                "lon": 174.83409
               }
             }
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/7131",
+            "id": "NZ/STR/p0/6384",
             "score": 2.0962057114,
             "matchConfidence": {
-              "score": 0.7759031899734428
+              "score": 0.7842035090316161
             },
             "address": {
-              "streetName": "Surveyors Road",
-              "countrySecondarySubdivision": "Canterbury",
-              "countryTertiarySubdivision": "Ashburton",
-              "countrySubdivision": "South Island",
+              "streetName": "Harris Road",
+              "countrySecondarySubdivision": "Northland",
+              "countryTertiarySubdivision": "Whangarei",
+              "countrySubdivision": "North Island",
               "countryCode": "NZ",
               "country": "New Zealand",
               "countryCodeISO3": "NZL",
-              "freeformAddress": "Surveyors Road, Ashburton"
+              "freeformAddress": "Harris Road, Whangarei"
             },
             "position": {
-              "lat": -44.05015,
-              "lon": 171.60599
+              "lat": -35.68327,
+              "lon": 174.36679
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -44.04529,
-                "lon": 171.59675
+                "lat": -35.67233,
+                "lon": 174.35792
               },
               "btmRightPoint": {
-                "lat": -44.06327,
-                "lon": 171.62177
+                "lat": -35.69032,
+                "lon": 174.38007
               }
             }
           }
@@ -809,6 +815,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "951450940"
+    "RandomSeed": "1455787021"
   }
 }

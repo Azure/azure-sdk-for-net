@@ -6,30 +6,30 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-7001d6a45873524090424d8d8d879440-f0e5e1c99a1e9795-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220615.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-426a754edc8fbfc31947cbaa98bfa7fc-c5e86496aff88536-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220617.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "d445bde0fe071c837ddd72a916b27f31",
+        "x-ms-client-request-id": "003c039c8a48899368fcccd173a49f1e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "6765",
+        "Content-Length": "6886",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Jun 2022 15:23:24 GMT",
+        "Date": "Fri, 17 Jun 2022 01:05:28 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: A19C5705DB9449D484FACC409BF83801 Ref B: TPE30EDGE0915 Ref C: 2022-06-15T15:23:24Z"
+        "X-MSEdge-Ref": "Ref A: 1B7E35B87EB9447087C07B217BCFDBD8 Ref B: TPE30EDGE0613 Ref C: 2022-06-17T01:05:29Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "seattle",
           "queryType": "NON_NEAR",
-          "queryTime": 7,
+          "queryTime": 51,
           "numResults": 10,
           "offset": 0,
           "totalResults": 267,
@@ -38,7 +38,7 @@
         "results": [
           {
             "type": "Geography",
-            "id": "US/GEO/p0/43021",
+            "id": "US/GEO/p0/65094",
             "score": 2.5828008652,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -86,7 +86,7 @@
           },
           {
             "type": "Geography",
-            "id": "MX/GEO/p0/22219",
+            "id": "MX/GEO/p0/23529",
             "score": 2.1768069267,
             "entityType": "MunicipalitySubdivision",
             "matchConfidence": {
@@ -133,11 +133,11 @@
           },
           {
             "type": "Geography",
-            "id": "MX/GEO/p0/22103",
+            "id": "MX/GEO/p0/23413",
             "score": 2.1554658413,
             "entityType": "MunicipalitySubdivision",
             "matchConfidence": {
-              "score": 0.8767918195584238
+              "score": 0.8767918105153754
             },
             "address": {
               "municipalitySubdivision": "Ecol\u00F3gica Seattle",
@@ -180,11 +180,11 @@
           },
           {
             "type": "Geography",
-            "id": "MX/GEO/p0/21945",
+            "id": "MX/GEO/p0/23255",
             "score": 2.1345388889,
             "entityType": "MunicipalitySubdivision",
             "matchConfidence": {
-              "score": 0.873262649962553
+              "score": 0.8732623594518495
             },
             "address": {
               "municipalitySubdivision": "Jardines Seattle Unidad",
@@ -227,7 +227,7 @@
           },
           {
             "type": "Street",
-            "id": "MX/STR/p0/728980",
+            "id": "MX/STR/p0/1304764",
             "score": 2.1169600487,
             "matchConfidence": {
               "score": 1
@@ -260,179 +260,181 @@
           },
           {
             "type": "Street",
-            "id": "US/STR/p0/86185",
+            "id": "US/STR/p0/741880",
             "score": 2.1169600487,
             "matchConfidence": {
               "score": 1
             },
             "address": {
               "streetName": "Seattle Street",
-              "municipality": "Buffalo",
-              "countrySecondarySubdivision": "Erie",
-              "countrySubdivision": "NY",
-              "countrySubdivisionName": "New York",
+              "municipalitySubdivision": "Cooper Young",
+              "municipality": "Memphis",
+              "countrySecondarySubdivision": "Shelby",
+              "countrySubdivision": "TN",
+              "countrySubdivisionName": "Tennessee",
+              "postalCode": "38114",
+              "extendedPostalCode": "38114-1729, 38114-1730, 38114-1731, 38114-1732, 38114-1826, 38114-1827",
               "countryCode": "US",
               "country": "United States",
               "countryCodeISO3": "USA",
-              "freeformAddress": "Seattle Street, Buffalo, NY",
-              "localName": "Buffalo"
+              "freeformAddress": "Seattle Street, Memphis, TN 38114",
+              "localName": "Memphis"
             },
             "position": {
-              "lat": 42.95758,
-              "lon": -78.83682
+              "lat": 35.11933,
+              "lon": -90.00257
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 42.95774,
-                "lon": -78.83832
+                "lat": 35.12126,
+                "lon": -90.00312
               },
               "btmRightPoint": {
-                "lat": 42.95754,
-                "lon": -78.83145
+                "lat": 35.1165,
+                "lon": -90.00246
               }
             }
           },
           {
             "type": "Street",
-            "id": "US/STR/p0/555284",
+            "id": "US/STR/p0/1646185",
             "score": 2.1169600487,
             "matchConfidence": {
               "score": 1
             },
             "address": {
               "streetName": "Seattle Street",
-              "municipality": "Cuyahoga Falls",
-              "countrySecondarySubdivision": "Summit",
-              "countrySubdivision": "OH",
-              "countrySubdivisionName": "Ohio",
-              "postalCode": "44221",
-              "extendedPostalCode": "44221-4452, 44221-4453, 44221-4454, 44221-4455",
+              "municipalitySubdivision": "West End",
+              "municipality": "New Orleans",
+              "countrySecondarySubdivision": "Orleans",
+              "countrySubdivision": "LA",
+              "countrySubdivisionName": "Louisiana",
+              "postalCode": "70124",
+              "extendedPostalCode": "70124-1431, 70124-1432, 70124-1433, 70124-1434",
               "countryCode": "US",
               "country": "United States",
               "countryCodeISO3": "USA",
-              "freeformAddress": "Seattle Street, Cuyahoga Falls, OH 44221",
-              "localName": "Cuyahoga Falls"
+              "freeformAddress": "Seattle Street, New Orleans, LA 70124",
+              "localName": "New Orleans"
             },
             "position": {
-              "lat": 41.13215,
-              "lon": -81.45829
+              "lat": 30.01277,
+              "lon": -90.11963
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 41.13366,
-                "lon": -81.45834
+                "lat": 30.01279,
+                "lon": -90.1209
               },
               "btmRightPoint": {
-                "lat": 41.13046,
-                "lon": -81.45823
+                "lat": 30.01269,
+                "lon": -90.11809
               }
             }
           },
           {
             "type": "Street",
-            "id": "US/STR/p0/801332",
+            "id": "US/STR/p0/2236449",
             "score": 2.1169600487,
             "matchConfidence": {
               "score": 1
             },
             "address": {
               "streetName": "Seattle Street",
-              "municipality": "Northwoods",
-              "countrySecondarySubdivision": "Saint Louis County",
-              "countrySubdivision": "MO",
-              "countrySubdivisionName": "Missouri",
-              "postalCode": "63121",
-              "extendedPostalCode": "63121-3031, 63121-3032, 63121-3033, 63121-3034",
-              "countryCode": "US",
-              "country": "United States",
-              "countryCodeISO3": "USA",
-              "freeformAddress": "Seattle Street, Saint Louis, MO 63121",
-              "localName": "Saint Louis"
-            },
-            "position": {
-              "lat": 38.70526,
-              "lon": -90.27657
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": 38.70687,
-                "lon": -90.27695
-              },
-              "btmRightPoint": {
-                "lat": 38.70471,
-                "lon": -90.27538
-              }
-            }
-          },
-          {
-            "type": "Street",
-            "id": "US/STR/p0/1580038",
-            "score": 2.1169600487,
-            "matchConfidence": {
-              "score": 1
-            },
-            "address": {
-              "streetName": "Seattle Court",
-              "municipality": "Freehold Township",
-              "countrySecondarySubdivision": "Monmouth",
-              "countrySubdivision": "NJ",
-              "countrySubdivisionName": "New Jersey",
-              "postalCode": "07728",
-              "extendedPostalCode": "07728-3601, 07728-3650",
-              "countryCode": "US",
-              "country": "United States",
-              "countryCodeISO3": "USA",
-              "freeformAddress": "Seattle Court, Freehold, NJ 07728",
-              "localName": "Freehold"
-            },
-            "position": {
-              "lat": 40.21189,
-              "lon": -74.26523
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": 40.2121,
-                "lon": -74.26527
-              },
-              "btmRightPoint": {
-                "lat": 40.2117,
-                "lon": -74.26462
-              }
-            }
-          },
-          {
-            "type": "Street",
-            "id": "US/STR/p0/3084190",
-            "score": 2.1169600487,
-            "matchConfidence": {
-              "score": 1
-            },
-            "address": {
-              "streetName": "Seattle Drive",
-              "municipality": "Port Ludlow",
-              "countrySecondarySubdivision": "Jefferson",
+              "municipality": "Okanogan",
+              "countrySecondarySubdivision": "Okanogan",
               "countrySubdivision": "WA",
               "countrySubdivisionName": "Washington",
-              "postalCode": "98365",
-              "extendedPostalCode": "98365-8256, 98365-8281, 98365-8282",
+              "postalCode": "98840",
+              "extendedPostalCode": "98840-9508, 98840-9749",
               "countryCode": "US",
               "country": "United States",
               "countryCodeISO3": "USA",
-              "freeformAddress": "Seattle Drive, Port Ludlow, WA 98365",
-              "localName": "Port Ludlow"
+              "freeformAddress": "Seattle Street, Okanogan, WA 98840",
+              "localName": "Okanogan"
             },
             "position": {
-              "lat": 47.83538,
-              "lon": -122.69371
+              "lat": 48.3601,
+              "lon": -119.58941
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 47.83859,
-                "lon": -122.69375
+                "lat": 48.36118,
+                "lon": -119.59161
               },
               "btmRightPoint": {
-                "lat": 47.83071,
-                "lon": -122.69168
+                "lat": 48.35945,
+                "lon": -119.58635
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "US/STR/p0/2322995",
+            "score": 2.1169600487,
+            "matchConfidence": {
+              "score": 1
+            },
+            "address": {
+              "streetName": "East Seattle Avenue",
+              "municipality": "Ellensburg",
+              "countrySecondarySubdivision": "Kittitas",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "East Seattle Avenue, Ellensburg, WA",
+              "localName": "Ellensburg"
+            },
+            "position": {
+              "lat": 46.98765,
+              "lon": -120.52736
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 46.99676,
+                "lon": -120.54071
+              },
+              "btmRightPoint": {
+                "lat": 46.97877,
+                "lon": -120.51434
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "US/STR/p0/2322999",
+            "score": 2.1169600487,
+            "matchConfidence": {
+              "score": 1
+            },
+            "address": {
+              "streetName": "East Seattle Avenue",
+              "municipality": "Moxee",
+              "countrySecondarySubdivision": "Yakima",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "postalCode": "98936",
+              "extendedPostalCode": "98936-1341, 98936-9036, 98936-9637, 98936-9639, 98936-9640",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "East Seattle Avenue, Moxee, WA 98936",
+              "localName": "Moxee"
+            },
+            "position": {
+              "lat": 46.55285,
+              "lon": -120.38185
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 46.55428,
+                "lon": -120.38552
+              },
+              "btmRightPoint": {
+                "lat": 46.54967,
+                "lon": -120.38036
               }
             }
           }
@@ -443,6 +445,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "2092032330"
+    "RandomSeed": "250305742"
   }
 }

@@ -6,33 +6,33 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-6b99c88354cf63388d47f716db2004f6-915daf2019c9408e-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220615.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-c304727d2b85f542872062accaf6cc2b-610d4a457934f20e-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220617.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "8ce9755a5f729983bc4d4656a1424fc0",
+        "x-ms-client-request-id": "9918d0c0554ecf019be0eba417de2690",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "10487",
+        "Content-Length": "10488",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Jun 2022 15:23:14 GMT",
+        "Date": "Fri, 17 Jun 2022 01:05:16 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 4A977FD88C0E4F0B915C45F1724646B1 Ref B: TPE30EDGE0915 Ref C: 2022-06-15T15:23:15Z"
+        "X-MSEdge-Ref": "Ref A: D7584B661C924D7DB2C74EB792717DCC Ref B: TPE30EDGE0613 Ref C: 2022-06-17T01:05:17Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "coffee",
           "queryType": "NON_NEAR",
-          "queryTime": 9,
+          "queryTime": 11,
           "numResults": 10,
           "offset": 0,
-          "totalResults": 1802495,
+          "totalResults": 1802517,
           "fuzzyLevel": 1,
           "geoBias": {
             "lat": 25.04,
@@ -418,78 +418,6 @@
           },
           {
             "type": "POI",
-            "id": "158009001789613",
-            "score": 2.5745120049,
-            "dist": 220.2243834162837,
-            "info": "search:ta:158009001789613-TW",
-            "poi": {
-              "name": "louisacoffee yi xian dian",
-              "phone": "\u002B886 2 8780 4613",
-              "categorySet": [
-                {
-                  "id": 9376006
-                }
-              ],
-              "categories": [
-                "caf\u00E9/pub",
-                "coffee shop"
-              ],
-              "classifications": [
-                {
-                  "code": "CAFE_PUB",
-                  "names": [
-                    {
-                      "nameLocale": "en-US",
-                      "name": "coffee shop"
-                    },
-                    {
-                      "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
-                    }
-                  ]
-                }
-              ]
-            },
-            "address": {
-              "streetNumber": "6",
-              "streetName": "Yixian Road Lane 50",
-              "municipalitySubdivision": "Xinyi District",
-              "municipality": "Taipei City",
-              "countrySubdivision": "Taipei City",
-              "postalCode": "110",
-              "extendedPostalCode": "11071",
-              "countryCode": "TW",
-              "country": "Taiwan",
-              "countryCodeISO3": "TWN",
-              "freeformAddress": "6, Yixian Road Lane 50, Xinyi District, Taipei City 11071",
-              "localName": "Xinyi District"
-            },
-            "position": {
-              "lat": 25.04055,
-              "lon": 121.5621
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": 25.04145,
-                "lon": 121.56111
-              },
-              "btmRightPoint": {
-                "lat": 25.03965,
-                "lon": 121.56309
-              }
-            },
-            "entryPoints": [
-              {
-                "type": "main",
-                "position": {
-                  "lat": 25.04064,
-                  "lon": 121.5621
-                }
-              }
-            ]
-          },
-          {
-            "type": "POI",
             "id": "158009001771249",
             "score": 2.5745120049,
             "dist": 220.2243834162837,
@@ -567,6 +495,78 @@
             "info": "search:ta:158009001710928-TW",
             "poi": {
               "name": "ou li jiang ka fei guan",
+              "categorySet": [
+                {
+                  "id": 9376006
+                }
+              ],
+              "categories": [
+                "caf\u00E9/pub",
+                "coffee shop"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "coffee shop"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "6",
+              "streetName": "Yixian Road Lane 50",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "extendedPostalCode": "11071",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "6, Yixian Road Lane 50, Xinyi District, Taipei City 11071",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04055,
+              "lon": 121.5621
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04145,
+                "lon": 121.56111
+              },
+              "btmRightPoint": {
+                "lat": 25.03965,
+                "lon": 121.56309
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04064,
+                  "lon": 121.5621
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "158009001789613",
+            "score": 2.5745120049,
+            "dist": 220.2243834162837,
+            "info": "search:ta:158009001789613-TW",
+            "poi": {
+              "name": "louisacoffee yi xian dian",
+              "phone": "\u002B886 2 8780 4613",
               "categorySet": [
                 {
                   "id": 9376006
@@ -737,11 +737,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "tea house"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "tea house"
+                      "name": "caf\u00E9/pub"
                     }
                   ]
                 }
@@ -792,6 +792,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1880432625"
+    "RandomSeed": "1685823655"
   }
 }

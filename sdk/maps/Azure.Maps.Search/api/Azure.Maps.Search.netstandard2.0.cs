@@ -18,50 +18,36 @@ namespace Azure.Maps.Search
         protected SearchClient() { }
         public SearchClient(Azure.AzureKeyCredential credential, System.Uri endpoint = null, Azure.Maps.Search.SearchClientOptions options = null) { }
         public SearchClient(Azure.Core.TokenCredential credential, System.Uri endpoint = null, string clientId = null, Azure.Maps.Search.SearchClientOptions options = null) { }
-        public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> FuzzySearch(string query, Azure.Maps.Search.Models.LatLon coordinates, Azure.Maps.Search.Models.FuzzySearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> FuzzySearch(string query, Azure.Maps.Search.Models.LatLon coordinates, System.Collections.Generic.IEnumerable<string> countryFilter, Azure.Maps.Search.Models.FuzzySearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> FuzzySearch(string query, System.Collections.Generic.IEnumerable<string> countryFilter, Azure.Maps.Search.Models.FuzzySearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> FuzzySearchAsync(string query, Azure.Maps.Search.Models.LatLon coordinates, Azure.Maps.Search.Models.FuzzySearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> FuzzySearchAsync(string query, Azure.Maps.Search.Models.LatLon coordinates, System.Collections.Generic.IEnumerable<string> countryFilter, Azure.Maps.Search.Models.FuzzySearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> FuzzySearchAsync(string query, System.Collections.Generic.IEnumerable<string> countryFilter, Azure.Maps.Search.Models.FuzzySearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> FuzzySearch(string query, Azure.Maps.Search.Models.FuzzySearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> FuzzySearchAsync(string query, Azure.Maps.Search.Models.FuzzySearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressBatchResult> FuzzySearchBatch(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.FuzzySearchQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressBatchResult>> FuzzySearchBatchAsync(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.FuzzySearchQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Search.Models.PointOfInterestCategoryTreeResult> GetPointOfInterestCategoryTree(string language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.PointOfInterestCategoryTreeResult>> GetPointOfInterestCategoryTreeAsync(string language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Search.Models.PolygonResult> ListPolygons(System.Collections.Generic.IEnumerable<string> geometryIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.PolygonResult>> ListPolygonsAsync(System.Collections.Generic.IEnumerable<string> geometryIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.ReverseSearchAddressResult> ReverseSearchAddress(Azure.Maps.Search.Models.LatLon coordinates, Azure.Maps.Search.Models.ReverseSearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.ReverseSearchAddressResult>> ReverseSearchAddressAsync(Azure.Maps.Search.Models.LatLon coordinates, Azure.Maps.Search.Models.ReverseSearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.ReverseSearchAddressBatchProcessResult> ReverseSearchAddressBatch(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ReverseSearchAddressQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.ReverseSearchAddressBatchProcessResult>> ReverseSearchAddressBatchAsync(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ReverseSearchAddressQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResult> ReverseSearchCrossStreetAddress(Azure.Maps.Search.Models.LatLon coordinates, Azure.Maps.Search.Models.ReverseSearchCrossStreetOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResult>> ReverseSearchCrossStreetAddressAsync(Azure.Maps.Search.Models.LatLon coordinates, Azure.Maps.Search.Models.ReverseSearchCrossStreetOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Search.Models.ReverseSearchAddressResult> ReverseSearchAddress(Azure.Maps.Search.Models.ReverseSearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.ReverseSearchAddressResult>> ReverseSearchAddressAsync(Azure.Maps.Search.Models.ReverseSearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Search.Models.ReverseSearchAddressBatchResult> ReverseSearchAddressBatch(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ReverseSearchAddressQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.ReverseSearchAddressBatchResult>> ReverseSearchAddressBatchAsync(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ReverseSearchAddressQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResult> ReverseSearchCrossStreetAddress(Azure.Maps.Search.Models.ReverseSearchCrossStreetOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResult>> ReverseSearchCrossStreetAddressAsync(Azure.Maps.Search.Models.ReverseSearchCrossStreetOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchAddress(string query, Azure.Maps.Search.Models.SearchAddressOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchAddressAsync(string query, Azure.Maps.Search.Models.SearchAddressOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressBatchResult> SearchAddressBatch(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.SearchAddressQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressBatchResult>> SearchAddressBatchAsync(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.SearchAddressQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchInsideGeometry(string query, Azure.Maps.Search.Models.GeoJsonPolygon polygon, Azure.Maps.Search.Models.SearchInsideGeometryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchInsideGeometry(string query, Azure.Maps.Search.Models.SearchInsideFeatureCollection featureCollection, Azure.Maps.Search.Models.SearchInsideGeometryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchInsideGeometry(string query, Azure.Maps.Search.Models.SearchInsideGeometryCollection geometryCollection, Azure.Maps.Search.Models.SearchInsideGeometryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchInsideGeometryAsync(string query, Azure.Maps.Search.Models.GeoJsonPolygon polygon, Azure.Maps.Search.Models.SearchInsideGeometryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchInsideGeometryAsync(string query, Azure.Maps.Search.Models.SearchInsideFeatureCollection featureCollection, Azure.Maps.Search.Models.SearchInsideGeometryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchInsideGeometryAsync(string query, Azure.Maps.Search.Models.SearchInsideGeometryCollection geometryCollection, Azure.Maps.Search.Models.SearchInsideGeometryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchNearbyPointOfInterest(Azure.Maps.Search.Models.LatLon coordinates, Azure.Maps.Search.Models.SearchNearbyPointOfInterestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchNearbyPointOfInterestAsync(Azure.Maps.Search.Models.LatLon coordinates, Azure.Maps.Search.Models.SearchNearbyPointOfInterestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchPointOfInterest(string query, Azure.Maps.Search.Models.LatLon coordinates, Azure.Maps.Search.Models.SearchPointOfInterestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchPointOfInterest(string query, Azure.Maps.Search.Models.LatLon coordinates, System.Collections.Generic.IEnumerable<string> countryFilter, Azure.Maps.Search.Models.SearchPointOfInterestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchPointOfInterest(string query, System.Collections.Generic.IEnumerable<string> countryFilter, Azure.Maps.Search.Models.SearchPointOfInterestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchPointOfInterestAlongRoute(string query, int maxDetourTime, Azure.Maps.Search.Models.GeoJsonLineString route, Azure.Maps.Search.Models.SearchAlongRouteOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchPointOfInterestAlongRouteAsync(string query, int maxDetourTime, Azure.Maps.Search.Models.GeoJsonLineString route, Azure.Maps.Search.Models.SearchAlongRouteOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchPointOfInterestAsync(string query, Azure.Maps.Search.Models.LatLon coordinates, Azure.Maps.Search.Models.SearchPointOfInterestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchPointOfInterestAsync(string query, Azure.Maps.Search.Models.LatLon coordinates, System.Collections.Generic.IEnumerable<string> countryFilter, Azure.Maps.Search.Models.SearchPointOfInterestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchPointOfInterestAsync(string query, System.Collections.Generic.IEnumerable<string> countryFilter, Azure.Maps.Search.Models.SearchPointOfInterestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchPointOfInterestCategory(string query, Azure.Maps.Search.Models.LatLon coordinates, Azure.Maps.Search.Models.SearchPointOfInterestCategoryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchPointOfInterestCategory(string query, Azure.Maps.Search.Models.LatLon coordinates, System.Collections.Generic.IEnumerable<string> countryFilter, Azure.Maps.Search.Models.SearchPointOfInterestCategoryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchPointOfInterestCategory(string query, System.Collections.Generic.IEnumerable<string> countryFilter, Azure.Maps.Search.Models.SearchPointOfInterestCategoryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchPointOfInterestCategoryAsync(string query, Azure.Maps.Search.Models.LatLon coordinates, Azure.Maps.Search.Models.SearchPointOfInterestCategoryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchPointOfInterestCategoryAsync(string query, Azure.Maps.Search.Models.LatLon coordinates, System.Collections.Generic.IEnumerable<string> countryFilter, Azure.Maps.Search.Models.SearchPointOfInterestCategoryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchPointOfInterestCategoryAsync(string query, System.Collections.Generic.IEnumerable<string> countryFilter, Azure.Maps.Search.Models.SearchPointOfInterestCategoryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchInsideGeometry(string query, Azure.Core.GeoJson.GeoCollection geometryCollection, Azure.Maps.Search.Models.SearchInsideGeometryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchInsideGeometry(string query, Azure.Core.GeoJson.GeoObject geometry, Azure.Maps.Search.Models.SearchInsideGeometryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchInsideGeometryAsync(string query, Azure.Core.GeoJson.GeoCollection geometryCollection, Azure.Maps.Search.Models.SearchInsideGeometryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchInsideGeometryAsync(string query, Azure.Core.GeoJson.GeoObject geometry, Azure.Maps.Search.Models.SearchInsideGeometryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchNearbyPointOfInterest(Azure.Maps.Search.Models.SearchNearbyPointOfInterestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchNearbyPointOfInterestAsync(Azure.Maps.Search.Models.SearchNearbyPointOfInterestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchPointOfInterest(string query, bool IsTypeAhead, Azure.Maps.Search.Models.OperatingHoursRange OperatingHours, Azure.Core.GeoJson.GeoBoundingBox BoundingBox, Azure.Maps.Search.Models.SearchPointOfInterestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchPointOfInterestAlongRoute(string query, int maxDetourTime, Azure.Core.GeoJson.GeoLineString route, Azure.Maps.Search.Models.SearchAlongRouteOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchPointOfInterestAlongRouteAsync(string query, int maxDetourTime, Azure.Core.GeoJson.GeoLineString route, Azure.Maps.Search.Models.SearchAlongRouteOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchPointOfInterestAsync(string query, bool IsTypeAhead, Azure.Maps.Search.Models.OperatingHoursRange OperatingHours, Azure.Core.GeoJson.GeoBoundingBox BoundingBox, Azure.Maps.Search.Models.SearchPointOfInterestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchPointOfInterestCategory(Azure.Maps.Search.Models.SearchPointOfInterestCategoryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchPointOfInterestCategoryAsync(Azure.Maps.Search.Models.SearchPointOfInterestCategoryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> SearchStructuredAddress(Azure.Maps.Search.Models.StructuredAddress address, Azure.Maps.Search.Models.SearchStructuredAddressOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> SearchStructuredAddressAsync(Azure.Maps.Search.Models.StructuredAddress address, Azure.Maps.Search.Models.SearchStructuredAddressOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Maps.Search.SearchFuzzySearchBatchOperation StartFuzzySearchBatch(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.FuzzySearchQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -111,18 +97,18 @@ namespace Azure.Maps.Search
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Search.Models.SearchAddressBatchResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Search.Models.SearchAddressBatchResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SearchGetReverseSearchAddressBatchOperation : Azure.Operation<Azure.Maps.Search.Models.ReverseSearchAddressBatchProcessResult>
+    public partial class SearchGetReverseSearchAddressBatchOperation : Azure.Operation<Azure.Maps.Search.Models.ReverseSearchAddressBatchResult>
     {
         protected SearchGetReverseSearchAddressBatchOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
-        public override Azure.Maps.Search.Models.ReverseSearchAddressBatchProcessResult Value { get { throw null; } }
+        public override Azure.Maps.Search.Models.ReverseSearchAddressBatchResult Value { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Search.Models.ReverseSearchAddressBatchProcessResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Search.Models.ReverseSearchAddressBatchProcessResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Search.Models.ReverseSearchAddressBatchResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Search.Models.ReverseSearchAddressBatchResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SearchGetSearchAddressBatchOperation : Azure.Operation<Azure.Maps.Search.Models.SearchAddressBatchResult>
     {
@@ -137,26 +123,26 @@ namespace Azure.Maps.Search
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Search.Models.SearchAddressBatchResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Search.Models.SearchAddressBatchResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SearchReverseSearchAddressBatchOperation : Azure.Operation<Azure.Maps.Search.Models.ReverseSearchAddressBatchProcessResult>
+    public partial class SearchReverseSearchAddressBatchOperation : Azure.Operation<Azure.Maps.Search.Models.ReverseSearchAddressBatchResult>
     {
         protected SearchReverseSearchAddressBatchOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
-        public override Azure.Maps.Search.Models.ReverseSearchAddressBatchProcessResult Value { get { throw null; } }
+        public override Azure.Maps.Search.Models.ReverseSearchAddressBatchResult Value { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Search.Models.ReverseSearchAddressBatchProcessResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Search.Models.ReverseSearchAddressBatchProcessResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Search.Models.ReverseSearchAddressBatchResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Maps.Search.Models.ReverseSearchAddressBatchResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.Maps.Search.Models
 {
-    public partial class Address
+    public partial class AddressDetails
     {
-        internal Address() { }
-        public object BoundingBox { get { throw null; } }
+        internal AddressDetails() { }
+        public Azure.Maps.Search.Models.BoundingBoxCompassNotation BoundingBox { get { throw null; } }
         public string BuildingNumber { get { throw null; } }
         public string Country { get { throw null; } }
         public string CountryCode { get { throw null; } }
@@ -172,7 +158,7 @@ namespace Azure.Maps.Search.Models
         public string Municipality { get { throw null; } }
         public string MunicipalitySubdivision { get { throw null; } }
         public string PostalCode { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<int> RouteNumbers { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> RouteNumbers { get { throw null; } }
         public string Street { get { throw null; } }
         public string StreetName { get { throw null; } }
         public string StreetNameAndNumber { get { throw null; } }
@@ -181,10 +167,10 @@ namespace Azure.Maps.Search.Models
     public partial class AddressRanges
     {
         internal AddressRanges() { }
-        public Azure.Maps.Search.Models.LatLon From { get { throw null; } }
+        public Azure.Core.GeoJson.GeoPosition From { get { throw null; } }
         public string RangeLeft { get { throw null; } }
         public string RangeRight { get { throw null; } }
-        public Azure.Maps.Search.Models.LatLon To { get { throw null; } }
+        public Azure.Core.GeoJson.GeoPosition To { get { throw null; } }
     }
     public partial class BatchResult
     {
@@ -205,35 +191,21 @@ namespace Azure.Maps.Search.Models
     }
     public partial class BoundingBox
     {
-        public BoundingBox(Azure.Maps.Search.Models.LatLon northWest, Azure.Maps.Search.Models.LatLon southEast) { }
-        public BoundingBox(double north, double east, double south, double west) { }
-        public double Bottom { get { throw null; } }
-        public Azure.Maps.Search.Models.LatLon BottomLeft { get { throw null; } }
-        public Azure.Maps.Search.Models.LatLon BottomRight { get { throw null; } }
-        public double East { get { throw null; } }
-        public double Left { get { throw null; } }
-        public double North { get { throw null; } }
-        public Azure.Maps.Search.Models.LatLon NorthEast { get { throw null; } }
-        public Azure.Maps.Search.Models.LatLon NorthWest { get { throw null; } }
-        public double Right { get { throw null; } }
-        public double South { get { throw null; } }
-        public Azure.Maps.Search.Models.LatLon SouthEast { get { throw null; } }
-        public Azure.Maps.Search.Models.LatLon SouthWest { get { throw null; } }
-        public double Top { get { throw null; } }
-        public Azure.Maps.Search.Models.LatLon TopLeft { get { throw null; } }
-        public Azure.Maps.Search.Models.LatLon TopRight { get { throw null; } }
-        public double West { get { throw null; } }
+        internal BoundingBox() { }
+        public Azure.Maps.Search.Models.LatLongPairAbbreviated BottomRight { get { throw null; } }
+        public Azure.Maps.Search.Models.LatLongPairAbbreviated TopLeft { get { throw null; } }
+    }
+    public partial class BoundingBoxCompassNotation
+    {
+        internal BoundingBoxCompassNotation() { }
+        public Azure.Maps.Search.Models.Entity? Entity { get { throw null; } }
+        public string NorthEast { get { throw null; } }
+        public string SouthWest { get { throw null; } }
     }
     public partial class BrandName
     {
         internal BrandName() { }
         public string Name { get { throw null; } }
-    }
-    public partial class Classification
-    {
-        internal Classification() { }
-        public string Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.ClassificationName> Names { get { throw null; } }
     }
     public partial class ClassificationName
     {
@@ -273,10 +245,27 @@ namespace Azure.Maps.Search.Models
         public static bool operator !=(Azure.Maps.Search.Models.ElectricVehicleConnector left, Azure.Maps.Search.Models.ElectricVehicleConnector right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct Entity : System.IEquatable<Azure.Maps.Search.Models.Entity>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public Entity(string value) { throw null; }
+        public static Azure.Maps.Search.Models.Entity Position { get { throw null; } }
+        public bool Equals(Azure.Maps.Search.Models.Entity other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Maps.Search.Models.Entity left, Azure.Maps.Search.Models.Entity right) { throw null; }
+        public static implicit operator Azure.Maps.Search.Models.Entity (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.Search.Models.Entity left, Azure.Maps.Search.Models.Entity right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class EntryPoint
     {
         internal EntryPoint() { }
-        public Azure.Maps.Search.Models.LatLon Position { get { throw null; } }
+        public Azure.Core.GeoJson.GeoPosition Position { get { throw null; } }
         public Azure.Maps.Search.Models.EntryPointType? Type { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -320,17 +309,18 @@ namespace Azure.Maps.Search.Models
     public partial class FuzzySearchOptions : Azure.Maps.Search.Models.SearchPointOfInterestOptions
     {
         public FuzzySearchOptions() { }
+        public Azure.Core.GeoJson.GeoBoundingBox BoundingBox { get { throw null; } set { } }
         public Azure.Maps.Search.Models.GeographicEntityType? EntityType { get { throw null; } set { } }
         public new System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.SearchIndexes> ExtendedPostalCodesFor { get { throw null; } set { } }
         public System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.SearchIndexes> IndexFilter { get { throw null; } set { } }
+        public bool? IsTypeAhead { get { throw null; } set { } }
         public int? MaxFuzzyLevel { get { throw null; } set { } }
         public int? MinFuzzyLevel { get { throw null; } set { } }
+        public Azure.Maps.Search.Models.OperatingHoursRange? OperatingHours { get { throw null; } set { } }
     }
     public partial class FuzzySearchQuery : Azure.Maps.Search.Models.IQueryRepresentable
     {
-        public FuzzySearchQuery(string query, Azure.Maps.Search.Models.LatLon coordinates, Azure.Maps.Search.Models.FuzzySearchOptions options = null) { }
-        public FuzzySearchQuery(string query, Azure.Maps.Search.Models.LatLon coordinates, System.Collections.Generic.IEnumerable<string> countryFilter, Azure.Maps.Search.Models.FuzzySearchOptions options = null) { }
-        public FuzzySearchQuery(string query, System.Collections.Generic.IEnumerable<string> countryFilter, Azure.Maps.Search.Models.FuzzySearchOptions options = null) { }
+        public FuzzySearchQuery(string query, Azure.Maps.Search.Models.FuzzySearchOptions options = null) { }
         public string Query(Azure.Maps.Search.SearchClient client) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -356,17 +346,6 @@ namespace Azure.Maps.Search.Models
         public static implicit operator Azure.Maps.Search.Models.GeographicEntityType (string value) { throw null; }
         public static bool operator !=(Azure.Maps.Search.Models.GeographicEntityType left, Azure.Maps.Search.Models.GeographicEntityType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class GeoJsonCircleFeature : Azure.Maps.Search.Models.GeoJsonFeature
-    {
-        public GeoJsonCircleFeature(Azure.Maps.Search.Models.GeoJsonGeometry geometry) : base (default(Azure.Maps.Search.Models.GeoJsonGeometry)) { }
-        public static Azure.Maps.Search.Models.GeoJsonCircleFeature FromJsonElement(System.Text.Json.JsonElement element) { throw null; }
-    }
-    public partial class GeoJsonCircleFeatureProperties
-    {
-        public GeoJsonCircleFeatureProperties() { }
-        public float? Radius { get { throw null; } set { } }
-        public Azure.Maps.Search.Models.SubType? SubType { get { throw null; } set { } }
     }
     public partial class GeoJsonFeature : Azure.Maps.Search.Models.GeoJsonObject
     {
@@ -412,7 +391,6 @@ namespace Azure.Maps.Search.Models
     {
         public GeoJsonLineString(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<double>> coordinates) { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<double>> Coordinates { get { throw null; } }
-        public static Azure.Maps.Search.Models.GeoJsonLineString FromJsonElement(System.Text.Json.JsonElement element) { throw null; }
     }
     public partial class GeoJsonLineStringData
     {
@@ -428,11 +406,6 @@ namespace Azure.Maps.Search.Models
     {
         public GeoJsonMultiLineStringData(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> coordinates) { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> Coordinates { get { throw null; } }
-    }
-    public partial class GeoJsonMultiPoint : Azure.Maps.Search.Models.GeoJsonGeometry
-    {
-        public GeoJsonMultiPoint(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<double>> coordinates) { }
-        public System.Collections.Generic.IList<System.Collections.Generic.IList<double>> Coordinates { get { throw null; } }
     }
     public partial class GeoJsonMultiPointData
     {
@@ -452,6 +425,18 @@ namespace Azure.Maps.Search.Models
     public partial class GeoJsonObject
     {
         public GeoJsonObject() { }
+    }
+    public enum GeoJsonObjectType
+    {
+        GeoJsonPoint = 0,
+        GeoJsonMultiPoint = 1,
+        GeoJsonLineString = 2,
+        GeoJsonMultiLineString = 3,
+        GeoJsonPolygon = 4,
+        GeoJsonMultiPolygon = 5,
+        GeoJsonGeometryCollection = 6,
+        GeoJsonFeature = 7,
+        GeoJsonFeatureCollection = 8,
     }
     public partial class GeoJsonPoint : Azure.Maps.Search.Models.GeoJsonGeometry
     {
@@ -474,11 +459,6 @@ namespace Azure.Maps.Search.Models
         public GeoJsonPolygonData(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> coordinates) { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> Coordinates { get { throw null; } }
     }
-    public partial class GeoJsonPolygonFeature : Azure.Maps.Search.Models.GeoJsonFeature
-    {
-        public GeoJsonPolygonFeature(Azure.Maps.Search.Models.GeoJsonGeometry geometry) : base (default(Azure.Maps.Search.Models.GeoJsonGeometry)) { }
-        public static Azure.Maps.Search.Models.GeoJsonPolygonFeature FromJsonElement(System.Text.Json.JsonElement element) { throw null; }
-    }
     public partial class GeometryIdentifier
     {
         internal GeometryIdentifier() { }
@@ -488,32 +468,11 @@ namespace Azure.Maps.Search.Models
     {
         string Query(Azure.Maps.Search.SearchClient client);
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct JsonFormat : System.IEquatable<Azure.Maps.Search.Models.JsonFormat>
+    public partial class LatLongPairAbbreviated
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public JsonFormat(string value) { throw null; }
-        public static Azure.Maps.Search.Models.JsonFormat Json { get { throw null; } }
-        public bool Equals(Azure.Maps.Search.Models.JsonFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Search.Models.JsonFormat left, Azure.Maps.Search.Models.JsonFormat right) { throw null; }
-        public static implicit operator Azure.Maps.Search.Models.JsonFormat (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Search.Models.JsonFormat left, Azure.Maps.Search.Models.JsonFormat right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class LatLon
-    {
-        public LatLon(double latitude, double longitude) { }
-        public double Lat { get { throw null; } }
-        public double Latitude { get { throw null; } }
-        public double Lon { get { throw null; } }
-        public double Longitude { get { throw null; } }
-        public static implicit operator double[] (Azure.Maps.Search.Models.LatLon latLong) { throw null; }
-        public override string ToString() { throw null; }
+        internal LatLongPairAbbreviated() { }
+        public double? Lat { get { throw null; } }
+        public double? Lon { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LocalizedMapView : System.IEquatable<Azure.Maps.Search.Models.LocalizedMapView>
@@ -591,25 +550,19 @@ namespace Azure.Maps.Search.Models
         public static bool operator !=(Azure.Maps.Search.Models.OperatingHoursRange left, Azure.Maps.Search.Models.OperatingHoursRange right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class OperatingHoursTime
-    {
-        internal OperatingHoursTime() { }
-        public string Date { get { throw null; } }
-        public int? Hour { get { throw null; } }
-        public int? Minute { get { throw null; } }
-    }
     public partial class OperatingHoursTimeRange
     {
         internal OperatingHoursTimeRange() { }
-        public Azure.Maps.Search.Models.OperatingHoursTime EndTime { get { throw null; } }
-        public Azure.Maps.Search.Models.OperatingHoursTime StartTime { get { throw null; } }
+        public System.DateTimeOffset EndTime { get { throw null; } }
+        public System.DateTimeOffset StartTime { get { throw null; } }
     }
     public partial class PointOfInterest
     {
         internal PointOfInterest() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.BrandName> Brands { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Categories { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.PointOfInterestCategorySet> CategorySet { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.Classification> Classifications { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.PointOfInterestClassification> Classifications { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.Maps.Search.Models.OperatingHours OperatingHours { get { throw null; } }
         public string Phone { get { throw null; } }
@@ -633,6 +586,12 @@ namespace Azure.Maps.Search.Models
         internal PointOfInterestCategoryTreeResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.PointOfInterestCategory> Categories { get { throw null; } }
     }
+    public partial class PointOfInterestClassification
+    {
+        internal PointOfInterestClassification() { }
+        public string Code { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.ClassificationName> Names { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PointOfInterestExtendedPostalCodes : System.IEquatable<Azure.Maps.Search.Models.PointOfInterestExtendedPostalCodes>
     {
@@ -655,17 +614,7 @@ namespace Azure.Maps.Search.Models
     {
         internal Polygon() { }
         public Azure.Maps.Search.Models.GeoJsonFeatureCollection GeometryData { get { throw null; } }
-        public string ProviderID { get { throw null; } }
-    }
-    public partial class PolygonOrGeometryCollectionOrFeatureCollection
-    {
-        public PolygonOrGeometryCollectionOrFeatureCollection() { }
-    }
-    public enum PolygonOrGeometryCollectionOrFeatureCollectionType
-    {
-        GeoJsonPolygon = 0,
-        GeoJsonGeometryCollection = 1,
-        GeoJsonFeatureCollection = 2,
+        public string ProviderId { get { throw null; } }
     }
     public partial class PolygonResult
     {
@@ -722,14 +671,14 @@ namespace Azure.Maps.Search.Models
         internal ReverseSearchAddressBatchItemResponse() { }
         public Azure.Maps.Search.Models.ErrorDetail Error { get { throw null; } }
     }
-    public partial class ReverseSearchAddressBatchProcessResult : Azure.Maps.Search.Models.BatchResult
+    public partial class ReverseSearchAddressBatchResult : Azure.Maps.Search.Models.BatchResult
     {
-        internal ReverseSearchAddressBatchProcessResult() { }
+        internal ReverseSearchAddressBatchResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.ReverseSearchAddressBatchItem> BatchItems { get { throw null; } }
     }
     public partial class ReverseSearchAddressQuery : Azure.Maps.Search.Models.IQueryRepresentable
     {
-        public ReverseSearchAddressQuery(Azure.Maps.Search.Models.LatLon coordinates, Azure.Maps.Search.Models.ReverseSearchOptions options = null) { }
+        public ReverseSearchAddressQuery(Azure.Maps.Search.Models.ReverseSearchOptions options = null) { }
         public string Query(Azure.Maps.Search.SearchClient client) { throw null; }
     }
     public partial class ReverseSearchAddressResult
@@ -743,7 +692,7 @@ namespace Azure.Maps.Search.Models
     public partial class ReverseSearchAddressResultItem
     {
         internal ReverseSearchAddressResultItem() { }
-        public Azure.Maps.Search.Models.Address Address { get { throw null; } }
+        public Azure.Maps.Search.Models.AddressDetails Address { get { throw null; } }
         public Azure.Maps.Search.Models.MatchType? MatchType { get { throw null; } }
         public string Position { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.RoadUseType> RoadUse { get { throw null; } }
@@ -751,6 +700,7 @@ namespace Azure.Maps.Search.Models
     public partial class ReverseSearchBaseOptions
     {
         public ReverseSearchBaseOptions() { }
+        public Azure.Core.GeoJson.GeoPosition? coordinates { get { throw null; } set { } }
         public int? Heading { get { throw null; } set { } }
         public string Language { get { throw null; } set { } }
         public Azure.Maps.Search.Models.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
@@ -767,7 +717,7 @@ namespace Azure.Maps.Search.Models
     public partial class ReverseSearchCrossStreetAddressResultItem
     {
         internal ReverseSearchCrossStreetAddressResultItem() { }
-        public Azure.Maps.Search.Models.Address Address { get { throw null; } }
+        public Azure.Maps.Search.Models.AddressDetails Address { get { throw null; } }
         public string Position { get { throw null; } }
     }
     public partial class ReverseSearchCrossStreetOptions : Azure.Maps.Search.Models.ReverseSearchBaseOptions
@@ -811,8 +761,8 @@ namespace Azure.Maps.Search.Models
     public partial class SearchAddressBaseOptions : Azure.Maps.Search.Models.SearchBaseOptions
     {
         public SearchAddressBaseOptions() { }
-        public Azure.Maps.Search.Models.BoundingBox BoundingBox { get { throw null; } set { } }
-        public bool? IsTypeAhead { get { throw null; } set { } }
+        public Azure.Core.GeoJson.GeoPosition? Coordinates { get { throw null; } set { } }
+        public System.Collections.Generic.IEnumerable<string> CountryFilter { get { throw null; } set { } }
         public int? RadiusInMeters { get { throw null; } set { } }
     }
     public partial class SearchAddressBatchItem : Azure.Maps.Search.Models.BatchResultItem
@@ -820,7 +770,7 @@ namespace Azure.Maps.Search.Models
         internal SearchAddressBatchItem() { }
         public Azure.Maps.Search.Models.ErrorDetail Error { get { throw null; } }
         public int? FuzzyLevel { get { throw null; } }
-        public Azure.Maps.Search.Models.LatLon GeoBias { get { throw null; } }
+        public Azure.Core.GeoJson.GeoPosition GeoBias { get { throw null; } }
         public int? NumResults { get { throw null; } }
         public string Query { get { throw null; } }
         public int? QueryTime { get { throw null; } }
@@ -843,10 +793,10 @@ namespace Azure.Maps.Search.Models
     public partial class SearchAddressOptions : Azure.Maps.Search.Models.SearchAddressBaseOptions
     {
         public SearchAddressOptions() { }
-        public Azure.Maps.Search.Models.LatLon Coordinates { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<string> CountryFilter { get { throw null; } set { } }
+        public Azure.Core.GeoJson.GeoBoundingBox BoundingBox { get { throw null; } set { } }
         public Azure.Maps.Search.Models.GeographicEntityType? EntityType { get { throw null; } set { } }
         public System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.SearchIndexes> ExtendedPostalCodesFor { get { throw null; } set { } }
+        public bool? IsTypeAhead { get { throw null; } set { } }
     }
     public partial class SearchAddressQuery : Azure.Maps.Search.Models.IQueryRepresentable
     {
@@ -857,7 +807,7 @@ namespace Azure.Maps.Search.Models
     {
         internal SearchAddressResult() { }
         public int? FuzzyLevel { get { throw null; } }
-        public Azure.Maps.Search.Models.LatLon GeoBias { get { throw null; } }
+        public Azure.Core.GeoJson.GeoPosition GeoBias { get { throw null; } }
         public int? NumResults { get { throw null; } }
         public string Query { get { throw null; } }
         public int? QueryTime { get { throw null; } }
@@ -870,21 +820,21 @@ namespace Azure.Maps.Search.Models
     public partial class SearchAddressResultItem
     {
         internal SearchAddressResultItem() { }
-        public Azure.Maps.Search.Models.Address Address { get { throw null; } }
+        public Azure.Maps.Search.Models.AddressDetails Address { get { throw null; } }
         public Azure.Maps.Search.Models.AddressRanges AddressRanges { get { throw null; } }
+        public string DataSourceInfo { get { throw null; } }
         public Azure.Maps.Search.Models.DataSource DataSources { get { throw null; } }
         public int? DetourTime { get { throw null; } }
         public double? DistanceInMeters { get { throw null; } }
         public Azure.Maps.Search.Models.GeographicEntityType? EntityType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.EntryPoint> EntryPoints { get { throw null; } }
         public string Id { get { throw null; } }
-        public string Info { get { throw null; } }
         public Azure.Maps.Search.Models.MatchType? MatchType { get { throw null; } }
         public Azure.Maps.Search.Models.PointOfInterest PointOfInterest { get { throw null; } }
-        public Azure.Maps.Search.Models.LatLon Position { get { throw null; } }
+        public Azure.Core.GeoJson.GeoPosition Position { get { throw null; } }
         public double? Score { get { throw null; } }
         public Azure.Maps.Search.Models.SearchAddressResultType? Type { get { throw null; } }
-        public Azure.Maps.Search.Models.BoundingBox Viewport { get { throw null; } }
+        public Azure.Core.GeoJson.GeoBoundingBox Viewport { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SearchAddressResultType : System.IEquatable<Azure.Maps.Search.Models.SearchAddressResultType>
@@ -917,6 +867,7 @@ namespace Azure.Maps.Search.Models
     public partial class SearchAlongRouteRequest
     {
         public SearchAlongRouteRequest() { }
+        public SearchAlongRouteRequest(Azure.Core.GeoJson.GeoLineString Route) { }
         public Azure.Maps.Search.Models.GeoJsonLineString Route { get { throw null; } set { } }
     }
     public partial class SearchBaseOptions
@@ -957,19 +908,6 @@ namespace Azure.Maps.Search.Models
         public static bool operator !=(Azure.Maps.Search.Models.SearchIndexes left, Azure.Maps.Search.Models.SearchIndexes right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SearchInsideFeatureCollection : Azure.Maps.Search.Models.PolygonOrGeometryCollectionOrFeatureCollection
-    {
-        public SearchInsideFeatureCollection(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeoJsonFeature> features) { }
-        public System.Collections.Generic.IList<Azure.Maps.Search.Models.GeoJsonFeature> Features { get { throw null; } }
-        public static Azure.Maps.Search.Models.SearchInsideFeatureCollection FromJsonElement(System.Text.Json.JsonElement element) { throw null; }
-    }
-    public partial class SearchInsideGeometryCollection : Azure.Maps.Search.Models.PolygonOrGeometryCollectionOrFeatureCollection
-    {
-        public SearchInsideGeometryCollection(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeoJsonPolygon> geometries) { }
-        public SearchInsideGeometryCollection(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.SearchInsidePolygon> geometries) { }
-        public System.Collections.Generic.IList<Azure.Maps.Search.Models.SearchInsidePolygon> Geometries { get { throw null; } }
-        public static Azure.Maps.Search.Models.SearchInsideGeometryCollection FromJsonElement(System.Text.Json.JsonElement element) { throw null; }
-    }
     public partial class SearchInsideGeometryOptions : Azure.Maps.Search.Models.SearchGeometryBaseOptions
     {
         public SearchInsideGeometryOptions() { }
@@ -977,62 +915,49 @@ namespace Azure.Maps.Search.Models
         public System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.SearchIndexes> IndexFilter { get { throw null; } set { } }
         public string Language { get { throw null; } set { } }
     }
-    public partial class SearchInsideGeometryRequest
-    {
-        public SearchInsideGeometryRequest() { }
-        public Azure.Maps.Search.Models.PolygonOrGeometryCollectionOrFeatureCollection Geometry { get { throw null; } set { } }
-    }
-    public partial class SearchInsidePolygon : Azure.Maps.Search.Models.PolygonOrGeometryCollectionOrFeatureCollection
-    {
-        public SearchInsidePolygon(Azure.Maps.Search.Models.GeoJsonPolygon polygon) { }
-        public SearchInsidePolygon(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> coordinates) { }
-        public System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> Coordinates { get { throw null; } }
-    }
     public static partial class SearchModelFactory
     {
-        public static Azure.Maps.Search.Models.Address Address(string buildingNumber = null, string street = null, string crossStreet = null, string streetNumber = null, System.Collections.Generic.IEnumerable<int> routeNumbers = null, string streetName = null, string streetNameAndNumber = null, string municipality = null, string municipalitySubdivision = null, string countryTertiarySubdivision = null, string countrySecondarySubdivision = null, string countrySubdivision = null, string postalCode = null, string extendedPostalCode = null, string countryCode = null, string country = null, string countryCodeISO3 = null, string freeformAddress = null, string countrySubdivisionName = null, string localName = null, object boundingBox = null) { throw null; }
-        public static Azure.Maps.Search.Models.AddressRanges AddressRanges(string rangeLeft = null, string rangeRight = null, Azure.Maps.Search.Models.LatLon from = null, Azure.Maps.Search.Models.LatLon to = null) { throw null; }
+        public static Azure.Maps.Search.Models.AddressDetails AddressDetails(string buildingNumber = null, string street = null, string crossStreet = null, string streetNumber = null, System.Collections.Generic.IEnumerable<string> routeNumbers = null, string streetName = null, string streetNameAndNumber = null, string municipality = null, string municipalitySubdivision = null, string countryTertiarySubdivision = null, string countrySecondarySubdivision = null, string countrySubdivision = null, string postalCode = null, string extendedPostalCode = null, string countryCode = null, string country = null, string countryCodeISO3 = null, string freeformAddress = null, string countrySubdivisionName = null, string localName = null, Azure.Maps.Search.Models.BoundingBoxCompassNotation boundingBox = null) { throw null; }
         public static Azure.Maps.Search.Models.BatchResultItem BatchResultItem(int? statusCode = default(int?)) { throw null; }
         public static Azure.Maps.Search.Models.BatchResultSummary BatchResultSummary(int? successfulRequests = default(int?), int? totalRequests = default(int?)) { throw null; }
-        public static Azure.Maps.Search.Models.BoundingBox BoundingBox(Azure.Maps.Search.Models.LatLon topLeft = null, Azure.Maps.Search.Models.LatLon bottomRight = null) { throw null; }
+        public static Azure.Maps.Search.Models.BoundingBox BoundingBox(Azure.Maps.Search.Models.LatLongPairAbbreviated topLeft = null, Azure.Maps.Search.Models.LatLongPairAbbreviated bottomRight = null) { throw null; }
+        public static Azure.Maps.Search.Models.BoundingBoxCompassNotation BoundingBoxCompassNotation(string northEast = null, string southWest = null, Azure.Maps.Search.Models.Entity? entity = default(Azure.Maps.Search.Models.Entity?)) { throw null; }
         public static Azure.Maps.Search.Models.BrandName BrandName(string name = null) { throw null; }
-        public static Azure.Maps.Search.Models.Classification Classification(string code = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ClassificationName> names = null) { throw null; }
         public static Azure.Maps.Search.Models.ClassificationName ClassificationName(string nameLocale = null, string name = null) { throw null; }
         public static Azure.Maps.Search.Models.DataSource DataSource(Azure.Maps.Search.Models.GeometryIdentifier geometry = null) { throw null; }
-        public static Azure.Maps.Search.Models.EntryPoint EntryPoint(Azure.Maps.Search.Models.EntryPointType? type = default(Azure.Maps.Search.Models.EntryPointType?), Azure.Maps.Search.Models.LatLon position = null) { throw null; }
         public static Azure.Maps.Search.Models.ErrorAdditionalInfo ErrorAdditionalInfo(string type = null, object info = null) { throw null; }
         public static Azure.Maps.Search.Models.ErrorDetail ErrorDetail(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ErrorDetail> details = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ErrorAdditionalInfo> additionalInfo = null) { throw null; }
         public static Azure.Maps.Search.Models.ErrorResponse ErrorResponse(Azure.Maps.Search.Models.ErrorDetail error = null) { throw null; }
         public static Azure.Maps.Search.Models.GeometryIdentifier GeometryIdentifier(string id = null) { throw null; }
-        public static Azure.Maps.Search.Models.LatLon LatLon(double lat = 0, double lon = 0) { throw null; }
+        public static Azure.Maps.Search.Models.LatLongPairAbbreviated LatLongPairAbbreviated(double? lat = default(double?), double? lon = default(double?)) { throw null; }
         public static Azure.Maps.Search.Models.OperatingHours OperatingHours(string mode = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.OperatingHoursTimeRange> timeRanges = null) { throw null; }
-        public static Azure.Maps.Search.Models.OperatingHoursTime OperatingHoursTime(string date = null, int? hour = default(int?), int? minute = default(int?)) { throw null; }
-        public static Azure.Maps.Search.Models.OperatingHoursTimeRange OperatingHoursTimeRange(Azure.Maps.Search.Models.OperatingHoursTime startTime = null, Azure.Maps.Search.Models.OperatingHoursTime endTime = null) { throw null; }
-        public static Azure.Maps.Search.Models.PointOfInterest PointOfInterest(string name = null, string phone = null, string url = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.PointOfInterestCategorySet> categorySet = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.Classification> classifications = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.BrandName> brands = null, Azure.Maps.Search.Models.OperatingHours operatingHours = null) { throw null; }
+        public static Azure.Maps.Search.Models.PointOfInterest PointOfInterest(string name = null, string phone = null, string url = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.PointOfInterestCategorySet> categorySet = null, System.Collections.Generic.IEnumerable<string> categories = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.PointOfInterestClassification> classifications = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.BrandName> brands = null, Azure.Maps.Search.Models.OperatingHours operatingHours = null) { throw null; }
         public static Azure.Maps.Search.Models.PointOfInterestCategory PointOfInterestCategory(int? id = default(int?), string name = null, System.Collections.Generic.IEnumerable<int> childIds = null, System.Collections.Generic.IEnumerable<string> synonyms = null) { throw null; }
         public static Azure.Maps.Search.Models.PointOfInterestCategorySet PointOfInterestCategorySet(int? id = default(int?)) { throw null; }
         public static Azure.Maps.Search.Models.PointOfInterestCategoryTreeResult PointOfInterestCategoryTreeResult(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.PointOfInterestCategory> categories = null) { throw null; }
-        public static Azure.Maps.Search.Models.Polygon Polygon(string providerID = null, Azure.Maps.Search.Models.GeoJsonFeatureCollection geometryData = null) { throw null; }
+        public static Azure.Maps.Search.Models.PointOfInterestClassification PointOfInterestClassification(string code = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ClassificationName> names = null) { throw null; }
+        public static Azure.Maps.Search.Models.Polygon Polygon(string providerId = null, Azure.Maps.Search.Models.GeoJsonFeatureCollection geometryData = null) { throw null; }
         public static Azure.Maps.Search.Models.PolygonResult PolygonResult(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.Polygon> polygons = null) { throw null; }
         public static Azure.Maps.Search.Models.ReverseSearchAddressBatchItemResponse ReverseSearchAddressBatchItemResponse(Azure.Maps.Search.Models.SearchSummary summary = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ReverseSearchAddressResultItem> addresses = null, Azure.Maps.Search.Models.ErrorDetail error = null) { throw null; }
-        public static Azure.Maps.Search.Models.ReverseSearchAddressBatchProcessResult ReverseSearchAddressBatchProcessResult(Azure.Maps.Search.Models.BatchResultSummary batchSummary = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ReverseSearchAddressBatchItem> batchItems = null) { throw null; }
-        public static Azure.Maps.Search.Models.ReverseSearchAddressResultItem ReverseSearchAddressResultItem(Azure.Maps.Search.Models.Address address = null, string position = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.RoadUseType> roadUse = null, Azure.Maps.Search.Models.MatchType? matchType = default(Azure.Maps.Search.Models.MatchType?)) { throw null; }
-        public static Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResultItem ReverseSearchCrossStreetAddressResultItem(Azure.Maps.Search.Models.Address address = null, string position = null) { throw null; }
+        public static Azure.Maps.Search.Models.ReverseSearchAddressBatchResult ReverseSearchAddressBatchResult(Azure.Maps.Search.Models.BatchResultSummary batchSummary = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ReverseSearchAddressBatchItem> batchItems = null) { throw null; }
+        public static Azure.Maps.Search.Models.ReverseSearchAddressResultItem ReverseSearchAddressResultItem(Azure.Maps.Search.Models.AddressDetails address = null, string position = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.RoadUseType> roadUse = null, Azure.Maps.Search.Models.MatchType? matchType = default(Azure.Maps.Search.Models.MatchType?)) { throw null; }
+        public static Azure.Maps.Search.Models.ReverseSearchCrossStreetAddressResultItem ReverseSearchCrossStreetAddressResultItem(Azure.Maps.Search.Models.AddressDetails address = null, string position = null) { throw null; }
         public static Azure.Maps.Search.Models.SearchAddressBatchItemResponse SearchAddressBatchItemResponse(Azure.Maps.Search.Models.SearchSummary summary = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.SearchAddressResultItem> results = null, Azure.Maps.Search.Models.ErrorDetail error = null) { throw null; }
         public static Azure.Maps.Search.Models.SearchAddressBatchResult SearchAddressBatchResult(Azure.Maps.Search.Models.BatchResultSummary batchSummary = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.SearchAddressBatchItem> batchItems = null) { throw null; }
-        public static Azure.Maps.Search.Models.SearchAddressResultItem SearchAddressResultItem(Azure.Maps.Search.Models.SearchAddressResultType? type = default(Azure.Maps.Search.Models.SearchAddressResultType?), string id = null, double? score = default(double?), double? distanceInMeters = default(double?), string info = null, Azure.Maps.Search.Models.GeographicEntityType? entityType = default(Azure.Maps.Search.Models.GeographicEntityType?), Azure.Maps.Search.Models.PointOfInterest pointOfInterest = null, Azure.Maps.Search.Models.Address address = null, Azure.Maps.Search.Models.LatLon position = null, Azure.Maps.Search.Models.BoundingBox viewport = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.EntryPoint> entryPoints = null, Azure.Maps.Search.Models.AddressRanges addressRanges = null, Azure.Maps.Search.Models.DataSource dataSources = null, Azure.Maps.Search.Models.MatchType? matchType = default(Azure.Maps.Search.Models.MatchType?), int? detourTime = default(int?)) { throw null; }
-        public static Azure.Maps.Search.Models.SearchSummary SearchSummary(string query = null, Azure.Maps.Search.Models.QueryType? queryType = default(Azure.Maps.Search.Models.QueryType?), int? queryTime = default(int?), int? numResults = default(int?), int? top = default(int?), int? skip = default(int?), int? totalResults = default(int?), int? fuzzyLevel = default(int?), Azure.Maps.Search.Models.LatLon geoBias = null) { throw null; }
     }
     public partial class SearchNearbyPointOfInterestOptions : Azure.Maps.Search.Models.SearchPointOfInterestOptions
     {
         public SearchNearbyPointOfInterestOptions() { }
-        public System.Collections.Generic.IEnumerable<string> CountryFilter { get { throw null; } set { } }
         public new System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.SearchIndexes> ExtendedPostalCodesFor { get { throw null; } set { } }
     }
     public partial class SearchPointOfInterestCategoryOptions : Azure.Maps.Search.Models.SearchPointOfInterestOptions
     {
         public SearchPointOfInterestCategoryOptions() { }
+        public Azure.Core.GeoJson.GeoBoundingBox BoundingBox { get { throw null; } set { } }
         public new System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.SearchIndexes> ExtendedPostalCodesFor { get { throw null; } set { } }
+        public bool? IsTypeAhead { get { throw null; } set { } }
+        public Azure.Maps.Search.Models.OperatingHoursRange? OperatingHours { get { throw null; } set { } }
+        public string query { get { throw null; } set { } }
     }
     public partial class SearchPointOfInterestOptions : Azure.Maps.Search.Models.SearchAddressBaseOptions
     {
@@ -1041,7 +966,6 @@ namespace Azure.Maps.Search.Models
         public System.Collections.Generic.IEnumerable<int> CategoryFilter { get { throw null; } set { } }
         public System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ElectricVehicleConnector> ElectricVehicleConnectorFilter { get { throw null; } set { } }
         public System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.PointOfInterestExtendedPostalCodes> ExtendedPostalCodesFor { get { throw null; } set { } }
-        public Azure.Maps.Search.Models.OperatingHoursRange? OperatingHours { get { throw null; } set { } }
     }
     public partial class SearchStructuredAddressOptions : Azure.Maps.Search.Models.SearchBaseOptions
     {
@@ -1053,7 +977,7 @@ namespace Azure.Maps.Search.Models
     {
         internal SearchSummary() { }
         public int? FuzzyLevel { get { throw null; } }
-        public Azure.Maps.Search.Models.LatLon GeoBias { get { throw null; } }
+        public Azure.Core.GeoJson.GeoPosition GeoBias { get { throw null; } }
         public int? NumResults { get { throw null; } }
         public string Query { get { throw null; } }
         public int? QueryTime { get { throw null; } }
@@ -1075,22 +999,5 @@ namespace Azure.Maps.Search.Models
         public string PostalCode { get { throw null; } set { } }
         public string StreetName { get { throw null; } set { } }
         public string StreetNumber { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SubType : System.IEquatable<Azure.Maps.Search.Models.SubType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SubType(string value) { throw null; }
-        public static Azure.Maps.Search.Models.SubType Circle { get { throw null; } }
-        public bool Equals(Azure.Maps.Search.Models.SubType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Search.Models.SubType left, Azure.Maps.Search.Models.SubType right) { throw null; }
-        public static implicit operator Azure.Maps.Search.Models.SubType (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Search.Models.SubType left, Azure.Maps.Search.Models.SubType right) { throw null; }
-        public override string ToString() { throw null; }
     }
 }

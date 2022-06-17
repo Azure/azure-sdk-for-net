@@ -19,7 +19,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="northEast"> North-east latitude,longitude coordinate of the bounding box as comma-separated floats. </param>
         /// <param name="southWest"> South-west latitude,longitude coordinate of the bounding box as comma-separated floats. </param>
         /// <param name="entity"> Entity type source of the bounding box. For reverse-geocoding this is always equal to position. </param>
-        internal BoundingBoxCompassNotation(string northEast, string southWest, Entity? entity)
+        internal BoundingBoxCompassNotation(string northEast, string southWest, EntityType? entity)
         {
             NorthEast = northEast;
             SouthWest = southWest;
@@ -31,6 +31,6 @@ namespace Azure.Maps.Search.Models
         /// <summary> South-west latitude,longitude coordinate of the bounding box as comma-separated floats. </summary>
         public string SouthWest { get; }
         /// <summary> Entity type source of the bounding box. For reverse-geocoding this is always equal to position. </summary>
-        public Entity? Entity { get; }
+        public EntityType? Entity { get; }
     }
 }

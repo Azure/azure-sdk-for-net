@@ -36,8 +36,8 @@ namespace Azure.Maps.Search.Models
         /// <param name="entityType"></param>
         /// <param name="pointOfInterest"> Details of the returned POI including information such as the name, phone, url address, and classifications. </param>
         /// <param name="address"> The address of the result. </param>
-        /// <param name="position"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
-        /// <param name="viewport"> The viewport that covers the result represented by the top-left and bottom-right coordinates of the viewport. </param>
+        /// <param name="positionInternal"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
+        /// <param name="viewportInternal"> The viewport that covers the result represented by the top-left and bottom-right coordinates of the viewport. </param>
         /// <param name="entryPoints"> Array of EntryPoints. Those describe the types of entrances available at the location. The type can be &quot;main&quot; for main entrances such as a front door, or a lobby, and &quot;minor&quot;, for side and back doors. </param>
         /// <param name="addressRanges"> Describes the address range on both sides of the street for a search result. Coordinates for the start and end locations of the address range are included. </param>
         /// <param name="dataSources"> Optional section. Reference geometry id for use with the [Get Search Polygon](https://docs.microsoft.com/rest/api/maps/search/getsearchpolygon) API. </param>
@@ -50,7 +50,7 @@ namespace Azure.Maps.Search.Models
         ///   * Street
         /// </param>
         /// <param name="detourTime"> Detour time in seconds. Only returned for calls to the Search Along Route API. </param>
-        internal SearchAddressResultItem(SearchAddressResultType? type, string id, double? score, double? distanceInMeters, string dataSourceInfo, GeographicEntityType? entityType, PointOfInterest pointOfInterest, Address address, LatLongPairAbbreviated position, BoundingBox viewport, IReadOnlyList<EntryPoint> entryPoints, AddressRanges addressRanges, DataSource dataSources, MatchType? matchType, int? detourTime)
+        internal SearchAddressResultItem(SearchAddressResultType? type, string id, double? score, double? distanceInMeters, string dataSourceInfo, GeographicEntityType? entityType, PointOfInterest pointOfInterest, AddressDetails address, LatLongPairAbbreviated positionInternal, BoundingBox viewportInternal, IReadOnlyList<EntryPoint> entryPoints, AddressRanges addressRanges, DataSource dataSources, MatchType? matchType, int? detourTime)
         {
             Type = type;
             Id = id;
@@ -60,8 +60,8 @@ namespace Azure.Maps.Search.Models
             EntityType = entityType;
             PointOfInterest = pointOfInterest;
             Address = address;
-            Position = position;
-            Viewport = viewport;
+            PositionInternal = positionInternal;
+            ViewportInternal = viewportInternal;
             EntryPoints = entryPoints;
             AddressRanges = addressRanges;
             DataSources = dataSources;
@@ -90,11 +90,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Details of the returned POI including information such as the name, phone, url address, and classifications. </summary>
         public PointOfInterest PointOfInterest { get; }
         /// <summary> The address of the result. </summary>
-        public Address Address { get; }
-        /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
-        public LatLongPairAbbreviated Position { get; }
-        /// <summary> The viewport that covers the result represented by the top-left and bottom-right coordinates of the viewport. </summary>
-        public BoundingBox Viewport { get; }
+        public AddressDetails Address { get; }
         /// <summary> Array of EntryPoints. Those describe the types of entrances available at the location. The type can be &quot;main&quot; for main entrances such as a front door, or a lobby, and &quot;minor&quot;, for side and back doors. </summary>
         public IReadOnlyList<EntryPoint> EntryPoints { get; }
         /// <summary> Describes the address range on both sides of the street for a search result. Coordinates for the start and end locations of the address range are included. </summary>

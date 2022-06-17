@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core.GeoJson;
 
 namespace Azure.Maps.Search.Models
 {
@@ -17,20 +16,20 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of PolygonResult. </summary>
         /// <param name="polygons"> Results array. </param>
         /// <returns> A new <see cref="Models.PolygonResult"/> instance for mocking. </returns>
-        public static PolygonResult PolygonResult(IEnumerable<Polygon> polygons = null)
+        public static PolygonResult PolygonResult(IEnumerable<PolygonObject> polygons = null)
         {
-            polygons ??= new List<Polygon>();
+            polygons ??= new List<PolygonObject>();
 
             return new PolygonResult(polygons?.ToList());
         }
 
-        /// <summary> Initializes a new instance of Polygon. </summary>
+        /// <summary> Initializes a new instance of PolygonObject. </summary>
         /// <param name="providerId"> ID of the returned entity. </param>
         /// <param name="geometryData"> Geometry data in GeoJSON format. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. Present only if &quot;error&quot; is not present. </param>
-        /// <returns> A new <see cref="Models.Polygon"/> instance for mocking. </returns>
-        public static Polygon Polygon(string providerId = null, GeoJsonFeatureCollection geometryData = null)
+        /// <returns> A new <see cref="Models.PolygonObject"/> instance for mocking. </returns>
+        public static PolygonObject PolygonObject(string providerId = null, GeoJsonFeatureCollection geometryData = null)
         {
-            return new Polygon(providerId, geometryData);
+            return new PolygonObject(providerId, geometryData);
         }
 
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
@@ -65,22 +64,6 @@ namespace Azure.Maps.Search.Models
             return new ErrorAdditionalInfo(type, info);
         }
 
-        /// <summary> Initializes a new instance of SearchSummary. </summary>
-        /// <param name="query"> The query parameter that was used to produce these search results. </param>
-        /// <param name="queryType"> The type of query being returned: NEARBY or NON_NEAR. </param>
-        /// <param name="queryTime"> Time spent resolving the query, in milliseconds. </param>
-        /// <param name="numResults"> Number of results in the response. </param>
-        /// <param name="top"> Maximum number of responses that will be returned. </param>
-        /// <param name="skip"> The starting offset of the returned Results within the full Result set. </param>
-        /// <param name="totalResults"> The total number of Results found. </param>
-        /// <param name="fuzzyLevel"> The maximum fuzzy level required to provide Results. </param>
-        /// <param name="geoBias"> Indication when the internal search engine has applied a geospatial bias to improve the ranking of results.  In  some methods, this can be affected by setting the lat and lon parameters where available.  In other cases it is  purely internal. </param>
-        /// <returns> A new <see cref="Models.SearchSummary"/> instance for mocking. </returns>
-        public static SearchSummary SearchSummary(string query = null, QueryType? queryType = null, int? queryTime = null, int? numResults = null, int? top = null, int? skip = null, int? totalResults = null, int? fuzzyLevel = null, GeoPosition geoBias = default)
-        {
-            return new SearchSummary(query, queryType, queryTime, numResults, top, skip, totalResults, fuzzyLevel, geoBias);
-        }
-
         /// <summary> Initializes a new instance of LatLongPairAbbreviated. </summary>
         /// <param name="lat"> Latitude property. </param>
         /// <param name="lon"> Longitude property. </param>
@@ -88,45 +71,6 @@ namespace Azure.Maps.Search.Models
         public static LatLongPairAbbreviated LatLongPairAbbreviated(double? lat = null, double? lon = null)
         {
             return new LatLongPairAbbreviated(lat, lon);
-        }
-
-        /// <summary> Initializes a new instance of SearchAddressResultItem. </summary>
-        /// <param name="type">
-        /// One of:
-        /// * POI
-        /// * Street
-        /// * Geography
-        /// * Point Address
-        /// * Address Range
-        /// * Cross Street
-        /// </param>
-        /// <param name="id"> Id property. </param>
-        /// <param name="score"> The value within a result set to indicate the relative matching score between results.  You can use this to  determine that result x is twice as likely to be as relevant as result y if the value of x is 2x the value of y.   The values vary between queries and is only meant as a relative value for one result set. </param>
-        /// <param name="distanceInMeters"> Straight line distance between the result and geobias location in meters. </param>
-        /// <param name="dataSourceInfo"> Information about the original data source of the Result. Used for support requests. </param>
-        /// <param name="entityType"></param>
-        /// <param name="pointOfInterest"> Details of the returned POI including information such as the name, phone, url address, and classifications. </param>
-        /// <param name="address"> The address of the result. </param>
-        /// <param name="position"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
-        /// <param name="viewport"> The viewport that covers the result represented by the top-left and bottom-right coordinates of the viewport. </param>
-        /// <param name="entryPoints"> Array of EntryPoints. Those describe the types of entrances available at the location. The type can be &quot;main&quot; for main entrances such as a front door, or a lobby, and &quot;minor&quot;, for side and back doors. </param>
-        /// <param name="addressRanges"> Describes the address range on both sides of the street for a search result. Coordinates for the start and end locations of the address range are included. </param>
-        /// <param name="dataSources"> Optional section. Reference geometry id for use with the [Get Search Polygon](https://docs.microsoft.com/rest/api/maps/search/getsearchpolygon) API. </param>
-        /// <param name="matchType">
-        /// Information on the type of match.
-        /// 
-        /// One of:
-        ///   * AddressPoint
-        ///   * HouseNumberRange
-        ///   * Street
-        /// </param>
-        /// <param name="detourTime"> Detour time in seconds. Only returned for calls to the Search Along Route API. </param>
-        /// <returns> A new <see cref="Models.SearchAddressResultItem"/> instance for mocking. </returns>
-        public static SearchAddressResultItem SearchAddressResultItem(SearchAddressResultType? type = null, string id = null, double? score = null, double? distanceInMeters = null, string dataSourceInfo = null, GeographicEntityType? entityType = null, PointOfInterest pointOfInterest = null, Address address = null, LatLongPairAbbreviated position = null, BoundingBox viewport = null, IEnumerable<EntryPoint> entryPoints = null, AddressRanges addressRanges = null, DataSource dataSources = null, MatchType? matchType = null, int? detourTime = null)
-        {
-            entryPoints ??= new List<EntryPoint>();
-
-            return new SearchAddressResultItem(type, id, score, distanceInMeters, dataSourceInfo, entityType, pointOfInterest, address, position, viewport, entryPoints?.ToList(), addressRanges, dataSources, matchType, detourTime);
         }
 
         /// <summary> Initializes a new instance of PointOfInterest. </summary>
@@ -196,7 +140,7 @@ namespace Azure.Maps.Search.Models
             return new OperatingHours(mode, timeRanges?.ToList());
         }
 
-        /// <summary> Initializes a new instance of Address. </summary>
+        /// <summary> Initializes a new instance of AddressDetails. </summary>
         /// <param name="buildingNumber"> The building number on the street. DEPRECATED, use streetNumber instead. </param>
         /// <param name="street"> The street name. DEPRECATED, use streetName instead. </param>
         /// <param name="crossStreet"> The name of the street being crossed. </param>
@@ -218,12 +162,12 @@ namespace Azure.Maps.Search.Models
         /// <param name="countrySubdivisionName"> The full name of a first level of country administrative hierarchy. This field appears only in case countrySubdivision is presented in an abbreviated form. Only supported for USA, Canada, and Great Britain. </param>
         /// <param name="localName"> An address component which represents the name of a geographic area or locality that groups a number of addressable objects for addressing purposes, without being an administrative unit. This field is used to build the `freeformAddress` property. </param>
         /// <param name="boundingBox"> The bounding box of the location. </param>
-        /// <returns> A new <see cref="Models.Address"/> instance for mocking. </returns>
-        public static Address Address(string buildingNumber = null, string street = null, string crossStreet = null, string streetNumber = null, IEnumerable<string> routeNumbers = null, string streetName = null, string streetNameAndNumber = null, string municipality = null, string municipalitySubdivision = null, string countryTertiarySubdivision = null, string countrySecondarySubdivision = null, string countrySubdivision = null, string postalCode = null, string extendedPostalCode = null, string countryCode = null, string country = null, string countryCodeISO3 = null, string freeformAddress = null, string countrySubdivisionName = null, string localName = null, BoundingBoxCompassNotation boundingBox = null)
+        /// <returns> A new <see cref="Models.AddressDetails"/> instance for mocking. </returns>
+        public static AddressDetails AddressDetails(string buildingNumber = null, string street = null, string crossStreet = null, string streetNumber = null, IEnumerable<string> routeNumbers = null, string streetName = null, string streetNameAndNumber = null, string municipality = null, string municipalitySubdivision = null, string countryTertiarySubdivision = null, string countrySecondarySubdivision = null, string countrySubdivision = null, string postalCode = null, string extendedPostalCode = null, string countryCode = null, string country = null, string countryCodeISO3 = null, string freeformAddress = null, string countrySubdivisionName = null, string localName = null, BoundingBoxCompassNotation boundingBox = null)
         {
             routeNumbers ??= new List<string>();
 
-            return new Address(buildingNumber, street, crossStreet, streetNumber, routeNumbers?.ToList(), streetName, streetNameAndNumber, municipality, municipalitySubdivision, countryTertiarySubdivision, countrySecondarySubdivision, countrySubdivision, postalCode, extendedPostalCode, countryCode, country, countryCodeISO3, freeformAddress, countrySubdivisionName, localName, boundingBox);
+            return new AddressDetails(buildingNumber, street, crossStreet, streetNumber, routeNumbers?.ToList(), streetName, streetNameAndNumber, municipality, municipalitySubdivision, countryTertiarySubdivision, countrySecondarySubdivision, countrySubdivision, postalCode, extendedPostalCode, countryCode, country, countryCodeISO3, freeformAddress, countrySubdivisionName, localName, boundingBox);
         }
 
         /// <summary> Initializes a new instance of BoundingBoxCompassNotation. </summary>
@@ -231,38 +175,9 @@ namespace Azure.Maps.Search.Models
         /// <param name="southWest"> South-west latitude,longitude coordinate of the bounding box as comma-separated floats. </param>
         /// <param name="entity"> Entity type source of the bounding box. For reverse-geocoding this is always equal to position. </param>
         /// <returns> A new <see cref="Models.BoundingBoxCompassNotation"/> instance for mocking. </returns>
-        public static BoundingBoxCompassNotation BoundingBoxCompassNotation(string northEast = null, string southWest = null, Entity? entity = null)
+        public static BoundingBoxCompassNotation BoundingBoxCompassNotation(string northEast = null, string southWest = null, EntityType? entity = null)
         {
             return new BoundingBoxCompassNotation(northEast, southWest, entity);
-        }
-
-        /// <summary> Initializes a new instance of BoundingBox. </summary>
-        /// <param name="topLeft"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
-        /// <param name="bottomRight"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
-        /// <returns> A new <see cref="Models.BoundingBox"/> instance for mocking. </returns>
-        public static BoundingBox BoundingBox(LatLongPairAbbreviated topLeft = null, LatLongPairAbbreviated bottomRight = null)
-        {
-            return new BoundingBox(topLeft, bottomRight);
-        }
-
-        /// <summary> Initializes a new instance of EntryPoint. </summary>
-        /// <param name="type"> The type of entry point. Value can be either _main_ or _minor_. </param>
-        /// <param name="position"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
-        /// <returns> A new <see cref="Models.EntryPoint"/> instance for mocking. </returns>
-        public static EntryPoint EntryPoint(EntryPointType? type = null, LatLongPairAbbreviated position = null)
-        {
-            return new EntryPoint(type, position);
-        }
-
-        /// <summary> Initializes a new instance of AddressRanges. </summary>
-        /// <param name="rangeLeft"> Address range on the left side of the street. </param>
-        /// <param name="rangeRight"> Address range on the right side of the street. </param>
-        /// <param name="from"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
-        /// <param name="to"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
-        /// <returns> A new <see cref="Models.AddressRanges"/> instance for mocking. </returns>
-        public static AddressRanges AddressRanges(string rangeLeft = null, string rangeRight = null, LatLongPairAbbreviated @from = null, LatLongPairAbbreviated to = null)
-        {
-            return new AddressRanges(rangeLeft, rangeRight, @from, to);
         }
 
         /// <summary> Initializes a new instance of DataSource. </summary>
@@ -318,7 +233,7 @@ namespace Azure.Maps.Search.Models
         ///   * Street
         /// </param>
         /// <returns> A new <see cref="Models.ReverseSearchAddressResultItem"/> instance for mocking. </returns>
-        public static ReverseSearchAddressResultItem ReverseSearchAddressResultItem(Address address = null, string position = null, IEnumerable<RoadUseType> roadUse = null, MatchType? matchType = null)
+        public static ReverseSearchAddressResultItem ReverseSearchAddressResultItem(AddressDetails address = null, string position = null, IEnumerable<RoadUseType> roadUse = null, MatchType? matchType = null)
         {
             roadUse ??= new List<RoadUseType>();
 
@@ -329,7 +244,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="address"> The address of the result. </param>
         /// <param name="position"> Position property in the form of &quot;{latitude},{longitude}&quot;. </param>
         /// <returns> A new <see cref="Models.ReverseSearchCrossStreetAddressResultItem"/> instance for mocking. </returns>
-        public static ReverseSearchCrossStreetAddressResultItem ReverseSearchCrossStreetAddressResultItem(Address address = null, string position = null)
+        public static ReverseSearchCrossStreetAddressResultItem ReverseSearchCrossStreetAddressResultItem(AddressDetails address = null, string position = null)
         {
             return new ReverseSearchCrossStreetAddressResultItem(address, position);
         }

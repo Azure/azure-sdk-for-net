@@ -14,7 +14,7 @@ namespace Azure.Maps.Search.Models
     {
         internal static ReverseSearchCrossStreetAddressResultItem DeserializeReverseSearchCrossStreetAddressResultItem(JsonElement element)
         {
-            Optional<Address> address = default;
+            Optional<AddressDetails> address = default;
             Optional<string> position = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -25,7 +25,7 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    address = Address.DeserializeAddress(property.Value);
+                    address = AddressDetails.DeserializeAddressDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("position"))

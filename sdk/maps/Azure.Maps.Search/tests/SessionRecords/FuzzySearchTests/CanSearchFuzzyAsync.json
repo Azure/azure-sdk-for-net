@@ -6,30 +6,30 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-eb44a98e0c376cc450703321634ab5da-2e7e3855148fbbfc-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220615.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-be02a447bce6b3f806f5ca40eecff4cd-1b5eb1ba972b688a-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220617.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "9adf0760336e5b6ab0f40aa619e528e1",
+        "x-ms-client-request-id": "794c38938cc95dba34c57299d6f73ad4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "8623",
+        "Content-Length": "8624",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Jun 2022 15:23:16 GMT",
+        "Date": "Fri, 17 Jun 2022 01:05:18 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: AB47E0CFD5AA4912A2A23D3654784B8A Ref B: TPE30EDGE0915 Ref C: 2022-06-15T15:23:16Z"
+        "X-MSEdge-Ref": "Ref A: 177641B8621645F0B8A776CF07B963E4 Ref B: TPE30EDGE0613 Ref C: 2022-06-17T01:05:19Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "milford",
           "queryType": "NON_NEAR",
-          "queryTime": 6,
+          "queryTime": 5,
           "numResults": 10,
           "offset": 0,
           "totalResults": 125,
@@ -38,7 +38,7 @@
         "results": [
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/1320",
+            "id": "NZ/GEO/p0/2568",
             "score": 2.3825688362,
             "entityType": "Municipality",
             "address": {
@@ -83,7 +83,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/540",
+            "id": "NZ/GEO/p0/2056",
             "score": 2.358474493,
             "entityType": "Municipality",
             "address": {
@@ -128,7 +128,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/4153",
+            "id": "NZ/GEO/p0/2964",
             "score": 2.1768069267,
             "entityType": "MunicipalitySubdivision",
             "address": {
@@ -171,70 +171,6 @@
                 "id": "00005831-3200-1200-0000-00007d32922b"
               }
             }
-          },
-          {
-            "type": "POI",
-            "id": "554009000525688",
-            "score": 2.1244060993,
-            "info": "search:ta:554009000525688-NZ",
-            "poi": {
-              "name": "Milford Track",
-              "categorySet": [
-                {
-                  "id": 7376
-                }
-              ],
-              "categories": [
-                "important tourist attraction"
-              ],
-              "classifications": [
-                {
-                  "code": "IMPORTANT_TOURIST_ATTRACTION",
-                  "names": [
-                    {
-                      "nameLocale": "en-US",
-                      "name": "important tourist attraction"
-                    }
-                  ]
-                }
-              ]
-            },
-            "address": {
-              "streetName": "Milford Track",
-              "municipality": "Fiordland National Park",
-              "countrySecondarySubdivision": "Southland",
-              "countryTertiarySubdivision": "Southland",
-              "countrySubdivision": "South Island",
-              "postalCode": "9679",
-              "countryCode": "NZ",
-              "country": "New Zealand",
-              "countryCodeISO3": "NZL",
-              "freeformAddress": "Milford Track, Fiordland National Park, Fiordland National Park 9679",
-              "localName": "Fiordland National Park"
-            },
-            "position": {
-              "lat": -44.8604,
-              "lon": 167.82471
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": -44.8595,
-                "lon": 167.82344
-              },
-              "btmRightPoint": {
-                "lat": -44.8613,
-                "lon": 167.82598
-              }
-            },
-            "entryPoints": [
-              {
-                "type": "main",
-                "position": {
-                  "lat": -44.86049,
-                  "lon": 167.82468
-                }
-              }
-            ]
           },
           {
             "type": "POI",
@@ -368,6 +304,70 @@
           },
           {
             "type": "POI",
+            "id": "554009000525688",
+            "score": 2.1244060993,
+            "info": "search:ta:554009000525688-NZ",
+            "poi": {
+              "name": "Milford Track",
+              "categorySet": [
+                {
+                  "id": 7376
+                }
+              ],
+              "categories": [
+                "important tourist attraction"
+              ],
+              "classifications": [
+                {
+                  "code": "IMPORTANT_TOURIST_ATTRACTION",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "important tourist attraction"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetName": "Milford Track",
+              "municipality": "Fiordland National Park",
+              "countrySecondarySubdivision": "Southland",
+              "countryTertiarySubdivision": "Southland",
+              "countrySubdivision": "South Island",
+              "postalCode": "9679",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Milford Track, Fiordland National Park, Fiordland National Park 9679",
+              "localName": "Fiordland National Park"
+            },
+            "position": {
+              "lat": -44.8604,
+              "lon": 167.82471
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -44.8595,
+                "lon": 167.82344
+              },
+              "btmRightPoint": {
+                "lat": -44.8613,
+                "lon": 167.82598
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": -44.86049,
+                  "lon": 167.82468
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
             "id": "554009000483240",
             "score": 2.1053037643,
             "info": "search:ta:554009000483240-NZ",
@@ -389,11 +389,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "airport"
+                      "name": "public authority"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "public authority"
+                      "name": "airport"
                     }
                   ]
                 }
@@ -517,7 +517,7 @@
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/29664",
+            "id": "NZ/STR/p0/67629",
             "score": 2.0962057114,
             "address": {
               "streetName": "Milford Street",
@@ -550,7 +550,7 @@
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/29667",
+            "id": "NZ/STR/p0/67632",
             "score": 2.0962057114,
             "address": {
               "streetName": "Milford Street",
@@ -587,6 +587,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "891978681"
+    "RandomSeed": "883518536"
   }
 }

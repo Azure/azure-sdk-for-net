@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class Polygon
+    public partial class PolygonObject
     {
-        internal static Polygon DeserializePolygon(JsonElement element)
+        internal static PolygonObject DeserializePolygonObject(JsonElement element)
         {
             Optional<string> providerID = default;
             Optional<GeoJsonFeatureCollection> geometryData = default;
@@ -34,7 +34,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new Polygon(providerID.Value, geometryData.Value);
+            return new PolygonObject(providerID.Value, geometryData.Value);
         }
     }
 }
