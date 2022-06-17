@@ -101,10 +101,19 @@ directive:
   - from: types.json
     where: $.definitions.encryptionProperties
     transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
       $["x-namespace"] = "Azure.ResourceManager.Models";
       $["x-accessibility"] = "public";
       $["x-csharp-formats"] = "json";
-      $["x-csharp-usage"] = "model,input,output,converter";
+      $["x-csharp-usage"] = "model,input,output";
+  - from: types.json
+    where: $.definitions.keyVaultProperties
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
   - from: types.json
     where: $.definitions.*.properties[?(@.enum)]
     transform: >

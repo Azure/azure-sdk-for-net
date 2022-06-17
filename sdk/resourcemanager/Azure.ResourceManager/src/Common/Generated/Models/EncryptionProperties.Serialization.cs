@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties");
-                JsonSerializer.Serialize(writer, KeyVaultProperties);
+                writer.WriteObjectValue(KeyVaultProperties);
             }
             writer.WriteEndObject();
         }
@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    keyVaultProperties = JsonSerializer.Deserialize<KeyVaultProperties>(property.Value.ToString());
+                    keyVaultProperties = Models.KeyVaultProperties.DeserializeKeyVaultProperties(property.Value);
                     continue;
                 }
             }
-            return new EncryptionProperties(Optional.ToNullable(status), keyVaultProperties);
+            return new EncryptionProperties(Optional.ToNullable(status), keyVaultProperties.Value);
         }
 
         internal partial class EncryptionPropertiesConverter : JsonConverter<EncryptionProperties>
