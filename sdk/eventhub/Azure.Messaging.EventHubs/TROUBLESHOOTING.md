@@ -326,7 +326,7 @@ When filing GitHub issues, the following details are requested for all scenarios
 
 - Instructions on how to reproduce the issue locally.  Ideally, a small self-contained project that can reproduce the error is available.
 
-- Logs for the period of at least +/- 10 minutes from when the issue occurred.  Verbose logs are usually needed, but can be filtered by the type of issue.  _(see below)_
+- Logs for the period of at least +/- 5 minutes from when the issue occurred.  Verbose logs are usually needed, but can be filtered by the type of issue.  _(see below)_
 
 - How many partitions does the Event Hub have?
 
@@ -356,6 +356,8 @@ When filing GitHub issues, the following details are requested for all scenarios
   - 88 (Buffered Producer Publish Start)
   - 89 (Buffered Producer Publish Complete)
   - 90 (Buffered Producer Publish Error)
+  - 126 (Buffered Producer Idle Start)
+  - 127 (Buffered Producer Idle Complete)
 
 ### Event processor issues
 
@@ -383,6 +385,9 @@ When filing GitHub issues, the following details are requested for all scenarios
   - 45 (EventProcessorClaimOwnershipError)
   - 103 (EventProcessorLoadBalancingCycleSlowWarning)
   - 104 (EventProcessorHighPartitionOwnershipWarning)
+  - 123 (EventProcessorProcessingHandlerStart)
+  - 124 (EventProcessorProcessingHandlerComplete)
+  - 125 (EventProcessorProcessingHandlerError)
   
 ### Consuming issues
 
