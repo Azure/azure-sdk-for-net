@@ -12755,7 +12755,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///     {
         ///         response.ContentStream.CopyTo(outFileStream);
         ///     }
-        /// };
+        /// }
         /// ]]></code>
         /// This sample shows how to call ExportGlossaryTermsAsCsvAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
@@ -12774,7 +12774,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///     {
         ///         response.ContentStream.CopyTo(outFileStream);
         ///     }
-        /// };
+        /// }
         /// ]]></code>
         /// </example>
         public virtual async Task<Response> ExportGlossaryTermsAsCsvAsync(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
@@ -12821,7 +12821,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///     {
         ///         response.ContentStream.CopyTo(outFileStream);
         ///     }
-        /// };
+        /// }
         /// ]]></code>
         /// This sample shows how to call ExportGlossaryTermsAsCsv with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
@@ -12840,7 +12840,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///     {
         ///         response.ContentStream.CopyTo(outFileStream);
         ///     }
-        /// };
+        /// }
         /// ]]></code>
         /// </example>
         public virtual Response ExportGlossaryTermsAsCsv(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
