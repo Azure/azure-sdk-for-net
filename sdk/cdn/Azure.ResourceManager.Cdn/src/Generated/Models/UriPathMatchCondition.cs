@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Initializes a new instance of UriPathMatchCondition. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="operator"> Describes operator to be matched. </param>
-        public UriPathMatchCondition(UriPathMatchConditionType conditionType, UriPathOperator @operator)
+        /// <param name="uriPathOperator"> Describes operator to be matched. </param>
+        public UriPathMatchCondition(UriPathMatchConditionType conditionType, UriPathOperator uriPathOperator)
         {
             ConditionType = conditionType;
-            Operator = @operator;
+            UriPathOperator = uriPathOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
         /// <summary> Initializes a new instance of UriPathMatchCondition. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="operator"> Describes operator to be matched. </param>
+        /// <param name="uriPathOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal UriPathMatchCondition(UriPathMatchConditionType conditionType, UriPathOperator @operator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
+        internal UriPathMatchCondition(UriPathMatchConditionType conditionType, UriPathOperator uriPathOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
         {
             ConditionType = conditionType;
-            Operator = @operator;
+            UriPathOperator = uriPathOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Gets or sets the condition type. </summary>
         public UriPathMatchConditionType ConditionType { get; set; }
         /// <summary> Describes operator to be matched. </summary>
-        public UriPathOperator Operator { get; set; }
+        public UriPathOperator UriPathOperator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>
         public bool? NegateCondition { get; set; }
         /// <summary> The match value for the condition of the delivery rule. </summary>

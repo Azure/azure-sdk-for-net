@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Initializes a new instance of RemoteAddressMatchCondition. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="operator"> Describes operator to be matched. </param>
-        public RemoteAddressMatchCondition(RemoteAddressMatchConditionType conditionType, RemoteAddressOperator @operator)
+        /// <param name="remoteAddressOperator"> Describes operator to be matched. </param>
+        public RemoteAddressMatchCondition(RemoteAddressMatchConditionType conditionType, RemoteAddressOperator remoteAddressOperator)
         {
             ConditionType = conditionType;
-            Operator = @operator;
+            RemoteAddressOperator = remoteAddressOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
         /// <summary> Initializes a new instance of RemoteAddressMatchCondition. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="operator"> Describes operator to be matched. </param>
+        /// <param name="remoteAddressOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> Match values to match against. The operator will apply to each value in here with OR semantics. If any of them match the variable with the given operator this match condition is considered a match. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal RemoteAddressMatchCondition(RemoteAddressMatchConditionType conditionType, RemoteAddressOperator @operator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
+        internal RemoteAddressMatchCondition(RemoteAddressMatchConditionType conditionType, RemoteAddressOperator remoteAddressOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
         {
             ConditionType = conditionType;
-            Operator = @operator;
+            RemoteAddressOperator = remoteAddressOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Gets or sets the condition type. </summary>
         public RemoteAddressMatchConditionType ConditionType { get; set; }
         /// <summary> Describes operator to be matched. </summary>
-        public RemoteAddressOperator Operator { get; set; }
+        public RemoteAddressOperator RemoteAddressOperator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>
         public bool? NegateCondition { get; set; }
         /// <summary> Match values to match against. The operator will apply to each value in here with OR semantics. If any of them match the variable with the given operator this match condition is considered a match. </summary>
