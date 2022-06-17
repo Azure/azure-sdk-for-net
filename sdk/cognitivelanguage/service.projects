@@ -1,6 +1,6 @@
 <Project>
   <ItemGroup>
     <!-- Remove below project to unblock other SDKs -->
-    <ProjectReference Remove="$(MSBuildThisFileDirectory)Azure.AI.Language.Conversations\**\*.csproj" />
+    <ProjectReference Remove="$(MSBuildThisFileDirectory)Azure.AI.Language.*\**\*.csproj" />
   </ItemGroup>
 </Project>
