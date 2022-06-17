@@ -39,6 +39,58 @@ namespace Azure.Maps.Search.Tests
         }
 
         [RecordedTest]
+        public void InvalidSearchAddressTest()
+        {
+            var client = CreateClient();
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
+                   async () => await client.SearchAddressAsync(""));
+            Assert.AreEqual(400, ex.Status);
+        }
+
+        [RecordedTest]
+        public void InvalidListPolygonsTest()
+        {
+            var client = CreateClient();
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
+                   async () => await client.ListPolygonsAsync(new string[] {}));
+            Assert.AreEqual(400, ex.Status);
+        }
+
+        [RecordedTest]
+        public void InvalidSearchInsideGeometryTest()
+        {
+            var client = CreateClient();
+            var polygonString = @"
+            {
+                ""type"": ""Polygon"",
+                ""coordinates"": [
+                    [
+                        [
+                            -122.43576049804686,
+                            37.7524152343544
+                        ],
+                        [
+                            -122.43301391601563,
+                            37.706604725423119
+                        ],
+                        [
+                            -122.36434936523438,
+                            37.712059855877314
+                        ],
+                        [
+                            -122.43576049804686,
+                            37.7524152343544
+                        ]
+                    ]
+                ]
+            }";
+            GeoPolygon polygon = JsonSerializer.Deserialize<GeoPolygon>(polygonString);
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
+                   async () => await client.SearchInsideGeometryAsync("", polygon));
+            Assert.AreEqual(400, ex.Status);
+        }
+
+        [RecordedTest]
         public async Task CanSearchInsidePolygon()
         {
             var client = CreateClient();

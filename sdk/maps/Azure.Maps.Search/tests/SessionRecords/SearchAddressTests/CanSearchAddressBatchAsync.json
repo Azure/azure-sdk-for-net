@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "240",
         "Content-Type": "application/json",
-        "traceparent": "00-c0cdd237a159614ad79e3308dc3e69ac-60e106380f2c3c50-00",
+        "traceparent": "00-297a17d059af0412b93705d53eed3de1-288ab9a382d31853-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220617.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "8c0250c1bf7b6f0ded3e95db2df7ffff",
+        "x-ms-client-request-id": "c0a657e4d9a186210a7c9feb93a9be5f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -27,13 +27,13 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Fri, 17 Jun 2022 01:05:34 GMT",
+        "Date": "Fri, 17 Jun 2022 04:39:35 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 810F178290834204A17B0A5C7E7A9D0C Ref B: TPE30EDGE0613 Ref C: 2022-06-17T01:05:35Z"
+        "X-MSEdge-Ref": "Ref A: 149BDB538BCE4D7A97067CBAFE161038 Ref B: TPE30EDGE0609 Ref C: 2022-06-17T04:39:35Z"
       },
       "ResponseBody": {
         "batchItems": [
@@ -43,7 +43,7 @@
               "summary": {
                 "query": "microsoft campus",
                 "queryType": "NON_NEAR",
-                "queryTime": 33,
+                "queryTime": 6,
                 "numResults": 1,
                 "offset": 0,
                 "totalResults": 1,
@@ -93,7 +93,7 @@
               "summary": {
                 "query": "millenium",
                 "queryType": "NON_NEAR",
-                "queryTime": 11,
+                "queryTime": 5,
                 "numResults": 2,
                 "offset": 0,
                 "totalResults": 2,
@@ -186,6 +186,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1251609060"
+    "RandomSeed": "892935522"
   }
 }

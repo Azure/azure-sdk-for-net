@@ -28,6 +28,15 @@ namespace Azure.Maps.Search.Tests
         }
 
         [RecordedTest]
+        public void InvalidReverseSearchAddressTest()
+        {
+            var client = CreateClient();
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
+                   async () => await client.ReverseSearchAddressAsync(new ReverseSearchOptions { coordinates = new GeoPosition(121.0, -1000.0) }));
+            Assert.AreEqual(400, ex.Status);
+        }
+
+        [RecordedTest]
         public async Task CanResolveCoordinatesToCrossStreetAddress()
         {
             var client = CreateClient();
@@ -36,6 +45,15 @@ namespace Azure.Maps.Search.Tests
                 Language = "en"
             });
             Assert.AreEqual("Niuwei Road Lane 1 \u0026 Niuwei Road", reverseResult.Value.Addresses.First().Address.StreetName);
+        }
+
+        [RecordedTest]
+        public void InvalidCrossStreetSearchAddressTest()
+        {
+            var client = CreateClient();
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
+                   async () => await client.ReverseSearchCrossStreetAddressAsync(new ReverseSearchCrossStreetOptions { coordinates = new GeoPosition(121.0, -1000.0) }));
+            Assert.AreEqual(400, ex.Status);
         }
 
         [RecordedTest]

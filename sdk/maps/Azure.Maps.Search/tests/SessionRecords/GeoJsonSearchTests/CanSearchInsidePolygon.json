@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "208",
         "Content-Type": "application/json",
-        "traceparent": "00-95fc75d354a10f47f2a21e16e244bb8a-5bde22e92f7d671a-00",
+        "traceparent": "00-bed236450ebccc052c4857c2133b8901-06d0f6c1eac4aff3-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220617.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "a2beb37984a8501fb4a4199fb518da65",
+        "x-ms-client-request-id": "98b7347f3796d190ddfe8f1956f4efde",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -41,9 +41,9 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "11213",
+        "Content-Length": "11214",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Jun 2022 01:05:20 GMT",
+        "Date": "Fri, 17 Jun 2022 04:39:21 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": [
           "Accept-Encoding",
@@ -52,13 +52,13 @@
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 1DFD2B21EB2B4467A0DE3187F0537C8B Ref B: TPE30EDGE0613 Ref C: 2022-06-17T01:05:20Z"
+        "X-MSEdge-Ref": "Ref A: 715C8FC402D1449AB78883F032FC9047 Ref B: TPE30EDGE0609 Ref C: 2022-06-17T04:39:22Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "coffee",
           "queryType": "NON_NEAR",
-          "queryTime": 7,
+          "queryTime": 10,
           "numResults": 10,
           "offset": 0,
           "totalResults": 64,
@@ -88,11 +88,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "coffee shop"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "coffee shop"
+                      "name": "caf\u00E9/pub"
                     }
                   ]
                 }
@@ -843,6 +843,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1211355389"
+    "RandomSeed": "739219036"
   }
 }

@@ -92,6 +92,16 @@ namespace Azure.Maps.Search.Tests
             Assert.AreEqual("15127 Northeast 24th Street, Redmond, WA 98052", searchResult.Value.Results.First().Address.FreeformAddress);
         }
 
+                [RecordedTest]
+        public void InvalidSearchStructuredAddressTest()
+        {
+            var client = CreateClient();
+            var address = new StructuredAddress { CountryCode = "" };
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
+                   async () => await client.SearchStructuredAddressAsync(address));
+            Assert.AreEqual(400, ex.Status);
+        }
+
         [RecordedTest]
         public async Task CanSearchStructuredPartialAddress()
         {

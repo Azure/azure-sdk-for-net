@@ -39,6 +39,15 @@ namespace Azure.Maps.Search.Tests
         }
 
         [RecordedTest]
+        public void InvalidFuzzySearchTest()
+        {
+            var client = CreateClient();
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
+                   async () => await client.FuzzySearchAsync("", new FuzzySearchOptions {}));
+            Assert.AreEqual(400, ex.Status);
+        }
+
+        [RecordedTest]
         public async Task CanBatchSearchFuzzy()
         {
             var client = CreateClient();

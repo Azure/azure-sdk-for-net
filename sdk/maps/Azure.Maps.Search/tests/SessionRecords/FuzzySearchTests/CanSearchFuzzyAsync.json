@@ -6,10 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-be02a447bce6b3f806f5ca40eecff4cd-1b5eb1ba972b688a-00",
+        "traceparent": "00-17569a621bb5258cd20c046ecb899115-20f0be2b835a9a02-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220617.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "794c38938cc95dba34c57299d6f73ad4",
+        "x-ms-client-request-id": "8d7c5f955f9a537a88e0625ee75e105d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,19 +17,19 @@
       "ResponseHeaders": {
         "Content-Length": "8624",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Jun 2022 01:05:18 GMT",
+        "Date": "Fri, 17 Jun 2022 04:39:19 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 177641B8621645F0B8A776CF07B963E4 Ref B: TPE30EDGE0613 Ref C: 2022-06-17T01:05:19Z"
+        "X-MSEdge-Ref": "Ref A: 709D57DDD1204253939975942D47CB4B Ref B: TPE30EDGE0609 Ref C: 2022-06-17T04:39:20Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "milford",
           "queryType": "NON_NEAR",
-          "queryTime": 5,
+          "queryTime": 6,
           "numResults": 10,
           "offset": 0,
           "totalResults": 125,
@@ -389,11 +389,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "public authority"
+                      "name": "airport"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "airport"
+                      "name": "public authority"
                     }
                   ]
                 }
@@ -587,6 +587,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "883518536"
+    "RandomSeed": "1877047715"
   }
 }
