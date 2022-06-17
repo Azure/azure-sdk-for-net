@@ -17,7 +17,7 @@ namespace Azure.Core.Tests
 {
     public class OperationInternalTests
     {
-        private static readonly string DiagnosticNamespace = "Azure.Core.Tests";
+        private static readonly string DiagnosticNamespace = "Azure.Core.TestFramework";
         private static readonly ClientDiagnostics ClientDiagnostics = new(new TestClientOptions());
         private static readonly RequestFailedException OriginalException = new("");
         private static readonly StackOverflowException CustomException = new();
