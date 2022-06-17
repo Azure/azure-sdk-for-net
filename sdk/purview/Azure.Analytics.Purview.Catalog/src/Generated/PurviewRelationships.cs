@@ -50,6 +50,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
+        /// This sample shows how to call CreateAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateAsync(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
         /// This sample shows how to call CreateAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -190,6 +202,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
+        /// This sample shows how to call Create and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.Create(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
         /// This sample shows how to call Create with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -330,6 +354,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
+        /// This sample shows how to call UpdateAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.UpdateAsync(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
         /// This sample shows how to call UpdateAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -470,6 +506,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
+        /// This sample shows how to call Update and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.Update(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
         /// This sample shows how to call Update with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -612,7 +660,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GetPurviewRelationshipAsync with required parameters, and how to parse the result.
+        /// This sample shows how to call GetPurviewRelationshipAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
@@ -741,7 +789,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GetPurviewRelationship with required parameters, and how to parse the result.
+        /// This sample shows how to call GetPurviewRelationship with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");

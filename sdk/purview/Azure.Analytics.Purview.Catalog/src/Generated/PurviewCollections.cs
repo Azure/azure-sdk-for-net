@@ -59,6 +59,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="collection"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collection"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
+        /// This sample shows how to call CreateOrUpdateEntityAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateOrUpdateEntityAsync("<collection>", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
         /// This sample shows how to call CreateOrUpdateEntityAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -419,6 +431,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="collection"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collection"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
+        /// This sample shows how to call CreateOrUpdateEntity with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.CreateOrUpdateEntity("<collection>", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
         /// This sample shows how to call CreateOrUpdateEntity with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -779,6 +803,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="collection"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collection"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
+        /// This sample shows how to call CreateOrUpdateEntityInBulkAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateOrUpdateEntityInBulkAsync("<collection>", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
         /// This sample shows how to call CreateOrUpdateEntityInBulkAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -1143,6 +1179,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="collection"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collection"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
+        /// This sample shows how to call CreateOrUpdateEntityInBulk with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.CreateOrUpdateEntityInBulk("<collection>", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
         /// This sample shows how to call CreateOrUpdateEntityInBulk with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -1503,6 +1551,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="collection"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collection"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
+        /// This sample shows how to call MoveEntitiesToCollectionAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.MoveEntitiesToCollectionAsync("<collection>", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
         /// This sample shows how to call MoveEntitiesToCollectionAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -1670,6 +1730,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="collection"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collection"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
+        /// This sample shows how to call MoveEntitiesToCollection with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.MoveEntitiesToCollection("<collection>", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
         /// This sample shows how to call MoveEntitiesToCollection with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();

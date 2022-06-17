@@ -1240,6 +1240,17 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
+        /// This sample shows how to call UpdateSynonymsAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.UpdateSynonymsAsync("<projectName>", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
         /// This sample shows how to call UpdateSynonymsAsync with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -1315,6 +1326,17 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
+        /// This sample shows how to call UpdateSynonyms with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.UpdateSynonyms("<projectName>", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
         /// This sample shows how to call UpdateSynonyms with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -1786,6 +1808,17 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
+        /// This sample shows how to call AddFeedbackAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.AddFeedbackAsync("<projectName>", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
         /// This sample shows how to call AddFeedbackAsync with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -1863,6 +1896,17 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
+        /// This sample shows how to call AddFeedback with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.AddFeedback("<projectName>", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
         /// This sample shows how to call AddFeedback with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -1939,6 +1983,16 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
+        /// This sample shows how to call GetProjectsAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetProjectsAsync();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
         /// This sample shows how to call GetProjectsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -2025,6 +2079,16 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
+        /// This sample shows how to call GetProjects and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetProjects();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
         /// This sample shows how to call GetProjects with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -2114,7 +2178,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GetDeploymentsAsync with required parameters, and how to parse the result.
+        /// This sample shows how to call GetDeploymentsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
@@ -2201,7 +2265,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GetDeployments with required parameters, and how to parse the result.
+        /// This sample shows how to call GetDeployments with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
@@ -2288,7 +2352,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GetSynonymsAsync with required parameters, and how to parse the result.
+        /// This sample shows how to call GetSynonymsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
@@ -2373,7 +2437,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GetSynonyms with required parameters, and how to parse the result.
+        /// This sample shows how to call GetSynonyms with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
@@ -2458,7 +2522,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GetSourcesAsync with required parameters, and how to parse the result.
+        /// This sample shows how to call GetSourcesAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
@@ -2553,7 +2617,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GetSources with required parameters, and how to parse the result.
+        /// This sample shows how to call GetSources with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
@@ -2649,7 +2713,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GetQnasAsync with required parameters, and how to parse the result.
+        /// This sample shows how to call GetQnasAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
@@ -2793,7 +2857,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GetQnas with required parameters, and how to parse the result.
+        /// This sample shows how to call GetQnas with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
@@ -3046,7 +3110,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call ExportAsync with required parameters, and how to parse the result.
+        /// This sample shows how to call ExportAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
@@ -3163,7 +3227,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call Export with required parameters, and how to parse the result.
+        /// This sample shows how to call Export with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
@@ -3281,6 +3345,17 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
+        /// This sample shows how to call ImportAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
         /// This sample shows how to call ImportAsync with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -3481,6 +3556,17 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
+        /// This sample shows how to call Import with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
         /// This sample shows how to call Import with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();

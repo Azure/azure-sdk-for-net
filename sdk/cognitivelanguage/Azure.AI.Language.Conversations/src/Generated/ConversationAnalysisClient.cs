@@ -169,7 +169,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
-        /// This sample shows how to call JobStatusAsync with required parameters, and how to parse the result.
+        /// This sample shows how to call JobStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
@@ -317,7 +317,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
-        /// This sample shows how to call JobStatus with required parameters, and how to parse the result.
+        /// This sample shows how to call JobStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");

@@ -328,6 +328,16 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="continuationToken"> Continuation token. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
+        /// This sample shows how to call GetRoleAssignmentsAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetRoleAssignmentsAsync();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
         /// This sample shows how to call GetRoleAssignmentsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -400,6 +410,16 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="continuationToken"> Continuation token. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
+        /// This sample shows how to call GetRoleAssignments and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetRoleAssignments();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
         /// This sample shows how to call GetRoleAssignments with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();

@@ -507,7 +507,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GetLedgerEntryAsync with required parameters, and how to parse the result.
+        /// This sample shows how to call GetLedgerEntryAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
@@ -578,7 +578,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GetLedgerEntry with required parameters, and how to parse the result.
+        /// This sample shows how to call GetLedgerEntry with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
@@ -898,6 +898,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
+        /// This sample shows how to call GetCurrentLedgerEntryAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ConfidentialLedgerClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetCurrentLedgerEntryAsync();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("contents").ToString());
+        /// ]]></code>
         /// This sample shows how to call GetCurrentLedgerEntryAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -950,6 +960,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
+        /// This sample shows how to call GetCurrentLedgerEntry and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ConfidentialLedgerClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetCurrentLedgerEntry();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("contents").ToString());
+        /// ]]></code>
         /// This sample shows how to call GetCurrentLedgerEntry with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -1336,6 +1356,17 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
+        /// This sample shows how to call GetLedgerEntriesAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ConfidentialLedgerClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetLedgerEntriesAsync();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("state").ToString());
+        /// Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("contents").ToString());
+        /// ]]></code>
         /// This sample shows how to call GetLedgerEntriesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -1404,6 +1435,17 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
+        /// This sample shows how to call GetLedgerEntries and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ConfidentialLedgerClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetLedgerEntries();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("state").ToString());
+        /// Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("contents").ToString());
+        /// ]]></code>
         /// This sample shows how to call GetLedgerEntries with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();

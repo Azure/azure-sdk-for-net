@@ -64,6 +64,16 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
+        /// This sample shows how to call GetRoleDefinitionsAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new RoleDefinitionsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetRoleDefinitionsAsync();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].ToString());
+        /// ]]></code>
         /// This sample shows how to call GetRoleDefinitionsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -142,6 +152,16 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
+        /// This sample shows how to call GetRoleDefinitions and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new RoleDefinitionsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetRoleDefinitions();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.Item[0].ToString());
+        /// ]]></code>
         /// This sample shows how to call GetRoleDefinitions with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();

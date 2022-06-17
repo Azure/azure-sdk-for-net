@@ -218,6 +218,18 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
+        /// This sample shows how to call CreateOrUpdateCollectionAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateOrUpdateCollectionAsync(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
         /// This sample shows how to call CreateOrUpdateCollectionAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -331,6 +343,18 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
+        /// This sample shows how to call CreateOrUpdateCollection and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.CreateOrUpdateCollection(RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
         /// This sample shows how to call CreateOrUpdateCollection with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -655,6 +679,16 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
+        /// This sample shows how to call GetChildCollectionNamesAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
+        /// 
+        /// Response response = await client.GetChildCollectionNamesAsync();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].ToString());
+        /// ]]></code>
         /// This sample shows how to call GetChildCollectionNamesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -727,6 +761,16 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
+        /// This sample shows how to call GetChildCollectionNames and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
+        /// 
+        /// Response response = client.GetChildCollectionNames();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].ToString());
+        /// ]]></code>
         /// This sample shows how to call GetChildCollectionNames with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();

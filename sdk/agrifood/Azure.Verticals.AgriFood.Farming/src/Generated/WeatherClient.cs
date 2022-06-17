@@ -446,7 +446,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="extensionId"/>, <paramref name="weatherDataType"/> or <paramref name="granularity"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call GetWeathersAsync with required parameters, and how to parse the result.
+        /// This sample shows how to call GetWeathersAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
@@ -620,7 +620,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="extensionId"/>, <paramref name="weatherDataType"/> or <paramref name="granularity"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call GetWeathers with required parameters, and how to parse the result.
+        /// This sample shows how to call GetWeathers with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");

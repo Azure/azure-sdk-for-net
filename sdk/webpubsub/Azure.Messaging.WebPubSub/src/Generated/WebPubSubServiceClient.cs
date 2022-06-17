@@ -39,6 +39,16 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
+        /// This sample shows how to call GenerateClientTokenImplAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GenerateClientTokenImplAsync();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
         /// This sample shows how to call GenerateClientTokenImplAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -92,6 +102,16 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
+        /// This sample shows how to call GenerateClientTokenImpl and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
+        /// Response response = client.GenerateClientTokenImpl();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
         /// This sample shows how to call GenerateClientTokenImpl with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -144,6 +164,15 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="reason"> The reason closing the client connection. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
+        /// This sample shows how to call CloseAllConnectionsAsync.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
+        /// Response response = await client.CloseAllConnectionsAsync();
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
         /// This sample shows how to call CloseAllConnectionsAsync with all parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -190,6 +219,15 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="reason"> The reason closing the client connection. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
+        /// This sample shows how to call CloseAllConnections.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
+        /// Response response = client.CloseAllConnections();
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
         /// This sample shows how to call CloseAllConnections with all parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();

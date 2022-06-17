@@ -380,7 +380,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call GetScenesAsync with required parameters, and how to parse the result.
+        /// This sample shows how to call GetScenesAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
@@ -510,7 +510,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call GetScenes with required parameters, and how to parse the result.
+        /// This sample shows how to call GetScenes with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
