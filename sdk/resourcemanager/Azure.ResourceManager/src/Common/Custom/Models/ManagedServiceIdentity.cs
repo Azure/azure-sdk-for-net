@@ -37,12 +37,16 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
+        [PropertySerializedName("principalId")]
         public Guid? PrincipalId { get; }
         /// <summary> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
+        [PropertySerializedName("tenantId")]
         public Guid? TenantId { get; }
         /// <summary> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </summary>
+        [PropertySerializedName("type")]
         public ManagedServiceIdentityType ManagedServiceIdentityType { get; set; }
         /// <summary> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </summary>
+        [PropertySerializedName("userAssignedIdentities")]
         public IDictionary<ResourceIdentifier, UserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

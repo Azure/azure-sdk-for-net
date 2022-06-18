@@ -37,8 +37,10 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Resource tags. </summary>
+        [PropertySerializedName("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The geo-location where the resource lives. </summary>
+        [PropertySerializedName("location")]
         public AzureLocation Location { get; set; }
     }
 }

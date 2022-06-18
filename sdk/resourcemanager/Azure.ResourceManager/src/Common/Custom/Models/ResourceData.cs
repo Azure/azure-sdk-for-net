@@ -33,12 +33,16 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>
+        [PropertySerializedName("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> The name of the resource. </summary>
+        [PropertySerializedName("name")]
         public string Name { get; }
         /// <summary> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </summary>
+        [PropertySerializedName("type")]
         public ResourceType ResourceType { get; }
         /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
+        [PropertySerializedName("systemData")]
         public SystemData SystemData { get; }
     }
 }
