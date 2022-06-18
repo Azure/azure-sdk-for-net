@@ -30,8 +30,10 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Indicates whether or not the encryption is enabled for container registry. </summary>
+        [PropertySerializedName("status")]
         public EncryptionStatus? Status { get; set; }
         /// <summary> Key vault properties. </summary>
+        [PropertySerializedName("keyVaultProperties")]
         public KeyVaultProperties KeyVaultProperties { get; set; }
     }
 }

@@ -35,10 +35,13 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
+        [PropertySerializedName("principalId")]
         public Guid? PrincipalId { get; }
         /// <summary> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
+        [PropertySerializedName("tenantId")]
         public Guid? TenantId { get; }
         /// <summary> Type of managed service identity (either system assigned, or none). </summary>
+        [PropertySerializedName("type")]
         public SystemAssignedServiceIdentityType SystemAssignedServiceIdentityType { get; set; }
     }
 }

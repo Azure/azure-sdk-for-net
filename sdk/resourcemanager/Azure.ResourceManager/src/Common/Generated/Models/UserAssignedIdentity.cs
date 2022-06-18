@@ -31,8 +31,10 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> The principal ID of the assigned identity. </summary>
+        [PropertySerializedName("principalId")]
         public Guid? PrincipalId { get; }
         /// <summary> The client ID of the assigned identity. </summary>
+        [PropertySerializedName("clientId")]
         public Guid? ClientId { get; }
     }
 }
