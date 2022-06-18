@@ -1688,9 +1688,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary> Lists the existing projects. </summary>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1733,12 +1730,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetProjectsAsync(int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetProjectsAsync(RequestContext context = null)
         {
-            return GetProjectsImplementationAsync("ConversationAuthoringClient.GetProjects", top, skip, maxpagesize, context);
+            return GetProjectsImplementationAsync("ConversationAuthoringClient.GetProjects", context);
         }
 
-        private AsyncPageable<BinaryData> GetProjectsImplementationAsync(string diagnosticsScopeName, int? top, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetProjectsImplementationAsync(string diagnosticsScopeName, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1746,8 +1743,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetProjectsRequest(top, skip, maxpagesize, context)
-                        : CreateGetProjectsNextPageRequest(nextLink, top, skip, maxpagesize, context);
+                        ? CreateGetProjectsRequest(context)
+                        : CreateGetProjectsNextPageRequest(nextLink, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1756,9 +1753,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary> Lists the existing projects. </summary>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1801,12 +1795,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetProjects(int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetProjects(RequestContext context = null)
         {
-            return GetProjectsImplementation("ConversationAuthoringClient.GetProjects", top, skip, maxpagesize, context);
+            return GetProjectsImplementation("ConversationAuthoringClient.GetProjects", context);
         }
 
-        private Pageable<BinaryData> GetProjectsImplementation(string diagnosticsScopeName, int? top, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetProjectsImplementation(string diagnosticsScopeName, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1814,8 +1808,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetProjectsRequest(top, skip, maxpagesize, context)
-                        : CreateGetProjectsNextPageRequest(nextLink, top, skip, maxpagesize, context);
+                        ? CreateGetProjectsRequest(context)
+                        : CreateGetProjectsNextPageRequest(nextLink, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1825,9 +1819,6 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Lists the deployments belonging to a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1866,14 +1857,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetDeploymentsImplementationAsync("ConversationAuthoringClient.GetDeployments", projectName, top, skip, maxpagesize, context);
+            return GetDeploymentsImplementationAsync("ConversationAuthoringClient.GetDeployments", projectName, context);
         }
 
-        private AsyncPageable<BinaryData> GetDeploymentsImplementationAsync(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetDeploymentsImplementationAsync(string diagnosticsScopeName, string projectName, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1881,8 +1872,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeploymentsRequest(projectName, top, skip, maxpagesize, context)
-                        : CreateGetDeploymentsNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
+                        ? CreateGetDeploymentsRequest(projectName, context)
+                        : CreateGetDeploymentsNextPageRequest(nextLink, projectName, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1892,9 +1883,6 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Lists the deployments belonging to a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1933,14 +1921,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetDeployments(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetDeployments(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetDeploymentsImplementation("ConversationAuthoringClient.GetDeployments", projectName, top, skip, maxpagesize, context);
+            return GetDeploymentsImplementation("ConversationAuthoringClient.GetDeployments", projectName, context);
         }
 
-        private Pageable<BinaryData> GetDeploymentsImplementation(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetDeploymentsImplementation(string diagnosticsScopeName, string projectName, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1948,8 +1936,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeploymentsRequest(projectName, top, skip, maxpagesize, context)
-                        : CreateGetDeploymentsNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
+                        ? CreateGetDeploymentsRequest(projectName, context)
+                        : CreateGetDeploymentsNextPageRequest(nextLink, projectName, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1959,9 +1947,6 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Lists the trained models belonging to a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2000,14 +1985,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetTrainedModelsAsync(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetTrainedModelsAsync(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetTrainedModelsImplementationAsync("ConversationAuthoringClient.GetTrainedModels", projectName, top, skip, maxpagesize, context);
+            return GetTrainedModelsImplementationAsync("ConversationAuthoringClient.GetTrainedModels", projectName, context);
         }
 
-        private AsyncPageable<BinaryData> GetTrainedModelsImplementationAsync(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetTrainedModelsImplementationAsync(string diagnosticsScopeName, string projectName, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -2015,8 +2000,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetTrainedModelsRequest(projectName, top, skip, maxpagesize, context)
-                        : CreateGetTrainedModelsNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
+                        ? CreateGetTrainedModelsRequest(projectName, context)
+                        : CreateGetTrainedModelsNextPageRequest(nextLink, projectName, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2026,9 +2011,6 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Lists the trained models belonging to a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2067,14 +2049,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetTrainedModels(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetTrainedModels(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetTrainedModelsImplementation("ConversationAuthoringClient.GetTrainedModels", projectName, top, skip, maxpagesize, context);
+            return GetTrainedModelsImplementation("ConversationAuthoringClient.GetTrainedModels", projectName, context);
         }
 
-        private Pageable<BinaryData> GetTrainedModelsImplementation(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetTrainedModelsImplementation(string diagnosticsScopeName, string projectName, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -2082,8 +2064,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetTrainedModelsRequest(projectName, top, skip, maxpagesize, context)
-                        : CreateGetTrainedModelsNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
+                        ? CreateGetTrainedModelsRequest(projectName, context)
+                        : CreateGetTrainedModelsNextPageRequest(nextLink, projectName, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2095,9 +2077,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to &quot;Utf16CodeUnit&quot; for .NET strings, which are encoded as UTF-16. Allowed values: &quot;Utf16CodeUnit&quot;. </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="stringIndexType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2146,16 +2125,16 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetModelEvaluationResultsAsync(string projectName, string trainedModelLabel, string stringIndexType = "Utf16CodeUnit", int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetModelEvaluationResultsAsync(string projectName, string trainedModelLabel, string stringIndexType = "Utf16CodeUnit", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
             Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
 
-            return GetModelEvaluationResultsImplementationAsync("ConversationAuthoringClient.GetModelEvaluationResults", projectName, trainedModelLabel, stringIndexType, top, skip, maxpagesize, context);
+            return GetModelEvaluationResultsImplementationAsync("ConversationAuthoringClient.GetModelEvaluationResults", projectName, trainedModelLabel, stringIndexType, context);
         }
 
-        private AsyncPageable<BinaryData> GetModelEvaluationResultsImplementationAsync(string diagnosticsScopeName, string projectName, string trainedModelLabel, string stringIndexType, int? top, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetModelEvaluationResultsImplementationAsync(string diagnosticsScopeName, string projectName, string trainedModelLabel, string stringIndexType, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -2163,8 +2142,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType, top, skip, maxpagesize, context)
-                        : CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType, top, skip, maxpagesize, context);
+                        ? CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType, context)
+                        : CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2176,9 +2155,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to &quot;Utf16CodeUnit&quot; for .NET strings, which are encoded as UTF-16. Allowed values: &quot;Utf16CodeUnit&quot;. </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="stringIndexType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2227,16 +2203,16 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetModelEvaluationResults(string projectName, string trainedModelLabel, string stringIndexType = "Utf16CodeUnit", int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetModelEvaluationResults(string projectName, string trainedModelLabel, string stringIndexType = "Utf16CodeUnit", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
             Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
 
-            return GetModelEvaluationResultsImplementation("ConversationAuthoringClient.GetModelEvaluationResults", projectName, trainedModelLabel, stringIndexType, top, skip, maxpagesize, context);
+            return GetModelEvaluationResultsImplementation("ConversationAuthoringClient.GetModelEvaluationResults", projectName, trainedModelLabel, stringIndexType, context);
         }
 
-        private Pageable<BinaryData> GetModelEvaluationResultsImplementation(string diagnosticsScopeName, string projectName, string trainedModelLabel, string stringIndexType, int? top, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetModelEvaluationResultsImplementation(string diagnosticsScopeName, string projectName, string trainedModelLabel, string stringIndexType, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -2244,8 +2220,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType, top, skip, maxpagesize, context)
-                        : CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType, top, skip, maxpagesize, context);
+                        ? CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType, context)
+                        : CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2255,9 +2231,6 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Lists the non-expired training jobs created for a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2329,14 +2302,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetTrainingJobsAsync(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetTrainingJobsAsync(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetTrainingJobsImplementationAsync("ConversationAuthoringClient.GetTrainingJobs", projectName, top, skip, maxpagesize, context);
+            return GetTrainingJobsImplementationAsync("ConversationAuthoringClient.GetTrainingJobs", projectName, context);
         }
 
-        private AsyncPageable<BinaryData> GetTrainingJobsImplementationAsync(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetTrainingJobsImplementationAsync(string diagnosticsScopeName, string projectName, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -2344,8 +2317,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetTrainingJobsRequest(projectName, top, skip, maxpagesize, context)
-                        : CreateGetTrainingJobsNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
+                        ? CreateGetTrainingJobsRequest(projectName, context)
+                        : CreateGetTrainingJobsNextPageRequest(nextLink, projectName, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2355,9 +2328,6 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Lists the non-expired training jobs created for a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2429,14 +2399,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetTrainingJobs(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetTrainingJobs(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetTrainingJobsImplementation("ConversationAuthoringClient.GetTrainingJobs", projectName, top, skip, maxpagesize, context);
+            return GetTrainingJobsImplementation("ConversationAuthoringClient.GetTrainingJobs", projectName, context);
         }
 
-        private Pageable<BinaryData> GetTrainingJobsImplementation(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetTrainingJobsImplementation(string diagnosticsScopeName, string projectName, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -2444,8 +2414,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetTrainingJobsRequest(projectName, top, skip, maxpagesize, context)
-                        : CreateGetTrainingJobsNextPageRequest(nextLink, projectName, top, skip, maxpagesize, context);
+                        ? CreateGetTrainingJobsRequest(projectName, context)
+                        : CreateGetTrainingJobsNextPageRequest(nextLink, projectName, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2455,9 +2425,6 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Lists the supported languages for the given project type. </summary>
         /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot;. </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <remarks>
@@ -2491,14 +2458,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetSupportedLanguagesAsync(string projectKind, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSupportedLanguagesAsync(string projectKind, RequestContext context = null)
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
 
-            return GetSupportedLanguagesImplementationAsync("ConversationAuthoringClient.GetSupportedLanguages", projectKind, top, skip, maxpagesize, context);
+            return GetSupportedLanguagesImplementationAsync("ConversationAuthoringClient.GetSupportedLanguages", projectKind, context);
         }
 
-        private AsyncPageable<BinaryData> GetSupportedLanguagesImplementationAsync(string diagnosticsScopeName, string projectKind, int? top, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetSupportedLanguagesImplementationAsync(string diagnosticsScopeName, string projectKind, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -2506,8 +2473,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSupportedLanguagesRequest(projectKind, top, skip, maxpagesize, context)
-                        : CreateGetSupportedLanguagesNextPageRequest(nextLink, projectKind, top, skip, maxpagesize, context);
+                        ? CreateGetSupportedLanguagesRequest(projectKind, context)
+                        : CreateGetSupportedLanguagesNextPageRequest(nextLink, projectKind, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2517,9 +2484,6 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Lists the supported languages for the given project type. </summary>
         /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot;. </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <remarks>
@@ -2553,14 +2517,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetSupportedLanguages(string projectKind, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetSupportedLanguages(string projectKind, RequestContext context = null)
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
 
-            return GetSupportedLanguagesImplementation("ConversationAuthoringClient.GetSupportedLanguages", projectKind, top, skip, maxpagesize, context);
+            return GetSupportedLanguagesImplementation("ConversationAuthoringClient.GetSupportedLanguages", projectKind, context);
         }
 
-        private Pageable<BinaryData> GetSupportedLanguagesImplementation(string diagnosticsScopeName, string projectKind, int? top, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetSupportedLanguagesImplementation(string diagnosticsScopeName, string projectKind, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -2568,8 +2532,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSupportedLanguagesRequest(projectKind, top, skip, maxpagesize, context)
-                        : CreateGetSupportedLanguagesNextPageRequest(nextLink, projectKind, top, skip, maxpagesize, context);
+                        ? CreateGetSupportedLanguagesRequest(projectKind, context)
+                        : CreateGetSupportedLanguagesNextPageRequest(nextLink, projectKind, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2580,9 +2544,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Lists the supported prebuilt entities that can be used while creating composed entities. </summary>
         /// <param name="language"> The language to get supported prebuilt entities for. Required if multilingual is false. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc. </param>
         /// <param name="multilingual"> Whether to get the support prebuilt entities for multilingual or monolingual projects. If true, the language parameter is ignored. </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2616,12 +2577,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetSupportedPrebuiltEntitiesAsync(string language = null, bool? multilingual = null, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSupportedPrebuiltEntitiesAsync(string language = null, bool? multilingual = null, RequestContext context = null)
         {
-            return GetSupportedPrebuiltEntitiesImplementationAsync("ConversationAuthoringClient.GetSupportedPrebuiltEntities", language, multilingual, top, skip, maxpagesize, context);
+            return GetSupportedPrebuiltEntitiesImplementationAsync("ConversationAuthoringClient.GetSupportedPrebuiltEntities", language, multilingual, context);
         }
 
-        private AsyncPageable<BinaryData> GetSupportedPrebuiltEntitiesImplementationAsync(string diagnosticsScopeName, string language, bool? multilingual, int? top, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetSupportedPrebuiltEntitiesImplementationAsync(string diagnosticsScopeName, string language, bool? multilingual, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -2629,8 +2590,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSupportedPrebuiltEntitiesRequest(language, multilingual, top, skip, maxpagesize, context)
-                        : CreateGetSupportedPrebuiltEntitiesNextPageRequest(nextLink, language, multilingual, top, skip, maxpagesize, context);
+                        ? CreateGetSupportedPrebuiltEntitiesRequest(language, multilingual, context)
+                        : CreateGetSupportedPrebuiltEntitiesNextPageRequest(nextLink, language, multilingual, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2641,9 +2602,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Lists the supported prebuilt entities that can be used while creating composed entities. </summary>
         /// <param name="language"> The language to get supported prebuilt entities for. Required if multilingual is false. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc. </param>
         /// <param name="multilingual"> Whether to get the support prebuilt entities for multilingual or monolingual projects. If true, the language parameter is ignored. </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2677,12 +2635,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetSupportedPrebuiltEntities(string language = null, bool? multilingual = null, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetSupportedPrebuiltEntities(string language = null, bool? multilingual = null, RequestContext context = null)
         {
-            return GetSupportedPrebuiltEntitiesImplementation("ConversationAuthoringClient.GetSupportedPrebuiltEntities", language, multilingual, top, skip, maxpagesize, context);
+            return GetSupportedPrebuiltEntitiesImplementation("ConversationAuthoringClient.GetSupportedPrebuiltEntities", language, multilingual, context);
         }
 
-        private Pageable<BinaryData> GetSupportedPrebuiltEntitiesImplementation(string diagnosticsScopeName, string language, bool? multilingual, int? top, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetSupportedPrebuiltEntitiesImplementation(string diagnosticsScopeName, string language, bool? multilingual, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -2690,8 +2648,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSupportedPrebuiltEntitiesRequest(language, multilingual, top, skip, maxpagesize, context)
-                        : CreateGetSupportedPrebuiltEntitiesNextPageRequest(nextLink, language, multilingual, top, skip, maxpagesize, context);
+                        ? CreateGetSupportedPrebuiltEntitiesRequest(language, multilingual, context)
+                        : CreateGetSupportedPrebuiltEntitiesNextPageRequest(nextLink, language, multilingual, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2701,9 +2659,6 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Lists the support training config version for a given project type. </summary>
         /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot;. </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <remarks>
@@ -2737,14 +2692,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetTrainingConfigVersionsAsync(string projectKind, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetTrainingConfigVersionsAsync(string projectKind, RequestContext context = null)
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
 
-            return GetTrainingConfigVersionsImplementationAsync("ConversationAuthoringClient.GetTrainingConfigVersions", projectKind, top, skip, maxpagesize, context);
+            return GetTrainingConfigVersionsImplementationAsync("ConversationAuthoringClient.GetTrainingConfigVersions", projectKind, context);
         }
 
-        private AsyncPageable<BinaryData> GetTrainingConfigVersionsImplementationAsync(string diagnosticsScopeName, string projectKind, int? top, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetTrainingConfigVersionsImplementationAsync(string diagnosticsScopeName, string projectKind, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -2752,8 +2707,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetTrainingConfigVersionsRequest(projectKind, top, skip, maxpagesize, context)
-                        : CreateGetTrainingConfigVersionsNextPageRequest(nextLink, projectKind, top, skip, maxpagesize, context);
+                        ? CreateGetTrainingConfigVersionsRequest(projectKind, context)
+                        : CreateGetTrainingConfigVersionsNextPageRequest(nextLink, projectKind, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2763,9 +2718,6 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Lists the support training config version for a given project type. </summary>
         /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot;. </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <remarks>
@@ -2799,14 +2751,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetTrainingConfigVersions(string projectKind, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetTrainingConfigVersions(string projectKind, RequestContext context = null)
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
 
-            return GetTrainingConfigVersionsImplementation("ConversationAuthoringClient.GetTrainingConfigVersions", projectKind, top, skip, maxpagesize, context);
+            return GetTrainingConfigVersionsImplementation("ConversationAuthoringClient.GetTrainingConfigVersions", projectKind, context);
         }
 
-        private Pageable<BinaryData> GetTrainingConfigVersionsImplementation(string diagnosticsScopeName, string projectKind, int? top, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetTrainingConfigVersionsImplementation(string diagnosticsScopeName, string projectKind, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -2814,8 +2766,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetTrainingConfigVersionsRequest(projectKind, top, skip, maxpagesize, context)
-                        : CreateGetTrainingConfigVersionsNextPageRequest(nextLink, projectKind, top, skip, maxpagesize, context);
+                        ? CreateGetTrainingConfigVersionsRequest(projectKind, context)
+                        : CreateGetTrainingConfigVersionsNextPageRequest(nextLink, projectKind, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -4143,7 +4095,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        internal HttpMessage CreateGetProjectsRequest(int? top, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetProjectsRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4152,18 +4104,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects", false);
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -4288,7 +4228,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentsRequest(string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetDeploymentsRequest(string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4299,18 +4239,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments", false);
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -4466,7 +4394,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetTrainedModelsRequest(string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetTrainedModelsRequest(string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4477,18 +4405,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/models", false);
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -4531,7 +4447,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetModelEvaluationResultsRequest(string projectName, string trainedModelLabel, string stringIndexType, int? top, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetModelEvaluationResultsRequest(string projectName, string trainedModelLabel, string stringIndexType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4545,18 +4461,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath(trainedModelLabel, true);
             uri.AppendPath("/evaluation/result", false);
             uri.AppendQuery("stringIndexType", stringIndexType, true);
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -4582,7 +4486,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetTrainingJobsRequest(string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetTrainingJobsRequest(string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4593,18 +4497,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/train/jobs", false);
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -4664,7 +4556,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetSupportedLanguagesRequest(string projectKind, int? top, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetSupportedLanguagesRequest(string projectKind, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4674,25 +4566,13 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/global/languages", false);
             uri.AppendQuery("projectKind", projectKind, true);
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetSupportedPrebuiltEntitiesRequest(string language, bool? multilingual, int? top, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetSupportedPrebuiltEntitiesRequest(string language, bool? multilingual, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4709,25 +4589,13 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 uri.AppendQuery("multilingual", multilingual.Value, true);
             }
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetTrainingConfigVersionsRequest(string projectKind, int? top, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetTrainingConfigVersionsRequest(string projectKind, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4737,25 +4605,13 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/global/training-config-versions", false);
             uri.AppendQuery("projectKind", projectKind, true);
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetProjectsNextPageRequest(string nextLink, int? top, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetProjectsNextPageRequest(string nextLink, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4769,7 +4625,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentsNextPageRequest(string nextLink, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetDeploymentsNextPageRequest(string nextLink, string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4783,7 +4639,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetTrainedModelsNextPageRequest(string nextLink, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetTrainedModelsNextPageRequest(string nextLink, string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4797,7 +4653,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetModelEvaluationResultsNextPageRequest(string nextLink, string projectName, string trainedModelLabel, string stringIndexType, int? top, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetModelEvaluationResultsNextPageRequest(string nextLink, string projectName, string trainedModelLabel, string stringIndexType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4811,7 +4667,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetTrainingJobsNextPageRequest(string nextLink, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetTrainingJobsNextPageRequest(string nextLink, string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4825,7 +4681,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetSupportedLanguagesNextPageRequest(string nextLink, string projectKind, int? top, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetSupportedLanguagesNextPageRequest(string nextLink, string projectKind, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4839,7 +4695,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetSupportedPrebuiltEntitiesNextPageRequest(string nextLink, string language, bool? multilingual, int? top, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetSupportedPrebuiltEntitiesNextPageRequest(string nextLink, string language, bool? multilingual, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4853,7 +4709,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetTrainingConfigVersionsNextPageRequest(string nextLink, string projectKind, int? top, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetTrainingConfigVersionsNextPageRequest(string nextLink, string projectKind, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

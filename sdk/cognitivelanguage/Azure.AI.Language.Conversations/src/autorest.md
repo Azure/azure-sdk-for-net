@@ -202,4 +202,18 @@ directive:
   transform: |
     $["description"] = "Specifies the method used to interpret string offsets. Set this to \"Utf16CodeUnit\" for .NET strings, which are encoded as UTF-16.";
     $["x-ms-client-default"] = "Utf16CodeUnit";
+
+# Remove explicit paging parameters until Azure/azure-sdk-for-net#29342 is resolved.
+# where-operation-match (Azure/autorest#4565) and remove-parameter (Azure/autorest#4566) do not work correctly.
+- from: swagger-document
+  where: $.paths.*.*
+  transform: |
+    var paramRefs = [
+        "common.json#/parameters/TopParameter",
+        "common.json#/parameters/SkipParameter",
+        "common.json#/parameters/MaxPageSizeParameter"
+    ];
+    if (/ConversationalAnalysisAuthoring_((List(Projects|Deployments|TrainedModels|TrainingJobs|TrainingConfigVersions))|Get(ModelEvaluationResults|SupportedLanguages|SupportedPrebuiltEntities))/.test($.operationId)) {
+        $.parameters = $.parameters.filter(param => !paramRefs.includes(param["$ref"]));
+    }
 ```

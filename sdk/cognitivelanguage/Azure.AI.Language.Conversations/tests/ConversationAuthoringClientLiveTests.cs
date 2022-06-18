@@ -31,5 +31,21 @@ namespace Azure.AI.Language.Conversations.Tests
             AsyncPageable<BinaryData> response = Client.GetSupportedPrebuiltEntitiesAsync(language: "es", multilingual: false);
             Assert.That(await response.ToEnumerableAsync(), Has.Count.AtLeast(1));
         }
+
+        [RecordedTest]
+        public async Task GetProjects()
+        {
+            // Make sure pageables still work after removing explicit parameters (Azure/azure-sdk-for-net#29331).
+            AsyncPageable<BinaryData> response = Client.GetProjectsAsync();
+            Assert.That(await response.ToEnumerableAsync(), Has.Count.AtLeast(1));
+        }
+
+        [RecordedTest]
+        public async Task GetTrainedModels()
+        {
+            // Make sure pageables still work after removing explicit parameters (Azure/azure-sdk-for-net#29331).
+            AsyncPageable<BinaryData> response = Client.GetTrainedModelsAsync(TestEnvironment.ProjectName);
+            Assert.That(await response.ToEnumerableAsync(), Has.Count.AtLeast(1));
+        }
     }
 }
