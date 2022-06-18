@@ -10,6 +10,8 @@ namespace Azure.Data.Tables
 {
     internal class TablesTypeBinder: TypeBinder<IDictionary<string, object>>
     {
+        private TablesTypeBinder() : base(bindITableEntityProperties: true) { }
+
         public static TablesTypeBinder Shared { get; } = new();
         protected override void Set<T>(IDictionary<string, object> destination, T value, BoundMemberInfo memberInfo)
         {

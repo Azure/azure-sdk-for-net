@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Serialization;
+using Azure.Data.Tables;
 
 namespace Azure.Core
 {
@@ -14,10 +15,19 @@ namespace Azure.Core
     {
         private readonly ConcurrentDictionary<Type, BoundTypeInfo> _cache = new();
         private Func<Type, BoundTypeInfo> _valueFactory;
+        //Since ITableEntity is intrinsic to the correct operation of types in table storage, we need to track these specially in case they
+        //are implemented on the exchange type in a way that's not directly visible through TExchange.
+        //Most often, this is due to an explicit interface implementation, which is common in F# and may be present in other scenarios
+        //migrating from other table storage SDKs.
+        //NOTE: this functionality is only triggered bindITableEntityProperties is true
+        private static readonly PropertyInfo s_iTableEntityPartitionKey = typeof(ITableEntity).GetProperty(nameof(ITableEntity.PartitionKey)) ?? throw new InvalidOperationException($"Could not find property {nameof(ITableEntity.PartitionKey)}");
+        private static readonly PropertyInfo s_iTableEntityRowKey = typeof(ITableEntity).GetProperty(nameof(ITableEntity.RowKey)) ?? throw new InvalidOperationException($"Could not find property {nameof(ITableEntity.RowKey)}");
+        private static readonly PropertyInfo s_iTableEntityETag = typeof(ITableEntity).GetProperty(nameof(ITableEntity.ETag)) ?? throw new InvalidOperationException($"Could not find property {nameof(ITableEntity.ETag)}");
+        private static readonly PropertyInfo s_iTableEntityTimestamp = typeof(ITableEntity).GetProperty(nameof(ITableEntity.Timestamp)) ?? throw new InvalidOperationException($"Could not find property {nameof(ITableEntity.Timestamp)}");
 
-        protected TypeBinder()
+        protected TypeBinder(bool bindITableEntityProperties)
         {
-            _valueFactory = t => new(t, this);
+            _valueFactory = t => new(t, this, bindITableEntityProperties);
         }
 
         public T Deserialize<T>(TExchange source)
@@ -52,7 +62,7 @@ namespace Azure.Core
             private readonly bool _isPrimitive;
             private readonly BoundMemberInfo[] _members;
 
-            public BoundTypeInfo(Type type, TypeBinder<TExchange> binderImplementation)
+            public BoundTypeInfo(Type type, TypeBinder<TExchange> binderImplementation, bool bindITableEntityProperties)
             {
                 _binderImplementation = binderImplementation;
                 Type innerType = type;
@@ -70,6 +80,10 @@ namespace Azure.Core
 
                 if (!_isPrimitive)
                 {
+                    bool foundPartitionKey = false;
+                    bool foundRowKey = false;
+                    bool foundETag = false;
+                    bool foundTimeStamp = false;
                     List<BoundMemberInfo> members = new List<BoundMemberInfo>();
                     foreach (var memberInfo in type.GetMembers(BindingFlags.Public | BindingFlags.Instance))
                     {
@@ -85,12 +99,38 @@ namespace Azure.Core
                                 {
                                     continue;
                                 }
+                                //track whether we have found any of the special ITableEntity properties
+                                if (memberInfo.Name == nameof(ITableEntity.PartitionKey))
+                                    foundPartitionKey = true;
+                                if (memberInfo.Name == nameof(ITableEntity.RowKey))
+                                    foundRowKey = true;
+                                if (memberInfo.Name == nameof(ITableEntity.ETag))
+                                    foundETag = true;
+                                if (memberInfo.Name == nameof(ITableEntity.Timestamp))
+                                    foundTimeStamp = true;
+
                                 members.Add((BoundMemberInfo) Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(typeof(TExchange), propertyInfo.PropertyType), propertyInfo));
                                 break;
                             case FieldInfo fieldInfo:
                                 members.Add((BoundMemberInfo) Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(typeof(TExchange), fieldInfo.FieldType), fieldInfo));
                                 break;
                         }
+                    }
+                    //if the type implements ITableEntity, this is a declaration that it intends to participate
+                    //in table storage as part of its binding. If we didn't find any of the ITableEntity properties,
+                    //bind these to the interface so it works correctly.
+                    //It should be noted that even prior to this change, types could hide any of these with "same-named"
+                    //properties, and they would be used instead of the actual implementations.
+                    if (bindITableEntityProperties && typeof(ITableEntity).IsAssignableFrom(type))
+                    {
+                        if (!foundPartitionKey)
+                            members.Add((BoundMemberInfo)Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(typeof(TExchange), s_iTableEntityPartitionKey.PropertyType), s_iTableEntityPartitionKey));
+                        if (!foundRowKey)
+                            members.Add((BoundMemberInfo)Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(typeof(TExchange), s_iTableEntityRowKey.PropertyType), s_iTableEntityRowKey));
+                        if (!foundETag)
+                            members.Add((BoundMemberInfo)Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(typeof(TExchange), s_iTableEntityETag.PropertyType), s_iTableEntityETag));
+                        if (!foundTimeStamp)
+                            members.Add((BoundMemberInfo)Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(typeof(TExchange), s_iTableEntityTimestamp.PropertyType), s_iTableEntityTimestamp));
                     }
 
                     _members = members.ToArray();
