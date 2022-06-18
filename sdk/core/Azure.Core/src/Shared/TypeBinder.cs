@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Serialization;
-using Azure.Data.Tables;
 
 namespace Azure.Core
 {
@@ -15,19 +14,22 @@ namespace Azure.Core
     {
         private readonly ConcurrentDictionary<Type, BoundTypeInfo> _cache = new();
         private Func<Type, BoundTypeInfo> _valueFactory;
-        //Since ITableEntity is intrinsic to the correct operation of types in table storage, we need to track these specially in case they
-        //are implemented on the exchange type in a way that's not directly visible through TExchange.
-        //Most often, this is due to an explicit interface implementation, which is common in F# and may be present in other scenarios
-        //migrating from other table storage SDKs.
-        //NOTE: this functionality is only triggered bindITableEntityProperties is true
-        private static readonly PropertyInfo s_iTableEntityPartitionKey = typeof(ITableEntity).GetProperty(nameof(ITableEntity.PartitionKey)) ?? throw new InvalidOperationException($"Could not find property {nameof(ITableEntity.PartitionKey)}");
-        private static readonly PropertyInfo s_iTableEntityRowKey = typeof(ITableEntity).GetProperty(nameof(ITableEntity.RowKey)) ?? throw new InvalidOperationException($"Could not find property {nameof(ITableEntity.RowKey)}");
-        private static readonly PropertyInfo s_iTableEntityETag = typeof(ITableEntity).GetProperty(nameof(ITableEntity.ETag)) ?? throw new InvalidOperationException($"Could not find property {nameof(ITableEntity.ETag)}");
-        private static readonly PropertyInfo s_iTableEntityTimestamp = typeof(ITableEntity).GetProperty(nameof(ITableEntity.Timestamp)) ?? throw new InvalidOperationException($"Could not find property {nameof(ITableEntity.Timestamp)}");
-
-        protected TypeBinder(bool bindITableEntityProperties)
+        //these are "other interfaces of interest" that we will use when binding
+        private readonly List<Type> _otherInterfacesOfInterest = new();
+        /// <summary>
+        /// Call this from the constructor of a subclass to add additional interfaces of interest for binding
+        /// </summary>
+        /// <param name="interfaceType">An interface type whose properties will be bound if implemented explicitly</param>
+        protected void AddInterfaceOfInterest(Type interfaceType)
         {
-            _valueFactory = t => new(t, this, bindITableEntityProperties);
+            if (!interfaceType.IsInterface)
+                throw new ArgumentException("The type must be an interface", nameof(interfaceType));
+            _otherInterfacesOfInterest.Add(interfaceType);
+        }
+
+        protected TypeBinder()
+        {
+            _valueFactory = t => new(t, this);
         }
 
         public T Deserialize<T>(TExchange source)
@@ -62,7 +64,7 @@ namespace Azure.Core
             private readonly bool _isPrimitive;
             private readonly BoundMemberInfo[] _members;
 
-            public BoundTypeInfo(Type type, TypeBinder<TExchange> binderImplementation, bool bindITableEntityProperties)
+            public BoundTypeInfo(Type type, TypeBinder<TExchange> binderImplementation)
             {
                 _binderImplementation = binderImplementation;
                 Type innerType = type;
@@ -80,10 +82,15 @@ namespace Azure.Core
 
                 if (!_isPrimitive)
                 {
-                    bool foundPartitionKey = false;
-                    bool foundRowKey = false;
-                    bool foundETag = false;
-                    bool foundTimeStamp = false;
+                    //Go through the "other interfaces of interest", and make a list of the property names we're interested in.
+                    var memberNamesFromInterfaces = new Dictionary<string, bool>();
+                    foreach (var iface in binderImplementation._otherInterfacesOfInterest)
+                    {
+                        foreach (var prop in iface.GetProperties(BindingFlags.Instance | BindingFlags.Public))
+                        {
+                            memberNamesFromInterfaces.Add(prop.Name, false);
+                        }
+                    }
                     List<BoundMemberInfo> members = new List<BoundMemberInfo>();
                     foreach (var memberInfo in type.GetMembers(BindingFlags.Public | BindingFlags.Instance))
                     {
@@ -99,38 +106,35 @@ namespace Azure.Core
                                 {
                                     continue;
                                 }
-                                //track whether we have found any of the special ITableEntity properties
-                                if (memberInfo.Name == nameof(ITableEntity.PartitionKey))
-                                    foundPartitionKey = true;
-                                if (memberInfo.Name == nameof(ITableEntity.RowKey))
-                                    foundRowKey = true;
-                                if (memberInfo.Name == nameof(ITableEntity.ETag))
-                                    foundETag = true;
-                                if (memberInfo.Name == nameof(ITableEntity.Timestamp))
-                                    foundTimeStamp = true;
-
-                                members.Add((BoundMemberInfo) Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(typeof(TExchange), propertyInfo.PropertyType), propertyInfo));
+                                //if the name matches one of the members from our "other interfaces of interest", then note that we've found it
+                                //NOTE: this only supports properties due to the nature of interfaces
+                                if (memberNamesFromInterfaces.ContainsKey(memberInfo.Name))
+                                    memberNamesFromInterfaces[memberInfo.Name] = true;
+                                members.Add((BoundMemberInfo)Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(typeof(TExchange), propertyInfo.PropertyType), propertyInfo));
                                 break;
                             case FieldInfo fieldInfo:
-                                members.Add((BoundMemberInfo) Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(typeof(TExchange), fieldInfo.FieldType), fieldInfo));
+                                members.Add((BoundMemberInfo)Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(typeof(TExchange), fieldInfo.FieldType), fieldInfo));
                                 break;
                         }
                     }
-                    //if the type implements ITableEntity, this is a declaration that it intends to participate
-                    //in table storage as part of its binding. If we didn't find any of the ITableEntity properties,
-                    //bind these to the interface so it works correctly.
-                    //It should be noted that even prior to this change, types could hide any of these with "same-named"
-                    //properties, and they would be used instead of the actual implementations.
-                    if (bindITableEntityProperties && typeof(ITableEntity).IsAssignableFrom(type))
+                    //for each of the "other interfaces of interest", we need to shore up any properties that are "missing"
+                    //from the declared surface area of the type
+                    foreach (var iface in binderImplementation._otherInterfacesOfInterest)
                     {
-                        if (!foundPartitionKey)
-                            members.Add((BoundMemberInfo)Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(typeof(TExchange), s_iTableEntityPartitionKey.PropertyType), s_iTableEntityPartitionKey));
-                        if (!foundRowKey)
-                            members.Add((BoundMemberInfo)Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(typeof(TExchange), s_iTableEntityRowKey.PropertyType), s_iTableEntityRowKey));
-                        if (!foundETag)
-                            members.Add((BoundMemberInfo)Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(typeof(TExchange), s_iTableEntityETag.PropertyType), s_iTableEntityETag));
-                        if (!foundTimeStamp)
-                            members.Add((BoundMemberInfo)Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(typeof(TExchange), s_iTableEntityTimestamp.PropertyType), s_iTableEntityTimestamp));
+                        //if the interface isn't assignable from the type, ignore it
+                        if (!iface.IsAssignableFrom(type))
+                            continue;
+                        foreach (var prop in iface.GetProperties(BindingFlags.Instance | BindingFlags.Public))
+                        {
+                            //if we're still tracking the name, and we haven't found it, add it
+                            if (memberNamesFromInterfaces.ContainsKey(prop.Name) && !memberNamesFromInterfaces[prop.Name])
+                            {
+                                members.Add((BoundMemberInfo)Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(typeof(TExchange), prop.PropertyType), prop));
+                                //remove the name from what we're tracking so we don't collide with another interface
+                                //NOTE: this means that the first interface with a property name "wins" (just like a property declared by type wins over explicit interfaces
+                                memberNamesFromInterfaces.Remove(prop.Name);
+                            }
+                        }
                     }
 
                     _members = members.ToArray();
