@@ -51,6 +51,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             };
 
             Response response = client.AnalyzeConversation(RequestContent.Create(data));
+            #endregion
 
             using JsonDocument result = JsonDocument.Parse(response.ContentStream);
             JsonElement conversationalTaskResult = result.RootElement;
@@ -93,7 +94,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                 }
             }
-            #endregion
 
             Assert.That(response.Status, Is.EqualTo(200));
             Assert.That(conversationPrediction.GetProperty("topIntent").GetString(), Is.EqualTo("Send"));
@@ -138,6 +138,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             };
 
             Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
+            #endregion
 
             using JsonDocument result = await JsonDocument.ParseAsync(response.ContentStream);
             JsonElement conversationalTaskResult = result.RootElement;
@@ -180,7 +181,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                 }
             }
-            #endregion
 
             Assert.That(response.Status, Is.EqualTo(200));
             Assert.That(conversationPrediction.GetProperty("topIntent").GetString(), Is.EqualTo("Send"));

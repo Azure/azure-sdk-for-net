@@ -8,7 +8,7 @@ title: Conversations
 license-header: MICROSOFT_MIT_NO_VERSION
 
 input-file:
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e7f37e4e43b1d12fd1988fda3ed39624c4b23303/specification/cognitiveservices/data-plane/Language/preview/2022-05-15-preview/analyzeconversations.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/725f4ca360426a32d20e81eb945065e62c285d6a/specification/cognitiveservices/data-plane/Language/stable/2022-05-01/analyzeconversations.json
 
 namespace: Azure.AI.Language.Conversations
 model-namespace: false
@@ -24,24 +24,6 @@ modelerfour:
 ## Customizations
 
 Customizations that should eventually be added to central autorest configuration.
-
-### Client customizations
-
-```yaml
-directive:
-# Put all operations into a single REST client.
-- rename-operation:
-    from: AnalyzeConversation_SubmitJob
-    to: ConversationAnalysis_SubmitJob
-
-- rename-operation:
-    from: AnalyzeConversation_JobStatus
-    to: ConversationAnalysis_JobStatus
-
-- rename-operation:
-    from: AnalyzeConversation_CancelJob
-    to: ConversationAnalysis_CancelJob
-```
 
 ### Model customizations
 
