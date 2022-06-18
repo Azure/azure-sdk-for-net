@@ -2440,7 +2440,7 @@ using Azure.Core.Pipeline;
                 var request = new RouterWorker()
                 {
                     TotalCapacity = totalCapacity,
-                    QueueAssignments = options?.QueueIds?.ToDictionary(x => x, x => new QueueAssignment(null)),
+                    QueueAssignments = options?.QueueIds,
                     Labels = options?.Labels,
                     ChannelConfigurations = options?.ChannelConfigurations,
                     AvailableForOffers = options?.AvailableForOffers,
@@ -2483,7 +2483,7 @@ using Azure.Core.Pipeline;
                 var request = new RouterWorker()
                 {
                     TotalCapacity = totalCapacity,
-                    QueueAssignments = options?.QueueIds?.ToDictionary(x => x, x => new QueueAssignment(null)),
+                    QueueAssignments = options?.QueueIds,
                     Labels = options?.Labels,
                     ChannelConfigurations = options?.ChannelConfigurations,
                     AvailableForOffers = options?.AvailableForOffers,
@@ -2523,7 +2523,7 @@ using Azure.Core.Pipeline;
                 var request = new RouterWorker()
                 {
                     TotalCapacity = options.TotalCapacity,
-                    QueueAssignments = options.QueueIds?.ToDictionary(x => x, x => new QueueAssignment(null)),
+                    QueueAssignments = options.QueueIds,
                     Labels = options.Labels,
                     ChannelConfigurations = options.ChannelConfigurations,
                     AvailableForOffers = options.AvailableForOffers,
@@ -2564,7 +2564,7 @@ using Azure.Core.Pipeline;
                 var request = new RouterWorker()
                 {
                     TotalCapacity = options.TotalCapacity,
-                    QueueAssignments = options.QueueIds?.ToDictionary(x => x, x => new QueueAssignment(null)),
+                    QueueAssignments = options.QueueIds,
                     Labels = options.Labels,
                     ChannelConfigurations = options.ChannelConfigurations,
                     AvailableForOffers = options.AvailableForOffers,

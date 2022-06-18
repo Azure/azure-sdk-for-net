@@ -50,7 +50,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 totalCapacity: 1,
                 new CreateWorkerOptions()
                 {
-                    QueueIds = new string[] { queueResponse.Value.Id },
+                    QueueIds = new Dictionary<string, QueueAssignment>() { [queueResponse.Value.Id] = new QueueAssignment()},
                     ChannelConfigurations = new Dictionary<string, ChannelConfiguration>
                     {
                         [channelResponse] = new ChannelConfiguration(1)

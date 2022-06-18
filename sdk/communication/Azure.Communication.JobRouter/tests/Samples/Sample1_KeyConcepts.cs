@@ -63,7 +63,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 totalCapacity: 1,
                 new CreateWorkerOptions()
                 {
-                    QueueIds = new[] { queue.Value.Id },
+                    QueueIds = new Dictionary<string, QueueAssignment>() { [queue.Value.Id] = new QueueAssignment() },
                     Labels = new LabelCollection()
                     {
                         ["Some-Skill"] = 11

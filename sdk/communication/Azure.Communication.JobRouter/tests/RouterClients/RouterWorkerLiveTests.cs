@@ -51,7 +51,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 totalCapacity: totalCapacity,
                 new CreateWorkerOptions()
                 {
-                    QueueIds = queueAssignmentList,
+                    QueueIds = queueAssignmentList.ToDictionary(x => x, _ => new QueueAssignment(null)),
                     Labels = workerLabels,
                     ChannelConfigurations = channelConfigList,
                 });
@@ -106,9 +106,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 10,
                 new CreateWorkerOptions()
                 {
-                    QueueIds = new List<string>()
+                    QueueIds = new Dictionary<string, QueueAssignment>()
                     {
-                        createQueue1.Id
+                        [createQueue1.Id] = new QueueAssignment()
                     },
                     ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
                     {
@@ -125,9 +125,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 10,
                 new CreateWorkerOptions()
                 {
-                    QueueIds = new List<string>()
+                    QueueIds = new Dictionary<string, QueueAssignment>()
                     {
-                        createQueue2.Id
+                        [createQueue2.Id] = new QueueAssignment()
                     },
                     ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
                     {
@@ -144,9 +144,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 10,
                 new CreateWorkerOptions()
                 {
-                    QueueIds = new List<string>()
+                    QueueIds = new Dictionary<string, QueueAssignment>()
                     {
-                        createQueue1.Id, createQueue2.Id
+                        [createQueue1.Id] = new QueueAssignment(), [createQueue2.Id] = new QueueAssignment()
                     },
                     ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
                     {
@@ -163,9 +163,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 10,
                 new CreateWorkerOptions()
                 {
-                    QueueIds = new List<string>()
+                    QueueIds = new Dictionary<string, QueueAssignment>()
                     {
-                        createQueue1.Id
+                        [createQueue1.Id] = new QueueAssignment()
                     },
                     ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
                     {

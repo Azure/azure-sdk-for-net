@@ -13,28 +13,8 @@ namespace Azure.Communication.JobRouter
     /// <summary> A rule that defines actions to execute upon a specific trigger. </summary>
     public partial class ExceptionRule
     {
-        /// <summary> Initializes a new instance of ExceptionRule. </summary>
-        /// <param name="trigger"> The trigger for this exception rule. </param>
-        /// <param name="actions"> A dictionary collection of actions to perform once the exception is triggered. Key is the Id of each exception action. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="trigger"/> or <paramref name="actions"/> is null. </exception>
-        public ExceptionRule(JobExceptionTrigger trigger, IDictionary<string, ExceptionAction> actions)
-        {
-            if (trigger == null)
-            {
-                throw new ArgumentNullException(nameof(trigger));
-            }
-            if (actions == null)
-            {
-                throw new ArgumentNullException(nameof(actions));
-            }
-
-            Trigger = trigger;
-            Actions = actions;
-        }
 
         /// <summary> The trigger for this exception rule. </summary>
         public JobExceptionTrigger Trigger { get; set; }
-        /// <summary> A dictionary collection of actions to perform once the exception is triggered. Key is the Id of each exception action. </summary>
-        public IDictionary<string, ExceptionAction> Actions { get; }
     }
 }

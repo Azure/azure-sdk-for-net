@@ -18,7 +18,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> (Optional) A dictionary collection of exception rules on the exception policy. Key is the Id of each exception rule. </summary>
 #pragma warning disable CA2227 // Collection properties should be read only
-        public IDictionary<string, ExceptionRule>? ExceptionRules { get; set; }
+        public IDictionary<string, ExceptionRule?>? ExceptionRules { get; set; }
 #pragma warning restore CA2227 // Collection properties should be read only
     }
 }

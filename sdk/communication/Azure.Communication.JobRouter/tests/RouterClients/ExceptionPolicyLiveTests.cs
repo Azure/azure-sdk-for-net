@@ -34,7 +34,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var rules = new Dictionary<string, ExceptionRule>()
             {
                 [exceptionRuleId] = new ExceptionRule(new QueueLengthExceptionTrigger(1),
-                    new Dictionary<string, ExceptionAction>()
+                    new Dictionary<string, ExceptionAction?>()
                     {
                         [cancelActionId] = new CancelExceptionAction()
                         {

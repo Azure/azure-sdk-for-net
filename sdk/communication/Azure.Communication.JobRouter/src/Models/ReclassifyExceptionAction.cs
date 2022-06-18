@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
+    [CodeGenSuppress("ReclassifyExceptionAction")]
     public partial class ReclassifyExceptionAction
     {
         [CodeGenMember("LabelsToUpsert")]
@@ -16,7 +17,10 @@ namespace Azure.Communication.JobRouter
         {
             get
             {
-                return LabelsToUpsert?.ToDictionary(x => x.Key, x => x.Value);
+                return LabelsToUpsert != null
+                    ? LabelsToUpsert?.ToDictionary(x => x.Key,
+                        x => x.Value)
+                    : new ChangeTrackingDictionary<string, object>();
             }
             set
             {
@@ -28,5 +32,16 @@ namespace Azure.Communication.JobRouter
         /// (optional) Dictionary containing the labels to update (or add if not existing) in key-value pairs
         /// </summary>
         public LabelCollection LabelsToUpsert { get; set; }
+
+        /// <summary> Initializes a new instance of ReclassifyExceptionAction. </summary>
+        /// <param name="classificationPolicyId"> (optional) The new classification policy that will determine queue, priority and worker selectors. </param>
+        /// <param name="labelsToUpsert"> (optional) Dictionary containing the labels to update (or add if not existing) in key-value pairs. </param>
+        public ReclassifyExceptionAction(string classificationPolicyId, LabelCollection labelsToUpsert = default)
+        {
+            Argument.AssertNotNullOrWhiteSpace(classificationPolicyId, nameof(classificationPolicyId));
+
+            ClassificationPolicyId = classificationPolicyId;
+            LabelsToUpsert = labelsToUpsert;
+        }
     }
 }

@@ -31,7 +31,7 @@ namespace Azure.Communication.JobRouter
         public IDictionary<string, ChannelConfiguration>? ChannelConfigurations { get; set; }
 
         /// <summary> The queue(s) that this worker can receive work from. </summary>
-        public IEnumerable<string>? QueueIds { get; set; }
+        public IDictionary<string, QueueAssignment>? QueueIds { get; set; }
 #pragma warning restore CA2227 // Collection properties should be read only
     }
 }

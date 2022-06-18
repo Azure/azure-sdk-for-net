@@ -13,12 +13,6 @@ namespace Azure.Communication.JobRouter
     /// <summary> An action that modifies labels on a job and then reclassifies it. </summary>
     public partial class ReclassifyExceptionAction : ExceptionAction
     {
-        /// <summary> Initializes a new instance of ReclassifyExceptionAction. </summary>
-        public ReclassifyExceptionAction()
-        {
-            _labelsToUpsert = new ChangeTrackingDictionary<string, object>();
-            Kind = "reclassify";
-        }
 
         /// <summary> Initializes a new instance of ReclassifyExceptionAction. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>

@@ -69,7 +69,7 @@ var worker = routerClient.CreateWorker(
     totalCapacity: 1,
     new CreateWorkerOptions()
     {
-        QueueIds = new[] { queue.Value.Id },
+        QueueIds = new Dictionary<string, QueueAssignment>() { [queue.Value.Id] = new QueueAssignment() },
         Labels = new LabelCollection()
         {
             ["Some-Skill"] = 11
@@ -104,7 +104,7 @@ Once a worker receives an offer, it can take two possible actions: accept or dec
 var jobOffer = result.Value.Offers.FirstOrDefault(x => x.JobId == job.Value.Id);
 
 // accepting the offer sent to `worker-1`
-var acceptJobOfferResult = routerClient.AcceptJobOffer(worker.Value.Id, jobOffer.Id);
+var acceptJobOfferResult = routerClient.AcceptJobOffer(worker.Value.Id, jobOffer!.Id);
 
 Console.WriteLine($"Offer: {jobOffer.Id} sent to worker: {worker.Value.Id} has been accepted");
 Console.WriteLine($"Job has been assigned to worker: {worker.Value.Id} with assignment: {acceptJobOfferResult.Value.AssignmentId}");

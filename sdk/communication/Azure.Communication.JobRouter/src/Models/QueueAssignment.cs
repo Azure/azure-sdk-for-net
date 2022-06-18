@@ -18,7 +18,14 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public QueueAssignment(object value) : base(value)
+        internal QueueAssignment(object value) : base(value)
+        {
+        }
+
+        /// <summary>
+        /// Public constructor
+        /// </summary>
+        public QueueAssignment(): this(null)
         {
         }
     }
