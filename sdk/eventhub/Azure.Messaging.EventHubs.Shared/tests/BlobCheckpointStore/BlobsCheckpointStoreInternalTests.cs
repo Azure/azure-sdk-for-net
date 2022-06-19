@@ -413,6 +413,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(checkpoint, Is.Not.Null, "A checkpoint should have been returned.");
             Assert.That(checkpoint.StartingPosition, Is.EqualTo(expectedStartingPosition));
+
+            Assert.That(checkpoint, Is.InstanceOf<BlobCheckpointStoreInternal.BlobStorageCheckpoint>());
+            var blobCheckpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoint;
+            Assert.IsNull(blobCheckpoint.Offset);
+            Assert.AreEqual(expectedSequence, blobCheckpoint.SequenceNumber);
         }
 
         /// <summary>
@@ -1202,6 +1207,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(checkpoint, Is.Not.Null, "A single checkpoint should have been returned.");
             Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset(14, false)));
             Assert.That(checkpoint.PartitionId, Is.EqualTo("0"));
+
+            Assert.That(checkpoint, Is.InstanceOf<BlobCheckpointStoreInternal.BlobStorageCheckpoint>());
+            var blobCheckpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoint;
+            Assert.AreEqual(14, blobCheckpoint.Offset);
+            Assert.AreEqual(960182, blobCheckpoint.SequenceNumber);
         }
 
         /// <summary>
