@@ -5,13 +5,13 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{ECC730C1-4AEA-420C-916A-66B19B79E4DC}"
 EndProject
-Project("{D6EBFE95-7C60-46F7-99B9-DFDCFC8C69E5}") = "Azure.Analytics.LoadTestService.Perf", "perf\Azure.Analytics.LoadTestService.Perf.csproj", "{30C5FF85-655A-49FC-A324-16438130FF3F}"
+Project("{8579331E-4962-4930-BB76-730A1A839F2F}") = "Azure.Analytics.LoadTestService.Perf", "perf\Azure.Analytics.LoadTestService.Perf.csproj", "{30C5FF85-655A-49FC-A324-16438130FF3F}"
 EndProject
-Project("{D6EBFE95-7C60-46F7-99B9-DFDCFC8C69E5}") = "Azure.Analytics.LoadTestService.Stress", "stress\Azure.Analytics.LoadTestService.Stress.csproj", "{47E3BC66-5C4F-47CD-A37B-A973E54BCBA9}"
+Project("{8579331E-4962-4930-BB76-730A1A839F2F}") = "Azure.Analytics.LoadTestService.Stress", "stress\Azure.Analytics.LoadTestService.Stress.csproj", "{47E3BC66-5C4F-47CD-A37B-A973E54BCBA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Analytics.LoadTestService", "src\Azure.Analytics.LoadTestService.csproj", "{0C240CDC-A7C6-4883-9A83-A785D35275FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Analytics.LoadTestService", "src\Azure.Analytics.LoadTestService.csproj", "{7D2F968A-9AFD-4E84-B059-45A6180D90CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Analytics.LoadTestService.Tests", "tests\Azure.Analytics.LoadTestService.Tests.csproj", "{4946598E-32A2-4F6F-9437-6F0505AD5D72}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Analytics.LoadTestService.Tests", "tests\Azure.Analytics.LoadTestService.Tests.csproj", "{D792CDEE-2604-41D3-8F10-B820996771E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,14 +51,14 @@ Global
 		{47E3BC66-5C4F-47CD-A37B-A973E54BCBA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47E3BC66-5C4F-47CD-A37B-A973E54BCBA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47E3BC66-5C4F-47CD-A37B-A973E54BCBA9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0C240CDC-A7C6-4883-9A83-A785D35275FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C240CDC-A7C6-4883-9A83-A785D35275FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C240CDC-A7C6-4883-9A83-A785D35275FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C240CDC-A7C6-4883-9A83-A785D35275FD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4946598E-32A2-4F6F-9437-6F0505AD5D72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4946598E-32A2-4F6F-9437-6F0505AD5D72}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4946598E-32A2-4F6F-9437-6F0505AD5D72}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4946598E-32A2-4F6F-9437-6F0505AD5D72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D2F968A-9AFD-4E84-B059-45A6180D90CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D2F968A-9AFD-4E84-B059-45A6180D90CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D2F968A-9AFD-4E84-B059-45A6180D90CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D2F968A-9AFD-4E84-B059-45A6180D90CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D792CDEE-2604-41D3-8F10-B820996771E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D792CDEE-2604-41D3-8F10-B820996771E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D792CDEE-2604-41D3-8F10-B820996771E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D792CDEE-2604-41D3-8F10-B820996771E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
