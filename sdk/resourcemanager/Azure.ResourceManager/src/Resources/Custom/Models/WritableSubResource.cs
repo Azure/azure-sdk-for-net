@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// Gets or sets the ARM resource identifier.
         /// </summary>
         /// <value></value>
+        [PropertySerializedName("id")]
         public ResourceIdentifier Id { get; set; }
     }
 }
