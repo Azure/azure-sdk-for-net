@@ -105,6 +105,9 @@ override-operation-name:
 no-property-type-replacement:
 - ApiManagementConfig
 
+keep-plural-enums:
+- StackPreferredOS
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
