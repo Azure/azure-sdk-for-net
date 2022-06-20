@@ -115,14 +115,6 @@ namespace ServiceBus.Tests.ScenarioTests
                 }
                 //------------------------------------------------------
 
-                //Create Queues and Topics
-                //-------------------------------------------------------
-                ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName1, new SBQueue());
-                ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName2, new SBQueue());
-
-                ServiceBusManagementClient.Topics.CreateOrUpdate(resourceGroup, namespaceName, topicName1, new SBTopic());
-                ServiceBusManagementClient.Topics.CreateOrUpdate(resourceGroup, namespaceName, topicName2, new SBTopic());
-                //-------------------------------------------------------
 
                 var getNamespaceAuthorizationRulesListKeysResponse = ServiceBusManagementClient.Namespaces.ListKeys(resourceGroup, namespaceName, authorizationRuleName);
 
@@ -158,7 +150,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 var disasterRecoveryGetResponse_Sec = ServiceBusManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName2, disasterRecoveryName);
                 Assert.NotNull(disasterRecoveryGetResponse_Sec);
                 Assert.Equal(RoleDisasterRecovery.Secondary, disasterRecoveryGetResponse_Sec.Role);
-                Assert.Equal(createNamespaceResponse.Id, DisasterRecoveryResponse.PartnerNamespace);
+                Assert.Equal(createNamespaceResponse.Id, disasterRecoveryGetResponse_Sec.PartnerNamespace);
 
                 //Get authorization rule thorugh Alias 
 
@@ -177,14 +169,6 @@ namespace ServiceBus.Tests.ScenarioTests
                     TestUtilities.Wait(TimeSpan.FromSeconds(10));
                 }
 
-                var listOfQueuesNamespace = ServiceBusManagementClient.Queues.ListByNamespace(resourceGroup, namespaceName);
-                var listOfQueuesSecNamespace = ServiceBusManagementClient.Queues.ListByNamespace(resourceGroup, namespaceName2);
-
-                var listOfTopicsNamespace = ServiceBusManagementClient.Topics.ListByNamespace(resourceGroup, namespaceName);
-                var listOfTopicsSecNamespace = ServiceBusManagementClient.Topics.ListByNamespace(resourceGroup, namespaceName2);
-
-                Assert.Equal(listOfQueuesNamespace.Count(), listOfQueuesSecNamespace.Count());
-                Assert.Equal(listOfTopicsNamespace.Count(), listOfTopicsSecNamespace.Count());
 
                 //// Break Pairing
                 ServiceBusManagementClient.DisasterRecoveryConfigs.BreakPairing(resourceGroup, namespaceName, disasterRecoveryName);
@@ -207,7 +191,7 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 Assert.NotNull(DisasterRecoveryResponse_update);
                 Assert.Equal(createNamespaceResponse2.Id, DisasterRecoveryResponse_update.PartnerNamespace);
-                Assert.Equal(RoleDisasterRecovery.PrimaryNotReplicating, DisasterRecoveryResponse_update.Role);
+                Assert.Equal(RoleDisasterRecovery.Primary, DisasterRecoveryResponse_update.Role);
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(10));
 
@@ -221,6 +205,26 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.NotNull(DisasterRecoveryResponse);
                 Assert.Equal(createNamespaceResponse2.Id, DisasterRecoveryResponse.PartnerNamespace);
                 Assert.Equal(RoleDisasterRecovery.Primary, DisasterRecoveryResponse.Role);
+
+
+                //Create Queues and Topics
+                //-------------------------------------------------------
+                ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName1, new SBQueue());
+                ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName2, new SBQueue());
+
+                ServiceBusManagementClient.Topics.CreateOrUpdate(resourceGroup, namespaceName, topicName1, new SBTopic());
+                ServiceBusManagementClient.Topics.CreateOrUpdate(resourceGroup, namespaceName, topicName2, new SBTopic());
+                //-------------------------------------------------------
+
+
+                var listOfQueuesNamespace = ServiceBusManagementClient.Queues.ListByNamespace(resourceGroup, namespaceName);
+                var listOfQueuesSecNamespace = ServiceBusManagementClient.Queues.ListByNamespace(resourceGroup, namespaceName2);
+
+                var listOfTopicsNamespace = ServiceBusManagementClient.Topics.ListByNamespace(resourceGroup, namespaceName);
+                var listOfTopicsSecNamespace = ServiceBusManagementClient.Topics.ListByNamespace(resourceGroup, namespaceName2);
+
+                Assert.Equal(listOfQueuesNamespace.Count(), listOfQueuesSecNamespace.Count());
+                Assert.Equal(listOfTopicsNamespace.Count(), listOfTopicsSecNamespace.Count());
 
                 // Fail over
                 ServiceBusManagementClient.DisasterRecoveryConfigs.FailOver(resourceGroup, namespaceName2, disasterRecoveryName);
