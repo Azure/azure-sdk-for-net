@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         private StreamingJobsRestOperations _streamingJobRestClient;
         private ClientDiagnostics _subscriptionsClientDiagnostics;
         private SubscriptionsRestOperations _subscriptionsRestClient;
-        private ClientDiagnostics _clusterClientDiagnostics;
-        private ClustersRestOperations _clusterRestClient;
+        private ClientDiagnostics _streamAnalyticsClusterClustersClientDiagnostics;
+        private ClustersRestOperations _streamAnalyticsClusterClustersRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         private StreamingJobsRestOperations StreamingJobRestClient => _streamingJobRestClient ??= new StreamingJobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StreamingJobResource.ResourceType));
         private ClientDiagnostics SubscriptionsClientDiagnostics => _subscriptionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StreamAnalytics", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SubscriptionsRestOperations SubscriptionsRestClient => _subscriptionsRestClient ??= new SubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ClusterClientDiagnostics => _clusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StreamAnalytics", ClusterResource.ResourceType.Namespace, Diagnostics);
-        private ClustersRestOperations ClusterRestClient => _clusterRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ClusterResource.ResourceType));
+        private ClientDiagnostics StreamAnalyticsClusterClustersClientDiagnostics => _streamAnalyticsClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StreamAnalytics", StreamAnalyticsClusterResource.ResourceType.Namespace, Diagnostics);
+        private ClustersRestOperations StreamAnalyticsClusterClustersRestClient => _streamAnalyticsClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StreamAnalyticsClusterResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionQuota> GetQuotasSubscriptionsAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SubscriptionQuota> GetQuotasSubscriptionsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<SubscriptionQuota>> FirstPageFunc(int? pageSizeHint)
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionQuota> GetQuotasSubscriptions(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<SubscriptionQuota> GetQuotasSubscriptions(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<SubscriptionQuota> FirstPageFunc(int? pageSizeHint)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="testQuery"> The query testing object that defines the input, output, and transformation for the query testing. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<QueryTestingResult>> TestQuerySubscriptionAsync(WaitUntil waitUntil, string location, TestQuery testQuery, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<QueryTestingResult>> TestQuerySubscriptionAsync(WaitUntil waitUntil, AzureLocation location, TestQuery testQuery, CancellationToken cancellationToken = default)
         {
             using var scope = SubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.TestQuerySubscription");
             scope.Start();
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="testQuery"> The query testing object that defines the input, output, and transformation for the query testing. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<QueryTestingResult> TestQuerySubscription(WaitUntil waitUntil, string location, TestQuery testQuery, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<QueryTestingResult> TestQuerySubscription(WaitUntil waitUntil, AzureLocation location, TestQuery testQuery, CancellationToken cancellationToken = default)
         {
             using var scope = SubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.TestQuerySubscription");
             scope.Start();
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="compileQuery"> The query compilation object which defines the input, output, and transformation for the query compilation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<QueryCompilationResult>> CompileQuerySubscriptionAsync(string location, CompileQuery compileQuery, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QueryCompilationResult>> CompileQuerySubscriptionAsync(AzureLocation location, CompileQuery compileQuery, CancellationToken cancellationToken = default)
         {
             using var scope = SubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CompileQuerySubscription");
             scope.Start();
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="compileQuery"> The query compilation object which defines the input, output, and transformation for the query compilation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<QueryCompilationResult> CompileQuerySubscription(string location, CompileQuery compileQuery, CancellationToken cancellationToken = default)
+        public virtual Response<QueryCompilationResult> CompileQuerySubscription(AzureLocation location, CompileQuery compileQuery, CancellationToken cancellationToken = default)
         {
             using var scope = SubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CompileQuerySubscription");
             scope.Start();
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="content"> Defines the necessary parameters for sampling the Stream Analytics input data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<SampleInputResult>> SampleInputSubscriptionAsync(WaitUntil waitUntil, string location, SampleContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SampleInputResult>> SampleInputSubscriptionAsync(WaitUntil waitUntil, AzureLocation location, SampleContent content, CancellationToken cancellationToken = default)
         {
             using var scope = SubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SampleInputSubscription");
             scope.Start();
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="content"> Defines the necessary parameters for sampling the Stream Analytics input data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<SampleInputResult> SampleInputSubscription(WaitUntil waitUntil, string location, SampleContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SampleInputResult> SampleInputSubscription(WaitUntil waitUntil, AzureLocation location, SampleContent content, CancellationToken cancellationToken = default)
         {
             using var scope = SubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SampleInputSubscription");
             scope.Start();
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="content"> Defines the necessary parameters for testing the Stream Analytics input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<TestDatasourceResult>> TestInputSubscriptionAsync(WaitUntil waitUntil, string location, TestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TestDatasourceResult>> TestInputSubscriptionAsync(WaitUntil waitUntil, AzureLocation location, TestContent content, CancellationToken cancellationToken = default)
         {
             using var scope = SubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.TestInputSubscription");
             scope.Start();
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="content"> Defines the necessary parameters for testing the Stream Analytics input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<TestDatasourceResult> TestInputSubscription(WaitUntil waitUntil, string location, TestContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TestDatasourceResult> TestInputSubscription(WaitUntil waitUntil, AzureLocation location, TestContent content, CancellationToken cancellationToken = default)
         {
             using var scope = SubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.TestInputSubscription");
             scope.Start();
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="testOutput"> Defines the necessary parameters for testing the Stream Analytics output. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<TestDatasourceResult>> TestOutputSubscriptionAsync(WaitUntil waitUntil, string location, TestOutput testOutput, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TestDatasourceResult>> TestOutputSubscriptionAsync(WaitUntil waitUntil, AzureLocation location, TestOutput testOutput, CancellationToken cancellationToken = default)
         {
             using var scope = SubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.TestOutputSubscription");
             scope.Start();
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="testOutput"> Defines the necessary parameters for testing the Stream Analytics output. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<TestDatasourceResult> TestOutputSubscription(WaitUntil waitUntil, string location, TestOutput testOutput, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TestDatasourceResult> TestOutputSubscription(WaitUntil waitUntil, AzureLocation location, TestOutput testOutput, CancellationToken cancellationToken = default)
         {
             using var scope = SubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.TestOutputSubscription");
             scope.Start();
@@ -472,17 +472,17 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// Operation Id: Clusters_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ClusterResource> GetClustersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StreamAnalyticsClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StreamAnalyticsClusterResource> GetStreamAnalyticsClustersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ClusterResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<StreamAnalyticsClusterResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetClusters");
+                using var scope = StreamAnalyticsClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStreamAnalyticsClusters");
                 scope.Start();
                 try
                 {
-                    var response = await ClusterRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await StreamAnalyticsClusterClustersRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new StreamAnalyticsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -490,14 +490,14 @@ namespace Azure.ResourceManager.StreamAnalytics
                     throw;
                 }
             }
-            async Task<Page<ClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<StreamAnalyticsClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetClusters");
+                using var scope = StreamAnalyticsClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStreamAnalyticsClusters");
                 scope.Start();
                 try
                 {
-                    var response = await ClusterRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await StreamAnalyticsClusterClustersRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new StreamAnalyticsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -514,17 +514,17 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// Operation Id: Clusters_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ClusterResource> GetClusters(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StreamAnalyticsClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StreamAnalyticsClusterResource> GetStreamAnalyticsClusters(CancellationToken cancellationToken = default)
         {
-            Page<ClusterResource> FirstPageFunc(int? pageSizeHint)
+            Page<StreamAnalyticsClusterResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetClusters");
+                using var scope = StreamAnalyticsClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStreamAnalyticsClusters");
                 scope.Start();
                 try
                 {
-                    var response = ClusterRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = StreamAnalyticsClusterClustersRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new StreamAnalyticsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -532,14 +532,14 @@ namespace Azure.ResourceManager.StreamAnalytics
                     throw;
                 }
             }
-            Page<ClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<StreamAnalyticsClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetClusters");
+                using var scope = StreamAnalyticsClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStreamAnalyticsClusters");
                 scope.Start();
                 try
                 {
-                    var response = ClusterRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = StreamAnalyticsClusterClustersRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new StreamAnalyticsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

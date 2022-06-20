@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="compression"> Describes how input data is compressed. </param>
         /// <param name="partitionKey"> partitionKey Describes a key in the input data which is used for partitioning the input data. </param>
         /// <param name="watermarkSettings"> Settings which determine whether to read watermark events. </param>
-        internal InputProperties(string inputPropertiesType, Serialization serialization, Diagnostics diagnostics, string etag, Compression compression, string partitionKey, InputWatermarkProperties watermarkSettings)
+        internal InputProperties(string inputPropertiesType, Serialization serialization, Diagnostics diagnostics, ETag? etag, Compression compression, string partitionKey, InputWatermarkProperties watermarkSettings)
         {
             InputPropertiesType = inputPropertiesType;
             Serialization = serialization;
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> The current entity tag for the input. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Describes how input data is compressed. </summary>
         internal Compression Compression { get; set; }
         /// <summary> Indicates the type of compression that the input uses. Required on PUT (CreateOrReplace) requests. </summary>

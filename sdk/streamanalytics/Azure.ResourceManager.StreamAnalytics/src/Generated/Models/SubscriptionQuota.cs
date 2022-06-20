@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes the current quota for the subscription. </summary>
-    public partial class SubscriptionQuota : SubResource
+    public partial class SubscriptionQuota : StreamAnalyticsSubResource
     {
         /// <summary> Initializes a new instance of SubscriptionQuota. </summary>
         public SubscriptionQuota()

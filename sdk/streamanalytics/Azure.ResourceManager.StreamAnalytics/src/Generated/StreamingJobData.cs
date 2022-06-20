@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -21,9 +22,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The location. </param>
         public StreamingJobData(AzureLocation location) : base(location)
         {
-            Inputs = new ChangeTrackingList<InputData>();
-            Outputs = new ChangeTrackingList<OutputData>();
-            Functions = new ChangeTrackingList<FunctionData>();
+            Inputs = new ChangeTrackingList<StreamingJobInputData>();
+            Outputs = new ChangeTrackingList<StreamingJobOutputData>();
+            Functions = new ChangeTrackingList<StreamingJobFunctionData>();
         }
 
         /// <summary> Initializes a new instance of StreamingJobData. </summary>
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="contentStoragePolicy"> Valid values are JobStorageAccount and SystemAccount. If set to JobStorageAccount, this requires the user to also specify jobStorageAccount property. . </param>
         /// <param name="externals"> The storage account where the custom code artifacts are located. </param>
         /// <param name="cluster"> The cluster which streaming jobs will run on. </param>
-        internal StreamingJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Identity identity, StreamAnalyticsSku sku, string jobId, string provisioningState, string jobState, JobType? jobType, OutputStartMode? outputStartMode, DateTimeOffset? outputStartOn, DateTimeOffset? lastOutputEventOn, EventsOutOfOrderPolicy? eventsOutOfOrderPolicy, OutputErrorPolicy? outputErrorPolicy, int? eventsOutOfOrderMaxDelayInSeconds, int? eventsLateArrivalMaxDelayInSeconds, string dataLocale, CompatibilityLevel? compatibilityLevel, DateTimeOffset? createdOn, IList<InputData> inputs, TransformationData transformation, IList<OutputData> outputs, IList<FunctionData> functions, string etag, JobStorageAccount jobStorageAccount, ContentStoragePolicy? contentStoragePolicy, External externals, WritableSubResource cluster) : base(id, name, resourceType, systemData, tags, location)
+        internal StreamingJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedIdentity identity, StreamAnalyticsSku sku, string jobId, string provisioningState, string jobState, JobType? jobType, OutputStartMode? outputStartMode, DateTimeOffset? outputStartOn, DateTimeOffset? lastOutputEventOn, EventsOutOfOrderPolicy? eventsOutOfOrderPolicy, OutputErrorPolicy? outputErrorPolicy, int? eventsOutOfOrderMaxDelayInSeconds, int? eventsLateArrivalMaxDelayInSeconds, string dataLocale, CompatibilityLevel? compatibilityLevel, DateTimeOffset? createdOn, IList<StreamingJobInputData> inputs, StreamingJobTransformationData transformation, IList<StreamingJobOutputData> outputs, IList<StreamingJobFunctionData> functions, ETag? etag, JobStorageAccount jobStorageAccount, ContentStoragePolicy? contentStoragePolicy, ExternalStorageAccount externals, WritableSubResource cluster) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         }
 
         /// <summary> Describes the managed identity assigned to this job that can be used to authenticate with inputs and outputs. </summary>
-        public Identity Identity { get; set; }
+        public ManagedIdentity Identity { get; set; }
         /// <summary> Describes the SKU of the streaming job. Required on PUT (CreateOrReplace) requests. </summary>
         internal StreamAnalyticsSku Sku { get; set; }
         /// <summary> The name of the SKU. Required on PUT (CreateOrReplace) requests. </summary>
@@ -132,21 +133,21 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <summary> Value is an ISO-8601 formatted UTC timestamp indicating when the streaming job was created. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> A list of one or more inputs to the streaming job. The name property for each input is required when specifying this property in a PUT request. This property cannot be modify via a PATCH operation. You must use the PATCH API available for the individual input. </summary>
-        public IList<InputData> Inputs { get; }
+        public IList<StreamingJobInputData> Inputs { get; }
         /// <summary> Indicates the query and the number of streaming units to use for the streaming job. The name property of the transformation is required when specifying this property in a PUT request. This property cannot be modify via a PATCH operation. You must use the PATCH API available for the individual transformation. </summary>
-        public TransformationData Transformation { get; set; }
+        public StreamingJobTransformationData Transformation { get; set; }
         /// <summary> A list of one or more outputs for the streaming job. The name property for each output is required when specifying this property in a PUT request. This property cannot be modify via a PATCH operation. You must use the PATCH API available for the individual output. </summary>
-        public IList<OutputData> Outputs { get; }
+        public IList<StreamingJobOutputData> Outputs { get; }
         /// <summary> A list of one or more functions for the streaming job. The name property for each function is required when specifying this property in a PUT request. This property cannot be modify via a PATCH operation. You must use the PATCH API available for the individual transformation. </summary>
-        public IList<FunctionData> Functions { get; }
+        public IList<StreamingJobFunctionData> Functions { get; }
         /// <summary> The current entity tag for the streaming job. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> The properties that are associated with an Azure Storage account with MSI. </summary>
         public JobStorageAccount JobStorageAccount { get; set; }
         /// <summary> Valid values are JobStorageAccount and SystemAccount. If set to JobStorageAccount, this requires the user to also specify jobStorageAccount property. . </summary>
         public ContentStoragePolicy? ContentStoragePolicy { get; set; }
         /// <summary> The storage account where the custom code artifacts are located. </summary>
-        public External Externals { get; set; }
+        public ExternalStorageAccount Externals { get; set; }
         /// <summary> The cluster which streaming jobs will run on. </summary>
         internal WritableSubResource Cluster { get; set; }
         /// <summary> Gets or sets Id. </summary>

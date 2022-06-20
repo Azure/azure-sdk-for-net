@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> The stream analytics input to sample. </summary>
-        public InputData Input { get; set; }
+        public StreamingJobInputData Input { get; set; }
         /// <summary> Defaults to the default ASA job compatibility level. Today it is 1.2. </summary>
         public string CompatibilityLevel { get; set; }
         /// <summary> The SAS URI of the storage blob for service to write the sampled events to. If this parameter is not provided, service will write events to he system account and share a temporary SAS URI to it. </summary>

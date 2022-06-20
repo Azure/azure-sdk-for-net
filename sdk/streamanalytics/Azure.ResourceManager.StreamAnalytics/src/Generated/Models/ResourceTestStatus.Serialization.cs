@@ -15,7 +15,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         internal static ResourceTestStatus DeserializeResourceTestStatus(JsonElement element)
         {
             Optional<string> status = default;
-            Optional<ErrorResponse> error = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -30,11 +31,23 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("code"))
+                        {
+                            code = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("message"))
+                        {
+                            message = property0.Value.GetString();
+                            continue;
+                        }
+                    }
                     continue;
                 }
             }
-            return new ResourceTestStatus(status.Value, error.Value);
+            return new ResourceTestStatus(status.Value, code.Value, message.Value);
         }
     }
 }

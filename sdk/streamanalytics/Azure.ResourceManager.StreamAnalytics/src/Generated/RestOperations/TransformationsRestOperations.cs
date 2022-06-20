@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrReplaceRequest(string subscriptionId, string resourceGroupName, string jobName, string transformationName, TransformationData data, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateCreateOrReplaceRequest(string subscriptionId, string resourceGroupName, string jobName, string transformationName, StreamingJobTransformationData data, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/>, <paramref name="transformationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="transformationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TransformationData>> CreateOrReplaceAsync(string subscriptionId, string resourceGroupName, string jobName, string transformationName, TransformationData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<StreamingJobTransformationData>> CreateOrReplaceAsync(string subscriptionId, string resourceGroupName, string jobName, string transformationName, StreamingJobTransformationData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                 case 201:
                     {
-                        TransformationData value = default;
+                        StreamingJobTransformationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TransformationData.DeserializeTransformationData(document.RootElement);
+                        value = StreamingJobTransformationData.DeserializeStreamingJobTransformationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/>, <paramref name="transformationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="transformationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TransformationData> CreateOrReplace(string subscriptionId, string resourceGroupName, string jobName, string transformationName, TransformationData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response<StreamingJobTransformationData> CreateOrReplace(string subscriptionId, string resourceGroupName, string jobName, string transformationName, StreamingJobTransformationData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -132,9 +132,9 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                 case 201:
                     {
-                        TransformationData value = default;
+                        StreamingJobTransformationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TransformationData.DeserializeTransformationData(document.RootElement);
+                        value = StreamingJobTransformationData.DeserializeStreamingJobTransformationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string jobName, string transformationName, TransformationData data, string ifMatch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string jobName, string transformationName, StreamingJobTransformationData data, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/>, <paramref name="transformationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="transformationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TransformationData>> UpdateAsync(string subscriptionId, string resourceGroupName, string jobName, string transformationName, TransformationData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<StreamingJobTransformationData>> UpdateAsync(string subscriptionId, string resourceGroupName, string jobName, string transformationName, StreamingJobTransformationData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -196,9 +196,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 case 200:
                     {
-                        TransformationData value = default;
+                        StreamingJobTransformationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TransformationData.DeserializeTransformationData(document.RootElement);
+                        value = StreamingJobTransformationData.DeserializeStreamingJobTransformationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/>, <paramref name="transformationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="transformationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TransformationData> Update(string subscriptionId, string resourceGroupName, string jobName, string transformationName, TransformationData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<StreamingJobTransformationData> Update(string subscriptionId, string resourceGroupName, string jobName, string transformationName, StreamingJobTransformationData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -230,9 +230,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 case 200:
                     {
-                        TransformationData value = default;
+                        StreamingJobTransformationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TransformationData.DeserializeTransformationData(document.RootElement);
+                        value = StreamingJobTransformationData.DeserializeStreamingJobTransformationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="transformationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="transformationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TransformationData>> GetAsync(string subscriptionId, string resourceGroupName, string jobName, string transformationName, CancellationToken cancellationToken = default)
+        public async Task<Response<StreamingJobTransformationData>> GetAsync(string subscriptionId, string resourceGroupName, string jobName, string transformationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -283,13 +283,13 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 case 200:
                     {
-                        TransformationData value = default;
+                        StreamingJobTransformationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TransformationData.DeserializeTransformationData(document.RootElement);
+                        value = StreamingJobTransformationData.DeserializeStreamingJobTransformationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TransformationData)null, message.Response);
+                    return Response.FromValue((StreamingJobTransformationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="transformationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="transformationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TransformationData> Get(string subscriptionId, string resourceGroupName, string jobName, string transformationName, CancellationToken cancellationToken = default)
+        public Response<StreamingJobTransformationData> Get(string subscriptionId, string resourceGroupName, string jobName, string transformationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -316,13 +316,13 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 case 200:
                     {
-                        TransformationData value = default;
+                        StreamingJobTransformationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TransformationData.DeserializeTransformationData(document.RootElement);
+                        value = StreamingJobTransformationData.DeserializeStreamingJobTransformationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TransformationData)null, message.Response);
+                    return Response.FromValue((StreamingJobTransformationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

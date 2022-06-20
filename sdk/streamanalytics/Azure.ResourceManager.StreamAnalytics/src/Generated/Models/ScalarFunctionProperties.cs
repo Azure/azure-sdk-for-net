@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// Please note <see cref="FunctionBinding"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureMachineLearningStudioFunctionBinding"/>, <see cref="AzureMachineLearningServiceFunctionBinding"/>, <see cref="CSharpFunctionBinding"/> and <see cref="JavaScriptFunctionBinding"/>.
         /// </param>
-        internal ScalarFunctionProperties(string functionPropertiesType, string etag, IList<FunctionInput> inputs, FunctionOutput output, FunctionBinding binding) : base(functionPropertiesType, etag, inputs, output, binding)
+        internal ScalarFunctionProperties(string functionPropertiesType, ETag? etag, IList<FunctionInput> inputs, FunctionOutput output, FunctionBinding binding) : base(functionPropertiesType, etag, inputs, output, binding)
         {
             FunctionPropertiesType = functionPropertiesType ?? "Scalar";
         }

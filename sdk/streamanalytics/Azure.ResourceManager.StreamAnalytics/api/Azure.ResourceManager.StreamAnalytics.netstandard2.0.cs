@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.StreamAnalytics
     public partial class ClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.ResourceManager.StreamAnalytics.Models.ClusterProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.ClusterSku Sku { get { throw null; } set { } }
     }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         public OutputData() { }
         public Azure.ResourceManager.StreamAnalytics.Models.OutputDataSource Datasource { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StreamAnalytics.Models.DiagnosticCondition> DiagnosticsConditions { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StreamAnalytics.Models.LastOutputEventTimestamp> LastOutputEventTimestamps { get { throw null; } }
         public Azure.ResourceManager.StreamAnalytics.Models.Serialization Serialization { get { throw null; } set { } }
         public float? SizeWindow { get { throw null; } set { } }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.StreamAnalytics
     public partial class PrivateEndpointData : Azure.ResourceManager.Models.ResourceData
     {
         public PrivateEndpointData() { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.ResourceManager.StreamAnalytics.Models.PrivateEndpointProperties Properties { get { throw null; } set { } }
     }
     public partial class PrivateEndpointResource : Azure.ResourceManager.ArmResource
@@ -201,8 +201,8 @@ namespace Azure.ResourceManager.StreamAnalytics
     }
     public static partial class StreamAnalyticsExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.StreamAnalytics.Models.QueryCompilationResult> CompileQuerySubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.StreamAnalytics.Models.CompileQuery compileQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StreamAnalytics.Models.QueryCompilationResult>> CompileQuerySubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.StreamAnalytics.Models.CompileQuery compileQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.StreamAnalytics.Models.QueryCompilationResult> CompileQuerySubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.CompileQuery compileQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StreamAnalytics.Models.QueryCompilationResult>> CompileQuerySubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.CompileQuery compileQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.StreamAnalytics.ClusterResource> GetCluster(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StreamAnalytics.ClusterResource>> GetClusterAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.StreamAnalytics.ClusterResource GetClusterResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -213,8 +213,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         public static Azure.ResourceManager.StreamAnalytics.InputResource GetInputResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.StreamAnalytics.OutputResource GetOutputResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.StreamAnalytics.PrivateEndpointResource GetPrivateEndpointResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.StreamAnalytics.Models.SubscriptionQuota> GetQuotasSubscriptions(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.StreamAnalytics.Models.SubscriptionQuota> GetQuotasSubscriptionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.StreamAnalytics.Models.SubscriptionQuota> GetQuotasSubscriptions(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.StreamAnalytics.Models.SubscriptionQuota> GetQuotasSubscriptionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamingJobResource> GetStreamingJob(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string jobName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamingJobResource>> GetStreamingJobAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string jobName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.StreamAnalytics.StreamingJobResource GetStreamingJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -222,14 +222,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         public static Azure.Pageable<Azure.ResourceManager.StreamAnalytics.StreamingJobResource> GetStreamingJobs(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.StreamAnalytics.StreamingJobResource> GetStreamingJobsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.StreamAnalytics.TransformationResource GetTransformationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.SampleInputResult> SampleInputSubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, string location, Azure.ResourceManager.StreamAnalytics.Models.SampleContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.SampleInputResult>> SampleInputSubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, string location, Azure.ResourceManager.StreamAnalytics.Models.SampleContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.TestDatasourceResult> TestInputSubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, string location, Azure.ResourceManager.StreamAnalytics.Models.TestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.TestDatasourceResult>> TestInputSubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, string location, Azure.ResourceManager.StreamAnalytics.Models.TestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.TestDatasourceResult> TestOutputSubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, string location, Azure.ResourceManager.StreamAnalytics.Models.TestOutput testOutput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.TestDatasourceResult>> TestOutputSubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, string location, Azure.ResourceManager.StreamAnalytics.Models.TestOutput testOutput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.QueryTestingResult> TestQuerySubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, string location, Azure.ResourceManager.StreamAnalytics.Models.TestQuery testQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.QueryTestingResult>> TestQuerySubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, string location, Azure.ResourceManager.StreamAnalytics.Models.TestQuery testQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.SampleInputResult> SampleInputSubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.SampleContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.SampleInputResult>> SampleInputSubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.SampleContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.TestDatasourceResult> TestInputSubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.TestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.TestDatasourceResult>> TestInputSubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.TestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.TestDatasourceResult> TestOutputSubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.TestOutput testOutput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.TestDatasourceResult>> TestOutputSubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.TestOutput testOutput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.QueryTestingResult> TestQuerySubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.TestQuery testQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.QueryTestingResult>> TestQuerySubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.TestQuery testQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class StreamingJobCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StreamAnalytics.StreamingJobResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StreamAnalytics.StreamingJobResource>, System.Collections.IEnumerable
     {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         public Azure.ResourceManager.StreamAnalytics.Models.ContentStoragePolicy? ContentStoragePolicy { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DataLocale { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public int? EventsLateArrivalMaxDelayInSeconds { get { throw null; } set { } }
         public int? EventsOutOfOrderMaxDelayInSeconds { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.EventsOutOfOrderPolicy? EventsOutOfOrderPolicy { get { throw null; } set { } }
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.StreamAnalytics
     public partial class TransformationData : Azure.ResourceManager.StreamAnalytics.Models.SubResource
     {
         public TransformationData() { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string Query { get { throw null; } set { } }
         public int? StreamingUnits { get { throw null; } set { } }
         public System.Collections.Generic.IList<int> ValidStreamingUnits { get { throw null; } }
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public string DateFormat { get { throw null; } set { } }
         public string FilePathPrefix { get { throw null; } set { } }
         public string RefreshToken { get { throw null; } set { } }
-        public string TenantId { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } set { } }
         public string TimeFormat { get { throw null; } set { } }
         public string TokenUserDisplayName { get { throw null; } set { } }
         public string TokenUserPrincipalName { get { throw null; } set { } }
@@ -875,7 +875,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         public FunctionProperties() { }
         public Azure.ResourceManager.StreamAnalytics.Models.FunctionBinding Binding { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.StreamAnalytics.Models.FunctionInput> Inputs { get { throw null; } }
         public string OutputDataType { get { throw null; } set { } }
     }
@@ -898,7 +898,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public Identity() { }
         public string IdentityType { get { throw null; } set { } }
         public string PrincipalId { get { throw null; } set { } }
-        public string TenantId { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } set { } }
         public System.BinaryData UserAssignedIdentities { get { throw null; } set { } }
     }
     public partial class InputProperties
@@ -906,7 +906,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public InputProperties() { }
         public Azure.ResourceManager.StreamAnalytics.Models.CompressionType? CompressionType { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StreamAnalytics.Models.DiagnosticCondition> DiagnosticsConditions { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string PartitionKey { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.Serialization Serialization { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.InputWatermarkMode? WatermarkMode { get { throw null; } set { } }

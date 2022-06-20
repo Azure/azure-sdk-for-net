@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of OutputListResult. </summary>
         internal OutputListResult()
         {
-            Value = new ChangeTrackingList<OutputData>();
+            Value = new ChangeTrackingList<StreamingJobOutputData>();
         }
 
         /// <summary> Initializes a new instance of OutputListResult. </summary>
         /// <param name="value"> A list of outputs under a streaming job. Populated by a &apos;List&apos; operation. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal OutputListResult(IReadOnlyList<OutputData> value, string nextLink)
+        internal OutputListResult(IReadOnlyList<StreamingJobOutputData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of outputs under a streaming job. Populated by a &apos;List&apos; operation. </summary>
-        public IReadOnlyList<OutputData> Value { get; }
+        public IReadOnlyList<StreamingJobOutputData> Value { get; }
         /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }

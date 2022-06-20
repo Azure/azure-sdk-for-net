@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         internal static AggregateFunctionProperties DeserializeAggregateFunctionProperties(JsonElement element)
         {
             string type = default;
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<IList<FunctionInput>> inputs = default;
             Optional<FunctionOutput> output = default;
             Optional<FunctionBinding> binding = default;
@@ -60,7 +61,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -111,7 +117,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new AggregateFunctionProperties(type, etag.Value, Optional.ToList(inputs), output.Value, binding.Value);
+            return new AggregateFunctionProperties(type, Optional.ToNullable(etag), Optional.ToList(inputs), output.Value, binding.Value);
         }
     }
 }

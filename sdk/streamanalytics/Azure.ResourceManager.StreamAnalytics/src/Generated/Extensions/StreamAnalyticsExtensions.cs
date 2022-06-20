@@ -64,13 +64,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="SubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubscriptionQuota> GetQuotasSubscriptionsAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SubscriptionQuota> GetQuotasSubscriptionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetExtensionClient(subscriptionResource).GetQuotasSubscriptionsAsync(location, cancellationToken);
         }
 
@@ -82,13 +78,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="SubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubscriptionQuota> GetQuotasSubscriptions(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Pageable<SubscriptionQuota> GetQuotasSubscriptions(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetExtensionClient(subscriptionResource).GetQuotasSubscriptions(location, cancellationToken);
         }
 
@@ -102,11 +94,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="testQuery"> The query testing object that defines the input, output, and transformation for the query testing. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="testQuery"/> is null. </exception>
-        public static async Task<ArmOperation<QueryTestingResult>> TestQuerySubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string location, TestQuery testQuery, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="testQuery"/> is null. </exception>
+        public static async Task<ArmOperation<QueryTestingResult>> TestQuerySubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, TestQuery testQuery, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(testQuery, nameof(testQuery));
 
             return await GetExtensionClient(subscriptionResource).TestQuerySubscriptionAsync(waitUntil, location, testQuery, cancellationToken).ConfigureAwait(false);
@@ -122,11 +112,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="testQuery"> The query testing object that defines the input, output, and transformation for the query testing. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="testQuery"/> is null. </exception>
-        public static ArmOperation<QueryTestingResult> TestQuerySubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string location, TestQuery testQuery, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="testQuery"/> is null. </exception>
+        public static ArmOperation<QueryTestingResult> TestQuerySubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, TestQuery testQuery, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(testQuery, nameof(testQuery));
 
             return GetExtensionClient(subscriptionResource).TestQuerySubscription(waitUntil, location, testQuery, cancellationToken);
@@ -141,11 +129,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="compileQuery"> The query compilation object which defines the input, output, and transformation for the query compilation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="compileQuery"/> is null. </exception>
-        public static async Task<Response<QueryCompilationResult>> CompileQuerySubscriptionAsync(this SubscriptionResource subscriptionResource, string location, CompileQuery compileQuery, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="compileQuery"/> is null. </exception>
+        public static async Task<Response<QueryCompilationResult>> CompileQuerySubscriptionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CompileQuery compileQuery, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(compileQuery, nameof(compileQuery));
 
             return await GetExtensionClient(subscriptionResource).CompileQuerySubscriptionAsync(location, compileQuery, cancellationToken).ConfigureAwait(false);
@@ -160,11 +146,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="compileQuery"> The query compilation object which defines the input, output, and transformation for the query compilation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="compileQuery"/> is null. </exception>
-        public static Response<QueryCompilationResult> CompileQuerySubscription(this SubscriptionResource subscriptionResource, string location, CompileQuery compileQuery, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="compileQuery"/> is null. </exception>
+        public static Response<QueryCompilationResult> CompileQuerySubscription(this SubscriptionResource subscriptionResource, AzureLocation location, CompileQuery compileQuery, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(compileQuery, nameof(compileQuery));
 
             return GetExtensionClient(subscriptionResource).CompileQuerySubscription(location, compileQuery, cancellationToken);
@@ -180,11 +164,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="content"> Defines the necessary parameters for sampling the Stream Analytics input data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<ArmOperation<SampleInputResult>> SampleInputSubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string location, SampleContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<ArmOperation<SampleInputResult>> SampleInputSubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, SampleContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
             return await GetExtensionClient(subscriptionResource).SampleInputSubscriptionAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
@@ -200,11 +182,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="content"> Defines the necessary parameters for sampling the Stream Analytics input data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        public static ArmOperation<SampleInputResult> SampleInputSubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string location, SampleContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static ArmOperation<SampleInputResult> SampleInputSubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, SampleContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
             return GetExtensionClient(subscriptionResource).SampleInputSubscription(waitUntil, location, content, cancellationToken);
@@ -220,11 +200,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="content"> Defines the necessary parameters for testing the Stream Analytics input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<ArmOperation<TestDatasourceResult>> TestInputSubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string location, TestContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<ArmOperation<TestDatasourceResult>> TestInputSubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, TestContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
             return await GetExtensionClient(subscriptionResource).TestInputSubscriptionAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
@@ -240,11 +218,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="content"> Defines the necessary parameters for testing the Stream Analytics input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        public static ArmOperation<TestDatasourceResult> TestInputSubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string location, TestContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static ArmOperation<TestDatasourceResult> TestInputSubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, TestContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
             return GetExtensionClient(subscriptionResource).TestInputSubscription(waitUntil, location, content, cancellationToken);
@@ -260,11 +236,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="testOutput"> Defines the necessary parameters for testing the Stream Analytics output. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="testOutput"/> is null. </exception>
-        public static async Task<ArmOperation<TestDatasourceResult>> TestOutputSubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string location, TestOutput testOutput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="testOutput"/> is null. </exception>
+        public static async Task<ArmOperation<TestDatasourceResult>> TestOutputSubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, TestOutput testOutput, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(testOutput, nameof(testOutput));
 
             return await GetExtensionClient(subscriptionResource).TestOutputSubscriptionAsync(waitUntil, location, testOutput, cancellationToken).ConfigureAwait(false);
@@ -280,11 +254,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="testOutput"> Defines the necessary parameters for testing the Stream Analytics output. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="testOutput"/> is null. </exception>
-        public static ArmOperation<TestDatasourceResult> TestOutputSubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string location, TestOutput testOutput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="testOutput"/> is null. </exception>
+        public static ArmOperation<TestDatasourceResult> TestOutputSubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, TestOutput testOutput, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(testOutput, nameof(testOutput));
 
             return GetExtensionClient(subscriptionResource).TestOutputSubscription(waitUntil, location, testOutput, cancellationToken);
@@ -297,10 +269,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ClusterResource> GetClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StreamAnalyticsClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<StreamAnalyticsClusterResource> GetStreamAnalyticsClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetClustersAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetStreamAnalyticsClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -310,10 +282,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ClusterResource> GetClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StreamAnalyticsClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<StreamAnalyticsClusterResource> GetStreamAnalyticsClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetClusters(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetStreamAnalyticsClusters(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -367,12 +339,12 @@ namespace Azure.ResourceManager.StreamAnalytics
             return resourceGroupResource.GetStreamingJobs().Get(jobName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ClusterResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of StreamAnalyticsClusterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ClusterResources and their operations over a ClusterResource. </returns>
-        public static ClusterCollection GetClusters(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of StreamAnalyticsClusterResources and their operations over a StreamAnalyticsClusterResource. </returns>
+        public static StreamAnalyticsClusterCollection GetStreamAnalyticsClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetClusters();
+            return GetExtensionClient(resourceGroupResource).GetStreamAnalyticsClusters();
         }
 
         /// <summary>
@@ -386,9 +358,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ClusterResource>> GetClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        public static async Task<Response<StreamAnalyticsClusterResource>> GetStreamAnalyticsClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetStreamAnalyticsClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -402,63 +374,63 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ClusterResource> GetCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        public static Response<StreamAnalyticsClusterResource> GetStreamAnalyticsCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetClusters().Get(clusterName, cancellationToken);
+            return resourceGroupResource.GetStreamAnalyticsClusters().Get(clusterName, cancellationToken);
         }
 
-        #region FunctionResource
+        #region StreamingJobFunctionResource
         /// <summary>
-        /// Gets an object representing a <see cref="FunctionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FunctionResource.CreateResourceIdentifier" /> to create a <see cref="FunctionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StreamingJobFunctionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StreamingJobFunctionResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobFunctionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FunctionResource" /> object. </returns>
-        public static FunctionResource GetFunctionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StreamingJobFunctionResource" /> object. </returns>
+        public static StreamingJobFunctionResource GetStreamingJobFunctionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                FunctionResource.ValidateResourceId(id);
-                return new FunctionResource(client, id);
+                StreamingJobFunctionResource.ValidateResourceId(id);
+                return new StreamingJobFunctionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region InputResource
+        #region StreamingJobInputResource
         /// <summary>
-        /// Gets an object representing an <see cref="InputResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InputResource.CreateResourceIdentifier" /> to create an <see cref="InputResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StreamingJobInputResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StreamingJobInputResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobInputResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InputResource" /> object. </returns>
-        public static InputResource GetInputResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StreamingJobInputResource" /> object. </returns>
+        public static StreamingJobInputResource GetStreamingJobInputResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                InputResource.ValidateResourceId(id);
-                return new InputResource(client, id);
+                StreamingJobInputResource.ValidateResourceId(id);
+                return new StreamingJobInputResource(client, id);
             }
             );
         }
         #endregion
 
-        #region OutputResource
+        #region StreamingJobOutputResource
         /// <summary>
-        /// Gets an object representing an <see cref="OutputResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OutputResource.CreateResourceIdentifier" /> to create an <see cref="OutputResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StreamingJobOutputResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StreamingJobOutputResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobOutputResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OutputResource" /> object. </returns>
-        public static OutputResource GetOutputResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StreamingJobOutputResource" /> object. </returns>
+        public static StreamingJobOutputResource GetStreamingJobOutputResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                OutputResource.ValidateResourceId(id);
-                return new OutputResource(client, id);
+                StreamingJobOutputResource.ValidateResourceId(id);
+                return new StreamingJobOutputResource(client, id);
             }
             );
         }
@@ -483,58 +455,58 @@ namespace Azure.ResourceManager.StreamAnalytics
         }
         #endregion
 
-        #region TransformationResource
+        #region StreamingJobTransformationResource
         /// <summary>
-        /// Gets an object representing a <see cref="TransformationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TransformationResource.CreateResourceIdentifier" /> to create a <see cref="TransformationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StreamingJobTransformationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StreamingJobTransformationResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobTransformationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TransformationResource" /> object. </returns>
-        public static TransformationResource GetTransformationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StreamingJobTransformationResource" /> object. </returns>
+        public static StreamingJobTransformationResource GetStreamingJobTransformationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                TransformationResource.ValidateResourceId(id);
-                return new TransformationResource(client, id);
+                StreamingJobTransformationResource.ValidateResourceId(id);
+                return new StreamingJobTransformationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ClusterResource
+        #region StreamAnalyticsClusterResource
         /// <summary>
-        /// Gets an object representing a <see cref="ClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ClusterResource.CreateResourceIdentifier" /> to create a <see cref="ClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StreamAnalyticsClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StreamAnalyticsClusterResource.CreateResourceIdentifier" /> to create a <see cref="StreamAnalyticsClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClusterResource" /> object. </returns>
-        public static ClusterResource GetClusterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StreamAnalyticsClusterResource" /> object. </returns>
+        public static StreamAnalyticsClusterResource GetStreamAnalyticsClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ClusterResource.ValidateResourceId(id);
-                return new ClusterResource(client, id);
+                StreamAnalyticsClusterResource.ValidateResourceId(id);
+                return new StreamAnalyticsClusterResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PrivateEndpointResource
+        #region StreamAnalyticsPrivateEndpointResource
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateEndpointResource.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StreamAnalyticsPrivateEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StreamAnalyticsPrivateEndpointResource.CreateResourceIdentifier" /> to create a <see cref="StreamAnalyticsPrivateEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointResource" /> object. </returns>
-        public static PrivateEndpointResource GetPrivateEndpointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StreamAnalyticsPrivateEndpointResource" /> object. </returns>
+        public static StreamAnalyticsPrivateEndpointResource GetStreamAnalyticsPrivateEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateEndpointResource.ValidateResourceId(id);
-                return new PrivateEndpointResource(client, id);
+                StreamAnalyticsPrivateEndpointResource.ValidateResourceId(id);
+                return new StreamAnalyticsPrivateEndpointResource(client, id);
             }
             );
         }

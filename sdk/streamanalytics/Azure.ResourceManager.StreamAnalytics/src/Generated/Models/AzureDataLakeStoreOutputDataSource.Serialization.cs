@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId");
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(FilePathPrefix))
             {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> tokenUserPrincipalName = default;
             Optional<string> tokenUserDisplayName = default;
             Optional<string> accountName = default;
-            Optional<string> tenantId = default;
+            Optional<Guid> tenantId = default;
             Optional<string> filePathPrefix = default;
             Optional<string> dateFormat = default;
             Optional<string> timeFormat = default;
@@ -118,7 +119,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         }
                         if (property0.NameEquals("tenantId"))
                         {
-                            tenantId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            tenantId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("filePathPrefix"))
@@ -150,7 +156,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new AzureDataLakeStoreOutputDataSource(type, refreshToken.Value, tokenUserPrincipalName.Value, tokenUserDisplayName.Value, accountName.Value, tenantId.Value, filePathPrefix.Value, dateFormat.Value, timeFormat.Value, Optional.ToNullable(authenticationMode));
+            return new AzureDataLakeStoreOutputDataSource(type, refreshToken.Value, tokenUserPrincipalName.Value, tokenUserDisplayName.Value, accountName.Value, Optional.ToNullable(tenantId), filePathPrefix.Value, dateFormat.Value, timeFormat.Value, Optional.ToNullable(authenticationMode));
         }
     }
 }

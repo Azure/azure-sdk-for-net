@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of FunctionListResult. </summary>
         internal FunctionListResult()
         {
-            Value = new ChangeTrackingList<FunctionData>();
+            Value = new ChangeTrackingList<StreamingJobFunctionData>();
         }
 
         /// <summary> Initializes a new instance of FunctionListResult. </summary>
         /// <param name="value"> A list of functions under a streaming job. Populated by a &apos;List&apos; operation. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal FunctionListResult(IReadOnlyList<FunctionData> value, string nextLink)
+        internal FunctionListResult(IReadOnlyList<StreamingJobFunctionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of functions under a streaming job. Populated by a &apos;List&apos; operation. </summary>
-        public IReadOnlyList<FunctionData> Value { get; }
+        public IReadOnlyList<StreamingJobFunctionData> Value { get; }
         /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }

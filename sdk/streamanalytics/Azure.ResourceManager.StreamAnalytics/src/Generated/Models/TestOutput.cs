@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of TestOutput. </summary>
         /// <param name="output"> The stream analytics output to test. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="output"/> is null. </exception>
-        public TestOutput(OutputData output)
+        public TestOutput(StreamingJobOutputData output)
         {
             if (output == null)
             {
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> The stream analytics output to test. </summary>
-        public OutputData Output { get; }
+        public StreamingJobOutputData Output { get; }
     }
 }

@@ -17,16 +17,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         /// <summary> Initializes a new instance of ResourceTestStatus. </summary>
         /// <param name="status"> The status of the test operation. </param>
-        /// <param name="error"> Describes the error that occurred. </param>
-        internal ResourceTestStatus(string status, ErrorResponse error)
+        /// <param name="code"> Error code associated with the error that occurred. </param>
+        /// <param name="message"> Describes the error in detail. </param>
+        internal ResourceTestStatus(string status, string code, string message)
         {
             Status = status;
-            Error = error;
+            Code = code;
+            Message = message;
         }
 
         /// <summary> The status of the test operation. </summary>
         public string Status { get; }
-        /// <summary> Describes the error that occurred. </summary>
-        public ErrorResponse Error { get; }
+        /// <summary> Error code associated with the error that occurred. </summary>
+        public string Code { get; }
+        /// <summary> Describes the error in detail. </summary>
+        public string Message { get; }
     }
 }

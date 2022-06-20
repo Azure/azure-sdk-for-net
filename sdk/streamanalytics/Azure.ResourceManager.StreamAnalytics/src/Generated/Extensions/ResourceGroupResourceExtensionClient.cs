@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.StreamAnalytics
             return GetCachedClient(Client => new StreamingJobCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ClusterResources and their operations over a ClusterResource. </returns>
-        public virtual ClusterCollection GetClusters()
+        /// <summary> Gets a collection of StreamAnalyticsClusterResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of StreamAnalyticsClusterResources and their operations over a StreamAnalyticsClusterResource. </returns>
+        public virtual StreamAnalyticsClusterCollection GetStreamAnalyticsClusters()
         {
-            return GetCachedClient(Client => new ClusterCollection(Client, Id));
+            return GetCachedClient(Client => new StreamAnalyticsClusterCollection(Client, Id));
         }
     }
 }

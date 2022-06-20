@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrReplaceRequest(string subscriptionId, string resourceGroupName, string jobName, string functionName, FunctionData data, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateCreateOrReplaceRequest(string subscriptionId, string resourceGroupName, string jobName, string functionName, StreamingJobFunctionData data, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/>, <paramref name="functionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FunctionData>> CreateOrReplaceAsync(string subscriptionId, string resourceGroupName, string jobName, string functionName, FunctionData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<StreamingJobFunctionData>> CreateOrReplaceAsync(string subscriptionId, string resourceGroupName, string jobName, string functionName, StreamingJobFunctionData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                 case 201:
                     {
-                        FunctionData value = default;
+                        StreamingJobFunctionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FunctionData.DeserializeFunctionData(document.RootElement);
+                        value = StreamingJobFunctionData.DeserializeStreamingJobFunctionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/>, <paramref name="functionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FunctionData> CreateOrReplace(string subscriptionId, string resourceGroupName, string jobName, string functionName, FunctionData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response<StreamingJobFunctionData> CreateOrReplace(string subscriptionId, string resourceGroupName, string jobName, string functionName, StreamingJobFunctionData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -133,9 +133,9 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case 200:
                 case 201:
                     {
-                        FunctionData value = default;
+                        StreamingJobFunctionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FunctionData.DeserializeFunctionData(document.RootElement);
+                        value = StreamingJobFunctionData.DeserializeStreamingJobFunctionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string jobName, string functionName, FunctionData data, string ifMatch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string jobName, string functionName, StreamingJobFunctionData data, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/>, <paramref name="functionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FunctionData>> UpdateAsync(string subscriptionId, string resourceGroupName, string jobName, string functionName, FunctionData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<StreamingJobFunctionData>> UpdateAsync(string subscriptionId, string resourceGroupName, string jobName, string functionName, StreamingJobFunctionData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -197,9 +197,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 case 200:
                     {
-                        FunctionData value = default;
+                        StreamingJobFunctionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FunctionData.DeserializeFunctionData(document.RootElement);
+                        value = StreamingJobFunctionData.DeserializeStreamingJobFunctionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/>, <paramref name="functionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FunctionData> Update(string subscriptionId, string resourceGroupName, string jobName, string functionName, FunctionData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<StreamingJobFunctionData> Update(string subscriptionId, string resourceGroupName, string jobName, string functionName, StreamingJobFunctionData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -231,9 +231,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 case 200:
                     {
-                        FunctionData value = default;
+                        StreamingJobFunctionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FunctionData.DeserializeFunctionData(document.RootElement);
+                        value = StreamingJobFunctionData.DeserializeStreamingJobFunctionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="functionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FunctionData>> GetAsync(string subscriptionId, string resourceGroupName, string jobName, string functionName, CancellationToken cancellationToken = default)
+        public async Task<Response<StreamingJobFunctionData>> GetAsync(string subscriptionId, string resourceGroupName, string jobName, string functionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -360,13 +360,13 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 case 200:
                     {
-                        FunctionData value = default;
+                        StreamingJobFunctionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FunctionData.DeserializeFunctionData(document.RootElement);
+                        value = StreamingJobFunctionData.DeserializeStreamingJobFunctionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FunctionData)null, message.Response);
+                    return Response.FromValue((StreamingJobFunctionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="functionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FunctionData> Get(string subscriptionId, string resourceGroupName, string jobName, string functionName, CancellationToken cancellationToken = default)
+        public Response<StreamingJobFunctionData> Get(string subscriptionId, string resourceGroupName, string jobName, string functionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -393,13 +393,13 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 case 200:
                     {
-                        FunctionData value = default;
+                        StreamingJobFunctionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FunctionData.DeserializeFunctionData(document.RootElement);
+                        value = StreamingJobFunctionData.DeserializeStreamingJobFunctionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FunctionData)null, message.Response);
+                    return Response.FromValue((StreamingJobFunctionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
         }
 
-        internal HttpMessage CreateTestRequest(string subscriptionId, string resourceGroupName, string jobName, string functionName, FunctionData data)
+        internal HttpMessage CreateTestRequest(string subscriptionId, string resourceGroupName, string jobName, string functionName, StreamingJobFunctionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="functionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> TestAsync(string subscriptionId, string resourceGroupName, string jobName, string functionName, FunctionData data = null, CancellationToken cancellationToken = default)
+        public async Task<Response> TestAsync(string subscriptionId, string resourceGroupName, string jobName, string functionName, StreamingJobFunctionData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="functionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Test(string subscriptionId, string resourceGroupName, string jobName, string functionName, FunctionData data = null, CancellationToken cancellationToken = default)
+        public Response Test(string subscriptionId, string resourceGroupName, string jobName, string functionName, StreamingJobFunctionData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="functionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FunctionData>> RetrieveDefaultDefinitionAsync(string subscriptionId, string resourceGroupName, string jobName, string functionName, FunctionRetrieveDefaultDefinitionContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response<StreamingJobFunctionData>> RetrieveDefaultDefinitionAsync(string subscriptionId, string resourceGroupName, string jobName, string functionName, FunctionRetrieveDefaultDefinitionContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -628,9 +628,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 case 200:
                     {
-                        FunctionData value = default;
+                        StreamingJobFunctionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FunctionData.DeserializeFunctionData(document.RootElement);
+                        value = StreamingJobFunctionData.DeserializeStreamingJobFunctionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="functionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FunctionData> RetrieveDefaultDefinition(string subscriptionId, string resourceGroupName, string jobName, string functionName, FunctionRetrieveDefaultDefinitionContent content = null, CancellationToken cancellationToken = default)
+        public Response<StreamingJobFunctionData> RetrieveDefaultDefinition(string subscriptionId, string resourceGroupName, string jobName, string functionName, FunctionRetrieveDefaultDefinitionContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -660,9 +660,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 case 200:
                     {
-                        FunctionData value = default;
+                        StreamingJobFunctionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FunctionData.DeserializeFunctionData(document.RootElement);
+                        value = StreamingJobFunctionData.DeserializeStreamingJobFunctionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

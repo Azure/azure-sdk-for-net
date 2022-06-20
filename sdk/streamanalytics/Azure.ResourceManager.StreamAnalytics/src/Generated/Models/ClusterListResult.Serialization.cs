@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         internal static ClusterListResult DeserializeClusterListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ClusterData>> value = default;
+            Optional<IReadOnlyList<StreamAnalyticsClusterData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ClusterData> array = new List<ClusterData>();
+                    List<StreamAnalyticsClusterData> array = new List<StreamAnalyticsClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterData.DeserializeClusterData(item));
+                        array.Add(StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(item));
                     }
                     value = array;
                     continue;

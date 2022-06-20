@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         internal static JsonSerialization DeserializeJsonSerialization(JsonElement element)
         {
             EventSerializationType type = default;
-            Optional<Encoding> encoding = default;
+            Optional<StreamEncoding> encoding = default;
             Optional<JsonOutputSerializationFormat> format = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encoding = new Encoding(property0.Value.GetString());
+                            encoding = new StreamEncoding(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("format"))

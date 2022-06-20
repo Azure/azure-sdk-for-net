@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of TestContent. </summary>
         /// <param name="input"> The stream analytics input to test. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public TestContent(InputData input)
+        public TestContent(StreamingJobInputData input)
         {
             if (input == null)
             {
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> The stream analytics input to test. </summary>
-        public InputData Input { get; }
+        public StreamingJobInputData Input { get; }
     }
 }

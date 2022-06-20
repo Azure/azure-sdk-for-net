@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The properties that are associated with an input containing reference data. </summary>
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// Please note <see cref="ReferenceInputDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureSqlReferenceInputDataSource"/>, <see cref="BlobReferenceInputDataSource"/> and <see cref="RawReferenceInputDataSource"/>.
         /// </param>
-        internal ReferenceInputProperties(string inputPropertiesType, Serialization serialization, Diagnostics diagnostics, string etag, Compression compression, string partitionKey, InputWatermarkProperties watermarkSettings, ReferenceInputDataSource datasource) : base(inputPropertiesType, serialization, diagnostics, etag, compression, partitionKey, watermarkSettings)
+        internal ReferenceInputProperties(string inputPropertiesType, Serialization serialization, Diagnostics diagnostics, ETag? etag, Compression compression, string partitionKey, InputWatermarkProperties watermarkSettings, ReferenceInputDataSource datasource) : base(inputPropertiesType, serialization, diagnostics, etag, compression, partitionKey, watermarkSettings)
         {
             Datasource = datasource;
             InputPropertiesType = inputPropertiesType ?? "Reference";

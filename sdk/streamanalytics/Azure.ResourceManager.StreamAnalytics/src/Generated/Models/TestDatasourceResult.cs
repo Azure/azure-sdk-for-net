@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The result of the test input or output request. </summary>
-    public partial class TestDatasourceResult : Error
+    public partial class TestDatasourceResult : StreamAnalyticsError
     {
         /// <summary> Initializes a new instance of TestDatasourceResult. </summary>
         internal TestDatasourceResult()
@@ -16,9 +18,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of TestDatasourceResult. </summary>
-        /// <param name="errorValue"> Error definition properties. </param>
+        /// <param name="code"> Error code. </param>
+        /// <param name="message"> Error message. </param>
+        /// <param name="target"> Error target. </param>
+        /// <param name="details"> Error details. </param>
         /// <param name="status"> The status of the sample output request. </param>
-        internal TestDatasourceResult(ErrorError errorValue, TestDatasourceResultStatus? status) : base(errorValue)
+        internal TestDatasourceResult(string code, string message, string target, IReadOnlyList<StreamAnalyticsErrorDetails> details, TestDatasourceResultStatus? status) : base(code, message, target, details)
         {
             Status = status;
         }

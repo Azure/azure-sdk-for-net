@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             string type = default;
             Optional<Serialization> serialization = default;
             Optional<Diagnostics> diagnostics = default;
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<Compression> compression = default;
             Optional<string> partitionKey = default;
             Optional<InputWatermarkProperties> watermarkSettings = default;
@@ -86,7 +87,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("compression"))
@@ -115,7 +121,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new InputProperties(type, serialization.Value, diagnostics.Value, etag.Value, compression.Value, partitionKey.Value, watermarkSettings.Value);
+            return new InputProperties(type, serialization.Value, diagnostics.Value, Optional.ToNullable(etag), compression.Value, partitionKey.Value, watermarkSettings.Value);
         }
     }
 }

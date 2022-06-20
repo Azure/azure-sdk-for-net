@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
             EventSerializationType type = default;
             Optional<string> fieldDelimiter = default;
-            Optional<Encoding> encoding = default;
+            Optional<StreamEncoding> encoding = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encoding = new Encoding(property0.Value.GetString());
+                            encoding = new StreamEncoding(property0.Value.GetString());
                             continue;
                         }
                     }

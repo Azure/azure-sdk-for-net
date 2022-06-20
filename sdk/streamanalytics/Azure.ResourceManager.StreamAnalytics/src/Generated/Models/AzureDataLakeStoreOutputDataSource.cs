@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes an Azure Data Lake Store output data source. </summary>
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="dateFormat"> The date format. Wherever {date} appears in filePathPrefix, the value of this property is used as the date format instead. </param>
         /// <param name="timeFormat"> The time format. Wherever {time} appears in filePathPrefix, the value of this property is used as the time format instead. </param>
         /// <param name="authenticationMode"> Authentication Mode. </param>
-        internal AzureDataLakeStoreOutputDataSource(string outputDataSourceType, string refreshToken, string tokenUserPrincipalName, string tokenUserDisplayName, string accountName, string tenantId, string filePathPrefix, string dateFormat, string timeFormat, AuthenticationMode? authenticationMode) : base(outputDataSourceType)
+        internal AzureDataLakeStoreOutputDataSource(string outputDataSourceType, string refreshToken, string tokenUserPrincipalName, string tokenUserDisplayName, string accountName, Guid? tenantId, string filePathPrefix, string dateFormat, string timeFormat, AuthenticationMode? authenticationMode) : base(outputDataSourceType)
         {
             RefreshToken = refreshToken;
             TokenUserPrincipalName = tokenUserPrincipalName;
@@ -50,7 +52,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> The name of the Azure Data Lake Store account. Required on PUT (CreateOrReplace) requests. </summary>
         public string AccountName { get; set; }
         /// <summary> The tenant id of the user used to obtain the refresh token. Required on PUT (CreateOrReplace) requests. </summary>
-        public string TenantId { get; set; }
+        public Guid? TenantId { get; set; }
         /// <summary> The location of the file to which the output should be written to. Required on PUT (CreateOrReplace) requests. </summary>
         public string FilePathPrefix { get; set; }
         /// <summary> The date format. Wherever {date} appears in filePathPrefix, the value of this property is used as the date format instead. </summary>

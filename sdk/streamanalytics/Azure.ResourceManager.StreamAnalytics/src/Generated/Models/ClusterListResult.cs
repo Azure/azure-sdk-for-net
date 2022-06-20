@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of ClusterListResult. </summary>
         internal ClusterListResult()
         {
-            Value = new ChangeTrackingList<ClusterData>();
+            Value = new ChangeTrackingList<StreamAnalyticsClusterData>();
         }
 
         /// <summary> Initializes a new instance of ClusterListResult. </summary>
         /// <param name="value"> A list of clusters. </param>
         /// <param name="nextLink"> The URL to fetch the next set of clusters. </param>
-        internal ClusterListResult(IReadOnlyList<ClusterData> value, string nextLink)
+        internal ClusterListResult(IReadOnlyList<StreamAnalyticsClusterData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of clusters. </summary>
-        public IReadOnlyList<ClusterData> Value { get; }
+        public IReadOnlyList<StreamAnalyticsClusterData> Value { get; }
         /// <summary> The URL to fetch the next set of clusters. </summary>
         public string NextLink { get; }
     }

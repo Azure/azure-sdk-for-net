@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.StreamAnalytics
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of FunctionResources in the StreamingJob. </summary>
-        /// <returns> An object representing collection of FunctionResources and their operations over a FunctionResource. </returns>
-        public virtual FunctionCollection GetFunctions()
+        /// <summary> Gets a collection of StreamingJobFunctionResources in the StreamingJob. </summary>
+        /// <returns> An object representing collection of StreamingJobFunctionResources and their operations over a StreamingJobFunctionResource. </returns>
+        public virtual StreamingJobFunctionCollection GetStreamingJobFunctions()
         {
-            return GetCachedClient(Client => new FunctionCollection(Client, Id));
+            return GetCachedClient(Client => new StreamingJobFunctionCollection(Client, Id));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FunctionResource>> GetFunctionAsync(string functionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StreamingJobFunctionResource>> GetStreamingJobFunctionAsync(string functionName, CancellationToken cancellationToken = default)
         {
-            return await GetFunctions().GetAsync(functionName, cancellationToken).ConfigureAwait(false);
+            return await GetStreamingJobFunctions().GetAsync(functionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,31 +121,16 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FunctionResource> GetFunction(string functionName, CancellationToken cancellationToken = default)
+        public virtual Response<StreamingJobFunctionResource> GetStreamingJobFunction(string functionName, CancellationToken cancellationToken = default)
         {
-            return GetFunctions().Get(functionName, cancellationToken);
+            return GetStreamingJobFunctions().Get(functionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of InputResources in the StreamingJob. </summary>
-        /// <returns> An object representing collection of InputResources and their operations over a InputResource. </returns>
-        public virtual InputCollection GetInputs()
+        /// <summary> Gets a collection of StreamingJobInputResources in the StreamingJob. </summary>
+        /// <returns> An object representing collection of StreamingJobInputResources and their operations over a StreamingJobInputResource. </returns>
+        public virtual StreamingJobInputCollection GetStreamingJobInputs()
         {
-            return GetCachedClient(Client => new InputCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets details about the specified input.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}/inputs/{inputName}
-        /// Operation Id: Inputs_Get
-        /// </summary>
-        /// <param name="inputName"> The name of the input. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inputName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<InputResource>> GetInputAsync(string inputName, CancellationToken cancellationToken = default)
-        {
-            return await GetInputs().GetAsync(inputName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new StreamingJobInputCollection(Client, Id));
         }
 
         /// <summary>
@@ -158,16 +143,31 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="inputName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inputName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<InputResource> GetInput(string inputName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StreamingJobInputResource>> GetStreamingJobInputAsync(string inputName, CancellationToken cancellationToken = default)
         {
-            return GetInputs().Get(inputName, cancellationToken);
+            return await GetStreamingJobInputs().GetAsync(inputName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of OutputResources in the StreamingJob. </summary>
-        /// <returns> An object representing collection of OutputResources and their operations over a OutputResource. </returns>
-        public virtual OutputCollection GetOutputs()
+        /// <summary>
+        /// Gets details about the specified input.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}/inputs/{inputName}
+        /// Operation Id: Inputs_Get
+        /// </summary>
+        /// <param name="inputName"> The name of the input. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inputName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<StreamingJobInputResource> GetStreamingJobInput(string inputName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new OutputCollection(Client, Id));
+            return GetStreamingJobInputs().Get(inputName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of StreamingJobOutputResources in the StreamingJob. </summary>
+        /// <returns> An object representing collection of StreamingJobOutputResources and their operations over a StreamingJobOutputResource. </returns>
+        public virtual StreamingJobOutputCollection GetStreamingJobOutputs()
+        {
+            return GetCachedClient(Client => new StreamingJobOutputCollection(Client, Id));
         }
 
         /// <summary>
@@ -180,9 +180,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="outputName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outputName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<OutputResource>> GetOutputAsync(string outputName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StreamingJobOutputResource>> GetStreamingJobOutputAsync(string outputName, CancellationToken cancellationToken = default)
         {
-            return await GetOutputs().GetAsync(outputName, cancellationToken).ConfigureAwait(false);
+            return await GetStreamingJobOutputs().GetAsync(outputName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -195,31 +195,16 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="outputName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outputName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<OutputResource> GetOutput(string outputName, CancellationToken cancellationToken = default)
+        public virtual Response<StreamingJobOutputResource> GetStreamingJobOutput(string outputName, CancellationToken cancellationToken = default)
         {
-            return GetOutputs().Get(outputName, cancellationToken);
+            return GetStreamingJobOutputs().Get(outputName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TransformationResources in the StreamingJob. </summary>
-        /// <returns> An object representing collection of TransformationResources and their operations over a TransformationResource. </returns>
-        public virtual TransformationCollection GetTransformations()
+        /// <summary> Gets a collection of StreamingJobTransformationResources in the StreamingJob. </summary>
+        /// <returns> An object representing collection of StreamingJobTransformationResources and their operations over a StreamingJobTransformationResource. </returns>
+        public virtual StreamingJobTransformationCollection GetStreamingJobTransformations()
         {
-            return GetCachedClient(Client => new TransformationCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets details about the specified transformation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}/transformations/{transformationName}
-        /// Operation Id: Transformations_Get
-        /// </summary>
-        /// <param name="transformationName"> The name of the transformation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="transformationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="transformationName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<TransformationResource>> GetTransformationAsync(string transformationName, CancellationToken cancellationToken = default)
-        {
-            return await GetTransformations().GetAsync(transformationName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new StreamingJobTransformationCollection(Client, Id));
         }
 
         /// <summary>
@@ -232,9 +217,24 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="transformationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="transformationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TransformationResource> GetTransformation(string transformationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StreamingJobTransformationResource>> GetStreamingJobTransformationAsync(string transformationName, CancellationToken cancellationToken = default)
         {
-            return GetTransformations().Get(transformationName, cancellationToken);
+            return await GetStreamingJobTransformations().GetAsync(transformationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets details about the specified transformation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}/transformations/{transformationName}
+        /// Operation Id: Transformations_Get
+        /// </summary>
+        /// <param name="transformationName"> The name of the transformation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="transformationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="transformationName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<StreamingJobTransformationResource> GetStreamingJobTransformation(string transformationName, CancellationToken cancellationToken = default)
+        {
+            return GetStreamingJobTransformations().Get(transformationName, cancellationToken);
         }
 
         /// <summary>

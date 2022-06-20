@@ -19,6 +19,13 @@ modelerfour:
 list-exception:
 - /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}/transformations/{transformationName}
 
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -39,5 +46,54 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+
+
+directive:
+- from: definitions.json
+  where: $.definitions
+  transform: >
+    $.Error.properties.error['x-ms-client-flatten'] = true;
+    $.Error['x-ms-client-name'] = 'StreamAnalyticsError';
+    $.ErrorDetails['x-ms-client-name'] = 'StreamAnalyticsErrorDetails';
+- from: clusters.json
+  where: $.definitions
+  transform: >
+    $.Cluster['x-ms-client-name'] = 'StreamAnalyticsCluster';
+    $.Cluster['x-ms-client-name'] = 'StreamAnalyticsCluster';
+- from: functions.json
+  where: $.definitions
+  transform: >
+    $.Function['x-ms-client-name'] = 'StreamingJobFunction';
+    $.SubResource['x-ms-client-name'] = 'StreamAnalyticsSubResource';
+- from: inputs.json
+  where: $.definitions
+  transform: >
+    $.Input['x-ms-client-name'] = 'StreamingJobInput';
+    $.Encoding['x-ms-enum']['name'] = 'StreamEncoding';
+    $.SubResource['x-ms-client-name'] = 'StreamAnalyticsSubResource';
+    $.ResourceTestStatus.properties.error['x-ms-client-flatten'] = true;
+- from: outputs.json
+  where: $.definitions
+  transform: >
+    $.Output['x-ms-client-name'] = 'StreamingJobOutput';
+    $.SubResource['x-ms-client-name'] = 'StreamAnalyticsSubResource';
+- from: privateEndpoints.json
+  where: $.definitions
+  transform: >
+    $.PrivateEndpoint['x-ms-client-name'] = 'StreamAnalyticsPrivateEndpoint';
+- from: transformations.json
+  where: $.definitions
+  transform: >
+    $.Transformation['x-ms-client-name'] = 'StreamingJobTransformation';
+    $.SubResource['x-ms-client-name'] = 'StreamAnalyticsSubResource';
+- from: streamingjobs.json
+  where: $.definitions
+  transform: >
+    $.External['x-ms-client-name'] = 'ExternalStorageAccount';
+    $.Identity['x-ms-client-name'] = 'ManagedIdentity';
+- from: subscriptions.json
+  where: $.definitions
+  transform: >
+    $.SubResource['x-ms-client-name'] = 'StreamAnalyticsSubResource';
 
 ```

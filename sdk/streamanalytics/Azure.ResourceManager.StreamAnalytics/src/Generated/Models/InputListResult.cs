@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of InputListResult. </summary>
         internal InputListResult()
         {
-            Value = new ChangeTrackingList<InputData>();
+            Value = new ChangeTrackingList<StreamingJobInputData>();
         }
 
         /// <summary> Initializes a new instance of InputListResult. </summary>
         /// <param name="value"> A list of inputs under a streaming job. Populated by a &apos;List&apos; operation. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal InputListResult(IReadOnlyList<InputData> value, string nextLink)
+        internal InputListResult(IReadOnlyList<StreamingJobInputData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of inputs under a streaming job. Populated by a &apos;List&apos; operation. </summary>
-        public IReadOnlyList<InputData> Value { get; }
+        public IReadOnlyList<StreamingJobInputData> Value { get; }
         /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }

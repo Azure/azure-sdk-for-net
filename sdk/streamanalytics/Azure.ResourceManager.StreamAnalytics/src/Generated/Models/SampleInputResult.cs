@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The result of the sample input request. </summary>
-    public partial class SampleInputResult : Error
+    public partial class SampleInputResult : StreamAnalyticsError
     {
         /// <summary> Initializes a new instance of SampleInputResult. </summary>
         internal SampleInputResult()
@@ -21,12 +21,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of SampleInputResult. </summary>
-        /// <param name="errorValue"> Error definition properties. </param>
+        /// <param name="code"> Error code. </param>
+        /// <param name="message"> Error message. </param>
+        /// <param name="target"> Error target. </param>
+        /// <param name="details"> Error details. </param>
         /// <param name="status"> The status of the sample input request. </param>
         /// <param name="diagnostics"> Diagnostics messages. E.g. message indicating some partitions from the input have no data. </param>
         /// <param name="eventsDownloadUri"> A SAS URL to download the sampled input data. </param>
         /// <param name="lastArrivalTime"> The timestamp for the last event in the data. It is in DateTime format. </param>
-        internal SampleInputResult(ErrorError errorValue, SampleInputResultStatus? status, IReadOnlyList<string> diagnostics, Uri eventsDownloadUri, string lastArrivalTime) : base(errorValue)
+        internal SampleInputResult(string code, string message, string target, IReadOnlyList<StreamAnalyticsErrorDetails> details, SampleInputResultStatus? status, IReadOnlyList<string> diagnostics, Uri eventsDownloadUri, string lastArrivalTime) : base(code, message, target, details)
         {
             Status = status;
             Diagnostics = diagnostics;

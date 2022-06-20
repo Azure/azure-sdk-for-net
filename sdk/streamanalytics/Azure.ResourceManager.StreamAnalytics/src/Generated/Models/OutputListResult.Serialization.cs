@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         internal static OutputListResult DeserializeOutputListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<OutputData>> value = default;
+            Optional<IReadOnlyList<StreamingJobOutputData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OutputData> array = new List<OutputData>();
+                    List<StreamingJobOutputData> array = new List<StreamingJobOutputData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutputData.DeserializeOutputData(item));
+                        array.Add(StreamingJobOutputData.DeserializeStreamingJobOutputData(item));
                     }
                     value = array;
                     continue;

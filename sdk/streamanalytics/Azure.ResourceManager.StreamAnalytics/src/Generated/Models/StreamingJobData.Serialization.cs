@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         internal static StreamingJobData DeserializeStreamingJobData(JsonElement element)
         {
-            Optional<Identity> identity = default;
+            Optional<ManagedIdentity> identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -170,14 +171,14 @@ namespace Azure.ResourceManager.StreamAnalytics
             Optional<string> dataLocale = default;
             Optional<CompatibilityLevel> compatibilityLevel = default;
             Optional<DateTimeOffset> createdDate = default;
-            Optional<IList<InputData>> inputs = default;
-            Optional<TransformationData> transformation = default;
-            Optional<IList<OutputData>> outputs = default;
-            Optional<IList<FunctionData>> functions = default;
-            Optional<string> etag = default;
+            Optional<IList<StreamingJobInputData>> inputs = default;
+            Optional<StreamingJobTransformationData> transformation = default;
+            Optional<IList<StreamingJobOutputData>> outputs = default;
+            Optional<IList<StreamingJobFunctionData>> functions = default;
+            Optional<ETag> etag = default;
             Optional<JobStorageAccount> jobStorageAccount = default;
             Optional<ContentStoragePolicy> contentStoragePolicy = default;
-            Optional<External> externals = default;
+            Optional<ExternalStorageAccount> externals = default;
             Optional<WritableSubResource> cluster = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -188,7 +189,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = Identity.DeserializeIdentity(property.Value);
+                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -372,10 +373,10 @@ namespace Azure.ResourceManager.StreamAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<InputData> array = new List<InputData>();
+                            List<StreamingJobInputData> array = new List<StreamingJobInputData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(InputData.DeserializeInputData(item));
+                                array.Add(StreamingJobInputData.DeserializeStreamingJobInputData(item));
                             }
                             inputs = array;
                             continue;
@@ -387,7 +388,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            transformation = TransformationData.DeserializeTransformationData(property0.Value);
+                            transformation = StreamingJobTransformationData.DeserializeStreamingJobTransformationData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("outputs"))
@@ -397,10 +398,10 @@ namespace Azure.ResourceManager.StreamAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<OutputData> array = new List<OutputData>();
+                            List<StreamingJobOutputData> array = new List<StreamingJobOutputData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(OutputData.DeserializeOutputData(item));
+                                array.Add(StreamingJobOutputData.DeserializeStreamingJobOutputData(item));
                             }
                             outputs = array;
                             continue;
@@ -412,17 +413,22 @@ namespace Azure.ResourceManager.StreamAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<FunctionData> array = new List<FunctionData>();
+                            List<StreamingJobFunctionData> array = new List<StreamingJobFunctionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FunctionData.DeserializeFunctionData(item));
+                                array.Add(StreamingJobFunctionData.DeserializeStreamingJobFunctionData(item));
                             }
                             functions = array;
                             continue;
                         }
                         if (property0.NameEquals("etag"))
                         {
-                            etag = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            etag = new ETag(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("jobStorageAccount"))
@@ -452,7 +458,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            externals = External.DeserializeExternal(property0.Value);
+                            externals = ExternalStorageAccount.DeserializeExternalStorageAccount(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cluster"))
@@ -469,7 +475,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     continue;
                 }
             }
-            return new StreamingJobData(id, name, type, systemData, tags, location, identity.Value, sku.Value, jobId.Value, provisioningState.Value, jobState.Value, Optional.ToNullable(jobType), Optional.ToNullable(outputStartMode), Optional.ToNullable(outputStartTime), Optional.ToNullable(lastOutputEventTime), Optional.ToNullable(eventsOutOfOrderPolicy), Optional.ToNullable(outputErrorPolicy), Optional.ToNullable(eventsOutOfOrderMaxDelayInSeconds), Optional.ToNullable(eventsLateArrivalMaxDelayInSeconds), dataLocale.Value, Optional.ToNullable(compatibilityLevel), Optional.ToNullable(createdDate), Optional.ToList(inputs), transformation.Value, Optional.ToList(outputs), Optional.ToList(functions), etag.Value, jobStorageAccount.Value, Optional.ToNullable(contentStoragePolicy), externals.Value, cluster);
+            return new StreamingJobData(id, name, type, systemData, tags, location, identity.Value, sku.Value, jobId.Value, provisioningState.Value, jobState.Value, Optional.ToNullable(jobType), Optional.ToNullable(outputStartMode), Optional.ToNullable(outputStartTime), Optional.ToNullable(lastOutputEventTime), Optional.ToNullable(eventsOutOfOrderPolicy), Optional.ToNullable(outputErrorPolicy), Optional.ToNullable(eventsOutOfOrderMaxDelayInSeconds), Optional.ToNullable(eventsLateArrivalMaxDelayInSeconds), dataLocale.Value, Optional.ToNullable(compatibilityLevel), Optional.ToNullable(createdDate), Optional.ToList(inputs), transformation.Value, Optional.ToList(outputs), Optional.ToList(functions), Optional.ToNullable(etag), jobStorageAccount.Value, Optional.ToNullable(contentStoragePolicy), externals.Value, cluster);
         }
     }
 }

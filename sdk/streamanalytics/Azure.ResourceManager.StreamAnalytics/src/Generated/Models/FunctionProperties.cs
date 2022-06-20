@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// Please note <see cref="FunctionBinding"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureMachineLearningStudioFunctionBinding"/>, <see cref="AzureMachineLearningServiceFunctionBinding"/>, <see cref="CSharpFunctionBinding"/> and <see cref="JavaScriptFunctionBinding"/>.
         /// </param>
-        internal FunctionProperties(string functionPropertiesType, string etag, IList<FunctionInput> inputs, FunctionOutput output, FunctionBinding binding)
+        internal FunctionProperties(string functionPropertiesType, ETag? etag, IList<FunctionInput> inputs, FunctionOutput output, FunctionBinding binding)
         {
             FunctionPropertiesType = functionPropertiesType;
             Etag = etag;
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Indicates the type of function. </summary>
         internal string FunctionPropertiesType { get; set; }
         /// <summary> The current entity tag for the function. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Gets the inputs. </summary>
         public IList<FunctionInput> Inputs { get; }
         /// <summary> Describes the output of a function. </summary>
