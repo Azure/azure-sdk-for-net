@@ -58,13 +58,10 @@ directive:
   - remove-model: "Identity"
   - remove-model: "Operation"
   - remove-model: "OperationListResult"
-  - remove-model: "OperationStatusResult"
   - remove-model: "locationData"
   - remove-model: "CheckNameAvailabilityRequest"
   - remove-model: "CheckNameAvailabilityResponse"
   - remove-model: "ErrorResponse"
-  - remove-model: "ErrorDetail"
-  - remove-model: "ErrorAdditionalInfo"
   - from: types.json
     where: $.definitions['Resource']
     transform: >
@@ -86,6 +83,12 @@ directive:
     transform: >
       $["x-namespace"] = "Azure.ResourceManager.Models";
       $["x-accessibility"] = "public";
+  - from: types.json
+    where: $.definitions['OperationStatusResult']
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = false;
+      $["x-ms-mgmt-typeReferenceType"] = true;
+      $["x-csharp-usage"] = "model,output";
 # Workaround for the issue that SystemData lost readonly attribute: https://github.com/Azure/autorest/issues/4269
   - from: types.json
     where: $.definitions.systemData.properties.*

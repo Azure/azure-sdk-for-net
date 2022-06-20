@@ -414,6 +414,18 @@ namespace Azure.ResourceManager.Models
         public static bool operator !=(Azure.ResourceManager.Models.ManagedServiceIdentityType left, Azure.ResourceManager.Models.ManagedServiceIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class OperationStatusResult
+    {
+        internal OperationStatusResult() { }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public Azure.ResponseError Error { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Models.OperationStatusResult> Operations { get { throw null; } }
+        public float? PercentComplete { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public string Status { get { throw null; } }
+    }
     public abstract partial class ResourceData
     {
         protected ResourceData() { }
