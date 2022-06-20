@@ -79,11 +79,6 @@ namespace Microsoft.Azure.Management.EventHub
         public virtual IClustersOperations Clusters { get; private set; }
 
         /// <summary>
-        /// Gets the IConfigurationOperations.
-        /// </summary>
-        public virtual IConfigurationOperations Configuration { get; private set; }
-
-        /// <summary>
         /// Gets the INamespacesOperations.
         /// </summary>
         public virtual INamespacesOperations Namespaces { get; private set; }
@@ -99,14 +94,19 @@ namespace Microsoft.Azure.Management.EventHub
         public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
 
         /// <summary>
-        /// Gets the IOperations.
+        /// Gets the INetworkSecurityPerimeterConfigurationOperations.
         /// </summary>
-        public virtual IOperations Operations { get; private set; }
+        public virtual INetworkSecurityPerimeterConfigurationOperations NetworkSecurityPerimeterConfiguration { get; private set; }
 
         /// <summary>
-        /// Gets the IEventHubsOperations.
+        /// Gets the INetworkSecurityPerimeterConfigurationsOperations.
         /// </summary>
-        public virtual IEventHubsOperations EventHubs { get; private set; }
+        public virtual INetworkSecurityPerimeterConfigurationsOperations NetworkSecurityPerimeterConfigurations { get; private set; }
+
+        /// <summary>
+        /// Gets the IConfigurationOperations.
+        /// </summary>
+        public virtual IConfigurationOperations Configuration { get; private set; }
 
         /// <summary>
         /// Gets the IDisasterRecoveryConfigsOperations.
@@ -114,14 +114,29 @@ namespace Microsoft.Azure.Management.EventHub
         public virtual IDisasterRecoveryConfigsOperations DisasterRecoveryConfigs { get; private set; }
 
         /// <summary>
+        /// Gets the IEventHubsOperations.
+        /// </summary>
+        public virtual IEventHubsOperations EventHubs { get; private set; }
+
+        /// <summary>
         /// Gets the IConsumerGroupsOperations.
         /// </summary>
         public virtual IConsumerGroupsOperations ConsumerGroups { get; private set; }
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
         /// Gets the ISchemaRegistryOperations.
         /// </summary>
         public virtual ISchemaRegistryOperations SchemaRegistry { get; private set; }
+
+        /// <summary>
+        /// Gets the IApplicationGroupOperations.
+        /// </summary>
+        public virtual IApplicationGroupOperations ApplicationGroup { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the EventHubManagementClient class.
@@ -365,17 +380,20 @@ namespace Microsoft.Azure.Management.EventHub
         private void Initialize()
         {
             Clusters = new ClustersOperations(this);
-            Configuration = new ConfigurationOperations(this);
             Namespaces = new NamespacesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
-            Operations = new Operations(this);
-            EventHubs = new EventHubsOperations(this);
+            NetworkSecurityPerimeterConfiguration = new NetworkSecurityPerimeterConfigurationOperations(this);
+            NetworkSecurityPerimeterConfigurations = new NetworkSecurityPerimeterConfigurationsOperations(this);
+            Configuration = new ConfigurationOperations(this);
             DisasterRecoveryConfigs = new DisasterRecoveryConfigsOperations(this);
+            EventHubs = new EventHubsOperations(this);
             ConsumerGroups = new ConsumerGroupsOperations(this);
+            Operations = new Operations(this);
             SchemaRegistry = new SchemaRegistryOperations(this);
+            ApplicationGroup = new ApplicationGroupOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-11-01";
+            ApiVersion = "2022-01-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -405,6 +423,8 @@ namespace Microsoft.Azure.Management.EventHub
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ApplicationGroupPolicy>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ApplicationGroupPolicy>("type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

@@ -52,7 +52,9 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <param name="metricId">The metric ID of the cluster resource.
         /// Provided by the service and not modifiable by the user.</param>
         /// <param name="status">Status of the Cluster resource</param>
-        public Cluster(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ClusterSku sku = default(ClusterSku), SystemData systemData = default(SystemData), string createdAt = default(string), string updatedAt = default(string), string metricId = default(string), string status = default(string))
+        /// <param name="supportsScaling">A value that indicates whether
+        /// Scaling is Supported.</param>
+        public Cluster(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ClusterSku sku = default(ClusterSku), SystemData systemData = default(SystemData), string createdAt = default(string), string updatedAt = default(string), string metricId = default(string), string status = default(string), bool? supportsScaling = default(bool?))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
@@ -61,6 +63,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
             UpdatedAt = updatedAt;
             MetricId = metricId;
             Status = status;
+            SupportsScaling = supportsScaling;
             CustomInit();
         }
 
@@ -105,6 +108,12 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; private set; }
+
+        /// <summary>
+        /// Gets or sets a value that indicates whether Scaling is Supported.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.supportsScaling")]
+        public bool? SupportsScaling { get; set; }
 
         /// <summary>
         /// Validate the object.

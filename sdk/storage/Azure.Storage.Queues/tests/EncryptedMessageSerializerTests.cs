@@ -68,7 +68,7 @@ namespace Azure.Storage.Queues.Test
         [Test]
         public void SerializeEncryptedMessage()
         {
-            var result = new ClientSideEncryptor(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            var result = new ClientSideEncryptorV1_0(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
             {
                 KeyEncryptionKey = GetIKeyEncryptionKey().Object,
                 KeyWrapAlgorithm = KeyWrapAlgorithm
@@ -90,7 +90,7 @@ namespace Azure.Storage.Queues.Test
         [Test]
         public void DeserializeEncryptedMessage()
         {
-            var result = new ClientSideEncryptor(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            var result = new ClientSideEncryptorV1_0(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
             {
                 KeyEncryptionKey = GetIKeyEncryptionKey().Object,
                 KeyWrapAlgorithm = KeyWrapAlgorithm
@@ -113,7 +113,7 @@ namespace Azure.Storage.Queues.Test
         [Test]
         public void TryDeserializeEncryptedMessage()
         {
-            var result = new ClientSideEncryptor(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            var result = new ClientSideEncryptorV1_0(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
             {
                 KeyEncryptionKey = GetIKeyEncryptionKey().Object,
                 KeyWrapAlgorithm = KeyWrapAlgorithm

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<VirtualMachineHealthStatus> vmHealth = default;
             Optional<BootDiagnosticsInstanceView> bootDiagnostics = default;
             Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
-            Optional<string> assignedHost = default;
+            Optional<ResourceIdentifier> assignedHost = default;
             Optional<string> placementGroupId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -141,7 +141,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("assignedHost"))
                 {
-                    assignedHost = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    assignedHost = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("placementGroupId"))

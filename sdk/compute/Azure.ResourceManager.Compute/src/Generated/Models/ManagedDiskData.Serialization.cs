@@ -167,8 +167,8 @@ namespace Azure.ResourceManager.Compute
 
         internal static ManagedDiskData DeserializeManagedDiskData(JsonElement element)
         {
-            Optional<string> managedBy = default;
-            Optional<IReadOnlyList<string>> managedByExtended = default;
+            Optional<ResourceIdentifier> managedBy = default;
+            Optional<IReadOnlyList<ResourceIdentifier>> managedByExtended = default;
             Optional<DiskSku> sku = default;
             Optional<IList<string>> zones = default;
             Optional<ExtendedLocation> extendedLocation = default;
@@ -211,7 +211,12 @@ namespace Azure.ResourceManager.Compute
             {
                 if (property.NameEquals("managedBy"))
                 {
-                    managedBy = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    managedBy = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("managedByExtended"))
@@ -221,10 +226,10 @@ namespace Azure.ResourceManager.Compute
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new ResourceIdentifier(item.GetString()));
                     }
                     managedByExtended = array;
                     continue;
