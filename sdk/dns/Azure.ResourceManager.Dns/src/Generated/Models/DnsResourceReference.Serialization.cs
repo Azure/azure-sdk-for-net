@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns.Models
 {
@@ -15,8 +16,8 @@ namespace Azure.ResourceManager.Dns.Models
     {
         internal static DnsResourceReference DeserializeDnsResourceReference(JsonElement element)
         {
-            Optional<IReadOnlyList<SubResource>> dnsResources = default;
-            Optional<SubResource> targetResource = default;
+            Optional<IReadOnlyList<WritableSubResource>> dnsResources = default;
+            Optional<WritableSubResource> targetResource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dnsResources"))
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Dns.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SubResource.DeserializeSubResource(item));
+                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                     }
                     dnsResources = array;
                     continue;
@@ -41,11 +42,11 @@ namespace Azure.ResourceManager.Dns.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    targetResource = SubResource.DeserializeSubResource(property.Value);
+                    targetResource = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
             }
-            return new DnsResourceReference(Optional.ToList(dnsResources), targetResource.Value);
+            return new DnsResourceReference(Optional.ToList(dnsResources), targetResource);
         }
     }
 }
