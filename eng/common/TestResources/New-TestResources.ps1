@@ -64,6 +64,10 @@ param (
     [string] $Environment = 'AzureCloud',
 
     [Parameter()]
+    [ValidateSet('test', 'perf')]
+    [string] $ResourceType = 'test',
+
+    [Parameter()]
     [hashtable] $ArmTemplateParameters,
 
     [Parameter()]
@@ -223,7 +227,7 @@ function BuildBicepFile([System.IO.FileSystemInfo] $file)
     }
 
     $tmp = $env:TEMP ? $env:TEMP : [System.IO.Path]::GetTempPath()
-    $templateFilePath = Join-Path $tmp "test-resources.$(New-Guid).compiled.json"
+    $templateFilePath = Join-Path $tmp "$ResourceType-resources.$(New-Guid).compiled.json"
 
     # Az can deploy bicep files natively, but by compiling here it becomes easier to parse the
     # outputted json for mismatched parameter declarations.
@@ -349,7 +353,7 @@ try {
     $root = [System.IO.Path]::Combine($repositoryRoot, "sdk", $ServiceDirectory) | Resolve-Path
     $templateFiles = @()
 
-    'test-resources.json', 'test-resources.bicep' | ForEach-Object {
+    "$ResourceType-resources.json", "$ResourceType-resources.bicep" | ForEach-Object {
         Write-Verbose "Checking for '$_' files under '$root'"
         Get-ChildItem -Path $root -Filter "$_" -Recurse | ForEach-Object {
             Write-Verbose "Found template '$($_.FullName)'"
@@ -586,9 +590,9 @@ try {
             # Service principals in the Microsoft AAD tenant must end with an @microsoft.com domain; those in other tenants
             # are not permitted to do so. Format the non-MS name so there's an assocation with the Azure SDK.
             if ($TenantId -eq '72f988bf-86f1-41af-91ab-2d7cd011db47') {
-                $displayName = "test-resources-$($baseName)$suffix.microsoft.com"
+                $displayName = "$ResourceType-resources-$($baseName)$suffix.microsoft.com"
             } else {
-                $displayName = "$($baseName)$suffix.test-resources.azure.sdk"
+                $displayName = "$($baseName)$suffix.$ResourceType-resources.azure.sdk"
             }
 
             $servicePrincipalWrapper = NewServicePrincipalWrapper -subscription $SubscriptionId -resourceGroup $ResourceGroupName -displayName $DisplayName
@@ -705,7 +709,7 @@ try {
             }
         }
 
-        $preDeploymentScript = $templateFile.originalFilePath | Split-Path | Join-Path -ChildPath 'test-resources-pre.ps1'
+        $preDeploymentScript = $templateFile.originalFilePath | Split-Path | Join-Path -ChildPath "$ResourceType-resources-pre.ps1"
         if (Test-Path $preDeploymentScript) {
             Log "Invoking pre-deployment script '$preDeploymentScript'"
             &$preDeploymentScript -ResourceGroupName $ResourceGroupName @PSBoundParameters
@@ -745,7 +749,7 @@ try {
 
         $deploymentOutputs = SetDeploymentOutputs $serviceName $context $deployment $templateFile
 
-        $postDeploymentScript = $templateFile.originalFilePath | Split-Path | Join-Path -ChildPath 'test-resources-post.ps1'
+        $postDeploymentScript = $templateFile.originalFilePath | Split-Path | Join-Path -ChildPath "$ResourceType-resources-post.ps1"
         if (Test-Path $postDeploymentScript) {
             Log "Invoking post-deployment script '$postDeploymentScript'"
             &$postDeploymentScript -ResourceGroupName $ResourceGroupName -DeploymentOutputs $deploymentOutputs @PSBoundParameters

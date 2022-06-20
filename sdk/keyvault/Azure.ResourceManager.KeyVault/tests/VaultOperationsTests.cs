@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 true,
                 true, // enableSoftDelete defaults to true
                 new[] { AccessPolicy },
-                VaultProperties.NetworkAcls,
+                VaultProperties.NetworkRuleSet,
                 Tags);
 
             //Update
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 true,
                 true,
                 new[] { AccessPolicy },
-                VaultProperties.NetworkAcls,
+                VaultProperties.NetworkRuleSet,
                 Tags);
 
             Response<VaultResource> rawRetrievedVault = await VaultCollection.GetAsync(VaultName);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 true,
                 true,
                 new[] { AccessPolicy },
-                VaultProperties.NetworkAcls,
+                VaultProperties.NetworkRuleSet,
                 Tags);
 
             // Delete
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             bool expectedEnabledForTemplateDeployment,
             bool expectedEnabledForDiskEncryption,
             bool? expectedEnableSoftDelete,
-            AccessPolicyEntry[] expectedPolicies,
+            VaultAccessPolicy[] expectedPolicies,
             Dictionary<string, string> expectedTags)
         {
             Assert.NotNull(vaultData);
@@ -366,8 +366,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
             bool expectedEnabledForTemplateDeployment,
             bool expectedEnabledForDiskEncryption,
             bool? expectedEnableSoftDelete,
-            AccessPolicyEntry[] expectedPolicies,
-            NetworkRuleSet networkRuleSet,
+            VaultAccessPolicy[] expectedPolicies,
+            VaultNetworkRuleSet networkRuleSet,
             Dictionary<string, string> expectedTags)
         {
             ValidateVault(
@@ -386,12 +386,12 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 expectedPolicies,
                 expectedTags);
 
-            Assert.NotNull(vaultData.Properties.NetworkAcls);
-            Assert.AreEqual(networkRuleSet.DefaultAction, vaultData.Properties.NetworkAcls.DefaultAction);
-            Assert.AreEqual(networkRuleSet.Bypass, vaultData.Properties.NetworkAcls.Bypass);
-            Assert.True(vaultData.Properties.NetworkAcls.IPRules != null && vaultData.Properties.NetworkAcls.IPRules.Count == 2);
-            Assert.AreEqual(networkRuleSet.IPRules[0].AddressRange, vaultData.Properties.NetworkAcls.IPRules[0].AddressRange);
-            Assert.AreEqual(networkRuleSet.IPRules[1].AddressRange, vaultData.Properties.NetworkAcls.IPRules[1].AddressRange);
+            Assert.NotNull(vaultData.Properties.NetworkRuleSet);
+            Assert.AreEqual(networkRuleSet.DefaultAction, vaultData.Properties.NetworkRuleSet.DefaultAction);
+            Assert.AreEqual(networkRuleSet.Bypass, vaultData.Properties.NetworkRuleSet.Bypass);
+            Assert.True(vaultData.Properties.NetworkRuleSet.IPRules != null && vaultData.Properties.NetworkRuleSet.IPRules.Count == 2);
+            Assert.AreEqual(networkRuleSet.IPRules[0].AddressRange, vaultData.Properties.NetworkRuleSet.IPRules[0].AddressRange);
+            Assert.AreEqual(networkRuleSet.IPRules[1].AddressRange, vaultData.Properties.NetworkRuleSet.IPRules[1].AddressRange);
         }
     }
 }

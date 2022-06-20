@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the managed hsm pool. </param>
         /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
         /// <param name="scheduledPurgeOn"> The scheduled purge date in UTC. </param>
-        internal ManagedHsmProperties(Guid? tenantId, IList<string> initialAdminObjectIds, Uri hsmUri, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enablePurgeProtection, CreateMode? createMode, string statusMessage, HsmProvisioningState? provisioningState, ManagedHsmNetworkRuleSet networkRuleSet, IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, DateTimeOffset? scheduledPurgeOn)
+        internal ManagedHsmProperties(Guid? tenantId, IList<string> initialAdminObjectIds, Uri hsmUri, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enablePurgeProtection, ManagedHsmCreateMode? createMode, string statusMessage, ManagedHsmProvisioningState? provisioningState, ManagedHsmNetworkRuleSet networkRuleSet, IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, DateTimeOffset? scheduledPurgeOn)
         {
             TenantId = tenantId;
             InitialAdminObjectIds = initialAdminObjectIds;
@@ -65,11 +65,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Property specifying whether protection against purge is enabled for this managed HSM pool. Setting this property to true activates protection against purge for this managed HSM pool and its content - only the Managed HSM service may initiate a hard, irrecoverable deletion. The setting is effective only if soft delete is also enabled. Enabling this functionality is irreversible. </summary>
         public bool? EnablePurgeProtection { get; set; }
         /// <summary> The create mode to indicate whether the resource is being created or is being recovered from a deleted resource. </summary>
-        public CreateMode? CreateMode { get; set; }
+        public ManagedHsmCreateMode? CreateMode { get; set; }
         /// <summary> Resource Status Message. </summary>
         public string StatusMessage { get; }
         /// <summary> Provisioning state. </summary>
-        public HsmProvisioningState? ProvisioningState { get; }
+        public ManagedHsmProvisioningState? ProvisioningState { get; }
         /// <summary> Rules governing the accessibility of the key vault from specific network locations. </summary>
         public ManagedHsmNetworkRuleSet NetworkRuleSet { get; set; }
         /// <summary> List of private endpoint connections associated with the managed hsm pool. </summary>

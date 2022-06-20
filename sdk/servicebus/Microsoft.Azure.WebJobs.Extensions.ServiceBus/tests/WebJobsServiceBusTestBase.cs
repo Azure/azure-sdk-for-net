@@ -196,6 +196,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             if (!string.IsNullOrEmpty(sessionId))
             {
                 messageObj.SessionId = sessionId;
+                messageObj.ReplyToSessionId = sessionId;
             }
             await sender.SendMessageAsync(messageObj);
         }
@@ -216,6 +217,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 {
                     // evenly distribute the messages across sessions
                     message.SessionId = sessionIds[sessionCounter++ % sessionIds.Length];
+                    message.ReplyToSessionId = message.SessionId;
                 }
 
                 if (!batch.TryAddMessage(message))
@@ -247,6 +249,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             if (!string.IsNullOrEmpty(sessionId))
             {
                 messageObj.SessionId = sessionId;
+                messageObj.ReplyToSessionId = sessionId;
             }
             await sender.SendMessageAsync(messageObj);
         }
@@ -259,6 +262,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             if (!string.IsNullOrEmpty(sessionId))
             {
                 messageObj.SessionId = sessionId;
+                messageObj.ReplyToSessionId = sessionId;
             }
             await sender.SendMessageAsync(messageObj);
         }
