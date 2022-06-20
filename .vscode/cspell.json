@@ -401,7 +401,22 @@
         "Noreuse",
         "Unsecure"
         ]
-    }
+    },
+    {
+      "filename": "**/sdk/machinelearningservices/**/*.cs",
+      "words": [
+        "Skus",
+        "Cname",
+        "Kube",
+        "Gluster",
+        "Gepc",
+        "Conda",
+        "Reimage",
+        "Cran",
+        "Rscript",
+        "VCPUs"
+        ]
+    }  
   ],
   "allowCompoundWords": true
 }
