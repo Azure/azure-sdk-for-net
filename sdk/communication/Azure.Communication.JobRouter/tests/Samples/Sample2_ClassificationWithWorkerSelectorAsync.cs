@@ -560,5 +560,19 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PassThroughWorkerSelectors
         }
+
+        // TODO
+        /*[Test]
+        public async Task WorkerSelection_ByRuleEngineLabels()
+        {
+            throw new NotImplementedException();
+        }*/
+
+        // TODO
+        /*[Test]
+        public async Task WorkerSelection_ByWeightedAllocation()
+        {
+            throw new NotImplementedException();
+        }*/
     }
 }
