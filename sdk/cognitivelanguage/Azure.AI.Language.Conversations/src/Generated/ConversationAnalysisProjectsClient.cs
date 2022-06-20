@@ -2878,7 +2878,7 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -2887,7 +2887,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2952,7 +2952,7 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation DeleteProject(WaitUntil waitUntil, string projectName, RequestContext context = null)
+        public virtual Operation<BinaryData> DeleteProject(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -2961,7 +2961,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -3040,8 +3040,16 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateExportProjectRequest(projectName, exportedProjectFormat, assetKind, stringIndexType, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.ExportProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.ExportProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
                 throw;
+            }
+        }
+
+        /// <summary> Triggers a job to export a project&apos;s data. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: &quot;Conversation&quot; | &quot;Luis&quot;. </param>
@@ -3111,7 +3119,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateExportProjectRequest(projectName, exportedProjectFormat, assetKind, stringIndexType, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.ExportProject", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.ExportProject", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -3207,7 +3215,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateImportProjectRequest(projectName, content, exportedProjectFormat, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.ImportProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.ImportProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3303,7 +3311,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateImportProjectRequest(projectName, content, exportedProjectFormat, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.ImportProject", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.ImportProject", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -3394,7 +3402,7 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation> TrainAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> TrainAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -3404,7 +3412,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateTrainRequest(projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.Train", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.Train", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3495,7 +3503,7 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation Train(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual Operation<BinaryData> Train(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -3505,7 +3513,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateTrainRequest(projectName, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.Train", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.Train", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -3577,7 +3585,7 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation> SwapDeploymentsAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> SwapDeploymentsAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -3587,7 +3595,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateSwapDeploymentsRequest(projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.SwapDeployments", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.SwapDeployments", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3659,7 +3667,7 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation SwapDeployments(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual Operation<BinaryData> SwapDeployments(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -3669,7 +3677,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateSwapDeploymentsRequest(projectName, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.SwapDeployments", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.SwapDeployments", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -3721,7 +3729,7 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -3732,7 +3740,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3784,7 +3792,7 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
+        public virtual Operation<BinaryData> DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -3795,7 +3803,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -3861,7 +3869,7 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation> DeleteDeploymentAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> DeleteDeploymentAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -3871,7 +3879,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateDeleteDeploymentRequest(projectName, deploymentName, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.DeleteDeployment", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.DeleteDeployment", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3937,7 +3945,7 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation DeleteDeployment(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
+        public virtual Operation<BinaryData> DeleteDeployment(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -3947,7 +3955,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateDeleteDeploymentRequest(projectName, deploymentName, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.DeleteDeployment", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.DeleteDeployment", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -4026,7 +4034,7 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation> CancelTrainingJobAsync(WaitUntil waitUntil, string projectName, string jobId, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> CancelTrainingJobAsync(WaitUntil waitUntil, string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -4036,7 +4044,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateCancelTrainingJobRequest(projectName, jobId, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.CancelTrainingJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.CancelTrainingJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -4115,7 +4123,7 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation CancelTrainingJob(WaitUntil waitUntil, string projectName, string jobId, RequestContext context = null)
+        public virtual Operation<BinaryData> CancelTrainingJob(WaitUntil waitUntil, string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -4125,7 +4133,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateCancelTrainingJobRequest(projectName, jobId, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.CancelTrainingJob", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.CancelTrainingJob", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
