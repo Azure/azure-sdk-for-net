@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> Describes a request to update a DNS zone. </summary>
-    internal partial class DnsZonePatch
+    public partial class DnsZonePatch
     {
         /// <summary> Initializes a new instance of DnsZonePatch. </summary>
         public DnsZonePatch()

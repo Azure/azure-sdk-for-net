@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Dns.Models
     {
         internal DnsResourceReference() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> DnsResources { get { throw null; } }
-        public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
     }
     public partial class DnsResourceReferenceContent
     {
@@ -555,6 +555,11 @@ namespace Azure.ResourceManager.Dns.Models
     {
         internal DnsResourceReferenceResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Dns.Models.DnsResourceReference> DnsResourceReferences { get { throw null; } }
+    }
+    public partial class DnsZonePatch
+    {
+        public DnsZonePatch() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class MxRecord
     {
