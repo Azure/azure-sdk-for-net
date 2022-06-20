@@ -16,8 +16,10 @@ namespace Azure.Analytics.LoadTestService
     /// <summary> The Test service client. </summary>
     public partial class TestClient
     {
+        private static readonly string[] AuthorizationScopes = new string[] { "https://loadtest.azure-dev.com/.default" };
+        private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly Uri _endpoint;
+        private readonly string _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -26,22 +28,33 @@ namespace Azure.Analytics.LoadTestService
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of TestClient. </summary>
-        public TestClient() : this(new Uri("https://<dataPlaneURL>"), new AzureLoadTestingClientOptions())
+        /// <summary> Initializes a new instance of TestClient for mocking. </summary>
+        protected TestClient()
         {
         }
 
         /// <summary> Initializes a new instance of TestClient. </summary>
-        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="endpoint"> URL to perform data plane API operations on the resource. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public TestClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new AzureLoadTestingClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of TestClient. </summary>
+        /// <param name="endpoint"> URL to perform data plane API operations on the resource. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public TestClient(Uri endpoint, AzureLoadTestingClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public TestClient(string endpoint, TokenCredential credential, AzureLoadTestingClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new AzureLoadTestingClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -1038,7 +1051,8 @@ namespace Azure.Analytics.LoadTestService
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/loadtests/", false);
             uri.AppendPath(testId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -1055,7 +1069,8 @@ namespace Azure.Analytics.LoadTestService
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/loadtests/", false);
             uri.AppendPath(testId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -1070,7 +1085,8 @@ namespace Azure.Analytics.LoadTestService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/loadtests/", false);
             uri.AppendPath(testId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -1085,7 +1101,8 @@ namespace Azure.Analytics.LoadTestService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/loadtests/sortAndFilter", false);
             if (orderBy != null)
             {
@@ -1123,7 +1140,8 @@ namespace Azure.Analytics.LoadTestService
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/loadtests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/files/", false);
@@ -1146,7 +1164,8 @@ namespace Azure.Analytics.LoadTestService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/loadtests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/files/", false);
@@ -1163,7 +1182,8 @@ namespace Azure.Analytics.LoadTestService
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/loadtests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/files/", false);
@@ -1180,7 +1200,8 @@ namespace Azure.Analytics.LoadTestService
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/loadtests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/files", false);

@@ -2,10 +2,9 @@ namespace Azure.Analytics.LoadTestService
 {
     public partial class AppComponentClient
     {
-        public AppComponentClient() { }
-        public AppComponentClient(Azure.Analytics.LoadTestService.AzureLoadTestingClientOptions options) { }
-        public AppComponentClient(System.Uri endpoint) { }
-        public AppComponentClient(System.Uri endpoint, Azure.Analytics.LoadTestService.AzureLoadTestingClientOptions options) { }
+        protected AppComponentClient() { }
+        public AppComponentClient(string endpoint, Azure.Core.TokenCredential credential) { }
+        public AppComponentClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.LoadTestService.AzureLoadTestingClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response CreateOrUpdateAppComponents(string name, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAppComponentsAsync(string name, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -26,10 +25,9 @@ namespace Azure.Analytics.LoadTestService
     }
     public partial class ServerMetricsClient
     {
-        public ServerMetricsClient() { }
-        public ServerMetricsClient(Azure.Analytics.LoadTestService.AzureLoadTestingClientOptions options) { }
-        public ServerMetricsClient(System.Uri endpoint) { }
-        public ServerMetricsClient(System.Uri endpoint, Azure.Analytics.LoadTestService.AzureLoadTestingClientOptions options) { }
+        protected ServerMetricsClient() { }
+        public ServerMetricsClient(string endpoint, Azure.Core.TokenCredential credential) { }
+        public ServerMetricsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.LoadTestService.AzureLoadTestingClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response CreateOrUpdateServerMetricsConfig(string name, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateServerMetricsConfigAsync(string name, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -46,10 +44,9 @@ namespace Azure.Analytics.LoadTestService
     }
     public partial class TestClient
     {
-        public TestClient() { }
-        public TestClient(Azure.Analytics.LoadTestService.AzureLoadTestingClientOptions options) { }
-        public TestClient(System.Uri endpoint) { }
-        public TestClient(System.Uri endpoint, Azure.Analytics.LoadTestService.AzureLoadTestingClientOptions options) { }
+        protected TestClient() { }
+        public TestClient(string endpoint, Azure.Core.TokenCredential credential) { }
+        public TestClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.LoadTestService.AzureLoadTestingClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response CreateOrUpdateTest(string testId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateTestAsync(string testId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -70,10 +67,9 @@ namespace Azure.Analytics.LoadTestService
     }
     public partial class TestRunClient
     {
-        public TestRunClient() { }
-        public TestRunClient(Azure.Analytics.LoadTestService.AzureLoadTestingClientOptions options) { }
-        public TestRunClient(System.Uri endpoint) { }
-        public TestRunClient(System.Uri endpoint, Azure.Analytics.LoadTestService.AzureLoadTestingClientOptions options) { }
+        protected TestRunClient() { }
+        public TestRunClient(string endpoint, Azure.Core.TokenCredential credential) { }
+        public TestRunClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.LoadTestService.AzureLoadTestingClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response CreateAndUpdateTest(string testRunId, Azure.Core.RequestContent content, string oldTestRunId = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateAndUpdateTestAsync(string testRunId, Azure.Core.RequestContent content, string oldTestRunId = null, Azure.RequestContext context = null) { throw null; }
