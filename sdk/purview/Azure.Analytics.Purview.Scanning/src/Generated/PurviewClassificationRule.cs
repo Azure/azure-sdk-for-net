@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Purview.Scanning
 {
     /// <summary> The PurviewClassificationRule service client. </summary>
-    public partial class PurviewClassificationRuleClient
+    public partial class PurviewClassificationRule
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -32,41 +32,26 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of PurviewClassificationRuleClient for mocking. </summary>
-        protected PurviewClassificationRuleClient()
+        /// <summary> Initializes a new instance of PurviewClassificationRule for mocking. </summary>
+        protected PurviewClassificationRule()
         {
         }
 
-        /// <summary> Initializes a new instance of PurviewClassificationRuleClient. </summary>
+        /// <summary> Initializes a new instance of PurviewClassificationRule. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
         /// <param name="classificationRuleName"> The String to use. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="classificationRuleName"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classificationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public PurviewClassificationRuleClient(Uri endpoint, string classificationRuleName, TokenCredential credential) : this(endpoint, classificationRuleName, credential, new PurviewScanningServiceClientOptions())
+        /// <param name="apiVersion"> Api Version. </param>
+        internal PurviewClassificationRule(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string classificationRuleName, string apiVersion)
         {
-        }
-
-        /// <summary> Initializes a new instance of PurviewClassificationRuleClient. </summary>
-        /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
-        /// <param name="classificationRuleName"> The String to use. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="classificationRuleName"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classificationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public PurviewClassificationRuleClient(Uri endpoint, string classificationRuleName, TokenCredential credential, PurviewScanningServiceClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNullOrEmpty(classificationRuleName, nameof(classificationRuleName));
-            Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new PurviewScanningServiceClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            ClientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = tokenCredential;
             _endpoint = endpoint;
             _classificationRuleName = classificationRuleName;
-            _apiVersion = options.Version;
+            _apiVersion = apiVersion;
         }
 
         /// <summary> Get a classification rule. </summary>
@@ -76,7 +61,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("<classificationRuleName>");
         /// 
         /// Response response = await client.GetPropertiesAsync();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -114,7 +99,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual async Task<Response> GetPropertiesAsync(RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetProperties");
+            using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRule.GetProperties");
             scope.Start();
             try
             {
@@ -135,7 +120,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("<classificationRuleName>");
         /// 
         /// Response response = client.GetProperties();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -173,7 +158,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual Response GetProperties(RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetProperties");
+            using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRule.GetProperties");
             scope.Start();
             try
             {
@@ -195,7 +180,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("<classificationRuleName>");
         /// 
         /// var data = new {
         ///     kind = "<System>",
@@ -244,7 +229,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRule.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -266,7 +251,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("<classificationRuleName>");
         /// 
         /// var data = new {
         ///     kind = "<System>",
@@ -315,7 +300,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual Response CreateOrUpdate(RequestContent content, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRule.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -336,7 +321,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("<classificationRuleName>");
         /// 
         /// Response response = await client.DeleteAsync();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -374,7 +359,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRule.Delete");
             scope.Start();
             try
             {
@@ -395,7 +380,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("<classificationRuleName>");
         /// 
         /// Response response = client.Delete();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -433,7 +418,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual Response Delete(RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRule.Delete");
             scope.Start();
             try
             {
@@ -457,7 +442,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("<classificationRuleName>");
         /// 
         /// Response response = await client.TagVersionAsync(1234, "<action>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -518,7 +503,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             Argument.AssertNotNull(action, nameof(action));
 
-            using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.TagVersion");
+            using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRule.TagVersion");
             scope.Start();
             try
             {
@@ -542,7 +527,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("<classificationRuleName>");
         /// 
         /// Response response = client.TagVersion(1234, "<action>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -603,7 +588,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             Argument.AssertNotNull(action, nameof(action));
 
-            using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.TagVersion");
+            using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRule.TagVersion");
             scope.Start();
             try
             {
@@ -624,7 +609,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("<classificationRuleName>");
         /// 
         /// Response response = await client.GetVersionsAsync();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -670,7 +655,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetVersionsAsync(RequestContext context = null)
         {
-            return GetVersionsImplementationAsync("PurviewClassificationRuleClient.GetVersions", context);
+            return GetVersionsImplementationAsync("PurviewClassificationRule.GetVersions", context);
         }
 
         private AsyncPageable<BinaryData> GetVersionsImplementationAsync(string diagnosticsScopeName, RequestContext context)
@@ -697,7 +682,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewClassificationRuleClient(endpoint, credential);
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("<classificationRuleName>");
         /// 
         /// Response response = client.GetVersions();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -743,7 +728,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual Pageable<BinaryData> GetVersions(RequestContext context = null)
         {
-            return GetVersionsImplementation("PurviewClassificationRuleClient.GetVersions", context);
+            return GetVersionsImplementation("PurviewClassificationRule.GetVersions", context);
         }
 
         private Pageable<BinaryData> GetVersionsImplementation(string diagnosticsScopeName, RequestContext context)

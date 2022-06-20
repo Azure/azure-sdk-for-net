@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Purview.Scanning
 {
     /// <summary> The PurviewDataSource service client. </summary>
-    public partial class PurviewDataSourceClient
+    public partial class PurviewDataSource
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -32,41 +32,26 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of PurviewDataSourceClient for mocking. </summary>
-        protected PurviewDataSourceClient()
+        /// <summary> Initializes a new instance of PurviewDataSource for mocking. </summary>
+        protected PurviewDataSource()
         {
         }
 
-        /// <summary> Initializes a new instance of PurviewDataSourceClient. </summary>
+        /// <summary> Initializes a new instance of PurviewDataSource. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
         /// <param name="dataSourceName"> The String to use. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="dataSourceName"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataSourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public PurviewDataSourceClient(Uri endpoint, string dataSourceName, TokenCredential credential) : this(endpoint, dataSourceName, credential, new PurviewScanningServiceClientOptions())
+        /// <param name="apiVersion"> Api Version. </param>
+        internal PurviewDataSource(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string dataSourceName, string apiVersion)
         {
-        }
-
-        /// <summary> Initializes a new instance of PurviewDataSourceClient. </summary>
-        /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
-        /// <param name="dataSourceName"> The String to use. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="dataSourceName"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataSourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public PurviewDataSourceClient(Uri endpoint, string dataSourceName, TokenCredential credential, PurviewScanningServiceClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNullOrEmpty(dataSourceName, nameof(dataSourceName));
-            Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new PurviewScanningServiceClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            ClientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = tokenCredential;
             _endpoint = endpoint;
             _dataSourceName = dataSourceName;
-            _apiVersion = options.Version;
+            _apiVersion = apiVersion;
         }
 
         /// <summary> Creates or Updates a data source. </summary>
@@ -77,7 +62,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewDataSourceClient(endpoint, credential);
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>");
         /// 
         /// var data = new {
         ///     kind = "<None>",
@@ -252,7 +237,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewDataSourceClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("PurviewDataSource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -274,7 +259,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewDataSourceClient(endpoint, credential);
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>");
         /// 
         /// var data = new {
         ///     kind = "<None>",
@@ -449,7 +434,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual Response CreateOrUpdate(RequestContent content, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewDataSourceClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("PurviewDataSource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -470,7 +455,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewDataSourceClient(endpoint, credential);
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>");
         /// 
         /// Response response = await client.GetPropertiesAsync();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -585,7 +570,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual async Task<Response> GetPropertiesAsync(RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewDataSourceClient.GetProperties");
+            using var scope = ClientDiagnostics.CreateScope("PurviewDataSource.GetProperties");
             scope.Start();
             try
             {
@@ -606,7 +591,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewDataSourceClient(endpoint, credential);
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>");
         /// 
         /// Response response = client.GetProperties();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -721,7 +706,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual Response GetProperties(RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewDataSourceClient.GetProperties");
+            using var scope = ClientDiagnostics.CreateScope("PurviewDataSource.GetProperties");
             scope.Start();
             try
             {
@@ -742,7 +727,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewDataSourceClient(endpoint, credential);
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>");
         /// 
         /// Response response = await client.DeleteAsync();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -857,7 +842,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewDataSourceClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("PurviewDataSource.Delete");
             scope.Start();
             try
             {
@@ -878,7 +863,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewDataSourceClient(endpoint, credential);
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>");
         /// 
         /// Response response = client.Delete();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -993,7 +978,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual Response Delete(RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewDataSourceClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("PurviewDataSource.Delete");
             scope.Start();
             try
             {
@@ -1014,7 +999,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewDataSourceClient(endpoint, credential);
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>");
         /// 
         /// Response response = await client.GetScansAsync();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -1127,7 +1112,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetScansAsync(RequestContext context = null)
         {
-            return GetScansImplementationAsync("PurviewDataSourceClient.GetScans", context);
+            return GetScansImplementationAsync("PurviewDataSource.GetScans", context);
         }
 
         private AsyncPageable<BinaryData> GetScansImplementationAsync(string diagnosticsScopeName, RequestContext context)
@@ -1154,7 +1139,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewDataSourceClient(endpoint, credential);
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>");
         /// 
         /// Response response = client.GetScans();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -1267,7 +1252,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual Pageable<BinaryData> GetScans(RequestContext context = null)
         {
-            return GetScansImplementation("PurviewDataSourceClient.GetScans", context);
+            return GetScansImplementation("PurviewDataSource.GetScans", context);
         }
 
         private Pageable<BinaryData> GetScansImplementation(string diagnosticsScopeName, RequestContext context)
@@ -1285,6 +1270,17 @@ namespace Azure.Analytics.Purview.Scanning
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
             }
+        }
+
+        /// <summary> Initializes a new instance of PurviewScan. </summary>
+        /// <param name="scanName"> The String to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scanName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scanName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual PurviewScan GetPurviewScanClient(string scanName)
+        {
+            Argument.AssertNotNullOrEmpty(scanName, nameof(scanName));
+
+            return new PurviewScan(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _dataSourceName, scanName, _apiVersion);
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(RequestContent content, RequestContext context)

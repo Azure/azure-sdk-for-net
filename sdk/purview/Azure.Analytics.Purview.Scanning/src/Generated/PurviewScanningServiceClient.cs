@@ -2554,6 +2554,28 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
+        /// <summary> Initializes a new instance of PurviewClassificationRule. </summary>
+        /// <param name="classificationRuleName"> The String to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classificationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="classificationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual PurviewClassificationRule GetPurviewClassificationRuleClient(string classificationRuleName)
+        {
+            Argument.AssertNotNullOrEmpty(classificationRuleName, nameof(classificationRuleName));
+
+            return new PurviewClassificationRule(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, classificationRuleName, _apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of PurviewDataSource. </summary>
+        /// <param name="dataSourceName"> The String to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataSourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual PurviewDataSource GetPurviewDataSourceClient(string dataSourceName)
+        {
+            Argument.AssertNotNullOrEmpty(dataSourceName, nameof(dataSourceName));
+
+            return new PurviewDataSource(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, dataSourceName, _apiVersion);
+        }
+
         internal HttpMessage CreateGetKeyVaultReferenceRequest(string keyVaultName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);

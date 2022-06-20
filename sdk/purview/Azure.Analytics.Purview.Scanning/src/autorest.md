@@ -10,6 +10,7 @@ security: AADToken
 security-scopes:  https://purview.azure.net/.default
 modelerfour:
   lenient-model-deduplication: true
+single-top-level-client: true 
 ```
 
 # Model endpoint parameter as a url, not a string.
