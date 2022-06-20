@@ -89,6 +89,16 @@ namespace Azure.Storage.Files.DataLake
         internal virtual DataLakeClientConfiguration ClientConfiguration => _clientConfiguration;
 
         /// <summary>
+        /// <see cref="DataLakeClientOptions"/>.
+        /// </summary>
+        private readonly DataLakeClientOptions _clientOptions;
+
+        /// <summary>
+        /// <see cref="DataLakeClientConfiguration"/>.
+        /// </summary>
+        internal virtual DataLakeClientOptions Options => _clientOptions;
+
+        /// <summary>
         /// The Storage account name corresponding to the directory client.
         /// </summary>
         private string _accountName;
@@ -473,6 +483,7 @@ namespace Azure.Storage.Files.DataLake
             _uri = pathUri;
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
+            _clientOptions = options;
 
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(authentication),
@@ -528,6 +539,7 @@ namespace Azure.Storage.Files.DataLake
             _uri = pathUri;
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
+            _clientOptions = options;
 
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(authentication),
@@ -583,6 +595,7 @@ namespace Azure.Storage.Files.DataLake
             _uri = pathUri;
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
+            _clientOptions = options;
 
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(authentication),
@@ -2232,21 +2245,16 @@ namespace Azure.Storage.Files.DataLake
                         // If the destination already has a SAS, then let's not further add to the Uri if it contains
                         // AzureSasCredential on the source.
                         var paramsMap = new UriQueryParamsCollection(split[1]);
-                        if (!paramsMap.ContainsKey(Constants.Sas.Parameters.Version) &&
-                            ClientConfiguration.SasCredential != default)
+                        if (!paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
                         {
                             destPathClient = new DataLakePathClient(destUriBuilder.ToUri(), ClientConfiguration);
                         }
                         else
                         {
+                            // There's a SAS in the query
                             destPathClient = new DataLakePathClient(
                                 destUriBuilder.ToUri(),
-                                new DataLakeClientConfiguration(
-                                    pipeline: ClientConfiguration.Pipeline,
-                                    sasCredential: ClientConfiguration.SasCredential,
-                                    ClientConfiguration.ClientDiagnostics,
-                                    ClientConfiguration.Version,
-                                    ClientConfiguration.CustomerProvidedKey));
+                                Options);
                         }
                     }
                     else
