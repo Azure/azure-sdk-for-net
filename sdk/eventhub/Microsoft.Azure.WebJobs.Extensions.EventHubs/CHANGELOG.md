@@ -1,7 +1,15 @@
 # Release History
 
-## 5.1.0-beta.1 (Unreleased)
+## 5.1.1 (2022-06-20)
+
+### Bugs Fixed
+
+- Fixed a bug in the runtime scale controller that prevented function apps from scaling in.
+
+## 5.1.0 (2022-04-21)
+
 ### Features Added
+
 - Adding support for retry policy (SupportsRetryAttribute)
 
 ## 5.0.1 (2022-03-09)
