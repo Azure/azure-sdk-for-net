@@ -15,7 +15,7 @@
     <ProjectReference Include="..\src\Azure.Communication.Chat.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\tests.yml" Link="\tests.yml" />
+    <None Include="..\tests.yml" Link="tests.yml" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

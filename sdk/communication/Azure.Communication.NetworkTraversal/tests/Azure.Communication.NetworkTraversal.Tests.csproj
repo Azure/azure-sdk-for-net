@@ -22,7 +22,7 @@
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\tests.yml" Link="\tests.yml" />
+    <None Include="..\tests.yml" Link="tests.yml" />
     <None Include="..\samples\README.md" Link="samples\README.md" />
   </ItemGroup>
 </Project>
