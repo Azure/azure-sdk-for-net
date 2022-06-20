@@ -41,14 +41,14 @@ steps:
   displayName: CredScan result analysis
   condition: and(succeededOrFailed(), ne(variables['SKIP_CREDSCAN'], true))
   inputs:
-    # GdnBreakBaselineFiles: ${{ parameters.BaselineFilePath }}
+    GdnBreakBaselineFiles: ${{ parameters.BaselineFilePath }}
     GdnBreakAllTools: false
     GdnBreakGdnToolCredScan: true
     GdnBreakGdnToolCredScanSeverity: Error
-    # GdnBreakBaselines: baseline
+    GdnBreakBaselines: baseline
     # Used for generating baseline file.
-    GdnBreakOutputBaselineFile: baseline
-    GdnBreakOutputBaseline: baseline
+    # GdnBreakOutputBaselineFile: baseline
+    # GdnBreakOutputBaseline: baseline
 - pwsh: |
     Write-Host "Please check https://aka.ms/azsdk/credscan for more information about the cred scan failure."
   displayName: CredScan troubleshooting guide
