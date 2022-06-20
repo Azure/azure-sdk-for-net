@@ -62,7 +62,7 @@ namespace Azure.Storage.Blobs
                 ClientSideEncryptionVersion.V2_0 => contentRange?.Start > 0
                     ? (-encryptionData.EncryptedRegionInfo.NonceLength * (v2StartRegion0Indexed)) - (Constants.ClientSideEncryption.V2.TagSize * v2StartRegion0Indexed)
                     : 0,
-                _ => throw Errors.InvalidArgument(nameof(encryptionData.EncryptionAgent.EncryptionVersion))
+                _ => throw Errors.ClientSideEncryption.ClientSideEncryptionVersionNotSupported()
             };
             return await TrimStreamInternal(plaintext, originalRange, contentRange, alreadyTrimmedOffset, async, cancellationToken).ConfigureAwait(false);
         }
