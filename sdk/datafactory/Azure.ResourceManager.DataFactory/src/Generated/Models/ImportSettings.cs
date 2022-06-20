@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of ImportSettings. </summary>
         public ImportSettings()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ImportSettings. </summary>
         /// <param name="importSettingsType"> The import setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ImportSettings(string importSettingsType, IDictionary<string, Uri> additionalProperties)
+        internal ImportSettings(string importSettingsType, IDictionary<string, BinaryData> additionalProperties)
         {
             ImportSettingsType = importSettingsType;
             AdditionalProperties = additionalProperties;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The import setting type. </summary>
         internal string ImportSettingsType { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

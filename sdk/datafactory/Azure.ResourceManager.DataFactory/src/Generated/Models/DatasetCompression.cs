@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of DatasetCompression. </summary>
         /// <param name="datasetCompressionType"> Type of dataset compression. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="datasetCompressionType"/> is null. </exception>
-        public DatasetCompression(Uri datasetCompressionType)
+        public DatasetCompression(BinaryData datasetCompressionType)
         {
             if (datasetCompressionType == null)
             {
@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             DatasetCompressionType = datasetCompressionType;
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DatasetCompression. </summary>
         /// <param name="datasetCompressionType"> Type of dataset compression. Type: string (or Expression with resultType string). </param>
         /// <param name="level"> The dataset compression level. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DatasetCompression(Uri datasetCompressionType, Uri level, IDictionary<string, Uri> additionalProperties)
+        internal DatasetCompression(BinaryData datasetCompressionType, BinaryData level, IDictionary<string, BinaryData> additionalProperties)
         {
             DatasetCompressionType = datasetCompressionType;
             Level = level;
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Type of dataset compression. Type: string (or Expression with resultType string). </summary>
-        public Uri DatasetCompressionType { get; set; }
+        public BinaryData DatasetCompressionType { get; set; }
         /// <summary> The dataset compression level. Type: string (or Expression with resultType string). </summary>
-        public Uri Level { get; set; }
+        public BinaryData Level { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

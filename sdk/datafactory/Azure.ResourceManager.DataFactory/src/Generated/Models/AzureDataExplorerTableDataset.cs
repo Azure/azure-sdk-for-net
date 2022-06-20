@@ -37,13 +37,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="table"> The table name of the Azure Data Explorer database. Type: string (or Expression with resultType string). </param>
-        internal AzureDataExplorerTableDataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, Uri table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AzureDataExplorerTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Table = table;
             DatasetType = datasetType ?? "AzureDataExplorerTable";
         }
 
         /// <summary> The table name of the Azure Data Explorer database. Type: string (or Expression with resultType string). </summary>
-        public Uri Table { get; set; }
+        public BinaryData Table { get; set; }
     }
 }

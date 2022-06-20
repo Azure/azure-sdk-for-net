@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </param>
         /// <param name="encodingName"> The code page name of the preferred encoding. If not specified, the default value is UTF-8, unless BOM denotes another Unicode encoding. Refer to the name column of the table in the following link to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string). </param>
         /// <param name="compression"> The data compression method used for the json dataset. </param>
-        internal JsonDataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, DatasetLocation location, Uri encodingName, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal JsonDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation location, BinaryData encodingName, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Location = location;
             EncodingName = encodingName;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public DatasetLocation Location { get; set; }
         /// <summary> The code page name of the preferred encoding. If not specified, the default value is UTF-8, unless BOM denotes another Unicode encoding. Refer to the name column of the table in the following link to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string). </summary>
-        public Uri EncodingName { get; set; }
+        public BinaryData EncodingName { get; set; }
         /// <summary> The data compression method used for the json dataset. </summary>
         public DatasetCompression Compression { get; set; }
     }

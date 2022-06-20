@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of ScheduleTriggerRecurrence. </summary>
         public ScheduleTriggerRecurrence()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ScheduleTriggerRecurrence. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="timeZone"> The time zone. </param>
         /// <param name="schedule"> The recurrence schedule. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ScheduleTriggerRecurrence(RecurrenceFrequency? frequency, int? interval, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeZone, RecurrenceSchedule schedule, IDictionary<string, Uri> additionalProperties)
+        internal ScheduleTriggerRecurrence(RecurrenceFrequency? frequency, int? interval, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeZone, RecurrenceSchedule schedule, IDictionary<string, BinaryData> additionalProperties)
         {
             Frequency = frequency;
             Interval = interval;
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The recurrence schedule. </summary>
         public RecurrenceSchedule Schedule { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The available derived classes include <see cref="AmazonS3CompatibleReadSettings"/>, <see cref="AmazonS3ReadSettings"/>, <see cref="AzureBlobFSReadSettings"/>, <see cref="AzureBlobStorageReadSettings"/>, <see cref="AzureDataLakeStoreReadSettings"/>, <see cref="AzureFileStorageReadSettings"/>, <see cref="FileServerReadSettings"/>, <see cref="FtpReadSettings"/>, <see cref="GoogleCloudStorageReadSettings"/>, <see cref="HdfsReadSettings"/>, <see cref="HttpReadSettings"/>, <see cref="OracleCloudStorageReadSettings"/> and <see cref="SftpReadSettings"/>.
         /// </param>
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
-        internal OrcSource(string copySourceType, Uri sourceRetryCount, Uri sourceRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, StoreReadSettings storeSettings, Uri additionalColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal OrcSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, StoreReadSettings storeSettings, BinaryData additionalColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             StoreSettings = storeSettings;
             AdditionalColumns = additionalColumns;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public StoreReadSettings StoreSettings { get; set; }
         /// <summary> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </summary>
-        public Uri AdditionalColumns { get; set; }
+        public BinaryData AdditionalColumns { get; set; }
     }
 }

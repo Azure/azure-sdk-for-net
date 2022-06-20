@@ -30,7 +30,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteStringValue(item.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             string type = default;
             Optional<string> description = default;
-            Optional<IList<Uri>> annotations = default;
+            Optional<IList<BinaryData>> annotations = default;
             Optional<DataFlowFolder> folder = default;
             Optional<IList<PowerQuerySource>> sources = default;
             Optional<string> script = default;
@@ -93,10 +97,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Uri> array = new List<Uri>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Uri(item.GetString()));
+                        array.Add(BinaryData.FromString(item.GetRawText()));
                     }
                     annotations = array;
                     continue;

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="table"> The name of delta table. Type: string (or Expression with resultType string). </param>
         /// <param name="database"> The database name of delta table. Type: string (or Expression with resultType string). </param>
-        internal AzureDatabricksDeltaLakeDataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, Uri table, Uri database) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AzureDatabricksDeltaLakeDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData table, BinaryData database) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Table = table;
             Database = database;
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of delta table. Type: string (or Expression with resultType string). </summary>
-        public Uri Table { get; set; }
+        public BinaryData Table { get; set; }
         /// <summary> The database name of delta table. Type: string (or Expression with resultType string). </summary>
-        public Uri Database { get; set; }
+        public BinaryData Database { get; set; }
     }
 }

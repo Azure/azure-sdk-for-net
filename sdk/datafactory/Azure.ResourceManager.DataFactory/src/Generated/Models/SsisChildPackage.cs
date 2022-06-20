@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="packagePath"> Path for embedded child package. Type: string (or Expression with resultType string). </param>
         /// <param name="packageContent"> Content for embedded child package. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packagePath"/> or <paramref name="packageContent"/> is null. </exception>
-        public SsisChildPackage(Uri packagePath, Uri packageContent)
+        public SsisChildPackage(BinaryData packagePath, BinaryData packageContent)
         {
             if (packagePath == null)
             {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="packageName"> Name for embedded child package. </param>
         /// <param name="packageContent"> Content for embedded child package. Type: string (or Expression with resultType string). </param>
         /// <param name="packageLastModifiedDate"> Last modified date for embedded child package. </param>
-        internal SsisChildPackage(Uri packagePath, string packageName, Uri packageContent, string packageLastModifiedDate)
+        internal SsisChildPackage(BinaryData packagePath, string packageName, BinaryData packageContent, string packageLastModifiedDate)
         {
             PackagePath = packagePath;
             PackageName = packageName;
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Path for embedded child package. Type: string (or Expression with resultType string). </summary>
-        public Uri PackagePath { get; set; }
+        public BinaryData PackagePath { get; set; }
         /// <summary> Name for embedded child package. </summary>
         public string PackageName { get; set; }
         /// <summary> Content for embedded child package. Type: string (or Expression with resultType string). </summary>
-        public Uri PackageContent { get; set; }
+        public BinaryData PackageContent { get; set; }
         /// <summary> Last modified date for embedded child package. </summary>
         public string PackageLastModifiedDate { get; set; }
     }

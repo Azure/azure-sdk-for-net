@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="apiVersion"> The Salesforce API version used in ADF. Type: string (or Expression with resultType string). </param>
         /// <param name="extendedProperties"> Extended properties appended to the connection string. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal SalesforceServiceCloudLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri environmentUri, Uri username, SecretBase password, SecretBase securityToken, Uri apiVersion, Uri extendedProperties, Uri encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal SalesforceServiceCloudLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData environmentUri, BinaryData username, SecretBase password, SecretBase securityToken, BinaryData apiVersion, BinaryData extendedProperties, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             EnvironmentUri = environmentUri;
             Username = username;
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The URL of Salesforce Service Cloud instance. Default is &apos;https://login.salesforce.com&apos;. To copy data from sandbox, specify &apos;https://test.salesforce.com&apos;. To copy data from custom domain, specify, for example, &apos;https://[domain].my.salesforce.com&apos;. Type: string (or Expression with resultType string). </summary>
-        public Uri EnvironmentUri { get; set; }
+        public BinaryData EnvironmentUri { get; set; }
         /// <summary> The username for Basic authentication of the Salesforce instance. Type: string (or Expression with resultType string). </summary>
-        public Uri Username { get; set; }
+        public BinaryData Username { get; set; }
         /// <summary>
         /// The password for Basic authentication of the Salesforce instance.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase SecurityToken { get; set; }
         /// <summary> The Salesforce API version used in ADF. Type: string (or Expression with resultType string). </summary>
-        public Uri ApiVersion { get; set; }
+        public BinaryData ApiVersion { get; set; }
         /// <summary> Extended properties appended to the connection string. Type: string (or Expression with resultType string). </summary>
-        public Uri ExtendedProperties { get; set; }
+        public BinaryData ExtendedProperties { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

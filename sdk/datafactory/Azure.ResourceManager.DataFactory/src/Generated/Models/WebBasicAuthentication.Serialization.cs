@@ -17,11 +17,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("username");
-            writer.WriteStringValue(Username.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Username);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Username.ToString()).RootElement);
+#endif
             writer.WritePropertyName("password");
             writer.WriteObjectValue(Password);
             writer.WritePropertyName("url");
-            writer.WriteStringValue(Uri.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Uri);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Uri.ToString()).RootElement);
+#endif
             writer.WritePropertyName("authenticationType");
             writer.WriteStringValue(AuthenticationType.ToString());
             writer.WriteEndObject();
@@ -29,15 +37,15 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static WebBasicAuthentication DeserializeWebBasicAuthentication(JsonElement element)
         {
-            Uri username = default;
+            BinaryData username = default;
             SecretBase password = default;
-            Uri url = default;
+            BinaryData url = default;
             WebAuthenticationType authenticationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("username"))
                 {
-                    username = new Uri(property.Value.GetString());
+                    username = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("password"))
@@ -47,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("url"))
                 {
-                    url = new Uri(property.Value.GetString());
+                    url = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("authenticationType"))

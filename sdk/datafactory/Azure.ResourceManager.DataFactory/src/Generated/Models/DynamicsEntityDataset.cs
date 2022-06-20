@@ -37,13 +37,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="entityName"> The logical name of the entity. Type: string (or Expression with resultType string). </param>
-        internal DynamicsEntityDataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, Uri entityName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal DynamicsEntityDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData entityName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             EntityName = entityName;
             DatasetType = datasetType ?? "DynamicsEntity";
         }
 
         /// <summary> The logical name of the entity. Type: string (or Expression with resultType string). </summary>
-        public Uri EntityName { get; set; }
+        public BinaryData EntityName { get; set; }
     }
 }

@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             Activity = activity;
             DependencyConditions = dependencyConditions.ToList();
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ActivityDependency. </summary>
         /// <param name="activity"> Activity name. </param>
         /// <param name="dependencyConditions"> Match-Condition for the dependency. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ActivityDependency(string activity, IList<DependencyCondition> dependencyConditions, IDictionary<string, Uri> additionalProperties)
+        internal ActivityDependency(string activity, IList<DependencyCondition> dependencyConditions, IDictionary<string, BinaryData> additionalProperties)
         {
             Activity = activity;
             DependencyConditions = dependencyConditions;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Match-Condition for the dependency. </summary>
         public IList<DependencyCondition> DependencyConditions { get; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

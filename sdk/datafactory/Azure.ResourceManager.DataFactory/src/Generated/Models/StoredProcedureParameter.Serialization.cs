@@ -19,7 +19,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value");
-                writer.WriteStringValue(Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Value.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ParameterType))
             {
@@ -31,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static StoredProcedureParameter DeserializeStoredProcedureParameter(JsonElement element)
         {
-            Optional<Uri> value = default;
+            Optional<BinaryData> value = default;
             Optional<StoredProcedureParameterType> type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -39,10 +43,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        value = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    value = new Uri(property.Value.GetString());
+                    value = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))

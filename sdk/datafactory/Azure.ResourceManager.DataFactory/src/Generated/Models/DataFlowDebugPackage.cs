@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFlows = new ChangeTrackingList<DataFlowDebugResource>();
             Datasets = new ChangeTrackingList<DatasetDebugResource>();
             LinkedServices = new ChangeTrackingList<LinkedServiceDebugResource>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> The ID of data flow debug session. </summary>
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Data flow debug settings. </summary>
         public DataFlowDebugPackageDebugSettings DebugSettings { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

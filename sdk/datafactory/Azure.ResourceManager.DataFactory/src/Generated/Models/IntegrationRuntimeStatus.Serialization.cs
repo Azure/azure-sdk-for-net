@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             IntegrationRuntimeType type = default;
             Optional<string> dataFactoryName = default;
             Optional<IntegrationRuntimeState> state = default;
-            IReadOnlyDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     state = new IntegrationRuntimeState(property.Value.GetString());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new IntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties);

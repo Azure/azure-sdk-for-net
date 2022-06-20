@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="WebLinkedServiceTypeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebAnonymousAuthentication"/>, <see cref="WebBasicAuthentication"/> and <see cref="WebClientCertificateAuthentication"/>.
         /// </param>
-        internal WebLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, WebLinkedServiceTypeProperties typeProperties) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal WebLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, WebLinkedServiceTypeProperties typeProperties) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             TypeProperties = typeProperties;
             LinkedServiceType = linkedServiceType ?? "Web";

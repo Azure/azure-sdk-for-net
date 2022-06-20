@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal ManagedIntegrationRuntimeOperationResult()
         {
             Parameters = new ChangeTrackingList<string>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ManagedIntegrationRuntimeOperationResult. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Managed integration runtime error parameters. </param>
         /// <param name="activityId"> The activity id for the operation request. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ManagedIntegrationRuntimeOperationResult(string managedIntegrationRuntimeOperationResultType, DateTimeOffset? startOn, string result, string errorCode, IReadOnlyList<string> parameters, string activityId, IReadOnlyDictionary<string, Uri> additionalProperties)
+        internal ManagedIntegrationRuntimeOperationResult(string managedIntegrationRuntimeOperationResultType, DateTimeOffset? startOn, string result, string errorCode, IReadOnlyList<string> parameters, string activityId, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             ManagedIntegrationRuntimeOperationResultType = managedIntegrationRuntimeOperationResultType;
             StartOn = startOn;
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The activity id for the operation request. </summary>
         public string ActivityId { get; }
         /// <summary> Additional Properties. </summary>
-        public IReadOnlyDictionary<string, Uri> AdditionalProperties { get; }
+        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

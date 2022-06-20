@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="fileShare"> The azure file share name. It is required when auth with accountKey/sasToken. Type: string (or Expression with resultType string). </param>
         /// <param name="snapshot"> The azure file share snapshot version. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AzureFileStorageLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri host, Uri userId, SecretBase password, Uri connectionString, AzureKeyVaultSecretReference accountKey, Uri sasUri, AzureKeyVaultSecretReference sasToken, Uri fileShare, Uri snapshot, Uri encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureFileStorageLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData host, BinaryData userId, SecretBase password, BinaryData connectionString, AzureKeyVaultSecretReference accountKey, BinaryData sasUri, AzureKeyVaultSecretReference sasToken, BinaryData fileShare, BinaryData snapshot, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             UserId = userId;
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Host name of the server. Type: string (or Expression with resultType string). </summary>
-        public Uri Host { get; set; }
+        public BinaryData Host { get; set; }
         /// <summary> User ID to logon the server. Type: string (or Expression with resultType string). </summary>
-        public Uri UserId { get; set; }
+        public BinaryData UserId { get; set; }
         /// <summary>
         /// Password to logon the server.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -66,18 +66,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> The connection string. It is mutually exclusive with sasUri property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
-        public Uri ConnectionString { get; set; }
+        public BinaryData ConnectionString { get; set; }
         /// <summary> The Azure key vault secret reference of accountKey in connection string. </summary>
         public AzureKeyVaultSecretReference AccountKey { get; set; }
         /// <summary> SAS URI of the Azure File resource. It is mutually exclusive with connectionString property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
-        public Uri SasUri { get; set; }
+        public BinaryData SasUri { get; set; }
         /// <summary> The Azure key vault secret reference of sasToken in sas uri. </summary>
         public AzureKeyVaultSecretReference SasToken { get; set; }
         /// <summary> The azure file share name. It is required when auth with accountKey/sasToken. Type: string (or Expression with resultType string). </summary>
-        public Uri FileShare { get; set; }
+        public BinaryData FileShare { get; set; }
         /// <summary> The azure file share snapshot version. Type: string (or Expression with resultType string). </summary>
-        public Uri Snapshot { get; set; }
+        public BinaryData Snapshot { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

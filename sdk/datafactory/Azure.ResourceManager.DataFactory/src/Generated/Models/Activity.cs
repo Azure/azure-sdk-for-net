@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Name = name;
             DependsOn = new ChangeTrackingList<ActivityDependency>();
             UserProperties = new ChangeTrackingList<UserProperty>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of Activity. </summary>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal Activity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, Uri> additionalProperties)
+        internal Activity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties)
         {
             Name = name;
             ActivityType = activityType;
@@ -62,6 +62,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Activity user properties. </summary>
         public IList<UserProperty> UserProperties { get; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

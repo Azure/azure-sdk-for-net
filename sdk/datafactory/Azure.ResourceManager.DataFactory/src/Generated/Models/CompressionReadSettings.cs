@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of CompressionReadSettings. </summary>
         public CompressionReadSettings()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of CompressionReadSettings. </summary>
         /// <param name="compressionReadSettingsType"> The Compression setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal CompressionReadSettings(string compressionReadSettingsType, IDictionary<string, Uri> additionalProperties)
+        internal CompressionReadSettings(string compressionReadSettingsType, IDictionary<string, BinaryData> additionalProperties)
         {
             CompressionReadSettingsType = compressionReadSettingsType;
             AdditionalProperties = additionalProperties;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The Compression setting type. </summary>
         internal string CompressionReadSettingsType { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

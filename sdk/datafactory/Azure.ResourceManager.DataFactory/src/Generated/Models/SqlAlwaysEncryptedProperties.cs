@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal SqlAlwaysEncryptedProperties(SqlAlwaysEncryptedAkvAuthType alwaysEncryptedAkvAuthType, Uri servicePrincipalId, SecretBase servicePrincipalKey, CredentialReference credential)
+        internal SqlAlwaysEncryptedProperties(SqlAlwaysEncryptedAkvAuthType alwaysEncryptedAkvAuthType, BinaryData servicePrincipalId, SecretBase servicePrincipalKey, CredentialReference credential)
         {
             AlwaysEncryptedAkvAuthType = alwaysEncryptedAkvAuthType;
             ServicePrincipalId = servicePrincipalId;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Sql always encrypted AKV authentication type. Type: string (or Expression with resultType string). </summary>
         public SqlAlwaysEncryptedAkvAuthType AlwaysEncryptedAkvAuthType { get; set; }
         /// <summary> The client ID of the application in Azure Active Directory used for Azure Key Vault authentication. Type: string (or Expression with resultType string). </summary>
-        public Uri ServicePrincipalId { get; set; }
+        public BinaryData ServicePrincipalId { get; set; }
         /// <summary>
         /// The key of the service principal used to authenticate against Azure Key Vault.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

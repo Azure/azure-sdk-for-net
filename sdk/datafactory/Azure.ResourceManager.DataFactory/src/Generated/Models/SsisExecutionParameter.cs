@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of SsisExecutionParameter. </summary>
         /// <param name="value"> SSIS package execution parameter value. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SsisExecutionParameter(Uri value)
+        public SsisExecutionParameter(BinaryData value)
         {
             if (value == null)
             {
@@ -26,6 +26,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> SSIS package execution parameter value. Type: string (or Expression with resultType string). </summary>
-        public Uri Value { get; set; }
+        public BinaryData Value { get; set; }
     }
 }

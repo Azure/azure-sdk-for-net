@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="endpoint"> The endpoint of the Responsys server. </param>
         /// <param name="clientId"> The client ID associated with the Responsys application. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="clientId"/> is null. </exception>
-        public ResponsysLinkedService(Uri endpoint, Uri clientId)
+        public ResponsysLinkedService(BinaryData endpoint, BinaryData clientId)
         {
             if (endpoint == null)
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal ResponsysLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri endpoint, Uri clientId, SecretBase clientSecret, Uri useEncryptedEndpoints, Uri useHostVerification, Uri usePeerVerification, Uri encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal ResponsysLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData endpoint, BinaryData clientId, SecretBase clientSecret, BinaryData useEncryptedEndpoints, BinaryData useHostVerification, BinaryData usePeerVerification, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Endpoint = endpoint;
             ClientId = clientId;
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The endpoint of the Responsys server. </summary>
-        public Uri Endpoint { get; set; }
+        public BinaryData Endpoint { get; set; }
         /// <summary> The client ID associated with the Responsys application. Type: string (or Expression with resultType string). </summary>
-        public Uri ClientId { get; set; }
+        public BinaryData ClientId { get; set; }
         /// <summary>
         /// The client secret associated with the Responsys application. Type: string (or Expression with resultType string).
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase ClientSecret { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri UseEncryptedEndpoints { get; set; }
+        public BinaryData UseEncryptedEndpoints { get; set; }
         /// <summary> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri UseHostVerification { get; set; }
+        public BinaryData UseHostVerification { get; set; }
         /// <summary> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri UsePeerVerification { get; set; }
+        public BinaryData UsePeerVerification { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

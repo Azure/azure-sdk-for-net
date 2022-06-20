@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="blobWriterAddHeader"> Blob writer add header. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
         /// <param name="metadata"> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </param>
-        internal BlobSink(string copySinkType, Uri writeBatchSize, Uri writeBatchTimeout, Uri sinkRetryCount, Uri sinkRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri blobWriterOverwriteFiles, Uri blobWriterDateTimeFormat, Uri blobWriterAddHeader, Uri copyBehavior, IList<MetadataItem> metadata) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal BlobSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData blobWriterOverwriteFiles, BinaryData blobWriterDateTimeFormat, BinaryData blobWriterAddHeader, BinaryData copyBehavior, IList<MetadataItem> metadata) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             BlobWriterOverwriteFiles = blobWriterOverwriteFiles;
             BlobWriterDateTimeFormat = blobWriterDateTimeFormat;
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Blob writer overwrite files. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri BlobWriterOverwriteFiles { get; set; }
+        public BinaryData BlobWriterOverwriteFiles { get; set; }
         /// <summary> Blob writer date time format. Type: string (or Expression with resultType string). </summary>
-        public Uri BlobWriterDateTimeFormat { get; set; }
+        public BinaryData BlobWriterDateTimeFormat { get; set; }
         /// <summary> Blob writer add header. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri BlobWriterAddHeader { get; set; }
+        public BinaryData BlobWriterAddHeader { get; set; }
         /// <summary> The type of copy behavior for copy sink. </summary>
-        public Uri CopyBehavior { get; set; }
+        public BinaryData CopyBehavior { get; set; }
         /// <summary> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </summary>
         public IList<MetadataItem> Metadata { get; }
     }

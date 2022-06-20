@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="tenant"> The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="clusterResourceGroup"> The resource group where the cluster belongs. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterSize"/>, <paramref name="timeToLive"/>, <paramref name="version"/>, <paramref name="linkedServiceName"/>, <paramref name="hostSubscriptionId"/>, <paramref name="tenant"/> or <paramref name="clusterResourceGroup"/> is null. </exception>
-        public HDInsightOnDemandLinkedService(Uri clusterSize, Uri timeToLive, Uri version, LinkedServiceReference linkedServiceName, Uri hostSubscriptionId, Uri tenant, Uri clusterResourceGroup)
+        public HDInsightOnDemandLinkedService(BinaryData clusterSize, BinaryData timeToLive, BinaryData version, LinkedServiceReference linkedServiceName, BinaryData hostSubscriptionId, BinaryData tenant, BinaryData clusterResourceGroup)
         {
             if (clusterSize == null)
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="virtualNetworkId"> The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string). </param>
         /// <param name="subnetName"> The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal HDInsightOnDemandLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri clusterSize, Uri timeToLive, Uri version, LinkedServiceReference linkedServiceName, Uri hostSubscriptionId, Uri servicePrincipalId, SecretBase servicePrincipalKey, Uri tenant, Uri clusterResourceGroup, Uri clusterNamePrefix, Uri clusterUserName, SecretBase clusterPassword, Uri clusterSshUserName, SecretBase clusterSshPassword, IList<LinkedServiceReference> additionalLinkedServiceNames, LinkedServiceReference hcatalogLinkedServiceName, Uri clusterType, Uri sparkVersion, Uri coreConfiguration, Uri hBaseConfiguration, Uri hdfsConfiguration, Uri hiveConfiguration, Uri mapReduceConfiguration, Uri oozieConfiguration, Uri stormConfiguration, Uri yarnConfiguration, Uri encryptedCredential, Uri headNodeSize, Uri dataNodeSize, Uri zookeeperNodeSize, IList<ScriptAction> scriptActions, Uri virtualNetworkId, Uri subnetName, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal HDInsightOnDemandLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData clusterSize, BinaryData timeToLive, BinaryData version, LinkedServiceReference linkedServiceName, BinaryData hostSubscriptionId, BinaryData servicePrincipalId, SecretBase servicePrincipalKey, BinaryData tenant, BinaryData clusterResourceGroup, BinaryData clusterNamePrefix, BinaryData clusterUserName, SecretBase clusterPassword, BinaryData clusterSshUserName, SecretBase clusterSshPassword, IList<LinkedServiceReference> additionalLinkedServiceNames, LinkedServiceReference hcatalogLinkedServiceName, BinaryData clusterType, BinaryData sparkVersion, BinaryData coreConfiguration, BinaryData hBaseConfiguration, BinaryData hdfsConfiguration, BinaryData hiveConfiguration, BinaryData mapReduceConfiguration, BinaryData oozieConfiguration, BinaryData stormConfiguration, BinaryData yarnConfiguration, BinaryData encryptedCredential, BinaryData headNodeSize, BinaryData dataNodeSize, BinaryData zookeeperNodeSize, IList<ScriptAction> scriptActions, BinaryData virtualNetworkId, BinaryData subnetName, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ClusterSize = clusterSize;
             TimeToLive = timeToLive;
@@ -159,17 +159,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string). </summary>
-        public Uri ClusterSize { get; set; }
+        public BinaryData ClusterSize { get; set; }
         /// <summary> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </summary>
-        public Uri TimeToLive { get; set; }
+        public BinaryData TimeToLive { get; set; }
         /// <summary> Version of the HDInsight cluster.  Type: string (or Expression with resultType string). </summary>
-        public Uri Version { get; set; }
+        public BinaryData Version { get; set; }
         /// <summary> Azure Storage linked service to be used by the on-demand cluster for storing and processing data. </summary>
         public LinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> The customer’s subscription to host the cluster. Type: string (or Expression with resultType string). </summary>
-        public Uri HostSubscriptionId { get; set; }
+        public BinaryData HostSubscriptionId { get; set; }
         /// <summary> The service principal id for the hostSubscriptionId. Type: string (or Expression with resultType string). </summary>
-        public Uri ServicePrincipalId { get; set; }
+        public BinaryData ServicePrincipalId { get; set; }
         /// <summary>
         /// The key for the service principal id.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -177,13 +177,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase ServicePrincipalKey { get; set; }
         /// <summary> The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
-        public Uri Tenant { get; set; }
+        public BinaryData Tenant { get; set; }
         /// <summary> The resource group where the cluster belongs. Type: string (or Expression with resultType string). </summary>
-        public Uri ClusterResourceGroup { get; set; }
+        public BinaryData ClusterResourceGroup { get; set; }
         /// <summary> The prefix of cluster name, postfix will be distinct with timestamp. Type: string (or Expression with resultType string). </summary>
-        public Uri ClusterNamePrefix { get; set; }
+        public BinaryData ClusterNamePrefix { get; set; }
         /// <summary> The username to access the cluster. Type: string (or Expression with resultType string). </summary>
-        public Uri ClusterUserName { get; set; }
+        public BinaryData ClusterUserName { get; set; }
         /// <summary>
         /// The password to access the cluster.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase ClusterPassword { get; set; }
         /// <summary> The username to SSH remotely connect to cluster’s node (for Linux). Type: string (or Expression with resultType string). </summary>
-        public Uri ClusterSshUserName { get; set; }
+        public BinaryData ClusterSshUserName { get; set; }
         /// <summary>
         /// The password to SSH remotely connect cluster’s node (for Linux).
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -203,39 +203,39 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The name of Azure SQL linked service that point to the HCatalog database. The on-demand HDInsight cluster is created by using the Azure SQL database as the metastore. </summary>
         public LinkedServiceReference HcatalogLinkedServiceName { get; set; }
         /// <summary> The cluster type. Type: string (or Expression with resultType string). </summary>
-        public Uri ClusterType { get; set; }
+        public BinaryData ClusterType { get; set; }
         /// <summary> The version of spark if the cluster type is &apos;spark&apos;. Type: string (or Expression with resultType string). </summary>
-        public Uri SparkVersion { get; set; }
+        public BinaryData SparkVersion { get; set; }
         /// <summary> Specifies the core configuration parameters (as in core-site.xml) for the HDInsight cluster to be created. </summary>
-        public Uri CoreConfiguration { get; set; }
+        public BinaryData CoreConfiguration { get; set; }
         /// <summary> Specifies the HBase configuration parameters (hbase-site.xml) for the HDInsight cluster. </summary>
-        public Uri HBaseConfiguration { get; set; }
+        public BinaryData HBaseConfiguration { get; set; }
         /// <summary> Specifies the HDFS configuration parameters (hdfs-site.xml) for the HDInsight cluster. </summary>
-        public Uri HdfsConfiguration { get; set; }
+        public BinaryData HdfsConfiguration { get; set; }
         /// <summary> Specifies the hive configuration parameters (hive-site.xml) for the HDInsight cluster. </summary>
-        public Uri HiveConfiguration { get; set; }
+        public BinaryData HiveConfiguration { get; set; }
         /// <summary> Specifies the MapReduce configuration parameters (mapred-site.xml) for the HDInsight cluster. </summary>
-        public Uri MapReduceConfiguration { get; set; }
+        public BinaryData MapReduceConfiguration { get; set; }
         /// <summary> Specifies the Oozie configuration parameters (oozie-site.xml) for the HDInsight cluster. </summary>
-        public Uri OozieConfiguration { get; set; }
+        public BinaryData OozieConfiguration { get; set; }
         /// <summary> Specifies the Storm configuration parameters (storm-site.xml) for the HDInsight cluster. </summary>
-        public Uri StormConfiguration { get; set; }
+        public BinaryData StormConfiguration { get; set; }
         /// <summary> Specifies the Yarn configuration parameters (yarn-site.xml) for the HDInsight cluster. </summary>
-        public Uri YarnConfiguration { get; set; }
+        public BinaryData YarnConfiguration { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
         /// <summary> Specifies the size of the head node for the HDInsight cluster. </summary>
-        public Uri HeadNodeSize { get; set; }
+        public BinaryData HeadNodeSize { get; set; }
         /// <summary> Specifies the size of the data node for the HDInsight cluster. </summary>
-        public Uri DataNodeSize { get; set; }
+        public BinaryData DataNodeSize { get; set; }
         /// <summary> Specifies the size of the Zoo Keeper node for the HDInsight cluster. </summary>
-        public Uri ZookeeperNodeSize { get; set; }
+        public BinaryData ZookeeperNodeSize { get; set; }
         /// <summary> Custom script actions to run on HDI ondemand cluster once it&apos;s up. Please refer to https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&amp;bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions. </summary>
         public IList<ScriptAction> ScriptActions { get; }
         /// <summary> The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string). </summary>
-        public Uri VirtualNetworkId { get; set; }
+        public BinaryData VirtualNetworkId { get; set; }
         /// <summary> The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType string). </summary>
-        public Uri SubnetName { get; set; }
+        public BinaryData SubnetName { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
         public CredentialReference Credential { get; set; }
     }

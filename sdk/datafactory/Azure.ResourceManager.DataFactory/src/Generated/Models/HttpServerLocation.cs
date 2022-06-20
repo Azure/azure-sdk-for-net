@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="relativeUri"> Specify the relativeUrl of http server. Type: string (or Expression with resultType string). </param>
-        internal HttpServerLocation(string datasetLocationType, Uri folderPath, Uri fileName, IDictionary<string, Uri> additionalProperties, Uri relativeUri) : base(datasetLocationType, folderPath, fileName, additionalProperties)
+        internal HttpServerLocation(string datasetLocationType, BinaryData folderPath, BinaryData fileName, IDictionary<string, BinaryData> additionalProperties, BinaryData relativeUri) : base(datasetLocationType, folderPath, fileName, additionalProperties)
         {
             RelativeUri = relativeUri;
             DatasetLocationType = datasetLocationType ?? "HttpServerLocation";
         }
 
         /// <summary> Specify the relativeUrl of http server. Type: string (or Expression with resultType string). </summary>
-        public Uri RelativeUri { get; set; }
+        public BinaryData RelativeUri { get; set; }
     }
 }

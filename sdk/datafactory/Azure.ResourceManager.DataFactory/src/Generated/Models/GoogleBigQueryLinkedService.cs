@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="project"> The default BigQuery project to query against. </param>
         /// <param name="authenticationType"> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="project"/> is null. </exception>
-        public GoogleBigQueryLinkedService(Uri project, GoogleBigQueryAuthenticationType authenticationType)
+        public GoogleBigQueryLinkedService(BinaryData project, GoogleBigQueryAuthenticationType authenticationType)
         {
             if (project == null)
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="trustedCertPath"> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </param>
         /// <param name="useSystemTrustStore"> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal GoogleBigQueryLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri project, Uri additionalProjects, Uri requestGoogleDriveScope, GoogleBigQueryAuthenticationType authenticationType, SecretBase refreshToken, Uri clientId, SecretBase clientSecret, Uri email, Uri keyFilePath, Uri trustedCertPath, Uri useSystemTrustStore, Uri encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal GoogleBigQueryLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData project, BinaryData additionalProjects, BinaryData requestGoogleDriveScope, GoogleBigQueryAuthenticationType authenticationType, SecretBase refreshToken, BinaryData clientId, SecretBase clientSecret, BinaryData email, BinaryData keyFilePath, BinaryData trustedCertPath, BinaryData useSystemTrustStore, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Project = project;
             AdditionalProjects = additionalProjects;
@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The default BigQuery project to query against. </summary>
-        public Uri Project { get; set; }
+        public BinaryData Project { get; set; }
         /// <summary> A comma-separated list of public BigQuery projects to access. </summary>
-        public Uri AdditionalProjects { get; set; }
+        public BinaryData AdditionalProjects { get; set; }
         /// <summary> Whether to request access to Google Drive. Allowing Google Drive access enables support for federated tables that combine BigQuery data with data from Google Drive. The default value is false. </summary>
-        public Uri RequestGoogleDriveScope { get; set; }
+        public BinaryData RequestGoogleDriveScope { get; set; }
         /// <summary> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </summary>
         public GoogleBigQueryAuthenticationType AuthenticationType { get; set; }
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase RefreshToken { get; set; }
         /// <summary> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </summary>
-        public Uri ClientId { get; set; }
+        public BinaryData ClientId { get; set; }
         /// <summary>
         /// The client secret of the google application used to acquire the refresh token.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -96,14 +96,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase ClientSecret { get; set; }
         /// <summary> The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR. </summary>
-        public Uri Email { get; set; }
+        public BinaryData Email { get; set; }
         /// <summary> The full path to the .p12 key file that is used to authenticate the service account email address and can only be used on self-hosted IR. </summary>
-        public Uri KeyFilePath { get; set; }
+        public BinaryData KeyFilePath { get; set; }
         /// <summary> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </summary>
-        public Uri TrustedCertPath { get; set; }
+        public BinaryData TrustedCertPath { get; set; }
         /// <summary> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. </summary>
-        public Uri UseSystemTrustStore { get; set; }
+        public BinaryData UseSystemTrustStore { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

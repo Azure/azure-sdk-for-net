@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="pythonFile"> The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="pythonFile"/> is null. </exception>
-        public DatabricksSparkPythonActivity(string name, Uri pythonFile) : base(name)
+        public DatabricksSparkPythonActivity(string name, BinaryData pythonFile) : base(name)
         {
             if (name == null)
             {
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             PythonFile = pythonFile;
-            Parameters = new ChangeTrackingList<Uri>();
-            Libraries = new ChangeTrackingList<IDictionary<string, Uri>>();
+            Parameters = new ChangeTrackingList<BinaryData>();
+            Libraries = new ChangeTrackingList<IDictionary<string, BinaryData>>();
             ActivityType = "DatabricksSparkPython";
         }
 
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="pythonFile"> The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string). </param>
         /// <param name="parameters"> Command line parameters that will be passed to the Python file. </param>
         /// <param name="libraries"> A list of libraries to be installed on the cluster that will execute the job. </param>
-        internal DatabricksSparkPythonActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, Uri> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, Uri pythonFile, IList<Uri> parameters, IList<IDictionary<string, Uri>> libraries) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal DatabricksSparkPythonActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData pythonFile, IList<BinaryData> parameters, IList<IDictionary<string, BinaryData>> libraries) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             PythonFile = pythonFile;
             Parameters = parameters;
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string). </summary>
-        public Uri PythonFile { get; set; }
+        public BinaryData PythonFile { get; set; }
         /// <summary> Command line parameters that will be passed to the Python file. </summary>
-        public IList<Uri> Parameters { get; }
+        public IList<BinaryData> Parameters { get; }
         /// <summary> A list of libraries to be installed on the cluster that will execute the job. </summary>
-        public IList<IDictionary<string, Uri>> Libraries { get; }
+        public IList<IDictionary<string, BinaryData>> Libraries { get; }
     }
 }

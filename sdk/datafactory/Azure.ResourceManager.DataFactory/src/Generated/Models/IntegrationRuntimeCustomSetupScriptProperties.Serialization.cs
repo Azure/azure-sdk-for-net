@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(BlobContainerUri))
             {
                 writer.WritePropertyName("blobContainerUri");
-                writer.WriteStringValue(BlobContainerUri.AbsoluteUri);
+                writer.WriteStringValue(BlobContainerUri);
             }
             if (Optional.IsDefined(SasToken))
             {
@@ -31,18 +30,13 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static IntegrationRuntimeCustomSetupScriptProperties DeserializeIntegrationRuntimeCustomSetupScriptProperties(JsonElement element)
         {
-            Optional<Uri> blobContainerUri = default;
+            Optional<string> blobContainerUri = default;
             Optional<SecureString> sasToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blobContainerUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        blobContainerUri = null;
-                        continue;
-                    }
-                    blobContainerUri = new Uri(property.Value.GetString());
+                    blobContainerUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sasToken"))

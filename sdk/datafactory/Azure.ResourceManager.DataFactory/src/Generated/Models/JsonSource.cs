@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </param>
         /// <param name="formatSettings"> Json format settings. </param>
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
-        internal JsonSource(string copySourceType, Uri sourceRetryCount, Uri sourceRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, StoreReadSettings storeSettings, JsonReadSettings formatSettings, Uri additionalColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal JsonSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, StoreReadSettings storeSettings, JsonReadSettings formatSettings, BinaryData additionalColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             StoreSettings = storeSettings;
             FormatSettings = formatSettings;
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Json format settings. </summary>
         public JsonReadSettings FormatSettings { get; set; }
         /// <summary> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </summary>
-        public Uri AdditionalColumns { get; set; }
+        public BinaryData AdditionalColumns { get; set; }
     }
 }

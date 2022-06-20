@@ -27,12 +27,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure");
-                writer.WriteStringValue(Structure.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Structure);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Structure.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema");
-                writer.WriteStringValue(Schema.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Schema);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Schema.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("linkedServiceName");
             writer.WriteObjectValue(LinkedServiceName);
@@ -53,7 +61,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteStringValue(item.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -67,18 +79,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Database))
             {
                 writer.WritePropertyName("database");
-                writer.WriteStringValue(Database.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Database);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Database.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table");
-                writer.WriteStringValue(Table.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Table);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Table.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -87,16 +111,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             string type = default;
             Optional<string> description = default;
-            Optional<Uri> structure = default;
-            Optional<Uri> schema = default;
+            Optional<BinaryData> structure = default;
+            Optional<BinaryData> schema = default;
             LinkedServiceReference linkedServiceName = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<Uri>> annotations = default;
+            Optional<IList<BinaryData>> annotations = default;
             Optional<DatasetFolder> folder = default;
-            Optional<Uri> database = default;
-            Optional<Uri> table = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> database = default;
+            Optional<BinaryData> table = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -113,20 +137,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        structure = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    structure = new Uri(property.Value.GetString());
+                    structure = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("schema"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        schema = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    schema = new Uri(property.Value.GetString());
+                    schema = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("linkedServiceName"))
@@ -156,10 +180,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Uri> array = new List<Uri>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Uri(item.GetString()));
+                        array.Add(BinaryData.FromString(item.GetRawText()));
                     }
                     annotations = array;
                     continue;
@@ -187,26 +211,26 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                database = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            database = new Uri(property0.Value.GetString());
+                            database = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("table"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                table = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            table = new Uri(property0.Value.GetString());
+                            table = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new TeradataTableDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, database.Value, table.Value);

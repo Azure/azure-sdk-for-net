@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="recursive"> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </param>
-        internal AzureDataLakeStoreSource(string copySourceType, Uri sourceRetryCount, Uri sourceRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri recursive) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal AzureDataLakeStoreSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData recursive) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             Recursive = recursive;
             CopySourceType = copySourceType ?? "AzureDataLakeStoreSource";
         }
 
         /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri Recursive { get; set; }
+        public BinaryData Recursive { get; set; }
     }
 }

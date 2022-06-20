@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of AzureBlobFSLinkedService. </summary>
         /// <param name="uri"> Endpoint for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public AzureBlobFSLinkedService(Uri uri)
+        public AzureBlobFSLinkedService(BinaryData uri)
         {
             if (uri == null)
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        internal AzureBlobFSLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri uri, Uri accountKey, Uri servicePrincipalId, SecretBase servicePrincipalKey, Uri tenant, Uri azureCloudType, Uri encryptedCredential, CredentialReference credential, Uri servicePrincipalCredentialType, SecretBase servicePrincipalCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureBlobFSLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData uri, BinaryData accountKey, BinaryData servicePrincipalId, SecretBase servicePrincipalKey, BinaryData tenant, BinaryData azureCloudType, BinaryData encryptedCredential, CredentialReference credential, BinaryData servicePrincipalCredentialType, SecretBase servicePrincipalCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Uri = uri;
             AccountKey = accountKey;
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Endpoint for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string). </summary>
-        public Uri Uri { get; set; }
+        public BinaryData Uri { get; set; }
         /// <summary> Account key for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string). </summary>
-        public Uri AccountKey { get; set; }
+        public BinaryData AccountKey { get; set; }
         /// <summary> The ID of the application used to authenticate against the Azure Data Lake Storage Gen2 account. Type: string (or Expression with resultType string). </summary>
-        public Uri ServicePrincipalId { get; set; }
+        public BinaryData ServicePrincipalId { get; set; }
         /// <summary>
         /// The Key of the application used to authenticate against the Azure Data Lake Storage Gen2 account.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase ServicePrincipalKey { get; set; }
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
-        public Uri Tenant { get; set; }
+        public BinaryData Tenant { get; set; }
         /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
-        public Uri AzureCloudType { get; set; }
+        public BinaryData AzureCloudType { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
         public CredentialReference Credential { get; set; }
         /// <summary> The service principal credential type to use in Server-To-Server authentication. &apos;ServicePrincipalKey&apos; for key/secret, &apos;ServicePrincipalCert&apos; for certificate. Type: string (or Expression with resultType string). </summary>
-        public Uri ServicePrincipalCredentialType { get; set; }
+        public BinaryData ServicePrincipalCredentialType { get; set; }
         /// <summary>
         /// The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is &apos;ServicePrincipalKey&apos;, servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is &apos;ServicePrincipalCert&apos;, servicePrincipalCredential can only be AzureKeyVaultSecretReference.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

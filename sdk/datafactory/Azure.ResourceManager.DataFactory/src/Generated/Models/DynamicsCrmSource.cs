@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="query"> FetchXML is a proprietary query language that is used in Microsoft Dynamics CRM (online &amp; on-premises). Type: string (or Expression with resultType string). </param>
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
-        internal DynamicsCrmSource(string copySourceType, Uri sourceRetryCount, Uri sourceRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri query, Uri additionalColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal DynamicsCrmSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData query, BinaryData additionalColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             Query = query;
             AdditionalColumns = additionalColumns;
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> FetchXML is a proprietary query language that is used in Microsoft Dynamics CRM (online &amp; on-premises). Type: string (or Expression with resultType string). </summary>
-        public Uri Query { get; set; }
+        public BinaryData Query { get; set; }
         /// <summary> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </summary>
-        public Uri AdditionalColumns { get; set; }
+        public BinaryData AdditionalColumns { get; set; }
     }
 }

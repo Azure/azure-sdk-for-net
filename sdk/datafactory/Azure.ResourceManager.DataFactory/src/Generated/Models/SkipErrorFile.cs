@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of SkipErrorFile. </summary>
         /// <param name="fileMissing"> Skip if file is deleted by other client during copy. Default is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="dataInconsistency"> Skip if source/sink file changed by other concurrent write. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        internal SkipErrorFile(Uri fileMissing, Uri dataInconsistency)
+        internal SkipErrorFile(BinaryData fileMissing, BinaryData dataInconsistency)
         {
             FileMissing = fileMissing;
             DataInconsistency = dataInconsistency;
         }
 
         /// <summary> Skip if file is deleted by other client during copy. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri FileMissing { get; set; }
+        public BinaryData FileMissing { get; set; }
         /// <summary> Skip if source/sink file changed by other concurrent write. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri DataInconsistency { get; set; }
+        public BinaryData DataInconsistency { get; set; }
     }
 }

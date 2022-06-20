@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sources"> List of sources in Power Query. </param>
         /// <param name="script"> Power query mashup script. </param>
         /// <param name="documentLocale"> Locale of the Power query mashup document. </param>
-        internal WranglingDataFlow(string dataFlowType, string description, IList<Uri> annotations, DataFlowFolder folder, IList<PowerQuerySource> sources, string script, string documentLocale) : base(dataFlowType, description, annotations, folder)
+        internal WranglingDataFlow(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IList<PowerQuerySource> sources, string script, string documentLocale) : base(dataFlowType, description, annotations, folder)
         {
             Sources = sources;
             Script = script;

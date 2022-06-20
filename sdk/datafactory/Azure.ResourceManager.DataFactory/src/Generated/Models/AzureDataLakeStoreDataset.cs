@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The available derived classes include <see cref="AvroFormat"/>, <see cref="JsonFormat"/>, <see cref="OrcFormat"/>, <see cref="ParquetFormat"/> and <see cref="TextFormat"/>.
         /// </param>
         /// <param name="compression"> The data compression method used for the item(s) in the Azure Data Lake Store. </param>
-        internal AzureDataLakeStoreDataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, Uri folderPath, Uri fileName, DatasetStorageFormat format, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AzureDataLakeStoreDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData folderPath, BinaryData fileName, DatasetStorageFormat format, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             FolderPath = folderPath;
             FileName = fileName;
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Path to the folder in the Azure Data Lake Store. Type: string (or Expression with resultType string). </summary>
-        public Uri FolderPath { get; set; }
+        public BinaryData FolderPath { get; set; }
         /// <summary> The name of the file in the Azure Data Lake Store. Type: string (or Expression with resultType string). </summary>
-        public Uri FileName { get; set; }
+        public BinaryData FileName { get; set; }
         /// <summary>
         /// The format of the Data Lake Store.
         /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="packetSize"> The packet size of data read from SAP HANA. Type: integer(or Expression with resultType integer). </param>
         /// <param name="partitionOption"> The partition mechanism that will be used for SAP HANA read in parallel. Possible values include: &quot;None&quot;, &quot;PhysicalPartitionsOfTable&quot;, &quot;SapHanaDynamicRange&quot;. </param>
         /// <param name="partitionSettings"> The settings that will be leveraged for SAP HANA source partitioning. </param>
-        internal SapHanaSource(string copySourceType, Uri sourceRetryCount, Uri sourceRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri queryTimeout, Uri additionalColumns, Uri query, Uri packetSize, Uri partitionOption, SapHanaPartitionSettings partitionSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
+        internal SapHanaSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData queryTimeout, BinaryData additionalColumns, BinaryData query, BinaryData packetSize, BinaryData partitionOption, SapHanaPartitionSettings partitionSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
         {
             Query = query;
             PacketSize = packetSize;
@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> SAP HANA Sql query. Type: string (or Expression with resultType string). </summary>
-        public Uri Query { get; set; }
+        public BinaryData Query { get; set; }
         /// <summary> The packet size of data read from SAP HANA. Type: integer(or Expression with resultType integer). </summary>
-        public Uri PacketSize { get; set; }
+        public BinaryData PacketSize { get; set; }
         /// <summary> The partition mechanism that will be used for SAP HANA read in parallel. Possible values include: &quot;None&quot;, &quot;PhysicalPartitionsOfTable&quot;, &quot;SapHanaDynamicRange&quot;. </summary>
-        public Uri PartitionOption { get; set; }
+        public BinaryData PartitionOption { get; set; }
         /// <summary> The settings that will be leveraged for SAP HANA source partitioning. </summary>
         internal SapHanaPartitionSettings PartitionSettings { get; set; }
         /// <summary> The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
-        public Uri PartitionColumnName
+        public BinaryData PartitionColumnName
         {
             get => PartitionSettings is null ? default : PartitionSettings.PartitionColumnName;
             set

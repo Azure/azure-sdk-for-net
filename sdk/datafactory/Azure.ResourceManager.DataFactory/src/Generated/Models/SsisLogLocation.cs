@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="logPath"> The SSIS package execution log path. Type: string (or Expression with resultType string). </param>
         /// <param name="locationType"> The type of SSIS log location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logPath"/> is null. </exception>
-        public SsisLogLocation(Uri logPath, SsisLogLocationType locationType)
+        public SsisLogLocation(BinaryData logPath, SsisLogLocationType locationType)
         {
             if (logPath == null)
             {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="locationType"> The type of SSIS log location. </param>
         /// <param name="accessCredential"> The package execution log access credential. </param>
         /// <param name="logRefreshInterval"> Specifies the interval to refresh log. The default interval is 5 minutes. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        internal SsisLogLocation(Uri logPath, SsisLogLocationType locationType, SsisAccessCredential accessCredential, Uri logRefreshInterval)
+        internal SsisLogLocation(BinaryData logPath, SsisLogLocationType locationType, SsisAccessCredential accessCredential, BinaryData logRefreshInterval)
         {
             LogPath = logPath;
             LocationType = locationType;
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The SSIS package execution log path. Type: string (or Expression with resultType string). </summary>
-        public Uri LogPath { get; set; }
+        public BinaryData LogPath { get; set; }
         /// <summary> The type of SSIS log location. </summary>
         public SsisLogLocationType LocationType { get; set; }
         /// <summary> The package execution log access credential. </summary>
         public SsisAccessCredential AccessCredential { get; set; }
         /// <summary> Specifies the interval to refresh log. The default interval is 5 minutes. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
-        public Uri LogRefreshInterval { get; set; }
+        public BinaryData LogRefreshInterval { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of AzureSqlDatabaseLinkedService. </summary>
         /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
-        public AzureSqlDatabaseLinkedService(Uri connectionString)
+        public AzureSqlDatabaseLinkedService(BinaryData connectionString)
         {
             if (connectionString == null)
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         /// <param name="alwaysEncryptedSettings"> Sql always encrypted properties. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzureSqlDatabaseLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri connectionString, AzureKeyVaultSecretReference password, Uri servicePrincipalId, SecretBase servicePrincipalKey, Uri tenant, Uri azureCloudType, Uri encryptedCredential, SqlAlwaysEncryptedProperties alwaysEncryptedSettings, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureSqlDatabaseLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionString, AzureKeyVaultSecretReference password, BinaryData servicePrincipalId, SecretBase servicePrincipalKey, BinaryData tenant, BinaryData azureCloudType, BinaryData encryptedCredential, SqlAlwaysEncryptedProperties alwaysEncryptedSettings, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             Password = password;
@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
-        public Uri ConnectionString { get; set; }
+        public BinaryData ConnectionString { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>
         public AzureKeyVaultSecretReference Password { get; set; }
         /// <summary> The ID of the service principal used to authenticate against Azure SQL Database. Type: string (or Expression with resultType string). </summary>
-        public Uri ServicePrincipalId { get; set; }
+        public BinaryData ServicePrincipalId { get; set; }
         /// <summary>
         /// The key of the service principal used to authenticate against Azure SQL Database.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase ServicePrincipalKey { get; set; }
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
-        public Uri Tenant { get; set; }
+        public BinaryData Tenant { get; set; }
         /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
-        public Uri AzureCloudType { get; set; }
+        public BinaryData AzureCloudType { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
         /// <summary> Sql always encrypted properties. </summary>
         public SqlAlwaysEncryptedProperties AlwaysEncryptedSettings { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>

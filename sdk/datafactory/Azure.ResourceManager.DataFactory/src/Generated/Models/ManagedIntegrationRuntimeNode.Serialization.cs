@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> nodeId = default;
             Optional<ManagedIntegrationRuntimeNodeStatus> status = default;
             Optional<IReadOnlyList<ManagedIntegrationRuntimeError>> errors = default;
-            IReadOnlyDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodeId"))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     errors = array;
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ManagedIntegrationRuntimeNode(nodeId.Value, Optional.ToNullable(status), Optional.ToList(errors), additionalProperties);

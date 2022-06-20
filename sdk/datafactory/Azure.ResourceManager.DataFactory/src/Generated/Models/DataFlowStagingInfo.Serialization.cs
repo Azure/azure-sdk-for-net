@@ -24,7 +24,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath");
-                writer.WriteStringValue(FolderPath.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FolderPath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(FolderPath.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -32,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static DataFlowStagingInfo DeserializeDataFlowStagingInfo(JsonElement element)
         {
             Optional<LinkedServiceReference> linkedService = default;
-            Optional<Uri> folderPath = default;
+            Optional<BinaryData> folderPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedService"))
@@ -49,10 +53,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        folderPath = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    folderPath = new Uri(property.Value.GetString());
+                    folderPath = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

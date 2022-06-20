@@ -59,16 +59,28 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("rootPath");
-            writer.WriteStringValue(RootPath.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RootPath);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(RootPath.ToString()).RootElement);
+#endif
             writer.WritePropertyName("entryFilePath");
-            writer.WriteStringValue(EntryFilePath.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EntryFilePath);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(EntryFilePath.ToString()).RootElement);
+#endif
             if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("arguments");
                 writer.WriteStartArray();
                 foreach (var item in Arguments)
                 {
-                    writer.WriteStringValue(item.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +102,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ProxyUser))
             {
                 writer.WritePropertyName("proxyUser");
-                writer.WriteStringValue(ProxyUser.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ProxyUser);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ProxyUser.ToString()).RootElement);
+#endif
             }
             if (Optional.IsCollectionDefined(SparkConfig))
             {
@@ -99,7 +115,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in SparkConfig)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndObject();
             }
@@ -107,7 +127,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -121,16 +145,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
-            Uri rootPath = default;
-            Uri entryFilePath = default;
-            Optional<IList<Uri>> arguments = default;
+            BinaryData rootPath = default;
+            BinaryData entryFilePath = default;
+            Optional<IList<BinaryData>> arguments = default;
             Optional<HDInsightActivityDebugInfoOption> getDebugInfo = default;
             Optional<LinkedServiceReference> sparkJobLinkedService = default;
             Optional<string> className = default;
-            Optional<Uri> proxyUser = default;
-            Optional<IDictionary<string, Uri>> sparkConfig = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> proxyUser = default;
+            Optional<IDictionary<string, BinaryData>> sparkConfig = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -209,12 +233,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("rootPath"))
                         {
-                            rootPath = new Uri(property0.Value.GetString());
+                            rootPath = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("entryFilePath"))
                         {
-                            entryFilePath = new Uri(property0.Value.GetString());
+                            entryFilePath = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("arguments"))
@@ -224,10 +248,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Uri> array = new List<Uri>();
+                            List<BinaryData> array = new List<BinaryData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new Uri(item.GetString()));
+                                array.Add(BinaryData.FromString(item.GetRawText()));
                             }
                             arguments = array;
                             continue;
@@ -261,10 +285,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                proxyUser = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            proxyUser = new Uri(property0.Value.GetString());
+                            proxyUser = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sparkConfig"))
@@ -274,10 +298,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, Uri> dictionary = new Dictionary<string, Uri>();
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, new Uri(property1.Value.GetString()));
+                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
                             }
                             sparkConfig = dictionary;
                             continue;
@@ -285,7 +309,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new HDInsightSparkActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, rootPath, entryFilePath, Optional.ToList(arguments), Optional.ToNullable(getDebugInfo), sparkJobLinkedService.Value, className.Value, proxyUser.Value, Optional.ToDictionary(sparkConfig));

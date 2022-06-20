@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </param>
         /// <param name="dataset"> Lookup activity dataset reference. </param>
         /// <param name="firstRowOnly"> Whether to return first row or all rows. Default value is true. Type: boolean (or Expression with resultType boolean). </param>
-        internal LookupActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, Uri> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, CopySource source, DatasetReference dataset, Uri firstRowOnly) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal LookupActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, CopySource source, DatasetReference dataset, BinaryData firstRowOnly) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Source = source;
             Dataset = dataset;
@@ -75,6 +75,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Lookup activity dataset reference. </summary>
         public DatasetReference Dataset { get; set; }
         /// <summary> Whether to return first row or all rows. Default value is true. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri FirstRowOnly { get; set; }
+        public BinaryData FirstRowOnly { get; set; }
     }
 }

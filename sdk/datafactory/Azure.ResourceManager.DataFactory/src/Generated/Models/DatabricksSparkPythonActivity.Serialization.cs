@@ -59,14 +59,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("pythonFile");
-            writer.WriteStringValue(PythonFile.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PythonFile);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(PythonFile.ToString()).RootElement);
+#endif
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteStringValue(item.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +88,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                     foreach (var item0 in item)
                     {
                         writer.WritePropertyName(item0.Key);
-                        writer.WriteStringValue(item0.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item0.Value);
+#else
+                        JsonSerializer.Serialize(writer, JsonDocument.Parse(item0.Value.ToString()).RootElement);
+#endif
                     }
                     writer.WriteEndObject();
                 }
@@ -90,7 +102,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -104,11 +120,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
-            Uri pythonFile = default;
-            Optional<IList<Uri>> parameters = default;
-            Optional<IList<IDictionary<string, Uri>>> libraries = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            BinaryData pythonFile = default;
+            Optional<IList<BinaryData>> parameters = default;
+            Optional<IList<IDictionary<string, BinaryData>>> libraries = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -187,7 +203,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("pythonFile"))
                         {
-                            pythonFile = new Uri(property0.Value.GetString());
+                            pythonFile = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("parameters"))
@@ -197,10 +213,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Uri> array = new List<Uri>();
+                            List<BinaryData> array = new List<BinaryData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new Uri(item.GetString()));
+                                array.Add(BinaryData.FromString(item.GetRawText()));
                             }
                             parameters = array;
                             continue;
@@ -212,13 +228,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<IDictionary<string, Uri>> array = new List<IDictionary<string, Uri>>();
+                            List<IDictionary<string, BinaryData>> array = new List<IDictionary<string, BinaryData>>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                Dictionary<string, Uri> dictionary = new Dictionary<string, Uri>();
+                                Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                                 foreach (var property1 in item.EnumerateObject())
                                 {
-                                    dictionary.Add(property1.Name, new Uri(property1.Value.GetString()));
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
                                 }
                                 array.Add(dictionary);
                             }
@@ -228,7 +244,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DatabricksSparkPythonActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, pythonFile, Optional.ToList(parameters), Optional.ToList(libraries));

@@ -19,24 +19,28 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName");
-                writer.WriteStringValue(PartitionColumnName.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PartitionColumnName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionColumnName.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static SapHanaPartitionSettings DeserializeSapHanaPartitionSettings(JsonElement element)
         {
-            Optional<Uri> partitionColumnName = default;
+            Optional<BinaryData> partitionColumnName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionColumnName"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        partitionColumnName = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    partitionColumnName = new Uri(property.Value.GetString());
+                    partitionColumnName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

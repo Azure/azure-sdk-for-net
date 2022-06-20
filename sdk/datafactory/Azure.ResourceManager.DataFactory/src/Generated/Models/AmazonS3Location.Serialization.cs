@@ -20,62 +20,82 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(BucketName))
             {
                 writer.WritePropertyName("bucketName");
-                writer.WriteStringValue(BucketName.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(BucketName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(BucketName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version");
-                writer.WriteStringValue(Version.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Version);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Version.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(DatasetLocationType);
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath");
-                writer.WriteStringValue(FolderPath.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FolderPath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(FolderPath.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName");
-                writer.WriteStringValue(FileName.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FileName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(FileName.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static AmazonS3Location DeserializeAmazonS3Location(JsonElement element)
         {
-            Optional<Uri> bucketName = default;
-            Optional<Uri> version = default;
+            Optional<BinaryData> bucketName = default;
+            Optional<BinaryData> version = default;
             string type = default;
-            Optional<Uri> folderPath = default;
-            Optional<Uri> fileName = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> folderPath = default;
+            Optional<BinaryData> fileName = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bucketName"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        bucketName = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    bucketName = new Uri(property.Value.GetString());
+                    bucketName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("version"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        version = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    version = new Uri(property.Value.GetString());
+                    version = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -87,23 +107,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        folderPath = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    folderPath = new Uri(property.Value.GetString());
+                    folderPath = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("fileName"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        fileName = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fileName = new Uri(property.Value.GetString());
+                    fileName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AmazonS3Location(type, folderPath.Value, fileName.Value, additionalProperties, bucketName.Value, version.Value);

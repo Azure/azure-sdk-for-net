@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Outputs = new ChangeTrackingList<DatasetReference>();
             Source = source;
             Sink = sink;
-            PreserveRules = new ChangeTrackingList<Uri>();
-            Preserve = new ChangeTrackingList<Uri>();
+            PreserveRules = new ChangeTrackingList<BinaryData>();
+            Preserve = new ChangeTrackingList<BinaryData>();
             ActivityType = "Copy";
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="preserve"> Preserve rules. </param>
         /// <param name="validateDataConsistency"> Whether to enable Data Consistency validation. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="skipErrorFile"> Specify the fault tolerance for data consistency. </param>
-        internal CopyActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, Uri> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<DatasetReference> inputs, IList<DatasetReference> outputs, CopySource source, CopySink sink, Uri translator, Uri enableStaging, StagingSettings stagingSettings, Uri parallelCopies, Uri dataIntegrationUnits, Uri enableSkipIncompatibleRow, RedirectIncompatibleRowSettings redirectIncompatibleRowSettings, LogStorageSettings logStorageSettings, LogSettings logSettings, IList<Uri> preserveRules, IList<Uri> preserve, Uri validateDataConsistency, SkipErrorFile skipErrorFile) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal CopyActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<DatasetReference> inputs, IList<DatasetReference> outputs, CopySource source, CopySink sink, BinaryData translator, BinaryData enableStaging, StagingSettings stagingSettings, BinaryData parallelCopies, BinaryData dataIntegrationUnits, BinaryData enableSkipIncompatibleRow, RedirectIncompatibleRowSettings redirectIncompatibleRowSettings, LogStorageSettings logStorageSettings, LogSettings logSettings, IList<BinaryData> preserveRules, IList<BinaryData> preserve, BinaryData validateDataConsistency, SkipErrorFile skipErrorFile) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Inputs = inputs;
             Outputs = outputs;
@@ -124,17 +124,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public CopySink Sink { get; set; }
         /// <summary> Copy activity translator. If not specified, tabular translator is used. </summary>
-        public Uri Translator { get; set; }
+        public BinaryData Translator { get; set; }
         /// <summary> Specifies whether to copy data via an interim staging. Default value is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri EnableStaging { get; set; }
+        public BinaryData EnableStaging { get; set; }
         /// <summary> Specifies interim staging settings when EnableStaging is true. </summary>
         public StagingSettings StagingSettings { get; set; }
         /// <summary> Maximum number of concurrent sessions opened on the source or sink to avoid overloading the data store. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
-        public Uri ParallelCopies { get; set; }
+        public BinaryData ParallelCopies { get; set; }
         /// <summary> Maximum number of data integration units that can be used to perform this data movement. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
-        public Uri DataIntegrationUnits { get; set; }
+        public BinaryData DataIntegrationUnits { get; set; }
         /// <summary> Whether to skip incompatible row. Default value is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri EnableSkipIncompatibleRow { get; set; }
+        public BinaryData EnableSkipIncompatibleRow { get; set; }
         /// <summary> Redirect incompatible row settings when EnableSkipIncompatibleRow is true. </summary>
         public RedirectIncompatibleRowSettings RedirectIncompatibleRowSettings { get; set; }
         /// <summary> (Deprecated. Please use LogSettings) Log storage settings customer need to provide when enabling session log. </summary>
@@ -142,11 +142,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Log settings customer needs provide when enabling log. </summary>
         public LogSettings LogSettings { get; set; }
         /// <summary> Preserve Rules. </summary>
-        public IList<Uri> PreserveRules { get; }
+        public IList<BinaryData> PreserveRules { get; }
         /// <summary> Preserve rules. </summary>
-        public IList<Uri> Preserve { get; }
+        public IList<BinaryData> Preserve { get; }
         /// <summary> Whether to enable Data Consistency validation. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri ValidateDataConsistency { get; set; }
+        public BinaryData ValidateDataConsistency { get; set; }
         /// <summary> Specify the fault tolerance for data consistency. </summary>
         public SkipErrorFile SkipErrorFile { get; set; }
     }

@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IReadOnlyDictionary<string, string>> properties = default;
             Optional<IReadOnlyDictionary<string, string>> triggeredPipelines = default;
             Optional<IReadOnlyDictionary<string, string>> runDimension = default;
-            Optional<IReadOnlyDictionary<string, Uri>> dependencyStatus = default;
-            IReadOnlyDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<IReadOnlyDictionary<string, BinaryData>> dependencyStatus = default;
+            IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("triggerRunId"))
@@ -122,15 +122,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, Uri> dictionary = new Dictionary<string, Uri>();
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, new Uri(property0.Value.GetString()));
+                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
                     }
                     dependencyStatus = dictionary;
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new TriggerRun(triggerRunId.Value, triggerName.Value, triggerType.Value, Optional.ToNullable(triggerRunTimestamp), Optional.ToNullable(status), message.Value, Optional.ToDictionary(properties), Optional.ToDictionary(triggeredPipelines), Optional.ToDictionary(runDimension), Optional.ToDictionary(dependencyStatus), additionalProperties);

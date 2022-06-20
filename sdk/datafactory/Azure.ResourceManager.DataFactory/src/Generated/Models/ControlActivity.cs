@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ControlActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, Uri> additionalProperties) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal ControlActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             ActivityType = activityType ?? "Container";
         }

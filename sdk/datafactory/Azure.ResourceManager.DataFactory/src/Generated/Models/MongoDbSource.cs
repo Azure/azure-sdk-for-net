@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="query"> Database query. Should be a SQL-92 query expression. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
-        internal MongoDbSource(string copySourceType, Uri sourceRetryCount, Uri sourceRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri query, Uri additionalColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal MongoDbSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData query, BinaryData additionalColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             Query = query;
             AdditionalColumns = additionalColumns;
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Database query. Should be a SQL-92 query expression. Type: string (or Expression with resultType string). </summary>
-        public Uri Query { get; set; }
+        public BinaryData Query { get; set; }
         /// <summary> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </summary>
-        public Uri AdditionalColumns { get; set; }
+        public BinaryData AdditionalColumns { get; set; }
     }
 }

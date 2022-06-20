@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="tableName"> Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="tableName"/> is null. </exception>
-        public Office365Dataset(LinkedServiceReference linkedServiceName, Uri tableName) : base(linkedServiceName)
+        public Office365Dataset(LinkedServiceReference linkedServiceName, BinaryData tableName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="tableName"> Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string). </param>
         /// <param name="predicate"> A predicate expression that can be used to filter the specific rows to extract from Office 365. Type: string (or Expression with resultType string). </param>
-        internal Office365Dataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, Uri tableName, Uri predicate) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal Office365Dataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName, BinaryData predicate) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
             Predicate = predicate;
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string). </summary>
-        public Uri TableName { get; set; }
+        public BinaryData TableName { get; set; }
         /// <summary> A predicate expression that can be used to filter the specific rows to extract from Office 365. Type: string (or Expression with resultType string). </summary>
-        public Uri Predicate { get; set; }
+        public BinaryData Predicate { get; set; }
     }
 }

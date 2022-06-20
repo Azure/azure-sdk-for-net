@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of ExecuteDataFlowActivityTypePropertiesCompute. </summary>
         /// <param name="computeType"> Compute type of the cluster which will execute data flow job. Possible values include: &apos;General&apos;, &apos;MemoryOptimized&apos;, &apos;ComputeOptimized&apos;. Type: string (or Expression with resultType string). </param>
         /// <param name="coreCount"> Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. Type: integer (or Expression with resultType integer). </param>
-        internal ExecuteDataFlowActivityTypePropertiesCompute(Uri computeType, Uri coreCount)
+        internal ExecuteDataFlowActivityTypePropertiesCompute(BinaryData computeType, BinaryData coreCount)
         {
             ComputeType = computeType;
             CoreCount = coreCount;
         }
 
         /// <summary> Compute type of the cluster which will execute data flow job. Possible values include: &apos;General&apos;, &apos;MemoryOptimized&apos;, &apos;ComputeOptimized&apos;. Type: string (or Expression with resultType string). </summary>
-        public Uri ComputeType { get; set; }
+        public BinaryData ComputeType { get; set; }
         /// <summary> Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. Type: integer (or Expression with resultType integer). </summary>
-        public Uri CoreCount { get; set; }
+        public BinaryData CoreCount { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory
         public FactoryData(AzureLocation location) : base(location)
         {
             GlobalParameters = new ChangeTrackingDictionary<string, GlobalParameterSpecification>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of FactoryData. </summary>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="encryption"> Properties to enable Customer Managed Key for the factory. </param>
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the data factory. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal FactoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string eTag, FactoryIdentity identity, string provisioningState, DateTimeOffset? createOn, string version, PurviewConfiguration purviewConfiguration, FactoryRepoConfiguration repoConfiguration, IDictionary<string, GlobalParameterSpecification> globalParameters, EncryptionConfiguration encryption, PublicNetworkAccess? publicNetworkAccess, IDictionary<string, Uri> additionalProperties) : base(id, name, resourceType, systemData, tags, location, eTag)
+        internal FactoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string eTag, FactoryIdentity identity, string provisioningState, DateTimeOffset? createOn, string version, PurviewConfiguration purviewConfiguration, FactoryRepoConfiguration repoConfiguration, IDictionary<string, GlobalParameterSpecification> globalParameters, EncryptionConfiguration encryption, PublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData, tags, location, eTag)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -95,6 +95,6 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary> Whether or not public network access is allowed for the data factory. </summary>
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

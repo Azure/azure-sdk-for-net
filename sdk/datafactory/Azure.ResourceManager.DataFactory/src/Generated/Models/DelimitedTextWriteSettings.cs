@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of DelimitedTextWriteSettings. </summary>
         /// <param name="fileExtension"> The file extension used to create the files. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileExtension"/> is null. </exception>
-        public DelimitedTextWriteSettings(Uri fileExtension)
+        public DelimitedTextWriteSettings(BinaryData fileExtension)
         {
             if (fileExtension == null)
             {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="fileExtension"> The file extension used to create the files. Type: string (or Expression with resultType string). </param>
         /// <param name="maxRowsPerFile"> Limit the written file&apos;s row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="fileNamePrefix"> Specifies the file name pattern &lt;fileNamePrefix&gt;_&lt;fileIndex&gt;.&lt;fileExtension&gt; when copy from non-file based store without partitionOptions. Type: string (or Expression with resultType string). </param>
-        internal DelimitedTextWriteSettings(string formatWriteSettingsType, IDictionary<string, Uri> additionalProperties, Uri quoteAllText, Uri fileExtension, Uri maxRowsPerFile, Uri fileNamePrefix) : base(formatWriteSettingsType, additionalProperties)
+        internal DelimitedTextWriteSettings(string formatWriteSettingsType, IDictionary<string, BinaryData> additionalProperties, BinaryData quoteAllText, BinaryData fileExtension, BinaryData maxRowsPerFile, BinaryData fileNamePrefix) : base(formatWriteSettingsType, additionalProperties)
         {
             QuoteAllText = quoteAllText;
             FileExtension = fileExtension;
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Indicates whether string values should always be enclosed with quotes. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri QuoteAllText { get; set; }
+        public BinaryData QuoteAllText { get; set; }
         /// <summary> The file extension used to create the files. Type: string (or Expression with resultType string). </summary>
-        public Uri FileExtension { get; set; }
+        public BinaryData FileExtension { get; set; }
         /// <summary> Limit the written file&apos;s row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer). </summary>
-        public Uri MaxRowsPerFile { get; set; }
+        public BinaryData MaxRowsPerFile { get; set; }
         /// <summary> Specifies the file name pattern &lt;fileNamePrefix&gt;_&lt;fileIndex&gt;.&lt;fileExtension&gt; when copy from non-file based store without partitionOptions. Type: string (or Expression with resultType string). </summary>
-        public Uri FileNamePrefix { get; set; }
+        public BinaryData FileNamePrefix { get; set; }
     }
 }

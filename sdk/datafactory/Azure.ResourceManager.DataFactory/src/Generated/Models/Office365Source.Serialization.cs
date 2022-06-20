@@ -20,138 +20,182 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AllowedGroups))
             {
                 writer.WritePropertyName("allowedGroups");
-                writer.WriteStringValue(AllowedGroups.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AllowedGroups);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(AllowedGroups.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(UserScopeFilterUri))
             {
                 writer.WritePropertyName("userScopeFilterUri");
-                writer.WriteStringValue(UserScopeFilterUri.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UserScopeFilterUri);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(UserScopeFilterUri.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DateFilterColumn))
             {
                 writer.WritePropertyName("dateFilterColumn");
-                writer.WriteStringValue(DateFilterColumn.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DateFilterColumn);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DateFilterColumn.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartTime.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(StartTime);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(StartTime.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EndTime))
             {
                 writer.WritePropertyName("endTime");
-                writer.WriteStringValue(EndTime.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EndTime);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EndTime.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(OutputColumns))
             {
                 writer.WritePropertyName("outputColumns");
-                writer.WriteStringValue(OutputColumns.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(OutputColumns);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(OutputColumns.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(CopySourceType);
             if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount");
-                writer.WriteStringValue(SourceRetryCount.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SourceRetryCount);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceRetryCount.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait");
-                writer.WriteStringValue(SourceRetryWait.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SourceRetryWait);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceRetryWait.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections");
-                writer.WriteStringValue(MaxConcurrentConnections.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MaxConcurrentConnections);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection");
-                writer.WriteStringValue(DisableMetricsCollection.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DisableMetricsCollection);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DisableMetricsCollection.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static Office365Source DeserializeOffice365Source(JsonElement element)
         {
-            Optional<Uri> allowedGroups = default;
-            Optional<Uri> userScopeFilterUri = default;
-            Optional<Uri> dateFilterColumn = default;
-            Optional<Uri> startTime = default;
-            Optional<Uri> endTime = default;
-            Optional<Uri> outputColumns = default;
+            Optional<BinaryData> allowedGroups = default;
+            Optional<BinaryData> userScopeFilterUri = default;
+            Optional<BinaryData> dateFilterColumn = default;
+            Optional<BinaryData> startTime = default;
+            Optional<BinaryData> endTime = default;
+            Optional<BinaryData> outputColumns = default;
             string type = default;
-            Optional<Uri> sourceRetryCount = default;
-            Optional<Uri> sourceRetryWait = default;
-            Optional<Uri> maxConcurrentConnections = default;
-            Optional<Uri> disableMetricsCollection = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> sourceRetryCount = default;
+            Optional<BinaryData> sourceRetryWait = default;
+            Optional<BinaryData> maxConcurrentConnections = default;
+            Optional<BinaryData> disableMetricsCollection = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedGroups"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        allowedGroups = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    allowedGroups = new Uri(property.Value.GetString());
+                    allowedGroups = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("userScopeFilterUri"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        userScopeFilterUri = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    userScopeFilterUri = new Uri(property.Value.GetString());
+                    userScopeFilterUri = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("dateFilterColumn"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dateFilterColumn = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dateFilterColumn = new Uri(property.Value.GetString());
+                    dateFilterColumn = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("startTime"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        startTime = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    startTime = new Uri(property.Value.GetString());
+                    startTime = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("endTime"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endTime = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    endTime = new Uri(property.Value.GetString());
+                    endTime = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("outputColumns"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        outputColumns = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    outputColumns = new Uri(property.Value.GetString());
+                    outputColumns = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -163,43 +207,43 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sourceRetryCount = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sourceRetryCount = new Uri(property.Value.GetString());
+                    sourceRetryCount = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sourceRetryWait"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sourceRetryWait = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sourceRetryWait = new Uri(property.Value.GetString());
+                    sourceRetryWait = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        maxConcurrentConnections = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxConcurrentConnections = new Uri(property.Value.GetString());
+                    maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        disableMetricsCollection = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    disableMetricsCollection = new Uri(property.Value.GetString());
+                    disableMetricsCollection = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new Office365Source(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, allowedGroups.Value, userScopeFilterUri.Value, dateFilterColumn.Value, startTime.Value, endTime.Value, outputColumns.Value);

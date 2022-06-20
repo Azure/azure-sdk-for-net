@@ -17,7 +17,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("value");
-            writer.WriteStringValue(Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Value);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Value.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(IsSensitive))
             {
                 writer.WritePropertyName("isSensitive");
@@ -28,13 +32,13 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SsisPropertyOverride DeserializeSsisPropertyOverride(JsonElement element)
         {
-            Uri value = default;
+            BinaryData value = default;
             Optional<bool> isSensitive = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    value = new Uri(property.Value.GetString());
+                    value = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("isSensitive"))

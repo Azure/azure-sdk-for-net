@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             LinkedServiceName = linkedServiceName;
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of StagingSettings. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="path"> The path to storage for storing the interim data. Type: string (or Expression with resultType string). </param>
         /// <param name="enableCompression"> Specifies whether to use compression when copying data via an interim staging. Default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal StagingSettings(LinkedServiceReference linkedServiceName, Uri path, Uri enableCompression, IDictionary<string, Uri> additionalProperties)
+        internal StagingSettings(LinkedServiceReference linkedServiceName, BinaryData path, BinaryData enableCompression, IDictionary<string, BinaryData> additionalProperties)
         {
             LinkedServiceName = linkedServiceName;
             Path = path;
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Staging linked service reference. </summary>
         public LinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> The path to storage for storing the interim data. Type: string (or Expression with resultType string). </summary>
-        public Uri Path { get; set; }
+        public BinaryData Path { get; set; }
         /// <summary> Specifies whether to use compression when copying data via an interim staging. Default value is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri EnableCompression { get; set; }
+        public BinaryData EnableCompression { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

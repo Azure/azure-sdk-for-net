@@ -61,16 +61,28 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("method");
             writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("url");
-            writer.WriteStringValue(Uri.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Uri);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Uri.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(Headers))
             {
                 writer.WritePropertyName("headers");
-                writer.WriteStringValue(Headers.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Headers);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Headers.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body");
-                writer.WriteStringValue(Body.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Body);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Body.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Authentication))
             {
@@ -111,7 +123,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -126,16 +142,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
             WebActivityMethod method = default;
-            Uri url = default;
-            Optional<Uri> headers = default;
-            Optional<Uri> body = default;
+            BinaryData url = default;
+            Optional<BinaryData> headers = default;
+            Optional<BinaryData> body = default;
             Optional<WebActivityAuthentication> authentication = default;
             Optional<bool> disableCertValidation = default;
             Optional<IList<DatasetReference>> datasets = default;
             Optional<IList<LinkedServiceReference>> linkedServices = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -219,27 +235,27 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("url"))
                         {
-                            url = new Uri(property0.Value.GetString());
+                            url = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("headers"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                headers = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            headers = new Uri(property0.Value.GetString());
+                            headers = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("body"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                body = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            body = new Uri(property0.Value.GetString());
+                            body = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authentication"))
@@ -305,7 +321,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new WebActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, method, url, headers.Value, body.Value, authentication.Value, Optional.ToNullable(disableCertValidation), Optional.ToList(datasets), Optional.ToList(linkedServices), connectVia.Value);

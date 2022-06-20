@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="schemaTypePropertiesSchema"> The schema name of the SQL Server dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The table name of the SQL Server dataset. Type: string (or Expression with resultType string). </param>
-        internal AmazonRdsForSqlServerTableDataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, Uri schemaTypePropertiesSchema, Uri table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AmazonRdsForSqlServerTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData schemaTypePropertiesSchema, BinaryData table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
             Table = table;
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The schema name of the SQL Server dataset. Type: string (or Expression with resultType string). </summary>
-        public Uri SchemaTypePropertiesSchema { get; set; }
+        public BinaryData SchemaTypePropertiesSchema { get; set; }
         /// <summary> The table name of the SQL Server dataset. Type: string (or Expression with resultType string). </summary>
-        public Uri Table { get; set; }
+        public BinaryData Table { get; set; }
     }
 }

@@ -20,74 +20,94 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(QuoteAllText))
             {
                 writer.WritePropertyName("quoteAllText");
-                writer.WriteStringValue(QuoteAllText.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(QuoteAllText);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(QuoteAllText.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("fileExtension");
-            writer.WriteStringValue(FileExtension.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FileExtension);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(FileExtension.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile");
-                writer.WriteStringValue(MaxRowsPerFile.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MaxRowsPerFile);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxRowsPerFile.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(FileNamePrefix))
             {
                 writer.WritePropertyName("fileNamePrefix");
-                writer.WriteStringValue(FileNamePrefix.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FileNamePrefix);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(FileNamePrefix.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(FormatWriteSettingsType);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static DelimitedTextWriteSettings DeserializeDelimitedTextWriteSettings(JsonElement element)
         {
-            Optional<Uri> quoteAllText = default;
-            Uri fileExtension = default;
-            Optional<Uri> maxRowsPerFile = default;
-            Optional<Uri> fileNamePrefix = default;
+            Optional<BinaryData> quoteAllText = default;
+            BinaryData fileExtension = default;
+            Optional<BinaryData> maxRowsPerFile = default;
+            Optional<BinaryData> fileNamePrefix = default;
             string type = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("quoteAllText"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        quoteAllText = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    quoteAllText = new Uri(property.Value.GetString());
+                    quoteAllText = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("fileExtension"))
                 {
-                    fileExtension = new Uri(property.Value.GetString());
+                    fileExtension = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("maxRowsPerFile"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        maxRowsPerFile = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxRowsPerFile = new Uri(property.Value.GetString());
+                    maxRowsPerFile = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("fileNamePrefix"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        fileNamePrefix = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fileNamePrefix = new Uri(property.Value.GetString());
+                    fileNamePrefix = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -95,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     type = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DelimitedTextWriteSettings(type, additionalProperties, quoteAllText.Value, fileExtension, maxRowsPerFile.Value, fileNamePrefix.Value);

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="pipelines"> Pipelines that need to be started. </param>
-        internal MultiplePipelineTrigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, IList<TriggerPipelineReference> pipelines) : base(triggerType, description, runtimeState, annotations, additionalProperties)
+        internal MultiplePipelineTrigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines) : base(triggerType, description, runtimeState, annotations, additionalProperties)
         {
             Pipelines = pipelines;
             TriggerType = triggerType ?? "MultiplePipelineTrigger";

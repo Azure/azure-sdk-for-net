@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
-        internal FileSystemSink(string copySinkType, Uri writeBatchSize, Uri writeBatchTimeout, Uri sinkRetryCount, Uri sinkRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri copyBehavior) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal FileSystemSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData copyBehavior) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             CopyBehavior = copyBehavior;
             CopySinkType = copySinkType ?? "FileSystemSink";
         }
 
         /// <summary> The type of copy behavior for copy sink. </summary>
-        public Uri CopyBehavior { get; set; }
+        public BinaryData CopyBehavior { get; set; }
     }
 }

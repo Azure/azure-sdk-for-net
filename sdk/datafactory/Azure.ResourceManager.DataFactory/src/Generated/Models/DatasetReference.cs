@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             ReferenceType = referenceType;
             ReferenceName = referenceName;
-            Parameters = new ChangeTrackingDictionary<string, Uri>();
+            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DatasetReference. </summary>
         /// <param name="referenceType"> Dataset reference type. </param>
         /// <param name="referenceName"> Reference dataset name. </param>
         /// <param name="parameters"> Arguments for dataset. </param>
-        internal DatasetReference(DatasetReferenceType referenceType, string referenceName, IDictionary<string, Uri> parameters)
+        internal DatasetReference(DatasetReferenceType referenceType, string referenceName, IDictionary<string, BinaryData> parameters)
         {
             ReferenceType = referenceType;
             ReferenceName = referenceName;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Reference dataset name. </summary>
         public string ReferenceName { get; set; }
         /// <summary> Arguments for dataset. </summary>
-        public IDictionary<string, Uri> Parameters { get; }
+        public IDictionary<string, BinaryData> Parameters { get; }
     }
 }

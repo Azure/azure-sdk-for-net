@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="host"> The URL of the PayPal instance. (i.e. api.sandbox.paypal.com). </param>
         /// <param name="clientId"> The client ID associated with your PayPal application. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="clientId"/> is null. </exception>
-        public PaypalLinkedService(Uri host, Uri clientId)
+        public PaypalLinkedService(BinaryData host, BinaryData clientId)
         {
             if (host == null)
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal PaypalLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri host, Uri clientId, SecretBase clientSecret, Uri useEncryptedEndpoints, Uri useHostVerification, Uri usePeerVerification, Uri encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal PaypalLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData host, BinaryData clientId, SecretBase clientSecret, BinaryData useEncryptedEndpoints, BinaryData useHostVerification, BinaryData usePeerVerification, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             ClientId = clientId;
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The URL of the PayPal instance. (i.e. api.sandbox.paypal.com). </summary>
-        public Uri Host { get; set; }
+        public BinaryData Host { get; set; }
         /// <summary> The client ID associated with your PayPal application. </summary>
-        public Uri ClientId { get; set; }
+        public BinaryData ClientId { get; set; }
         /// <summary>
         /// The client secret associated with your PayPal application.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase ClientSecret { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
-        public Uri UseEncryptedEndpoints { get; set; }
+        public BinaryData UseEncryptedEndpoints { get; set; }
         /// <summary> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </summary>
-        public Uri UseHostVerification { get; set; }
+        public BinaryData UseHostVerification { get; set; }
         /// <summary> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </summary>
-        public Uri UsePeerVerification { get; set; }
+        public BinaryData UsePeerVerification { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

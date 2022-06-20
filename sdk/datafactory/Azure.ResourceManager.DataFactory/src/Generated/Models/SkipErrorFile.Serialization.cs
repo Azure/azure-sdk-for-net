@@ -19,40 +19,48 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FileMissing))
             {
                 writer.WritePropertyName("fileMissing");
-                writer.WriteStringValue(FileMissing.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FileMissing);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(FileMissing.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DataInconsistency))
             {
                 writer.WritePropertyName("dataInconsistency");
-                writer.WriteStringValue(DataInconsistency.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DataInconsistency);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DataInconsistency.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static SkipErrorFile DeserializeSkipErrorFile(JsonElement element)
         {
-            Optional<Uri> fileMissing = default;
-            Optional<Uri> dataInconsistency = default;
+            Optional<BinaryData> fileMissing = default;
+            Optional<BinaryData> dataInconsistency = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileMissing"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        fileMissing = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fileMissing = new Uri(property.Value.GetString());
+                    fileMissing = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("dataInconsistency"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dataInconsistency = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dataInconsistency = new Uri(property.Value.GetString());
+                    dataInconsistency = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

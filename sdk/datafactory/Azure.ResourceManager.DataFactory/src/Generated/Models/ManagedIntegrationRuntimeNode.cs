@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal ManagedIntegrationRuntimeNode()
         {
             Errors = new ChangeTrackingList<ManagedIntegrationRuntimeError>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ManagedIntegrationRuntimeNode. </summary>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="status"> The managed integration runtime node status. </param>
         /// <param name="errors"> The errors that occurred on this integration runtime node. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ManagedIntegrationRuntimeNode(string nodeId, ManagedIntegrationRuntimeNodeStatus? status, IReadOnlyList<ManagedIntegrationRuntimeError> errors, IReadOnlyDictionary<string, Uri> additionalProperties)
+        internal ManagedIntegrationRuntimeNode(string nodeId, ManagedIntegrationRuntimeNodeStatus? status, IReadOnlyList<ManagedIntegrationRuntimeError> errors, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             NodeId = nodeId;
             Status = status;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The errors that occurred on this integration runtime node. </summary>
         public IReadOnlyList<ManagedIntegrationRuntimeError> Errors { get; }
         /// <summary> Additional Properties. </summary>
-        public IReadOnlyDictionary<string, Uri> AdditionalProperties { get; }
+        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

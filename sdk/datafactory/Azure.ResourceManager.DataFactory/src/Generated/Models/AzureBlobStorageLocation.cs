@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="container"> Specify the container of azure blob. Type: string (or Expression with resultType string). </param>
-        internal AzureBlobStorageLocation(string datasetLocationType, Uri folderPath, Uri fileName, IDictionary<string, Uri> additionalProperties, Uri container) : base(datasetLocationType, folderPath, fileName, additionalProperties)
+        internal AzureBlobStorageLocation(string datasetLocationType, BinaryData folderPath, BinaryData fileName, IDictionary<string, BinaryData> additionalProperties, BinaryData container) : base(datasetLocationType, folderPath, fileName, additionalProperties)
         {
             Container = container;
             DatasetLocationType = datasetLocationType ?? "AzureBlobStorageLocation";
         }
 
         /// <summary> Specify the container of azure blob. Type: string (or Expression with resultType string). </summary>
-        public Uri Container { get; set; }
+        public BinaryData Container { get; set; }
     }
 }

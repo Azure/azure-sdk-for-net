@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of SqlDWUpsertSettings. </summary>
         /// <param name="interimSchemaName"> Schema name for interim table. Type: string (or Expression with resultType string). </param>
         /// <param name="keys"> Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings). </param>
-        internal SqlDWUpsertSettings(Uri interimSchemaName, Uri keys)
+        internal SqlDWUpsertSettings(BinaryData interimSchemaName, BinaryData keys)
         {
             InterimSchemaName = interimSchemaName;
             Keys = keys;
         }
 
         /// <summary> Schema name for interim table. Type: string (or Expression with resultType string). </summary>
-        public Uri InterimSchemaName { get; set; }
+        public BinaryData InterimSchemaName { get; set; }
         /// <summary> Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings). </summary>
-        public Uri Keys { get; set; }
+        public BinaryData Keys { get; set; }
     }
 }

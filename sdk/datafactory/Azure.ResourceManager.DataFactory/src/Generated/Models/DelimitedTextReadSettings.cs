@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="TarGZipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
         /// </param>
-        internal DelimitedTextReadSettings(string formatReadSettingsType, IDictionary<string, Uri> additionalProperties, Uri skipLineCount, CompressionReadSettings compressionProperties) : base(formatReadSettingsType, additionalProperties)
+        internal DelimitedTextReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties, BinaryData skipLineCount, CompressionReadSettings compressionProperties) : base(formatReadSettingsType, additionalProperties)
         {
             SkipLineCount = skipLineCount;
             CompressionProperties = compressionProperties;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Indicates the number of non-empty rows to skip when reading data from input files. Type: integer (or Expression with resultType integer). </summary>
-        public Uri SkipLineCount { get; set; }
+        public BinaryData SkipLineCount { get; set; }
         /// <summary>
         /// Compression settings.
         /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

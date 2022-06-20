@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="variableName"> Name of the variable whose value needs to be appended to. </param>
         /// <param name="value"> Value to be appended. Could be a static value or Expression. </param>
-        internal AppendVariableActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, Uri> additionalProperties, string variableName, Uri value) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal AppendVariableActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, string variableName, BinaryData value) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             VariableName = variableName;
             Value = value;
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Name of the variable whose value needs to be appended to. </summary>
         public string VariableName { get; set; }
         /// <summary> Value to be appended. Could be a static value or Expression. </summary>
-        public Uri Value { get; set; }
+        public BinaryData Value { get; set; }
     }
 }

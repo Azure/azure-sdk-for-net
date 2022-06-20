@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal ManagedIntegrationRuntimeError()
         {
             Parameters = new ChangeTrackingList<string>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ManagedIntegrationRuntimeError. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Managed integration runtime error parameters. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ManagedIntegrationRuntimeError(DateTimeOffset? time, string code, IReadOnlyList<string> parameters, string message, IReadOnlyDictionary<string, Uri> additionalProperties)
+        internal ManagedIntegrationRuntimeError(DateTimeOffset? time, string code, IReadOnlyList<string> parameters, string message, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             Time = time;
             Code = code;
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Error message. </summary>
         public string Message { get; }
         /// <summary> Additional Properties. </summary>
-        public IReadOnlyDictionary<string, Uri> AdditionalProperties { get; }
+        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

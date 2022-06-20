@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="query"> Azure Databricks Delta Lake Sql query. Type: string (or Expression with resultType string). </param>
         /// <param name="exportSettings"> Azure Databricks Delta Lake export settings. </param>
-        internal AzureDatabricksDeltaLakeSource(string copySourceType, Uri sourceRetryCount, Uri sourceRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri query, AzureDatabricksDeltaLakeExportCommand exportSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal AzureDatabricksDeltaLakeSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData query, AzureDatabricksDeltaLakeExportCommand exportSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             Query = query;
             ExportSettings = exportSettings;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Azure Databricks Delta Lake Sql query. Type: string (or Expression with resultType string). </summary>
-        public Uri Query { get; set; }
+        public BinaryData Query { get; set; }
         /// <summary> Azure Databricks Delta Lake export settings. </summary>
         public AzureDatabricksDeltaLakeExportCommand ExportSettings { get; set; }
     }

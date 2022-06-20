@@ -20,22 +20,38 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod");
-                writer.WriteStringValue(RequestMethod.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RequestMethod);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RequestMethod.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("requestBody");
-                writer.WriteStringValue(RequestBody.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RequestBody);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RequestBody.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders");
-                writer.WriteStringValue(AdditionalHeaders.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AdditionalHeaders);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(AdditionalHeaders.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(RequestTimeout))
             {
                 writer.WritePropertyName("requestTimeout");
-                writer.WriteStringValue(RequestTimeout.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RequestTimeout);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RequestTimeout.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EnablePartitionDiscovery))
             {
@@ -45,81 +61,97 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionRootPath))
             {
                 writer.WritePropertyName("partitionRootPath");
-                writer.WriteStringValue(PartitionRootPath.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PartitionRootPath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionRootPath.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(StoreReadSettingsType);
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections");
-                writer.WriteStringValue(MaxConcurrentConnections.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MaxConcurrentConnections);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection");
-                writer.WriteStringValue(DisableMetricsCollection.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DisableMetricsCollection);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DisableMetricsCollection.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static HttpReadSettings DeserializeHttpReadSettings(JsonElement element)
         {
-            Optional<Uri> requestMethod = default;
-            Optional<Uri> requestBody = default;
-            Optional<Uri> additionalHeaders = default;
-            Optional<Uri> requestTimeout = default;
+            Optional<BinaryData> requestMethod = default;
+            Optional<BinaryData> requestBody = default;
+            Optional<BinaryData> additionalHeaders = default;
+            Optional<BinaryData> requestTimeout = default;
             Optional<bool> enablePartitionDiscovery = default;
-            Optional<Uri> partitionRootPath = default;
+            Optional<BinaryData> partitionRootPath = default;
             string type = default;
-            Optional<Uri> maxConcurrentConnections = default;
-            Optional<Uri> disableMetricsCollection = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> maxConcurrentConnections = default;
+            Optional<BinaryData> disableMetricsCollection = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requestMethod"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        requestMethod = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    requestMethod = new Uri(property.Value.GetString());
+                    requestMethod = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("requestBody"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        requestBody = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    requestBody = new Uri(property.Value.GetString());
+                    requestBody = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("additionalHeaders"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        additionalHeaders = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    additionalHeaders = new Uri(property.Value.GetString());
+                    additionalHeaders = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("requestTimeout"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        requestTimeout = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    requestTimeout = new Uri(property.Value.GetString());
+                    requestTimeout = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("enablePartitionDiscovery"))
@@ -136,10 +168,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        partitionRootPath = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    partitionRootPath = new Uri(property.Value.GetString());
+                    partitionRootPath = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -151,23 +183,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        maxConcurrentConnections = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxConcurrentConnections = new Uri(property.Value.GetString());
+                    maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        disableMetricsCollection = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    disableMetricsCollection = new Uri(property.Value.GetString());
+                    disableMetricsCollection = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new HttpReadSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, requestMethod.Value, requestBody.Value, additionalHeaders.Value, requestTimeout.Value, Optional.ToNullable(enablePartitionDiscovery), partitionRootPath.Value);

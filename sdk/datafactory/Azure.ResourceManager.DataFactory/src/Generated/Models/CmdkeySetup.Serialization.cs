@@ -21,9 +21,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("targetName");
-            writer.WriteStringValue(TargetName.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TargetName);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(TargetName.ToString()).RootElement);
+#endif
             writer.WritePropertyName("userName");
-            writer.WriteStringValue(UserName.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UserName);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(UserName.ToString()).RootElement);
+#endif
             writer.WritePropertyName("password");
             writer.WriteObjectValue(Password);
             writer.WriteEndObject();
@@ -33,8 +41,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static CmdkeySetup DeserializeCmdkeySetup(JsonElement element)
         {
             string type = default;
-            Uri targetName = default;
-            Uri userName = default;
+            BinaryData targetName = default;
+            BinaryData userName = default;
             SecretBase password = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -54,12 +62,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("targetName"))
                         {
-                            targetName = new Uri(property0.Value.GetString());
+                            targetName = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("userName"))
                         {
-                            userName = new Uri(property0.Value.GetString());
+                            userName = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"))

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="partitionUpperBound"> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionLowerBound"> The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="maxPartitionsNumber"> The maximum value of partitions the table will be split into. Type: integer (or Expression with resultType string). </param>
-        internal SapTablePartitionSettings(Uri partitionColumnName, Uri partitionUpperBound, Uri partitionLowerBound, Uri maxPartitionsNumber)
+        internal SapTablePartitionSettings(BinaryData partitionColumnName, BinaryData partitionUpperBound, BinaryData partitionLowerBound, BinaryData maxPartitionsNumber)
         {
             PartitionColumnName = partitionColumnName;
             PartitionUpperBound = partitionUpperBound;
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
-        public Uri PartitionColumnName { get; set; }
+        public BinaryData PartitionColumnName { get; set; }
         /// <summary> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
-        public Uri PartitionUpperBound { get; set; }
+        public BinaryData PartitionUpperBound { get; set; }
         /// <summary> The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
-        public Uri PartitionLowerBound { get; set; }
+        public BinaryData PartitionLowerBound { get; set; }
         /// <summary> The maximum value of partitions the table will be split into. Type: integer (or Expression with resultType string). </summary>
-        public Uri MaxPartitionsNumber { get; set; }
+        public BinaryData MaxPartitionsNumber { get; set; }
     }
 }

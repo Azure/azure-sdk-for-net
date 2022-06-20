@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of IntegrationRuntimeNodeMonitoringData. </summary>
         internal IntegrationRuntimeNodeMonitoringData()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeNodeMonitoringData. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sentBytes"> Sent bytes on the integration runtime node. </param>
         /// <param name="receivedBytes"> Received bytes on the integration runtime node. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeNodeMonitoringData(string nodeName, int? availableMemoryInMB, int? cpuUtilization, int? concurrentJobsLimit, int? concurrentJobsRunning, int? maxConcurrentJobs, float? sentBytes, float? receivedBytes, IReadOnlyDictionary<string, Uri> additionalProperties)
+        internal IntegrationRuntimeNodeMonitoringData(string nodeName, int? availableMemoryInMB, int? cpuUtilization, int? concurrentJobsLimit, int? concurrentJobsRunning, int? maxConcurrentJobs, float? sentBytes, float? receivedBytes, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             NodeName = nodeName;
             AvailableMemoryInMB = availableMemoryInMB;
@@ -60,6 +60,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Received bytes on the integration runtime node. </summary>
         public float? ReceivedBytes { get; }
         /// <summary> Additional Properties. </summary>
-        public IReadOnlyDictionary<string, Uri> AdditionalProperties { get; }
+        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

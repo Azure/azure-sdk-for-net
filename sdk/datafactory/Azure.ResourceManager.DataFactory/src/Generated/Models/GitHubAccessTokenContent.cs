@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="gitHubAccessCode"> GitHub access code. </param>
         /// <param name="gitHubAccessTokenBaseUri"> GitHub access token base URL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubAccessCode"/> or <paramref name="gitHubAccessTokenBaseUri"/> is null. </exception>
-        public GitHubAccessTokenContent(string gitHubAccessCode, Uri gitHubAccessTokenBaseUri)
+        public GitHubAccessTokenContent(string gitHubAccessCode, string gitHubAccessTokenBaseUri)
         {
             if (gitHubAccessCode == null)
             {
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> GitHub bring your own app client secret information. </summary>
         public GitHubClientSecret GitHubClientSecret { get; set; }
         /// <summary> GitHub access token base URL. </summary>
-        public Uri GitHubAccessTokenBaseUri { get; }
+        public string GitHubAccessTokenBaseUri { get; }
     }
 }

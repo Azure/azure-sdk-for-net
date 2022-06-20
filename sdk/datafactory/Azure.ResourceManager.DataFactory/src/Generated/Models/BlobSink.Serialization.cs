@@ -20,22 +20,38 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(BlobWriterOverwriteFiles))
             {
                 writer.WritePropertyName("blobWriterOverwriteFiles");
-                writer.WriteStringValue(BlobWriterOverwriteFiles.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(BlobWriterOverwriteFiles);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(BlobWriterOverwriteFiles.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(BlobWriterDateTimeFormat))
             {
                 writer.WritePropertyName("blobWriterDateTimeFormat");
-                writer.WriteStringValue(BlobWriterDateTimeFormat.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(BlobWriterDateTimeFormat);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(BlobWriterDateTimeFormat.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(BlobWriterAddHeader))
             {
                 writer.WritePropertyName("blobWriterAddHeader");
-                writer.WriteStringValue(BlobWriterAddHeader.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(BlobWriterAddHeader);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(BlobWriterAddHeader.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(CopyBehavior))
             {
                 writer.WritePropertyName("copyBehavior");
-                writer.WriteStringValue(CopyBehavior.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(CopyBehavior);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(CopyBehavior.ToString()).RootElement);
+#endif
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
@@ -52,97 +68,125 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize");
-                writer.WriteStringValue(WriteBatchSize.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(WriteBatchSize);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(WriteBatchSize.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout");
-                writer.WriteStringValue(WriteBatchTimeout.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(WriteBatchTimeout);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(WriteBatchTimeout.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount");
-                writer.WriteStringValue(SinkRetryCount.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SinkRetryCount);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SinkRetryCount.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait");
-                writer.WriteStringValue(SinkRetryWait.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SinkRetryWait);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SinkRetryWait.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections");
-                writer.WriteStringValue(MaxConcurrentConnections.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MaxConcurrentConnections);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection");
-                writer.WriteStringValue(DisableMetricsCollection.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DisableMetricsCollection);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DisableMetricsCollection.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static BlobSink DeserializeBlobSink(JsonElement element)
         {
-            Optional<Uri> blobWriterOverwriteFiles = default;
-            Optional<Uri> blobWriterDateTimeFormat = default;
-            Optional<Uri> blobWriterAddHeader = default;
-            Optional<Uri> copyBehavior = default;
+            Optional<BinaryData> blobWriterOverwriteFiles = default;
+            Optional<BinaryData> blobWriterDateTimeFormat = default;
+            Optional<BinaryData> blobWriterAddHeader = default;
+            Optional<BinaryData> copyBehavior = default;
             Optional<IList<MetadataItem>> metadata = default;
             string type = default;
-            Optional<Uri> writeBatchSize = default;
-            Optional<Uri> writeBatchTimeout = default;
-            Optional<Uri> sinkRetryCount = default;
-            Optional<Uri> sinkRetryWait = default;
-            Optional<Uri> maxConcurrentConnections = default;
-            Optional<Uri> disableMetricsCollection = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> writeBatchSize = default;
+            Optional<BinaryData> writeBatchTimeout = default;
+            Optional<BinaryData> sinkRetryCount = default;
+            Optional<BinaryData> sinkRetryWait = default;
+            Optional<BinaryData> maxConcurrentConnections = default;
+            Optional<BinaryData> disableMetricsCollection = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blobWriterOverwriteFiles"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        blobWriterOverwriteFiles = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    blobWriterOverwriteFiles = new Uri(property.Value.GetString());
+                    blobWriterOverwriteFiles = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("blobWriterDateTimeFormat"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        blobWriterDateTimeFormat = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    blobWriterDateTimeFormat = new Uri(property.Value.GetString());
+                    blobWriterDateTimeFormat = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("blobWriterAddHeader"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        blobWriterAddHeader = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    blobWriterAddHeader = new Uri(property.Value.GetString());
+                    blobWriterAddHeader = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("copyBehavior"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        copyBehavior = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    copyBehavior = new Uri(property.Value.GetString());
+                    copyBehavior = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("metadata"))
@@ -169,63 +213,63 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        writeBatchSize = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    writeBatchSize = new Uri(property.Value.GetString());
+                    writeBatchSize = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("writeBatchTimeout"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        writeBatchTimeout = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    writeBatchTimeout = new Uri(property.Value.GetString());
+                    writeBatchTimeout = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sinkRetryCount"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sinkRetryCount = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sinkRetryCount = new Uri(property.Value.GetString());
+                    sinkRetryCount = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sinkRetryWait"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sinkRetryWait = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sinkRetryWait = new Uri(property.Value.GetString());
+                    sinkRetryWait = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        maxConcurrentConnections = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxConcurrentConnections = new Uri(property.Value.GetString());
+                    maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        disableMetricsCollection = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    disableMetricsCollection = new Uri(property.Value.GetString());
+                    disableMetricsCollection = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new BlobSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, blobWriterOverwriteFiles.Value, blobWriterDateTimeFormat.Value, blobWriterAddHeader.Value, copyBehavior.Value, Optional.ToList(metadata));

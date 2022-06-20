@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sourceStagingConcurrency"> Specify number of parallel staging for sources applicable to the sink. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sinks"> (Deprecated. Please use Queries). List of Power Query activity sinks mapped to a queryName. </param>
         /// <param name="queries"> List of mapping for Power Query mashup query to sink dataset(s). </param>
-        internal ExecuteWranglingDataflowActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, Uri> additionalProperties, ActivityPolicy policy, DataFlowReference dataFlow, DataFlowStagingInfo staging, IntegrationRuntimeReference integrationRuntime, ExecuteDataFlowActivityTypePropertiesCompute compute, Uri traceLevel, Uri continueOnError, Uri runConcurrently, Uri sourceStagingConcurrency, IDictionary<string, PowerQuerySink> sinks, IList<PowerQuerySinkMapping> queries) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal ExecuteWranglingDataflowActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, ActivityPolicy policy, DataFlowReference dataFlow, DataFlowStagingInfo staging, IntegrationRuntimeReference integrationRuntime, ExecuteDataFlowActivityTypePropertiesCompute compute, BinaryData traceLevel, BinaryData continueOnError, BinaryData runConcurrently, BinaryData sourceStagingConcurrency, IDictionary<string, PowerQuerySink> sinks, IList<PowerQuerySinkMapping> queries) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             Policy = policy;
             DataFlow = dataFlow;
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Compute properties for data flow activity. </summary>
         public ExecuteDataFlowActivityTypePropertiesCompute Compute { get; set; }
         /// <summary> Trace level setting used for data flow monitoring output. Supported values are: &apos;coarse&apos;, &apos;fine&apos;, and &apos;none&apos;. Type: string (or Expression with resultType string). </summary>
-        public Uri TraceLevel { get; set; }
+        public BinaryData TraceLevel { get; set; }
         /// <summary> Continue on error setting used for data flow execution. Enables processing to continue if a sink fails. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri ContinueOnError { get; set; }
+        public BinaryData ContinueOnError { get; set; }
         /// <summary> Concurrent run setting used for data flow execution. Allows sinks with the same save order to be processed concurrently. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri RunConcurrently { get; set; }
+        public BinaryData RunConcurrently { get; set; }
         /// <summary> Specify number of parallel staging for sources applicable to the sink. Type: integer (or Expression with resultType integer). </summary>
-        public Uri SourceStagingConcurrency { get; set; }
+        public BinaryData SourceStagingConcurrency { get; set; }
         /// <summary> (Deprecated. Please use Queries). List of Power Query activity sinks mapped to a queryName. </summary>
         public IDictionary<string, PowerQuerySink> Sinks { get; }
         /// <summary> List of mapping for Power Query mashup query to sink dataset(s). </summary>

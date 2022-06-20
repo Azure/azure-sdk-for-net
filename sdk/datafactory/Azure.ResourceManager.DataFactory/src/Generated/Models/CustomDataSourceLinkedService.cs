@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of CustomDataSourceLinkedService. </summary>
         /// <param name="typeProperties"> Custom linked service properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeProperties"/> is null. </exception>
-        public CustomDataSourceLinkedService(Uri typeProperties)
+        public CustomDataSourceLinkedService(BinaryData typeProperties)
         {
             if (typeProperties == null)
             {
@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="typeProperties"> Custom linked service properties. </param>
-        internal CustomDataSourceLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri typeProperties) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal CustomDataSourceLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData typeProperties) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             TypeProperties = typeProperties;
             LinkedServiceType = linkedServiceType ?? "CustomDataSource";
         }
 
         /// <summary> Custom linked service properties. </summary>
-        public Uri TypeProperties { get; set; }
+        public BinaryData TypeProperties { get; set; }
     }
 }

@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of RetryPolicy. </summary>
         /// <param name="count"> Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="intervalInSeconds"> Interval between retries in seconds. Default is 30. </param>
-        internal RetryPolicy(Uri count, int? intervalInSeconds)
+        internal RetryPolicy(BinaryData count, int? intervalInSeconds)
         {
             Count = count;
             IntervalInSeconds = intervalInSeconds;
         }
 
         /// <summary> Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
-        public Uri Count { get; set; }
+        public BinaryData Count { get; set; }
         /// <summary> Interval between retries in seconds. Default is 30. </summary>
         public int? IntervalInSeconds { get; set; }
     }

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Optional<string> serviceToken = default;
             Optional<string> identityCertThumbprint = default;
-            Optional<Uri> hostServiceUri = default;
+            Optional<string> hostServiceUri = default;
             Optional<string> version = default;
             Optional<string> publicKey = default;
             Optional<bool> isIdentityCertExprired = default;
-            IReadOnlyDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceToken"))
@@ -38,12 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("hostServiceUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        hostServiceUri = null;
-                        continue;
-                    }
-                    hostServiceUri = new Uri(property.Value.GetString());
+                    hostServiceUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("version"))
@@ -66,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     isIdentityCertExprired = property.Value.GetBoolean();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new IntegrationRuntimeConnectionInfo(serviceToken.Value, identityCertThumbprint.Value, hostServiceUri.Value, version.Value, publicKey.Value, Optional.ToNullable(isIdentityCertExprired), additionalProperties);

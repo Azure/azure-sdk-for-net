@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="httpRequestTimeout"> The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:01:40. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="requestInterval"> The time to await before sending next page request. </param>
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
-        internal RestSource(string copySourceType, Uri sourceRetryCount, Uri sourceRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri requestMethod, Uri requestBody, Uri additionalHeaders, Uri paginationRules, Uri httpRequestTimeout, Uri requestInterval, Uri additionalColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal RestSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData requestMethod, BinaryData requestBody, BinaryData additionalHeaders, BinaryData paginationRules, BinaryData httpRequestTimeout, BinaryData requestInterval, BinaryData additionalColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             RequestMethod = requestMethod;
             RequestBody = requestBody;
@@ -46,18 +46,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string). </summary>
-        public Uri RequestMethod { get; set; }
+        public BinaryData RequestMethod { get; set; }
         /// <summary> The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string). </summary>
-        public Uri RequestBody { get; set; }
+        public BinaryData RequestBody { get; set; }
         /// <summary> The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string). </summary>
-        public Uri AdditionalHeaders { get; set; }
+        public BinaryData AdditionalHeaders { get; set; }
         /// <summary> The pagination rules to compose next page requests. Type: string (or Expression with resultType string). </summary>
-        public Uri PaginationRules { get; set; }
+        public BinaryData PaginationRules { get; set; }
         /// <summary> The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:01:40. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
-        public Uri HttpRequestTimeout { get; set; }
+        public BinaryData HttpRequestTimeout { get; set; }
         /// <summary> The time to await before sending next page request. </summary>
-        public Uri RequestInterval { get; set; }
+        public BinaryData RequestInterval { get; set; }
         /// <summary> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </summary>
-        public Uri AdditionalColumns { get; set; }
+        public BinaryData AdditionalColumns { get; set; }
     }
 }

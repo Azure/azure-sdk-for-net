@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of IntegrationRuntimeStatus. </summary>
         internal IntegrationRuntimeStatus()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeStatus. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dataFactoryName"> The data factory name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, Uri> additionalProperties)
+        internal IntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             RuntimeType = runtimeType;
             DataFactoryName = dataFactoryName;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The state of integration runtime. </summary>
         public IntegrationRuntimeState? State { get; }
         /// <summary> Additional Properties. </summary>
-        public IReadOnlyDictionary<string, Uri> AdditionalProperties { get; }
+        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

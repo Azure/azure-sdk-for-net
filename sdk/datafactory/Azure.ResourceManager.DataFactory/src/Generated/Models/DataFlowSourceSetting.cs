@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of DataFlowSourceSetting. </summary>
         public DataFlowSourceSetting()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> The data flow source name. </summary>
@@ -25,6 +25,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Defines the row limit of data flow source in debug. </summary>
         public int? RowLimit { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="startTime"> Start time of the requested range for this dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="endTime"> End time of the requested range for this dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="outputColumns"> The columns to be read out from the Office 365 table. Type: array of objects (or Expression with resultType array of objects). Example: [ { &quot;name&quot;: &quot;Id&quot; }, { &quot;name&quot;: &quot;CreatedDateTime&quot; } ]. </param>
-        internal Office365Source(string copySourceType, Uri sourceRetryCount, Uri sourceRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri allowedGroups, Uri userScopeFilterUri, Uri dateFilterColumn, Uri startTime, Uri endTime, Uri outputColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal Office365Source(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData allowedGroups, BinaryData userScopeFilterUri, BinaryData dateFilterColumn, BinaryData startTime, BinaryData endTime, BinaryData outputColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             AllowedGroups = allowedGroups;
             UserScopeFilterUri = userScopeFilterUri;
@@ -44,16 +44,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The groups containing all the users. Type: array of strings (or Expression with resultType array of strings). </summary>
-        public Uri AllowedGroups { get; set; }
+        public BinaryData AllowedGroups { get; set; }
         /// <summary> The user scope uri. Type: string (or Expression with resultType string). </summary>
-        public Uri UserScopeFilterUri { get; set; }
+        public BinaryData UserScopeFilterUri { get; set; }
         /// <summary> The Column to apply the &lt;paramref name=&quot;StartTime&quot;/&gt; and &lt;paramref name=&quot;EndTime&quot;/&gt;. Type: string (or Expression with resultType string). </summary>
-        public Uri DateFilterColumn { get; set; }
+        public BinaryData DateFilterColumn { get; set; }
         /// <summary> Start time of the requested range for this dataset. Type: string (or Expression with resultType string). </summary>
-        public Uri StartTime { get; set; }
+        public BinaryData StartTime { get; set; }
         /// <summary> End time of the requested range for this dataset. Type: string (or Expression with resultType string). </summary>
-        public Uri EndTime { get; set; }
+        public BinaryData EndTime { get; set; }
         /// <summary> The columns to be read out from the Office 365 table. Type: array of objects (or Expression with resultType array of objects). Example: [ { &quot;name&quot;: &quot;Id&quot; }, { &quot;name&quot;: &quot;CreatedDateTime&quot; } ]. </summary>
-        public Uri OutputColumns { get; set; }
+        public BinaryData OutputColumns { get; set; }
     }
 }

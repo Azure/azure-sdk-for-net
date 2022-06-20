@@ -63,17 +63,29 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Runtime))
             {
                 writer.WritePropertyName("runtime");
-                writer.WriteStringValue(Runtime.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Runtime);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Runtime.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(LoggingLevel))
             {
                 writer.WritePropertyName("loggingLevel");
-                writer.WriteStringValue(LoggingLevel.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(LoggingLevel);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(LoggingLevel.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EnvironmentPath))
             {
                 writer.WritePropertyName("environmentPath");
-                writer.WriteStringValue(EnvironmentPath.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EnvironmentPath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnvironmentPath.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ExecutionCredential))
             {
@@ -158,7 +170,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -173,9 +189,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
             SsisPackageLocation packageLocation = default;
-            Optional<Uri> runtime = default;
-            Optional<Uri> loggingLevel = default;
-            Optional<Uri> environmentPath = default;
+            Optional<BinaryData> runtime = default;
+            Optional<BinaryData> loggingLevel = default;
+            Optional<BinaryData> environmentPath = default;
             Optional<SsisExecutionCredential> executionCredential = default;
             IntegrationRuntimeReference connectVia = default;
             Optional<IDictionary<string, SsisExecutionParameter>> projectParameters = default;
@@ -184,8 +200,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IDictionary<string, IDictionary<string, SsisExecutionParameter>>> packageConnectionManagers = default;
             Optional<IDictionary<string, SsisPropertyOverride>> propertyOverrides = default;
             Optional<SsisLogLocation> logLocation = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -271,30 +287,30 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                runtime = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            runtime = new Uri(property0.Value.GetString());
+                            runtime = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("loggingLevel"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                loggingLevel = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            loggingLevel = new Uri(property0.Value.GetString());
+                            loggingLevel = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("environmentPath"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                environmentPath = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            environmentPath = new Uri(property0.Value.GetString());
+                            environmentPath = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("executionCredential"))
@@ -410,7 +426,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ExecuteSsisPackageActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, packageLocation, runtime.Value, loggingLevel.Value, environmentPath.Value, executionCredential.Value, connectVia, Optional.ToDictionary(projectParameters), Optional.ToDictionary(packageParameters), Optional.ToDictionary(projectConnectionManagers), Optional.ToDictionary(packageConnectionManagers), Optional.ToDictionary(propertyOverrides), logLocation.Value);

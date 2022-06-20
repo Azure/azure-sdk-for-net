@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="azureTablePartitionKeyName"> Azure Table partition key name. Type: string (or Expression with resultType string). </param>
         /// <param name="azureTableRowKeyName"> Azure Table row key name. Type: string (or Expression with resultType string). </param>
         /// <param name="azureTableInsertType"> Azure Table insert type. Type: string (or Expression with resultType string). </param>
-        internal AzureTableSink(string copySinkType, Uri writeBatchSize, Uri writeBatchTimeout, Uri sinkRetryCount, Uri sinkRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri azureTableDefaultPartitionKeyValue, Uri azureTablePartitionKeyName, Uri azureTableRowKeyName, Uri azureTableInsertType) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal AzureTableSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData azureTableDefaultPartitionKeyValue, BinaryData azureTablePartitionKeyName, BinaryData azureTableRowKeyName, BinaryData azureTableInsertType) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             AzureTableDefaultPartitionKeyValue = azureTableDefaultPartitionKeyValue;
             AzureTablePartitionKeyName = azureTablePartitionKeyName;
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Azure Table default partition key value. Type: string (or Expression with resultType string). </summary>
-        public Uri AzureTableDefaultPartitionKeyValue { get; set; }
+        public BinaryData AzureTableDefaultPartitionKeyValue { get; set; }
         /// <summary> Azure Table partition key name. Type: string (or Expression with resultType string). </summary>
-        public Uri AzureTablePartitionKeyName { get; set; }
+        public BinaryData AzureTablePartitionKeyName { get; set; }
         /// <summary> Azure Table row key name. Type: string (or Expression with resultType string). </summary>
-        public Uri AzureTableRowKeyName { get; set; }
+        public BinaryData AzureTableRowKeyName { get; set; }
         /// <summary> Azure Table insert type. Type: string (or Expression with resultType string). </summary>
-        public Uri AzureTableInsertType { get; set; }
+        public BinaryData AzureTableInsertType { get; set; }
     }
 }

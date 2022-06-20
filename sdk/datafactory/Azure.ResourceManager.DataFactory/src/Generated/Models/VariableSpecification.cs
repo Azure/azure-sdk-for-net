@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of VariableSpecification. </summary>
         /// <param name="variableType"> Variable type. </param>
         /// <param name="defaultValue"> Default value of variable. </param>
-        internal VariableSpecification(VariableType variableType, Uri defaultValue)
+        internal VariableSpecification(VariableType variableType, BinaryData defaultValue)
         {
             VariableType = variableType;
             DefaultValue = defaultValue;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Variable type. </summary>
         public VariableType VariableType { get; set; }
         /// <summary> Default value of variable. </summary>
-        public Uri DefaultValue { get; set; }
+        public BinaryData DefaultValue { get; set; }
     }
 }

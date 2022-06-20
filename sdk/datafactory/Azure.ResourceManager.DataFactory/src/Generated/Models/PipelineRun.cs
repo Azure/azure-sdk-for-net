@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Parameters = new ChangeTrackingDictionary<string, string>();
             RunDimensions = new ChangeTrackingDictionary<string, string>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of PipelineRun. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="status"> The status of a pipeline run. Possible values: Queued, InProgress, Succeeded, Failed, Canceling, Cancelled. </param>
         /// <param name="message"> The message from a pipeline run. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal PipelineRun(string runId, string runGroupId, bool? isLatest, string pipelineName, IReadOnlyDictionary<string, string> parameters, IReadOnlyDictionary<string, string> runDimensions, PipelineRunInvokedBy invokedBy, DateTimeOffset? lastUpdated, DateTimeOffset? runStart, DateTimeOffset? runEnd, int? durationInMs, string status, string message, IReadOnlyDictionary<string, Uri> additionalProperties)
+        internal PipelineRun(string runId, string runGroupId, bool? isLatest, string pipelineName, IReadOnlyDictionary<string, string> parameters, IReadOnlyDictionary<string, string> runDimensions, PipelineRunInvokedBy invokedBy, DateTimeOffset? lastUpdated, DateTimeOffset? runStart, DateTimeOffset? runEnd, int? durationInMs, string status, string message, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             RunId = runId;
             RunGroupId = runGroupId;
@@ -82,6 +82,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The message from a pipeline run. </summary>
         public string Message { get; }
         /// <summary> Additional Properties. </summary>
-        public IReadOnlyDictionary<string, Uri> AdditionalProperties { get; }
+        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

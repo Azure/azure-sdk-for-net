@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="events"> The list of event types that cause this trigger to fire. </param>
         /// <param name="scope"> The ARM resource ID of the Azure Event Grid Topic. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="events"/> or <paramref name="scope"/> is null. </exception>
-        public CustomEventsTrigger(IEnumerable<Uri> events, string scope)
+        public CustomEventsTrigger(IEnumerable<BinaryData> events, string scope)
         {
             if (events == null)
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="subjectEndsWith"> The event subject must end with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith. </param>
         /// <param name="events"> The list of event types that cause this trigger to fire. </param>
         /// <param name="scope"> The ARM resource ID of the Azure Event Grid Topic. </param>
-        internal CustomEventsTrigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, IList<TriggerPipelineReference> pipelines, string subjectBeginsWith, string subjectEndsWith, IList<Uri> events, string scope) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
+        internal CustomEventsTrigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, string subjectBeginsWith, string subjectEndsWith, IList<BinaryData> events, string scope) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
         {
             SubjectBeginsWith = subjectBeginsWith;
             SubjectEndsWith = subjectEndsWith;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The event subject must end with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith. </summary>
         public string SubjectEndsWith { get; set; }
         /// <summary> The list of event types that cause this trigger to fire. </summary>
-        public IList<Uri> Events { get; }
+        public IList<BinaryData> Events { get; }
         /// <summary> The ARM resource ID of the Azure Event Grid Topic. </summary>
         public string Scope { get; set; }
     }

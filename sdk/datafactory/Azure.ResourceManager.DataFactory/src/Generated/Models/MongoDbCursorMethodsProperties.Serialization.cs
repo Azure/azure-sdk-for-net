@@ -20,82 +20,102 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Project))
             {
                 writer.WritePropertyName("project");
-                writer.WriteStringValue(Project.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Project);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Project.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Sort))
             {
                 writer.WritePropertyName("sort");
-                writer.WriteStringValue(Sort.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Sort);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Sort.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Skip))
             {
                 writer.WritePropertyName("skip");
-                writer.WriteStringValue(Skip.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Skip);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Skip.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit");
-                writer.WriteStringValue(Limit.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Limit);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Limit.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static MongoDbCursorMethodsProperties DeserializeMongoDbCursorMethodsProperties(JsonElement element)
         {
-            Optional<Uri> project = default;
-            Optional<Uri> sort = default;
-            Optional<Uri> skip = default;
-            Optional<Uri> limit = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> project = default;
+            Optional<BinaryData> sort = default;
+            Optional<BinaryData> skip = default;
+            Optional<BinaryData> limit = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("project"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        project = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    project = new Uri(property.Value.GetString());
+                    project = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sort"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sort = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sort = new Uri(property.Value.GetString());
+                    sort = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("skip"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        skip = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    skip = new Uri(property.Value.GetString());
+                    skip = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("limit"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        limit = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    limit = new Uri(property.Value.GetString());
+                    limit = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new MongoDbCursorMethodsProperties(project.Value, sort.Value, skip.Value, limit.Value, additionalProperties);

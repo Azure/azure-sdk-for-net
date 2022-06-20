@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
-        internal ExecutionActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, Uri> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal ExecutionActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             LinkedServiceName = linkedServiceName;
             Policy = policy;

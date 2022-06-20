@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="scriptPath"> Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string). </param>
         /// <param name="scriptLinkedService"> Script linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="scriptPath"/> or <paramref name="scriptLinkedService"/> is null. </exception>
-        public DataLakeAnalyticsUsqlActivity(string name, Uri scriptPath, LinkedServiceReference scriptLinkedService) : base(name)
+        public DataLakeAnalyticsUsqlActivity(string name, BinaryData scriptPath, LinkedServiceReference scriptLinkedService) : base(name)
         {
             if (name == null)
             {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             ScriptPath = scriptPath;
             ScriptLinkedService = scriptLinkedService;
-            Parameters = new ChangeTrackingDictionary<string, Uri>();
+            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
             ActivityType = "DataLakeAnalyticsU-SQL";
         }
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for U-SQL job request. </param>
         /// <param name="runtimeVersion"> Runtime version of the U-SQL engine to use. Type: string (or Expression with resultType string). </param>
         /// <param name="compilationMode"> Compilation mode of U-SQL. Must be one of these values : Semantic, Full and SingleBox. Type: string (or Expression with resultType string). </param>
-        internal DataLakeAnalyticsUsqlActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, Uri> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, Uri scriptPath, LinkedServiceReference scriptLinkedService, Uri degreeOfParallelism, Uri priority, IDictionary<string, Uri> parameters, Uri runtimeVersion, Uri compilationMode) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal DataLakeAnalyticsUsqlActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData scriptPath, LinkedServiceReference scriptLinkedService, BinaryData degreeOfParallelism, BinaryData priority, IDictionary<string, BinaryData> parameters, BinaryData runtimeVersion, BinaryData compilationMode) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             ScriptPath = scriptPath;
             ScriptLinkedService = scriptLinkedService;
@@ -69,18 +69,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string). </summary>
-        public Uri ScriptPath { get; set; }
+        public BinaryData ScriptPath { get; set; }
         /// <summary> Script linked service reference. </summary>
         public LinkedServiceReference ScriptLinkedService { get; set; }
         /// <summary> The maximum number of nodes simultaneously used to run the job. Default value is 1. Type: integer (or Expression with resultType integer), minimum: 1. </summary>
-        public Uri DegreeOfParallelism { get; set; }
+        public BinaryData DegreeOfParallelism { get; set; }
         /// <summary> Determines which jobs out of all that are queued should be selected to run first. The lower the number, the higher the priority. Default value is 1000. Type: integer (or Expression with resultType integer), minimum: 1. </summary>
-        public Uri Priority { get; set; }
+        public BinaryData Priority { get; set; }
         /// <summary> Parameters for U-SQL job request. </summary>
-        public IDictionary<string, Uri> Parameters { get; }
+        public IDictionary<string, BinaryData> Parameters { get; }
         /// <summary> Runtime version of the U-SQL engine to use. Type: string (or Expression with resultType string). </summary>
-        public Uri RuntimeVersion { get; set; }
+        public BinaryData RuntimeVersion { get; set; }
         /// <summary> Compilation mode of U-SQL. Must be one of these values : Semantic, Full and SingleBox. Type: string (or Expression with resultType string). </summary>
-        public Uri CompilationMode { get; set; }
+        public BinaryData CompilationMode { get; set; }
     }
 }

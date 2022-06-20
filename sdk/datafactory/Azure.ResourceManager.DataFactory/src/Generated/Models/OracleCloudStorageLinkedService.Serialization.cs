@@ -46,7 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteStringValue(item.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +59,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AccessKeyId))
             {
                 writer.WritePropertyName("accessKeyId");
-                writer.WriteStringValue(AccessKeyId.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AccessKeyId);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(AccessKeyId.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SecretAccessKey))
             {
@@ -65,18 +73,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUrl");
-                writer.WriteStringValue(ServiceUri.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ServiceUri);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ServiceUri.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
-                writer.WriteStringValue(EncryptedCredential.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EncryptedCredential);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -87,13 +107,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<Uri>> annotations = default;
-            Optional<Uri> accessKeyId = default;
+            Optional<IList<BinaryData>> annotations = default;
+            Optional<BinaryData> accessKeyId = default;
             Optional<SecretBase> secretAccessKey = default;
-            Optional<Uri> serviceUrl = default;
-            Optional<Uri> encryptedCredential = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> serviceUrl = default;
+            Optional<BinaryData> encryptedCredential = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -138,10 +158,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Uri> array = new List<Uri>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Uri(item.GetString()));
+                        array.Add(BinaryData.FromString(item.GetRawText()));
                     }
                     annotations = array;
                     continue;
@@ -159,10 +179,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                accessKeyId = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            accessKeyId = new Uri(property0.Value.GetString());
+                            accessKeyId = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("secretAccessKey"))
@@ -179,26 +199,26 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                serviceUrl = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            serviceUrl = new Uri(property0.Value.GetString());
+                            serviceUrl = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                encryptedCredential = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryptedCredential = new Uri(property0.Value.GetString());
+                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new OracleCloudStorageLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, accessKeyId.Value, secretAccessKey.Value, serviceUrl.Value, encryptedCredential.Value);

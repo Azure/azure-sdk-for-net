@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="computeProperties"> The compute resource for managed integration runtime. </param>
         /// <param name="ssisProperties"> SSIS properties for managed integration runtime. </param>
         /// <param name="customerVirtualNetwork"> The name of virtual network to which Azure-SSIS integration runtime will join. </param>
-        internal ManagedIntegrationRuntime(IntegrationRuntimeType runtimeType, string description, IDictionary<string, Uri> additionalProperties, IntegrationRuntimeState? state, ManagedVirtualNetworkReference managedVirtualNetwork, IntegrationRuntimeComputeProperties computeProperties, IntegrationRuntimeSsisProperties ssisProperties, IntegrationRuntimeCustomerVirtualNetwork customerVirtualNetwork) : base(runtimeType, description, additionalProperties)
+        internal ManagedIntegrationRuntime(IntegrationRuntimeType runtimeType, string description, IDictionary<string, BinaryData> additionalProperties, IntegrationRuntimeState? state, ManagedVirtualNetworkReference managedVirtualNetwork, IntegrationRuntimeComputeProperties computeProperties, IntegrationRuntimeSsisProperties ssisProperties, IntegrationRuntimeCustomerVirtualNetwork customerVirtualNetwork) : base(runtimeType, description, additionalProperties)
         {
             State = state;
             ManagedVirtualNetwork = managedVirtualNetwork;

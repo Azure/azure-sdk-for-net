@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> User property name. </param>
         /// <param name="value"> User property value. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
-        public UserProperty(string name, Uri value)
+        public UserProperty(string name, BinaryData value)
         {
             if (name == null)
             {
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> User property name. </summary>
         public string Name { get; set; }
         /// <summary> User property value. Type: string (or Expression with resultType string). </summary>
-        public Uri Value { get; set; }
+        public BinaryData Value { get; set; }
     }
 }

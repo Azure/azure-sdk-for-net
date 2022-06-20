@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mlEndpoint"/> or <paramref name="apiKey"/> is null. </exception>
-        public AzureMLLinkedService(Uri mlEndpoint, SecretBase apiKey)
+        public AzureMLLinkedService(BinaryData mlEndpoint, SecretBase apiKey)
         {
             if (mlEndpoint == null)
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         /// <param name="authentication"> Type of authentication (Required to specify MSI) used to connect to AzureML. Type: string (or Expression with resultType string). </param>
-        internal AzureMLLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri mlEndpoint, SecretBase apiKey, Uri updateResourceEndpoint, Uri servicePrincipalId, SecretBase servicePrincipalKey, Uri tenant, Uri encryptedCredential, Uri authentication) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureMLLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData mlEndpoint, SecretBase apiKey, BinaryData updateResourceEndpoint, BinaryData servicePrincipalId, SecretBase servicePrincipalKey, BinaryData tenant, BinaryData encryptedCredential, BinaryData authentication) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             MlEndpoint = mlEndpoint;
             ApiKey = apiKey;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </summary>
-        public Uri MlEndpoint { get; set; }
+        public BinaryData MlEndpoint { get; set; }
         /// <summary>
         /// The API key for accessing the Azure ML model endpoint.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase ApiKey { get; set; }
         /// <summary> The Update Resource REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </summary>
-        public Uri UpdateResourceEndpoint { get; set; }
+        public BinaryData UpdateResourceEndpoint { get; set; }
         /// <summary> The ID of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML Studio web service. Type: string (or Expression with resultType string). </summary>
-        public Uri ServicePrincipalId { get; set; }
+        public BinaryData ServicePrincipalId { get; set; }
         /// <summary>
         /// The key of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML Studio web service.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase ServicePrincipalKey { get; set; }
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
-        public Uri Tenant { get; set; }
+        public BinaryData Tenant { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
         /// <summary> Type of authentication (Required to specify MSI) used to connect to AzureML. Type: string (or Expression with resultType string). </summary>
-        public Uri Authentication { get; set; }
+        public BinaryData Authentication { get; set; }
     }
 }

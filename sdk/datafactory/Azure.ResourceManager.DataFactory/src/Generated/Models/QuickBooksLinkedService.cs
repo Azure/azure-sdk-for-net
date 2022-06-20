@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal QuickBooksLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri connectionProperties, Uri endpoint, Uri companyId, Uri consumerKey, SecretBase consumerSecret, SecretBase accessToken, SecretBase accessTokenSecret, Uri useEncryptedEndpoints, Uri encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal QuickBooksLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, BinaryData endpoint, BinaryData companyId, BinaryData consumerKey, SecretBase consumerSecret, SecretBase accessToken, SecretBase accessTokenSecret, BinaryData useEncryptedEndpoints, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionProperties = connectionProperties;
             Endpoint = endpoint;
@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Properties used to connect to QuickBooks. It is mutually exclusive with any other properties in the linked service. Type: object. </summary>
-        public Uri ConnectionProperties { get; set; }
+        public BinaryData ConnectionProperties { get; set; }
         /// <summary> The endpoint of the QuickBooks server. (i.e. quickbooks.api.intuit.com). </summary>
-        public Uri Endpoint { get; set; }
+        public BinaryData Endpoint { get; set; }
         /// <summary> The company ID of the QuickBooks company to authorize. </summary>
-        public Uri CompanyId { get; set; }
+        public BinaryData CompanyId { get; set; }
         /// <summary> The consumer key for OAuth 1.0 authentication. </summary>
-        public Uri ConsumerKey { get; set; }
+        public BinaryData ConsumerKey { get; set; }
         /// <summary>
         /// The consumer secret for OAuth 1.0 authentication.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase AccessTokenSecret { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
-        public Uri UseEncryptedEndpoints { get; set; }
+        public BinaryData UseEncryptedEndpoints { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

@@ -19,7 +19,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EnableCopyActivityLog))
             {
                 writer.WritePropertyName("enableCopyActivityLog");
-                writer.WriteStringValue(EnableCopyActivityLog.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EnableCopyActivityLog);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnableCopyActivityLog.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(CopyActivityLogSettings))
             {
@@ -33,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static LogSettings DeserializeLogSettings(JsonElement element)
         {
-            Optional<Uri> enableCopyActivityLog = default;
+            Optional<BinaryData> enableCopyActivityLog = default;
             Optional<CopyActivityLogSettings> copyActivityLogSettings = default;
             LogLocationSettings logLocationSettings = default;
             foreach (var property in element.EnumerateObject())
@@ -42,10 +46,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        enableCopyActivityLog = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enableCopyActivityLog = new Uri(property.Value.GetString());
+                    enableCopyActivityLog = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("copyActivityLogSettings"))

@@ -18,44 +18,56 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("linkedServiceName");
-            writer.WriteStringValue(LinkedServiceName.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(LinkedServiceName);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(LinkedServiceName.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path");
-                writer.WriteStringValue(Path.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Path);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Path.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static RedirectIncompatibleRowSettings DeserializeRedirectIncompatibleRowSettings(JsonElement element)
         {
-            Uri linkedServiceName = default;
-            Optional<Uri> path = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            BinaryData linkedServiceName = default;
+            Optional<BinaryData> path = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
                 {
-                    linkedServiceName = new Uri(property.Value.GetString());
+                    linkedServiceName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("path"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        path = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    path = new Uri(property.Value.GetString());
+                    path = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new RedirectIncompatibleRowSettings(linkedServiceName, path.Value, additionalProperties);

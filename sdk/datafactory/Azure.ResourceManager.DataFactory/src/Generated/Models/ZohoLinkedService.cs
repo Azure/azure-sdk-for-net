@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal ZohoLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri connectionProperties, Uri endpoint, SecretBase accessToken, Uri useEncryptedEndpoints, Uri useHostVerification, Uri usePeerVerification, Uri encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal ZohoLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, BinaryData endpoint, SecretBase accessToken, BinaryData useEncryptedEndpoints, BinaryData useHostVerification, BinaryData usePeerVerification, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionProperties = connectionProperties;
             Endpoint = endpoint;
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Properties used to connect to Zoho. It is mutually exclusive with any other properties in the linked service. Type: object. </summary>
-        public Uri ConnectionProperties { get; set; }
+        public BinaryData ConnectionProperties { get; set; }
         /// <summary> The endpoint of the Zoho server. (i.e. crm.zoho.com/crm/private). </summary>
-        public Uri Endpoint { get; set; }
+        public BinaryData Endpoint { get; set; }
         /// <summary>
         /// The access token for Zoho authentication.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase AccessToken { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
-        public Uri UseEncryptedEndpoints { get; set; }
+        public BinaryData UseEncryptedEndpoints { get; set; }
         /// <summary> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </summary>
-        public Uri UseHostVerification { get; set; }
+        public BinaryData UseHostVerification { get; set; }
         /// <summary> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </summary>
-        public Uri UsePeerVerification { get; set; }
+        public BinaryData UsePeerVerification { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal AzureFileStorageWriteSettings(string storeWriteSettingsType, Uri maxConcurrentConnections, Uri disableMetricsCollection, Uri copyBehavior, IDictionary<string, Uri> additionalProperties) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, additionalProperties)
+        internal AzureFileStorageWriteSettings(string storeWriteSettingsType, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, BinaryData copyBehavior, IDictionary<string, BinaryData> additionalProperties) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, additionalProperties)
         {
             StoreWriteSettingsType = storeWriteSettingsType ?? "AzureFileStorageWriteSettings";
         }

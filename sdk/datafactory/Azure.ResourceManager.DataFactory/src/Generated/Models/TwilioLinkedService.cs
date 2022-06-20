@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
-        public TwilioLinkedService(Uri userName, SecretBase password)
+        public TwilioLinkedService(BinaryData userName, SecretBase password)
         {
             if (userName == null)
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        internal TwilioLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri userName, SecretBase password) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal TwilioLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData userName, SecretBase password) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             UserName = userName;
             Password = password;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The Account SID of Twilio service. </summary>
-        public Uri UserName { get; set; }
+        public BinaryData UserName { get; set; }
         /// <summary>
         /// The auth token of Twilio service.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

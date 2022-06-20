@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The available derived classes include <see cref="AmazonS3CompatibleLocation"/>, <see cref="AmazonS3Location"/>, <see cref="AzureBlobFSLocation"/>, <see cref="AzureBlobStorageLocation"/>, <see cref="AzureDataLakeStoreLocation"/>, <see cref="AzureFileStorageLocation"/>, <see cref="FileServerLocation"/>, <see cref="FtpServerLocation"/>, <see cref="GoogleCloudStorageLocation"/>, <see cref="HdfsLocation"/>, <see cref="HttpServerLocation"/>, <see cref="OracleCloudStorageLocation"/> and <see cref="SftpLocation"/>.
         /// </param>
         /// <param name="compressionCodec"> The data compressionCodec. Type: string (or Expression with resultType string). </param>
-        internal ParquetDataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, DatasetLocation location, Uri compressionCodec) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal ParquetDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation location, BinaryData compressionCodec) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Location = location;
             CompressionCodec = compressionCodec;
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public DatasetLocation Location { get; set; }
         /// <summary> The data compressionCodec. Type: string (or Expression with resultType string). </summary>
-        public Uri CompressionCodec { get; set; }
+        public BinaryData CompressionCodec { get; set; }
     }
 }

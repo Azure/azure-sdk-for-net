@@ -20,7 +20,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SkipLineCount))
             {
                 writer.WritePropertyName("skipLineCount");
-                writer.WriteStringValue(SkipLineCount.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SkipLineCount);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SkipLineCount.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(CompressionProperties))
             {
@@ -32,28 +36,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static DelimitedTextReadSettings DeserializeDelimitedTextReadSettings(JsonElement element)
         {
-            Optional<Uri> skipLineCount = default;
+            Optional<BinaryData> skipLineCount = default;
             Optional<CompressionReadSettings> compressionProperties = default;
             string type = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("skipLineCount"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        skipLineCount = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    skipLineCount = new Uri(property.Value.GetString());
+                    skipLineCount = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("compressionProperties"))
@@ -71,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     type = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DelimitedTextReadSettings(type, additionalProperties, skipLineCount.Value, compressionProperties.Value);

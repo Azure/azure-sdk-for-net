@@ -61,22 +61,38 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("method");
             writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("functionName");
-            writer.WriteStringValue(FunctionName.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FunctionName);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(FunctionName.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(Headers))
             {
                 writer.WritePropertyName("headers");
-                writer.WriteStringValue(Headers.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Headers);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Headers.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body");
-                writer.WriteStringValue(Body.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Body);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Body.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -91,11 +107,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
             AzureFunctionActivityMethod method = default;
-            Uri functionName = default;
-            Optional<Uri> headers = default;
-            Optional<Uri> body = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            BinaryData functionName = default;
+            Optional<BinaryData> headers = default;
+            Optional<BinaryData> body = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -179,33 +195,33 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("functionName"))
                         {
-                            functionName = new Uri(property0.Value.GetString());
+                            functionName = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("headers"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                headers = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            headers = new Uri(property0.Value.GetString());
+                            headers = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("body"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                body = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            body = new Uri(property0.Value.GetString());
+                            body = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureFunctionActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, method, functionName, headers.Value, body.Value);

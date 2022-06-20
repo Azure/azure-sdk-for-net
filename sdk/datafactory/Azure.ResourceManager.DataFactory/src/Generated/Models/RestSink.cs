@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="httpRequestTimeout"> The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:01:40. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="requestInterval"> The time to await before sending next request, in milliseconds. </param>
         /// <param name="httpCompressionType"> Http Compression Type to Send data in compressed format with Optimal Compression Level, Default is None. And The Only Supported option is Gzip. </param>
-        internal RestSink(string copySinkType, Uri writeBatchSize, Uri writeBatchTimeout, Uri sinkRetryCount, Uri sinkRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri requestMethod, Uri additionalHeaders, Uri httpRequestTimeout, Uri requestInterval, Uri httpCompressionType) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal RestSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData requestMethod, BinaryData additionalHeaders, BinaryData httpRequestTimeout, BinaryData requestInterval, BinaryData httpCompressionType) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             RequestMethod = requestMethod;
             AdditionalHeaders = additionalHeaders;
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The HTTP method used to call the RESTful API. The default is POST. Type: string (or Expression with resultType string). </summary>
-        public Uri RequestMethod { get; set; }
+        public BinaryData RequestMethod { get; set; }
         /// <summary> The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string). </summary>
-        public Uri AdditionalHeaders { get; set; }
+        public BinaryData AdditionalHeaders { get; set; }
         /// <summary> The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:01:40. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
-        public Uri HttpRequestTimeout { get; set; }
+        public BinaryData HttpRequestTimeout { get; set; }
         /// <summary> The time to await before sending next request, in milliseconds. </summary>
-        public Uri RequestInterval { get; set; }
+        public BinaryData RequestInterval { get; set; }
         /// <summary> Http Compression Type to Send data in compressed format with Optimal Compression Level, Default is None. And The Only Supported option is Gzip. </summary>
-        public Uri HttpCompressionType { get; set; }
+        public BinaryData HttpCompressionType { get; set; }
     }
 }

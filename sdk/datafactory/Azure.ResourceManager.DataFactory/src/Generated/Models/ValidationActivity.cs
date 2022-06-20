@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="minimumSize"> Can be used if dataset points to a file. The file must be greater than or equal in size to the value specified. Type: integer (or Expression with resultType integer). </param>
         /// <param name="childItems"> Can be used if dataset points to a folder. If set to true, the folder must have at least one file. If set to false, the folder must be empty. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="dataset"> Validation activity dataset reference. </param>
-        internal ValidationActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, Uri> additionalProperties, Uri timeout, Uri sleep, Uri minimumSize, Uri childItems, DatasetReference dataset) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal ValidationActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, BinaryData timeout, BinaryData sleep, BinaryData minimumSize, BinaryData childItems, DatasetReference dataset) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             Timeout = timeout;
             Sleep = sleep;
@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Specifies the timeout for the activity to run. If there is no value specified, it takes the value of TimeSpan.FromDays(7) which is 1 week as default. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
-        public Uri Timeout { get; set; }
+        public BinaryData Timeout { get; set; }
         /// <summary> A delay in seconds between validation attempts. If no value is specified, 10 seconds will be used as the default. Type: integer (or Expression with resultType integer). </summary>
-        public Uri Sleep { get; set; }
+        public BinaryData Sleep { get; set; }
         /// <summary> Can be used if dataset points to a file. The file must be greater than or equal in size to the value specified. Type: integer (or Expression with resultType integer). </summary>
-        public Uri MinimumSize { get; set; }
+        public BinaryData MinimumSize { get; set; }
         /// <summary> Can be used if dataset points to a folder. If set to true, the folder must have at least one file. If set to false, the folder must be empty. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri ChildItems { get; set; }
+        public BinaryData ChildItems { get; set; }
         /// <summary> Validation activity dataset reference. </summary>
         public DatasetReference Dataset { get; set; }
     }

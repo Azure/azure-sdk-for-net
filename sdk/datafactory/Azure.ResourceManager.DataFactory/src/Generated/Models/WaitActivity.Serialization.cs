@@ -49,12 +49,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("waitTimeInSeconds");
-            writer.WriteStringValue(WaitTimeInSeconds.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(WaitTimeInSeconds);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(WaitTimeInSeconds.ToString()).RootElement);
+#endif
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -66,9 +74,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
-            Uri waitTimeInSeconds = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            BinaryData waitTimeInSeconds = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -127,13 +135,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("waitTimeInSeconds"))
                         {
-                            waitTimeInSeconds = new Uri(property0.Value.GetString());
+                            waitTimeInSeconds = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new WaitActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, waitTimeInSeconds);

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="resourceGroupName"> Azure ML Service workspace resource group name. Type: string (or Expression with resultType string). </param>
         /// <param name="mlWorkspaceName"> Azure ML Service workspace name. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mlWorkspaceName"/> is null. </exception>
-        public AzureMLServiceLinkedService(Uri subscriptionId, Uri resourceGroupName, Uri mlWorkspaceName)
+        public AzureMLServiceLinkedService(BinaryData subscriptionId, BinaryData resourceGroupName, BinaryData mlWorkspaceName)
         {
             if (subscriptionId == null)
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </param>
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AzureMLServiceLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri subscriptionId, Uri resourceGroupName, Uri mlWorkspaceName, Uri servicePrincipalId, SecretBase servicePrincipalKey, Uri tenant, Uri encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureMLServiceLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData subscriptionId, BinaryData resourceGroupName, BinaryData mlWorkspaceName, BinaryData servicePrincipalId, SecretBase servicePrincipalKey, BinaryData tenant, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Azure ML Service workspace subscription ID. Type: string (or Expression with resultType string). </summary>
-        public Uri SubscriptionId { get; set; }
+        public BinaryData SubscriptionId { get; set; }
         /// <summary> Azure ML Service workspace resource group name. Type: string (or Expression with resultType string). </summary>
-        public Uri ResourceGroupName { get; set; }
+        public BinaryData ResourceGroupName { get; set; }
         /// <summary> Azure ML Service workspace name. Type: string (or Expression with resultType string). </summary>
-        public Uri MlWorkspaceName { get; set; }
+        public BinaryData MlWorkspaceName { get; set; }
         /// <summary> The ID of the service principal used to authenticate against the endpoint of a published Azure ML Service pipeline. Type: string (or Expression with resultType string). </summary>
-        public Uri ServicePrincipalId { get; set; }
+        public BinaryData ServicePrincipalId { get; set; }
         /// <summary>
         /// The key of the service principal used to authenticate against the endpoint of a published Azure ML Service pipeline.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase ServicePrincipalKey { get; set; }
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
-        public Uri Tenant { get; set; }
+        public BinaryData Tenant { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

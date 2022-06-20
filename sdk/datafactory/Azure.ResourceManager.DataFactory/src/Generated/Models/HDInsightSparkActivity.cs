@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="rootPath"> The root path in &apos;sparkJobLinkedService&apos; for all the job’s files. Type: string (or Expression with resultType string). </param>
         /// <param name="entryFilePath"> The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="rootPath"/> or <paramref name="entryFilePath"/> is null. </exception>
-        public HDInsightSparkActivity(string name, Uri rootPath, Uri entryFilePath) : base(name)
+        public HDInsightSparkActivity(string name, BinaryData rootPath, BinaryData entryFilePath) : base(name)
         {
             if (name == null)
             {
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             RootPath = rootPath;
             EntryFilePath = entryFilePath;
-            Arguments = new ChangeTrackingList<Uri>();
-            SparkConfig = new ChangeTrackingDictionary<string, Uri>();
+            Arguments = new ChangeTrackingList<BinaryData>();
+            SparkConfig = new ChangeTrackingDictionary<string, BinaryData>();
             ActivityType = "HDInsightSpark";
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="className"> The application&apos;s Java/Spark main class. </param>
         /// <param name="proxyUser"> The user to impersonate that will execute the job. Type: string (or Expression with resultType string). </param>
         /// <param name="sparkConfig"> Spark configuration property. </param>
-        internal HDInsightSparkActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, Uri> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, Uri rootPath, Uri entryFilePath, IList<Uri> arguments, HDInsightActivityDebugInfoOption? getDebugInfo, LinkedServiceReference sparkJobLinkedService, string className, Uri proxyUser, IDictionary<string, Uri> sparkConfig) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal HDInsightSparkActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData rootPath, BinaryData entryFilePath, IList<BinaryData> arguments, HDInsightActivityDebugInfoOption? getDebugInfo, LinkedServiceReference sparkJobLinkedService, string className, BinaryData proxyUser, IDictionary<string, BinaryData> sparkConfig) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             RootPath = rootPath;
             EntryFilePath = entryFilePath;
@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The root path in &apos;sparkJobLinkedService&apos; for all the job’s files. Type: string (or Expression with resultType string). </summary>
-        public Uri RootPath { get; set; }
+        public BinaryData RootPath { get; set; }
         /// <summary> The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string). </summary>
-        public Uri EntryFilePath { get; set; }
+        public BinaryData EntryFilePath { get; set; }
         /// <summary> The user-specified arguments to HDInsightSparkActivity. </summary>
-        public IList<Uri> Arguments { get; }
+        public IList<BinaryData> Arguments { get; }
         /// <summary> Debug info option. </summary>
         public HDInsightActivityDebugInfoOption? GetDebugInfo { get; set; }
         /// <summary> The storage linked service for uploading the entry file and dependencies, and for receiving logs. </summary>
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The application&apos;s Java/Spark main class. </summary>
         public string ClassName { get; set; }
         /// <summary> The user to impersonate that will execute the job. Type: string (or Expression with resultType string). </summary>
-        public Uri ProxyUser { get; set; }
+        public BinaryData ProxyUser { get; set; }
         /// <summary> Spark configuration property. </summary>
-        public IDictionary<string, Uri> SparkConfig { get; }
+        public IDictionary<string, BinaryData> SparkConfig { get; }
     }
 }

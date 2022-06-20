@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of DataFlow. </summary>
         public DataFlow()
         {
-            Annotations = new ChangeTrackingList<Uri>();
+            Annotations = new ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DataFlow. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> The description of the data flow. </param>
         /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>
         /// <param name="folder"> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </param>
-        internal DataFlow(string dataFlowType, string description, IList<Uri> annotations, DataFlowFolder folder)
+        internal DataFlow(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder)
         {
             DataFlowType = dataFlowType;
             Description = description;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The description of the data flow. </summary>
         public string Description { get; set; }
         /// <summary> List of tags that can be used for describing the data flow. </summary>
-        public IList<Uri> Annotations { get; }
+        public IList<BinaryData> Annotations { get; }
         /// <summary> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </summary>
         internal DataFlowFolder Folder { get; set; }
         /// <summary> The name of the folder that this data flow is in. </summary>

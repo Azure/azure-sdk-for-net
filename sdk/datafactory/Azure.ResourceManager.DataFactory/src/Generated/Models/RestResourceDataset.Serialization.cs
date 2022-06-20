@@ -27,12 +27,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure");
-                writer.WriteStringValue(Structure.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Structure);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Structure.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema");
-                writer.WriteStringValue(Schema.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Schema);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Schema.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("linkedServiceName");
             writer.WriteObjectValue(LinkedServiceName);
@@ -53,7 +61,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteStringValue(item.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -67,33 +79,57 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RelativeUri))
             {
                 writer.WritePropertyName("relativeUrl");
-                writer.WriteStringValue(RelativeUri.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RelativeUri);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RelativeUri.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod");
-                writer.WriteStringValue(RequestMethod.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RequestMethod);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RequestMethod.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("requestBody");
-                writer.WriteStringValue(RequestBody.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RequestBody);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RequestBody.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders");
-                writer.WriteStringValue(AdditionalHeaders.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AdditionalHeaders);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(AdditionalHeaders.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(PaginationRules))
             {
                 writer.WritePropertyName("paginationRules");
-                writer.WriteStringValue(PaginationRules.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PaginationRules);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PaginationRules.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -102,19 +138,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             string type = default;
             Optional<string> description = default;
-            Optional<Uri> structure = default;
-            Optional<Uri> schema = default;
+            Optional<BinaryData> structure = default;
+            Optional<BinaryData> schema = default;
             LinkedServiceReference linkedServiceName = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<Uri>> annotations = default;
+            Optional<IList<BinaryData>> annotations = default;
             Optional<DatasetFolder> folder = default;
-            Optional<Uri> relativeUrl = default;
-            Optional<Uri> requestMethod = default;
-            Optional<Uri> requestBody = default;
-            Optional<Uri> additionalHeaders = default;
-            Optional<Uri> paginationRules = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> relativeUrl = default;
+            Optional<BinaryData> requestMethod = default;
+            Optional<BinaryData> requestBody = default;
+            Optional<BinaryData> additionalHeaders = default;
+            Optional<BinaryData> paginationRules = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -131,20 +167,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        structure = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    structure = new Uri(property.Value.GetString());
+                    structure = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("schema"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        schema = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    schema = new Uri(property.Value.GetString());
+                    schema = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("linkedServiceName"))
@@ -174,10 +210,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Uri> array = new List<Uri>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Uri(item.GetString()));
+                        array.Add(BinaryData.FromString(item.GetRawText()));
                     }
                     annotations = array;
                     continue;
@@ -205,56 +241,56 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                relativeUrl = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            relativeUrl = new Uri(property0.Value.GetString());
+                            relativeUrl = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("requestMethod"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                requestMethod = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            requestMethod = new Uri(property0.Value.GetString());
+                            requestMethod = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("requestBody"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                requestBody = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            requestBody = new Uri(property0.Value.GetString());
+                            requestBody = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("additionalHeaders"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                additionalHeaders = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            additionalHeaders = new Uri(property0.Value.GetString());
+                            additionalHeaders = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("paginationRules"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                paginationRules = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            paginationRules = new Uri(property0.Value.GetString());
+                            paginationRules = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new RestResourceDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, relativeUrl.Value, requestMethod.Value, requestBody.Value, additionalHeaders.Value, paginationRules.Value);

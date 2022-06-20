@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             ReferenceType = referenceType;
             ReferenceName = referenceName;
-            Parameters = new ChangeTrackingDictionary<string, Uri>();
+            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of LinkedServiceReference. </summary>
         /// <param name="referenceType"> Linked service reference type. </param>
         /// <param name="referenceName"> Reference LinkedService name. </param>
         /// <param name="parameters"> Arguments for LinkedService. </param>
-        internal LinkedServiceReference(LinkedServiceReferenceType referenceType, string referenceName, IDictionary<string, Uri> parameters)
+        internal LinkedServiceReference(LinkedServiceReferenceType referenceType, string referenceName, IDictionary<string, BinaryData> parameters)
         {
             ReferenceType = referenceType;
             ReferenceName = referenceName;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Reference LinkedService name. </summary>
         public string ReferenceName { get; set; }
         /// <summary> Arguments for LinkedService. </summary>
-        public IDictionary<string, Uri> Parameters { get; }
+        public IDictionary<string, BinaryData> Parameters { get; }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="host"> IP address or host name of the Hive server, separated by &apos;;&apos; for multiple hosts (only when serviceDiscoveryMode is enable). </param>
         /// <param name="authenticationType"> The authentication method used to access the Hive server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
-        public HiveLinkedService(Uri host, HiveAuthenticationType authenticationType)
+        public HiveLinkedService(BinaryData host, HiveAuthenticationType authenticationType)
         {
             if (host == null)
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="allowHostNameCNMismatch"> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. </param>
         /// <param name="allowSelfSignedServerCert"> Specifies whether to allow self-signed certificates from the server. The default value is false. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal HiveLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri host, Uri port, HiveServerType? serverType, HiveThriftTransportProtocol? thriftTransportProtocol, HiveAuthenticationType authenticationType, Uri serviceDiscoveryMode, Uri zooKeeperNameSpace, Uri useNativeQuery, Uri username, SecretBase password, Uri httpPath, Uri enableSsl, Uri trustedCertPath, Uri useSystemTrustStore, Uri allowHostNameCNMismatch, Uri allowSelfSignedServerCert, Uri encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal HiveLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData host, BinaryData port, HiveServerType? serverType, HiveThriftTransportProtocol? thriftTransportProtocol, HiveAuthenticationType authenticationType, BinaryData serviceDiscoveryMode, BinaryData zooKeeperNameSpace, BinaryData useNativeQuery, BinaryData username, SecretBase password, BinaryData httpPath, BinaryData enableSsl, BinaryData trustedCertPath, BinaryData useSystemTrustStore, BinaryData allowHostNameCNMismatch, BinaryData allowSelfSignedServerCert, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             Port = port;
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> IP address or host name of the Hive server, separated by &apos;;&apos; for multiple hosts (only when serviceDiscoveryMode is enable). </summary>
-        public Uri Host { get; set; }
+        public BinaryData Host { get; set; }
         /// <summary> The TCP port that the Hive server uses to listen for client connections. </summary>
-        public Uri Port { get; set; }
+        public BinaryData Port { get; set; }
         /// <summary> The type of Hive server. </summary>
         public HiveServerType? ServerType { get; set; }
         /// <summary> The transport protocol to use in the Thrift layer. </summary>
@@ -90,13 +90,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The authentication method used to access the Hive server. </summary>
         public HiveAuthenticationType AuthenticationType { get; set; }
         /// <summary> true to indicate using the ZooKeeper service, false not. </summary>
-        public Uri ServiceDiscoveryMode { get; set; }
+        public BinaryData ServiceDiscoveryMode { get; set; }
         /// <summary> The namespace on ZooKeeper under which Hive Server 2 nodes are added. </summary>
-        public Uri ZooKeeperNameSpace { get; set; }
+        public BinaryData ZooKeeperNameSpace { get; set; }
         /// <summary> Specifies whether the driver uses native HiveQL queries,or converts them into an equivalent form in HiveQL. </summary>
-        public Uri UseNativeQuery { get; set; }
+        public BinaryData UseNativeQuery { get; set; }
         /// <summary> The user name that you use to access Hive Server. </summary>
-        public Uri Username { get; set; }
+        public BinaryData Username { get; set; }
         /// <summary>
         /// The password corresponding to the user name that you provided in the Username field
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -104,18 +104,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> The partial URL corresponding to the Hive server. </summary>
-        public Uri HttpPath { get; set; }
+        public BinaryData HttpPath { get; set; }
         /// <summary> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </summary>
-        public Uri EnableSsl { get; set; }
+        public BinaryData EnableSsl { get; set; }
         /// <summary> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </summary>
-        public Uri TrustedCertPath { get; set; }
+        public BinaryData TrustedCertPath { get; set; }
         /// <summary> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. </summary>
-        public Uri UseSystemTrustStore { get; set; }
+        public BinaryData UseSystemTrustStore { get; set; }
         /// <summary> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. </summary>
-        public Uri AllowHostNameCNMismatch { get; set; }
+        public BinaryData AllowHostNameCNMismatch { get; set; }
         /// <summary> Specifies whether to allow self-signed certificates from the server. The default value is false. </summary>
-        public Uri AllowSelfSignedServerCert { get; set; }
+        public BinaryData AllowSelfSignedServerCert { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

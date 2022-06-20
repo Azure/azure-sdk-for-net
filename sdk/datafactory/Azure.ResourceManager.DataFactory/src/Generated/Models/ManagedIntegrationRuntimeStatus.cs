@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="nodes"> The list of nodes for managed integration runtime. </param>
         /// <param name="otherErrors"> The errors that occurred on this integration runtime. </param>
         /// <param name="lastOperation"> The last operation result that occurred on this integration runtime. </param>
-        internal ManagedIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, Uri> additionalProperties, DateTimeOffset? createOn, IReadOnlyList<ManagedIntegrationRuntimeNode> nodes, IReadOnlyList<ManagedIntegrationRuntimeError> otherErrors, ManagedIntegrationRuntimeOperationResult lastOperation) : base(runtimeType, dataFactoryName, state, additionalProperties)
+        internal ManagedIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, DateTimeOffset? createOn, IReadOnlyList<ManagedIntegrationRuntimeNode> nodes, IReadOnlyList<ManagedIntegrationRuntimeError> otherErrors, ManagedIntegrationRuntimeOperationResult lastOperation) : base(runtimeType, dataFactoryName, state, additionalProperties)
         {
             CreateOn = createOn;
             Nodes = nodes;

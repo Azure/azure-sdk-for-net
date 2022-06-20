@@ -19,40 +19,48 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel");
-                writer.WriteStringValue(LogLevel.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(LogLevel);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(LogLevel.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EnableReliableLogging))
             {
                 writer.WritePropertyName("enableReliableLogging");
-                writer.WriteStringValue(EnableReliableLogging.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EnableReliableLogging);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnableReliableLogging.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static CopyActivityLogSettings DeserializeCopyActivityLogSettings(JsonElement element)
         {
-            Optional<Uri> logLevel = default;
-            Optional<Uri> enableReliableLogging = default;
+            Optional<BinaryData> logLevel = default;
+            Optional<BinaryData> enableReliableLogging = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logLevel"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        logLevel = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    logLevel = new Uri(property.Value.GetString());
+                    logLevel = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("enableReliableLogging"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        enableReliableLogging = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enableReliableLogging = new Uri(property.Value.GetString());
+                    enableReliableLogging = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

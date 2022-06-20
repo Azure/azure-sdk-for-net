@@ -46,26 +46,50 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteStringValue(item.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("clusterSize");
-            writer.WriteStringValue(ClusterSize.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClusterSize);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(ClusterSize.ToString()).RootElement);
+#endif
             writer.WritePropertyName("timeToLive");
-            writer.WriteStringValue(TimeToLive.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TimeToLive);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(TimeToLive.ToString()).RootElement);
+#endif
             writer.WritePropertyName("version");
-            writer.WriteStringValue(Version.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Version);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Version.ToString()).RootElement);
+#endif
             writer.WritePropertyName("linkedServiceName");
             writer.WriteObjectValue(LinkedServiceName);
             writer.WritePropertyName("hostSubscriptionId");
-            writer.WriteStringValue(HostSubscriptionId.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(HostSubscriptionId);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(HostSubscriptionId.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId");
-                writer.WriteStringValue(ServicePrincipalId.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ServicePrincipalId);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ServicePrincipalId.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ServicePrincipalKey))
             {
@@ -73,18 +97,34 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteObjectValue(ServicePrincipalKey);
             }
             writer.WritePropertyName("tenant");
-            writer.WriteStringValue(Tenant.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Tenant);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Tenant.ToString()).RootElement);
+#endif
             writer.WritePropertyName("clusterResourceGroup");
-            writer.WriteStringValue(ClusterResourceGroup.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClusterResourceGroup);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(ClusterResourceGroup.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(ClusterNamePrefix))
             {
                 writer.WritePropertyName("clusterNamePrefix");
-                writer.WriteStringValue(ClusterNamePrefix.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClusterNamePrefix);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClusterNamePrefix.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ClusterUserName))
             {
                 writer.WritePropertyName("clusterUserName");
-                writer.WriteStringValue(ClusterUserName.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClusterUserName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClusterUserName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ClusterPassword))
             {
@@ -94,7 +134,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ClusterSshUserName))
             {
                 writer.WritePropertyName("clusterSshUserName");
-                writer.WriteStringValue(ClusterSshUserName.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClusterSshUserName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClusterSshUserName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ClusterSshPassword))
             {
@@ -119,72 +163,128 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ClusterType))
             {
                 writer.WritePropertyName("clusterType");
-                writer.WriteStringValue(ClusterType.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClusterType);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClusterType.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SparkVersion))
             {
                 writer.WritePropertyName("sparkVersion");
-                writer.WriteStringValue(SparkVersion.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SparkVersion);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SparkVersion.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(CoreConfiguration))
             {
                 writer.WritePropertyName("coreConfiguration");
-                writer.WriteStringValue(CoreConfiguration.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(CoreConfiguration);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(CoreConfiguration.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(HBaseConfiguration))
             {
                 writer.WritePropertyName("hBaseConfiguration");
-                writer.WriteStringValue(HBaseConfiguration.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(HBaseConfiguration);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(HBaseConfiguration.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(HdfsConfiguration))
             {
                 writer.WritePropertyName("hdfsConfiguration");
-                writer.WriteStringValue(HdfsConfiguration.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(HdfsConfiguration);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(HdfsConfiguration.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(HiveConfiguration))
             {
                 writer.WritePropertyName("hiveConfiguration");
-                writer.WriteStringValue(HiveConfiguration.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(HiveConfiguration);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(HiveConfiguration.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(MapReduceConfiguration))
             {
                 writer.WritePropertyName("mapReduceConfiguration");
-                writer.WriteStringValue(MapReduceConfiguration.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MapReduceConfiguration);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MapReduceConfiguration.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(OozieConfiguration))
             {
                 writer.WritePropertyName("oozieConfiguration");
-                writer.WriteStringValue(OozieConfiguration.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(OozieConfiguration);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(OozieConfiguration.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(StormConfiguration))
             {
                 writer.WritePropertyName("stormConfiguration");
-                writer.WriteStringValue(StormConfiguration.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(StormConfiguration);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(StormConfiguration.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(YarnConfiguration))
             {
                 writer.WritePropertyName("yarnConfiguration");
-                writer.WriteStringValue(YarnConfiguration.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(YarnConfiguration);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(YarnConfiguration.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
-                writer.WriteStringValue(EncryptedCredential.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EncryptedCredential);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(HeadNodeSize))
             {
                 writer.WritePropertyName("headNodeSize");
-                writer.WriteStringValue(HeadNodeSize.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(HeadNodeSize);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(HeadNodeSize.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DataNodeSize))
             {
                 writer.WritePropertyName("dataNodeSize");
-                writer.WriteStringValue(DataNodeSize.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DataNodeSize);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DataNodeSize.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ZookeeperNodeSize))
             {
                 writer.WritePropertyName("zookeeperNodeSize");
-                writer.WriteStringValue(ZookeeperNodeSize.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ZookeeperNodeSize);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ZookeeperNodeSize.ToString()).RootElement);
+#endif
             }
             if (Optional.IsCollectionDefined(ScriptActions))
             {
@@ -199,12 +299,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(VirtualNetworkId))
             {
                 writer.WritePropertyName("virtualNetworkId");
-                writer.WriteStringValue(VirtualNetworkId.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(VirtualNetworkId);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(VirtualNetworkId.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SubnetName))
             {
                 writer.WritePropertyName("subnetName");
-                writer.WriteStringValue(SubnetName.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SubnetName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SubnetName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Credential))
             {
@@ -215,7 +323,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -226,43 +338,43 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<Uri>> annotations = default;
-            Uri clusterSize = default;
-            Uri timeToLive = default;
-            Uri version = default;
+            Optional<IList<BinaryData>> annotations = default;
+            BinaryData clusterSize = default;
+            BinaryData timeToLive = default;
+            BinaryData version = default;
             LinkedServiceReference linkedServiceName = default;
-            Uri hostSubscriptionId = default;
-            Optional<Uri> servicePrincipalId = default;
+            BinaryData hostSubscriptionId = default;
+            Optional<BinaryData> servicePrincipalId = default;
             Optional<SecretBase> servicePrincipalKey = default;
-            Uri tenant = default;
-            Uri clusterResourceGroup = default;
-            Optional<Uri> clusterNamePrefix = default;
-            Optional<Uri> clusterUserName = default;
+            BinaryData tenant = default;
+            BinaryData clusterResourceGroup = default;
+            Optional<BinaryData> clusterNamePrefix = default;
+            Optional<BinaryData> clusterUserName = default;
             Optional<SecretBase> clusterPassword = default;
-            Optional<Uri> clusterSshUserName = default;
+            Optional<BinaryData> clusterSshUserName = default;
             Optional<SecretBase> clusterSshPassword = default;
             Optional<IList<LinkedServiceReference>> additionalLinkedServiceNames = default;
             Optional<LinkedServiceReference> hcatalogLinkedServiceName = default;
-            Optional<Uri> clusterType = default;
-            Optional<Uri> sparkVersion = default;
-            Optional<Uri> coreConfiguration = default;
-            Optional<Uri> hBaseConfiguration = default;
-            Optional<Uri> hdfsConfiguration = default;
-            Optional<Uri> hiveConfiguration = default;
-            Optional<Uri> mapReduceConfiguration = default;
-            Optional<Uri> oozieConfiguration = default;
-            Optional<Uri> stormConfiguration = default;
-            Optional<Uri> yarnConfiguration = default;
-            Optional<Uri> encryptedCredential = default;
-            Optional<Uri> headNodeSize = default;
-            Optional<Uri> dataNodeSize = default;
-            Optional<Uri> zookeeperNodeSize = default;
+            Optional<BinaryData> clusterType = default;
+            Optional<BinaryData> sparkVersion = default;
+            Optional<BinaryData> coreConfiguration = default;
+            Optional<BinaryData> hBaseConfiguration = default;
+            Optional<BinaryData> hdfsConfiguration = default;
+            Optional<BinaryData> hiveConfiguration = default;
+            Optional<BinaryData> mapReduceConfiguration = default;
+            Optional<BinaryData> oozieConfiguration = default;
+            Optional<BinaryData> stormConfiguration = default;
+            Optional<BinaryData> yarnConfiguration = default;
+            Optional<BinaryData> encryptedCredential = default;
+            Optional<BinaryData> headNodeSize = default;
+            Optional<BinaryData> dataNodeSize = default;
+            Optional<BinaryData> zookeeperNodeSize = default;
             Optional<IList<ScriptAction>> scriptActions = default;
-            Optional<Uri> virtualNetworkId = default;
-            Optional<Uri> subnetName = default;
+            Optional<BinaryData> virtualNetworkId = default;
+            Optional<BinaryData> subnetName = default;
             Optional<CredentialReference> credential = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -307,10 +419,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Uri> array = new List<Uri>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Uri(item.GetString()));
+                        array.Add(BinaryData.FromString(item.GetRawText()));
                     }
                     annotations = array;
                     continue;
@@ -326,17 +438,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("clusterSize"))
                         {
-                            clusterSize = new Uri(property0.Value.GetString());
+                            clusterSize = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("timeToLive"))
                         {
-                            timeToLive = new Uri(property0.Value.GetString());
+                            timeToLive = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("version"))
                         {
-                            version = new Uri(property0.Value.GetString());
+                            version = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("linkedServiceName"))
@@ -346,17 +458,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("hostSubscriptionId"))
                         {
-                            hostSubscriptionId = new Uri(property0.Value.GetString());
+                            hostSubscriptionId = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalId"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                servicePrincipalId = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePrincipalId = new Uri(property0.Value.GetString());
+                            servicePrincipalId = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalKey"))
@@ -371,32 +483,32 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("tenant"))
                         {
-                            tenant = new Uri(property0.Value.GetString());
+                            tenant = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clusterResourceGroup"))
                         {
-                            clusterResourceGroup = new Uri(property0.Value.GetString());
+                            clusterResourceGroup = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clusterNamePrefix"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                clusterNamePrefix = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clusterNamePrefix = new Uri(property0.Value.GetString());
+                            clusterNamePrefix = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clusterUserName"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                clusterUserName = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clusterUserName = new Uri(property0.Value.GetString());
+                            clusterUserName = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clusterPassword"))
@@ -413,10 +525,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                clusterSshUserName = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clusterSshUserName = new Uri(property0.Value.GetString());
+                            clusterSshUserName = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clusterSshPassword"))
@@ -458,140 +570,140 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                clusterType = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clusterType = new Uri(property0.Value.GetString());
+                            clusterType = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sparkVersion"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                sparkVersion = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sparkVersion = new Uri(property0.Value.GetString());
+                            sparkVersion = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("coreConfiguration"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                coreConfiguration = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            coreConfiguration = new Uri(property0.Value.GetString());
+                            coreConfiguration = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("hBaseConfiguration"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                hBaseConfiguration = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hBaseConfiguration = new Uri(property0.Value.GetString());
+                            hBaseConfiguration = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("hdfsConfiguration"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                hdfsConfiguration = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hdfsConfiguration = new Uri(property0.Value.GetString());
+                            hdfsConfiguration = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("hiveConfiguration"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                hiveConfiguration = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hiveConfiguration = new Uri(property0.Value.GetString());
+                            hiveConfiguration = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("mapReduceConfiguration"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                mapReduceConfiguration = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            mapReduceConfiguration = new Uri(property0.Value.GetString());
+                            mapReduceConfiguration = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("oozieConfiguration"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                oozieConfiguration = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            oozieConfiguration = new Uri(property0.Value.GetString());
+                            oozieConfiguration = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("stormConfiguration"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                stormConfiguration = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            stormConfiguration = new Uri(property0.Value.GetString());
+                            stormConfiguration = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("yarnConfiguration"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                yarnConfiguration = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            yarnConfiguration = new Uri(property0.Value.GetString());
+                            yarnConfiguration = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                encryptedCredential = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryptedCredential = new Uri(property0.Value.GetString());
+                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("headNodeSize"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                headNodeSize = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            headNodeSize = new Uri(property0.Value.GetString());
+                            headNodeSize = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("dataNodeSize"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                dataNodeSize = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dataNodeSize = new Uri(property0.Value.GetString());
+                            dataNodeSize = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("zookeeperNodeSize"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                zookeeperNodeSize = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            zookeeperNodeSize = new Uri(property0.Value.GetString());
+                            zookeeperNodeSize = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("scriptActions"))
@@ -613,20 +725,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                virtualNetworkId = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            virtualNetworkId = new Uri(property0.Value.GetString());
+                            virtualNetworkId = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("subnetName"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                subnetName = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            subnetName = new Uri(property0.Value.GetString());
+                            subnetName = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("credential"))
@@ -642,7 +754,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new HDInsightOnDemandLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, clusterSize, timeToLive, version, linkedServiceName, hostSubscriptionId, servicePrincipalId.Value, servicePrincipalKey.Value, tenant, clusterResourceGroup, clusterNamePrefix.Value, clusterUserName.Value, clusterPassword.Value, clusterSshUserName.Value, clusterSshPassword.Value, Optional.ToList(additionalLinkedServiceNames), hcatalogLinkedServiceName.Value, clusterType.Value, sparkVersion.Value, coreConfiguration.Value, hBaseConfiguration.Value, hdfsConfiguration.Value, hiveConfiguration.Value, mapReduceConfiguration.Value, oozieConfiguration.Value, stormConfiguration.Value, yarnConfiguration.Value, encryptedCredential.Value, headNodeSize.Value, dataNodeSize.Value, zookeeperNodeSize.Value, Optional.ToList(scriptActions), virtualNetworkId.Value, subnetName.Value, credential.Value);

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="value"> The value of the parameter. </param>
         /// <param name="direction"> The direction of the parameter. </param>
         /// <param name="size"> The size of the output direction parameter. </param>
-        internal ScriptActivityParameter(Uri name, ScriptActivityParameterType? parameterType, Uri value, ScriptActivityParameterDirection? direction, int? size)
+        internal ScriptActivityParameter(BinaryData name, ScriptActivityParameterType? parameterType, BinaryData value, ScriptActivityParameterDirection? direction, int? size)
         {
             Name = name;
             ParameterType = parameterType;
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the parameter. Type: string (or Expression with resultType string). </summary>
-        public Uri Name { get; set; }
+        public BinaryData Name { get; set; }
         /// <summary> The type of the parameter. </summary>
         public ScriptActivityParameterType? ParameterType { get; set; }
         /// <summary> The value of the parameter. </summary>
-        public Uri Value { get; set; }
+        public BinaryData Value { get; set; }
         /// <summary> The direction of the parameter. </summary>
         public ScriptActivityParameterDirection? Direction { get; set; }
         /// <summary> The size of the output direction parameter. </summary>

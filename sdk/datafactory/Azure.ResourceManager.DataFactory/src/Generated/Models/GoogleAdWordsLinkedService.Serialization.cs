@@ -46,7 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteStringValue(item.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -55,12 +59,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectionProperties))
             {
                 writer.WritePropertyName("connectionProperties");
-                writer.WriteStringValue(ConnectionProperties.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ConnectionProperties);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ConnectionProperties.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ClientCustomerId))
             {
                 writer.WritePropertyName("clientCustomerID");
-                writer.WriteStringValue(ClientCustomerId.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClientCustomerId);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClientCustomerId.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DeveloperToken))
             {
@@ -80,7 +92,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId");
-                writer.WriteStringValue(ClientId.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClientId);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClientId.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ClientSecret))
             {
@@ -90,33 +106,57 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email");
-                writer.WriteStringValue(Email.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Email);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Email.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(KeyFilePath))
             {
                 writer.WritePropertyName("keyFilePath");
-                writer.WriteStringValue(KeyFilePath.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(KeyFilePath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(KeyFilePath.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(TrustedCertPath))
             {
                 writer.WritePropertyName("trustedCertPath");
-                writer.WriteStringValue(TrustedCertPath.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TrustedCertPath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(TrustedCertPath.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(UseSystemTrustStore))
             {
                 writer.WritePropertyName("useSystemTrustStore");
-                writer.WriteStringValue(UseSystemTrustStore.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UseSystemTrustStore);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(UseSystemTrustStore.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
-                writer.WriteStringValue(EncryptedCredential.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EncryptedCredential);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -127,21 +167,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<Uri>> annotations = default;
-            Optional<Uri> connectionProperties = default;
-            Optional<Uri> clientCustomerID = default;
+            Optional<IList<BinaryData>> annotations = default;
+            Optional<BinaryData> connectionProperties = default;
+            Optional<BinaryData> clientCustomerID = default;
             Optional<SecretBase> developerToken = default;
             Optional<GoogleAdWordsAuthenticationType> authenticationType = default;
             Optional<SecretBase> refreshToken = default;
-            Optional<Uri> clientId = default;
+            Optional<BinaryData> clientId = default;
             Optional<SecretBase> clientSecret = default;
-            Optional<Uri> email = default;
-            Optional<Uri> keyFilePath = default;
-            Optional<Uri> trustedCertPath = default;
-            Optional<Uri> useSystemTrustStore = default;
-            Optional<Uri> encryptedCredential = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> email = default;
+            Optional<BinaryData> keyFilePath = default;
+            Optional<BinaryData> trustedCertPath = default;
+            Optional<BinaryData> useSystemTrustStore = default;
+            Optional<BinaryData> encryptedCredential = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -186,10 +226,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Uri> array = new List<Uri>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Uri(item.GetString()));
+                        array.Add(BinaryData.FromString(item.GetRawText()));
                     }
                     annotations = array;
                     continue;
@@ -207,20 +247,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                connectionProperties = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            connectionProperties = new Uri(property0.Value.GetString());
+                            connectionProperties = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clientCustomerID"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                clientCustomerID = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clientCustomerID = new Uri(property0.Value.GetString());
+                            clientCustomerID = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("developerToken"))
@@ -257,10 +297,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                clientId = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clientId = new Uri(property0.Value.GetString());
+                            clientId = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clientSecret"))
@@ -277,56 +317,56 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                email = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            email = new Uri(property0.Value.GetString());
+                            email = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("keyFilePath"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                keyFilePath = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            keyFilePath = new Uri(property0.Value.GetString());
+                            keyFilePath = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("trustedCertPath"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                trustedCertPath = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            trustedCertPath = new Uri(property0.Value.GetString());
+                            trustedCertPath = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("useSystemTrustStore"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                useSystemTrustStore = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            useSystemTrustStore = new Uri(property0.Value.GetString());
+                            useSystemTrustStore = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                encryptedCredential = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryptedCredential = new Uri(property0.Value.GetString());
+                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new GoogleAdWordsLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionProperties.Value, clientCustomerID.Value, developerToken.Value, Optional.ToNullable(authenticationType), refreshToken.Value, clientId.Value, clientSecret.Value, email.Value, keyFilePath.Value, trustedCertPath.Value, useSystemTrustStore.Value, encryptedCredential.Value);

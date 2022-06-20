@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="poolName"> The Azure Batch pool name. Type: string (or Expression with resultType string). </param>
         /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="batchUri"/>, <paramref name="poolName"/> or <paramref name="linkedServiceName"/> is null. </exception>
-        public AzureBatchLinkedService(Uri accountName, Uri batchUri, Uri poolName, LinkedServiceReference linkedServiceName)
+        public AzureBatchLinkedService(BinaryData accountName, BinaryData batchUri, BinaryData poolName, LinkedServiceReference linkedServiceName)
         {
             if (accountName == null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzureBatchLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri accountName, SecretBase accessKey, Uri batchUri, Uri poolName, LinkedServiceReference linkedServiceName, Uri encryptedCredential, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureBatchLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData accountName, SecretBase accessKey, BinaryData batchUri, BinaryData poolName, LinkedServiceReference linkedServiceName, BinaryData encryptedCredential, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             AccountName = accountName;
             AccessKey = accessKey;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The Azure Batch account name. Type: string (or Expression with resultType string). </summary>
-        public Uri AccountName { get; set; }
+        public BinaryData AccountName { get; set; }
         /// <summary>
         /// The Azure Batch account access key.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -84,13 +84,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase AccessKey { get; set; }
         /// <summary> The Azure Batch URI. Type: string (or Expression with resultType string). </summary>
-        public Uri BatchUri { get; set; }
+        public BinaryData BatchUri { get; set; }
         /// <summary> The Azure Batch pool name. Type: string (or Expression with resultType string). </summary>
-        public Uri PoolName { get; set; }
+        public BinaryData PoolName { get; set; }
         /// <summary> The Azure Storage linked service reference. </summary>
         public LinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
         public CredentialReference Credential { get; set; }
     }

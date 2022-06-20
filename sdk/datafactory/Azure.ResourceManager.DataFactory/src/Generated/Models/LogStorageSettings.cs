@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             LinkedServiceName = linkedServiceName;
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of LogStorageSettings. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="logLevel"> Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string). </param>
         /// <param name="enableReliableLogging"> Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal LogStorageSettings(LinkedServiceReference linkedServiceName, Uri path, Uri logLevel, Uri enableReliableLogging, IDictionary<string, Uri> additionalProperties)
+        internal LogStorageSettings(LinkedServiceReference linkedServiceName, BinaryData path, BinaryData logLevel, BinaryData enableReliableLogging, IDictionary<string, BinaryData> additionalProperties)
         {
             LinkedServiceName = linkedServiceName;
             Path = path;
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Log storage linked service reference. </summary>
         public LinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </summary>
-        public Uri Path { get; set; }
+        public BinaryData Path { get; set; }
         /// <summary> Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string). </summary>
-        public Uri LogLevel { get; set; }
+        public BinaryData LogLevel { get; set; }
         /// <summary> Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri EnableReliableLogging { get; set; }
+        public BinaryData EnableReliableLogging { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

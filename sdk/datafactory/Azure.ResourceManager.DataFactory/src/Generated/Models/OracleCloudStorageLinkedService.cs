@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </param>
         /// <param name="serviceUri"> This value specifies the endpoint to access with the Oracle Cloud Storage Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal OracleCloudStorageLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri accessKeyId, SecretBase secretAccessKey, Uri serviceUri, Uri encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal OracleCloudStorageLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData accessKeyId, SecretBase secretAccessKey, BinaryData serviceUri, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             AccessKeyId = accessKeyId;
             SecretAccessKey = secretAccessKey;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The access key identifier of the Oracle Cloud Storage Identity and Access Management (IAM) user. Type: string (or Expression with resultType string). </summary>
-        public Uri AccessKeyId { get; set; }
+        public BinaryData AccessKeyId { get; set; }
         /// <summary>
         /// The secret access key of the Oracle Cloud Storage Identity and Access Management (IAM) user.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase SecretAccessKey { get; set; }
         /// <summary> This value specifies the endpoint to access with the Oracle Cloud Storage Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string). </summary>
-        public Uri ServiceUri { get; set; }
+        public BinaryData ServiceUri { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public FactoryIdentity(FactoryIdentityType identityType)
         {
             IdentityType = identityType;
-            UserAssignedIdentities = new ChangeTrackingDictionary<string, Uri>();
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of FactoryIdentity. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="principalId"> The principal id of the identity. </param>
         /// <param name="tenantId"> The client tenant id of the identity. </param>
         /// <param name="userAssignedIdentities"> List of user assigned identities for the factory. </param>
-        internal FactoryIdentity(FactoryIdentityType identityType, Guid? principalId, Guid? tenantId, IDictionary<string, Uri> userAssignedIdentities)
+        internal FactoryIdentity(FactoryIdentityType identityType, Guid? principalId, Guid? tenantId, IDictionary<string, BinaryData> userAssignedIdentities)
         {
             IdentityType = identityType;
             PrincipalId = principalId;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The client tenant id of the identity. </summary>
         public Guid? TenantId { get; }
         /// <summary> List of user assigned identities for the factory. </summary>
-        public IDictionary<string, Uri> UserAssignedIdentities { get; }
+        public IDictionary<string, BinaryData> UserAssignedIdentities { get; }
     }
 }

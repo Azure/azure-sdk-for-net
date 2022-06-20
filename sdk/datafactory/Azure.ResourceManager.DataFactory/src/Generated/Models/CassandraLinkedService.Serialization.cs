@@ -46,28 +46,48 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteStringValue(item.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("host");
-            writer.WriteStringValue(Host.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Host);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Host.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType");
-                writer.WriteStringValue(AuthenticationType.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AuthenticationType);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(AuthenticationType.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port");
-                writer.WriteStringValue(Port.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Port);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Port.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username");
-                writer.WriteStringValue(Username.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Username);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Username.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Password))
             {
@@ -77,13 +97,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
-                writer.WriteStringValue(EncryptedCredential.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EncryptedCredential);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -94,15 +122,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<Uri>> annotations = default;
-            Uri host = default;
-            Optional<Uri> authenticationType = default;
-            Optional<Uri> port = default;
-            Optional<Uri> username = default;
+            Optional<IList<BinaryData>> annotations = default;
+            BinaryData host = default;
+            Optional<BinaryData> authenticationType = default;
+            Optional<BinaryData> port = default;
+            Optional<BinaryData> username = default;
             Optional<SecretBase> password = default;
-            Optional<Uri> encryptedCredential = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> encryptedCredential = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -147,10 +175,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Uri> array = new List<Uri>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Uri(item.GetString()));
+                        array.Add(BinaryData.FromString(item.GetRawText()));
                     }
                     annotations = array;
                     continue;
@@ -166,37 +194,37 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("host"))
                         {
-                            host = new Uri(property0.Value.GetString());
+                            host = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                authenticationType = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            authenticationType = new Uri(property0.Value.GetString());
+                            authenticationType = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("port"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                port = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            port = new Uri(property0.Value.GetString());
+                            port = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("username"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                username = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            username = new Uri(property0.Value.GetString());
+                            username = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"))
@@ -213,16 +241,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                encryptedCredential = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryptedCredential = new Uri(property0.Value.GetString());
+                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new CassandraLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host, authenticationType.Value, port.Value, username.Value, password.Value, encryptedCredential.Value);

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="StoreReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmazonS3CompatibleReadSettings"/>, <see cref="AmazonS3ReadSettings"/>, <see cref="AzureBlobFSReadSettings"/>, <see cref="AzureBlobStorageReadSettings"/>, <see cref="AzureDataLakeStoreReadSettings"/>, <see cref="AzureFileStorageReadSettings"/>, <see cref="FileServerReadSettings"/>, <see cref="FtpReadSettings"/>, <see cref="GoogleCloudStorageReadSettings"/>, <see cref="HdfsReadSettings"/>, <see cref="HttpReadSettings"/>, <see cref="OracleCloudStorageReadSettings"/> and <see cref="SftpReadSettings"/>.
         /// </param>
-        internal DeleteActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, Uri> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, Uri recursive, int? maxConcurrentConnections, Uri enableLogging, LogStorageSettings logStorageSettings, DatasetReference dataset, StoreReadSettings storeSettings) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal DeleteActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData recursive, int? maxConcurrentConnections, BinaryData enableLogging, LogStorageSettings logStorageSettings, DatasetReference dataset, StoreReadSettings storeSettings) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Recursive = recursive;
             MaxConcurrentConnections = maxConcurrentConnections;
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> If true, files or sub-folders under current folder path will be deleted recursively. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri Recursive { get; set; }
+        public BinaryData Recursive { get; set; }
         /// <summary> The max concurrent connections to connect data source at the same time. </summary>
         public int? MaxConcurrentConnections { get; set; }
         /// <summary> Whether to record detailed logs of delete-activity execution. Default value is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri EnableLogging { get; set; }
+        public BinaryData EnableLogging { get; set; }
         /// <summary> Log storage settings customer need to provide when enableLogging is true. </summary>
         public LogStorageSettings LogStorageSettings { get; set; }
         /// <summary> Delete activity dataset reference. </summary>

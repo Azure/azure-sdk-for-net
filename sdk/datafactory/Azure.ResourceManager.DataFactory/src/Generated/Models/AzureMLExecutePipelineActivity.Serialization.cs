@@ -61,48 +61,84 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(MlPipelineId))
             {
                 writer.WritePropertyName("mlPipelineId");
-                writer.WriteStringValue(MlPipelineId.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MlPipelineId);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MlPipelineId.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(MlPipelineEndpointId))
             {
                 writer.WritePropertyName("mlPipelineEndpointId");
-                writer.WriteStringValue(MlPipelineEndpointId.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MlPipelineEndpointId);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MlPipelineEndpointId.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version");
-                writer.WriteStringValue(Version.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Version);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Version.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ExperimentName))
             {
                 writer.WritePropertyName("experimentName");
-                writer.WriteStringValue(ExperimentName.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ExperimentName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ExperimentName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(MlPipelineParameters))
             {
                 writer.WritePropertyName("mlPipelineParameters");
-                writer.WriteStringValue(MlPipelineParameters.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MlPipelineParameters);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MlPipelineParameters.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DataPathAssignments))
             {
                 writer.WritePropertyName("dataPathAssignments");
-                writer.WriteStringValue(DataPathAssignments.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DataPathAssignments);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DataPathAssignments.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(MlParentRunId))
             {
                 writer.WritePropertyName("mlParentRunId");
-                writer.WriteStringValue(MlParentRunId.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MlParentRunId);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MlParentRunId.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ContinueOnStepFailure))
             {
                 writer.WritePropertyName("continueOnStepFailure");
-                writer.WriteStringValue(ContinueOnStepFailure.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ContinueOnStepFailure);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ContinueOnStepFailure.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -116,16 +152,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
-            Optional<Uri> mlPipelineId = default;
-            Optional<Uri> mlPipelineEndpointId = default;
-            Optional<Uri> version = default;
-            Optional<Uri> experimentName = default;
-            Optional<Uri> mlPipelineParameters = default;
-            Optional<Uri> dataPathAssignments = default;
-            Optional<Uri> mlParentRunId = default;
-            Optional<Uri> continueOnStepFailure = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> mlPipelineId = default;
+            Optional<BinaryData> mlPipelineEndpointId = default;
+            Optional<BinaryData> version = default;
+            Optional<BinaryData> experimentName = default;
+            Optional<BinaryData> mlPipelineParameters = default;
+            Optional<BinaryData> dataPathAssignments = default;
+            Optional<BinaryData> mlParentRunId = default;
+            Optional<BinaryData> continueOnStepFailure = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -206,86 +242,86 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                mlPipelineId = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            mlPipelineId = new Uri(property0.Value.GetString());
+                            mlPipelineId = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("mlPipelineEndpointId"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                mlPipelineEndpointId = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            mlPipelineEndpointId = new Uri(property0.Value.GetString());
+                            mlPipelineEndpointId = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("version"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                version = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            version = new Uri(property0.Value.GetString());
+                            version = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("experimentName"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                experimentName = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            experimentName = new Uri(property0.Value.GetString());
+                            experimentName = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("mlPipelineParameters"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                mlPipelineParameters = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            mlPipelineParameters = new Uri(property0.Value.GetString());
+                            mlPipelineParameters = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("dataPathAssignments"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                dataPathAssignments = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dataPathAssignments = new Uri(property0.Value.GetString());
+                            dataPathAssignments = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("mlParentRunId"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                mlParentRunId = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            mlParentRunId = new Uri(property0.Value.GetString());
+                            mlParentRunId = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("continueOnStepFailure"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                continueOnStepFailure = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            continueOnStepFailure = new Uri(property0.Value.GetString());
+                            continueOnStepFailure = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureMLExecutePipelineActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, mlPipelineId.Value, mlPipelineEndpointId.Value, version.Value, experimentName.Value, mlPipelineParameters.Value, dataPathAssignments.Value, mlParentRunId.Value, continueOnStepFailure.Value);

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The available derived classes include <see cref="AvroFormat"/>, <see cref="JsonFormat"/>, <see cref="OrcFormat"/>, <see cref="ParquetFormat"/> and <see cref="TextFormat"/>.
         /// </param>
         /// <param name="compression"> The data compression method used on files. </param>
-        internal HttpDataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, Uri relativeUri, Uri requestMethod, Uri requestBody, Uri additionalHeaders, DatasetStorageFormat format, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal HttpDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData relativeUri, BinaryData requestMethod, BinaryData requestBody, BinaryData additionalHeaders, DatasetStorageFormat format, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             RelativeUri = relativeUri;
             RequestMethod = requestMethod;
@@ -62,17 +62,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The relative URL based on the URL in the HttpLinkedService refers to an HTTP file Type: string (or Expression with resultType string). </summary>
-        public Uri RelativeUri { get; set; }
+        public BinaryData RelativeUri { get; set; }
         /// <summary> The HTTP method for the HTTP request. Type: string (or Expression with resultType string). </summary>
-        public Uri RequestMethod { get; set; }
+        public BinaryData RequestMethod { get; set; }
         /// <summary> The body for the HTTP request. Type: string (or Expression with resultType string). </summary>
-        public Uri RequestBody { get; set; }
+        public BinaryData RequestBody { get; set; }
         /// <summary>
         /// The headers for the HTTP Request. e.g. request-header-name-1:request-header-value-1
         /// ...
         /// request-header-name-n:request-header-value-n Type: string (or Expression with resultType string).
         /// </summary>
-        public Uri AdditionalHeaders { get; set; }
+        public BinaryData AdditionalHeaders { get; set; }
         /// <summary>
         /// The format of files.
         /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of SsisPropertyOverride. </summary>
         /// <param name="value"> SSIS package property override value. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SsisPropertyOverride(Uri value)
+        public SsisPropertyOverride(BinaryData value)
         {
             if (value == null)
             {
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of SsisPropertyOverride. </summary>
         /// <param name="value"> SSIS package property override value. Type: string (or Expression with resultType string). </param>
         /// <param name="isSensitive"> Whether SSIS package property override value is sensitive data. Value will be encrypted in SSISDB if it is true. </param>
-        internal SsisPropertyOverride(Uri value, bool? isSensitive)
+        internal SsisPropertyOverride(BinaryData value, bool? isSensitive)
         {
             Value = value;
             IsSensitive = isSensitive;
         }
 
         /// <summary> SSIS package property override value. Type: string (or Expression with resultType string). </summary>
-        public Uri Value { get; set; }
+        public BinaryData Value { get; set; }
         /// <summary> Whether SSIS package property override value is sensitive data. Value will be encrypted in SSISDB if it is true. </summary>
         public bool? IsSensitive { get; set; }
     }

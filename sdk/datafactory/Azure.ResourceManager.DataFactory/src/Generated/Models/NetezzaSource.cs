@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="query"> A query to retrieve data from source. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionOption"> The partition mechanism that will be used for Netezza read in parallel. Possible values include: &quot;None&quot;, &quot;DataSlice&quot;, &quot;DynamicRange&quot;. </param>
         /// <param name="partitionSettings"> The settings that will be leveraged for Netezza source partitioning. </param>
-        internal NetezzaSource(string copySourceType, Uri sourceRetryCount, Uri sourceRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri queryTimeout, Uri additionalColumns, Uri query, Uri partitionOption, NetezzaPartitionSettings partitionSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
+        internal NetezzaSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData queryTimeout, BinaryData additionalColumns, BinaryData query, BinaryData partitionOption, NetezzaPartitionSettings partitionSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
         {
             Query = query;
             PartitionOption = partitionOption;
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> A query to retrieve data from source. Type: string (or Expression with resultType string). </summary>
-        public Uri Query { get; set; }
+        public BinaryData Query { get; set; }
         /// <summary> The partition mechanism that will be used for Netezza read in parallel. Possible values include: &quot;None&quot;, &quot;DataSlice&quot;, &quot;DynamicRange&quot;. </summary>
-        public Uri PartitionOption { get; set; }
+        public BinaryData PartitionOption { get; set; }
         /// <summary> The settings that will be leveraged for Netezza source partitioning. </summary>
         public NetezzaPartitionSettings PartitionSettings { get; set; }
     }

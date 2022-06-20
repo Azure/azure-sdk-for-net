@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="notebookPath"> The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="notebookPath"/> is null. </exception>
-        public DatabricksNotebookActivity(string name, Uri notebookPath) : base(name)
+        public DatabricksNotebookActivity(string name, BinaryData notebookPath) : base(name)
         {
             if (name == null)
             {
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             NotebookPath = notebookPath;
-            BaseParameters = new ChangeTrackingDictionary<string, Uri>();
-            Libraries = new ChangeTrackingList<IDictionary<string, Uri>>();
+            BaseParameters = new ChangeTrackingDictionary<string, BinaryData>();
+            Libraries = new ChangeTrackingList<IDictionary<string, BinaryData>>();
             ActivityType = "DatabricksNotebook";
         }
 
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="notebookPath"> The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </param>
         /// <param name="baseParameters"> Base parameters to be used for each run of this job.If the notebook takes a parameter that is not specified, the default value from the notebook will be used. </param>
         /// <param name="libraries"> A list of libraries to be installed on the cluster that will execute the job. </param>
-        internal DatabricksNotebookActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, Uri> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, Uri notebookPath, IDictionary<string, Uri> baseParameters, IList<IDictionary<string, Uri>> libraries) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal DatabricksNotebookActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData notebookPath, IDictionary<string, BinaryData> baseParameters, IList<IDictionary<string, BinaryData>> libraries) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             NotebookPath = notebookPath;
             BaseParameters = baseParameters;
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </summary>
-        public Uri NotebookPath { get; set; }
+        public BinaryData NotebookPath { get; set; }
         /// <summary> Base parameters to be used for each run of this job.If the notebook takes a parameter that is not specified, the default value from the notebook will be used. </summary>
-        public IDictionary<string, Uri> BaseParameters { get; }
+        public IDictionary<string, BinaryData> BaseParameters { get; }
         /// <summary> A list of libraries to be installed on the cluster that will execute the job. </summary>
-        public IList<IDictionary<string, Uri>> Libraries { get; }
+        public IList<IDictionary<string, BinaryData>> Libraries { get; }
     }
 }

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="tableName"> The table name of the Cassandra database. Type: string (or Expression with resultType string). </param>
         /// <param name="keyspace"> The keyspace of the Cassandra database. Type: string (or Expression with resultType string). </param>
-        internal CassandraTableDataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, Uri tableName, Uri keyspace) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal CassandraTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName, BinaryData keyspace) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
             Keyspace = keyspace;
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The table name of the Cassandra database. Type: string (or Expression with resultType string). </summary>
-        public Uri TableName { get; set; }
+        public BinaryData TableName { get; set; }
         /// <summary> The keyspace of the Cassandra database. Type: string (or Expression with resultType string). </summary>
-        public Uri Keyspace { get; set; }
+        public BinaryData Keyspace { get; set; }
     }
 }

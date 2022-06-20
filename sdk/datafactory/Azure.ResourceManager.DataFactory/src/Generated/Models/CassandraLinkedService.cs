@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of CassandraLinkedService. </summary>
         /// <param name="host"> Host name for connection. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
-        public CassandraLinkedService(Uri host)
+        public CassandraLinkedService(BinaryData host)
         {
             if (host == null)
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal CassandraLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri host, Uri authenticationType, Uri port, Uri username, SecretBase password, Uri encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal CassandraLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData host, BinaryData authenticationType, BinaryData port, BinaryData username, SecretBase password, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             AuthenticationType = authenticationType;
@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Host name for connection. Type: string (or Expression with resultType string). </summary>
-        public Uri Host { get; set; }
+        public BinaryData Host { get; set; }
         /// <summary> AuthenticationType to be used for connection. Type: string (or Expression with resultType string). </summary>
-        public Uri AuthenticationType { get; set; }
+        public BinaryData AuthenticationType { get; set; }
         /// <summary> The port for the connection. Type: integer (or Expression with resultType integer). </summary>
-        public Uri Port { get; set; }
+        public BinaryData Port { get; set; }
         /// <summary> Username for authentication. Type: string (or Expression with resultType string). </summary>
-        public Uri Username { get; set; }
+        public BinaryData Username { get; set; }
         /// <summary>
         /// Password for authentication.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

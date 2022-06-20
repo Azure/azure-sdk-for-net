@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The available derived classes include <see cref="AvroFormat"/>, <see cref="JsonFormat"/>, <see cref="OrcFormat"/>, <see cref="ParquetFormat"/> and <see cref="TextFormat"/>.
         /// </param>
         /// <param name="compression"> The data compression method used for the blob storage. </param>
-        internal AzureBlobDataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, Uri folderPath, Uri tableRootLocation, Uri fileName, Uri modifiedDatetimeStart, Uri modifiedDatetimeEnd, DatasetStorageFormat format, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AzureBlobDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData folderPath, BinaryData tableRootLocation, BinaryData fileName, BinaryData modifiedDatetimeStart, BinaryData modifiedDatetimeEnd, DatasetStorageFormat format, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             FolderPath = folderPath;
             TableRootLocation = tableRootLocation;
@@ -60,15 +60,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The path of the Azure Blob storage. Type: string (or Expression with resultType string). </summary>
-        public Uri FolderPath { get; set; }
+        public BinaryData FolderPath { get; set; }
         /// <summary> The root of blob path. Type: string (or Expression with resultType string). </summary>
-        public Uri TableRootLocation { get; set; }
+        public BinaryData TableRootLocation { get; set; }
         /// <summary> The name of the Azure Blob. Type: string (or Expression with resultType string). </summary>
-        public Uri FileName { get; set; }
+        public BinaryData FileName { get; set; }
         /// <summary> The start of Azure Blob&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
-        public Uri ModifiedDatetimeStart { get; set; }
+        public BinaryData ModifiedDatetimeStart { get; set; }
         /// <summary> The end of Azure Blob&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
-        public Uri ModifiedDatetimeEnd { get; set; }
+        public BinaryData ModifiedDatetimeEnd { get; set; }
         /// <summary>
         /// The format of the Azure Blob storage.
         /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

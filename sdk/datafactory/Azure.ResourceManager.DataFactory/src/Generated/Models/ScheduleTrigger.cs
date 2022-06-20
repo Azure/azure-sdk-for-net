@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="pipelines"> Pipelines that need to be started. </param>
         /// <param name="recurrence"> Recurrence schedule configuration. </param>
-        internal ScheduleTrigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, IList<TriggerPipelineReference> pipelines, ScheduleTriggerRecurrence recurrence) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
+        internal ScheduleTrigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, ScheduleTriggerRecurrence recurrence) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
         {
             Recurrence = recurrence;
             TriggerType = triggerType ?? "ScheduleTrigger";

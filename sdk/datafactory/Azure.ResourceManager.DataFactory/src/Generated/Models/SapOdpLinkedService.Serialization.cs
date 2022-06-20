@@ -46,7 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteStringValue(item.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -55,32 +59,56 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server");
-                writer.WriteStringValue(Server.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Server);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Server.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SystemNumber))
             {
                 writer.WritePropertyName("systemNumber");
-                writer.WriteStringValue(SystemNumber.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SystemNumber);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SystemNumber.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId");
-                writer.WriteStringValue(ClientId.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClientId);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClientId.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language");
-                writer.WriteStringValue(Language.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Language);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Language.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SystemId))
             {
                 writer.WritePropertyName("systemId");
-                writer.WriteStringValue(SystemId.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SystemId);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SystemId.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName");
-                writer.WriteStringValue(UserName.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UserName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(UserName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Password))
             {
@@ -90,63 +118,111 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(MessageServer))
             {
                 writer.WritePropertyName("messageServer");
-                writer.WriteStringValue(MessageServer.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MessageServer);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MessageServer.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(MessageServerService))
             {
                 writer.WritePropertyName("messageServerService");
-                writer.WriteStringValue(MessageServerService.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MessageServerService);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MessageServerService.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SncMode))
             {
                 writer.WritePropertyName("sncMode");
-                writer.WriteStringValue(SncMode.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SncMode);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SncMode.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SncMyName))
             {
                 writer.WritePropertyName("sncMyName");
-                writer.WriteStringValue(SncMyName.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SncMyName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SncMyName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SncPartnerName))
             {
                 writer.WritePropertyName("sncPartnerName");
-                writer.WriteStringValue(SncPartnerName.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SncPartnerName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SncPartnerName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SncLibraryPath))
             {
                 writer.WritePropertyName("sncLibraryPath");
-                writer.WriteStringValue(SncLibraryPath.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SncLibraryPath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SncLibraryPath.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SncQop))
             {
                 writer.WritePropertyName("sncQop");
-                writer.WriteStringValue(SncQop.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SncQop);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SncQop.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(X509CertificatePath))
             {
                 writer.WritePropertyName("x509CertificatePath");
-                writer.WriteStringValue(X509CertificatePath.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(X509CertificatePath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(X509CertificatePath.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(LogonGroup))
             {
                 writer.WritePropertyName("logonGroup");
-                writer.WriteStringValue(LogonGroup.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(LogonGroup);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(LogonGroup.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SubscriberName))
             {
                 writer.WritePropertyName("subscriberName");
-                writer.WriteStringValue(SubscriberName.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SubscriberName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SubscriberName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
-                writer.WriteStringValue(EncryptedCredential.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EncryptedCredential);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -157,27 +233,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<Uri>> annotations = default;
-            Optional<Uri> server = default;
-            Optional<Uri> systemNumber = default;
-            Optional<Uri> clientId = default;
-            Optional<Uri> language = default;
-            Optional<Uri> systemId = default;
-            Optional<Uri> userName = default;
+            Optional<IList<BinaryData>> annotations = default;
+            Optional<BinaryData> server = default;
+            Optional<BinaryData> systemNumber = default;
+            Optional<BinaryData> clientId = default;
+            Optional<BinaryData> language = default;
+            Optional<BinaryData> systemId = default;
+            Optional<BinaryData> userName = default;
             Optional<SecretBase> password = default;
-            Optional<Uri> messageServer = default;
-            Optional<Uri> messageServerService = default;
-            Optional<Uri> sncMode = default;
-            Optional<Uri> sncMyName = default;
-            Optional<Uri> sncPartnerName = default;
-            Optional<Uri> sncLibraryPath = default;
-            Optional<Uri> sncQop = default;
-            Optional<Uri> x509CertificatePath = default;
-            Optional<Uri> logonGroup = default;
-            Optional<Uri> subscriberName = default;
-            Optional<Uri> encryptedCredential = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> messageServer = default;
+            Optional<BinaryData> messageServerService = default;
+            Optional<BinaryData> sncMode = default;
+            Optional<BinaryData> sncMyName = default;
+            Optional<BinaryData> sncPartnerName = default;
+            Optional<BinaryData> sncLibraryPath = default;
+            Optional<BinaryData> sncQop = default;
+            Optional<BinaryData> x509CertificatePath = default;
+            Optional<BinaryData> logonGroup = default;
+            Optional<BinaryData> subscriberName = default;
+            Optional<BinaryData> encryptedCredential = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -222,10 +298,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Uri> array = new List<Uri>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Uri(item.GetString()));
+                        array.Add(BinaryData.FromString(item.GetRawText()));
                     }
                     annotations = array;
                     continue;
@@ -243,60 +319,60 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                server = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            server = new Uri(property0.Value.GetString());
+                            server = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("systemNumber"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                systemNumber = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            systemNumber = new Uri(property0.Value.GetString());
+                            systemNumber = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clientId"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                clientId = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clientId = new Uri(property0.Value.GetString());
+                            clientId = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("language"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                language = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            language = new Uri(property0.Value.GetString());
+                            language = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("systemId"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                systemId = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            systemId = new Uri(property0.Value.GetString());
+                            systemId = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("userName"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                userName = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            userName = new Uri(property0.Value.GetString());
+                            userName = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"))
@@ -313,116 +389,116 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                messageServer = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            messageServer = new Uri(property0.Value.GetString());
+                            messageServer = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("messageServerService"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                messageServerService = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            messageServerService = new Uri(property0.Value.GetString());
+                            messageServerService = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sncMode"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                sncMode = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sncMode = new Uri(property0.Value.GetString());
+                            sncMode = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sncMyName"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                sncMyName = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sncMyName = new Uri(property0.Value.GetString());
+                            sncMyName = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sncPartnerName"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                sncPartnerName = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sncPartnerName = new Uri(property0.Value.GetString());
+                            sncPartnerName = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sncLibraryPath"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                sncLibraryPath = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sncLibraryPath = new Uri(property0.Value.GetString());
+                            sncLibraryPath = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sncQop"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                sncQop = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sncQop = new Uri(property0.Value.GetString());
+                            sncQop = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("x509CertificatePath"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                x509CertificatePath = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            x509CertificatePath = new Uri(property0.Value.GetString());
+                            x509CertificatePath = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("logonGroup"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                logonGroup = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            logonGroup = new Uri(property0.Value.GetString());
+                            logonGroup = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("subscriberName"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                subscriberName = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            subscriberName = new Uri(property0.Value.GetString());
+                            subscriberName = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                encryptedCredential = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryptedCredential = new Uri(property0.Value.GetString());
+                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SapOdpLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, server.Value, systemNumber.Value, clientId.Value, language.Value, systemId.Value, userName.Value, password.Value, messageServer.Value, messageServerService.Value, sncMode.Value, sncMyName.Value, sncPartnerName.Value, sncLibraryPath.Value, sncQop.Value, x509CertificatePath.Value, logonGroup.Value, subscriberName.Value, encryptedCredential.Value);

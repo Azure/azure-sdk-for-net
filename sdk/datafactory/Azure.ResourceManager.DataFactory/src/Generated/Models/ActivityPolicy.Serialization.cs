@@ -20,12 +20,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout");
-                writer.WriteStringValue(Timeout.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Timeout);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Timeout.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Retry))
             {
                 writer.WritePropertyName("retry");
-                writer.WriteStringValue(Retry.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Retry);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Retry.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(RetryIntervalInSeconds))
             {
@@ -45,40 +53,44 @@ namespace Azure.ResourceManager.DataFactory.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static ActivityPolicy DeserializeActivityPolicy(JsonElement element)
         {
-            Optional<Uri> timeout = default;
-            Optional<Uri> retry = default;
+            Optional<BinaryData> timeout = default;
+            Optional<BinaryData> retry = default;
             Optional<int> retryIntervalInSeconds = default;
             Optional<bool> secureInput = default;
             Optional<bool> secureOutput = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeout"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        timeout = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    timeout = new Uri(property.Value.GetString());
+                    timeout = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("retry"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        retry = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    retry = new Uri(property.Value.GetString());
+                    retry = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("retryIntervalInSeconds"))
@@ -111,7 +123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     secureOutput = property.Value.GetBoolean();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ActivityPolicy(timeout.Value, retry.Value, Optional.ToNullable(retryIntervalInSeconds), Optional.ToNullable(secureInput), Optional.ToNullable(secureOutput), additionalProperties);

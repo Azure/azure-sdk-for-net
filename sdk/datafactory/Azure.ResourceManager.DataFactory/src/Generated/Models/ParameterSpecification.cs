@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of ParameterSpecification. </summary>
         /// <param name="parameterType"> Parameter type. </param>
         /// <param name="defaultValue"> Default value of parameter. </param>
-        internal ParameterSpecification(ParameterType parameterType, Uri defaultValue)
+        internal ParameterSpecification(ParameterType parameterType, BinaryData defaultValue)
         {
             ParameterType = parameterType;
             DefaultValue = defaultValue;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Parameter type. </summary>
         public ParameterType ParameterType { get; set; }
         /// <summary> Default value of parameter. </summary>
-        public Uri DefaultValue { get; set; }
+        public BinaryData DefaultValue { get; set; }
     }
 }

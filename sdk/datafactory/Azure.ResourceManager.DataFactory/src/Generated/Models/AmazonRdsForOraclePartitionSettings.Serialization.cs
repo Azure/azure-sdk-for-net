@@ -19,72 +19,88 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionNames))
             {
                 writer.WritePropertyName("partitionNames");
-                writer.WriteStringValue(PartitionNames.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PartitionNames);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionNames.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName");
-                writer.WriteStringValue(PartitionColumnName.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PartitionColumnName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionColumnName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(PartitionUpperBound))
             {
                 writer.WritePropertyName("partitionUpperBound");
-                writer.WriteStringValue(PartitionUpperBound.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PartitionUpperBound);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionUpperBound.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(PartitionLowerBound))
             {
                 writer.WritePropertyName("partitionLowerBound");
-                writer.WriteStringValue(PartitionLowerBound.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PartitionLowerBound);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionLowerBound.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static AmazonRdsForOraclePartitionSettings DeserializeAmazonRdsForOraclePartitionSettings(JsonElement element)
         {
-            Optional<Uri> partitionNames = default;
-            Optional<Uri> partitionColumnName = default;
-            Optional<Uri> partitionUpperBound = default;
-            Optional<Uri> partitionLowerBound = default;
+            Optional<BinaryData> partitionNames = default;
+            Optional<BinaryData> partitionColumnName = default;
+            Optional<BinaryData> partitionUpperBound = default;
+            Optional<BinaryData> partitionLowerBound = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionNames"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        partitionNames = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    partitionNames = new Uri(property.Value.GetString());
+                    partitionNames = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("partitionColumnName"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        partitionColumnName = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    partitionColumnName = new Uri(property.Value.GetString());
+                    partitionColumnName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("partitionUpperBound"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        partitionUpperBound = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    partitionUpperBound = new Uri(property.Value.GetString());
+                    partitionUpperBound = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("partitionLowerBound"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        partitionLowerBound = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    partitionLowerBound = new Uri(property.Value.GetString());
+                    partitionLowerBound = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

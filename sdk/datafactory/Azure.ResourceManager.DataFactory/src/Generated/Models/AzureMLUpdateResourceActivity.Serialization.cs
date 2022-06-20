@@ -59,16 +59,28 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("trainedModelName");
-            writer.WriteStringValue(TrainedModelName.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TrainedModelName);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(TrainedModelName.ToString()).RootElement);
+#endif
             writer.WritePropertyName("trainedModelLinkedServiceName");
             writer.WriteObjectValue(TrainedModelLinkedServiceName);
             writer.WritePropertyName("trainedModelFilePath");
-            writer.WriteStringValue(TrainedModelFilePath.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TrainedModelFilePath);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(TrainedModelFilePath.ToString()).RootElement);
+#endif
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -82,11 +94,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
-            Uri trainedModelName = default;
+            BinaryData trainedModelName = default;
             LinkedServiceReference trainedModelLinkedServiceName = default;
-            Uri trainedModelFilePath = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            BinaryData trainedModelFilePath = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -165,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("trainedModelName"))
                         {
-                            trainedModelName = new Uri(property0.Value.GetString());
+                            trainedModelName = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("trainedModelLinkedServiceName"))
@@ -175,13 +187,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("trainedModelFilePath"))
                         {
-                            trainedModelFilePath = new Uri(property0.Value.GetString());
+                            trainedModelFilePath = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureMLUpdateResourceActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, trainedModelName, trainedModelLinkedServiceName, trainedModelFilePath);

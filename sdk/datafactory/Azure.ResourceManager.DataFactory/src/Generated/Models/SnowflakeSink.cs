@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="preCopyScript"> SQL pre-copy script. Type: string (or Expression with resultType string). </param>
         /// <param name="importSettings"> Snowflake import settings. </param>
-        internal SnowflakeSink(string copySinkType, Uri writeBatchSize, Uri writeBatchTimeout, Uri sinkRetryCount, Uri sinkRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri preCopyScript, SnowflakeImportCopyCommand importSettings) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal SnowflakeSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData preCopyScript, SnowflakeImportCopyCommand importSettings) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             PreCopyScript = preCopyScript;
             ImportSettings = importSettings;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> SQL pre-copy script. Type: string (or Expression with resultType string). </summary>
-        public Uri PreCopyScript { get; set; }
+        public BinaryData PreCopyScript { get; set; }
         /// <summary> Snowflake import settings. </summary>
         public SnowflakeImportCopyCommand ImportSettings { get; set; }
     }

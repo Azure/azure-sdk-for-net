@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Optional<string> nodeName = default;
             Optional<string> machineName = default;
-            Optional<Uri> hostServiceUri = default;
+            Optional<string> hostServiceUri = default;
             Optional<SelfHostedIntegrationRuntimeNodeStatus> status = default;
             Optional<IReadOnlyDictionary<string, string>> capabilities = default;
             Optional<string> versionStatus = default;
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<bool> isActiveDispatcher = default;
             Optional<int> concurrentJobsLimit = default;
             Optional<int> maxConcurrentJobs = default;
-            IReadOnlyDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodeName"))
@@ -50,12 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("hostServiceUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        hostServiceUri = null;
-                        continue;
-                    }
-                    hostServiceUri = new Uri(property.Value.GetString());
+                    hostServiceUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("status"))
@@ -203,7 +198,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     maxConcurrentJobs = property.Value.GetInt32();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SelfHostedIntegrationRuntimeNode(nodeName.Value, machineName.Value, hostServiceUri.Value, Optional.ToNullable(status), Optional.ToDictionary(capabilities), versionStatus.Value, version.Value, Optional.ToNullable(registerTime), Optional.ToNullable(lastConnectTime), Optional.ToNullable(expiryTime), Optional.ToNullable(lastStartTime), Optional.ToNullable(lastStopTime), Optional.ToNullable(lastUpdateResult), Optional.ToNullable(lastStartUpdateTime), Optional.ToNullable(lastEndUpdateTime), Optional.ToNullable(isActiveDispatcher), Optional.ToNullable(concurrentJobsLimit), Optional.ToNullable(maxConcurrentJobs), additionalProperties);

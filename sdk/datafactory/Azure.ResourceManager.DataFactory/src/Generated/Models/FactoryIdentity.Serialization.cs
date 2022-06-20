@@ -26,7 +26,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in UserAssignedIdentities)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndObject();
             }
@@ -38,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             FactoryIdentityType type = default;
             Optional<Guid> principalId = default;
             Optional<Guid> tenantId = default;
-            Optional<IDictionary<string, Uri>> userAssignedIdentities = default;
+            Optional<IDictionary<string, BinaryData>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -73,10 +77,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, Uri> dictionary = new Dictionary<string, Uri>();
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, new Uri(property0.Value.GetString()));
+                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
                     }
                     userAssignedIdentities = dictionary;
                     continue;

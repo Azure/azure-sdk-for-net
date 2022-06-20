@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="treatEmptyAsNull"> Treat empty column values in the text file as null. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="skipLineCount"> The number of lines/rows to be skipped when parsing text files. The default value is 0. Type: integer (or Expression with resultType integer). </param>
         /// <param name="firstRowAsHeader"> When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
-        internal TextFormat(string datasetStorageFormatType, Uri serializer, Uri deserializer, IDictionary<string, Uri> additionalProperties, Uri columnDelimiter, Uri rowDelimiter, Uri escapeChar, Uri quoteChar, Uri nullValue, Uri encodingName, Uri treatEmptyAsNull, Uri skipLineCount, Uri firstRowAsHeader) : base(datasetStorageFormatType, serializer, deserializer, additionalProperties)
+        internal TextFormat(string datasetStorageFormatType, BinaryData serializer, BinaryData deserializer, IDictionary<string, BinaryData> additionalProperties, BinaryData columnDelimiter, BinaryData rowDelimiter, BinaryData escapeChar, BinaryData quoteChar, BinaryData nullValue, BinaryData encodingName, BinaryData treatEmptyAsNull, BinaryData skipLineCount, BinaryData firstRowAsHeader) : base(datasetStorageFormatType, serializer, deserializer, additionalProperties)
         {
             ColumnDelimiter = columnDelimiter;
             RowDelimiter = rowDelimiter;
@@ -48,22 +48,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The column delimiter. Type: string (or Expression with resultType string). </summary>
-        public Uri ColumnDelimiter { get; set; }
+        public BinaryData ColumnDelimiter { get; set; }
         /// <summary> The row delimiter. Type: string (or Expression with resultType string). </summary>
-        public Uri RowDelimiter { get; set; }
+        public BinaryData RowDelimiter { get; set; }
         /// <summary> The escape character. Type: string (or Expression with resultType string). </summary>
-        public Uri EscapeChar { get; set; }
+        public BinaryData EscapeChar { get; set; }
         /// <summary> The quote character. Type: string (or Expression with resultType string). </summary>
-        public Uri QuoteChar { get; set; }
+        public BinaryData QuoteChar { get; set; }
         /// <summary> The null value string. Type: string (or Expression with resultType string). </summary>
-        public Uri NullValue { get; set; }
+        public BinaryData NullValue { get; set; }
         /// <summary> The code page name of the preferred encoding. If miss, the default value is ΓÇ£utf-8ΓÇ¥, unless BOM denotes another Unicode encoding. Refer to the ΓÇ£NameΓÇ¥ column of the table in the following link to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string). </summary>
-        public Uri EncodingName { get; set; }
+        public BinaryData EncodingName { get; set; }
         /// <summary> Treat empty column values in the text file as null. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri TreatEmptyAsNull { get; set; }
+        public BinaryData TreatEmptyAsNull { get; set; }
         /// <summary> The number of lines/rows to be skipped when parsing text files. The default value is 0. Type: integer (or Expression with resultType integer). </summary>
-        public Uri SkipLineCount { get; set; }
+        public BinaryData SkipLineCount { get; set; }
         /// <summary> When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri FirstRowAsHeader { get; set; }
+        public BinaryData FirstRowAsHeader { get; set; }
     }
 }

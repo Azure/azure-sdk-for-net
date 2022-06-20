@@ -21,7 +21,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path");
-                writer.WriteStringValue(Path.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Path);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Path.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static LogLocationSettings DeserializeLogLocationSettings(JsonElement element)
         {
             LinkedServiceReference linkedServiceName = default;
-            Optional<Uri> path = default;
+            Optional<BinaryData> path = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -41,10 +45,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        path = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    path = new Uri(property.Value.GetString());
+                    path = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

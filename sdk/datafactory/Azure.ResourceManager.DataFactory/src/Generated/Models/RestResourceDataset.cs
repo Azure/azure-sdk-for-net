@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="requestBody"> The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalHeaders"> The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string). </param>
         /// <param name="paginationRules"> The pagination rules to compose next page requests. Type: string (or Expression with resultType string). </param>
-        internal RestResourceDataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, Uri relativeUri, Uri requestMethod, Uri requestBody, Uri additionalHeaders, Uri paginationRules) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal RestResourceDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData relativeUri, BinaryData requestMethod, BinaryData requestBody, BinaryData additionalHeaders, BinaryData paginationRules) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             RelativeUri = relativeUri;
             RequestMethod = requestMethod;
@@ -52,14 +52,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The relative URL to the resource that the RESTful API provides. Type: string (or Expression with resultType string). </summary>
-        public Uri RelativeUri { get; set; }
+        public BinaryData RelativeUri { get; set; }
         /// <summary> The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string). </summary>
-        public Uri RequestMethod { get; set; }
+        public BinaryData RequestMethod { get; set; }
         /// <summary> The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string). </summary>
-        public Uri RequestBody { get; set; }
+        public BinaryData RequestBody { get; set; }
         /// <summary> The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string). </summary>
-        public Uri AdditionalHeaders { get; set; }
+        public BinaryData AdditionalHeaders { get; set; }
         /// <summary> The pagination rules to compose next page requests. Type: string (or Expression with resultType string). </summary>
-        public Uri PaginationRules { get; set; }
+        public BinaryData PaginationRules { get; set; }
     }
 }

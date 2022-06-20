@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of StoreWriteSettings. </summary>
         public StoreWriteSettings()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of StoreWriteSettings. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal StoreWriteSettings(string storeWriteSettingsType, Uri maxConcurrentConnections, Uri disableMetricsCollection, Uri copyBehavior, IDictionary<string, Uri> additionalProperties)
+        internal StoreWriteSettings(string storeWriteSettingsType, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, BinaryData copyBehavior, IDictionary<string, BinaryData> additionalProperties)
         {
             StoreWriteSettingsType = storeWriteSettingsType;
             MaxConcurrentConnections = maxConcurrentConnections;
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The write setting type. </summary>
         internal string StoreWriteSettingsType { get; set; }
         /// <summary> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </summary>
-        public Uri MaxConcurrentConnections { get; set; }
+        public BinaryData MaxConcurrentConnections { get; set; }
         /// <summary> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri DisableMetricsCollection { get; set; }
+        public BinaryData DisableMetricsCollection { get; set; }
         /// <summary> The type of copy behavior for copy sink. </summary>
-        public Uri CopyBehavior { get; set; }
+        public BinaryData CopyBehavior { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

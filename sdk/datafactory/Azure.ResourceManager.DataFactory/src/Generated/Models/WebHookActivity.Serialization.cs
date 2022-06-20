@@ -51,7 +51,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("method");
             writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("url");
-            writer.WriteStringValue(Uri.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Uri);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Uri.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout");
@@ -60,12 +64,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Headers))
             {
                 writer.WritePropertyName("headers");
-                writer.WriteStringValue(Headers.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Headers);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Headers.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body");
-                writer.WriteStringValue(Body.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Body);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Body.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Authentication))
             {
@@ -75,13 +87,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ReportStatusOnCallBack))
             {
                 writer.WritePropertyName("reportStatusOnCallBack");
-                writer.WriteStringValue(ReportStatusOnCallBack.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ReportStatusOnCallBack);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ReportStatusOnCallBack.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -94,14 +114,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
             WebHookActivityMethod method = default;
-            Uri url = default;
+            BinaryData url = default;
             Optional<string> timeout = default;
-            Optional<Uri> headers = default;
-            Optional<Uri> body = default;
+            Optional<BinaryData> headers = default;
+            Optional<BinaryData> body = default;
             Optional<WebActivityAuthentication> authentication = default;
-            Optional<Uri> reportStatusOnCallBack = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> reportStatusOnCallBack = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -165,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("url"))
                         {
-                            url = new Uri(property0.Value.GetString());
+                            url = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("timeout"))
@@ -177,20 +197,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                headers = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            headers = new Uri(property0.Value.GetString());
+                            headers = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("body"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                body = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            body = new Uri(property0.Value.GetString());
+                            body = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authentication"))
@@ -207,16 +227,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                reportStatusOnCallBack = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            reportStatusOnCallBack = new Uri(property0.Value.GetString());
+                            reportStatusOnCallBack = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new WebHookActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, method, url, timeout.Value, headers.Value, body.Value, authentication.Value, reportStatusOnCallBack.Value);

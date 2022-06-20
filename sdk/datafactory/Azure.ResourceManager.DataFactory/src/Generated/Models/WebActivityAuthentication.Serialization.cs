@@ -29,7 +29,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username");
-                writer.WriteStringValue(Username.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Username);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Username.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Password))
             {
@@ -39,12 +43,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource");
-                writer.WriteStringValue(Resource.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Resource);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Resource.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(UserTenant))
             {
                 writer.WritePropertyName("userTenant");
-                writer.WriteStringValue(UserTenant.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UserTenant);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(UserTenant.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Credential))
             {
@@ -58,10 +70,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Optional<string> type = default;
             Optional<SecretBase> pfx = default;
-            Optional<Uri> username = default;
+            Optional<BinaryData> username = default;
             Optional<SecretBase> password = default;
-            Optional<Uri> resource = default;
-            Optional<Uri> userTenant = default;
+            Optional<BinaryData> resource = default;
+            Optional<BinaryData> userTenant = default;
             Optional<CredentialReference> credential = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -84,10 +96,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        username = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    username = new Uri(property.Value.GetString());
+                    username = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("password"))
@@ -104,20 +116,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        resource = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resource = new Uri(property.Value.GetString());
+                    resource = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("userTenant"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        userTenant = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    userTenant = new Uri(property.Value.GetString());
+                    userTenant = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("credential"))

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of ActivityPolicy. </summary>
         public ActivityPolicy()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ActivityPolicy. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="secureInput"> When set to true, Input from activity is considered as secure and will not be logged to monitoring. </param>
         /// <param name="secureOutput"> When set to true, Output from activity is considered as secure and will not be logged to monitoring. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ActivityPolicy(Uri timeout, Uri retry, int? retryIntervalInSeconds, bool? secureInput, bool? secureOutput, IDictionary<string, Uri> additionalProperties)
+        internal ActivityPolicy(BinaryData timeout, BinaryData retry, int? retryIntervalInSeconds, bool? secureInput, bool? secureOutput, IDictionary<string, BinaryData> additionalProperties)
         {
             Timeout = timeout;
             Retry = retry;
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Specifies the timeout for the activity to run. The default timeout is 7 days. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
-        public Uri Timeout { get; set; }
+        public BinaryData Timeout { get; set; }
         /// <summary> Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
-        public Uri Retry { get; set; }
+        public BinaryData Retry { get; set; }
         /// <summary> Interval between each retry attempt (in seconds). The default is 30 sec. </summary>
         public int? RetryIntervalInSeconds { get; set; }
         /// <summary> When set to true, Input from activity is considered as secure and will not be logged to monitoring. </summary>
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> When set to true, Output from activity is considered as secure and will not be logged to monitoring. </summary>
         public bool? SecureOutput { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

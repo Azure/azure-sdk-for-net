@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="preferredRegions"> Preferred regions. Type: array of strings (or Expression with resultType array of strings). </param>
         /// <param name="detectDatetime"> Whether detect primitive values as datetime values. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
-        internal CosmosDbSqlApiSource(string copySourceType, Uri sourceRetryCount, Uri sourceRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri query, Uri pageSize, Uri preferredRegions, Uri detectDatetime, Uri additionalColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal CosmosDbSqlApiSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData query, BinaryData pageSize, BinaryData preferredRegions, BinaryData detectDatetime, BinaryData additionalColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             Query = query;
             PageSize = pageSize;
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> SQL API query. Type: string (or Expression with resultType string). </summary>
-        public Uri Query { get; set; }
+        public BinaryData Query { get; set; }
         /// <summary> Page size of the result. Type: integer (or Expression with resultType integer). </summary>
-        public Uri PageSize { get; set; }
+        public BinaryData PageSize { get; set; }
         /// <summary> Preferred regions. Type: array of strings (or Expression with resultType array of strings). </summary>
-        public Uri PreferredRegions { get; set; }
+        public BinaryData PreferredRegions { get; set; }
         /// <summary> Whether detect primitive values as datetime values. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri DetectDatetime { get; set; }
+        public BinaryData DetectDatetime { get; set; }
         /// <summary> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </summary>
-        public Uri AdditionalColumns { get; set; }
+        public BinaryData AdditionalColumns { get; set; }
     }
 }

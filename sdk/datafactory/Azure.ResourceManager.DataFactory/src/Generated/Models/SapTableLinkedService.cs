@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sncQop"> SNC Quality of Protection. Allowed value include: 1, 2, 3, 8, 9. Type: string (or Expression with resultType string). </param>
         /// <param name="logonGroup"> The Logon Group for the SAP System. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal SapTableLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri server, Uri systemNumber, Uri clientId, Uri language, Uri systemId, Uri userName, SecretBase password, Uri messageServer, Uri messageServerService, Uri sncMode, Uri sncMyName, Uri sncPartnerName, Uri sncLibraryPath, Uri sncQop, Uri logonGroup, Uri encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal SapTableLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData server, BinaryData systemNumber, BinaryData clientId, BinaryData language, BinaryData systemId, BinaryData userName, SecretBase password, BinaryData messageServer, BinaryData messageServerService, BinaryData sncMode, BinaryData sncMyName, BinaryData sncPartnerName, BinaryData sncLibraryPath, BinaryData sncQop, BinaryData logonGroup, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
             SystemNumber = systemNumber;
@@ -68,17 +68,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Host name of the SAP instance where the table is located. Type: string (or Expression with resultType string). </summary>
-        public Uri Server { get; set; }
+        public BinaryData Server { get; set; }
         /// <summary> System number of the SAP system where the table is located. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </summary>
-        public Uri SystemNumber { get; set; }
+        public BinaryData SystemNumber { get; set; }
         /// <summary> Client ID of the client on the SAP system where the table is located. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string). </summary>
-        public Uri ClientId { get; set; }
+        public BinaryData ClientId { get; set; }
         /// <summary> Language of the SAP system where the table is located. The default value is EN. Type: string (or Expression with resultType string). </summary>
-        public Uri Language { get; set; }
+        public BinaryData Language { get; set; }
         /// <summary> SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string). </summary>
-        public Uri SystemId { get; set; }
+        public BinaryData SystemId { get; set; }
         /// <summary> Username to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
-        public Uri UserName { get; set; }
+        public BinaryData UserName { get; set; }
         /// <summary>
         /// Password to access the SAP server where the table is located.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -86,22 +86,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </summary>
-        public Uri MessageServer { get; set; }
+        public BinaryData MessageServer { get; set; }
         /// <summary> The service name or port number of the Message Server. Type: string (or Expression with resultType string). </summary>
-        public Uri MessageServerService { get; set; }
+        public BinaryData MessageServerService { get; set; }
         /// <summary> SNC activation indicator to access the SAP server where the table is located. Must be either 0 (off) or 1 (on). Type: string (or Expression with resultType string). </summary>
-        public Uri SncMode { get; set; }
+        public BinaryData SncMode { get; set; }
         /// <summary> Initiator&apos;s SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
-        public Uri SncMyName { get; set; }
+        public BinaryData SncMyName { get; set; }
         /// <summary> Communication partner&apos;s SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
-        public Uri SncPartnerName { get; set; }
+        public BinaryData SncPartnerName { get; set; }
         /// <summary> External security product&apos;s library to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
-        public Uri SncLibraryPath { get; set; }
+        public BinaryData SncLibraryPath { get; set; }
         /// <summary> SNC Quality of Protection. Allowed value include: 1, 2, 3, 8, 9. Type: string (or Expression with resultType string). </summary>
-        public Uri SncQop { get; set; }
+        public BinaryData SncQop { get; set; }
         /// <summary> The Logon Group for the SAP System. Type: string (or Expression with resultType string). </summary>
-        public Uri LogonGroup { get; set; }
+        public BinaryData LogonGroup { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

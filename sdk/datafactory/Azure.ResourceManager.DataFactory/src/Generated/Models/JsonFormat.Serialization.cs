@@ -20,110 +20,142 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FilePattern))
             {
                 writer.WritePropertyName("filePattern");
-                writer.WriteStringValue(FilePattern.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FilePattern);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(FilePattern.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(NestingSeparator))
             {
                 writer.WritePropertyName("nestingSeparator");
-                writer.WriteStringValue(NestingSeparator.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(NestingSeparator);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(NestingSeparator.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName");
-                writer.WriteStringValue(EncodingName.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EncodingName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncodingName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(JsonNodeReference))
             {
                 writer.WritePropertyName("jsonNodeReference");
-                writer.WriteStringValue(JsonNodeReference.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(JsonNodeReference);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(JsonNodeReference.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(JsonPathDefinition))
             {
                 writer.WritePropertyName("jsonPathDefinition");
-                writer.WriteStringValue(JsonPathDefinition.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(JsonPathDefinition);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(JsonPathDefinition.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(DatasetStorageFormatType);
             if (Optional.IsDefined(Serializer))
             {
                 writer.WritePropertyName("serializer");
-                writer.WriteStringValue(Serializer.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Serializer);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Serializer.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Deserializer))
             {
                 writer.WritePropertyName("deserializer");
-                writer.WriteStringValue(Deserializer.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Deserializer);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Deserializer.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static JsonFormat DeserializeJsonFormat(JsonElement element)
         {
-            Optional<Uri> filePattern = default;
-            Optional<Uri> nestingSeparator = default;
-            Optional<Uri> encodingName = default;
-            Optional<Uri> jsonNodeReference = default;
-            Optional<Uri> jsonPathDefinition = default;
+            Optional<BinaryData> filePattern = default;
+            Optional<BinaryData> nestingSeparator = default;
+            Optional<BinaryData> encodingName = default;
+            Optional<BinaryData> jsonNodeReference = default;
+            Optional<BinaryData> jsonPathDefinition = default;
             string type = default;
-            Optional<Uri> serializer = default;
-            Optional<Uri> deserializer = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> serializer = default;
+            Optional<BinaryData> deserializer = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filePattern"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        filePattern = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    filePattern = new Uri(property.Value.GetString());
+                    filePattern = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("nestingSeparator"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        nestingSeparator = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    nestingSeparator = new Uri(property.Value.GetString());
+                    nestingSeparator = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("encodingName"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        encodingName = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    encodingName = new Uri(property.Value.GetString());
+                    encodingName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("jsonNodeReference"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        jsonNodeReference = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    jsonNodeReference = new Uri(property.Value.GetString());
+                    jsonNodeReference = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("jsonPathDefinition"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        jsonPathDefinition = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    jsonPathDefinition = new Uri(property.Value.GetString());
+                    jsonPathDefinition = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -135,23 +167,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        serializer = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    serializer = new Uri(property.Value.GetString());
+                    serializer = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("deserializer"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        deserializer = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    deserializer = new Uri(property.Value.GetString());
+                    deserializer = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new JsonFormat(type, serializer.Value, deserializer.Value, additionalProperties, filePattern.Value, nestingSeparator.Value, encodingName.Value, jsonNodeReference.Value, jsonPathDefinition.Value);

@@ -46,7 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteStringValue(item.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -55,17 +59,33 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(IsServerVersionAbove32))
             {
                 writer.WritePropertyName("isServerVersionAbove32");
-                writer.WriteStringValue(IsServerVersionAbove32.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(IsServerVersionAbove32);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(IsServerVersionAbove32.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("connectionString");
-            writer.WriteStringValue(ConnectionString.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ConnectionString);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(ConnectionString.ToString()).RootElement);
+#endif
             writer.WritePropertyName("database");
-            writer.WriteStringValue(Database.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Database);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Database.ToString()).RootElement);
+#endif
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -76,12 +96,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<Uri>> annotations = default;
-            Optional<Uri> isServerVersionAbove32 = default;
-            Uri connectionString = default;
-            Uri database = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<IList<BinaryData>> annotations = default;
+            Optional<BinaryData> isServerVersionAbove32 = default;
+            BinaryData connectionString = default;
+            BinaryData database = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -126,10 +146,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Uri> array = new List<Uri>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Uri(item.GetString()));
+                        array.Add(BinaryData.FromString(item.GetRawText()));
                     }
                     annotations = array;
                     continue;
@@ -147,26 +167,26 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                isServerVersionAbove32 = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            isServerVersionAbove32 = new Uri(property0.Value.GetString());
+                            isServerVersionAbove32 = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("connectionString"))
                         {
-                            connectionString = new Uri(property0.Value.GetString());
+                            connectionString = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("database"))
                         {
-                            database = new Uri(property0.Value.GetString());
+                            database = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new CosmosDbMongoDbApiLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, isServerVersionAbove32.Value, connectionString, database);

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of Trigger. </summary>
         public Trigger()
         {
-            Annotations = new ChangeTrackingList<Uri>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            Annotations = new ChangeTrackingList<BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of Trigger. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal Trigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties)
+        internal Trigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties)
         {
             TriggerType = triggerType;
             Description = description;
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </summary>
         public TriggerRuntimeState? RuntimeState { get; }
         /// <summary> List of tags that can be used for describing the trigger. </summary>
-        public IList<Uri> Annotations { get; }
+        public IList<BinaryData> Annotations { get; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

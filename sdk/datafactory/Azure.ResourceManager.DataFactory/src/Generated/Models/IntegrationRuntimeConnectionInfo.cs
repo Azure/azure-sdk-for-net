@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of IntegrationRuntimeConnectionInfo. </summary>
         internal IntegrationRuntimeConnectionInfo()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeConnectionInfo. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="publicKey"> The public key for encrypting a credential when transferring the credential to the integration runtime. </param>
         /// <param name="isIdentityCertExprired"> Whether the identity certificate is expired. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeConnectionInfo(string serviceToken, string identityCertThumbprint, Uri hostServiceUri, string version, string publicKey, bool? isIdentityCertExprired, IReadOnlyDictionary<string, Uri> additionalProperties)
+        internal IntegrationRuntimeConnectionInfo(string serviceToken, string identityCertThumbprint, string hostServiceUri, string version, string publicKey, bool? isIdentityCertExprired, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             ServiceToken = serviceToken;
             IdentityCertThumbprint = identityCertThumbprint;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The integration runtime SSL certificate thumbprint. Click-Once application uses it to do server validation. </summary>
         public string IdentityCertThumbprint { get; }
         /// <summary> The on-premises integration runtime host URL. </summary>
-        public Uri HostServiceUri { get; }
+        public string HostServiceUri { get; }
         /// <summary> The integration runtime version. </summary>
         public string Version { get; }
         /// <summary> The public key for encrypting a credential when transferring the credential to the integration runtime. </summary>
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Whether the identity certificate is expired. </summary>
         public bool? IsIdentityCertExprired { get; }
         /// <summary> Additional Properties. </summary>
-        public IReadOnlyDictionary<string, Uri> AdditionalProperties { get; }
+        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

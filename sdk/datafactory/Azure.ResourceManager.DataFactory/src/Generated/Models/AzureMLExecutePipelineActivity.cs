@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dataPathAssignments"> Dictionary used for changing data path assignments without retraining. Values will be passed in the dataPathAssignments property of the published pipeline execution request. Type: object with key value pairs (or Expression with resultType object). </param>
         /// <param name="mlParentRunId"> The parent Azure ML Service pipeline run id. This information will be passed in the ParentRunId property of the published pipeline execution request. Type: string (or Expression with resultType string). </param>
         /// <param name="continueOnStepFailure"> Whether to continue execution of other steps in the PipelineRun if a step fails. This information will be passed in the continueOnStepFailure property of the published pipeline execution request. Type: boolean (or Expression with resultType boolean). </param>
-        internal AzureMLExecutePipelineActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, Uri> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, Uri mlPipelineId, Uri mlPipelineEndpointId, Uri version, Uri experimentName, Uri mlPipelineParameters, Uri dataPathAssignments, Uri mlParentRunId, Uri continueOnStepFailure) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal AzureMLExecutePipelineActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData mlPipelineId, BinaryData mlPipelineEndpointId, BinaryData version, BinaryData experimentName, BinaryData mlPipelineParameters, BinaryData dataPathAssignments, BinaryData mlParentRunId, BinaryData continueOnStepFailure) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             MlPipelineId = mlPipelineId;
             MlPipelineEndpointId = mlPipelineEndpointId;
@@ -57,20 +57,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> ID of the published Azure ML pipeline. Type: string (or Expression with resultType string). </summary>
-        public Uri MlPipelineId { get; set; }
+        public BinaryData MlPipelineId { get; set; }
         /// <summary> ID of the published Azure ML pipeline endpoint. Type: string (or Expression with resultType string). </summary>
-        public Uri MlPipelineEndpointId { get; set; }
+        public BinaryData MlPipelineEndpointId { get; set; }
         /// <summary> Version of the published Azure ML pipeline endpoint. Type: string (or Expression with resultType string). </summary>
-        public Uri Version { get; set; }
+        public BinaryData Version { get; set; }
         /// <summary> Run history experiment name of the pipeline run. This information will be passed in the ExperimentName property of the published pipeline execution request. Type: string (or Expression with resultType string). </summary>
-        public Uri ExperimentName { get; set; }
+        public BinaryData ExperimentName { get; set; }
         /// <summary> Key,Value pairs to be passed to the published Azure ML pipeline endpoint. Keys must match the names of pipeline parameters defined in the published pipeline. Values will be passed in the ParameterAssignments property of the published pipeline execution request. Type: object with key value pairs (or Expression with resultType object). </summary>
-        public Uri MlPipelineParameters { get; set; }
+        public BinaryData MlPipelineParameters { get; set; }
         /// <summary> Dictionary used for changing data path assignments without retraining. Values will be passed in the dataPathAssignments property of the published pipeline execution request. Type: object with key value pairs (or Expression with resultType object). </summary>
-        public Uri DataPathAssignments { get; set; }
+        public BinaryData DataPathAssignments { get; set; }
         /// <summary> The parent Azure ML Service pipeline run id. This information will be passed in the ParentRunId property of the published pipeline execution request. Type: string (or Expression with resultType string). </summary>
-        public Uri MlParentRunId { get; set; }
+        public BinaryData MlParentRunId { get; set; }
         /// <summary> Whether to continue execution of other steps in the PipelineRun if a step fails. This information will be passed in the continueOnStepFailure property of the published pipeline execution request. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri ContinueOnStepFailure { get; set; }
+        public BinaryData ContinueOnStepFailure { get; set; }
     }
 }

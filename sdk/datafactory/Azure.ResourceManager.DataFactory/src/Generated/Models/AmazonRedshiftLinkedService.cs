@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="server"> The name of the Amazon Redshift server. Type: string (or Expression with resultType string). </param>
         /// <param name="database"> The database name of the Amazon Redshift source. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> or <paramref name="database"/> is null. </exception>
-        public AmazonRedshiftLinkedService(Uri server, Uri database)
+        public AmazonRedshiftLinkedService(BinaryData server, BinaryData database)
         {
             if (server == null)
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="database"> The database name of the Amazon Redshift source. Type: string (or Expression with resultType string). </param>
         /// <param name="port"> The TCP port number that the Amazon Redshift server uses to listen for client connections. The default value is 5439. Type: integer (or Expression with resultType integer). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AmazonRedshiftLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri server, Uri username, SecretBase password, Uri database, Uri port, Uri encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AmazonRedshiftLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData server, BinaryData username, SecretBase password, BinaryData database, BinaryData port, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
             Username = username;
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the Amazon Redshift server. Type: string (or Expression with resultType string). </summary>
-        public Uri Server { get; set; }
+        public BinaryData Server { get; set; }
         /// <summary> The username of the Amazon Redshift source. Type: string (or Expression with resultType string). </summary>
-        public Uri Username { get; set; }
+        public BinaryData Username { get; set; }
         /// <summary>
         /// The password of the Amazon Redshift source.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> The database name of the Amazon Redshift source. Type: string (or Expression with resultType string). </summary>
-        public Uri Database { get; set; }
+        public BinaryData Database { get; set; }
         /// <summary> The TCP port number that the Amazon Redshift server uses to listen for client connections. The default value is 5439. Type: integer (or Expression with resultType integer). </summary>
-        public Uri Port { get; set; }
+        public BinaryData Port { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

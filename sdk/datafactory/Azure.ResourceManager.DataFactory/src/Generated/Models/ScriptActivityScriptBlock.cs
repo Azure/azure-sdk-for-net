@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
         /// <param name="scriptType"> The type of the query. Type: string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public ScriptActivityScriptBlock(Uri text, ScriptType scriptType)
+        public ScriptActivityScriptBlock(BinaryData text, ScriptType scriptType)
         {
             if (text == null)
             {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
         /// <param name="scriptType"> The type of the query. Type: string. </param>
         /// <param name="parameters"> Array of script parameters. Type: array. </param>
-        internal ScriptActivityScriptBlock(Uri text, ScriptType scriptType, IList<ScriptActivityParameter> parameters)
+        internal ScriptActivityScriptBlock(BinaryData text, ScriptType scriptType, IList<ScriptActivityParameter> parameters)
         {
             Text = text;
             ScriptType = scriptType;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The query text. Type: string (or Expression with resultType string). </summary>
-        public Uri Text { get; set; }
+        public BinaryData Text { get; set; }
         /// <summary> The type of the query. Type: string. </summary>
         public ScriptType ScriptType { get; set; }
         /// <summary> Array of script parameters. Type: array. </summary>

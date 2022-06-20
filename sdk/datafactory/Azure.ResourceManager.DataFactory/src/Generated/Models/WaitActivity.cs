@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="waitTimeInSeconds"> Duration in seconds. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="waitTimeInSeconds"/> is null. </exception>
-        public WaitActivity(string name, Uri waitTimeInSeconds) : base(name)
+        public WaitActivity(string name, BinaryData waitTimeInSeconds) : base(name)
         {
             if (name == null)
             {
@@ -40,13 +40,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="waitTimeInSeconds"> Duration in seconds. </param>
-        internal WaitActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, Uri> additionalProperties, Uri waitTimeInSeconds) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal WaitActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, BinaryData waitTimeInSeconds) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             WaitTimeInSeconds = waitTimeInSeconds;
             ActivityType = activityType ?? "Wait";
         }
 
         /// <summary> Duration in seconds. </summary>
-        public Uri WaitTimeInSeconds { get; set; }
+        public BinaryData WaitTimeInSeconds { get; set; }
     }
 }

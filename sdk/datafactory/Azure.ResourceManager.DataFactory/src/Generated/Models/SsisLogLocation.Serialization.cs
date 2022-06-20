@@ -17,7 +17,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("logPath");
-            writer.WriteStringValue(LogPath.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(LogPath);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(LogPath.ToString()).RootElement);
+#endif
             writer.WritePropertyName("type");
             writer.WriteStringValue(LocationType.ToString());
             writer.WritePropertyName("typeProperties");
@@ -30,7 +34,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LogRefreshInterval))
             {
                 writer.WritePropertyName("logRefreshInterval");
-                writer.WriteStringValue(LogRefreshInterval.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(LogRefreshInterval);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(LogRefreshInterval.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -38,15 +46,15 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SsisLogLocation DeserializeSsisLogLocation(JsonElement element)
         {
-            Uri logPath = default;
+            BinaryData logPath = default;
             SsisLogLocationType type = default;
             Optional<SsisAccessCredential> accessCredential = default;
-            Optional<Uri> logRefreshInterval = default;
+            Optional<BinaryData> logRefreshInterval = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logPath"))
                 {
-                    logPath = new Uri(property.Value.GetString());
+                    logPath = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -77,10 +85,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                logRefreshInterval = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            logRefreshInterval = new Uri(property0.Value.GetString());
+                            logRefreshInterval = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }

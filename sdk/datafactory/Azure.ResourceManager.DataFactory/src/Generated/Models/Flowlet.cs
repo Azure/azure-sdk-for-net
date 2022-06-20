@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="transformations"> List of transformations in Flowlet. </param>
         /// <param name="script"> Flowlet script. </param>
         /// <param name="scriptLines"> Flowlet script lines. </param>
-        internal Flowlet(string dataFlowType, string description, IList<Uri> annotations, DataFlowFolder folder, IList<DataFlowSource> sources, IList<DataFlowSink> sinks, IList<Transformation> transformations, string script, IList<string> scriptLines) : base(dataFlowType, description, annotations, folder)
+        internal Flowlet(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IList<DataFlowSource> sources, IList<DataFlowSink> sinks, IList<Transformation> transformations, string script, IList<string> scriptLines) : base(dataFlowType, description, annotations, folder)
         {
             Sources = sources;
             Sinks = sinks;

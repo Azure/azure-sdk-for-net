@@ -20,52 +20,72 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ExpiryDateTime))
             {
                 writer.WritePropertyName("expiryDateTime");
-                writer.WriteStringValue(ExpiryDateTime.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ExpiryDateTime);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ExpiryDateTime.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(StoreWriteSettingsType);
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections");
-                writer.WriteStringValue(MaxConcurrentConnections.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MaxConcurrentConnections);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection");
-                writer.WriteStringValue(DisableMetricsCollection.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DisableMetricsCollection);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DisableMetricsCollection.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(CopyBehavior))
             {
                 writer.WritePropertyName("copyBehavior");
-                writer.WriteStringValue(CopyBehavior.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(CopyBehavior);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(CopyBehavior.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static AzureDataLakeStoreWriteSettings DeserializeAzureDataLakeStoreWriteSettings(JsonElement element)
         {
-            Optional<Uri> expiryDateTime = default;
+            Optional<BinaryData> expiryDateTime = default;
             string type = default;
-            Optional<Uri> maxConcurrentConnections = default;
-            Optional<Uri> disableMetricsCollection = default;
-            Optional<Uri> copyBehavior = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> maxConcurrentConnections = default;
+            Optional<BinaryData> disableMetricsCollection = default;
+            Optional<BinaryData> copyBehavior = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expiryDateTime"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        expiryDateTime = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    expiryDateTime = new Uri(property.Value.GetString());
+                    expiryDateTime = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -77,33 +97,33 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        maxConcurrentConnections = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxConcurrentConnections = new Uri(property.Value.GetString());
+                    maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        disableMetricsCollection = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    disableMetricsCollection = new Uri(property.Value.GetString());
+                    disableMetricsCollection = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("copyBehavior"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        copyBehavior = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    copyBehavior = new Uri(property.Value.GetString());
+                    copyBehavior = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureDataLakeStoreWriteSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, copyBehavior.Value, additionalProperties, expiryDateTime.Value);

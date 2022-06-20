@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeLinkedService. </summary>
         /// <param name="domain"> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domain"/> is null. </exception>
-        public AzureDatabricksDeltaLakeLinkedService(Uri domain)
+        public AzureDatabricksDeltaLakeLinkedService(BinaryData domain)
         {
             if (domain == null)
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <param name="workspaceResourceId"> Workspace resource id for databricks REST API. Type: string (or Expression with resultType string). </param>
-        internal AzureDatabricksDeltaLakeLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri domain, SecretBase accessToken, Uri clusterId, Uri encryptedCredential, CredentialReference credential, Uri workspaceResourceId) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureDatabricksDeltaLakeLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData domain, SecretBase accessToken, BinaryData clusterId, BinaryData encryptedCredential, CredentialReference credential, BinaryData workspaceResourceId) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Domain = domain;
             AccessToken = accessToken;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </summary>
-        public Uri Domain { get; set; }
+        public BinaryData Domain { get; set; }
         /// <summary>
         /// Access token for databricks REST API. Refer to https://docs.azuredatabricks.net/api/latest/authentication.html. Type: string, SecureString or AzureKeyVaultSecretReference.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase AccessToken { get; set; }
         /// <summary> The id of an existing interactive cluster that will be used for all runs of this job. Type: string (or Expression with resultType string). </summary>
-        public Uri ClusterId { get; set; }
+        public BinaryData ClusterId { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
         public CredentialReference Credential { get; set; }
         /// <summary> Workspace resource id for databricks REST API. Type: string (or Expression with resultType string). </summary>
-        public Uri WorkspaceResourceId { get; set; }
+        public BinaryData WorkspaceResourceId { get; set; }
     }
 }

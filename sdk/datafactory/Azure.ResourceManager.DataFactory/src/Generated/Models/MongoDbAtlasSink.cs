@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="writeBehavior"> Specifies whether the document with same key to be overwritten (upsert) rather than throw exception (insert). The default value is &quot;insert&quot;. Type: string (or Expression with resultType string). Type: string (or Expression with resultType string). </param>
-        internal MongoDbAtlasSink(string copySinkType, Uri writeBatchSize, Uri writeBatchTimeout, Uri sinkRetryCount, Uri sinkRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri writeBehavior) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal MongoDbAtlasSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData writeBehavior) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             WriteBehavior = writeBehavior;
             CopySinkType = copySinkType ?? "MongoDbAtlasSink";
         }
 
         /// <summary> Specifies whether the document with same key to be overwritten (upsert) rather than throw exception (insert). The default value is &quot;insert&quot;. Type: string (or Expression with resultType string). Type: string (or Expression with resultType string). </summary>
-        public Uri WriteBehavior { get; set; }
+        public BinaryData WriteBehavior { get; set; }
     }
 }

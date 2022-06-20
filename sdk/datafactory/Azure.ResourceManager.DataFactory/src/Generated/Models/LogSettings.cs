@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="enableCopyActivityLog"> Specifies whether to enable copy activity log. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyActivityLogSettings"> Specifies settings for copy activity log. </param>
         /// <param name="logLocationSettings"> Log location settings customer needs to provide when enabling log. </param>
-        internal LogSettings(Uri enableCopyActivityLog, CopyActivityLogSettings copyActivityLogSettings, LogLocationSettings logLocationSettings)
+        internal LogSettings(BinaryData enableCopyActivityLog, CopyActivityLogSettings copyActivityLogSettings, LogLocationSettings logLocationSettings)
         {
             EnableCopyActivityLog = enableCopyActivityLog;
             CopyActivityLogSettings = copyActivityLogSettings;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Specifies whether to enable copy activity log. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri EnableCopyActivityLog { get; set; }
+        public BinaryData EnableCopyActivityLog { get; set; }
         /// <summary> Specifies settings for copy activity log. </summary>
         public CopyActivityLogSettings CopyActivityLogSettings { get; set; }
         /// <summary> Log location settings customer needs to provide when enabling log. </summary>

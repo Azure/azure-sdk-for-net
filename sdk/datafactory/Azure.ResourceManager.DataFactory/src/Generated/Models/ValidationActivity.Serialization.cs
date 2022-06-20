@@ -51,22 +51,38 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout");
-                writer.WriteStringValue(Timeout.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Timeout);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Timeout.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Sleep))
             {
                 writer.WritePropertyName("sleep");
-                writer.WriteStringValue(Sleep.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Sleep);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Sleep.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(MinimumSize))
             {
                 writer.WritePropertyName("minimumSize");
-                writer.WriteStringValue(MinimumSize.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MinimumSize);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MinimumSize.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ChildItems))
             {
                 writer.WritePropertyName("childItems");
-                writer.WriteStringValue(ChildItems.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ChildItems);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ChildItems.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("dataset");
             writer.WriteObjectValue(Dataset);
@@ -74,7 +90,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -86,13 +106,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
-            Optional<Uri> timeout = default;
-            Optional<Uri> sleep = default;
-            Optional<Uri> minimumSize = default;
-            Optional<Uri> childItems = default;
+            Optional<BinaryData> timeout = default;
+            Optional<BinaryData> sleep = default;
+            Optional<BinaryData> minimumSize = default;
+            Optional<BinaryData> childItems = default;
             DatasetReference dataset = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -153,40 +173,40 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                timeout = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            timeout = new Uri(property0.Value.GetString());
+                            timeout = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sleep"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                sleep = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sleep = new Uri(property0.Value.GetString());
+                            sleep = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("minimumSize"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                minimumSize = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            minimumSize = new Uri(property0.Value.GetString());
+                            minimumSize = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("childItems"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                childItems = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            childItems = new Uri(property0.Value.GetString());
+                            childItems = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("dataset"))
@@ -197,7 +217,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ValidationActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, timeout.Value, sleep.Value, minimumSize.Value, childItems.Value, dataset);

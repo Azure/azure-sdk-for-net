@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ParquetFormat(string datasetStorageFormatType, Uri serializer, Uri deserializer, IDictionary<string, Uri> additionalProperties) : base(datasetStorageFormatType, serializer, deserializer, additionalProperties)
+        internal ParquetFormat(string datasetStorageFormatType, BinaryData serializer, BinaryData deserializer, IDictionary<string, BinaryData> additionalProperties) : base(datasetStorageFormatType, serializer, deserializer, additionalProperties)
         {
             DatasetStorageFormatType = datasetStorageFormatType ?? "ParquetFormat";
         }

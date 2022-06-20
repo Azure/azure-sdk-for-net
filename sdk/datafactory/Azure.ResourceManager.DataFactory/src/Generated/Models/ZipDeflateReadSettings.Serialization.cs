@@ -20,34 +20,42 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PreserveZipFileNameAsFolder))
             {
                 writer.WritePropertyName("preserveZipFileNameAsFolder");
-                writer.WriteStringValue(PreserveZipFileNameAsFolder.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PreserveZipFileNameAsFolder);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PreserveZipFileNameAsFolder.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(CompressionReadSettingsType);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static ZipDeflateReadSettings DeserializeZipDeflateReadSettings(JsonElement element)
         {
-            Optional<Uri> preserveZipFileNameAsFolder = default;
+            Optional<BinaryData> preserveZipFileNameAsFolder = default;
             string type = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preserveZipFileNameAsFolder"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        preserveZipFileNameAsFolder = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    preserveZipFileNameAsFolder = new Uri(property.Value.GetString());
+                    preserveZipFileNameAsFolder = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -55,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     type = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ZipDeflateReadSettings(type, additionalProperties, preserveZipFileNameAsFolder.Value);

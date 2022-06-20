@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="tableName"> The table name of the Azure PostgreSQL database which includes both schema and table. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The table name of the Azure PostgreSQL database. Type: string (or Expression with resultType string). </param>
         /// <param name="schemaTypePropertiesSchema"> The schema name of the Azure PostgreSQL database. Type: string (or Expression with resultType string). </param>
-        internal AzurePostgreSqlTableDataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, Uri tableName, Uri table, Uri schemaTypePropertiesSchema) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AzurePostgreSqlTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName, BinaryData table, BinaryData schemaTypePropertiesSchema) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
             Table = table;
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The table name of the Azure PostgreSQL database which includes both schema and table. Type: string (or Expression with resultType string). </summary>
-        public Uri TableName { get; set; }
+        public BinaryData TableName { get; set; }
         /// <summary> The table name of the Azure PostgreSQL database. Type: string (or Expression with resultType string). </summary>
-        public Uri Table { get; set; }
+        public BinaryData Table { get; set; }
         /// <summary> The schema name of the Azure PostgreSQL database. Type: string (or Expression with resultType string). </summary>
-        public Uri SchemaTypePropertiesSchema { get; set; }
+        public BinaryData SchemaTypePropertiesSchema { get; set; }
     }
 }

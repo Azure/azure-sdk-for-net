@@ -32,14 +32,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(DatasetParameters))
             {
                 writer.WritePropertyName("datasetParameters");
-                writer.WriteStringValue(DatasetParameters.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DatasetParameters);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DatasetParameters.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }

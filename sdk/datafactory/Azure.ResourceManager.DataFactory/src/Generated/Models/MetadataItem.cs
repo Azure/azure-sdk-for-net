@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of MetadataItem. </summary>
         /// <param name="name"> Metadata item key name. Type: string (or Expression with resultType string). </param>
         /// <param name="value"> Metadata item value. Type: string (or Expression with resultType string). </param>
-        internal MetadataItem(Uri name, Uri value)
+        internal MetadataItem(BinaryData name, BinaryData value)
         {
             Name = name;
             Value = value;
         }
 
         /// <summary> Metadata item key name. Type: string (or Expression with resultType string). </summary>
-        public Uri Name { get; set; }
+        public BinaryData Name { get; set; }
         /// <summary> Metadata item value. Type: string (or Expression with resultType string). </summary>
-        public Uri Value { get; set; }
+        public BinaryData Value { get; set; }
     }
 }

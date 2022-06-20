@@ -19,40 +19,48 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
-                writer.WriteStringValue(Name.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Name);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Name.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value");
-                writer.WriteStringValue(Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static MetadataItem DeserializeMetadataItem(JsonElement element)
         {
-            Optional<Uri> name = default;
-            Optional<Uri> value = default;
+            Optional<BinaryData> name = default;
+            Optional<BinaryData> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        name = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = new Uri(property.Value.GetString());
+                    name = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        value = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    value = new Uri(property.Value.GetString());
+                    value = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

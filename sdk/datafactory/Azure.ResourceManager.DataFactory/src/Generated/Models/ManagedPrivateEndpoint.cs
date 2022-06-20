@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public ManagedPrivateEndpoint()
         {
             Fqdns = new ChangeTrackingList<string>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ManagedPrivateEndpoint. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="privateLinkResourceId"> The ARM resource ID of the resource to which the managed private endpoint is created. </param>
         /// <param name="provisioningState"> The managed private endpoint provisioning state. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ManagedPrivateEndpoint(ConnectionStateProperties connectionState, IList<string> fqdns, string groupId, bool? isReserved, string privateLinkResourceId, string provisioningState, IDictionary<string, Uri> additionalProperties)
+        internal ManagedPrivateEndpoint(ConnectionStateProperties connectionState, IList<string> fqdns, string groupId, bool? isReserved, string privateLinkResourceId, string provisioningState, IDictionary<string, BinaryData> additionalProperties)
         {
             ConnectionState = connectionState;
             Fqdns = fqdns;
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The managed private endpoint provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

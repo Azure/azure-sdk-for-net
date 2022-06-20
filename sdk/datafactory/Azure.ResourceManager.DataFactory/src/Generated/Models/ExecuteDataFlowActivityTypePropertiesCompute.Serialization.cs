@@ -19,40 +19,48 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ComputeType))
             {
                 writer.WritePropertyName("computeType");
-                writer.WriteStringValue(ComputeType.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ComputeType);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ComputeType.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(CoreCount))
             {
                 writer.WritePropertyName("coreCount");
-                writer.WriteStringValue(CoreCount.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(CoreCount);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(CoreCount.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static ExecuteDataFlowActivityTypePropertiesCompute DeserializeExecuteDataFlowActivityTypePropertiesCompute(JsonElement element)
         {
-            Optional<Uri> computeType = default;
-            Optional<Uri> coreCount = default;
+            Optional<BinaryData> computeType = default;
+            Optional<BinaryData> coreCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeType"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        computeType = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    computeType = new Uri(property.Value.GetString());
+                    computeType = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("coreCount"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        coreCount = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    coreCount = new Uri(property.Value.GetString());
+                    coreCount = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

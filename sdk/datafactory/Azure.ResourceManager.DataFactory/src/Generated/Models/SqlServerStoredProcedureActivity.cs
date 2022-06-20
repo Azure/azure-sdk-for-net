@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="storedProcedureName"> Stored procedure name. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="storedProcedureName"/> is null. </exception>
-        public SqlServerStoredProcedureActivity(string name, Uri storedProcedureName) : base(name)
+        public SqlServerStoredProcedureActivity(string name, BinaryData storedProcedureName) : base(name)
         {
             if (name == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="policy"> Activity policy. </param>
         /// <param name="storedProcedureName"> Stored procedure name. Type: string (or Expression with resultType string). </param>
         /// <param name="storedProcedureParameters"> Value and type setting for stored procedure parameters. Example: &quot;{Parameter1: {value: &quot;1&quot;, type: &quot;int&quot;}}&quot;. </param>
-        internal SqlServerStoredProcedureActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, Uri> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, Uri storedProcedureName, Uri storedProcedureParameters) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal SqlServerStoredProcedureActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData storedProcedureName, BinaryData storedProcedureParameters) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             StoredProcedureName = storedProcedureName;
             StoredProcedureParameters = storedProcedureParameters;
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Stored procedure name. Type: string (or Expression with resultType string). </summary>
-        public Uri StoredProcedureName { get; set; }
+        public BinaryData StoredProcedureName { get; set; }
         /// <summary> Value and type setting for stored procedure parameters. Example: &quot;{Parameter1: {value: &quot;1&quot;, type: &quot;int&quot;}}&quot;. </summary>
-        public Uri StoredProcedureParameters { get; set; }
+        public BinaryData StoredProcedureParameters { get; set; }
     }
 }

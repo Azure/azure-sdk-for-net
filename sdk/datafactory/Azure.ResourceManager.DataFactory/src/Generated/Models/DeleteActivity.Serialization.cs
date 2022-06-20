@@ -61,7 +61,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive");
-                writer.WriteStringValue(Recursive.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Recursive);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Recursive.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
@@ -71,7 +75,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EnableLogging))
             {
                 writer.WritePropertyName("enableLogging");
-                writer.WriteStringValue(EnableLogging.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EnableLogging);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnableLogging.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(LogStorageSettings))
             {
@@ -89,7 +97,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -103,14 +115,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
-            Optional<Uri> recursive = default;
+            Optional<BinaryData> recursive = default;
             Optional<int> maxConcurrentConnections = default;
-            Optional<Uri> enableLogging = default;
+            Optional<BinaryData> enableLogging = default;
             Optional<LogStorageSettings> logStorageSettings = default;
             DatasetReference dataset = default;
             Optional<StoreReadSettings> storeSettings = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -191,10 +203,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                recursive = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            recursive = new Uri(property0.Value.GetString());
+                            recursive = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("maxConcurrentConnections"))
@@ -211,10 +223,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                enableLogging = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            enableLogging = new Uri(property0.Value.GetString());
+                            enableLogging = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("logStorageSettings"))
@@ -245,7 +257,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DeleteActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, recursive.Value, Optional.ToNullable(maxConcurrentConnections), enableLogging.Value, logStorageSettings.Value, dataset, storeSettings.Value);

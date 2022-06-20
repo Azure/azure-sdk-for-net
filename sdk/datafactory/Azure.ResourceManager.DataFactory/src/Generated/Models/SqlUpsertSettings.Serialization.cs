@@ -19,56 +19,68 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(UseTempDB))
             {
                 writer.WritePropertyName("useTempDB");
-                writer.WriteStringValue(UseTempDB.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UseTempDB);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(UseTempDB.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(InterimSchemaName))
             {
                 writer.WritePropertyName("interimSchemaName");
-                writer.WriteStringValue(InterimSchemaName.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(InterimSchemaName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(InterimSchemaName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Keys))
             {
                 writer.WritePropertyName("keys");
-                writer.WriteStringValue(Keys.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Keys);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Keys.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static SqlUpsertSettings DeserializeSqlUpsertSettings(JsonElement element)
         {
-            Optional<Uri> useTempDB = default;
-            Optional<Uri> interimSchemaName = default;
-            Optional<Uri> keys = default;
+            Optional<BinaryData> useTempDB = default;
+            Optional<BinaryData> interimSchemaName = default;
+            Optional<BinaryData> keys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("useTempDB"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        useTempDB = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    useTempDB = new Uri(property.Value.GetString());
+                    useTempDB = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("interimSchemaName"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        interimSchemaName = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    interimSchemaName = new Uri(property.Value.GetString());
+                    interimSchemaName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("keys"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keys = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    keys = new Uri(property.Value.GetString());
+                    keys = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

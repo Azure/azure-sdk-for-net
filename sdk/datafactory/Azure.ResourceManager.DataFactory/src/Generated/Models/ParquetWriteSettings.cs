@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="maxRowsPerFile"> Limit the written file&apos;s row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="fileNamePrefix"> Specifies the file name pattern &lt;fileNamePrefix&gt;_&lt;fileIndex&gt;.&lt;fileExtension&gt; when copy from non-file based store without partitionOptions. Type: string (or Expression with resultType string). </param>
-        internal ParquetWriteSettings(string formatWriteSettingsType, IDictionary<string, Uri> additionalProperties, Uri maxRowsPerFile, Uri fileNamePrefix) : base(formatWriteSettingsType, additionalProperties)
+        internal ParquetWriteSettings(string formatWriteSettingsType, IDictionary<string, BinaryData> additionalProperties, BinaryData maxRowsPerFile, BinaryData fileNamePrefix) : base(formatWriteSettingsType, additionalProperties)
         {
             MaxRowsPerFile = maxRowsPerFile;
             FileNamePrefix = fileNamePrefix;
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Limit the written file&apos;s row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer). </summary>
-        public Uri MaxRowsPerFile { get; set; }
+        public BinaryData MaxRowsPerFile { get; set; }
         /// <summary> Specifies the file name pattern &lt;fileNamePrefix&gt;_&lt;fileIndex&gt;.&lt;fileExtension&gt; when copy from non-file based store without partitionOptions. Type: string (or Expression with resultType string). </summary>
-        public Uri FileNamePrefix { get; set; }
+        public BinaryData FileNamePrefix { get; set; }
     }
 }

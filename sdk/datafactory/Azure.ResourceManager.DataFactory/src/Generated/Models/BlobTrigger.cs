@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folderPath"> The path of the container/folder that will trigger the pipeline. </param>
         /// <param name="maxConcurrency"> The max number of parallel files to handle when it is triggered. </param>
         /// <param name="linkedService"> The Azure Storage linked service reference. </param>
-        internal BlobTrigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, IList<TriggerPipelineReference> pipelines, string folderPath, int maxConcurrency, LinkedServiceReference linkedService) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
+        internal BlobTrigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, string folderPath, int maxConcurrency, LinkedServiceReference linkedService) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
         {
             FolderPath = folderPath;
             MaxConcurrency = maxConcurrency;

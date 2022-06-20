@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sellerId"> The Amazon seller ID. </param>
         /// <param name="accessKeyId"> The access key id used to access data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="marketplaceId"/>, <paramref name="sellerId"/> or <paramref name="accessKeyId"/> is null. </exception>
-        public AmazonMwsLinkedService(Uri endpoint, Uri marketplaceId, Uri sellerId, Uri accessKeyId)
+        public AmazonMwsLinkedService(BinaryData endpoint, BinaryData marketplaceId, BinaryData sellerId, BinaryData accessKeyId)
         {
             if (endpoint == null)
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AmazonMwsLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri endpoint, Uri marketplaceId, Uri sellerId, SecretBase mwsAuthToken, Uri accessKeyId, SecretBase secretKey, Uri useEncryptedEndpoints, Uri useHostVerification, Uri usePeerVerification, Uri encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AmazonMwsLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData endpoint, BinaryData marketplaceId, BinaryData sellerId, SecretBase mwsAuthToken, BinaryData accessKeyId, SecretBase secretKey, BinaryData useEncryptedEndpoints, BinaryData useHostVerification, BinaryData usePeerVerification, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Endpoint = endpoint;
             MarketplaceId = marketplaceId;
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The endpoint of the Amazon MWS server, (i.e. mws.amazonservices.com). </summary>
-        public Uri Endpoint { get; set; }
+        public BinaryData Endpoint { get; set; }
         /// <summary> The Amazon Marketplace ID you want to retrieve data from. To retrieve data from multiple Marketplace IDs, separate them with a comma (,). (i.e. A2EUQ1WTGCTBG2). </summary>
-        public Uri MarketplaceId { get; set; }
+        public BinaryData MarketplaceId { get; set; }
         /// <summary> The Amazon seller ID. </summary>
-        public Uri SellerId { get; set; }
+        public BinaryData SellerId { get; set; }
         /// <summary>
         /// The Amazon MWS authentication token.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase MwsAuthToken { get; set; }
         /// <summary> The access key id used to access data. </summary>
-        public Uri AccessKeyId { get; set; }
+        public BinaryData AccessKeyId { get; set; }
         /// <summary>
         /// The secret key used to access data.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase SecretKey { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
-        public Uri UseEncryptedEndpoints { get; set; }
+        public BinaryData UseEncryptedEndpoints { get; set; }
         /// <summary> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </summary>
-        public Uri UseHostVerification { get; set; }
+        public BinaryData UseHostVerification { get; set; }
         /// <summary> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </summary>
-        public Uri UsePeerVerification { get; set; }
+        public BinaryData UsePeerVerification { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

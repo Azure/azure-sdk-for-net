@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="path"> The path of the Dynamics AX OData entity. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="path"/> is null. </exception>
-        public DynamicsAXResourceDataset(LinkedServiceReference linkedServiceName, Uri path) : base(linkedServiceName)
+        public DynamicsAXResourceDataset(LinkedServiceReference linkedServiceName, BinaryData path) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="path"> The path of the Dynamics AX OData entity. Type: string (or Expression with resultType string). </param>
-        internal DynamicsAXResourceDataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, Uri path) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal DynamicsAXResourceDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData path) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Path = path;
             DatasetType = datasetType ?? "DynamicsAXResource";
         }
 
         /// <summary> The path of the Dynamics AX OData entity. Type: string (or Expression with resultType string). </summary>
-        public Uri Path { get; set; }
+        public BinaryData Path { get; set; }
     }
 }

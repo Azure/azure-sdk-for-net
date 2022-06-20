@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="indexName"> The name of the Azure Search Index. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="indexName"/> is null. </exception>
-        public AzureSearchIndexDataset(LinkedServiceReference linkedServiceName, Uri indexName) : base(linkedServiceName)
+        public AzureSearchIndexDataset(LinkedServiceReference linkedServiceName, BinaryData indexName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="indexName"> The name of the Azure Search Index. Type: string (or Expression with resultType string). </param>
-        internal AzureSearchIndexDataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, Uri indexName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AzureSearchIndexDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData indexName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             IndexName = indexName;
             DatasetType = datasetType ?? "AzureSearchIndex";
         }
 
         /// <summary> The name of the Azure Search Index. Type: string (or Expression with resultType string). </summary>
-        public Uri IndexName { get; set; }
+        public BinaryData IndexName { get; set; }
     }
 }

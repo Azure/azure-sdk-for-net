@@ -49,14 +49,26 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("message");
-            writer.WriteStringValue(Message.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Message);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Message.ToString()).RootElement);
+#endif
             writer.WritePropertyName("errorCode");
-            writer.WriteStringValue(ErrorCode.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ErrorCode);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(ErrorCode.ToString()).RootElement);
+#endif
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -68,10 +80,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
-            Uri message = default;
-            Uri errorCode = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            BinaryData message = default;
+            BinaryData errorCode = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -130,18 +142,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("message"))
                         {
-                            message = new Uri(property0.Value.GetString());
+                            message = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("errorCode"))
                         {
-                            errorCode = new Uri(property0.Value.GetString());
+                            errorCode = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new FailActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, message, errorCode);

@@ -22,17 +22,29 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Serializer))
             {
                 writer.WritePropertyName("serializer");
-                writer.WriteStringValue(Serializer.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Serializer);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Serializer.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Deserializer))
             {
                 writer.WritePropertyName("deserializer");
-                writer.WriteStringValue(Deserializer.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Deserializer);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Deserializer.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -40,10 +52,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static OrcFormat DeserializeOrcFormat(JsonElement element)
         {
             string type = default;
-            Optional<Uri> serializer = default;
-            Optional<Uri> deserializer = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> serializer = default;
+            Optional<BinaryData> deserializer = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -55,23 +67,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        serializer = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    serializer = new Uri(property.Value.GetString());
+                    serializer = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("deserializer"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        deserializer = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    deserializer = new Uri(property.Value.GetString());
+                    deserializer = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new OrcFormat(type, serializer.Value, deserializer.Value, additionalProperties);

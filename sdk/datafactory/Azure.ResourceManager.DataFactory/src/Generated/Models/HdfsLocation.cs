@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal HdfsLocation(string datasetLocationType, Uri folderPath, Uri fileName, IDictionary<string, Uri> additionalProperties) : base(datasetLocationType, folderPath, fileName, additionalProperties)
+        internal HdfsLocation(string datasetLocationType, BinaryData folderPath, BinaryData fileName, IDictionary<string, BinaryData> additionalProperties) : base(datasetLocationType, folderPath, fileName, additionalProperties)
         {
             DatasetLocationType = datasetLocationType ?? "HdfsLocation";
         }

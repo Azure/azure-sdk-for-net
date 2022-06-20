@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="writeBehavior"> The write behavior for the operation. Default is &apos;Insert&apos;. </param>
         /// <param name="httpRequestTimeout"> The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:05:00. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        internal SapCloudForCustomerSink(string copySinkType, Uri writeBatchSize, Uri writeBatchTimeout, Uri sinkRetryCount, Uri sinkRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, SapCloudForCustomerSinkWriteBehavior? writeBehavior, Uri httpRequestTimeout) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal SapCloudForCustomerSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, SapCloudForCustomerSinkWriteBehavior? writeBehavior, BinaryData httpRequestTimeout) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             WriteBehavior = writeBehavior;
             HttpRequestTimeout = httpRequestTimeout;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The write behavior for the operation. Default is &apos;Insert&apos;. </summary>
         public SapCloudForCustomerSinkWriteBehavior? WriteBehavior { get; set; }
         /// <summary> The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:05:00. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
-        public Uri HttpRequestTimeout { get; set; }
+        public BinaryData HttpRequestTimeout { get; set; }
     }
 }

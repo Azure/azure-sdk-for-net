@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             Dataset = dataset;
-            FieldList = new ChangeTrackingList<Uri>();
+            FieldList = new ChangeTrackingList<BinaryData>();
             ActivityType = "GetMetadata";
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="FormatReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BinaryReadSettings"/>, <see cref="JsonReadSettings"/>, <see cref="XmlReadSettings"/> and <see cref="DelimitedTextReadSettings"/>.
         /// </param>
-        internal GetMetadataActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, Uri> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, DatasetReference dataset, IList<Uri> fieldList, StoreReadSettings storeSettings, FormatReadSettings formatSettings) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal GetMetadataActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, DatasetReference dataset, IList<BinaryData> fieldList, StoreReadSettings storeSettings, FormatReadSettings formatSettings) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Dataset = dataset;
             FieldList = fieldList;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> GetMetadata activity dataset reference. </summary>
         public DatasetReference Dataset { get; set; }
         /// <summary> Fields of metadata to get from dataset. </summary>
-        public IList<Uri> FieldList { get; }
+        public IList<BinaryData> FieldList { get; }
         /// <summary>
         /// GetMetadata activity store settings.
         /// Please note <see cref="StoreReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

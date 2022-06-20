@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="uri"> The base URL of the REST service. </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the REST service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public RestServiceLinkedService(Uri uri, RestServiceAuthenticationType authenticationType)
+        public RestServiceLinkedService(BinaryData uri, RestServiceAuthenticationType authenticationType)
         {
             if (uri == null)
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="tokenEndpoint"> The token endpoint of the authorization server to acquire access token. Type: string (or Expression with resultType string). </param>
         /// <param name="resource"> The target service or resource to which the access will be requested. Type: string (or Expression with resultType string). </param>
         /// <param name="scope"> The scope of the access required. It describes what kind of access will be requested. Type: string (or Expression with resultType string). </param>
-        internal RestServiceLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri uri, Uri enableServerCertificateValidation, RestServiceAuthenticationType authenticationType, Uri userName, SecretBase password, Uri authHeaders, Uri servicePrincipalId, SecretBase servicePrincipalKey, Uri tenant, Uri azureCloudType, Uri aadResourceId, Uri encryptedCredential, CredentialReference credential, Uri clientId, SecretBase clientSecret, Uri tokenEndpoint, Uri resource, Uri scope) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal RestServiceLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData uri, BinaryData enableServerCertificateValidation, RestServiceAuthenticationType authenticationType, BinaryData userName, SecretBase password, BinaryData authHeaders, BinaryData servicePrincipalId, SecretBase servicePrincipalKey, BinaryData tenant, BinaryData azureCloudType, BinaryData aadResourceId, BinaryData encryptedCredential, CredentialReference credential, BinaryData clientId, SecretBase clientSecret, BinaryData tokenEndpoint, BinaryData resource, BinaryData scope) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Uri = uri;
             EnableServerCertificateValidation = enableServerCertificateValidation;
@@ -90,13 +90,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The base URL of the REST service. </summary>
-        public Uri Uri { get; set; }
+        public BinaryData Uri { get; set; }
         /// <summary> Whether to validate server side SSL certificate when connecting to the endpoint.The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri EnableServerCertificateValidation { get; set; }
+        public BinaryData EnableServerCertificateValidation { get; set; }
         /// <summary> Type of authentication used to connect to the REST service. </summary>
         public RestServiceAuthenticationType AuthenticationType { get; set; }
         /// <summary> The user name used in Basic authentication type. </summary>
-        public Uri UserName { get; set; }
+        public BinaryData UserName { get; set; }
         /// <summary>
         /// The password used in Basic authentication type.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> The additional HTTP headers in the request to RESTful API used for authorization. Type: object (or Expression with resultType object). </summary>
-        public Uri AuthHeaders { get; set; }
+        public BinaryData AuthHeaders { get; set; }
         /// <summary> The application&apos;s client ID used in AadServicePrincipal authentication type. </summary>
-        public Uri ServicePrincipalId { get; set; }
+        public BinaryData ServicePrincipalId { get; set; }
         /// <summary>
         /// The application&apos;s key used in AadServicePrincipal authentication type.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -114,17 +114,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase ServicePrincipalKey { get; set; }
         /// <summary> The tenant information (domain name or tenant ID) used in AadServicePrincipal authentication type under which your application resides. </summary>
-        public Uri Tenant { get; set; }
+        public BinaryData Tenant { get; set; }
         /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
-        public Uri AzureCloudType { get; set; }
+        public BinaryData AzureCloudType { get; set; }
         /// <summary> The resource you are requesting authorization to use. </summary>
-        public Uri AadResourceId { get; set; }
+        public BinaryData AadResourceId { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
         public CredentialReference Credential { get; set; }
         /// <summary> The client ID associated with your application. Type: string (or Expression with resultType string). </summary>
-        public Uri ClientId { get; set; }
+        public BinaryData ClientId { get; set; }
         /// <summary>
         /// The client secret associated with your application.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase ClientSecret { get; set; }
         /// <summary> The token endpoint of the authorization server to acquire access token. Type: string (or Expression with resultType string). </summary>
-        public Uri TokenEndpoint { get; set; }
+        public BinaryData TokenEndpoint { get; set; }
         /// <summary> The target service or resource to which the access will be requested. Type: string (or Expression with resultType string). </summary>
-        public Uri Resource { get; set; }
+        public BinaryData Resource { get; set; }
         /// <summary> The scope of the access required. It describes what kind of access will be requested. Type: string (or Expression with resultType string). </summary>
-        public Uri Scope { get; set; }
+        public BinaryData Scope { get; set; }
     }
 }

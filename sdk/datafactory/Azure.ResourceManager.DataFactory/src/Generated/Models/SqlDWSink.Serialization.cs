@@ -20,12 +20,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PreCopyScript))
             {
                 writer.WritePropertyName("preCopyScript");
-                writer.WriteStringValue(PreCopyScript.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PreCopyScript);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PreCopyScript.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(AllowPolyBase))
             {
                 writer.WritePropertyName("allowPolyBase");
-                writer.WriteStringValue(AllowPolyBase.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AllowPolyBase);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(AllowPolyBase.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(PolyBaseSettings))
             {
@@ -35,7 +43,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AllowCopyCommand))
             {
                 writer.WritePropertyName("allowCopyCommand");
-                writer.WriteStringValue(AllowCopyCommand.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AllowCopyCommand);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(AllowCopyCommand.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(CopyCommandSettings))
             {
@@ -45,17 +57,29 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TableOption))
             {
                 writer.WritePropertyName("tableOption");
-                writer.WriteStringValue(TableOption.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TableOption);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(TableOption.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SqlWriterUseTableLock))
             {
                 writer.WritePropertyName("sqlWriterUseTableLock");
-                writer.WriteStringValue(SqlWriterUseTableLock.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SqlWriterUseTableLock);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SqlWriterUseTableLock.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(WriteBehavior))
             {
                 writer.WritePropertyName("writeBehavior");
-                writer.WriteStringValue(WriteBehavior.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(WriteBehavior);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(WriteBehavior.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(UpsertSettings))
             {
@@ -67,81 +91,109 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize");
-                writer.WriteStringValue(WriteBatchSize.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(WriteBatchSize);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(WriteBatchSize.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout");
-                writer.WriteStringValue(WriteBatchTimeout.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(WriteBatchTimeout);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(WriteBatchTimeout.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount");
-                writer.WriteStringValue(SinkRetryCount.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SinkRetryCount);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SinkRetryCount.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait");
-                writer.WriteStringValue(SinkRetryWait.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SinkRetryWait);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SinkRetryWait.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections");
-                writer.WriteStringValue(MaxConcurrentConnections.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MaxConcurrentConnections);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection");
-                writer.WriteStringValue(DisableMetricsCollection.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DisableMetricsCollection);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DisableMetricsCollection.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static SqlDWSink DeserializeSqlDWSink(JsonElement element)
         {
-            Optional<Uri> preCopyScript = default;
-            Optional<Uri> allowPolyBase = default;
+            Optional<BinaryData> preCopyScript = default;
+            Optional<BinaryData> allowPolyBase = default;
             Optional<PolybaseSettings> polyBaseSettings = default;
-            Optional<Uri> allowCopyCommand = default;
+            Optional<BinaryData> allowCopyCommand = default;
             Optional<DWCopyCommandSettings> copyCommandSettings = default;
-            Optional<Uri> tableOption = default;
-            Optional<Uri> sqlWriterUseTableLock = default;
-            Optional<Uri> writeBehavior = default;
+            Optional<BinaryData> tableOption = default;
+            Optional<BinaryData> sqlWriterUseTableLock = default;
+            Optional<BinaryData> writeBehavior = default;
             Optional<SqlDWUpsertSettings> upsertSettings = default;
             string type = default;
-            Optional<Uri> writeBatchSize = default;
-            Optional<Uri> writeBatchTimeout = default;
-            Optional<Uri> sinkRetryCount = default;
-            Optional<Uri> sinkRetryWait = default;
-            Optional<Uri> maxConcurrentConnections = default;
-            Optional<Uri> disableMetricsCollection = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> writeBatchSize = default;
+            Optional<BinaryData> writeBatchTimeout = default;
+            Optional<BinaryData> sinkRetryCount = default;
+            Optional<BinaryData> sinkRetryWait = default;
+            Optional<BinaryData> maxConcurrentConnections = default;
+            Optional<BinaryData> disableMetricsCollection = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preCopyScript"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        preCopyScript = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    preCopyScript = new Uri(property.Value.GetString());
+                    preCopyScript = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("allowPolyBase"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        allowPolyBase = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    allowPolyBase = new Uri(property.Value.GetString());
+                    allowPolyBase = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("polyBaseSettings"))
@@ -158,10 +210,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        allowCopyCommand = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    allowCopyCommand = new Uri(property.Value.GetString());
+                    allowCopyCommand = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("copyCommandSettings"))
@@ -178,30 +230,30 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        tableOption = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    tableOption = new Uri(property.Value.GetString());
+                    tableOption = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sqlWriterUseTableLock"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sqlWriterUseTableLock = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sqlWriterUseTableLock = new Uri(property.Value.GetString());
+                    sqlWriterUseTableLock = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("writeBehavior"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        writeBehavior = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    writeBehavior = new Uri(property.Value.GetString());
+                    writeBehavior = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("upsertSettings"))
@@ -223,63 +275,63 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        writeBatchSize = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    writeBatchSize = new Uri(property.Value.GetString());
+                    writeBatchSize = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("writeBatchTimeout"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        writeBatchTimeout = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    writeBatchTimeout = new Uri(property.Value.GetString());
+                    writeBatchTimeout = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sinkRetryCount"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sinkRetryCount = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sinkRetryCount = new Uri(property.Value.GetString());
+                    sinkRetryCount = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sinkRetryWait"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sinkRetryWait = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sinkRetryWait = new Uri(property.Value.GetString());
+                    sinkRetryWait = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        maxConcurrentConnections = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxConcurrentConnections = new Uri(property.Value.GetString());
+                    maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        disableMetricsCollection = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    disableMetricsCollection = new Uri(property.Value.GetString());
+                    disableMetricsCollection = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SqlDWSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, preCopyScript.Value, allowPolyBase.Value, polyBaseSettings.Value, allowCopyCommand.Value, copyCommandSettings.Value, tableOption.Value, sqlWriterUseTableLock.Value, writeBehavior.Value, upsertSettings.Value);

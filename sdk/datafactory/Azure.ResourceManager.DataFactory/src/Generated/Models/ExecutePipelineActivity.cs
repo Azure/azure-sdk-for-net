@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             Pipeline = pipeline;
-            Parameters = new ChangeTrackingDictionary<string, Uri>();
+            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
             ActivityType = "ExecutePipeline";
         }
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="pipeline"> Pipeline reference. </param>
         /// <param name="parameters"> Pipeline parameters. </param>
         /// <param name="waitOnCompletion"> Defines whether activity execution will wait for the dependent pipeline execution to finish. Default is false. </param>
-        internal ExecutePipelineActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, Uri> additionalProperties, ExecutePipelineActivityPolicy policy, PipelineReference pipeline, IDictionary<string, Uri> parameters, bool? waitOnCompletion) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal ExecutePipelineActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, ExecutePipelineActivityPolicy policy, PipelineReference pipeline, IDictionary<string, BinaryData> parameters, bool? waitOnCompletion) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             Policy = policy;
             Pipeline = pipeline;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Pipeline reference. </summary>
         public PipelineReference Pipeline { get; set; }
         /// <summary> Pipeline parameters. </summary>
-        public IDictionary<string, Uri> Parameters { get; }
+        public IDictionary<string, BinaryData> Parameters { get; }
         /// <summary> Defines whether activity execution will wait for the dependent pipeline execution to finish. Default is false. </summary>
         public bool? WaitOnCompletion { get; set; }
     }

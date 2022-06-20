@@ -46,25 +46,41 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteStringValue(item.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("mlEndpoint");
-            writer.WriteStringValue(MlEndpoint.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MlEndpoint);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(MlEndpoint.ToString()).RootElement);
+#endif
             writer.WritePropertyName("apiKey");
             writer.WriteObjectValue(ApiKey);
             if (Optional.IsDefined(UpdateResourceEndpoint))
             {
                 writer.WritePropertyName("updateResourceEndpoint");
-                writer.WriteStringValue(UpdateResourceEndpoint.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UpdateResourceEndpoint);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(UpdateResourceEndpoint.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId");
-                writer.WriteStringValue(ServicePrincipalId.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ServicePrincipalId);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ServicePrincipalId.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ServicePrincipalKey))
             {
@@ -74,23 +90,39 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant");
-                writer.WriteStringValue(Tenant.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Tenant);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Tenant.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
-                writer.WriteStringValue(EncryptedCredential.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EncryptedCredential);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication");
-                writer.WriteStringValue(Authentication.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Authentication);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Authentication.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -101,17 +133,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<Uri>> annotations = default;
-            Uri mlEndpoint = default;
+            Optional<IList<BinaryData>> annotations = default;
+            BinaryData mlEndpoint = default;
             SecretBase apiKey = default;
-            Optional<Uri> updateResourceEndpoint = default;
-            Optional<Uri> servicePrincipalId = default;
+            Optional<BinaryData> updateResourceEndpoint = default;
+            Optional<BinaryData> servicePrincipalId = default;
             Optional<SecretBase> servicePrincipalKey = default;
-            Optional<Uri> tenant = default;
-            Optional<Uri> encryptedCredential = default;
-            Optional<Uri> authentication = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> tenant = default;
+            Optional<BinaryData> encryptedCredential = default;
+            Optional<BinaryData> authentication = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -156,10 +188,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Uri> array = new List<Uri>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Uri(item.GetString()));
+                        array.Add(BinaryData.FromString(item.GetRawText()));
                     }
                     annotations = array;
                     continue;
@@ -175,7 +207,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("mlEndpoint"))
                         {
-                            mlEndpoint = new Uri(property0.Value.GetString());
+                            mlEndpoint = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("apiKey"))
@@ -187,20 +219,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                updateResourceEndpoint = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            updateResourceEndpoint = new Uri(property0.Value.GetString());
+                            updateResourceEndpoint = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalId"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                servicePrincipalId = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePrincipalId = new Uri(property0.Value.GetString());
+                            servicePrincipalId = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalKey"))
@@ -217,36 +249,36 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                tenant = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            tenant = new Uri(property0.Value.GetString());
+                            tenant = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                encryptedCredential = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryptedCredential = new Uri(property0.Value.GetString());
+                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authentication"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                authentication = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            authentication = new Uri(property0.Value.GetString());
+                            authentication = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureMLLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, mlEndpoint, apiKey, updateResourceEndpoint.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, encryptedCredential.Value, authentication.Value);

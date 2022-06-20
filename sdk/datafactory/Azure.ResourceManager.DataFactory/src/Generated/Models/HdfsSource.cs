@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="recursive"> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="distcpSettings"> Specifies Distcp-related settings. </param>
-        internal HdfsSource(string copySourceType, Uri sourceRetryCount, Uri sourceRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri recursive, DistcpSettings distcpSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal HdfsSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData recursive, DistcpSettings distcpSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             Recursive = recursive;
             DistcpSettings = distcpSettings;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri Recursive { get; set; }
+        public BinaryData Recursive { get; set; }
         /// <summary> Specifies Distcp-related settings. </summary>
         public DistcpSettings DistcpSettings { get; set; }
     }

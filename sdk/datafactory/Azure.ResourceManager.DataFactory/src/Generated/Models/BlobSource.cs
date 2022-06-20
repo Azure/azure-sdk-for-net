@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="treatEmptyAsNull"> Treat empty as null. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="skipHeaderLineCount"> Number of header lines to skip from each blob. Type: integer (or Expression with resultType integer). </param>
         /// <param name="recursive"> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </param>
-        internal BlobSource(string copySourceType, Uri sourceRetryCount, Uri sourceRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri treatEmptyAsNull, Uri skipHeaderLineCount, Uri recursive) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal BlobSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData treatEmptyAsNull, BinaryData skipHeaderLineCount, BinaryData recursive) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             TreatEmptyAsNull = treatEmptyAsNull;
             SkipHeaderLineCount = skipHeaderLineCount;
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Treat empty as null. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri TreatEmptyAsNull { get; set; }
+        public BinaryData TreatEmptyAsNull { get; set; }
         /// <summary> Number of header lines to skip from each blob. Type: integer (or Expression with resultType integer). </summary>
-        public Uri SkipHeaderLineCount { get; set; }
+        public BinaryData SkipHeaderLineCount { get; set; }
         /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri Recursive { get; set; }
+        public BinaryData Recursive { get; set; }
     }
 }

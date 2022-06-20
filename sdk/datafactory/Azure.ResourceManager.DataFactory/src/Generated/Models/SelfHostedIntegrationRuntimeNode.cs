@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal SelfHostedIntegrationRuntimeNode()
         {
             Capabilities = new ChangeTrackingDictionary<string, string>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of SelfHostedIntegrationRuntimeNode. </summary>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="concurrentJobsLimit"> Maximum concurrent jobs on the integration runtime node. </param>
         /// <param name="maxConcurrentJobs"> The maximum concurrent jobs in this integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SelfHostedIntegrationRuntimeNode(string nodeName, string machineName, Uri hostServiceUri, SelfHostedIntegrationRuntimeNodeStatus? status, IReadOnlyDictionary<string, string> capabilities, string versionStatus, string version, DateTimeOffset? registerOn, DateTimeOffset? lastConnectOn, DateTimeOffset? expiryOn, DateTimeOffset? lastStartOn, DateTimeOffset? lastStopOn, IntegrationRuntimeUpdateResult? lastUpdateResult, DateTimeOffset? lastStartUpdateOn, DateTimeOffset? lastEndUpdateOn, bool? isActiveDispatcher, int? concurrentJobsLimit, int? maxConcurrentJobs, IReadOnlyDictionary<string, Uri> additionalProperties)
+        internal SelfHostedIntegrationRuntimeNode(string nodeName, string machineName, string hostServiceUri, SelfHostedIntegrationRuntimeNodeStatus? status, IReadOnlyDictionary<string, string> capabilities, string versionStatus, string version, DateTimeOffset? registerOn, DateTimeOffset? lastConnectOn, DateTimeOffset? expiryOn, DateTimeOffset? lastStartOn, DateTimeOffset? lastStopOn, IntegrationRuntimeUpdateResult? lastUpdateResult, DateTimeOffset? lastStartUpdateOn, DateTimeOffset? lastEndUpdateOn, bool? isActiveDispatcher, int? concurrentJobsLimit, int? maxConcurrentJobs, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             NodeName = nodeName;
             MachineName = machineName;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Machine name of the integration runtime node. </summary>
         public string MachineName { get; }
         /// <summary> URI for the host machine of the integration runtime. </summary>
-        public Uri HostServiceUri { get; }
+        public string HostServiceUri { get; }
         /// <summary> Status of the integration runtime node. </summary>
         public SelfHostedIntegrationRuntimeNodeStatus? Status { get; }
         /// <summary> The integration runtime capabilities dictionary. </summary>
@@ -101,6 +101,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The maximum concurrent jobs in this integration runtime. </summary>
         public int? MaxConcurrentJobs { get; }
         /// <summary> Additional Properties. </summary>
-        public IReadOnlyDictionary<string, Uri> AdditionalProperties { get; }
+        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

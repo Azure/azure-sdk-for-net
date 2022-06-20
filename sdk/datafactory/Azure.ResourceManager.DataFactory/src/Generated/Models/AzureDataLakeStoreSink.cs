@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
         /// <param name="enableAdlsSingleFileParallel"> Single File Parallel. </param>
-        internal AzureDataLakeStoreSink(string copySinkType, Uri writeBatchSize, Uri writeBatchTimeout, Uri sinkRetryCount, Uri sinkRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri copyBehavior, Uri enableAdlsSingleFileParallel) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal AzureDataLakeStoreSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData copyBehavior, BinaryData enableAdlsSingleFileParallel) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             CopyBehavior = copyBehavior;
             EnableAdlsSingleFileParallel = enableAdlsSingleFileParallel;
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The type of copy behavior for copy sink. </summary>
-        public Uri CopyBehavior { get; set; }
+        public BinaryData CopyBehavior { get; set; }
         /// <summary> Single File Parallel. </summary>
-        public Uri EnableAdlsSingleFileParallel { get; set; }
+        public BinaryData EnableAdlsSingleFileParallel { get; set; }
     }
 }

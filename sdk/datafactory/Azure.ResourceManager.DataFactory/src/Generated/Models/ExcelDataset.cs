@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="firstRowAsHeader"> When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="compression"> The data compression method used for the json dataset. </param>
         /// <param name="nullValue"> The null value string. Type: string (or Expression with resultType string). </param>
-        internal ExcelDataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, DatasetLocation location, Uri sheetName, Uri sheetIndex, Uri range, Uri firstRowAsHeader, DatasetCompression compression, Uri nullValue) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal ExcelDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation location, BinaryData sheetName, BinaryData sheetIndex, BinaryData range, BinaryData firstRowAsHeader, DatasetCompression compression, BinaryData nullValue) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Location = location;
             SheetName = sheetName;
@@ -66,16 +66,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public DatasetLocation Location { get; set; }
         /// <summary> The sheet name of excel file. Type: string (or Expression with resultType string). </summary>
-        public Uri SheetName { get; set; }
+        public BinaryData SheetName { get; set; }
         /// <summary> The sheet index of excel file and default value is 0. Type: integer (or Expression with resultType integer). </summary>
-        public Uri SheetIndex { get; set; }
+        public BinaryData SheetIndex { get; set; }
         /// <summary> The partial data of one sheet. Type: string (or Expression with resultType string). </summary>
-        public Uri Range { get; set; }
+        public BinaryData Range { get; set; }
         /// <summary> When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri FirstRowAsHeader { get; set; }
+        public BinaryData FirstRowAsHeader { get; set; }
         /// <summary> The data compression method used for the json dataset. </summary>
         public DatasetCompression Compression { get; set; }
         /// <summary> The null value string. Type: string (or Expression with resultType string). </summary>
-        public Uri NullValue { get; set; }
+        public BinaryData NullValue { get; set; }
     }
 }

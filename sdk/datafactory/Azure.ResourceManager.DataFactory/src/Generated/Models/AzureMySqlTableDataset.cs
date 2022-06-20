@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="tableName"> The Azure MySQL database table name. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The name of Azure MySQL database table. Type: string (or Expression with resultType string). </param>
-        internal AzureMySqlTableDataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, Uri tableName, Uri table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AzureMySqlTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName, BinaryData table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
             Table = table;
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The Azure MySQL database table name. Type: string (or Expression with resultType string). </summary>
-        public Uri TableName { get; set; }
+        public BinaryData TableName { get; set; }
         /// <summary> The name of Azure MySQL database table. Type: string (or Expression with resultType string). </summary>
-        public Uri Table { get; set; }
+        public BinaryData Table { get; set; }
     }
 }

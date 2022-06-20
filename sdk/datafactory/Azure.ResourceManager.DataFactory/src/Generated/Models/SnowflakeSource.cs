@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="query"> Snowflake Sql query. Type: string (or Expression with resultType string). </param>
         /// <param name="exportSettings"> Snowflake export settings. </param>
-        internal SnowflakeSource(string copySourceType, Uri sourceRetryCount, Uri sourceRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri query, SnowflakeExportCopyCommand exportSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal SnowflakeSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData query, SnowflakeExportCopyCommand exportSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             Query = query;
             ExportSettings = exportSettings;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Snowflake Sql query. Type: string (or Expression with resultType string). </summary>
-        public Uri Query { get; set; }
+        public BinaryData Query { get; set; }
         /// <summary> Snowflake export settings. </summary>
         public SnowflakeExportCopyCommand ExportSettings { get; set; }
     }

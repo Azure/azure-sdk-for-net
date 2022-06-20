@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domain"/>, <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
-        public SsisAccessCredential(Uri domain, Uri userName, SecretBase password)
+        public SsisAccessCredential(BinaryData domain, BinaryData userName, SecretBase password)
         {
             if (domain == null)
             {
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Domain for windows authentication. </summary>
-        public Uri Domain { get; set; }
+        public BinaryData Domain { get; set; }
         /// <summary> UseName for windows authentication. </summary>
-        public Uri UserName { get; set; }
+        public BinaryData UserName { get; set; }
         /// <summary>
         /// Password for windows authentication.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

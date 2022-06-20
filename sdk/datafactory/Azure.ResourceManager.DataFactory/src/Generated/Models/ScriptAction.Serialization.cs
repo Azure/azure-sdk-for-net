@@ -19,9 +19,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("uri");
-            writer.WriteStringValue(Uri.AbsoluteUri);
+            writer.WriteStringValue(Uri);
             writer.WritePropertyName("roles");
-            writer.WriteStringValue(Roles.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Roles);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Roles.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
@@ -33,8 +37,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static ScriptAction DeserializeScriptAction(JsonElement element)
         {
             string name = default;
-            Uri uri = default;
-            Uri roles = default;
+            string uri = default;
+            BinaryData roles = default;
             Optional<string> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -45,12 +49,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("uri"))
                 {
-                    uri = new Uri(property.Value.GetString());
+                    uri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("roles"))
                 {
-                    roles = new Uri(property.Value.GetString());
+                    roles = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("parameters"))

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Pipeline ElapsedTime Metric Policy. </summary>
         internal PipelineElapsedTimeMetricPolicy ElapsedTimeMetric { get; set; }
         /// <summary> TimeSpan value, after which an Azure Monitoring Metric is fired. </summary>
-        public Uri ElapsedTimeMetricDuration
+        public BinaryData ElapsedTimeMetricDuration
         {
             get => ElapsedTimeMetric is null ? default : ElapsedTimeMetric.Duration;
             set

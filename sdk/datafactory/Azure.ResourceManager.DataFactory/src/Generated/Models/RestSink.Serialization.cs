@@ -20,134 +20,182 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod");
-                writer.WriteStringValue(RequestMethod.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RequestMethod);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RequestMethod.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders");
-                writer.WriteStringValue(AdditionalHeaders.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AdditionalHeaders);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(AdditionalHeaders.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(HttpRequestTimeout))
             {
                 writer.WritePropertyName("httpRequestTimeout");
-                writer.WriteStringValue(HttpRequestTimeout.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(HttpRequestTimeout);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(HttpRequestTimeout.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(RequestInterval))
             {
                 writer.WritePropertyName("requestInterval");
-                writer.WriteStringValue(RequestInterval.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RequestInterval);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RequestInterval.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(HttpCompressionType))
             {
                 writer.WritePropertyName("httpCompressionType");
-                writer.WriteStringValue(HttpCompressionType.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(HttpCompressionType);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(HttpCompressionType.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(CopySinkType);
             if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize");
-                writer.WriteStringValue(WriteBatchSize.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(WriteBatchSize);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(WriteBatchSize.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout");
-                writer.WriteStringValue(WriteBatchTimeout.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(WriteBatchTimeout);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(WriteBatchTimeout.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount");
-                writer.WriteStringValue(SinkRetryCount.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SinkRetryCount);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SinkRetryCount.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait");
-                writer.WriteStringValue(SinkRetryWait.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SinkRetryWait);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SinkRetryWait.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections");
-                writer.WriteStringValue(MaxConcurrentConnections.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MaxConcurrentConnections);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection");
-                writer.WriteStringValue(DisableMetricsCollection.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DisableMetricsCollection);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DisableMetricsCollection.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static RestSink DeserializeRestSink(JsonElement element)
         {
-            Optional<Uri> requestMethod = default;
-            Optional<Uri> additionalHeaders = default;
-            Optional<Uri> httpRequestTimeout = default;
-            Optional<Uri> requestInterval = default;
-            Optional<Uri> httpCompressionType = default;
+            Optional<BinaryData> requestMethod = default;
+            Optional<BinaryData> additionalHeaders = default;
+            Optional<BinaryData> httpRequestTimeout = default;
+            Optional<BinaryData> requestInterval = default;
+            Optional<BinaryData> httpCompressionType = default;
             string type = default;
-            Optional<Uri> writeBatchSize = default;
-            Optional<Uri> writeBatchTimeout = default;
-            Optional<Uri> sinkRetryCount = default;
-            Optional<Uri> sinkRetryWait = default;
-            Optional<Uri> maxConcurrentConnections = default;
-            Optional<Uri> disableMetricsCollection = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> writeBatchSize = default;
+            Optional<BinaryData> writeBatchTimeout = default;
+            Optional<BinaryData> sinkRetryCount = default;
+            Optional<BinaryData> sinkRetryWait = default;
+            Optional<BinaryData> maxConcurrentConnections = default;
+            Optional<BinaryData> disableMetricsCollection = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requestMethod"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        requestMethod = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    requestMethod = new Uri(property.Value.GetString());
+                    requestMethod = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("additionalHeaders"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        additionalHeaders = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    additionalHeaders = new Uri(property.Value.GetString());
+                    additionalHeaders = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("httpRequestTimeout"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        httpRequestTimeout = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    httpRequestTimeout = new Uri(property.Value.GetString());
+                    httpRequestTimeout = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("requestInterval"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        requestInterval = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    requestInterval = new Uri(property.Value.GetString());
+                    requestInterval = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("httpCompressionType"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        httpCompressionType = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    httpCompressionType = new Uri(property.Value.GetString());
+                    httpCompressionType = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -159,63 +207,63 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        writeBatchSize = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    writeBatchSize = new Uri(property.Value.GetString());
+                    writeBatchSize = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("writeBatchTimeout"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        writeBatchTimeout = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    writeBatchTimeout = new Uri(property.Value.GetString());
+                    writeBatchTimeout = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sinkRetryCount"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sinkRetryCount = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sinkRetryCount = new Uri(property.Value.GetString());
+                    sinkRetryCount = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sinkRetryWait"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sinkRetryWait = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sinkRetryWait = new Uri(property.Value.GetString());
+                    sinkRetryWait = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        maxConcurrentConnections = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxConcurrentConnections = new Uri(property.Value.GetString());
+                    maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        disableMetricsCollection = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    disableMetricsCollection = new Uri(property.Value.GetString());
+                    disableMetricsCollection = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new RestSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, requestMethod.Value, additionalHeaders.Value, httpRequestTimeout.Value, requestInterval.Value, httpCompressionType.Value);

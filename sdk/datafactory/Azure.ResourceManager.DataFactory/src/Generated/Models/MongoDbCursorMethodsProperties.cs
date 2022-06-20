@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of MongoDbCursorMethodsProperties. </summary>
         public MongoDbCursorMethodsProperties()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of MongoDbCursorMethodsProperties. </summary>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="skip"> Specifies the how many documents skipped and where MongoDB begins returning results. This approach may be useful in implementing paginated results. Type: integer (or Expression with resultType integer). </param>
         /// <param name="limit"> Specifies the maximum number of documents the server returns. limit() is analogous to the LIMIT statement in a SQL database. Type: integer (or Expression with resultType integer). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal MongoDbCursorMethodsProperties(Uri project, Uri sort, Uri skip, Uri limit, IDictionary<string, Uri> additionalProperties)
+        internal MongoDbCursorMethodsProperties(BinaryData project, BinaryData sort, BinaryData skip, BinaryData limit, IDictionary<string, BinaryData> additionalProperties)
         {
             Project = project;
             Sort = sort;
@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Specifies the fields to return in the documents that match the query filter. To return all fields in the matching documents, omit this parameter. Type: string (or Expression with resultType string). </summary>
-        public Uri Project { get; set; }
+        public BinaryData Project { get; set; }
         /// <summary> Specifies the order in which the query returns matching documents. Type: string (or Expression with resultType string). Type: string (or Expression with resultType string). </summary>
-        public Uri Sort { get; set; }
+        public BinaryData Sort { get; set; }
         /// <summary> Specifies the how many documents skipped and where MongoDB begins returning results. This approach may be useful in implementing paginated results. Type: integer (or Expression with resultType integer). </summary>
-        public Uri Skip { get; set; }
+        public BinaryData Skip { get; set; }
         /// <summary> Specifies the maximum number of documents the server returns. limit() is analogous to the LIMIT statement in a SQL database. Type: integer (or Expression with resultType integer). </summary>
-        public Uri Limit { get; set; }
+        public BinaryData Limit { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

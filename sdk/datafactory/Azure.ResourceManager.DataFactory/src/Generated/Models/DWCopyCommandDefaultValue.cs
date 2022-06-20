@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of DWCopyCommandDefaultValue. </summary>
         /// <param name="columnName"> Column name. Type: object (or Expression with resultType string). </param>
         /// <param name="defaultValue"> The default value of the column. Type: object (or Expression with resultType string). </param>
-        internal DWCopyCommandDefaultValue(Uri columnName, Uri defaultValue)
+        internal DWCopyCommandDefaultValue(BinaryData columnName, BinaryData defaultValue)
         {
             ColumnName = columnName;
             DefaultValue = defaultValue;
         }
 
         /// <summary> Column name. Type: object (or Expression with resultType string). </summary>
-        public Uri ColumnName { get; set; }
+        public BinaryData ColumnName { get; set; }
         /// <summary> The default value of the column. Type: object (or Expression with resultType string). </summary>
-        public Uri DefaultValue { get; set; }
+        public BinaryData DefaultValue { get; set; }
     }
 }

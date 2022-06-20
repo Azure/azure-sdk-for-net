@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="server"> Server name for connection. Type: string (or Expression with resultType string). </param>
         /// <param name="database"> Database name for connection. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> or <paramref name="database"/> is null. </exception>
-        public SybaseLinkedService(Uri server, Uri database)
+        public SybaseLinkedService(BinaryData server, BinaryData database)
         {
             if (server == null)
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal SybaseLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri server, Uri database, Uri schema, SybaseAuthenticationType? authenticationType, Uri username, SecretBase password, Uri encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal SybaseLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData server, BinaryData database, BinaryData schema, SybaseAuthenticationType? authenticationType, BinaryData username, SecretBase password, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
             Database = database;
@@ -64,15 +64,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Server name for connection. Type: string (or Expression with resultType string). </summary>
-        public Uri Server { get; set; }
+        public BinaryData Server { get; set; }
         /// <summary> Database name for connection. Type: string (or Expression with resultType string). </summary>
-        public Uri Database { get; set; }
+        public BinaryData Database { get; set; }
         /// <summary> Schema name for connection. Type: string (or Expression with resultType string). </summary>
-        public Uri Schema { get; set; }
+        public BinaryData Schema { get; set; }
         /// <summary> AuthenticationType to be used for connection. </summary>
         public SybaseAuthenticationType? AuthenticationType { get; set; }
         /// <summary> Username for authentication. Type: string (or Expression with resultType string). </summary>
-        public Uri Username { get; set; }
+        public BinaryData Username { get; set; }
         /// <summary>
         /// Password for authentication.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -80,6 +80,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

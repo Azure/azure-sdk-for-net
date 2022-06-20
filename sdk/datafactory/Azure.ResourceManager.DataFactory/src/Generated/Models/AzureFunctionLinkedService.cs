@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of AzureFunctionLinkedService. </summary>
         /// <param name="functionAppUri"> The endpoint of the Azure Function App. URL will be in the format https://&lt;accountName&gt;.azurewebsites.net. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppUri"/> is null. </exception>
-        public AzureFunctionLinkedService(Uri functionAppUri)
+        public AzureFunctionLinkedService(BinaryData functionAppUri)
         {
             if (functionAppUri == null)
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <param name="resourceId"> Allowed token audiences for azure function. </param>
         /// <param name="authentication"> Type of authentication (Required to specify MSI) used to connect to AzureFunction. Type: string (or Expression with resultType string). </param>
-        internal AzureFunctionLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri functionAppUri, SecretBase functionKey, Uri encryptedCredential, CredentialReference credential, Uri resourceId, Uri authentication) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureFunctionLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData functionAppUri, SecretBase functionKey, BinaryData encryptedCredential, CredentialReference credential, BinaryData resourceId, BinaryData authentication) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             FunctionAppUri = functionAppUri;
             FunctionKey = functionKey;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The endpoint of the Azure Function App. URL will be in the format https://&lt;accountName&gt;.azurewebsites.net. </summary>
-        public Uri FunctionAppUri { get; set; }
+        public BinaryData FunctionAppUri { get; set; }
         /// <summary>
         /// Function or Host key for Azure Function App.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase FunctionKey { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
         public CredentialReference Credential { get; set; }
         /// <summary> Allowed token audiences for azure function. </summary>
-        public Uri ResourceId { get; set; }
+        public BinaryData ResourceId { get; set; }
         /// <summary> Type of authentication (Required to specify MSI) used to connect to AzureFunction. Type: string (or Expression with resultType string). </summary>
-        public Uri Authentication { get; set; }
+        public BinaryData Authentication { get; set; }
     }
 }

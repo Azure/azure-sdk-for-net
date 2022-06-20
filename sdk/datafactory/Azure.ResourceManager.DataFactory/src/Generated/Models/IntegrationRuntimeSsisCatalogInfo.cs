@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of IntegrationRuntimeSsisCatalogInfo. </summary>
         public IntegrationRuntimeSsisCatalogInfo()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeSsisCatalogInfo. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="catalogPricingTier"> The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/. </param>
         /// <param name="dualStandbyPairName"> The dual standby pair name of Azure-SSIS Integration Runtimes to support SSISDB failover. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeSsisCatalogInfo(string catalogServerEndpoint, string catalogAdminUserName, SecureString catalogAdminPassword, IntegrationRuntimeSsisCatalogPricingTier? catalogPricingTier, string dualStandbyPairName, IDictionary<string, Uri> additionalProperties)
+        internal IntegrationRuntimeSsisCatalogInfo(string catalogServerEndpoint, string catalogAdminUserName, SecureString catalogAdminPassword, IntegrationRuntimeSsisCatalogPricingTier? catalogPricingTier, string dualStandbyPairName, IDictionary<string, BinaryData> additionalProperties)
         {
             CatalogServerEndpoint = catalogServerEndpoint;
             CatalogAdminUserName = catalogAdminUserName;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The dual standby pair name of Azure-SSIS Integration Runtimes to support SSISDB failover. </summary>
         public string DualStandbyPairName { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

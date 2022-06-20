@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="index"> The zero-based index of the table in the web page. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="index"/> is null. </exception>
-        public WebTableDataset(LinkedServiceReference linkedServiceName, Uri index) : base(linkedServiceName)
+        public WebTableDataset(LinkedServiceReference linkedServiceName, BinaryData index) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="index"> The zero-based index of the table in the web page. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="path"> The relative URL to the web page from the linked service URL. Type: string (or Expression with resultType string). </param>
-        internal WebTableDataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, Uri index, Uri path) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal WebTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData index, BinaryData path) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Index = index;
             Path = path;
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The zero-based index of the table in the web page. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
-        public Uri Index { get; set; }
+        public BinaryData Index { get; set; }
         /// <summary> The relative URL to the web page from the linked service URL. Type: string (or Expression with resultType string). </summary>
-        public Uri Path { get; set; }
+        public BinaryData Path { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of AzureDatabricksLinkedService. </summary>
         /// <param name="domain"> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domain"/> is null. </exception>
-        public AzureDatabricksLinkedService(Uri domain)
+        public AzureDatabricksLinkedService(BinaryData domain)
         {
             if (domain == null)
             {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             Domain = domain;
-            NewClusterSparkConf = new ChangeTrackingDictionary<string, Uri>();
-            NewClusterSparkEnvVars = new ChangeTrackingDictionary<string, Uri>();
-            NewClusterCustomTags = new ChangeTrackingDictionary<string, Uri>();
+            NewClusterSparkConf = new ChangeTrackingDictionary<string, BinaryData>();
+            NewClusterSparkEnvVars = new ChangeTrackingDictionary<string, BinaryData>();
+            NewClusterCustomTags = new ChangeTrackingDictionary<string, BinaryData>();
             LinkedServiceType = "AzureDatabricks";
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         /// <param name="policyId"> The policy id for limiting the ability to configure clusters based on a user defined set of rules. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzureDatabricksLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri domain, SecretBase accessToken, Uri authentication, Uri workspaceResourceId, Uri existingClusterId, Uri instancePoolId, Uri newClusterVersion, Uri newClusterNumOfWorker, Uri newClusterNodeType, IDictionary<string, Uri> newClusterSparkConf, IDictionary<string, Uri> newClusterSparkEnvVars, IDictionary<string, Uri> newClusterCustomTags, Uri newClusterLogDestination, Uri newClusterDriverNodeType, Uri newClusterInitScripts, Uri newClusterEnableElasticDisk, Uri encryptedCredential, Uri policyId, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureDatabricksLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData domain, SecretBase accessToken, BinaryData authentication, BinaryData workspaceResourceId, BinaryData existingClusterId, BinaryData instancePoolId, BinaryData newClusterVersion, BinaryData newClusterNumOfWorker, BinaryData newClusterNodeType, IDictionary<string, BinaryData> newClusterSparkConf, IDictionary<string, BinaryData> newClusterSparkEnvVars, IDictionary<string, BinaryData> newClusterCustomTags, BinaryData newClusterLogDestination, BinaryData newClusterDriverNodeType, BinaryData newClusterInitScripts, BinaryData newClusterEnableElasticDisk, BinaryData encryptedCredential, BinaryData policyId, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Domain = domain;
             AccessToken = accessToken;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </summary>
-        public Uri Domain { get; set; }
+        public BinaryData Domain { get; set; }
         /// <summary>
         /// Access token for databricks REST API. Refer to https://docs.azuredatabricks.net/api/latest/authentication.html. Type: string (or Expression with resultType string).
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -94,37 +94,37 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase AccessToken { get; set; }
         /// <summary> Required to specify MSI, if using Workspace resource id for databricks REST API. Type: string (or Expression with resultType string). </summary>
-        public Uri Authentication { get; set; }
+        public BinaryData Authentication { get; set; }
         /// <summary> Workspace resource id for databricks REST API. Type: string (or Expression with resultType string). </summary>
-        public Uri WorkspaceResourceId { get; set; }
+        public BinaryData WorkspaceResourceId { get; set; }
         /// <summary> The id of an existing interactive cluster that will be used for all runs of this activity. Type: string (or Expression with resultType string). </summary>
-        public Uri ExistingClusterId { get; set; }
+        public BinaryData ExistingClusterId { get; set; }
         /// <summary> The id of an existing instance pool that will be used for all runs of this activity. Type: string (or Expression with resultType string). </summary>
-        public Uri InstancePoolId { get; set; }
+        public BinaryData InstancePoolId { get; set; }
         /// <summary> If not using an existing interactive cluster, this specifies the Spark version of a new job cluster or instance pool nodes created for each run of this activity. Required if instancePoolId is specified. Type: string (or Expression with resultType string). </summary>
-        public Uri NewClusterVersion { get; set; }
+        public BinaryData NewClusterVersion { get; set; }
         /// <summary> If not using an existing interactive cluster, this specifies the number of worker nodes to use for the new job cluster or instance pool. For new job clusters, this a string-formatted Int32, like &apos;1&apos; means numOfWorker is 1 or &apos;1:10&apos; means auto-scale from 1 (min) to 10 (max). For instance pools, this is a string-formatted Int32, and can only specify a fixed number of worker nodes, such as &apos;2&apos;. Required if newClusterVersion is specified. Type: string (or Expression with resultType string). </summary>
-        public Uri NewClusterNumOfWorker { get; set; }
+        public BinaryData NewClusterNumOfWorker { get; set; }
         /// <summary> The node type of the new job cluster. This property is required if newClusterVersion is specified and instancePoolId is not specified. If instancePoolId is specified, this property is ignored. Type: string (or Expression with resultType string). </summary>
-        public Uri NewClusterNodeType { get; set; }
+        public BinaryData NewClusterNodeType { get; set; }
         /// <summary> A set of optional, user-specified Spark configuration key-value pairs. </summary>
-        public IDictionary<string, Uri> NewClusterSparkConf { get; }
+        public IDictionary<string, BinaryData> NewClusterSparkConf { get; }
         /// <summary> A set of optional, user-specified Spark environment variables key-value pairs. </summary>
-        public IDictionary<string, Uri> NewClusterSparkEnvVars { get; }
+        public IDictionary<string, BinaryData> NewClusterSparkEnvVars { get; }
         /// <summary> Additional tags for cluster resources. This property is ignored in instance pool configurations. </summary>
-        public IDictionary<string, Uri> NewClusterCustomTags { get; }
+        public IDictionary<string, BinaryData> NewClusterCustomTags { get; }
         /// <summary> Specify a location to deliver Spark driver, worker, and event logs. Type: string (or Expression with resultType string). </summary>
-        public Uri NewClusterLogDestination { get; set; }
+        public BinaryData NewClusterLogDestination { get; set; }
         /// <summary> The driver node type for the new job cluster. This property is ignored in instance pool configurations. Type: string (or Expression with resultType string). </summary>
-        public Uri NewClusterDriverNodeType { get; set; }
+        public BinaryData NewClusterDriverNodeType { get; set; }
         /// <summary> User-defined initialization scripts for the new cluster. Type: array of strings (or Expression with resultType array of strings). </summary>
-        public Uri NewClusterInitScripts { get; set; }
+        public BinaryData NewClusterInitScripts { get; set; }
         /// <summary> Enable the elastic disk on the new cluster. This property is now ignored, and takes the default elastic disk behavior in Databricks (elastic disks are always enabled). Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri NewClusterEnableElasticDisk { get; set; }
+        public BinaryData NewClusterEnableElasticDisk { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
         /// <summary> The policy id for limiting the ability to configure clusters based on a user defined set of rules. Type: string (or Expression with resultType string). </summary>
-        public Uri PolicyId { get; set; }
+        public BinaryData PolicyId { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
         public CredentialReference Credential { get; set; }
     }

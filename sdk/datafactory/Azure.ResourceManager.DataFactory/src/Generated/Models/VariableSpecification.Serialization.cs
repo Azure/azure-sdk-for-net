@@ -21,7 +21,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue");
-                writer.WriteStringValue(DefaultValue.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DefaultValue);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DefaultValue.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static VariableSpecification DeserializeVariableSpecification(JsonElement element)
         {
             VariableType type = default;
-            Optional<Uri> defaultValue = default;
+            Optional<BinaryData> defaultValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -41,10 +45,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        defaultValue = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    defaultValue = new Uri(property.Value.GetString());
+                    defaultValue = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

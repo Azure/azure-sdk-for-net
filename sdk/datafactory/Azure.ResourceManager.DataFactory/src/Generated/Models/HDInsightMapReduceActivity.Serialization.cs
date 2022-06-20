@@ -74,7 +74,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Arguments)
                 {
-                    writer.WriteStringValue(item.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -84,9 +88,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStringValue(GetDebugInfo.Value.ToString());
             }
             writer.WritePropertyName("className");
-            writer.WriteStringValue(ClassName.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClassName);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(ClassName.ToString()).RootElement);
+#endif
             writer.WritePropertyName("jarFilePath");
-            writer.WriteStringValue(JarFilePath.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(JarFilePath);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(JarFilePath.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(JarLinkedService))
             {
                 writer.WritePropertyName("jarLinkedService");
@@ -98,7 +110,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in JarLibs)
                 {
-                    writer.WriteStringValue(item.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +125,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Defines)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndObject();
             }
@@ -117,7 +137,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -132,15 +156,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
             Optional<IList<LinkedServiceReference>> storageLinkedServices = default;
-            Optional<IList<Uri>> arguments = default;
+            Optional<IList<BinaryData>> arguments = default;
             Optional<HDInsightActivityDebugInfoOption> getDebugInfo = default;
-            Uri className = default;
-            Uri jarFilePath = default;
+            BinaryData className = default;
+            BinaryData jarFilePath = default;
             Optional<LinkedServiceReference> jarLinkedService = default;
-            Optional<IList<Uri>> jarLibs = default;
-            Optional<IDictionary<string, Uri>> defines = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<IList<BinaryData>> jarLibs = default;
+            Optional<IDictionary<string, BinaryData>> defines = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -239,10 +263,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Uri> array = new List<Uri>();
+                            List<BinaryData> array = new List<BinaryData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new Uri(item.GetString()));
+                                array.Add(BinaryData.FromString(item.GetRawText()));
                             }
                             arguments = array;
                             continue;
@@ -259,12 +283,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("className"))
                         {
-                            className = new Uri(property0.Value.GetString());
+                            className = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("jarFilePath"))
                         {
-                            jarFilePath = new Uri(property0.Value.GetString());
+                            jarFilePath = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("jarLinkedService"))
@@ -284,10 +308,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Uri> array = new List<Uri>();
+                            List<BinaryData> array = new List<BinaryData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new Uri(item.GetString()));
+                                array.Add(BinaryData.FromString(item.GetRawText()));
                             }
                             jarLibs = array;
                             continue;
@@ -299,10 +323,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, Uri> dictionary = new Dictionary<string, Uri>();
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, new Uri(property1.Value.GetString()));
+                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
                             }
                             defines = dictionary;
                             continue;
@@ -310,7 +334,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new HDInsightMapReduceActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, Optional.ToList(storageLinkedServices), Optional.ToList(arguments), Optional.ToNullable(getDebugInfo), className, jarFilePath, jarLinkedService.Value, Optional.ToList(jarLibs), Optional.ToDictionary(defines));

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="operationTimeout"> Specifies the timeout for writing each chunk to SFTP server. Default value: 01:00:00 (one hour). Type: string (or Expression with resultType string). </param>
         /// <param name="useTempFileRename"> Upload to temporary file(s) and rename. Disable this option if your SFTP server doesn&apos;t support rename operation. Type: boolean (or Expression with resultType boolean). </param>
-        internal SftpWriteSettings(string storeWriteSettingsType, Uri maxConcurrentConnections, Uri disableMetricsCollection, Uri copyBehavior, IDictionary<string, Uri> additionalProperties, Uri operationTimeout, Uri useTempFileRename) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, additionalProperties)
+        internal SftpWriteSettings(string storeWriteSettingsType, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, BinaryData copyBehavior, IDictionary<string, BinaryData> additionalProperties, BinaryData operationTimeout, BinaryData useTempFileRename) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, additionalProperties)
         {
             OperationTimeout = operationTimeout;
             UseTempFileRename = useTempFileRename;
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Specifies the timeout for writing each chunk to SFTP server. Default value: 01:00:00 (one hour). Type: string (or Expression with resultType string). </summary>
-        public Uri OperationTimeout { get; set; }
+        public BinaryData OperationTimeout { get; set; }
         /// <summary> Upload to temporary file(s) and rename. Disable this option if your SFTP server doesn&apos;t support rename operation. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri UseTempFileRename { get; set; }
+        public BinaryData UseTempFileRename { get; set; }
     }
 }

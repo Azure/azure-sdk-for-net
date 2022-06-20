@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public IntegrationRuntimeVNetProperties()
         {
             PublicIPs = new ChangeTrackingList<string>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeVNetProperties. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="publicIPs"> Resource IDs of the public IP addresses that this integration runtime will use. </param>
         /// <param name="subnetId"> The ID of subnet, to which this Azure-SSIS integration runtime will be joined. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeVNetProperties(string vNetId, string subnet, IList<string> publicIPs, string subnetId, IDictionary<string, Uri> additionalProperties)
+        internal IntegrationRuntimeVNetProperties(string vNetId, string subnet, IList<string> publicIPs, string subnetId, IDictionary<string, BinaryData> additionalProperties)
         {
             VNetId = vNetId;
             Subnet = subnet;
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The ID of subnet, to which this Azure-SSIS integration runtime will be joined. </summary>
         public string SubnetId { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

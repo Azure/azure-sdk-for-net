@@ -30,19 +30,31 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile");
-                writer.WriteStringValue(MaxRowsPerFile.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MaxRowsPerFile);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxRowsPerFile.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(FileNamePrefix))
             {
                 writer.WritePropertyName("fileNamePrefix");
-                writer.WriteStringValue(FileNamePrefix.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FileNamePrefix);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(FileNamePrefix.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(FormatWriteSettingsType);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -51,11 +63,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Optional<string> recordName = default;
             Optional<string> recordNamespace = default;
-            Optional<Uri> maxRowsPerFile = default;
-            Optional<Uri> fileNamePrefix = default;
+            Optional<BinaryData> maxRowsPerFile = default;
+            Optional<BinaryData> fileNamePrefix = default;
             string type = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recordName"))
@@ -72,20 +84,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        maxRowsPerFile = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxRowsPerFile = new Uri(property.Value.GetString());
+                    maxRowsPerFile = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("fileNamePrefix"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        fileNamePrefix = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fileNamePrefix = new Uri(property.Value.GetString());
+                    fileNamePrefix = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -93,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     type = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AvroWriteSettings(type, additionalProperties, recordName.Value, recordNamespace.Value, maxRowsPerFile.Value, fileNamePrefix.Value);

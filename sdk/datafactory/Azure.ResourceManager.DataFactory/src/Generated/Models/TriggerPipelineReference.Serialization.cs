@@ -29,7 +29,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndObject();
             }
@@ -39,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static TriggerPipelineReference DeserializeTriggerPipelineReference(JsonElement element)
         {
             Optional<PipelineReference> pipelineReference = default;
-            Optional<IDictionary<string, Uri>> parameters = default;
+            Optional<IDictionary<string, BinaryData>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pipelineReference"))
@@ -59,10 +63,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, Uri> dictionary = new Dictionary<string, Uri>();
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, new Uri(property0.Value.GetString()));
+                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
                     }
                     parameters = dictionary;
                     continue;

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of PipelineElapsedTimeMetricPolicy. </summary>
         /// <param name="duration"> TimeSpan value, after which an Azure Monitoring Metric is fired. </param>
-        internal PipelineElapsedTimeMetricPolicy(Uri duration)
+        internal PipelineElapsedTimeMetricPolicy(BinaryData duration)
         {
             Duration = duration;
         }
 
         /// <summary> TimeSpan value, after which an Azure Monitoring Metric is fired. </summary>
-        public Uri Duration { get; set; }
+        public BinaryData Duration { get; set; }
     }
 }

@@ -65,13 +65,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FirstRowOnly))
             {
                 writer.WritePropertyName("firstRowOnly");
-                writer.WriteStringValue(FirstRowOnly.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FirstRowOnly);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(FirstRowOnly.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -87,9 +95,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<UserProperty>> userProperties = default;
             CopySource source = default;
             DatasetReference dataset = default;
-            Optional<Uri> firstRowOnly = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> firstRowOnly = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -180,16 +188,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                firstRowOnly = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            firstRowOnly = new Uri(property0.Value.GetString());
+                            firstRowOnly = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new LookupActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, source, dataset, firstRowOnly.Value);

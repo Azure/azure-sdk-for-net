@@ -21,7 +21,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId");
-                writer.WriteStringValue(ServicePrincipalId.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ServicePrincipalId);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ServicePrincipalId.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ServicePrincipalKey))
             {
@@ -39,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static SqlAlwaysEncryptedProperties DeserializeSqlAlwaysEncryptedProperties(JsonElement element)
         {
             SqlAlwaysEncryptedAkvAuthType alwaysEncryptedAkvAuthType = default;
-            Optional<Uri> servicePrincipalId = default;
+            Optional<BinaryData> servicePrincipalId = default;
             Optional<SecretBase> servicePrincipalKey = default;
             Optional<CredentialReference> credential = default;
             foreach (var property in element.EnumerateObject())
@@ -53,10 +57,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        servicePrincipalId = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    servicePrincipalId = new Uri(property.Value.GetString());
+                    servicePrincipalId = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("servicePrincipalKey"))

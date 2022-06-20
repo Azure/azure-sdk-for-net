@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="tableName"> This property will be retired. Please consider using schema + table properties instead. </param>
         /// <param name="schemaTypePropertiesSchema"> The schema name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The table name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </param>
-        internal AzureSqlDWTableDataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, Uri tableName, Uri schemaTypePropertiesSchema, Uri table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AzureSqlDWTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName, BinaryData schemaTypePropertiesSchema, BinaryData table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>
-        public Uri TableName { get; set; }
+        public BinaryData TableName { get; set; }
         /// <summary> The schema name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </summary>
-        public Uri SchemaTypePropertiesSchema { get; set; }
+        public BinaryData SchemaTypePropertiesSchema { get; set; }
         /// <summary> The table name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </summary>
-        public Uri Table { get; set; }
+        public BinaryData Table { get; set; }
     }
 }

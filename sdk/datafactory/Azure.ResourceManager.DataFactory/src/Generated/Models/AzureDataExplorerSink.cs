@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="ingestionMappingName"> A name of a pre-created csv mapping that was defined on the target Kusto table. Type: string. </param>
         /// <param name="ingestionMappingAsJson"> An explicit column mapping description provided in a json format. Type: string. </param>
         /// <param name="flushImmediately"> If set to true, any aggregation will be skipped. Default is false. Type: boolean. </param>
-        internal AzureDataExplorerSink(string copySinkType, Uri writeBatchSize, Uri writeBatchTimeout, Uri sinkRetryCount, Uri sinkRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri ingestionMappingName, Uri ingestionMappingAsJson, Uri flushImmediately) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal AzureDataExplorerSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData ingestionMappingName, BinaryData ingestionMappingAsJson, BinaryData flushImmediately) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             IngestionMappingName = ingestionMappingName;
             IngestionMappingAsJson = ingestionMappingAsJson;
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> A name of a pre-created csv mapping that was defined on the target Kusto table. Type: string. </summary>
-        public Uri IngestionMappingName { get; set; }
+        public BinaryData IngestionMappingName { get; set; }
         /// <summary> An explicit column mapping description provided in a json format. Type: string. </summary>
-        public Uri IngestionMappingAsJson { get; set; }
+        public BinaryData IngestionMappingAsJson { get; set; }
         /// <summary> If set to true, any aggregation will be skipped. Default is false. Type: boolean. </summary>
-        public Uri FlushImmediately { get; set; }
+        public BinaryData FlushImmediately { get; set; }
     }
 }

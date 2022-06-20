@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of FormatWriteSettings. </summary>
         public FormatWriteSettings()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of FormatWriteSettings. </summary>
         /// <param name="formatWriteSettingsType"> The write setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal FormatWriteSettings(string formatWriteSettingsType, IDictionary<string, Uri> additionalProperties)
+        internal FormatWriteSettings(string formatWriteSettingsType, IDictionary<string, BinaryData> additionalProperties)
         {
             FormatWriteSettingsType = formatWriteSettingsType;
             AdditionalProperties = additionalProperties;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The write setting type. </summary>
         internal string FormatWriteSettingsType { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

@@ -17,7 +17,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("filePath");
-            writer.WriteStringValue(FilePath.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FilePath);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(FilePath.ToString()).RootElement);
+#endif
             writer.WritePropertyName("linkedServiceName");
             writer.WriteObjectValue(LinkedServiceName);
             writer.WriteEndObject();
@@ -25,13 +29,13 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureMLWebServiceFile DeserializeAzureMLWebServiceFile(JsonElement element)
         {
-            Uri filePath = default;
+            BinaryData filePath = default;
             LinkedServiceReference linkedServiceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filePath"))
                 {
-                    filePath = new Uri(property.Value.GetString());
+                    filePath = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("linkedServiceName"))

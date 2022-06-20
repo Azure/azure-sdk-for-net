@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="transformations"> List of transformations in data flow. </param>
         /// <param name="script"> DataFlow script. </param>
         /// <param name="scriptLines"> Data flow script lines. </param>
-        internal MappingDataFlow(string dataFlowType, string description, IList<Uri> annotations, DataFlowFolder folder, IList<DataFlowSource> sources, IList<DataFlowSink> sinks, IList<Transformation> transformations, string script, IList<string> scriptLines) : base(dataFlowType, description, annotations, folder)
+        internal MappingDataFlow(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IList<DataFlowSource> sources, IList<DataFlowSink> sinks, IList<Transformation> transformations, string script, IList<string> scriptLines) : base(dataFlowType, description, annotations, folder)
         {
             Sources = sources;
             Sinks = sinks;

@@ -19,7 +19,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
-                writer.WriteStringValue(Name.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Name);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Name.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ParameterType))
             {
@@ -29,7 +33,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value");
-                writer.WriteStringValue(Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Value.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Direction))
             {
@@ -46,9 +54,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ScriptActivityParameter DeserializeScriptActivityParameter(JsonElement element)
         {
-            Optional<Uri> name = default;
+            Optional<BinaryData> name = default;
             Optional<ScriptActivityParameterType> type = default;
-            Optional<Uri> value = default;
+            Optional<BinaryData> value = default;
             Optional<ScriptActivityParameterDirection> direction = default;
             Optional<int> size = default;
             foreach (var property in element.EnumerateObject())
@@ -57,10 +65,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        name = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = new Uri(property.Value.GetString());
+                    name = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -77,10 +85,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        value = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    value = new Uri(property.Value.GetString());
+                    value = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("direction"))

@@ -20,7 +20,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PackagePath))
             {
                 writer.WritePropertyName("packagePath");
-                writer.WriteStringValue(PackagePath.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PackagePath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PackagePath.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(LocationType))
             {
@@ -42,7 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConfigurationPath))
             {
                 writer.WritePropertyName("configurationPath");
-                writer.WriteStringValue(ConfigurationPath.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ConfigurationPath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ConfigurationPath.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ConfigurationAccessCredential))
             {
@@ -57,7 +65,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PackageContent))
             {
                 writer.WritePropertyName("packageContent");
-                writer.WriteStringValue(PackageContent.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PackageContent);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PackageContent.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(PackageLastModifiedDate))
             {
@@ -80,14 +92,14 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SsisPackageLocation DeserializeSsisPackageLocation(JsonElement element)
         {
-            Optional<Uri> packagePath = default;
+            Optional<BinaryData> packagePath = default;
             Optional<SsisPackageLocationType> type = default;
             Optional<SecretBase> packagePassword = default;
             Optional<SsisAccessCredential> accessCredential = default;
-            Optional<Uri> configurationPath = default;
+            Optional<BinaryData> configurationPath = default;
             Optional<SsisAccessCredential> configurationAccessCredential = default;
             Optional<string> packageName = default;
-            Optional<Uri> packageContent = default;
+            Optional<BinaryData> packageContent = default;
             Optional<string> packageLastModifiedDate = default;
             Optional<IList<SsisChildPackage>> childPackages = default;
             foreach (var property in element.EnumerateObject())
@@ -96,10 +108,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        packagePath = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    packagePath = new Uri(property.Value.GetString());
+                    packagePath = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -145,10 +157,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                configurationPath = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            configurationPath = new Uri(property0.Value.GetString());
+                            configurationPath = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("configurationAccessCredential"))
@@ -170,10 +182,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                packageContent = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            packageContent = new Uri(property0.Value.GetString());
+                            packageContent = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("packageLastModifiedDate"))

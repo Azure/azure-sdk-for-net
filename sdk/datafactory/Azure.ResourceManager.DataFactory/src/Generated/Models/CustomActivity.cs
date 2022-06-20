@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="command"> Command for custom activity Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="command"/> is null. </exception>
-        public CustomActivity(string name, Uri command) : base(name)
+        public CustomActivity(string name, BinaryData command) : base(name)
         {
             if (name == null)
             {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             Command = command;
-            ExtendedProperties = new ChangeTrackingDictionary<string, Uri>();
+            ExtendedProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ActivityType = "Custom";
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="extendedProperties"> User defined property bag. There is no restriction on the keys or values that can be used. The user specified custom activity has the full responsibility to consume and interpret the content defined. </param>
         /// <param name="retentionTimeInDays"> The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double). </param>
         /// <param name="autoUserSpecification"> Elevation level and scope for the user, default is nonadmin task. Type: string (or Expression with resultType double). </param>
-        internal CustomActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, Uri> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, Uri command, LinkedServiceReference resourceLinkedService, Uri folderPath, CustomActivityReferenceObject referenceObjects, IDictionary<string, Uri> extendedProperties, Uri retentionTimeInDays, Uri autoUserSpecification) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal CustomActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData command, LinkedServiceReference resourceLinkedService, BinaryData folderPath, CustomActivityReferenceObject referenceObjects, IDictionary<string, BinaryData> extendedProperties, BinaryData retentionTimeInDays, BinaryData autoUserSpecification) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Command = command;
             ResourceLinkedService = resourceLinkedService;
@@ -63,18 +63,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Command for custom activity Type: string (or Expression with resultType string). </summary>
-        public Uri Command { get; set; }
+        public BinaryData Command { get; set; }
         /// <summary> Resource linked service reference. </summary>
         public LinkedServiceReference ResourceLinkedService { get; set; }
         /// <summary> Folder path for resource files Type: string (or Expression with resultType string). </summary>
-        public Uri FolderPath { get; set; }
+        public BinaryData FolderPath { get; set; }
         /// <summary> Reference objects. </summary>
         public CustomActivityReferenceObject ReferenceObjects { get; set; }
         /// <summary> User defined property bag. There is no restriction on the keys or values that can be used. The user specified custom activity has the full responsibility to consume and interpret the content defined. </summary>
-        public IDictionary<string, Uri> ExtendedProperties { get; }
+        public IDictionary<string, BinaryData> ExtendedProperties { get; }
         /// <summary> The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double). </summary>
-        public Uri RetentionTimeInDays { get; set; }
+        public BinaryData RetentionTimeInDays { get; set; }
         /// <summary> Elevation level and scope for the user, default is nonadmin task. Type: string (or Expression with resultType double). </summary>
-        public Uri AutoUserSpecification { get; set; }
+        public BinaryData AutoUserSpecification { get; set; }
     }
 }

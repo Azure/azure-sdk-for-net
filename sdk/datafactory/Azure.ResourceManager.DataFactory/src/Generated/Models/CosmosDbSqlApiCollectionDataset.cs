@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="collectionName"> CosmosDB (SQL API) collection name. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="collectionName"/> is null. </exception>
-        public CosmosDbSqlApiCollectionDataset(LinkedServiceReference linkedServiceName, Uri collectionName) : base(linkedServiceName)
+        public CosmosDbSqlApiCollectionDataset(LinkedServiceReference linkedServiceName, BinaryData collectionName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="collectionName"> CosmosDB (SQL API) collection name. Type: string (or Expression with resultType string). </param>
-        internal CosmosDbSqlApiCollectionDataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, Uri collectionName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal CosmosDbSqlApiCollectionDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData collectionName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             CollectionName = collectionName;
             DatasetType = datasetType ?? "CosmosDbSqlApiCollection";
         }
 
         /// <summary> CosmosDB (SQL API) collection name. Type: string (or Expression with resultType string). </summary>
-        public Uri CollectionName { get; set; }
+        public BinaryData CollectionName { get; set; }
     }
 }

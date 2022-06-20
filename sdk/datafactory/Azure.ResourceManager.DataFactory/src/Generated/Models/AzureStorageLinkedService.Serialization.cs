@@ -46,7 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteStringValue(item.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +59,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString");
-                writer.WriteStringValue(ConnectionString.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ConnectionString);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ConnectionString.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(AccountKey))
             {
@@ -65,7 +73,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUri");
-                writer.WriteStringValue(SasUri.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SasUri);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SasUri.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SasToken))
             {
@@ -81,7 +93,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -92,14 +108,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<Uri>> annotations = default;
-            Optional<Uri> connectionString = default;
+            Optional<IList<BinaryData>> annotations = default;
+            Optional<BinaryData> connectionString = default;
             Optional<AzureKeyVaultSecretReference> accountKey = default;
-            Optional<Uri> sasUri = default;
+            Optional<BinaryData> sasUri = default;
             Optional<AzureKeyVaultSecretReference> sasToken = default;
             Optional<string> encryptedCredential = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -144,10 +160,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Uri> array = new List<Uri>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Uri(item.GetString()));
+                        array.Add(BinaryData.FromString(item.GetRawText()));
                     }
                     annotations = array;
                     continue;
@@ -165,10 +181,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                connectionString = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            connectionString = new Uri(property0.Value.GetString());
+                            connectionString = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accountKey"))
@@ -185,10 +201,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                sasUri = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sasUri = new Uri(property0.Value.GetString());
+                            sasUri = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sasToken"))
@@ -209,7 +225,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureStorageLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString.Value, accountKey.Value, sasUri.Value, sasToken.Value, encryptedCredential.Value);

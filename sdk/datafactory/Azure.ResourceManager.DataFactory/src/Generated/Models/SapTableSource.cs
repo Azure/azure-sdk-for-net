@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sapDataColumnDelimiter"> The single character that will be used as delimiter passed to SAP RFC as well as splitting the output data retrieved. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionOption"> The partition mechanism that will be used for SAP table read in parallel. Possible values include: &quot;None&quot;, &quot;PartitionOnInt&quot;, &quot;PartitionOnCalendarYear&quot;, &quot;PartitionOnCalendarMonth&quot;, &quot;PartitionOnCalendarDate&quot;, &quot;PartitionOnTime&quot;. </param>
         /// <param name="partitionSettings"> The settings that will be leveraged for SAP table source partitioning. </param>
-        internal SapTableSource(string copySourceType, Uri sourceRetryCount, Uri sourceRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri queryTimeout, Uri additionalColumns, Uri rowCount, Uri rowSkips, Uri rfcTableFields, Uri rfcTableOptions, Uri batchSize, Uri customRfcReadTableFunctionModule, Uri sapDataColumnDelimiter, Uri partitionOption, SapTablePartitionSettings partitionSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
+        internal SapTableSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData queryTimeout, BinaryData additionalColumns, BinaryData rowCount, BinaryData rowSkips, BinaryData rfcTableFields, BinaryData rfcTableOptions, BinaryData batchSize, BinaryData customRfcReadTableFunctionModule, BinaryData sapDataColumnDelimiter, BinaryData partitionOption, SapTablePartitionSettings partitionSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
         {
             RowCount = rowCount;
             RowSkips = rowSkips;
@@ -52,21 +52,21 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The number of rows to be retrieved. Type: integer(or Expression with resultType integer). </summary>
-        public Uri RowCount { get; set; }
+        public BinaryData RowCount { get; set; }
         /// <summary> The number of rows that will be skipped. Type: integer (or Expression with resultType integer). </summary>
-        public Uri RowSkips { get; set; }
+        public BinaryData RowSkips { get; set; }
         /// <summary> The fields of the SAP table that will be retrieved. For example, column0, column1. Type: string (or Expression with resultType string). </summary>
-        public Uri RfcTableFields { get; set; }
+        public BinaryData RfcTableFields { get; set; }
         /// <summary> The options for the filtering of the SAP Table. For example, COLUMN0 EQ SOME VALUE. Type: string (or Expression with resultType string). </summary>
-        public Uri RfcTableOptions { get; set; }
+        public BinaryData RfcTableOptions { get; set; }
         /// <summary> Specifies the maximum number of rows that will be retrieved at a time when retrieving data from SAP Table. Type: integer (or Expression with resultType integer). </summary>
-        public Uri BatchSize { get; set; }
+        public BinaryData BatchSize { get; set; }
         /// <summary> Specifies the custom RFC function module that will be used to read data from SAP Table. Type: string (or Expression with resultType string). </summary>
-        public Uri CustomRfcReadTableFunctionModule { get; set; }
+        public BinaryData CustomRfcReadTableFunctionModule { get; set; }
         /// <summary> The single character that will be used as delimiter passed to SAP RFC as well as splitting the output data retrieved. Type: string (or Expression with resultType string). </summary>
-        public Uri SapDataColumnDelimiter { get; set; }
+        public BinaryData SapDataColumnDelimiter { get; set; }
         /// <summary> The partition mechanism that will be used for SAP table read in parallel. Possible values include: &quot;None&quot;, &quot;PartitionOnInt&quot;, &quot;PartitionOnCalendarYear&quot;, &quot;PartitionOnCalendarMonth&quot;, &quot;PartitionOnCalendarDate&quot;, &quot;PartitionOnTime&quot;. </summary>
-        public Uri PartitionOption { get; set; }
+        public BinaryData PartitionOption { get; set; }
         /// <summary> The settings that will be leveraged for SAP table source partitioning. </summary>
         public SapTablePartitionSettings PartitionSettings { get; set; }
     }

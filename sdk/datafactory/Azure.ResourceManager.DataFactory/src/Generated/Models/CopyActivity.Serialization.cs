@@ -85,12 +85,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Translator))
             {
                 writer.WritePropertyName("translator");
-                writer.WriteStringValue(Translator.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Translator);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Translator.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EnableStaging))
             {
                 writer.WritePropertyName("enableStaging");
-                writer.WriteStringValue(EnableStaging.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EnableStaging);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnableStaging.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(StagingSettings))
             {
@@ -100,17 +108,29 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ParallelCopies))
             {
                 writer.WritePropertyName("parallelCopies");
-                writer.WriteStringValue(ParallelCopies.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ParallelCopies);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ParallelCopies.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DataIntegrationUnits))
             {
                 writer.WritePropertyName("dataIntegrationUnits");
-                writer.WriteStringValue(DataIntegrationUnits.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DataIntegrationUnits);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DataIntegrationUnits.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EnableSkipIncompatibleRow))
             {
                 writer.WritePropertyName("enableSkipIncompatibleRow");
-                writer.WriteStringValue(EnableSkipIncompatibleRow.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EnableSkipIncompatibleRow);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnableSkipIncompatibleRow.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(RedirectIncompatibleRowSettings))
             {
@@ -133,7 +153,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in PreserveRules)
                 {
-                    writer.WriteStringValue(item.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -143,14 +167,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Preserve)
                 {
-                    writer.WriteStringValue(item.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ValidateDataConsistency))
             {
                 writer.WritePropertyName("validateDataConsistency");
-                writer.WriteStringValue(ValidateDataConsistency.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ValidateDataConsistency);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ValidateDataConsistency.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SkipErrorFile))
             {
@@ -161,7 +193,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -179,21 +215,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<UserProperty>> userProperties = default;
             CopySource source = default;
             CopySink sink = default;
-            Optional<Uri> translator = default;
-            Optional<Uri> enableStaging = default;
+            Optional<BinaryData> translator = default;
+            Optional<BinaryData> enableStaging = default;
             Optional<StagingSettings> stagingSettings = default;
-            Optional<Uri> parallelCopies = default;
-            Optional<Uri> dataIntegrationUnits = default;
-            Optional<Uri> enableSkipIncompatibleRow = default;
+            Optional<BinaryData> parallelCopies = default;
+            Optional<BinaryData> dataIntegrationUnits = default;
+            Optional<BinaryData> enableSkipIncompatibleRow = default;
             Optional<RedirectIncompatibleRowSettings> redirectIncompatibleRowSettings = default;
             Optional<LogStorageSettings> logStorageSettings = default;
             Optional<LogSettings> logSettings = default;
-            Optional<IList<Uri>> preserveRules = default;
-            Optional<IList<Uri>> preserve = default;
-            Optional<Uri> validateDataConsistency = default;
+            Optional<IList<BinaryData>> preserveRules = default;
+            Optional<IList<BinaryData>> preserve = default;
+            Optional<BinaryData> validateDataConsistency = default;
             Optional<SkipErrorFile> skipErrorFile = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inputs"))
@@ -314,20 +350,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                translator = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            translator = new Uri(property0.Value.GetString());
+                            translator = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("enableStaging"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                enableStaging = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            enableStaging = new Uri(property0.Value.GetString());
+                            enableStaging = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("stagingSettings"))
@@ -344,30 +380,30 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                parallelCopies = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            parallelCopies = new Uri(property0.Value.GetString());
+                            parallelCopies = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("dataIntegrationUnits"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                dataIntegrationUnits = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dataIntegrationUnits = new Uri(property0.Value.GetString());
+                            dataIntegrationUnits = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("enableSkipIncompatibleRow"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                enableSkipIncompatibleRow = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            enableSkipIncompatibleRow = new Uri(property0.Value.GetString());
+                            enableSkipIncompatibleRow = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("redirectIncompatibleRowSettings"))
@@ -407,10 +443,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Uri> array = new List<Uri>();
+                            List<BinaryData> array = new List<BinaryData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new Uri(item.GetString()));
+                                array.Add(BinaryData.FromString(item.GetRawText()));
                             }
                             preserveRules = array;
                             continue;
@@ -422,10 +458,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Uri> array = new List<Uri>();
+                            List<BinaryData> array = new List<BinaryData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new Uri(item.GetString()));
+                                array.Add(BinaryData.FromString(item.GetRawText()));
                             }
                             preserve = array;
                             continue;
@@ -434,10 +470,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                validateDataConsistency = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            validateDataConsistency = new Uri(property0.Value.GetString());
+                            validateDataConsistency = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("skipErrorFile"))
@@ -453,7 +489,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new CopyActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, Optional.ToList(inputs), Optional.ToList(outputs), source, sink, translator.Value, enableStaging.Value, stagingSettings.Value, parallelCopies.Value, dataIntegrationUnits.Value, enableSkipIncompatibleRow.Value, redirectIncompatibleRowSettings.Value, logStorageSettings.Value, logSettings.Value, Optional.ToList(preserveRules), Optional.ToList(preserve), validateDataConsistency.Value, skipErrorFile.Value);

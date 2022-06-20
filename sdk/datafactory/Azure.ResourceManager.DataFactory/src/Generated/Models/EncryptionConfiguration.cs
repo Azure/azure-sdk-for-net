@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="keyName"> The name of the key in Azure Key Vault to use as Customer Managed Key. </param>
         /// <param name="vaultBaseUri"> The url of the Azure Key Vault used for CMK. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="vaultBaseUri"/> is null. </exception>
-        public EncryptionConfiguration(string keyName, Uri vaultBaseUri)
+        public EncryptionConfiguration(string keyName, string vaultBaseUri)
         {
             if (keyName == null)
             {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="vaultBaseUri"> The url of the Azure Key Vault used for CMK. </param>
         /// <param name="keyVersion"> The version of the key used for CMK. If not provided, latest version will be used. </param>
         /// <param name="identity"> User assigned identity to use to authenticate to customer&apos;s key vault. If not provided Managed Service Identity will be used. </param>
-        internal EncryptionConfiguration(string keyName, Uri vaultBaseUri, string keyVersion, CMKIdentityDefinition identity)
+        internal EncryptionConfiguration(string keyName, string vaultBaseUri, string keyVersion, CMKIdentityDefinition identity)
         {
             KeyName = keyName;
             VaultBaseUri = vaultBaseUri;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The name of the key in Azure Key Vault to use as Customer Managed Key. </summary>
         public string KeyName { get; set; }
         /// <summary> The url of the Azure Key Vault used for CMK. </summary>
-        public Uri VaultBaseUri { get; set; }
+        public string VaultBaseUri { get; set; }
         /// <summary> The version of the key used for CMK. If not provided, latest version will be used. </summary>
         public string KeyVersion { get; set; }
         /// <summary> User assigned identity to use to authenticate to customer&apos;s key vault. If not provided Managed Service Identity will be used. </summary>

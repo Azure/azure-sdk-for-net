@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="ignoreEmptyBlobs"> If set to true, blobs with zero bytes will be ignored. </param>
         /// <param name="events"> The type of events that cause this trigger to fire. </param>
         /// <param name="scope"> The ARM resource ID of the Storage Account. </param>
-        internal BlobEventsTrigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, IList<TriggerPipelineReference> pipelines, string blobPathBeginsWith, string blobPathEndsWith, bool? ignoreEmptyBlobs, IList<BlobEventTypes> events, string scope) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
+        internal BlobEventsTrigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, string blobPathBeginsWith, string blobPathEndsWith, bool? ignoreEmptyBlobs, IList<BlobEventTypes> events, string scope) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
         {
             BlobPathBeginsWith = blobPathBeginsWith;
             BlobPathEndsWith = blobPathEndsWith;

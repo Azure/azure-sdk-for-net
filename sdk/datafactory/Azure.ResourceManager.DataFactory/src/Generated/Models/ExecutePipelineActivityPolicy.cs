@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of ExecutePipelineActivityPolicy. </summary>
         public ExecutePipelineActivityPolicy()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ExecutePipelineActivityPolicy. </summary>
         /// <param name="secureInput"> When set to true, Input from activity is considered as secure and will not be logged to monitoring. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ExecutePipelineActivityPolicy(bool? secureInput, IDictionary<string, Uri> additionalProperties)
+        internal ExecutePipelineActivityPolicy(bool? secureInput, IDictionary<string, BinaryData> additionalProperties)
         {
             SecureInput = secureInput;
             AdditionalProperties = additionalProperties;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> When set to true, Input from activity is considered as secure and will not be logged to monitoring. </summary>
         public bool? SecureInput { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

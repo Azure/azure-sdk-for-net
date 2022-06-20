@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="expiryDateTime"> Specifies the expiry time of the written files. The time is applied to the UTC time zone in the format of &quot;2018-12-01T05:00:00Z&quot;. Default value is NULL. Type: integer (or Expression with resultType integer). </param>
-        internal AzureDataLakeStoreWriteSettings(string storeWriteSettingsType, Uri maxConcurrentConnections, Uri disableMetricsCollection, Uri copyBehavior, IDictionary<string, Uri> additionalProperties, Uri expiryDateTime) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, additionalProperties)
+        internal AzureDataLakeStoreWriteSettings(string storeWriteSettingsType, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, BinaryData copyBehavior, IDictionary<string, BinaryData> additionalProperties, BinaryData expiryDateTime) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, additionalProperties)
         {
             ExpiryDateTime = expiryDateTime;
             StoreWriteSettingsType = storeWriteSettingsType ?? "AzureDataLakeStoreWriteSettings";
         }
 
         /// <summary> Specifies the expiry time of the written files. The time is applied to the UTC time zone in the format of &quot;2018-12-01T05:00:00Z&quot;. Default value is NULL. Type: integer (or Expression with resultType integer). </summary>
-        public Uri ExpiryDateTime { get; set; }
+        public BinaryData ExpiryDateTime { get; set; }
     }
 }

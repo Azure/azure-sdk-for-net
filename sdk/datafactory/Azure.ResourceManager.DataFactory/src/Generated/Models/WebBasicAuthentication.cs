@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/>, <paramref name="username"/> or <paramref name="password"/> is null. </exception>
-        public WebBasicAuthentication(Uri uri, Uri username, SecretBase password) : base(uri)
+        public WebBasicAuthentication(BinaryData uri, BinaryData username, SecretBase password) : base(uri)
         {
             if (uri == null)
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        internal WebBasicAuthentication(Uri uri, WebAuthenticationType authenticationType, Uri username, SecretBase password) : base(uri, authenticationType)
+        internal WebBasicAuthentication(BinaryData uri, WebAuthenticationType authenticationType, BinaryData username, SecretBase password) : base(uri, authenticationType)
         {
             Username = username;
             Password = password;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> User name for Basic authentication. Type: string (or Expression with resultType string). </summary>
-        public Uri Username { get; set; }
+        public BinaryData Username { get; set; }
         /// <summary>
         /// The password for Basic authentication.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

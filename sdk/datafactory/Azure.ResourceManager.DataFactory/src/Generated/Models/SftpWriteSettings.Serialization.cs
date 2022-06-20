@@ -20,68 +20,92 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(OperationTimeout))
             {
                 writer.WritePropertyName("operationTimeout");
-                writer.WriteStringValue(OperationTimeout.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(OperationTimeout);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(OperationTimeout.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(UseTempFileRename))
             {
                 writer.WritePropertyName("useTempFileRename");
-                writer.WriteStringValue(UseTempFileRename.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UseTempFileRename);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(UseTempFileRename.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(StoreWriteSettingsType);
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections");
-                writer.WriteStringValue(MaxConcurrentConnections.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MaxConcurrentConnections);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection");
-                writer.WriteStringValue(DisableMetricsCollection.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DisableMetricsCollection);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DisableMetricsCollection.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(CopyBehavior))
             {
                 writer.WritePropertyName("copyBehavior");
-                writer.WriteStringValue(CopyBehavior.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(CopyBehavior);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(CopyBehavior.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static SftpWriteSettings DeserializeSftpWriteSettings(JsonElement element)
         {
-            Optional<Uri> operationTimeout = default;
-            Optional<Uri> useTempFileRename = default;
+            Optional<BinaryData> operationTimeout = default;
+            Optional<BinaryData> useTempFileRename = default;
             string type = default;
-            Optional<Uri> maxConcurrentConnections = default;
-            Optional<Uri> disableMetricsCollection = default;
-            Optional<Uri> copyBehavior = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> maxConcurrentConnections = default;
+            Optional<BinaryData> disableMetricsCollection = default;
+            Optional<BinaryData> copyBehavior = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationTimeout"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        operationTimeout = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    operationTimeout = new Uri(property.Value.GetString());
+                    operationTimeout = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("useTempFileRename"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        useTempFileRename = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    useTempFileRename = new Uri(property.Value.GetString());
+                    useTempFileRename = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -93,33 +117,33 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        maxConcurrentConnections = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxConcurrentConnections = new Uri(property.Value.GetString());
+                    maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        disableMetricsCollection = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    disableMetricsCollection = new Uri(property.Value.GetString());
+                    disableMetricsCollection = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("copyBehavior"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        copyBehavior = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    copyBehavior = new Uri(property.Value.GetString());
+                    copyBehavior = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SftpWriteSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, copyBehavior.Value, additionalProperties, operationTimeout.Value, useTempFileRename.Value);

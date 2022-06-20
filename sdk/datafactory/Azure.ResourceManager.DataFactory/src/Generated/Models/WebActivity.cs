@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="method"> Rest API method for target endpoint. </param>
         /// <param name="uri"> Web activity target endpoint and path. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="uri"/> is null. </exception>
-        public WebActivity(string name, WebActivityMethod method, Uri uri) : base(name)
+        public WebActivity(string name, WebActivityMethod method, BinaryData uri) : base(name)
         {
             if (name == null)
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="datasets"> List of datasets passed to web endpoint. </param>
         /// <param name="linkedServices"> List of linked services passed to web endpoint. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
-        internal WebActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, Uri> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, WebActivityMethod method, Uri uri, Uri headers, Uri body, WebActivityAuthentication authentication, bool? disableCertValidation, IList<DatasetReference> datasets, IList<LinkedServiceReference> linkedServices, IntegrationRuntimeReference connectVia) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal WebActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, WebActivityMethod method, BinaryData uri, BinaryData headers, BinaryData body, WebActivityAuthentication authentication, bool? disableCertValidation, IList<DatasetReference> datasets, IList<LinkedServiceReference> linkedServices, IntegrationRuntimeReference connectVia) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Method = method;
             Uri = uri;
@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Rest API method for target endpoint. </summary>
         public WebActivityMethod Method { get; set; }
         /// <summary> Web activity target endpoint and path. Type: string (or Expression with resultType string). </summary>
-        public Uri Uri { get; set; }
+        public BinaryData Uri { get; set; }
         /// <summary> Represents the headers that will be sent to the request. For example, to set the language and type on a request: &quot;headers&quot; : { &quot;Accept-Language&quot;: &quot;en-us&quot;, &quot;Content-Type&quot;: &quot;application/json&quot; }. Type: string (or Expression with resultType string). </summary>
-        public Uri Headers { get; set; }
+        public BinaryData Headers { get; set; }
         /// <summary> Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string). </summary>
-        public Uri Body { get; set; }
+        public BinaryData Body { get; set; }
         /// <summary> Authentication method used for calling the endpoint. </summary>
         public WebActivityAuthentication Authentication { get; set; }
         /// <summary> When set to true, Certificate validation will be disabled. </summary>

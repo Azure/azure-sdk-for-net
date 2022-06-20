@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Properties = new ChangeTrackingDictionary<string, string>();
             TriggeredPipelines = new ChangeTrackingDictionary<string, string>();
             RunDimension = new ChangeTrackingDictionary<string, string>();
-            DependencyStatus = new ChangeTrackingDictionary<string, Uri>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            DependencyStatus = new ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of TriggerRun. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="runDimension"> Run dimension for which trigger was fired. </param>
         /// <param name="dependencyStatus"> Status of the upstream pipelines. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal TriggerRun(string triggerRunId, string triggerName, string triggerType, DateTimeOffset? triggerRunTimestamp, TriggerRunStatus? status, string message, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> triggeredPipelines, IReadOnlyDictionary<string, string> runDimension, IReadOnlyDictionary<string, Uri> dependencyStatus, IReadOnlyDictionary<string, Uri> additionalProperties)
+        internal TriggerRun(string triggerRunId, string triggerName, string triggerType, DateTimeOffset? triggerRunTimestamp, TriggerRunStatus? status, string message, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> triggeredPipelines, IReadOnlyDictionary<string, string> runDimension, IReadOnlyDictionary<string, BinaryData> dependencyStatus, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             TriggerRunId = triggerRunId;
             TriggerName = triggerName;
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Run dimension for which trigger was fired. </summary>
         public IReadOnlyDictionary<string, string> RunDimension { get; }
         /// <summary> Status of the upstream pipelines. </summary>
-        public IReadOnlyDictionary<string, Uri> DependencyStatus { get; }
+        public IReadOnlyDictionary<string, BinaryData> DependencyStatus { get; }
         /// <summary> Additional Properties. </summary>
-        public IReadOnlyDictionary<string, Uri> AdditionalProperties { get; }
+        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

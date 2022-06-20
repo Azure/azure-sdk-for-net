@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="modifiedDatetimeStart"> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
         /// <param name="modifiedDatetimeEnd"> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
         /// <param name="fileFilter"> Specify a filter to be used to select a subset of files in the folderPath rather than all files. Type: string (or Expression with resultType string). </param>
-        internal FileServerReadSettings(string storeReadSettingsType, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri recursive, Uri wildcardFolderPath, Uri wildcardFileName, Uri fileListPath, bool? enablePartitionDiscovery, Uri partitionRootPath, Uri deleteFilesAfterCompletion, Uri modifiedDatetimeStart, Uri modifiedDatetimeEnd, Uri fileFilter) : base(storeReadSettingsType, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal FileServerReadSettings(string storeReadSettingsType, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData recursive, BinaryData wildcardFolderPath, BinaryData wildcardFileName, BinaryData fileListPath, bool? enablePartitionDiscovery, BinaryData partitionRootPath, BinaryData deleteFilesAfterCompletion, BinaryData modifiedDatetimeStart, BinaryData modifiedDatetimeEnd, BinaryData fileFilter) : base(storeReadSettingsType, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             Recursive = recursive;
             WildcardFolderPath = wildcardFolderPath;
@@ -50,24 +50,24 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri Recursive { get; set; }
+        public BinaryData Recursive { get; set; }
         /// <summary> FileServer wildcardFolderPath. Type: string (or Expression with resultType string). </summary>
-        public Uri WildcardFolderPath { get; set; }
+        public BinaryData WildcardFolderPath { get; set; }
         /// <summary> FileServer wildcardFileName. Type: string (or Expression with resultType string). </summary>
-        public Uri WildcardFileName { get; set; }
+        public BinaryData WildcardFileName { get; set; }
         /// <summary> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </summary>
-        public Uri FileListPath { get; set; }
+        public BinaryData FileListPath { get; set; }
         /// <summary> Indicates whether to enable partition discovery. </summary>
         public bool? EnablePartitionDiscovery { get; set; }
         /// <summary> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </summary>
-        public Uri PartitionRootPath { get; set; }
+        public BinaryData PartitionRootPath { get; set; }
         /// <summary> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri DeleteFilesAfterCompletion { get; set; }
+        public BinaryData DeleteFilesAfterCompletion { get; set; }
         /// <summary> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
-        public Uri ModifiedDatetimeStart { get; set; }
+        public BinaryData ModifiedDatetimeStart { get; set; }
         /// <summary> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
-        public Uri ModifiedDatetimeEnd { get; set; }
+        public BinaryData ModifiedDatetimeEnd { get; set; }
         /// <summary> Specify a filter to be used to select a subset of files in the folderPath rather than all files. Type: string (or Expression with resultType string). </summary>
-        public Uri FileFilter { get; set; }
+        public BinaryData FileFilter { get; set; }
     }
 }

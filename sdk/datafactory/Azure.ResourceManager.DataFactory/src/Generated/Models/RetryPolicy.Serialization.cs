@@ -19,7 +19,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count");
-                writer.WriteStringValue(Count.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Count);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Count.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(IntervalInSeconds))
             {
@@ -31,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static RetryPolicy DeserializeRetryPolicy(JsonElement element)
         {
-            Optional<Uri> count = default;
+            Optional<BinaryData> count = default;
             Optional<int> intervalInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -39,10 +43,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        count = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    count = new Uri(property.Value.GetString());
+                    count = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("intervalInSeconds"))

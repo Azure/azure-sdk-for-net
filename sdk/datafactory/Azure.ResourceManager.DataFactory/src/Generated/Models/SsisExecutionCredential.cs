@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="userName"> UseName for windows authentication. </param>
         /// <param name="password"> Password for windows authentication. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domain"/>, <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
-        public SsisExecutionCredential(Uri domain, Uri userName, SecureString password)
+        public SsisExecutionCredential(BinaryData domain, BinaryData userName, SecureString password)
         {
             if (domain == null)
             {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Domain for windows authentication. </summary>
-        public Uri Domain { get; set; }
+        public BinaryData Domain { get; set; }
         /// <summary> UseName for windows authentication. </summary>
-        public Uri UserName { get; set; }
+        public BinaryData UserName { get; set; }
         /// <summary> Password for windows authentication. </summary>
         public SecureString Password { get; set; }
     }

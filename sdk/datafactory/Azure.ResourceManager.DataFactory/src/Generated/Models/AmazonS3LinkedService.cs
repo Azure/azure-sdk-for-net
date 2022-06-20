@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AmazonS3LinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri authenticationType, Uri accessKeyId, SecretBase secretAccessKey, Uri serviceUri, SecretBase sessionToken, Uri encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AmazonS3LinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData authenticationType, BinaryData accessKeyId, SecretBase secretAccessKey, BinaryData serviceUri, SecretBase sessionToken, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             AuthenticationType = authenticationType;
             AccessKeyId = accessKeyId;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The authentication type of S3. Allowed value: AccessKey (default) or TemporarySecurityCredentials. Type: string (or Expression with resultType string). </summary>
-        public Uri AuthenticationType { get; set; }
+        public BinaryData AuthenticationType { get; set; }
         /// <summary> The access key identifier of the Amazon S3 Identity and Access Management (IAM) user. Type: string (or Expression with resultType string). </summary>
-        public Uri AccessKeyId { get; set; }
+        public BinaryData AccessKeyId { get; set; }
         /// <summary>
         /// The secret access key of the Amazon S3 Identity and Access Management (IAM) user.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase SecretAccessKey { get; set; }
         /// <summary> This value specifies the endpoint to access with the S3 Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string). </summary>
-        public Uri ServiceUri { get; set; }
+        public BinaryData ServiceUri { get; set; }
         /// <summary>
         /// The session token for the S3 temporary security credential.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase SessionToken { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

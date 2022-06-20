@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="packageCollection"> Under where packages are created when querying database. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </param>
         /// <param name="certificateCommonName"> Certificate Common Name when TLS is enabled. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </param>
-        internal Db2LinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri connectionString, Uri server, Uri database, Db2AuthenticationType? authenticationType, Uri username, SecretBase password, Uri packageCollection, Uri certificateCommonName, Uri encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal Db2LinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionString, BinaryData server, BinaryData database, Db2AuthenticationType? authenticationType, BinaryData username, SecretBase password, BinaryData packageCollection, BinaryData certificateCommonName, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             Server = server;
@@ -54,15 +54,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The connection string. It is mutually exclusive with server, database, authenticationType, userName, packageCollection and certificateCommonName property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
-        public Uri ConnectionString { get; set; }
+        public BinaryData ConnectionString { get; set; }
         /// <summary> Server name for connection. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </summary>
-        public Uri Server { get; set; }
+        public BinaryData Server { get; set; }
         /// <summary> Database name for connection. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </summary>
-        public Uri Database { get; set; }
+        public BinaryData Database { get; set; }
         /// <summary> AuthenticationType to be used for connection. It is mutually exclusive with connectionString property. </summary>
         public Db2AuthenticationType? AuthenticationType { get; set; }
         /// <summary> Username for authentication. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </summary>
-        public Uri Username { get; set; }
+        public BinaryData Username { get; set; }
         /// <summary>
         /// Password for authentication.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> Under where packages are created when querying database. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </summary>
-        public Uri PackageCollection { get; set; }
+        public BinaryData PackageCollection { get; set; }
         /// <summary> Certificate Common Name when TLS is enabled. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </summary>
-        public Uri CertificateCommonName { get; set; }
+        public BinaryData CertificateCommonName { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

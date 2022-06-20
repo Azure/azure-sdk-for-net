@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sqlWriterUseTableLock"> Whether to use table lock during bulk copy. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="writeBehavior"> Write behavior when copying data into Azure SQL. Type: SqlWriteBehaviorEnum (or Expression with resultType SqlWriteBehaviorEnum). </param>
         /// <param name="upsertSettings"> SQL upsert settings. </param>
-        internal AzureSqlSink(string copySinkType, Uri writeBatchSize, Uri writeBatchTimeout, Uri sinkRetryCount, Uri sinkRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri sqlWriterStoredProcedureName, Uri sqlWriterTableType, Uri preCopyScript, IDictionary<string, StoredProcedureParameter> storedProcedureParameters, Uri storedProcedureTableTypeParameterName, Uri tableOption, Uri sqlWriterUseTableLock, Uri writeBehavior, SqlUpsertSettings upsertSettings) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal AzureSqlSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData sqlWriterStoredProcedureName, BinaryData sqlWriterTableType, BinaryData preCopyScript, IDictionary<string, StoredProcedureParameter> storedProcedureParameters, BinaryData storedProcedureTableTypeParameterName, BinaryData tableOption, BinaryData sqlWriterUseTableLock, BinaryData writeBehavior, SqlUpsertSettings upsertSettings) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             SqlWriterStoredProcedureName = sqlWriterStoredProcedureName;
             SqlWriterTableType = sqlWriterTableType;
@@ -54,21 +54,21 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> SQL writer stored procedure name. Type: string (or Expression with resultType string). </summary>
-        public Uri SqlWriterStoredProcedureName { get; set; }
+        public BinaryData SqlWriterStoredProcedureName { get; set; }
         /// <summary> SQL writer table type. Type: string (or Expression with resultType string). </summary>
-        public Uri SqlWriterTableType { get; set; }
+        public BinaryData SqlWriterTableType { get; set; }
         /// <summary> SQL pre-copy script. Type: string (or Expression with resultType string). </summary>
-        public Uri PreCopyScript { get; set; }
+        public BinaryData PreCopyScript { get; set; }
         /// <summary> SQL stored procedure parameters. </summary>
         public IDictionary<string, StoredProcedureParameter> StoredProcedureParameters { get; }
         /// <summary> The stored procedure parameter name of the table type. Type: string (or Expression with resultType string). </summary>
-        public Uri StoredProcedureTableTypeParameterName { get; set; }
+        public BinaryData StoredProcedureTableTypeParameterName { get; set; }
         /// <summary> The option to handle sink table, such as autoCreate. For now only &apos;autoCreate&apos; value is supported. Type: string (or Expression with resultType string). </summary>
-        public Uri TableOption { get; set; }
+        public BinaryData TableOption { get; set; }
         /// <summary> Whether to use table lock during bulk copy. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri SqlWriterUseTableLock { get; set; }
+        public BinaryData SqlWriterUseTableLock { get; set; }
         /// <summary> Write behavior when copying data into Azure SQL. Type: SqlWriteBehaviorEnum (or Expression with resultType SqlWriteBehaviorEnum). </summary>
-        public Uri WriteBehavior { get; set; }
+        public BinaryData WriteBehavior { get; set; }
         /// <summary> SQL upsert settings. </summary>
         public SqlUpsertSettings UpsertSettings { get; set; }
     }

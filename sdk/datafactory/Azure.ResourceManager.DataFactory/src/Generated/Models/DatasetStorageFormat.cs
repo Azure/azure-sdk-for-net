@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of DatasetStorageFormat. </summary>
         public DatasetStorageFormat()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DatasetStorageFormat. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DatasetStorageFormat(string datasetStorageFormatType, Uri serializer, Uri deserializer, IDictionary<string, Uri> additionalProperties)
+        internal DatasetStorageFormat(string datasetStorageFormatType, BinaryData serializer, BinaryData deserializer, IDictionary<string, BinaryData> additionalProperties)
         {
             DatasetStorageFormatType = datasetStorageFormatType;
             Serializer = serializer;
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Type of dataset storage format. </summary>
         internal string DatasetStorageFormatType { get; set; }
         /// <summary> Serializer. Type: string (or Expression with resultType string). </summary>
-        public Uri Serializer { get; set; }
+        public BinaryData Serializer { get; set; }
         /// <summary> Deserializer. Type: string (or Expression with resultType string). </summary>
-        public Uri Deserializer { get; set; }
+        public BinaryData Deserializer { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

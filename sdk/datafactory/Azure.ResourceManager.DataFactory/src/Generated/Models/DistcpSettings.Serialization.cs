@@ -17,42 +17,54 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resourceManagerEndpoint");
-            writer.WriteStringValue(ResourceManagerEndpoint.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ResourceManagerEndpoint);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(ResourceManagerEndpoint.ToString()).RootElement);
+#endif
             writer.WritePropertyName("tempScriptPath");
-            writer.WriteStringValue(TempScriptPath.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TempScriptPath);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(TempScriptPath.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(DistcpOptions))
             {
                 writer.WritePropertyName("distcpOptions");
-                writer.WriteStringValue(DistcpOptions.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DistcpOptions);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DistcpOptions.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static DistcpSettings DeserializeDistcpSettings(JsonElement element)
         {
-            Uri resourceManagerEndpoint = default;
-            Uri tempScriptPath = default;
-            Optional<Uri> distcpOptions = default;
+            BinaryData resourceManagerEndpoint = default;
+            BinaryData tempScriptPath = default;
+            Optional<BinaryData> distcpOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceManagerEndpoint"))
                 {
-                    resourceManagerEndpoint = new Uri(property.Value.GetString());
+                    resourceManagerEndpoint = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tempScriptPath"))
                 {
-                    tempScriptPath = new Uri(property.Value.GetString());
+                    tempScriptPath = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("distcpOptions"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        distcpOptions = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    distcpOptions = new Uri(property.Value.GetString());
+                    distcpOptions = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

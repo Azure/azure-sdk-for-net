@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="subscriberProcess"> The subscriber process to manage the delta process. Type: string (or Expression with resultType string). </param>
         /// <param name="selection"> Specifies the selection conditions from source data. Type: array of objects(selection) (or Expression with resultType array of objects). </param>
         /// <param name="projection"> Specifies the columns to be selected from source data. Type: array of objects(projection) (or Expression with resultType array of objects). </param>
-        internal SapOdpSource(string copySourceType, Uri sourceRetryCount, Uri sourceRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri queryTimeout, Uri additionalColumns, Uri extractionMode, Uri subscriberProcess, Uri selection, Uri projection) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
+        internal SapOdpSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData queryTimeout, BinaryData additionalColumns, BinaryData extractionMode, BinaryData subscriberProcess, BinaryData selection, BinaryData projection) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
         {
             ExtractionMode = extractionMode;
             SubscriberProcess = subscriberProcess;
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The extraction mode. Allowed value include: Full, Delta and Recovery. The default value is Full. Type: string (or Expression with resultType string). </summary>
-        public Uri ExtractionMode { get; set; }
+        public BinaryData ExtractionMode { get; set; }
         /// <summary> The subscriber process to manage the delta process. Type: string (or Expression with resultType string). </summary>
-        public Uri SubscriberProcess { get; set; }
+        public BinaryData SubscriberProcess { get; set; }
         /// <summary> Specifies the selection conditions from source data. Type: array of objects(selection) (or Expression with resultType array of objects). </summary>
-        public Uri Selection { get; set; }
+        public BinaryData Selection { get; set; }
         /// <summary> Specifies the columns to be selected from source data. Type: array of objects(projection) (or Expression with resultType array of objects). </summary>
-        public Uri Projection { get; set; }
+        public BinaryData Projection { get; set; }
     }
 }

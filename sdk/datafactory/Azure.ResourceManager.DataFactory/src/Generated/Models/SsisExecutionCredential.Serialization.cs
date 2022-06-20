@@ -17,9 +17,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("domain");
-            writer.WriteStringValue(Domain.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Domain);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Domain.ToString()).RootElement);
+#endif
             writer.WritePropertyName("userName");
-            writer.WriteStringValue(UserName.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UserName);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(UserName.ToString()).RootElement);
+#endif
             writer.WritePropertyName("password");
             writer.WriteObjectValue(Password);
             writer.WriteEndObject();
@@ -27,19 +35,19 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SsisExecutionCredential DeserializeSsisExecutionCredential(JsonElement element)
         {
-            Uri domain = default;
-            Uri userName = default;
+            BinaryData domain = default;
+            BinaryData userName = default;
             SecureString password = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domain"))
                 {
-                    domain = new Uri(property.Value.GetString());
+                    domain = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("userName"))
                 {
-                    userName = new Uri(property.Value.GetString());
+                    userName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("password"))

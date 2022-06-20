@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="writeBehavior"> The write behavior for the operation. </param>
         /// <param name="ignoreNullValues"> The flag indicating whether to ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="alternateKeyName"> The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string). </param>
-        internal DynamicsCrmSink(string copySinkType, Uri writeBatchSize, Uri writeBatchTimeout, Uri sinkRetryCount, Uri sinkRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, DynamicsSinkWriteBehavior writeBehavior, Uri ignoreNullValues, Uri alternateKeyName) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal DynamicsCrmSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DynamicsSinkWriteBehavior writeBehavior, BinaryData ignoreNullValues, BinaryData alternateKeyName) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             WriteBehavior = writeBehavior;
             IgnoreNullValues = ignoreNullValues;
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The write behavior for the operation. </summary>
         public DynamicsSinkWriteBehavior WriteBehavior { get; set; }
         /// <summary> The flag indicating whether to ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri IgnoreNullValues { get; set; }
+        public BinaryData IgnoreNullValues { get; set; }
         /// <summary> The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string). </summary>
-        public Uri AlternateKeyName { get; set; }
+        public BinaryData AlternateKeyName { get; set; }
     }
 }

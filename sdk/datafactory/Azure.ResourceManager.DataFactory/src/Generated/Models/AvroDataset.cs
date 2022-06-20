@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </param>
         /// <param name="avroCompressionCodec"> The data avroCompressionCodec. Type: string (or Expression with resultType string). </param>
         /// <param name="avroCompressionLevel"></param>
-        internal AvroDataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, DatasetLocation location, Uri avroCompressionCodec, int? avroCompressionLevel) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AvroDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation location, BinaryData avroCompressionCodec, int? avroCompressionLevel) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Location = location;
             AvroCompressionCodec = avroCompressionCodec;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public DatasetLocation Location { get; set; }
         /// <summary> The data avroCompressionCodec. Type: string (or Expression with resultType string). </summary>
-        public Uri AvroCompressionCodec { get; set; }
+        public BinaryData AvroCompressionCodec { get; set; }
         /// <summary> Gets or sets the avro compression level. </summary>
         public int? AvroCompressionLevel { get; set; }
     }

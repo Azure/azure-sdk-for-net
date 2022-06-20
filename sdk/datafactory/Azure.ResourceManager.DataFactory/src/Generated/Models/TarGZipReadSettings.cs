@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="compressionReadSettingsType"> The Compression setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="preserveCompressionFileNameAsFolder"> Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean). </param>
-        internal TarGZipReadSettings(string compressionReadSettingsType, IDictionary<string, Uri> additionalProperties, Uri preserveCompressionFileNameAsFolder) : base(compressionReadSettingsType, additionalProperties)
+        internal TarGZipReadSettings(string compressionReadSettingsType, IDictionary<string, BinaryData> additionalProperties, BinaryData preserveCompressionFileNameAsFolder) : base(compressionReadSettingsType, additionalProperties)
         {
             PreserveCompressionFileNameAsFolder = preserveCompressionFileNameAsFolder;
             CompressionReadSettingsType = compressionReadSettingsType ?? "TarGZipReadSettings";
         }
 
         /// <summary> Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri PreserveCompressionFileNameAsFolder { get; set; }
+        public BinaryData PreserveCompressionFileNameAsFolder { get; set; }
     }
 }

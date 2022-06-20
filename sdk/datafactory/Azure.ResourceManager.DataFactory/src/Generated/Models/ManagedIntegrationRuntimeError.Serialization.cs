@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> code = default;
             Optional<IReadOnlyList<string>> parameters = default;
             Optional<string> message = default;
-            IReadOnlyDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("time"))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     message = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ManagedIntegrationRuntimeError(Optional.ToNullable(time), code.Value, Optional.ToList(parameters), message.Value, additionalProperties);

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of WebLinkedServiceTypeProperties. </summary>
         /// <param name="uri"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public WebLinkedServiceTypeProperties(Uri uri)
+        public WebLinkedServiceTypeProperties(BinaryData uri)
         {
             if (uri == null)
             {
@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of WebLinkedServiceTypeProperties. </summary>
         /// <param name="uri"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
-        internal WebLinkedServiceTypeProperties(Uri uri, WebAuthenticationType authenticationType)
+        internal WebLinkedServiceTypeProperties(BinaryData uri, WebAuthenticationType authenticationType)
         {
             Uri = uri;
             AuthenticationType = authenticationType;
         }
 
         /// <summary> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </summary>
-        public Uri Uri { get; set; }
+        public BinaryData Uri { get; set; }
         /// <summary> Type of authentication used to connect to the web table source. </summary>
         internal WebAuthenticationType AuthenticationType { get; set; }
     }

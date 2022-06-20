@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFlowDebugPackageDebugSettings()
         {
             SourceSettings = new ChangeTrackingList<DataFlowSourceSetting>();
-            Parameters = new ChangeTrackingDictionary<string, Uri>();
+            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Source setting for data flow debug. </summary>
         public IList<DataFlowSourceSetting> SourceSettings { get; }
         /// <summary> Data flow parameters. </summary>
-        public IDictionary<string, Uri> Parameters { get; }
+        public IDictionary<string, BinaryData> Parameters { get; }
         /// <summary> Parameters for dataset. </summary>
-        public Uri DatasetParameters { get; set; }
+        public BinaryData DatasetParameters { get; set; }
     }
 }

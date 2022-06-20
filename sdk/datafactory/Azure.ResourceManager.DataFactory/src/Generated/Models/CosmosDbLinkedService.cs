@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="connectionMode"> The connection mode used to access CosmosDB account. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal CosmosDbLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri connectionString, Uri accountEndpoint, Uri database, SecretBase accountKey, Uri servicePrincipalId, CosmosDbServicePrincipalCredentialType? servicePrincipalCredentialType, SecretBase servicePrincipalCredential, Uri tenant, Uri azureCloudType, CosmosDbConnectionMode? connectionMode, Uri encryptedCredential, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal CosmosDbLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionString, BinaryData accountEndpoint, BinaryData database, SecretBase accountKey, BinaryData servicePrincipalId, CosmosDbServicePrincipalCredentialType? servicePrincipalCredentialType, SecretBase servicePrincipalCredential, BinaryData tenant, BinaryData azureCloudType, CosmosDbConnectionMode? connectionMode, BinaryData encryptedCredential, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             AccountEndpoint = accountEndpoint;
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
-        public Uri ConnectionString { get; set; }
+        public BinaryData ConnectionString { get; set; }
         /// <summary> The endpoint of the Azure CosmosDB account. Type: string (or Expression with resultType string). </summary>
-        public Uri AccountEndpoint { get; set; }
+        public BinaryData AccountEndpoint { get; set; }
         /// <summary> The name of the database. Type: string (or Expression with resultType string). </summary>
-        public Uri Database { get; set; }
+        public BinaryData Database { get; set; }
         /// <summary>
         /// The account key of the Azure CosmosDB account. Type: SecureString or AzureKeyVaultSecretReference.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase AccountKey { get; set; }
         /// <summary> The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType string). </summary>
-        public Uri ServicePrincipalId { get; set; }
+        public BinaryData ServicePrincipalId { get; set; }
         /// <summary> The service principal credential type to use in Server-To-Server authentication. &apos;ServicePrincipalKey&apos; for key/secret, &apos;ServicePrincipalCert&apos; for certificate. Type: string (or Expression with resultType string). </summary>
         public CosmosDbServicePrincipalCredentialType? ServicePrincipalCredentialType { get; set; }
         /// <summary>
@@ -86,13 +86,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase ServicePrincipalCredential { get; set; }
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
-        public Uri Tenant { get; set; }
+        public BinaryData Tenant { get; set; }
         /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
-        public Uri AzureCloudType { get; set; }
+        public BinaryData AzureCloudType { get; set; }
         /// <summary> The connection mode used to access CosmosDB account. Type: string (or Expression with resultType string). </summary>
         public CosmosDbConnectionMode? ConnectionMode { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
         public CredentialReference Credential { get; set; }
     }

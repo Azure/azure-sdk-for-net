@@ -45,7 +45,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -58,8 +62,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<bool> isReserved = default;
             Optional<string> privateLinkResourceId = default;
             Optional<string> provisioningState = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionState"))
@@ -112,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     provisioningState = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ManagedPrivateEndpoint(connectionState.Value, Optional.ToList(fqdns), groupId.Value, Optional.ToNullable(isReserved), privateLinkResourceId.Value, provisioningState.Value, additionalProperties);

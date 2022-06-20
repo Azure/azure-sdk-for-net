@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="blockSizeInMB"> Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer). </param>
-        internal AzureBlobStorageWriteSettings(string storeWriteSettingsType, Uri maxConcurrentConnections, Uri disableMetricsCollection, Uri copyBehavior, IDictionary<string, Uri> additionalProperties, Uri blockSizeInMB) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, additionalProperties)
+        internal AzureBlobStorageWriteSettings(string storeWriteSettingsType, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, BinaryData copyBehavior, IDictionary<string, BinaryData> additionalProperties, BinaryData blockSizeInMB) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, additionalProperties)
         {
             BlockSizeInMB = blockSizeInMB;
             StoreWriteSettingsType = storeWriteSettingsType ?? "AzureBlobStorageWriteSettings";
         }
 
         /// <summary> Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer). </summary>
-        public Uri BlockSizeInMB { get; set; }
+        public BinaryData BlockSizeInMB { get; set; }
     }
 }

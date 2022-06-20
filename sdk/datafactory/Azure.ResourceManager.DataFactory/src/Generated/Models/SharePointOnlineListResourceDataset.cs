@@ -37,13 +37,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="listName"> The name of the SharePoint Online list. Type: string (or Expression with resultType string). </param>
-        internal SharePointOnlineListResourceDataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, Uri listName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal SharePointOnlineListResourceDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData listName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             ListName = listName;
             DatasetType = datasetType ?? "SharePointOnlineListResource";
         }
 
         /// <summary> The name of the SharePoint Online list. Type: string (or Expression with resultType string). </summary>
-        public Uri ListName { get; set; }
+        public BinaryData ListName { get; set; }
     }
 }

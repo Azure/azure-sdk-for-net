@@ -25,29 +25,49 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ValidationMode))
             {
                 writer.WritePropertyName("validationMode");
-                writer.WriteStringValue(ValidationMode.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ValidationMode);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ValidationMode.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DetectDataType))
             {
                 writer.WritePropertyName("detectDataType");
-                writer.WriteStringValue(DetectDataType.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DetectDataType);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DetectDataType.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Namespaces))
             {
                 writer.WritePropertyName("namespaces");
-                writer.WriteStringValue(Namespaces.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Namespaces);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Namespaces.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(NamespacePrefixes))
             {
                 writer.WritePropertyName("namespacePrefixes");
-                writer.WriteStringValue(NamespacePrefixes.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(NamespacePrefixes);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(NamespacePrefixes.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(FormatReadSettingsType);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -55,13 +75,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static XmlReadSettings DeserializeXmlReadSettings(JsonElement element)
         {
             Optional<CompressionReadSettings> compressionProperties = default;
-            Optional<Uri> validationMode = default;
-            Optional<Uri> detectDataType = default;
-            Optional<Uri> namespaces = default;
-            Optional<Uri> namespacePrefixes = default;
+            Optional<BinaryData> validationMode = default;
+            Optional<BinaryData> detectDataType = default;
+            Optional<BinaryData> namespaces = default;
+            Optional<BinaryData> namespacePrefixes = default;
             string type = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("compressionProperties"))
@@ -78,40 +98,40 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        validationMode = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    validationMode = new Uri(property.Value.GetString());
+                    validationMode = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("detectDataType"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        detectDataType = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    detectDataType = new Uri(property.Value.GetString());
+                    detectDataType = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("namespaces"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        namespaces = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    namespaces = new Uri(property.Value.GetString());
+                    namespaces = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("namespacePrefixes"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        namespacePrefixes = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    namespacePrefixes = new Uri(property.Value.GetString());
+                    namespacePrefixes = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -119,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     type = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new XmlReadSettings(type, additionalProperties, compressionProperties.Value, validationMode.Value, detectDataType.Value, namespaces.Value, namespacePrefixes.Value);

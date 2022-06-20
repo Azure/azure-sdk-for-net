@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.DataFactory
             Activities = new ChangeTrackingList<Activity>();
             Parameters = new ChangeTrackingDictionary<string, ParameterSpecification>();
             Variables = new ChangeTrackingDictionary<string, VariableSpecification>();
-            Annotations = new ChangeTrackingList<Uri>();
-            RunDimensions = new ChangeTrackingDictionary<string, Uri>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            Annotations = new ChangeTrackingList<BinaryData>();
+            RunDimensions = new ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of PipelineResourceData. </summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="folder"> The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level. </param>
         /// <param name="policy"> Pipeline Policy. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal PipelineResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, string description, IList<Activity> activities, IDictionary<string, ParameterSpecification> parameters, IDictionary<string, VariableSpecification> variables, int? concurrency, IList<Uri> annotations, IDictionary<string, Uri> runDimensions, PipelineFolder folder, PipelinePolicy policy, IDictionary<string, Uri> additionalProperties) : base(id, name, resourceType, systemData, etag)
+        internal PipelineResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, string description, IList<Activity> activities, IDictionary<string, ParameterSpecification> parameters, IDictionary<string, VariableSpecification> variables, int? concurrency, IList<BinaryData> annotations, IDictionary<string, BinaryData> runDimensions, PipelineFolder folder, PipelinePolicy policy, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData, etag)
         {
             Description = description;
             Activities = activities;
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary> The max number of concurrent runs for the pipeline. </summary>
         public int? Concurrency { get; set; }
         /// <summary> List of tags that can be used for describing the Pipeline. </summary>
-        public IList<Uri> Annotations { get; }
+        public IList<BinaryData> Annotations { get; }
         /// <summary> Dimensions emitted by Pipeline. </summary>
-        public IDictionary<string, Uri> RunDimensions { get; }
+        public IDictionary<string, BinaryData> RunDimensions { get; }
         /// <summary> The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level. </summary>
         internal PipelineFolder Folder { get; set; }
         /// <summary> The name of the folder that this Pipeline is in. </summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary> Pipeline Policy. </summary>
         internal PipelinePolicy Policy { get; set; }
         /// <summary> TimeSpan value, after which an Azure Monitoring Metric is fired. </summary>
-        public Uri ElapsedTimeMetricDuration
+        public BinaryData ElapsedTimeMetricDuration
         {
             get => Policy is null ? default : Policy.ElapsedTimeMetricDuration;
             set
@@ -108,6 +108,6 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

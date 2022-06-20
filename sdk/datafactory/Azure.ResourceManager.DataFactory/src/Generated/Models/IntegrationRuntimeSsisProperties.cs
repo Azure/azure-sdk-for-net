@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             ExpressCustomSetupProperties = new ChangeTrackingList<CustomSetupBase>();
             PackageStores = new ChangeTrackingList<PackageStore>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeSsisProperties. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="packageStores"> Package stores for the SSIS Integration Runtime. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeSsisProperties(IntegrationRuntimeSsisCatalogInfo catalogInfo, IntegrationRuntimeLicenseType? licenseType, IntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties, IntegrationRuntimeDataProxyProperties dataProxyProperties, IntegrationRuntimeEdition? edition, IList<CustomSetupBase> expressCustomSetupProperties, IList<PackageStore> packageStores, CredentialReference credential, IDictionary<string, Uri> additionalProperties)
+        internal IntegrationRuntimeSsisProperties(IntegrationRuntimeSsisCatalogInfo catalogInfo, IntegrationRuntimeLicenseType? licenseType, IntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties, IntegrationRuntimeDataProxyProperties dataProxyProperties, IntegrationRuntimeEdition? edition, IList<CustomSetupBase> expressCustomSetupProperties, IList<PackageStore> packageStores, CredentialReference credential, IDictionary<string, BinaryData> additionalProperties)
         {
             CatalogInfo = catalogInfo;
             LicenseType = licenseType;
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The credential reference containing authentication information. </summary>
         public CredentialReference Credential { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

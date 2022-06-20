@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DateTimeOffset> activityRunStart = default;
             Optional<DateTimeOffset> activityRunEnd = default;
             Optional<int> durationInMs = default;
-            Optional<Uri> input = default;
-            Optional<Uri> output = default;
-            Optional<Uri> error = default;
-            IReadOnlyDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> input = default;
+            Optional<BinaryData> output = default;
+            Optional<BinaryData> error = default;
+            IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pipelineName"))
@@ -102,33 +102,33 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        input = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    input = new Uri(property.Value.GetString());
+                    input = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("output"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        output = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    output = new Uri(property.Value.GetString());
+                    output = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("error"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        error = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = new Uri(property.Value.GetString());
+                    error = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ActivityRun(pipelineName.Value, pipelineRunId.Value, activityName.Value, activityType.Value, activityRunId.Value, linkedServiceName.Value, status.Value, Optional.ToNullable(activityRunStart), Optional.ToNullable(activityRunEnd), Optional.ToNullable(durationInMs), input.Value, output.Value, error.Value, additionalProperties);

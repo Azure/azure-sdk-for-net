@@ -17,14 +17,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("packagePath");
-            writer.WriteStringValue(PackagePath.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PackagePath);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(PackagePath.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(PackageName))
             {
                 writer.WritePropertyName("packageName");
                 writer.WriteStringValue(PackageName);
             }
             writer.WritePropertyName("packageContent");
-            writer.WriteStringValue(PackageContent.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PackageContent);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(PackageContent.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(PackageLastModifiedDate))
             {
                 writer.WritePropertyName("packageLastModifiedDate");
@@ -35,15 +43,15 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SsisChildPackage DeserializeSsisChildPackage(JsonElement element)
         {
-            Uri packagePath = default;
+            BinaryData packagePath = default;
             Optional<string> packageName = default;
-            Uri packageContent = default;
+            BinaryData packageContent = default;
             Optional<string> packageLastModifiedDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("packagePath"))
                 {
-                    packagePath = new Uri(property.Value.GetString());
+                    packagePath = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("packageName"))
@@ -53,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("packageContent"))
                 {
-                    packageContent = new Uri(property.Value.GetString());
+                    packageContent = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("packageLastModifiedDate"))

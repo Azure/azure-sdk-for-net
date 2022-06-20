@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="detectDataType"> Indicates whether type detection is enabled when reading the xml files. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="namespaces"> Indicates whether namespace is enabled when reading the xml files. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="namespacePrefixes"> Namespace uri to prefix mappings to override the prefixes in column names when namespace is enabled, if no prefix is defined for a namespace uri, the prefix of xml element/attribute name in the xml data file will be used. Example: &quot;{&quot;http://www.example.com/xml&quot;:&quot;prefix&quot;}&quot; Type: object (or Expression with resultType object). </param>
-        internal XmlReadSettings(string formatReadSettingsType, IDictionary<string, Uri> additionalProperties, CompressionReadSettings compressionProperties, Uri validationMode, Uri detectDataType, Uri namespaces, Uri namespacePrefixes) : base(formatReadSettingsType, additionalProperties)
+        internal XmlReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties, CompressionReadSettings compressionProperties, BinaryData validationMode, BinaryData detectDataType, BinaryData namespaces, BinaryData namespacePrefixes) : base(formatReadSettingsType, additionalProperties)
         {
             CompressionProperties = compressionProperties;
             ValidationMode = validationMode;
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public CompressionReadSettings CompressionProperties { get; set; }
         /// <summary> Indicates what validation method is used when reading the xml files. Allowed values: &apos;none&apos;, &apos;xsd&apos;, or &apos;dtd&apos;. Type: string (or Expression with resultType string). </summary>
-        public Uri ValidationMode { get; set; }
+        public BinaryData ValidationMode { get; set; }
         /// <summary> Indicates whether type detection is enabled when reading the xml files. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri DetectDataType { get; set; }
+        public BinaryData DetectDataType { get; set; }
         /// <summary> Indicates whether namespace is enabled when reading the xml files. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri Namespaces { get; set; }
+        public BinaryData Namespaces { get; set; }
         /// <summary> Namespace uri to prefix mappings to override the prefixes in column names when namespace is enabled, if no prefix is defined for a namespace uri, the prefix of xml element/attribute name in the xml data file will be used. Example: &quot;{&quot;http://www.example.com/xml&quot;:&quot;prefix&quot;}&quot; Type: object (or Expression with resultType object). </summary>
-        public Uri NamespacePrefixes { get; set; }
+        public BinaryData NamespacePrefixes { get; set; }
     }
 }

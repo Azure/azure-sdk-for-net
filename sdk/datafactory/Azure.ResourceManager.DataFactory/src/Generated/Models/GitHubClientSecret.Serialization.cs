@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ByoaSecretAkvUri))
             {
                 writer.WritePropertyName("byoaSecretAkvUrl");
-                writer.WriteStringValue(ByoaSecretAkvUri.AbsoluteUri);
+                writer.WriteStringValue(ByoaSecretAkvUri);
             }
             if (Optional.IsDefined(ByoaSecretName))
             {
@@ -31,18 +30,13 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static GitHubClientSecret DeserializeGitHubClientSecret(JsonElement element)
         {
-            Optional<Uri> byoaSecretAkvUrl = default;
+            Optional<string> byoaSecretAkvUrl = default;
             Optional<string> byoaSecretName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("byoaSecretAkvUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        byoaSecretAkvUrl = null;
-                        continue;
-                    }
-                    byoaSecretAkvUrl = new Uri(property.Value.GetString());
+                    byoaSecretAkvUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("byoaSecretName"))

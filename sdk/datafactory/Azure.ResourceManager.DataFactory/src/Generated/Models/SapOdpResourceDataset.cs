@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="context"> The context of the SAP ODP Object. Type: string (or Expression with resultType string). </param>
         /// <param name="objectName"> The name of the SAP ODP Object. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/>, <paramref name="context"/> or <paramref name="objectName"/> is null. </exception>
-        public SapOdpResourceDataset(LinkedServiceReference linkedServiceName, Uri context, Uri objectName) : base(linkedServiceName)
+        public SapOdpResourceDataset(LinkedServiceReference linkedServiceName, BinaryData context, BinaryData objectName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="context"> The context of the SAP ODP Object. Type: string (or Expression with resultType string). </param>
         /// <param name="objectName"> The name of the SAP ODP Object. Type: string (or Expression with resultType string). </param>
-        internal SapOdpResourceDataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, Uri context, Uri objectName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal SapOdpResourceDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData context, BinaryData objectName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Context = context;
             ObjectName = objectName;
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The context of the SAP ODP Object. Type: string (or Expression with resultType string). </summary>
-        public Uri Context { get; set; }
+        public BinaryData Context { get; set; }
         /// <summary> The name of the SAP ODP Object. Type: string (or Expression with resultType string). </summary>
-        public Uri ObjectName { get; set; }
+        public BinaryData ObjectName { get; set; }
     }
 }

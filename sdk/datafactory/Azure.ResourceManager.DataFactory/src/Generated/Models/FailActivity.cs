@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="message"> The error message that surfaced in the Fail activity. It can be dynamic content that&apos;s evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
         /// <param name="errorCode"> The error code that categorizes the error type of the Fail activity. It can be dynamic content that&apos;s evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="message"/> or <paramref name="errorCode"/> is null. </exception>
-        public FailActivity(string name, Uri message, Uri errorCode) : base(name)
+        public FailActivity(string name, BinaryData message, BinaryData errorCode) : base(name)
         {
             if (name == null)
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="message"> The error message that surfaced in the Fail activity. It can be dynamic content that&apos;s evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
         /// <param name="errorCode"> The error code that categorizes the error type of the Fail activity. It can be dynamic content that&apos;s evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
-        internal FailActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, Uri> additionalProperties, Uri message, Uri errorCode) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal FailActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, BinaryData message, BinaryData errorCode) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             Message = message;
             ErrorCode = errorCode;
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The error message that surfaced in the Fail activity. It can be dynamic content that&apos;s evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </summary>
-        public Uri Message { get; set; }
+        public BinaryData Message { get; set; }
         /// <summary> The error code that categorizes the error type of the Fail activity. It can be dynamic content that&apos;s evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </summary>
-        public Uri ErrorCode { get; set; }
+        public BinaryData ErrorCode { get; set; }
     }
 }

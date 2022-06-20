@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/>, <paramref name="pfx"/> or <paramref name="password"/> is null. </exception>
-        public WebClientCertificateAuthentication(Uri uri, SecretBase pfx, SecretBase password) : base(uri)
+        public WebClientCertificateAuthentication(BinaryData uri, SecretBase pfx, SecretBase password) : base(uri)
         {
             if (uri == null)
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        internal WebClientCertificateAuthentication(Uri uri, WebAuthenticationType authenticationType, SecretBase pfx, SecretBase password) : base(uri, authenticationType)
+        internal WebClientCertificateAuthentication(BinaryData uri, WebAuthenticationType authenticationType, SecretBase pfx, SecretBase password) : base(uri, authenticationType)
         {
             Pfx = pfx;
             Password = password;

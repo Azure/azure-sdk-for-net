@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of CopySource. </summary>
         public CopySource()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of CopySource. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal CopySource(string copySourceType, Uri sourceRetryCount, Uri sourceRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties)
+        internal CopySource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties)
         {
             CopySourceType = copySourceType;
             SourceRetryCount = sourceRetryCount;
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Copy source type. </summary>
         internal string CopySourceType { get; set; }
         /// <summary> Source retry count. Type: integer (or Expression with resultType integer). </summary>
-        public Uri SourceRetryCount { get; set; }
+        public BinaryData SourceRetryCount { get; set; }
         /// <summary> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
-        public Uri SourceRetryWait { get; set; }
+        public BinaryData SourceRetryWait { get; set; }
         /// <summary> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </summary>
-        public Uri MaxConcurrentConnections { get; set; }
+        public BinaryData MaxConcurrentConnections { get; set; }
         /// <summary> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri DisableMetricsCollection { get; set; }
+        public BinaryData DisableMetricsCollection { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

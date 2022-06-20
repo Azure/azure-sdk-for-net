@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of DatasetLocation. </summary>
         public DatasetLocation()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DatasetLocation. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DatasetLocation(string datasetLocationType, Uri folderPath, Uri fileName, IDictionary<string, Uri> additionalProperties)
+        internal DatasetLocation(string datasetLocationType, BinaryData folderPath, BinaryData fileName, IDictionary<string, BinaryData> additionalProperties)
         {
             DatasetLocationType = datasetLocationType;
             FolderPath = folderPath;
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Type of dataset storage location. </summary>
         internal string DatasetLocationType { get; set; }
         /// <summary> Specify the folder path of dataset. Type: string (or Expression with resultType string). </summary>
-        public Uri FolderPath { get; set; }
+        public BinaryData FolderPath { get; set; }
         /// <summary> Specify the file name of dataset. Type: string (or Expression with resultType string). </summary>
-        public Uri FileName { get; set; }
+        public BinaryData FileName { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

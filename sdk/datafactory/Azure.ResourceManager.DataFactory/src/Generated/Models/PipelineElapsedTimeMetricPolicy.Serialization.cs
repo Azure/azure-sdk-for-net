@@ -19,24 +19,28 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration");
-                writer.WriteStringValue(Duration.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Duration);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Duration.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static PipelineElapsedTimeMetricPolicy DeserializePipelineElapsedTimeMetricPolicy(JsonElement element)
         {
-            Optional<Uri> duration = default;
+            Optional<BinaryData> duration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("duration"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        duration = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    duration = new Uri(property.Value.GetString());
+                    duration = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

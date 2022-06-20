@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="method"> Rest API method for target endpoint. </param>
         /// <param name="functionName"> Name of the Function that the Azure Function Activity will call. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="functionName"/> is null. </exception>
-        public AzureFunctionActivity(string name, AzureFunctionActivityMethod method, Uri functionName) : base(name)
+        public AzureFunctionActivity(string name, AzureFunctionActivityMethod method, BinaryData functionName) : base(name)
         {
             if (name == null)
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="functionName"> Name of the Function that the Azure Function Activity will call. Type: string (or Expression with resultType string). </param>
         /// <param name="headers"> Represents the headers that will be sent to the request. For example, to set the language and type on a request: &quot;headers&quot; : { &quot;Accept-Language&quot;: &quot;en-us&quot;, &quot;Content-Type&quot;: &quot;application/json&quot; }. Type: string (or Expression with resultType string). </param>
         /// <param name="body"> Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string). </param>
-        internal AzureFunctionActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, Uri> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, AzureFunctionActivityMethod method, Uri functionName, Uri headers, Uri body) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal AzureFunctionActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, AzureFunctionActivityMethod method, BinaryData functionName, BinaryData headers, BinaryData body) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Method = method;
             FunctionName = functionName;
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Rest API method for target endpoint. </summary>
         public AzureFunctionActivityMethod Method { get; set; }
         /// <summary> Name of the Function that the Azure Function Activity will call. Type: string (or Expression with resultType string). </summary>
-        public Uri FunctionName { get; set; }
+        public BinaryData FunctionName { get; set; }
         /// <summary> Represents the headers that will be sent to the request. For example, to set the language and type on a request: &quot;headers&quot; : { &quot;Accept-Language&quot;: &quot;en-us&quot;, &quot;Content-Type&quot;: &quot;application/json&quot; }. Type: string (or Expression with resultType string). </summary>
-        public Uri Headers { get; set; }
+        public BinaryData Headers { get; set; }
         /// <summary> Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string). </summary>
-        public Uri Body { get; set; }
+        public BinaryData Body { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             WeekDays = new ChangeTrackingList<DaysOfWeek>();
             MonthDays = new ChangeTrackingList<int>();
             MonthlyOccurrences = new ChangeTrackingList<RecurrenceScheduleOccurrence>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of RecurrenceSchedule. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="monthDays"> The month days. </param>
         /// <param name="monthlyOccurrences"> The monthly occurrences. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal RecurrenceSchedule(IList<int> minutes, IList<int> hours, IList<DaysOfWeek> weekDays, IList<int> monthDays, IList<RecurrenceScheduleOccurrence> monthlyOccurrences, IDictionary<string, Uri> additionalProperties)
+        internal RecurrenceSchedule(IList<int> minutes, IList<int> hours, IList<DaysOfWeek> weekDays, IList<int> monthDays, IList<RecurrenceScheduleOccurrence> monthlyOccurrences, IDictionary<string, BinaryData> additionalProperties)
         {
             Minutes = minutes;
             Hours = hours;
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The monthly occurrences. </summary>
         public IList<RecurrenceScheduleOccurrence> MonthlyOccurrences { get; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

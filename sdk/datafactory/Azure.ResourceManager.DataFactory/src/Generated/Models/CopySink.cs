@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of CopySink. </summary>
         public CopySink()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of CopySink. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal CopySink(string copySinkType, Uri writeBatchSize, Uri writeBatchTimeout, Uri sinkRetryCount, Uri sinkRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties)
+        internal CopySink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties)
         {
             CopySinkType = copySinkType;
             WriteBatchSize = writeBatchSize;
@@ -48,18 +48,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Copy sink type. </summary>
         internal string CopySinkType { get; set; }
         /// <summary> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
-        public Uri WriteBatchSize { get; set; }
+        public BinaryData WriteBatchSize { get; set; }
         /// <summary> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
-        public Uri WriteBatchTimeout { get; set; }
+        public BinaryData WriteBatchTimeout { get; set; }
         /// <summary> Sink retry count. Type: integer (or Expression with resultType integer). </summary>
-        public Uri SinkRetryCount { get; set; }
+        public BinaryData SinkRetryCount { get; set; }
         /// <summary> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
-        public Uri SinkRetryWait { get; set; }
+        public BinaryData SinkRetryWait { get; set; }
         /// <summary> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </summary>
-        public Uri MaxConcurrentConnections { get; set; }
+        public BinaryData MaxConcurrentConnections { get; set; }
         /// <summary> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri DisableMetricsCollection { get; set; }
+        public BinaryData DisableMetricsCollection { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

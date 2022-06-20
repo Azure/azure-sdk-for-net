@@ -18,44 +18,56 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(DatasetCompressionType.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DatasetCompressionType);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(DatasetCompressionType.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level");
-                writer.WriteStringValue(Level.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Level);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Level.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static DatasetCompression DeserializeDatasetCompression(JsonElement element)
         {
-            Uri type = default;
-            Optional<Uri> level = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            BinaryData type = default;
+            Optional<BinaryData> level = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    type = new Uri(property.Value.GetString());
+                    type = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("level"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        level = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    level = new Uri(property.Value.GetString());
+                    level = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DatasetCompression(type, level.Value, additionalProperties);

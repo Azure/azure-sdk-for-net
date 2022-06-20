@@ -19,40 +19,48 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ColumnName))
             {
                 writer.WritePropertyName("columnName");
-                writer.WriteStringValue(ColumnName.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ColumnName);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ColumnName.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue");
-                writer.WriteStringValue(DefaultValue.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DefaultValue);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DefaultValue.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static DWCopyCommandDefaultValue DeserializeDWCopyCommandDefaultValue(JsonElement element)
         {
-            Optional<Uri> columnName = default;
-            Optional<Uri> defaultValue = default;
+            Optional<BinaryData> columnName = default;
+            Optional<BinaryData> defaultValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("columnName"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        columnName = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    columnName = new Uri(property.Value.GetString());
+                    columnName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("defaultValue"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        defaultValue = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    defaultValue = new Uri(property.Value.GetString());
+                    defaultValue = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

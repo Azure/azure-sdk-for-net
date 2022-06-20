@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="bucketName"> The name of the Amazon S3 bucket. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="bucketName"/> is null. </exception>
-        public AmazonS3Dataset(LinkedServiceReference linkedServiceName, Uri bucketName) : base(linkedServiceName)
+        public AmazonS3Dataset(LinkedServiceReference linkedServiceName, BinaryData bucketName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The available derived classes include <see cref="AvroFormat"/>, <see cref="JsonFormat"/>, <see cref="OrcFormat"/>, <see cref="ParquetFormat"/> and <see cref="TextFormat"/>.
         /// </param>
         /// <param name="compression"> The data compression method used for the Amazon S3 object. </param>
-        internal AmazonS3Dataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, Uri bucketName, Uri key, Uri prefix, Uri version, Uri modifiedDatetimeStart, Uri modifiedDatetimeEnd, DatasetStorageFormat format, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AmazonS3Dataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData bucketName, BinaryData key, BinaryData prefix, BinaryData version, BinaryData modifiedDatetimeStart, BinaryData modifiedDatetimeEnd, DatasetStorageFormat format, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             BucketName = bucketName;
             Key = key;
@@ -68,17 +68,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the Amazon S3 bucket. Type: string (or Expression with resultType string). </summary>
-        public Uri BucketName { get; set; }
+        public BinaryData BucketName { get; set; }
         /// <summary> The key of the Amazon S3 object. Type: string (or Expression with resultType string). </summary>
-        public Uri Key { get; set; }
+        public BinaryData Key { get; set; }
         /// <summary> The prefix filter for the S3 object name. Type: string (or Expression with resultType string). </summary>
-        public Uri Prefix { get; set; }
+        public BinaryData Prefix { get; set; }
         /// <summary> The version for the S3 object. Type: string (or Expression with resultType string). </summary>
-        public Uri Version { get; set; }
+        public BinaryData Version { get; set; }
         /// <summary> The start of S3 object&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
-        public Uri ModifiedDatetimeStart { get; set; }
+        public BinaryData ModifiedDatetimeStart { get; set; }
         /// <summary> The end of S3 object&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
-        public Uri ModifiedDatetimeEnd { get; set; }
+        public BinaryData ModifiedDatetimeEnd { get; set; }
         /// <summary>
         /// The format of files.
         /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

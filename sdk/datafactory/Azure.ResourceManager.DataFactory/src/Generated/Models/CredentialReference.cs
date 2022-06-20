@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             ReferenceType = referenceType;
             ReferenceName = referenceName;
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of CredentialReference. </summary>
         /// <param name="referenceType"> Credential reference type. </param>
         /// <param name="referenceName"> Reference credential name. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal CredentialReference(CredentialReferenceType referenceType, string referenceName, IDictionary<string, Uri> additionalProperties)
+        internal CredentialReference(CredentialReferenceType referenceType, string referenceName, IDictionary<string, BinaryData> additionalProperties)
         {
             ReferenceType = referenceType;
             ReferenceName = referenceName;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Reference credential name. </summary>
         public string ReferenceName { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

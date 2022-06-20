@@ -78,28 +78,48 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TraceLevel))
             {
                 writer.WritePropertyName("traceLevel");
-                writer.WriteStringValue(TraceLevel.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TraceLevel);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(TraceLevel.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ContinueOnError))
             {
                 writer.WritePropertyName("continueOnError");
-                writer.WriteStringValue(ContinueOnError.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ContinueOnError);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ContinueOnError.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(RunConcurrently))
             {
                 writer.WritePropertyName("runConcurrently");
-                writer.WriteStringValue(RunConcurrently.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RunConcurrently);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RunConcurrently.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SourceStagingConcurrency))
             {
                 writer.WritePropertyName("sourceStagingConcurrency");
-                writer.WriteStringValue(SourceStagingConcurrency.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SourceStagingConcurrency);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceStagingConcurrency.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -117,12 +137,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFlowStagingInfo> staging = default;
             Optional<IntegrationRuntimeReference> integrationRuntime = default;
             Optional<ExecuteDataFlowActivityTypePropertiesCompute> compute = default;
-            Optional<Uri> traceLevel = default;
-            Optional<Uri> continueOnError = default;
-            Optional<Uri> runConcurrently = default;
-            Optional<Uri> sourceStagingConcurrency = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> traceLevel = default;
+            Optional<BinaryData> continueOnError = default;
+            Optional<BinaryData> runConcurrently = default;
+            Optional<BinaryData> sourceStagingConcurrency = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -238,46 +258,46 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                traceLevel = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            traceLevel = new Uri(property0.Value.GetString());
+                            traceLevel = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("continueOnError"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                continueOnError = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            continueOnError = new Uri(property0.Value.GetString());
+                            continueOnError = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("runConcurrently"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                runConcurrently = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            runConcurrently = new Uri(property0.Value.GetString());
+                            runConcurrently = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sourceStagingConcurrency"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                sourceStagingConcurrency = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sourceStagingConcurrency = new Uri(property0.Value.GetString());
+                            sourceStagingConcurrency = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ExecuteDataFlowActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, dataFlow, staging.Value, integrationRuntime.Value, compute.Value, traceLevel.Value, continueOnError.Value, runConcurrently.Value, sourceStagingConcurrency.Value);

@@ -53,7 +53,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout");
-                writer.WriteStringValue(Timeout.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Timeout);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Timeout.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("activities");
             writer.WriteStartArray();
@@ -66,7 +70,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -79,10 +87,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
             Expression expression = default;
-            Optional<Uri> timeout = default;
+            Optional<BinaryData> timeout = default;
             IList<Activity> activities = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -148,10 +156,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                timeout = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            timeout = new Uri(property0.Value.GetString());
+                            timeout = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("activities"))
@@ -167,7 +175,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new UntilActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, expression, timeout.Value, activities);

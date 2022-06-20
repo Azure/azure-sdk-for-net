@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sqlWriterUseTableLock"> Whether to use table lock during bulk copy. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="writeBehavior"> Write behavior when copying data into azure SQL DW. Type: SqlDWWriteBehaviorEnum (or Expression with resultType SqlDWWriteBehaviorEnum). </param>
         /// <param name="upsertSettings"> SQL DW upsert settings. </param>
-        internal SqlDWSink(string copySinkType, Uri writeBatchSize, Uri writeBatchTimeout, Uri sinkRetryCount, Uri sinkRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri preCopyScript, Uri allowPolyBase, PolybaseSettings polyBaseSettings, Uri allowCopyCommand, DWCopyCommandSettings copyCommandSettings, Uri tableOption, Uri sqlWriterUseTableLock, Uri writeBehavior, SqlDWUpsertSettings upsertSettings) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal SqlDWSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData preCopyScript, BinaryData allowPolyBase, PolybaseSettings polyBaseSettings, BinaryData allowCopyCommand, DWCopyCommandSettings copyCommandSettings, BinaryData tableOption, BinaryData sqlWriterUseTableLock, BinaryData writeBehavior, SqlDWUpsertSettings upsertSettings) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             PreCopyScript = preCopyScript;
             AllowPolyBase = allowPolyBase;
@@ -52,21 +52,21 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> SQL pre-copy script. Type: string (or Expression with resultType string). </summary>
-        public Uri PreCopyScript { get; set; }
+        public BinaryData PreCopyScript { get; set; }
         /// <summary> Indicates to use PolyBase to copy data into SQL Data Warehouse when applicable. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri AllowPolyBase { get; set; }
+        public BinaryData AllowPolyBase { get; set; }
         /// <summary> Specifies PolyBase-related settings when allowPolyBase is true. </summary>
         public PolybaseSettings PolyBaseSettings { get; set; }
         /// <summary> Indicates to use Copy Command to copy data into SQL Data Warehouse. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri AllowCopyCommand { get; set; }
+        public BinaryData AllowCopyCommand { get; set; }
         /// <summary> Specifies Copy Command related settings when allowCopyCommand is true. </summary>
         public DWCopyCommandSettings CopyCommandSettings { get; set; }
         /// <summary> The option to handle sink table, such as autoCreate. For now only &apos;autoCreate&apos; value is supported. Type: string (or Expression with resultType string). </summary>
-        public Uri TableOption { get; set; }
+        public BinaryData TableOption { get; set; }
         /// <summary> Whether to use table lock during bulk copy. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri SqlWriterUseTableLock { get; set; }
+        public BinaryData SqlWriterUseTableLock { get; set; }
         /// <summary> Write behavior when copying data into azure SQL DW. Type: SqlDWWriteBehaviorEnum (or Expression with resultType SqlDWWriteBehaviorEnum). </summary>
-        public Uri WriteBehavior { get; set; }
+        public BinaryData WriteBehavior { get; set; }
         /// <summary> SQL DW upsert settings. </summary>
         public SqlDWUpsertSettings UpsertSettings { get; set; }
     }

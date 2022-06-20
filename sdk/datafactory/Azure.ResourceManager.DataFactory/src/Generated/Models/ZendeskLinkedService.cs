@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="authenticationType"> The authentication type to use. </param>
         /// <param name="uri"> The url to connect Zendesk source. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public ZendeskLinkedService(ZendeskAuthenticationType authenticationType, Uri uri)
+        public ZendeskLinkedService(ZendeskAuthenticationType authenticationType, BinaryData uri)
         {
             if (uri == null)
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal ZendeskLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, ZendeskAuthenticationType authenticationType, Uri uri, Uri userName, SecretBase password, SecretBase apiToken, Uri encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal ZendeskLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, ZendeskAuthenticationType authenticationType, BinaryData uri, BinaryData userName, SecretBase password, SecretBase apiToken, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             AuthenticationType = authenticationType;
             Uri = uri;
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The authentication type to use. </summary>
         public ZendeskAuthenticationType AuthenticationType { get; set; }
         /// <summary> The url to connect Zendesk source. Type: string (or Expression with resultType string). </summary>
-        public Uri Uri { get; set; }
+        public BinaryData Uri { get; set; }
         /// <summary> The username of the Zendesk source. Type: string (or Expression with resultType string). </summary>
-        public Uri UserName { get; set; }
+        public BinaryData UserName { get; set; }
         /// <summary>
         /// The password of the Zendesk source.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -80,6 +80,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase ApiToken { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
     }
 }

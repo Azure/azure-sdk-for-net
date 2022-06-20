@@ -25,22 +25,38 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RejectValue))
             {
                 writer.WritePropertyName("rejectValue");
-                writer.WriteStringValue(RejectValue.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RejectValue);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RejectValue.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(RejectSampleValue))
             {
                 writer.WritePropertyName("rejectSampleValue");
-                writer.WriteStringValue(RejectSampleValue.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RejectSampleValue);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RejectSampleValue.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(UseTypeDefault))
             {
                 writer.WritePropertyName("useTypeDefault");
-                writer.WriteStringValue(UseTypeDefault.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UseTypeDefault);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(UseTypeDefault.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -48,11 +64,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static PolybaseSettings DeserializePolybaseSettings(JsonElement element)
         {
             Optional<PolybaseSettingsRejectType> rejectType = default;
-            Optional<Uri> rejectValue = default;
-            Optional<Uri> rejectSampleValue = default;
-            Optional<Uri> useTypeDefault = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> rejectValue = default;
+            Optional<BinaryData> rejectSampleValue = default;
+            Optional<BinaryData> useTypeDefault = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rejectType"))
@@ -69,33 +85,33 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        rejectValue = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rejectValue = new Uri(property.Value.GetString());
+                    rejectValue = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("rejectSampleValue"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        rejectSampleValue = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rejectSampleValue = new Uri(property.Value.GetString());
+                    rejectSampleValue = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("useTypeDefault"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        useTypeDefault = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    useTypeDefault = new Uri(property.Value.GetString());
+                    useTypeDefault = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new PolybaseSettings(Optional.ToNullable(rejectType), rejectValue.Value, rejectSampleValue.Value, useTypeDefault.Value, additionalProperties);

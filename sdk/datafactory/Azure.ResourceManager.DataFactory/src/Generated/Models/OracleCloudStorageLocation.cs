@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="bucketName"> Specify the bucketName of Oracle Cloud Storage. Type: string (or Expression with resultType string). </param>
         /// <param name="version"> Specify the version of Oracle Cloud Storage. Type: string (or Expression with resultType string). </param>
-        internal OracleCloudStorageLocation(string datasetLocationType, Uri folderPath, Uri fileName, IDictionary<string, Uri> additionalProperties, Uri bucketName, Uri version) : base(datasetLocationType, folderPath, fileName, additionalProperties)
+        internal OracleCloudStorageLocation(string datasetLocationType, BinaryData folderPath, BinaryData fileName, IDictionary<string, BinaryData> additionalProperties, BinaryData bucketName, BinaryData version) : base(datasetLocationType, folderPath, fileName, additionalProperties)
         {
             BucketName = bucketName;
             Version = version;
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Specify the bucketName of Oracle Cloud Storage. Type: string (or Expression with resultType string). </summary>
-        public Uri BucketName { get; set; }
+        public BinaryData BucketName { get; set; }
         /// <summary> Specify the version of Oracle Cloud Storage. Type: string (or Expression with resultType string). </summary>
-        public Uri Version { get; set; }
+        public BinaryData Version { get; set; }
     }
 }

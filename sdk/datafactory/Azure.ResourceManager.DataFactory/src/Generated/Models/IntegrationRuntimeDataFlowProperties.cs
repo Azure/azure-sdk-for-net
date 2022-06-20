@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of IntegrationRuntimeDataFlowProperties. </summary>
         public IntegrationRuntimeDataFlowProperties()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeDataFlowProperties. </summary>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="timeToLive"> Time to live (in minutes) setting of the cluster which will execute data flow job. </param>
         /// <param name="cleanup"> Cluster will not be recycled and it will be used in next data flow activity run until TTL (time to live) is reached if this is set as false. Default is true. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeDataFlowProperties(DataFlowComputeType? computeType, int? coreCount, int? timeToLive, bool? cleanup, IDictionary<string, Uri> additionalProperties)
+        internal IntegrationRuntimeDataFlowProperties(DataFlowComputeType? computeType, int? coreCount, int? timeToLive, bool? cleanup, IDictionary<string, BinaryData> additionalProperties)
         {
             ComputeType = computeType;
             CoreCount = coreCount;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Cluster will not be recycled and it will be used in next data flow activity run until TTL (time to live) is reached if this is set as false. Default is true. </summary>
         public bool? Cleanup { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

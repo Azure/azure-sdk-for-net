@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="openHubDestinationName"> The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="openHubDestinationName"/> is null. </exception>
-        public SapOpenHubTableDataset(LinkedServiceReference linkedServiceName, Uri openHubDestinationName) : base(linkedServiceName)
+        public SapOpenHubTableDataset(LinkedServiceReference linkedServiceName, BinaryData openHubDestinationName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="openHubDestinationName"> The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression with resultType string). </param>
         /// <param name="excludeLastRequest"> Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="baseRequestId"> The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value is 0. Type: integer (or Expression with resultType integer ). </param>
-        internal SapOpenHubTableDataset(string datasetType, string description, Uri structure, Uri schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, DatasetFolder folder, IDictionary<string, Uri> additionalProperties, Uri openHubDestinationName, Uri excludeLastRequest, Uri baseRequestId) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal SapOpenHubTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData openHubDestinationName, BinaryData excludeLastRequest, BinaryData baseRequestId) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             OpenHubDestinationName = openHubDestinationName;
             ExcludeLastRequest = excludeLastRequest;
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression with resultType string). </summary>
-        public Uri OpenHubDestinationName { get; set; }
+        public BinaryData OpenHubDestinationName { get; set; }
         /// <summary> Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri ExcludeLastRequest { get; set; }
+        public BinaryData ExcludeLastRequest { get; set; }
         /// <summary> The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value is 0. Type: integer (or Expression with resultType integer ). </summary>
-        public Uri BaseRequestId { get; set; }
+        public BinaryData BaseRequestId { get; set; }
     }
 }

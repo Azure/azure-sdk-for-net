@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of ExportSettings. </summary>
         public ExportSettings()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ExportSettings. </summary>
         /// <param name="exportSettingsType"> The export setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ExportSettings(string exportSettingsType, IDictionary<string, Uri> additionalProperties)
+        internal ExportSettings(string exportSettingsType, IDictionary<string, BinaryData> additionalProperties)
         {
             ExportSettingsType = exportSettingsType;
             AdditionalProperties = additionalProperties;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The export setting type. </summary>
         internal string ExportSettingsType { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

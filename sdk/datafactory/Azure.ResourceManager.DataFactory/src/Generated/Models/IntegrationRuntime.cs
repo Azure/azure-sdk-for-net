@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of IntegrationRuntime. </summary>
         public IntegrationRuntime()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntime. </summary>
         /// <param name="runtimeType"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntime(IntegrationRuntimeType runtimeType, string description, IDictionary<string, Uri> additionalProperties)
+        internal IntegrationRuntime(IntegrationRuntimeType runtimeType, string description, IDictionary<string, BinaryData> additionalProperties)
         {
             RuntimeType = runtimeType;
             Description = description;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Integration runtime description. </summary>
         public string Description { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

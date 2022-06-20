@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="baseRequestId"> The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value is 0. Type: integer (or Expression with resultType integer ). </param>
         /// <param name="customRfcReadTableFunctionModule"> Specifies the custom RFC function module that will be used to read data from SAP Table. Type: string (or Expression with resultType string). </param>
         /// <param name="sapDataColumnDelimiter"> The single character that will be used as delimiter passed to SAP RFC as well as splitting the output data retrieved. Type: string (or Expression with resultType string). </param>
-        internal SapOpenHubSource(string copySourceType, Uri sourceRetryCount, Uri sourceRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri queryTimeout, Uri additionalColumns, Uri excludeLastRequest, Uri baseRequestId, Uri customRfcReadTableFunctionModule, Uri sapDataColumnDelimiter) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
+        internal SapOpenHubSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData queryTimeout, BinaryData additionalColumns, BinaryData excludeLastRequest, BinaryData baseRequestId, BinaryData customRfcReadTableFunctionModule, BinaryData sapDataColumnDelimiter) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
         {
             ExcludeLastRequest = excludeLastRequest;
             BaseRequestId = baseRequestId;
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
-        public Uri ExcludeLastRequest { get; set; }
+        public BinaryData ExcludeLastRequest { get; set; }
         /// <summary> The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value is 0. Type: integer (or Expression with resultType integer ). </summary>
-        public Uri BaseRequestId { get; set; }
+        public BinaryData BaseRequestId { get; set; }
         /// <summary> Specifies the custom RFC function module that will be used to read data from SAP Table. Type: string (or Expression with resultType string). </summary>
-        public Uri CustomRfcReadTableFunctionModule { get; set; }
+        public BinaryData CustomRfcReadTableFunctionModule { get; set; }
         /// <summary> The single character that will be used as delimiter passed to SAP RFC as well as splitting the output data retrieved. Type: string (or Expression with resultType string). </summary>
-        public Uri SapDataColumnDelimiter { get; set; }
+        public BinaryData SapDataColumnDelimiter { get; set; }
     }
 }

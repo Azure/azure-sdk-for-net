@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="nestingSeparator"> Nested properties separator. Default is . (dot). Type: string (or Expression with resultType string). </param>
         /// <param name="writeBehavior"> Describes how to write data to Azure Cosmos DB. Type: string (or Expression with resultType string). Allowed values: insert and upsert. </param>
-        internal DocumentDbCollectionSink(string copySinkType, Uri writeBatchSize, Uri writeBatchTimeout, Uri sinkRetryCount, Uri sinkRetryWait, Uri maxConcurrentConnections, Uri disableMetricsCollection, IDictionary<string, Uri> additionalProperties, Uri nestingSeparator, Uri writeBehavior) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal DocumentDbCollectionSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData nestingSeparator, BinaryData writeBehavior) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             NestingSeparator = nestingSeparator;
             WriteBehavior = writeBehavior;
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Nested properties separator. Default is . (dot). Type: string (or Expression with resultType string). </summary>
-        public Uri NestingSeparator { get; set; }
+        public BinaryData NestingSeparator { get; set; }
         /// <summary> Describes how to write data to Azure Cosmos DB. Type: string (or Expression with resultType string). Allowed values: insert and upsert. </summary>
-        public Uri WriteBehavior { get; set; }
+        public BinaryData WriteBehavior { get; set; }
     }
 }

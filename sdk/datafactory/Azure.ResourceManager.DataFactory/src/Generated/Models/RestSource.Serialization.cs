@@ -20,154 +20,202 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod");
-                writer.WriteStringValue(RequestMethod.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RequestMethod);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RequestMethod.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("requestBody");
-                writer.WriteStringValue(RequestBody.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RequestBody);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RequestBody.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders");
-                writer.WriteStringValue(AdditionalHeaders.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AdditionalHeaders);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(AdditionalHeaders.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(PaginationRules))
             {
                 writer.WritePropertyName("paginationRules");
-                writer.WriteStringValue(PaginationRules.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PaginationRules);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PaginationRules.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(HttpRequestTimeout))
             {
                 writer.WritePropertyName("httpRequestTimeout");
-                writer.WriteStringValue(HttpRequestTimeout.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(HttpRequestTimeout);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(HttpRequestTimeout.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(RequestInterval))
             {
                 writer.WritePropertyName("requestInterval");
-                writer.WriteStringValue(RequestInterval.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RequestInterval);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RequestInterval.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns");
-                writer.WriteStringValue(AdditionalColumns.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AdditionalColumns);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(AdditionalColumns.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(CopySourceType);
             if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount");
-                writer.WriteStringValue(SourceRetryCount.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SourceRetryCount);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceRetryCount.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait");
-                writer.WriteStringValue(SourceRetryWait.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SourceRetryWait);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceRetryWait.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections");
-                writer.WriteStringValue(MaxConcurrentConnections.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MaxConcurrentConnections);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection");
-                writer.WriteStringValue(DisableMetricsCollection.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DisableMetricsCollection);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DisableMetricsCollection.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static RestSource DeserializeRestSource(JsonElement element)
         {
-            Optional<Uri> requestMethod = default;
-            Optional<Uri> requestBody = default;
-            Optional<Uri> additionalHeaders = default;
-            Optional<Uri> paginationRules = default;
-            Optional<Uri> httpRequestTimeout = default;
-            Optional<Uri> requestInterval = default;
-            Optional<Uri> additionalColumns = default;
+            Optional<BinaryData> requestMethod = default;
+            Optional<BinaryData> requestBody = default;
+            Optional<BinaryData> additionalHeaders = default;
+            Optional<BinaryData> paginationRules = default;
+            Optional<BinaryData> httpRequestTimeout = default;
+            Optional<BinaryData> requestInterval = default;
+            Optional<BinaryData> additionalColumns = default;
             string type = default;
-            Optional<Uri> sourceRetryCount = default;
-            Optional<Uri> sourceRetryWait = default;
-            Optional<Uri> maxConcurrentConnections = default;
-            Optional<Uri> disableMetricsCollection = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> sourceRetryCount = default;
+            Optional<BinaryData> sourceRetryWait = default;
+            Optional<BinaryData> maxConcurrentConnections = default;
+            Optional<BinaryData> disableMetricsCollection = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requestMethod"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        requestMethod = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    requestMethod = new Uri(property.Value.GetString());
+                    requestMethod = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("requestBody"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        requestBody = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    requestBody = new Uri(property.Value.GetString());
+                    requestBody = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("additionalHeaders"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        additionalHeaders = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    additionalHeaders = new Uri(property.Value.GetString());
+                    additionalHeaders = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("paginationRules"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        paginationRules = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    paginationRules = new Uri(property.Value.GetString());
+                    paginationRules = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("httpRequestTimeout"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        httpRequestTimeout = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    httpRequestTimeout = new Uri(property.Value.GetString());
+                    httpRequestTimeout = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("requestInterval"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        requestInterval = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    requestInterval = new Uri(property.Value.GetString());
+                    requestInterval = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("additionalColumns"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        additionalColumns = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    additionalColumns = new Uri(property.Value.GetString());
+                    additionalColumns = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -179,43 +227,43 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sourceRetryCount = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sourceRetryCount = new Uri(property.Value.GetString());
+                    sourceRetryCount = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sourceRetryWait"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sourceRetryWait = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sourceRetryWait = new Uri(property.Value.GetString());
+                    sourceRetryWait = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        maxConcurrentConnections = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxConcurrentConnections = new Uri(property.Value.GetString());
+                    maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        disableMetricsCollection = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    disableMetricsCollection = new Uri(property.Value.GetString());
+                    disableMetricsCollection = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new RestSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, requestMethod.Value, requestBody.Value, additionalHeaders.Value, paginationRules.Value, httpRequestTimeout.Value, requestInterval.Value, additionalColumns.Value);

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("keyName");
             writer.WriteStringValue(KeyName);
             writer.WritePropertyName("vaultBaseUrl");
-            writer.WriteStringValue(VaultBaseUri.AbsoluteUri);
+            writer.WriteStringValue(VaultBaseUri);
             if (Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyVersion");
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static EncryptionConfiguration DeserializeEncryptionConfiguration(JsonElement element)
         {
             string keyName = default;
-            Uri vaultBaseUrl = default;
+            string vaultBaseUrl = default;
             Optional<string> keyVersion = default;
             Optional<CMKIdentityDefinition> identity = default;
             foreach (var property in element.EnumerateObject())
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("vaultBaseUrl"))
                 {
-                    vaultBaseUrl = new Uri(property.Value.GetString());
+                    vaultBaseUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("keyVersion"))

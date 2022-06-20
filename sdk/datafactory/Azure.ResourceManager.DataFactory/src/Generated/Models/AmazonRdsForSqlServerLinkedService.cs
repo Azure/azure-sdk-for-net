@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of AmazonRdsForSqlServerLinkedService. </summary>
         /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
-        public AmazonRdsForSqlServerLinkedService(Uri connectionString)
+        public AmazonRdsForSqlServerLinkedService(BinaryData connectionString)
         {
             if (connectionString == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         /// <param name="alwaysEncryptedSettings"> Sql always encrypted properties. </param>
-        internal AmazonRdsForSqlServerLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<Uri> annotations, IDictionary<string, Uri> additionalProperties, Uri connectionString, Uri userName, SecretBase password, Uri encryptedCredential, SqlAlwaysEncryptedProperties alwaysEncryptedSettings) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AmazonRdsForSqlServerLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionString, BinaryData userName, SecretBase password, BinaryData encryptedCredential, SqlAlwaysEncryptedProperties alwaysEncryptedSettings) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             UserName = userName;
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
-        public Uri ConnectionString { get; set; }
+        public BinaryData ConnectionString { get; set; }
         /// <summary> The on-premises Windows authentication user name. Type: string (or Expression with resultType string). </summary>
-        public Uri UserName { get; set; }
+        public BinaryData UserName { get; set; }
         /// <summary>
         /// The on-premises Windows authentication password.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
-        public Uri EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
         /// <summary> Sql always encrypted properties. </summary>
         public SqlAlwaysEncryptedProperties AlwaysEncryptedSettings { get; set; }
     }

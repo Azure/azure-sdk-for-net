@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="output"> Output blob path. Type: string (or Expression with resultType string). </param>
         /// <param name="filePaths"> Paths to streaming job files. Can be directories. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="mapper"/>, <paramref name="reducer"/>, <paramref name="input"/>, <paramref name="output"/> or <paramref name="filePaths"/> is null. </exception>
-        public HDInsightStreamingActivity(string name, Uri mapper, Uri reducer, Uri input, Uri output, IEnumerable<Uri> filePaths) : base(name)
+        public HDInsightStreamingActivity(string name, BinaryData mapper, BinaryData reducer, BinaryData input, BinaryData output, IEnumerable<BinaryData> filePaths) : base(name)
         {
             if (name == null)
             {
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             StorageLinkedServices = new ChangeTrackingList<LinkedServiceReference>();
-            Arguments = new ChangeTrackingList<Uri>();
+            Arguments = new ChangeTrackingList<BinaryData>();
             Mapper = mapper;
             Reducer = reducer;
             Input = input;
             Output = output;
             FilePaths = filePaths.ToList();
-            CommandEnvironment = new ChangeTrackingList<Uri>();
-            Defines = new ChangeTrackingDictionary<string, Uri>();
+            CommandEnvironment = new ChangeTrackingList<BinaryData>();
+            Defines = new ChangeTrackingDictionary<string, BinaryData>();
             ActivityType = "HDInsightStreaming";
         }
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="combiner"> Combiner executable name. Type: string (or Expression with resultType string). </param>
         /// <param name="commandEnvironment"> Command line environment values. </param>
         /// <param name="defines"> Allows user to specify defines for streaming job request. </param>
-        internal HDInsightStreamingActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, Uri> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<LinkedServiceReference> storageLinkedServices, IList<Uri> arguments, HDInsightActivityDebugInfoOption? getDebugInfo, Uri mapper, Uri reducer, Uri input, Uri output, IList<Uri> filePaths, LinkedServiceReference fileLinkedService, Uri combiner, IList<Uri> commandEnvironment, IDictionary<string, Uri> defines) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal HDInsightStreamingActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<LinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOption? getDebugInfo, BinaryData mapper, BinaryData reducer, BinaryData input, BinaryData output, IList<BinaryData> filePaths, LinkedServiceReference fileLinkedService, BinaryData combiner, IList<BinaryData> commandEnvironment, IDictionary<string, BinaryData> defines) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             StorageLinkedServices = storageLinkedServices;
             Arguments = arguments;
@@ -103,26 +103,26 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Storage linked service references. </summary>
         public IList<LinkedServiceReference> StorageLinkedServices { get; }
         /// <summary> User specified arguments to HDInsightActivity. </summary>
-        public IList<Uri> Arguments { get; }
+        public IList<BinaryData> Arguments { get; }
         /// <summary> Debug info option. </summary>
         public HDInsightActivityDebugInfoOption? GetDebugInfo { get; set; }
         /// <summary> Mapper executable name. Type: string (or Expression with resultType string). </summary>
-        public Uri Mapper { get; set; }
+        public BinaryData Mapper { get; set; }
         /// <summary> Reducer executable name. Type: string (or Expression with resultType string). </summary>
-        public Uri Reducer { get; set; }
+        public BinaryData Reducer { get; set; }
         /// <summary> Input blob path. Type: string (or Expression with resultType string). </summary>
-        public Uri Input { get; set; }
+        public BinaryData Input { get; set; }
         /// <summary> Output blob path. Type: string (or Expression with resultType string). </summary>
-        public Uri Output { get; set; }
+        public BinaryData Output { get; set; }
         /// <summary> Paths to streaming job files. Can be directories. </summary>
-        public IList<Uri> FilePaths { get; }
+        public IList<BinaryData> FilePaths { get; }
         /// <summary> Linked service reference where the files are located. </summary>
         public LinkedServiceReference FileLinkedService { get; set; }
         /// <summary> Combiner executable name. Type: string (or Expression with resultType string). </summary>
-        public Uri Combiner { get; set; }
+        public BinaryData Combiner { get; set; }
         /// <summary> Command line environment values. </summary>
-        public IList<Uri> CommandEnvironment { get; }
+        public IList<BinaryData> CommandEnvironment { get; }
         /// <summary> Allows user to specify defines for streaming job request. </summary>
-        public IDictionary<string, Uri> Defines { get; }
+        public IDictionary<string, BinaryData> Defines { get; }
     }
 }

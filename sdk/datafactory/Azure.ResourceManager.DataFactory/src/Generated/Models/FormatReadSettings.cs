@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of FormatReadSettings. </summary>
         public FormatReadSettings()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, Uri>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of FormatReadSettings. </summary>
         /// <param name="formatReadSettingsType"> The read setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal FormatReadSettings(string formatReadSettingsType, IDictionary<string, Uri> additionalProperties)
+        internal FormatReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties)
         {
             FormatReadSettingsType = formatReadSettingsType;
             AdditionalProperties = additionalProperties;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The read setting type. </summary>
         internal string FormatReadSettingsType { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, Uri> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

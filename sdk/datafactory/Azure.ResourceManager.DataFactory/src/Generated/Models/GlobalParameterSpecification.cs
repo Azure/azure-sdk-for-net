@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameterType"> Global Parameter type. </param>
         /// <param name="value"> Value of parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public GlobalParameterSpecification(GlobalParameterType parameterType, Uri value)
+        public GlobalParameterSpecification(GlobalParameterType parameterType, BinaryData value)
         {
             if (value == null)
             {
@@ -30,6 +30,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Global Parameter type. </summary>
         public GlobalParameterType ParameterType { get; set; }
         /// <summary> Value of parameter. </summary>
-        public Uri Value { get; set; }
+        public BinaryData Value { get; set; }
     }
 }

@@ -46,23 +46,39 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    writer.WriteStringValue(item.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("project");
-            writer.WriteStringValue(Project.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Project);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Project.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(AdditionalProjects))
             {
                 writer.WritePropertyName("additionalProjects");
-                writer.WriteStringValue(AdditionalProjects.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AdditionalProjects);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(AdditionalProjects.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(RequestGoogleDriveScope))
             {
                 writer.WritePropertyName("requestGoogleDriveScope");
-                writer.WriteStringValue(RequestGoogleDriveScope.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RequestGoogleDriveScope);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RequestGoogleDriveScope.ToString()).RootElement);
+#endif
             }
             writer.WritePropertyName("authenticationType");
             writer.WriteStringValue(AuthenticationType.ToString());
@@ -74,7 +90,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId");
-                writer.WriteStringValue(ClientId.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClientId);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClientId.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ClientSecret))
             {
@@ -84,33 +104,57 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email");
-                writer.WriteStringValue(Email.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Email);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Email.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(KeyFilePath))
             {
                 writer.WritePropertyName("keyFilePath");
-                writer.WriteStringValue(KeyFilePath.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(KeyFilePath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(KeyFilePath.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(TrustedCertPath))
             {
                 writer.WritePropertyName("trustedCertPath");
-                writer.WriteStringValue(TrustedCertPath.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TrustedCertPath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(TrustedCertPath.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(UseSystemTrustStore))
             {
                 writer.WritePropertyName("useSystemTrustStore");
-                writer.WriteStringValue(UseSystemTrustStore.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UseSystemTrustStore);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(UseSystemTrustStore.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
-                writer.WriteStringValue(EncryptedCredential.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EncryptedCredential);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -121,21 +165,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<Uri>> annotations = default;
-            Uri project = default;
-            Optional<Uri> additionalProjects = default;
-            Optional<Uri> requestGoogleDriveScope = default;
+            Optional<IList<BinaryData>> annotations = default;
+            BinaryData project = default;
+            Optional<BinaryData> additionalProjects = default;
+            Optional<BinaryData> requestGoogleDriveScope = default;
             GoogleBigQueryAuthenticationType authenticationType = default;
             Optional<SecretBase> refreshToken = default;
-            Optional<Uri> clientId = default;
+            Optional<BinaryData> clientId = default;
             Optional<SecretBase> clientSecret = default;
-            Optional<Uri> email = default;
-            Optional<Uri> keyFilePath = default;
-            Optional<Uri> trustedCertPath = default;
-            Optional<Uri> useSystemTrustStore = default;
-            Optional<Uri> encryptedCredential = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> email = default;
+            Optional<BinaryData> keyFilePath = default;
+            Optional<BinaryData> trustedCertPath = default;
+            Optional<BinaryData> useSystemTrustStore = default;
+            Optional<BinaryData> encryptedCredential = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -180,10 +224,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Uri> array = new List<Uri>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Uri(item.GetString()));
+                        array.Add(BinaryData.FromString(item.GetRawText()));
                     }
                     annotations = array;
                     continue;
@@ -199,27 +243,27 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("project"))
                         {
-                            project = new Uri(property0.Value.GetString());
+                            project = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("additionalProjects"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                additionalProjects = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            additionalProjects = new Uri(property0.Value.GetString());
+                            additionalProjects = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("requestGoogleDriveScope"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                requestGoogleDriveScope = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            requestGoogleDriveScope = new Uri(property0.Value.GetString());
+                            requestGoogleDriveScope = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"))
@@ -241,10 +285,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                clientId = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clientId = new Uri(property0.Value.GetString());
+                            clientId = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clientSecret"))
@@ -261,56 +305,56 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                email = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            email = new Uri(property0.Value.GetString());
+                            email = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("keyFilePath"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                keyFilePath = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            keyFilePath = new Uri(property0.Value.GetString());
+                            keyFilePath = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("trustedCertPath"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                trustedCertPath = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            trustedCertPath = new Uri(property0.Value.GetString());
+                            trustedCertPath = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("useSystemTrustStore"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                useSystemTrustStore = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            useSystemTrustStore = new Uri(property0.Value.GetString());
+                            useSystemTrustStore = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                encryptedCredential = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryptedCredential = new Uri(property0.Value.GetString());
+                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new GoogleBigQueryLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, project, additionalProjects.Value, requestGoogleDriveScope.Value, authenticationType, refreshToken.Value, clientId.Value, clientSecret.Value, email.Value, keyFilePath.Value, trustedCertPath.Value, useSystemTrustStore.Value, encryptedCredential.Value);

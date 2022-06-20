@@ -59,7 +59,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("command");
-            writer.WriteStringValue(Command.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Command);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Command.ToString()).RootElement);
+#endif
             if (Optional.IsDefined(ResourceLinkedService))
             {
                 writer.WritePropertyName("resourceLinkedService");
@@ -68,7 +72,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath");
-                writer.WriteStringValue(FolderPath.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FolderPath);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(FolderPath.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ReferenceObjects))
             {
@@ -82,25 +90,41 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in ExtendedProperties)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(RetentionTimeInDays))
             {
                 writer.WritePropertyName("retentionTimeInDays");
-                writer.WriteStringValue(RetentionTimeInDays.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RetentionTimeInDays);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RetentionTimeInDays.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(AutoUserSpecification))
             {
                 writer.WritePropertyName("autoUserSpecification");
-                writer.WriteStringValue(AutoUserSpecification.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AutoUserSpecification);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(AutoUserSpecification.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -114,15 +138,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
-            Uri command = default;
+            BinaryData command = default;
             Optional<LinkedServiceReference> resourceLinkedService = default;
-            Optional<Uri> folderPath = default;
+            Optional<BinaryData> folderPath = default;
             Optional<CustomActivityReferenceObject> referenceObjects = default;
-            Optional<IDictionary<string, Uri>> extendedProperties = default;
-            Optional<Uri> retentionTimeInDays = default;
-            Optional<Uri> autoUserSpecification = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<IDictionary<string, BinaryData>> extendedProperties = default;
+            Optional<BinaryData> retentionTimeInDays = default;
+            Optional<BinaryData> autoUserSpecification = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -201,7 +225,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("command"))
                         {
-                            command = new Uri(property0.Value.GetString());
+                            command = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("resourceLinkedService"))
@@ -218,10 +242,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                folderPath = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            folderPath = new Uri(property0.Value.GetString());
+                            folderPath = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("referenceObjects"))
@@ -241,10 +265,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, Uri> dictionary = new Dictionary<string, Uri>();
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, new Uri(property1.Value.GetString()));
+                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
                             }
                             extendedProperties = dictionary;
                             continue;
@@ -253,26 +277,26 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                retentionTimeInDays = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            retentionTimeInDays = new Uri(property0.Value.GetString());
+                            retentionTimeInDays = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("autoUserSpecification"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                autoUserSpecification = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            autoUserSpecification = new Uri(property0.Value.GetString());
+                            autoUserSpecification = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new CustomActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, command, resourceLinkedService.Value, folderPath.Value, referenceObjects.Value, Optional.ToDictionary(extendedProperties), retentionTimeInDays.Value, autoUserSpecification.Value);

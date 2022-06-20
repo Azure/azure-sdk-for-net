@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of StoredProcedureParameter. </summary>
         /// <param name="value"> Stored procedure parameter value. Type: string (or Expression with resultType string). </param>
         /// <param name="parameterType"> Stored procedure parameter type. </param>
-        internal StoredProcedureParameter(Uri value, StoredProcedureParameterType? parameterType)
+        internal StoredProcedureParameter(BinaryData value, StoredProcedureParameterType? parameterType)
         {
             Value = value;
             ParameterType = parameterType;
         }
 
         /// <summary> Stored procedure parameter value. Type: string (or Expression with resultType string). </summary>
-        public Uri Value { get; set; }
+        public BinaryData Value { get; set; }
         /// <summary> Stored procedure parameter type. </summary>
         public StoredProcedureParameterType? ParameterType { get; set; }
     }

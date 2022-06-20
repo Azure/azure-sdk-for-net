@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetName"/>, <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
-        public CmdkeySetup(Uri targetName, Uri userName, SecretBase password)
+        public CmdkeySetup(BinaryData targetName, BinaryData userName, SecretBase password)
         {
             if (targetName == null)
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        internal CmdkeySetup(string customSetupBaseType, Uri targetName, Uri userName, SecretBase password) : base(customSetupBaseType)
+        internal CmdkeySetup(string customSetupBaseType, BinaryData targetName, BinaryData userName, SecretBase password) : base(customSetupBaseType)
         {
             TargetName = targetName;
             UserName = userName;
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The server name of data source access. </summary>
-        public Uri TargetName { get; set; }
+        public BinaryData TargetName { get; set; }
         /// <summary> The user name of data source access. </summary>
-        public Uri UserName { get; set; }
+        public BinaryData UserName { get; set; }
         /// <summary>
         /// The password of data source access.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

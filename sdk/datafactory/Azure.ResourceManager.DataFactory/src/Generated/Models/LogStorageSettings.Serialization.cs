@@ -22,22 +22,38 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path");
-                writer.WriteStringValue(Path.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Path);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Path.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel");
-                writer.WriteStringValue(LogLevel.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(LogLevel);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(LogLevel.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EnableReliableLogging))
             {
                 writer.WritePropertyName("enableReliableLogging");
-                writer.WriteStringValue(EnableReliableLogging.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EnableReliableLogging);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnableReliableLogging.ToString()).RootElement);
+#endif
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value.AbsoluteUri);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -45,11 +61,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static LogStorageSettings DeserializeLogStorageSettings(JsonElement element)
         {
             LinkedServiceReference linkedServiceName = default;
-            Optional<Uri> path = default;
-            Optional<Uri> logLevel = default;
-            Optional<Uri> enableReliableLogging = default;
-            IDictionary<string, Uri> additionalProperties = default;
-            Dictionary<string, Uri> additionalPropertiesDictionary = new Dictionary<string, Uri>();
+            Optional<BinaryData> path = default;
+            Optional<BinaryData> logLevel = default;
+            Optional<BinaryData> enableReliableLogging = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
@@ -61,33 +77,33 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        path = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    path = new Uri(property.Value.GetString());
+                    path = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("logLevel"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        logLevel = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    logLevel = new Uri(property.Value.GetString());
+                    logLevel = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("enableReliableLogging"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        enableReliableLogging = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enableReliableLogging = new Uri(property.Value.GetString());
+                    enableReliableLogging = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, new Uri(property.Value.GetString()));
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new LogStorageSettings(linkedServiceName, path.Value, logLevel.Value, enableReliableLogging.Value, additionalProperties);

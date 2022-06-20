@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="partitionColumnName"> The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionUpperBound"> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionLowerBound"> The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
-        internal OraclePartitionSettings(Uri partitionNames, Uri partitionColumnName, Uri partitionUpperBound, Uri partitionLowerBound)
+        internal OraclePartitionSettings(BinaryData partitionNames, BinaryData partitionColumnName, BinaryData partitionUpperBound, BinaryData partitionLowerBound)
         {
             PartitionNames = partitionNames;
             PartitionColumnName = partitionColumnName;
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Names of the physical partitions of Oracle table. </summary>
-        public Uri PartitionNames { get; set; }
+        public BinaryData PartitionNames { get; set; }
         /// <summary> The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
-        public Uri PartitionColumnName { get; set; }
+        public BinaryData PartitionColumnName { get; set; }
         /// <summary> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
-        public Uri PartitionUpperBound { get; set; }
+        public BinaryData PartitionUpperBound { get; set; }
         /// <summary> The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
-        public Uri PartitionLowerBound { get; set; }
+        public BinaryData PartitionLowerBound { get; set; }
     }
 }
