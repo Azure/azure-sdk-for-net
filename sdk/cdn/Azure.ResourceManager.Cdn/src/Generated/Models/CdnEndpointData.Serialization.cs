@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("defaultOriginGroup");
                 }
             }
-            if (Optional.IsCollectionDefined(UrlSigningKeys))
+            if (Optional.IsCollectionDefined(UriSigningKeys))
             {
-                if (UrlSigningKeys != null)
+                if (UriSigningKeys != null)
                 {
                     writer.WritePropertyName("urlSigningKeys");
                     writer.WriteStartArray();
-                    foreach (var item in UrlSigningKeys)
+                    foreach (var item in UriSigningKeys)
                     {
                         writer.WriteObjectValue(item);
                     }
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Cdn
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             SystemData systemData = default;
             Optional<string> originPath = default;
             Optional<IList<string>> contentTypesToCompress = default;
@@ -193,15 +193,15 @@ namespace Azure.ResourceManager.Cdn
             Optional<string> probePath = default;
             Optional<IList<GeoFilter>> geoFilters = default;
             Optional<EndpointPropertiesUpdateParametersDefaultOriginGroup> defaultOriginGroup = default;
-            Optional<IList<UrlSigningKey>> urlSigningKeys = default;
-            Optional<EndpointPropertiesUpdateParametersDeliveryPolicy> deliveryPolicy = default;
+            Optional<IList<UriSigningKey>> urlSigningKeys = default;
+            Optional<EndpointDeliveryPolicy> deliveryPolicy = default;
             Optional<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink> webApplicationFirewallPolicyLink = default;
             Optional<string> hostName = default;
             Optional<IList<DeepCreatedOrigin>> origins = default;
             Optional<IList<DeepCreatedOriginGroup>> originGroups = default;
             Optional<IReadOnlyList<CdnCustomDomainData>> customDomains = default;
             Optional<EndpointResourceState> resourceState = default;
-            Optional<string> provisioningState = default;
+            Optional<EndpointProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -360,10 +360,10 @@ namespace Azure.ResourceManager.Cdn
                                 urlSigningKeys = null;
                                 continue;
                             }
-                            List<UrlSigningKey> array = new List<UrlSigningKey>();
+                            List<UriSigningKey> array = new List<UriSigningKey>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(UrlSigningKey.DeserializeUrlSigningKey(item));
+                                array.Add(UriSigningKey.DeserializeUriSigningKey(item));
                             }
                             urlSigningKeys = array;
                             continue;
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Cdn
                                 deliveryPolicy = null;
                                 continue;
                             }
-                            deliveryPolicy = EndpointPropertiesUpdateParametersDeliveryPolicy.DeserializeEndpointPropertiesUpdateParametersDeliveryPolicy(property0.Value);
+                            deliveryPolicy = EndpointDeliveryPolicy.DeserializeEndpointDeliveryPolicy(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("webApplicationFirewallPolicyLink"))
@@ -450,14 +450,19 @@ namespace Azure.ResourceManager.Cdn
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            provisioningState = new EndpointProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new CdnEndpointData(id, name, type, systemData, tags, location, originPath.Value, Optional.ToList(contentTypesToCompress), originHostHeader.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(isHttpAllowed), Optional.ToNullable(isHttpsAllowed), Optional.ToNullable(queryStringCachingBehavior), Optional.ToNullable(optimizationType), probePath.Value, Optional.ToList(geoFilters), defaultOriginGroup.Value, Optional.ToList(urlSigningKeys), deliveryPolicy.Value, webApplicationFirewallPolicyLink.Value, hostName.Value, Optional.ToList(origins), Optional.ToList(originGroups), Optional.ToList(customDomains), Optional.ToNullable(resourceState), provisioningState.Value);
+            return new CdnEndpointData(id, name, type, systemData, tags, location, originPath.Value, Optional.ToList(contentTypesToCompress), originHostHeader.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(isHttpAllowed), Optional.ToNullable(isHttpsAllowed), Optional.ToNullable(queryStringCachingBehavior), Optional.ToNullable(optimizationType), probePath.Value, Optional.ToList(geoFilters), defaultOriginGroup.Value, Optional.ToList(urlSigningKeys), deliveryPolicy.Value, webApplicationFirewallPolicyLink.Value, hostName.Value, Optional.ToList(origins), Optional.ToList(originGroups), Optional.ToList(customDomains), Optional.ToNullable(resourceState), Optional.ToNullable(provisioningState));
         }
     }
 }

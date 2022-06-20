@@ -19,7 +19,11 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Initializes a new instance of LogSearchRuleData. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="source"> Data Source against which rule will Query Data. </param>
-        /// <param name="action"> Action needs to be taken on rule execution. </param>
+        /// <param name="action">
+        /// Action needs to be taken on rule execution.
+        /// Please note <see cref="MonitorAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AlertingAction"/> and <see cref="LogToMetricAction"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="action"/> is null. </exception>
         public LogSearchRuleData(AzureLocation location, MonitorSource source, MonitorAction action) : base(location)
         {
@@ -55,7 +59,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="provisioningState"> Provisioning state of the scheduled query rule. </param>
         /// <param name="source"> Data Source against which rule will Query Data. </param>
         /// <param name="schedule"> Schedule (Frequency, Time Window) for rule. Required for action type - AlertingAction. </param>
-        /// <param name="action"> Action needs to be taken on rule execution. </param>
+        /// <param name="action">
+        /// Action needs to be taken on rule execution.
+        /// Please note <see cref="MonitorAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AlertingAction"/> and <see cref="LogToMetricAction"/>.
+        /// </param>
         internal LogSearchRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, string etag, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, bool? autoMitigate, Enabled? enabled, DateTimeOffset? lastUpdatedOn, ProvisioningState? provisioningState, MonitorSource source, MonitorSchedule schedule, MonitorAction action) : base(id, name, resourceType, systemData, tags, location, kind, etag)
         {
             CreatedWithApiVersion = createdWithApiVersion;
@@ -91,18 +99,11 @@ namespace Azure.ResourceManager.Monitor
         public MonitorSource Source { get; set; }
         /// <summary> Schedule (Frequency, Time Window) for rule. Required for action type - AlertingAction. </summary>
         public MonitorSchedule Schedule { get; set; }
-        /// <summary> Action needs to be taken on rule execution. </summary>
-        internal MonitorAction Action { get; set; }
-        /// <summary> Specifies the action. Supported values - AlertingAction, LogToMetricAction. </summary>
-        internal string ActionOdataType
-        {
-            get => Action is null ? default : Action.OdataType;
-            set
-            {
-                if (Action is null)
-                    Action = new MonitorAction();
-                Action.OdataType = value;
-            }
-        }
+        /// <summary>
+        /// Action needs to be taken on rule execution.
+        /// Please note <see cref="MonitorAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AlertingAction"/> and <see cref="LogToMetricAction"/>.
+        /// </summary>
+        public MonitorAction Action { get; set; }
     }
 }

@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Cdn
 
         private readonly ClientDiagnostics _profileClientDiagnostics;
         private readonly ProfilesRestOperations _profileRestClient;
-        private readonly ClientDiagnostics _afdProfilesClientDiagnostics;
-        private readonly AfdProfilesRestOperations _afdProfilesRestClient;
+        private readonly ClientDiagnostics _frontDoorProfilesClientDiagnostics;
+        private readonly FrontDoorProfilesRestOperations _frontDoorProfilesRestClient;
         private readonly ClientDiagnostics _logAnalyticsClientDiagnostics;
         private readonly LogAnalyticsRestOperations _logAnalyticsRestClient;
         private readonly ProfileData _data;
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.Cdn
             _profileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string profileApiVersion);
             _profileRestClient = new ProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, profileApiVersion);
-            _afdProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _afdProfilesRestClient = new AfdProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _frontDoorProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _frontDoorProfilesRestClient = new FrontDoorProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _logAnalyticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _logAnalyticsRestClient = new LogAnalyticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Cdn/profiles";
+        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,226 +97,226 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of AfdCustomDomainResources in the Profile. </summary>
-        /// <returns> An object representing collection of AfdCustomDomainResources and their operations over a AfdCustomDomainResource. </returns>
-        public virtual AfdCustomDomainCollection GetAfdCustomDomains()
+        /// <summary> Gets a collection of FrontDoorCustomDomainResources in the Profile. </summary>
+        /// <returns> An object representing collection of FrontDoorCustomDomainResources and their operations over a FrontDoorCustomDomainResource. </returns>
+        public virtual FrontDoorCustomDomainCollection GetFrontDoorCustomDomains()
         {
-            return GetCachedClient(Client => new AfdCustomDomainCollection(Client, Id));
+            return GetCachedClient(Client => new FrontDoorCustomDomainCollection(Client, Id));
         }
 
         /// <summary>
         /// Gets an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}
-        /// Operation Id: AfdCustomDomains_Get
+        /// Operation Id: FrontDoorCustomDomains_Get
         /// </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AfdCustomDomainResource>> GetAfdCustomDomainAsync(string customDomainName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FrontDoorCustomDomainResource>> GetFrontDoorCustomDomainAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
-            return await GetAfdCustomDomains().GetAsync(customDomainName, cancellationToken).ConfigureAwait(false);
+            return await GetFrontDoorCustomDomains().GetAsync(customDomainName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}
-        /// Operation Id: AfdCustomDomains_Get
+        /// Operation Id: FrontDoorCustomDomains_Get
         /// </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AfdCustomDomainResource> GetAfdCustomDomain(string customDomainName, CancellationToken cancellationToken = default)
+        public virtual Response<FrontDoorCustomDomainResource> GetFrontDoorCustomDomain(string customDomainName, CancellationToken cancellationToken = default)
         {
-            return GetAfdCustomDomains().Get(customDomainName, cancellationToken);
+            return GetFrontDoorCustomDomains().Get(customDomainName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AfdEndpointResources in the Profile. </summary>
-        /// <returns> An object representing collection of AfdEndpointResources and their operations over a AfdEndpointResource. </returns>
-        public virtual AfdEndpointCollection GetAfdEndpoints()
+        /// <summary> Gets a collection of FrontDoorEndpointResources in the Profile. </summary>
+        /// <returns> An object representing collection of FrontDoorEndpointResources and their operations over a FrontDoorEndpointResource. </returns>
+        public virtual FrontDoorEndpointCollection GetFrontDoorEndpoints()
         {
-            return GetCachedClient(Client => new AfdEndpointCollection(Client, Id));
+            return GetCachedClient(Client => new FrontDoorEndpointCollection(Client, Id));
         }
 
         /// <summary>
         /// Gets an existing AzureFrontDoor endpoint with the specified endpoint name under the specified subscription, resource group and profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}
-        /// Operation Id: AfdEndpoints_Get
+        /// Operation Id: FrontDoorEndpoints_Get
         /// </summary>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AfdEndpointResource>> GetAfdEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FrontDoorEndpointResource>> GetFrontDoorEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            return await GetAfdEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
+            return await GetFrontDoorEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets an existing AzureFrontDoor endpoint with the specified endpoint name under the specified subscription, resource group and profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}
-        /// Operation Id: AfdEndpoints_Get
+        /// Operation Id: FrontDoorEndpoints_Get
         /// </summary>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AfdEndpointResource> GetAfdEndpoint(string endpointName, CancellationToken cancellationToken = default)
+        public virtual Response<FrontDoorEndpointResource> GetFrontDoorEndpoint(string endpointName, CancellationToken cancellationToken = default)
         {
-            return GetAfdEndpoints().Get(endpointName, cancellationToken);
+            return GetFrontDoorEndpoints().Get(endpointName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AfdOriginGroupResources in the Profile. </summary>
-        /// <returns> An object representing collection of AfdOriginGroupResources and their operations over a AfdOriginGroupResource. </returns>
-        public virtual AfdOriginGroupCollection GetAfdOriginGroups()
+        /// <summary> Gets a collection of FrontDoorOriginGroupResources in the Profile. </summary>
+        /// <returns> An object representing collection of FrontDoorOriginGroupResources and their operations over a FrontDoorOriginGroupResource. </returns>
+        public virtual FrontDoorOriginGroupCollection GetFrontDoorOriginGroups()
         {
-            return GetCachedClient(Client => new AfdOriginGroupCollection(Client, Id));
+            return GetCachedClient(Client => new FrontDoorOriginGroupCollection(Client, Id));
         }
 
         /// <summary>
         /// Gets an existing origin group within a profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}
-        /// Operation Id: AfdOriginGroups_Get
+        /// Operation Id: FrontDoorOriginGroups_Get
         /// </summary>
         /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AfdOriginGroupResource>> GetAfdOriginGroupAsync(string originGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FrontDoorOriginGroupResource>> GetFrontDoorOriginGroupAsync(string originGroupName, CancellationToken cancellationToken = default)
         {
-            return await GetAfdOriginGroups().GetAsync(originGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetFrontDoorOriginGroups().GetAsync(originGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets an existing origin group within a profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}
-        /// Operation Id: AfdOriginGroups_Get
+        /// Operation Id: FrontDoorOriginGroups_Get
         /// </summary>
         /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AfdOriginGroupResource> GetAfdOriginGroup(string originGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<FrontDoorOriginGroupResource> GetFrontDoorOriginGroup(string originGroupName, CancellationToken cancellationToken = default)
         {
-            return GetAfdOriginGroups().Get(originGroupName, cancellationToken);
+            return GetFrontDoorOriginGroups().Get(originGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AfdRuleSetResources in the Profile. </summary>
-        /// <returns> An object representing collection of AfdRuleSetResources and their operations over a AfdRuleSetResource. </returns>
-        public virtual AfdRuleSetCollection GetAfdRuleSets()
+        /// <summary> Gets a collection of FrontDoorRuleSetResources in the Profile. </summary>
+        /// <returns> An object representing collection of FrontDoorRuleSetResources and their operations over a FrontDoorRuleSetResource. </returns>
+        public virtual FrontDoorRuleSetCollection GetFrontDoorRuleSets()
         {
-            return GetCachedClient(Client => new AfdRuleSetCollection(Client, Id));
+            return GetCachedClient(Client => new FrontDoorRuleSetCollection(Client, Id));
         }
 
         /// <summary>
         /// Gets an existing AzureFrontDoor rule set with the specified rule set name under the specified subscription, resource group and profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}
-        /// Operation Id: AfdRuleSets_Get
+        /// Operation Id: FrontDoorRuleSets_Get
         /// </summary>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AfdRuleSetResource>> GetAfdRuleSetAsync(string ruleSetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FrontDoorRuleSetResource>> GetFrontDoorRuleSetAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            return await GetAfdRuleSets().GetAsync(ruleSetName, cancellationToken).ConfigureAwait(false);
+            return await GetFrontDoorRuleSets().GetAsync(ruleSetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets an existing AzureFrontDoor rule set with the specified rule set name under the specified subscription, resource group and profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}
-        /// Operation Id: AfdRuleSets_Get
+        /// Operation Id: FrontDoorRuleSets_Get
         /// </summary>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AfdRuleSetResource> GetAfdRuleSet(string ruleSetName, CancellationToken cancellationToken = default)
+        public virtual Response<FrontDoorRuleSetResource> GetFrontDoorRuleSet(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            return GetAfdRuleSets().Get(ruleSetName, cancellationToken);
+            return GetFrontDoorRuleSets().Get(ruleSetName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AfdSecurityPolicyResources in the Profile. </summary>
-        /// <returns> An object representing collection of AfdSecurityPolicyResources and their operations over a AfdSecurityPolicyResource. </returns>
-        public virtual AfdSecurityPolicyCollection GetAfdSecurityPolicies()
+        /// <summary> Gets a collection of FrontDoorSecurityPolicyResources in the Profile. </summary>
+        /// <returns> An object representing collection of FrontDoorSecurityPolicyResources and their operations over a FrontDoorSecurityPolicyResource. </returns>
+        public virtual FrontDoorSecurityPolicyCollection GetFrontDoorSecurityPolicies()
         {
-            return GetCachedClient(Client => new AfdSecurityPolicyCollection(Client, Id));
+            return GetCachedClient(Client => new FrontDoorSecurityPolicyCollection(Client, Id));
         }
 
         /// <summary>
         /// Gets an existing security policy within a profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}
-        /// Operation Id: AfdSecurityPolicies_Get
+        /// Operation Id: FrontDoorSecurityPolicies_Get
         /// </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AfdSecurityPolicyResource>> GetAfdSecurityPolicyAsync(string securityPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FrontDoorSecurityPolicyResource>> GetFrontDoorSecurityPolicyAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            return await GetAfdSecurityPolicies().GetAsync(securityPolicyName, cancellationToken).ConfigureAwait(false);
+            return await GetFrontDoorSecurityPolicies().GetAsync(securityPolicyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets an existing security policy within a profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}
-        /// Operation Id: AfdSecurityPolicies_Get
+        /// Operation Id: FrontDoorSecurityPolicies_Get
         /// </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AfdSecurityPolicyResource> GetAfdSecurityPolicy(string securityPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<FrontDoorSecurityPolicyResource> GetFrontDoorSecurityPolicy(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            return GetAfdSecurityPolicies().Get(securityPolicyName, cancellationToken);
+            return GetFrontDoorSecurityPolicies().Get(securityPolicyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AfdSecretResources in the Profile. </summary>
-        /// <returns> An object representing collection of AfdSecretResources and their operations over a AfdSecretResource. </returns>
-        public virtual AfdSecretCollection GetAfdSecrets()
+        /// <summary> Gets a collection of FrontDoorSecretResources in the Profile. </summary>
+        /// <returns> An object representing collection of FrontDoorSecretResources and their operations over a FrontDoorSecretResource. </returns>
+        public virtual FrontDoorSecretCollection GetFrontDoorSecrets()
         {
-            return GetCachedClient(Client => new AfdSecretCollection(Client, Id));
+            return GetCachedClient(Client => new FrontDoorSecretCollection(Client, Id));
         }
 
         /// <summary>
         /// Gets an existing Secret within a profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}
-        /// Operation Id: AfdSecrets_Get
+        /// Operation Id: FrontDoorSecrets_Get
         /// </summary>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AfdSecretResource>> GetAfdSecretAsync(string secretName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FrontDoorSecretResource>> GetFrontDoorSecretAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            return await GetAfdSecrets().GetAsync(secretName, cancellationToken).ConfigureAwait(false);
+            return await GetFrontDoorSecrets().GetAsync(secretName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets an existing Secret within a profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}
-        /// Operation Id: AfdSecrets_Get
+        /// Operation Id: FrontDoorSecrets_Get
         /// </summary>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AfdSecretResource> GetAfdSecret(string secretName, CancellationToken cancellationToken = default)
+        public virtual Response<FrontDoorSecretResource> GetFrontDoorSecret(string secretName, CancellationToken cancellationToken = default)
         {
-            return GetAfdSecrets().Get(secretName, cancellationToken);
+            return GetFrontDoorSecrets().Get(secretName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CdnEndpointResources in the Profile. </summary>
@@ -517,21 +517,21 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given CDN profile.
+        /// Checks the quota and actual usage of AzureFrontDoor endpoints under the given CDN profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/usages
-        /// Operation Id: AfdProfiles_ListResourceUsage
+        /// Operation Id: FrontDoorProfiles_ListResourceUsage
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CdnUsage> GetResourceUsageAfdProfilesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CdnUsage> GetFrontDoorProfileResourceUsagesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<CdnUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.GetResourceUsageAfdProfiles");
+                using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.GetFrontDoorProfileResourceUsages");
                 scope.Start();
                 try
                 {
-                    var response = await _afdProfilesRestClient.ListResourceUsageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _frontDoorProfilesRestClient.ListResourceUsageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -542,11 +542,11 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<CdnUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.GetResourceUsageAfdProfiles");
+                using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.GetFrontDoorProfileResourceUsages");
                 scope.Start();
                 try
                 {
-                    var response = await _afdProfilesRestClient.ListResourceUsageNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _frontDoorProfilesRestClient.ListResourceUsageNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -559,21 +559,21 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given CDN profile.
+        /// Checks the quota and actual usage of AzureFrontDoor endpoints under the given CDN profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/usages
-        /// Operation Id: AfdProfiles_ListResourceUsage
+        /// Operation Id: FrontDoorProfiles_ListResourceUsage
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CdnUsage> GetResourceUsageAfdProfiles(CancellationToken cancellationToken = default)
+        public virtual Pageable<CdnUsage> GetFrontDoorProfileResourceUsages(CancellationToken cancellationToken = default)
         {
             Page<CdnUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.GetResourceUsageAfdProfiles");
+                using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.GetFrontDoorProfileResourceUsages");
                 scope.Start();
                 try
                 {
-                    var response = _afdProfilesRestClient.ListResourceUsage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _frontDoorProfilesRestClient.ListResourceUsage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -584,11 +584,11 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<CdnUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.GetResourceUsageAfdProfiles");
+                using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.GetFrontDoorProfileResourceUsages");
                 scope.Start();
                 try
                 {
-                    var response = _afdProfilesRestClient.ListResourceUsageNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _frontDoorProfilesRestClient.ListResourceUsageNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -601,22 +601,22 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS.
+        /// Check the name availability of a host name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/checkHostNameAvailability
-        /// Operation Id: AfdProfiles_CheckHostNameAvailability
+        /// Operation Id: FrontDoorProfiles_CheckHostNameAvailability
         /// </summary>
         /// <param name="content"> Custom domain to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityOutput>> CheckAfdProfileHostNameAvailabilityAsync(CheckHostNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnNameAvailabilityResult>> CheckFrontDoorProfileHostNameAvailabilityAsync(HostNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.CheckAfdProfileHostNameAvailability");
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckFrontDoorProfileHostNameAvailability");
             scope.Start();
             try
             {
-                var response = await _afdProfilesRestClient.CheckHostNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorProfilesRestClient.CheckHostNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -627,22 +627,22 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS.
+        /// Check the name availability of a host name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/checkHostNameAvailability
-        /// Operation Id: AfdProfiles_CheckHostNameAvailability
+        /// Operation Id: FrontDoorProfiles_CheckHostNameAvailability
         /// </summary>
         /// <param name="content"> Custom domain to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityOutput> CheckAfdProfileHostNameAvailability(CheckHostNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CdnNameAvailabilityResult> CheckFrontDoorProfileHostNameAvailability(HostNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.CheckAfdProfileHostNameAvailability");
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckFrontDoorProfileHostNameAvailability");
             scope.Start();
             try
             {
-                var response = _afdProfilesRestClient.CheckHostNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var response = _frontDoorProfilesRestClient.CheckHostNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1101,11 +1101,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceUsage> GetResourceUsageAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceUsage> GetResourceUsagesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ResourceUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetResourceUsage");
+                using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetResourceUsages");
                 scope.Start();
                 try
                 {
@@ -1120,7 +1120,7 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<ResourceUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetResourceUsage");
+                using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetResourceUsages");
                 scope.Start();
                 try
                 {
@@ -1143,11 +1143,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceUsage> GetResourceUsage(CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceUsage> GetResourceUsages(CancellationToken cancellationToken = default)
         {
             Page<ResourceUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetResourceUsage");
+                using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetResourceUsages");
                 scope.Start();
                 try
                 {
@@ -1162,7 +1162,7 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<ResourceUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetResourceUsage");
+                using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetResourceUsages");
                 scope.Start();
                 try
                 {

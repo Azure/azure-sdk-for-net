@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.Storage
             return GetBlobInventoryPolicies().Get(blobInventoryPolicyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the StorageAccount. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnectionResources and their operations over a PrivateEndpointConnectionResource. </returns>
-        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        /// <summary> Gets a collection of StoragePrivateEndpointConnectionResources in the StorageAccount. </summary>
+        /// <returns> An object representing collection of StoragePrivateEndpointConnectionResources and their operations over a StoragePrivateEndpointConnectionResource. </returns>
+        public virtual StoragePrivateEndpointConnectionCollection GetStoragePrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new PrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(Client => new StoragePrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -150,9 +150,9 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StoragePrivateEndpointConnectionResource>> GetStoragePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetStoragePrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<StoragePrivateEndpointConnectionResource> GetStoragePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetStoragePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ObjectReplicationPolicyResources in the StorageAccount. </summary>
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary>
         /// List SAS credentials of a storage account.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/ListAccountSas
-        /// Operation Id: StorageAccounts_ListAccountSas
+        /// Operation Id: StorageAccounts_ListAccountSAS
         /// </summary>
         /// <param name="content"> The parameters to provide to list SAS credentials for the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary>
         /// List SAS credentials of a storage account.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/ListAccountSas
-        /// Operation Id: StorageAccounts_ListAccountSas
+        /// Operation Id: StorageAccounts_ListAccountSAS
         /// </summary>
         /// <param name="content"> The parameters to provide to list SAS credentials for the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary>
         /// List service SAS credentials of a specific resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/ListServiceSas
-        /// Operation Id: StorageAccounts_ListServiceSas
+        /// Operation Id: StorageAccounts_ListServiceSAS
         /// </summary>
         /// <param name="content"> The parameters to provide to list service SAS credentials. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary>
         /// List service SAS credentials of a specific resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/ListServiceSas
-        /// Operation Id: StorageAccounts_ListServiceSas
+        /// Operation Id: StorageAccounts_ListServiceSAS
         /// </summary>
         /// <param name="content"> The parameters to provide to list service SAS credentials. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -937,10 +937,10 @@ namespace Azure.ResourceManager.Storage
         /// Operation Id: PrivateLinkResources_ListByStorageAccount
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StoragePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StoragePrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<StoragePrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("StorageAccountResource.GetPrivateLinkResources");
                 scope.Start();
@@ -964,10 +964,10 @@ namespace Azure.ResourceManager.Storage
         /// Operation Id: PrivateLinkResources_ListByStorageAccount
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StoragePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StoragePrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            Page<PrivateLinkResource> FirstPageFunc(int? pageSizeHint)
+            Page<StoragePrivateLinkResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("StorageAccountResource.GetPrivateLinkResources");
                 scope.Start();

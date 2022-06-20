@@ -32,21 +32,8 @@ namespace Azure.AI.TextAnalytics.Models
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of JobMetadata. </summary>
-        /// <param name="createdDateTime"></param>
-        /// <param name="expirationDateTime"></param>
-        /// <param name="jobId"></param>
-        /// <param name="lastUpdateDateTime"></param>
-        /// <param name="status"></param>
-        internal JobMetadata(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status)
-        {
-            CreatedDateTime = createdDateTime;
-            ExpirationDateTime = expirationDateTime;
-            JobId = jobId;
-            LastUpdateDateTime = lastUpdateDateTime;
-            Status = status;
-        }
-
+        /// <summary> Gets the display name. </summary>
+        public string DisplayName { get; }
         /// <summary> Gets the created date time. </summary>
         public DateTimeOffset CreatedDateTime { get; }
         /// <summary> Gets the expiration date time. </summary>

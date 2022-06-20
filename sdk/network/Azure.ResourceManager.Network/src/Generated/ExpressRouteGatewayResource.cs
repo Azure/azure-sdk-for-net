@@ -14,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "ExpressRouteGatewayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ExpressRouteGatewayResource(ArmClient client, ExpressRouteGatewayData data) : this(client, new ResourceIdentifier(data.Id))
+        internal ExpressRouteGatewayResource(ArmClient client, ExpressRouteGatewayData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -216,6 +217,66 @@ namespace Azure.ResourceManager.Network
                 var operation = new NetworkArmOperation(_expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates express route gateway tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// Operation Id: ExpressRouteGateways_UpdateTags
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="expressRouteGatewayParameters"> Parameters supplied to update a virtual wan express route gateway tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayParameters"/> is null. </exception>
+        public virtual async Task<ArmOperation<ExpressRouteGatewayResource>> UpdateAsync(WaitUntil waitUntil, TagsObject expressRouteGatewayParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(expressRouteGatewayParameters, nameof(expressRouteGatewayParameters));
+
+            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _expressRouteGatewayRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<ExpressRouteGatewayResource>(new ExpressRouteGatewayOperationSource(Client), _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates express route gateway tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// Operation Id: ExpressRouteGateways_UpdateTags
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="expressRouteGatewayParameters"> Parameters supplied to update a virtual wan express route gateway tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayParameters"/> is null. </exception>
+        public virtual ArmOperation<ExpressRouteGatewayResource> Update(WaitUntil waitUntil, TagsObject expressRouteGatewayParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(expressRouteGatewayParameters, nameof(expressRouteGatewayParameters));
+
+            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _expressRouteGatewayRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters, cancellationToken);
+                var operation = new NetworkArmOperation<ExpressRouteGatewayResource>(new ExpressRouteGatewayOperationSource(Client), _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)

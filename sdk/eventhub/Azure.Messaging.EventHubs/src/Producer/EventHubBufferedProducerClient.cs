@@ -58,18 +58,23 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <summary>The maximum amount of time, in milliseconds, to allow for acquiring the semaphore guarding a partition's publishing eligibility.</summary>
         private const int PartitionPublishingGuardAcquireLimitMilliseconds = 100;
 
+        /// <summary>The base interval to delay when publishing is throttled and an operation needs to back-off before retrying.  Four seconds is recommended by the service.</summary>
+        private static readonly TimeSpan ThrottleBackoffInterval = TimeSpan.FromSeconds(4);
+
         /// <summary>The minimum interval to allow for waiting when building a batch to publish.</summary>
         private static readonly TimeSpan MinimumPublishingWaitInterval = TimeSpan.FromMilliseconds(5);
 
         /// <summary>The default interval to delay for events to be available when building a batch to publish.</summary>
-        private static readonly TimeSpan DefaultPublishingDelayInterval = TimeSpan.FromMilliseconds(25);
+        private static readonly TimeSpan PublishingDelayInterval = TimeSpan.FromMilliseconds(100);
 
         /// <summary>The set of client options to use when options were not passed when the producer was instantiated.</summary>
-        private static readonly EventHubBufferedProducerClientOptions DefaultOptions =
-            new EventHubBufferedProducerClientOptions
-            {
-                RetryOptions = new EventHubsRetryOptions { MaximumRetries = 15, TryTimeout = TimeSpan.FromMinutes(3) }
-            };
+        private static readonly EventHubBufferedProducerClientOptions DefaultOptions = new();
+
+        /// <summary>The random number generator to use for a specific thread.</summary>
+        private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
+
+        /// <summary>The seed to use for initializing random number generated for a given thread-specific instance.</summary>
+        private static int s_randomSeed = Environment.TickCount;
 
         /// <summary>The set of currently active partition publishing tasks.  Partition identifiers are used as keys.</summary>
         private readonly ConcurrentDictionary<string, PartitionPublishingState> _activePartitionStateMap = new();
@@ -91,6 +96,9 @@ namespace Azure.Messaging.EventHubs.Producer
 
         /// <summary>A <see cref="CancellationTokenSource"/> instance to signal that any active publishing operations, including those in-flight, should terminate immediately.</summary>
         private CancellationTokenSource _activeSendOperationsCancellationSource;
+
+        /// <summary>A completion source that be awaited when publishing would like to pause and wait for an event to be enqueued.</summary>
+        private TaskCompletionSource<bool> _eventEnqueuedCompletionSource;
 
         /// <summary>The task responsible for managing the operations of the producer when it is running.</summary>
         private Task _producerManagementTask;
@@ -785,6 +793,7 @@ namespace Azure.Messaging.EventHubs.Producer
                 var count = Interlocked.Increment(ref _totalBufferedEventCount);
                 Interlocked.Increment(ref partitionState.BufferedEventCount);
 
+                _eventEnqueuedCompletionSource?.TrySetResult(true);
                 Logger.BufferedProducerEventEnqueued(Identifier, EventHubName, logPartition, partitionId, operationId, count);
             }
             catch (Exception ex)
@@ -963,6 +972,7 @@ namespace Azure.Messaging.EventHubs.Producer
                     var count = Interlocked.Increment(ref _totalBufferedEventCount);
                     Interlocked.Increment(ref activePartitionState.BufferedEventCount);
 
+                    _eventEnqueuedCompletionSource?.TrySetResult(true);
                     Logger.BufferedProducerEventEnqueued(Identifier, EventHubName, logPartition, eventPartitionId, operationId, count);
                 }
             }
@@ -1377,7 +1387,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 var totalWaitTime = _options.MaximumWaitTime ?? Timeout.InfiniteTimeSpan;
                 var remainingWaitTime = totalWaitTime;
-                var delayInterval = CalculateDelay(totalWaitTime, DefaultPublishingDelayInterval);
+                var delayInterval = CalculateBatchingDelay(totalWaitTime, PublishingDelayInterval);
 
                 // The wait time constraint should not consider creating the batch; start tracking after the batch is available to build.
 
@@ -1412,8 +1422,8 @@ namespace Azure.Messaging.EventHubs.Producer
 
                                 Logger.BufferedProducerEventBatchPublishError(Identifier, EventHubName, partitionId, operationId, message);
 
-                                // Handler invocation is performed in the background as a fire-and-forget operation.  Exceptions in the handler
-                                // are logged as part of the invocation.
+                                // Handler invocation is performed with a guarantee not to throw; exceptions in the handler are logged
+                                // as part of the invocation.
 
                                 await SafeInvokeOnSendFailedAsync(new List<EventData>(1) { currentEvent }, exception, partitionId, cancellationToken).ConfigureAwait(false);
                                 return;
@@ -1434,7 +1444,7 @@ namespace Azure.Messaging.EventHubs.Producer
                         // this point, the remaining time has not been updated, but the attempt to read was a quick synchronous operation,
                         // so the lack of precision is not a concern.
 
-                        delayInterval = CalculateDelay(remainingWaitTime, delayInterval);
+                        delayInterval = CalculateBatchingDelay(remainingWaitTime, delayInterval);
                         Logger.BufferedProducerEventBatchPublishNoEventRead(Identifier, EventHubName, partitionId, operationId, delayInterval.TotalSeconds, publishWatch.GetElapsedTime().TotalSeconds);
 
                         if (ShouldWait(remainingWaitTime, MinimumPublishingWaitInterval))
@@ -1454,10 +1464,10 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 if (batch.Count > 0)
                 {
-                    // Handler invocation is performed in the background as a fire-and-forget operation.  Exceptions in the handler
-                    // are logged as part of the invocation.
+                    // Handler invocation is performed with a guarantee not to throw; exceptions in the handler are logged
+                    // as part of the invocation.
 
-                    await _producer.SendAsync(batch, cancellationToken).ConfigureAwait(false);
+                    await SendBatchAsync(batch, partitionId, operationId, cancellationToken).ConfigureAwait(false);
                     await SafeInvokeOnSendSucceededAsync(batchEvents, partitionId, cancellationToken).ConfigureAwait(false);
                 }
             }
@@ -1465,8 +1475,8 @@ namespace Azure.Messaging.EventHubs.Producer
             {
                 Logger.BufferedProducerEventBatchPublishError(Identifier, EventHubName, partitionId, operationId, ex.Message);
 
-                // Handler invocation is performed in the background as a fire-and-forget operation.  Exceptions in the handler
-                // are logged as part of the invocation.
+                // Handler invocation is performed with a guarantee not to throw; exceptions in the handler are logged
+                // as part of the invocation.
 
                 if (batch?.Count > 0)
                 {
@@ -1923,6 +1933,53 @@ namespace Azure.Messaging.EventHubs.Producer
         }
 
         /// <summary>
+        ///   Performs the actions need to publish a batch of events, applying any needed
+        ///   logic for handling special error cases and recovery.
+        /// </summary>
+        ///
+        /// <param name="batch">The batch of events to publish.</param>
+        /// <param name="partitionId">The identifier of the partition associated with this publishing operation.</param>
+        /// <param name="operationId">The identifier of the publishing operation that this invocation is associated with.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.</param>
+        ///
+        /// <remarks>
+        ///   Callers are assumed to retain ownership over the <paramref name="batch" /> and are responsible for its disposal.
+        /// </remarks>
+        ///
+        private async Task SendBatchAsync(EventDataBatch batch,
+                                          string partitionId,
+                                          string operationId,
+                                          CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                var throttleBackoffs = 0;
+
+                try
+                {
+                    await _producer.SendAsync(batch, cancellationToken).ConfigureAwait(false);
+                    return;
+                }
+                catch (EventHubsException ex) when (ex.Reason == EventHubsException.FailureReason.ServiceBusy)
+                {
+                    // The service is throttling requests.  Because this is not a scenario under control
+                    // of callers, the operation should continue to be retried until cancellation takes
+                    // place or the operation succeeds/fails. Retry policy limits should not be applied.
+
+                    ++throttleBackoffs;
+
+                    var randomJitter = TimeSpan.FromSeconds(RandomNumberGenerator.Value.NextDouble());
+                    var backoffInterval = ThrottleBackoffInterval.Add(randomJitter);
+
+                    Logger.BufferedProducerThrottleDelay(Identifier, EventHubName, partitionId, operationId, backoffInterval.TotalSeconds, throttleBackoffs);
+                    await Task.Delay(backoffInterval, cancellationToken).ConfigureAwait(false);
+                }
+            }
+
+            throw new TaskCanceledException();
+        }
+
+        /// <summary>
         ///   Responsible for invoking <see cref="OnSendSucceededAsync" /> and ensuring that no exceptions
         ///   are surfaced.  This is necessary because the method may be overridden and non-throwing behavior
         ///   cannot be guaranteed.
@@ -2147,12 +2204,38 @@ namespace Azure.Messaging.EventHubs.Producer
                                 activeTasks.Add(PublishBatchToPartition(partitionState, releaseGuard: true, activeOperationCancellationSource.Token));
                             }
 
-                            // If there are no publishing tasks active, introduce a small
-                            // delay to avoid a tight loop.
+                            // If there are no events in the buffer, avoid a tight loop by blocking to wait for events to be enqueued
+                            // after a small delay.
 
-                            if (activeTasks.Count == 0)
+                            if (_totalBufferedEventCount == 0)
                             {
-                                 await Task.Delay(DefaultPublishingDelayInterval, cancellationToken).ConfigureAwait(false);
+                                // If completion source doesn't exist or was already set, then swap in a new completion source to be
+                                // set when an event is enqueued.  Allow the publishing loop to tick for one additional check of the
+                                // buffers, to ensure that no events were enqueued during the swap.
+
+                                if ((_eventEnqueuedCompletionSource == null) || (_eventEnqueuedCompletionSource.Task.IsCompleted))
+                                {
+                                    // Because we want to ensure that calls to enqueue events see the new completion source, use
+                                    // an interlocked operation to ensure the new value is visible to other threads.
+
+                                    Interlocked.Exchange(ref _eventEnqueuedCompletionSource, new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously));
+                                    await Task.Delay(PublishingDelayInterval, cancellationToken).ConfigureAwait(false);
+                                }
+                                else
+                                {
+                                    // If the buffer is still empty and no event was enqueued since the completion source was created,
+                                    // await an event to be enqueued.  Clearing the completion source after the await does not need a memory
+                                    // fence; it does not matter if other threads see the stale value.
+
+                                    Logger.BufferedProducerIdleStart(Identifier, EventHubName, operationId);
+
+                                    var idleWatch = ValueStopwatch.StartNew();
+
+                                    await _eventEnqueuedCompletionSource.Task.AwaitWithCancellation(cancellationToken);
+                                    _eventEnqueuedCompletionSource = null;
+
+                                    Logger.BufferedProducerIdleComplete(Identifier, EventHubName, operationId, idleWatch.GetElapsedTime().TotalSeconds);
+                                }
                             }
                         }
                         catch (OperationCanceledException)
@@ -2314,16 +2397,16 @@ namespace Azure.Messaging.EventHubs.Producer
           ((waitTime == Timeout.InfiniteTimeSpan) || (waitTime > minimumAllowedWaitTime));
 
         /// <summary>
-        ///   Calculates the amount of delay to apply, ensuring that the remaining time allotted
-        ///   supersedes the delay amount, if not enough time remains for the full delay.
+        ///   Calculates the amount of delay to apply when building a batch, ensuring that the remaining time
+        ///   allotted supersedes the delay amount, if not enough time remains for the full delay.
         /// </summary>
         /// <param name="remainingTime">The amount of allotted time remaining.</param>
         /// <param name="delayInterval">The desired delay interval.</param>
         ///
         /// <returns>The amount of delay to apply.</returns>
         ///
-        private static TimeSpan CalculateDelay(TimeSpan remainingTime,
-                                               TimeSpan delayInterval) => ((remainingTime != Timeout.InfiniteTimeSpan) && (remainingTime < delayInterval)) ? remainingTime : delayInterval;
+        private static TimeSpan CalculateBatchingDelay(TimeSpan remainingTime,
+                                                       TimeSpan delayInterval) => ((remainingTime != Timeout.InfiniteTimeSpan) && (remainingTime < delayInterval)) ? remainingTime : delayInterval;
 
         /// <summary>
         ///   The set of information needed to track and manage the active publishing

@@ -39,15 +39,23 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Initializes a new instance of WeatherClient. </summary>
         /// <param name="endpoint"> The endpoint of your FarmBeats resource (protocol and hostname, for example: https://{resourceName}.farmbeats.azure.net). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public WeatherClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new FarmBeatsClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of WeatherClient. </summary>
+        /// <param name="endpoint"> The endpoint of your FarmBeats resource (protocol and hostname, for example: https://{resourceName}.farmbeats.azure.net). </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public WeatherClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options = null)
+        public WeatherClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new FarmBeatsClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
@@ -392,7 +400,12 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(weatherDataType, nameof(weatherDataType));
             Argument.AssertNotNull(granularity, nameof(granularity));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "WeatherClient.GetWeathers");
+            return GetWeathersImplementationAsync("WeatherClient.GetWeathers", farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context);
+        }
+
+        private AsyncPageable<BinaryData> GetWeathersImplementationAsync(string diagnosticsScopeName, string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -493,7 +506,12 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(weatherDataType, nameof(weatherDataType));
             Argument.AssertNotNull(granularity, nameof(granularity));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "WeatherClient.GetWeathers");
+            return GetWeathersImplementation("WeatherClient.GetWeathers", farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context);
+        }
+
+        private Pageable<BinaryData> GetWeathersImplementation(string diagnosticsScopeName, string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do

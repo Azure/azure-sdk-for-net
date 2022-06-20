@@ -4,7 +4,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 azure-arm: true
-csharp: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
 require: https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/readme.md
@@ -82,10 +81,204 @@ directive:
   - remove-operation: "ApplicationGateways_ListAvailableSslPredefinedPolicies"
   - remove-operation: "ApplicationGateways_GetSslPredefinedPolicy"
   - from: virtualNetworkGateway.json
-    where: $.definitions.BgpPeerStatus.properties.connectedDuration
+    where: $.definitions
     transform: >
-      $["format"] = "duration";
-      $["x-ms-format"] = "duration-constant";
+      $.BgpPeerStatus.properties.connectedDuration["x-ms-format"] = "duration-constant";
+      $.IPConfigurationBgpPeeringAddress.properties.ipconfigurationId['x-ms-client-name'] = 'IPConfigurationId';
+      $.VirtualNetworkGatewayNatRuleProperties.properties.type['x-ms-client-name'] = 'VpnNatRuleType';
+      $.VirtualNetworkGatewayPropertiesFormat.properties.vNetExtendedLocationResourceId['x-ms-format'] = 'arm-id';
+  - from: network.json
+    where: $.definitions
+    transform: >
+      $.Resource['x-ms-client-name'] = 'NetworkTrackedResourceData';
+      $.Resource.properties.id['x-ms-format'] = 'arm-id';
+      $.Resource.properties.location['x-ms-format'] = 'azure-location';
+      $.Resource.properties.type['x-ms-format'] = 'resource-type';
+      $.SubResource['x-ms-client-name'] = 'NetworkSubResource';
+      $.SubResource.properties.id['x-ms-format'] = 'arm-id';
+      $.ProvisioningState['x-ms-enum'].name = 'NetworkProvisioningState';
+  - from: network.json
+    where: $.definitions
+    transform: >
+      $.NetworkResource = {
+        "properties": {
+            "id": {
+              "type": "string",
+              "description": "Resource ID.",
+              "x-ms-format": "arm-id"
+            },
+            "name": {
+              "type": "string",
+              "description": "Resource name."
+            },
+            "type": {
+              "readOnly": true,
+              "type": "string",
+              "description": "Resource type.",
+              "x-ms-format": "resource-type"
+            }
+          },
+        "description": "Common resource representation.",
+        "x-ms-azure-resource": true,
+        "x-ms-client-name": "NetworkResourceData"
+      };
+      $.NetworkWritableResource = {
+        "properties": {
+            "id": {
+              "type": "string",
+              "description": "Resource ID.",
+              "x-ms-format": "arm-id"
+            },
+            "name": {
+              "type": "string",
+              "description": "Resource name."
+            },
+            "type": {
+              "type": "string",
+              "description": "Resource type.",
+              "x-ms-format": "resource-type"
+            }
+          },
+        "description": "Common resource representation.",
+        "x-ms-azure-resource": true,
+        "x-ms-client-name": "NetworkWritableResourceData"
+      }
+    reason: Add network versions of Resource (id, name are not read-only). The original (Network)Resource definition is actually a TrackedResource.
+  - from: swagger-document
+    where: $.definitions[?(@.allOf && @.properties.name && !@.properties.type)]
+    transform: >
+      if ($.allOf[0]['$ref'].includes('network.json#/definitions/SubResource'))
+      {
+        $.properties.type = {
+          "readOnly": true,
+          "type": "string",
+          "description": "Resource type."
+        };
+      }
+    reason: Add missing type property in swagger definition which exists in service response.
+  - from: swagger-document
+    where: $.definitions[?(@.allOf && @.properties.name && !@.properties.name.readOnly && @.properties.type)]
+    transform: >
+      if ($.allOf[0]['$ref'].includes('network.json#/definitions/SubResource'))
+      {
+        if ($.properties.type.readOnly)
+          $.allOf[0]['$ref'] = $.allOf[0]['$ref'].replace('SubResource', 'NetworkResource');
+        else
+          $.allOf[0]['$ref'] = $.allOf[0]['$ref'].replace('SubResource', 'NetworkWritableResource');
+        delete $.properties.name;
+        delete $.properties.type;
+      }
+    reason: Resources with id, name and type should inherit from NetworkResource/NetworkWritableResource instead of SubResource.
+  - from: ipAllocation.json
+    where: $.definitions
+    transform: >
+      $.IpAllocationPropertiesFormat.properties.type['x-ms-client-name'] = 'IPAllocationType';
+  - from: virtualWan.json
+    where: $.definitions
+    transform: >
+      $.VirtualWanProperties.properties.type['x-ms-client-name'] = 'VirtualWanType';
+      $.VpnGatewayNatRuleProperties.properties.type['x-ms-client-name'] = 'VpnNatRuleType';
+      $.VirtualWanVpnProfileParameters.properties.vpnServerConfigurationResourceId['x-ms-format'] = 'arm-id';
+  - from: virtualWan.json
+    where: $.definitions.VpnServerConfigurationProperties.properties.name
+    transform: 'return undefined'
+    reason: The same property is defined in VpnServerConfiguration and service only returns value there.
+  - from: virtualWan.json
+    where: $.definitions.VpnServerConfigurationProperties.properties.etag
+    transform: 'return undefined'
+    reason: The same property is defined in VpnServerConfiguration and service only returns value there.
+  - from: swagger-document
+    where: $.definitions..resourceGuid
+    transform: >
+      $['format'] = 'uuid';
+  - from: swagger-document
+    where: $.definitions..targetResourceId
+    transform: >
+      $['x-ms-format'] = 'arm-id';
+  - from: swagger-document
+    where: $.definitions..resourceId
+    transform: >
+      $['x-ms-format'] = 'arm-id';
+  - from: swagger-document
+    where: $.definitions..etag
+    transform: >
+      $['x-ms-format'] = 'etag';
+  - from: swagger-document
+    where: $.definitions..location
+    transform: >
+      $['x-ms-format'] = 'azure-location';
+  - from: swagger-document
+    where: $.paths..parameters[?(@.name === "location")]
+    transform: >
+      $["x-ms-format"] = 'azure-location';
+  - from: azureFirewall.json
+    where: $.definitions.AzureFirewallIpGroups.properties.id
+    transform: >
+      $['x-ms-format'] = 'arm-id';
+  - from: networkWatcher.json
+    where: $.definitions
+    transform: >
+      $.FlowLogPropertiesFormat.properties.targetResourceGuid['format'] = 'uuid';
+      $.NetworkInterfaceAssociation.properties.id['x-ms-format'] = 'arm-id';
+      $.SubnetAssociation.properties.id['x-ms-format'] = 'arm-id';
+      $.Topology['x-ms-client-name'] = 'NetworkTopology';
+      $.TopologyResource['x-ms-client-name'] = 'TopologyResourceInfo';
+      $.AvailableProvidersListParameters.properties.azureLocations.items['x-ms-format'] = 'azure-location';
+      $.AzureReachabilityReportParameters.properties.azureLocations.items['x-ms-format'] = 'azure-location';
+      $.AzureReachabilityReportItem.properties.azureLocation['x-ms-format'] = 'azure-location';
+      $.PacketCapture.properties.type = {
+        "readOnly": true,
+        "type": "string",
+        "description": "Resource type."
+      };
+      $.ConnectionMonitorWorkspaceSettings.properties.workspaceResourceId['x-ms-format'] = 'arm-id';
+      $.TrafficAnalyticsConfigurationProperties.properties.workspaceResourceId['x-ms-format'] = 'arm-id';
+      $.EvaluatedNetworkSecurityGroup.properties.networkSecurityGroupId['x-ms-format'] = 'arm-id';
+      $.VerificationIPFlowParameters.properties.targetNicResourceId['x-ms-format'] = 'arm-id';
+      $.NextHopParameters.properties.targetNicResourceId['x-ms-format'] = 'arm-id';
+      $.NextHopResult.properties.routeTableId['x-ms-format'] = 'arm-id';
+  - from: virtualNetwork.json
+    where: $.definitions
+    transform: >
+      $.ServiceAssociationLinkPropertiesFormat.properties.locations.items['x-ms-format'] = 'azure-location';
+      $.ServiceEndpointPropertiesFormat.properties.locations.items['x-ms-format'] = 'azure-location';
+  - from: usage.json
+    where: $.definitions.Usage.properties.id
+    transform: >
+      $['x-ms-format'] = 'arm-id';
+  - from: endpointService.json
+    where: $.definitions
+    transform: >
+      $.EndpointServiceResult.properties.type['x-ms-format'] = 'resource-type';
+      delete $.EndpointServiceResult.allOf;
+      $.EndpointServiceResult.properties.id = {
+          "readOnly": true,
+          "type": "string",
+          "description": "Resource ID.",
+          "x-ms-format": "arm-id"
+      };
+    reason: id should be read-only.
+  - from: azureFirewall.json
+    where: $.definitions
+    transform: >
+      $.AzureFirewallApplicationRuleCollection['x-ms-client-name'] = 'AzureFirewallApplicationRuleCollectionData';
+      $.AzureFirewallNatRuleCollection['x-ms-client-name'] = 'AzureFirewallNatRuleCollectionData';
+      $.AzureFirewallNetworkRuleCollection['x-ms-client-name'] = 'AzureFirewallNetworkRuleCollectionData';
+  - from: firewallPolicy.json
+    where: $.definitions
+    transform: >
+      $.FirewallPolicyRuleCollection['x-ms-client-name'] = 'FirewallPolicyRuleCollectionInfo';
+      $.FirewallPolicyNatRuleCollection['x-ms-client-name'] = 'FirewallPolicyNatRuleCollectionInfo';
+      $.FirewallPolicyFilterRuleCollection['x-ms-client-name'] = 'FirewallPolicyFilterRuleCollectionInfo';
+# shorten "privateLinkServiceConnectionState" property name
+  - from: applicationGateway.json
+    where: $.definitions.ApplicationGatewayPrivateEndpointConnectionProperties
+    transform: >
+      $.properties.privateLinkServiceConnectionState["x-ms-client-name"] = "connectionState";
+  - from: privateEndpoint.json
+    where: $.definitions.PrivateLinkServiceConnectionProperties
+    transform: >
+      $.properties.privateLinkServiceConnectionState["x-ms-client-name"] = "connectionState";
 ```
 
 ### Tag: package-track2-preview

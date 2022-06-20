@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<IReadOnlyList<DatabaseAccountLocation>> locations = default;
             Optional<IReadOnlyList<FailoverPolicy>> failoverPolicies = default;
             Optional<IList<VirtualNetworkRule>> virtualNetworkRules = default;
-            Optional<IReadOnlyList<PrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<CosmosDBPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<bool> enableMultipleWriteLocations = default;
             Optional<bool> enableCassandraConnector = default;
             Optional<ConnectorOffer> connectorOffer = default;
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -464,10 +464,10 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PrivateEndpointConnectionData> array = new List<PrivateEndpointConnectionData>();
+                            List<CosmosDBPrivateEndpointConnectionData> array = new List<CosmosDBPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(item));
+                                array.Add(CosmosDBPrivateEndpointConnectionData.DeserializeCosmosDBPrivateEndpointConnectionData(item));
                             }
                             privateEndpointConnections = array;
                             continue;

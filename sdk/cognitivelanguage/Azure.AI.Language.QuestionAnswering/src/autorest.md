@@ -16,7 +16,6 @@ batch:
 - input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b791f57426508cb2793a8911650a416dcb11c6a6/specification/cognitiveservices/data-plane/Language/stable/2021-10-01/questionanswering-authoring.json
 # namespace: Azure.AI.Language.QuestionAnswering.Projects
   add-credentials: true
-  data-plane: true
 
 modelerfour:
   lenient-model-deduplication: true

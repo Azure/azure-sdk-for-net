@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn
         {
             ContentTypesToCompress = new ChangeTrackingList<string>();
             GeoFilters = new ChangeTrackingList<GeoFilter>();
-            UrlSigningKeys = new ChangeTrackingList<UrlSigningKey>();
+            UriSigningKeys = new ChangeTrackingList<UriSigningKey>();
             Origins = new ChangeTrackingList<DeepCreatedOrigin>();
             OriginGroups = new ChangeTrackingList<DeepCreatedOriginGroup>();
             CustomDomains = new ChangeTrackingList<CdnCustomDomainData>();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="probePath"> Path to a file hosted on the origin which helps accelerate delivery of the dynamic content and calculate the most optimal routes for the CDN. This is relative to the origin path. This property is only relevant when using a single origin. </param>
         /// <param name="geoFilters"> List of rules defining the user&apos;s geo access within a CDN endpoint. Each geo filter defines an access rule to a specified path or content, e.g. block APAC for path /pictures/. </param>
         /// <param name="defaultOriginGroup"> A reference to the origin group. </param>
-        /// <param name="urlSigningKeys"> List of keys used to validate the signed URL hashes. </param>
+        /// <param name="uriSigningKeys"> List of keys used to validate the signed URL hashes. </param>
         /// <param name="deliveryPolicy"> A policy that specifies the delivery rules to be used for an endpoint. </param>
         /// <param name="webApplicationFirewallPolicyLink"> Defines the Web Application Firewall policy for the endpoint (if applicable). </param>
         /// <param name="hostName"> The host name of the endpoint structured as {endpointName}.{DNSZone}, e.g. contoso.azureedge.net. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomains"> The custom domains under the endpoint. </param>
         /// <param name="resourceState"> Resource status of the endpoint. </param>
         /// <param name="provisioningState"> Provisioning status of the endpoint. </param>
-        internal CdnEndpointData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, EndpointPropertiesUpdateParametersDefaultOriginGroup defaultOriginGroup, IList<UrlSigningKey> urlSigningKeys, EndpointPropertiesUpdateParametersDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, string hostName, IList<DeepCreatedOrigin> origins, IList<DeepCreatedOriginGroup> originGroups, IReadOnlyList<CdnCustomDomainData> customDomains, EndpointResourceState? resourceState, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal CdnEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, EndpointPropertiesUpdateParametersDefaultOriginGroup defaultOriginGroup, IList<UriSigningKey> uriSigningKeys, EndpointDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, string hostName, IList<DeepCreatedOrigin> origins, IList<DeepCreatedOriginGroup> originGroups, IReadOnlyList<CdnCustomDomainData> customDomains, EndpointResourceState? resourceState, EndpointProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             OriginPath = originPath;
             ContentTypesToCompress = contentTypesToCompress;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn
             ProbePath = probePath;
             GeoFilters = geoFilters;
             DefaultOriginGroup = defaultOriginGroup;
-            UrlSigningKeys = urlSigningKeys;
+            UriSigningKeys = uriSigningKeys;
             DeliveryPolicy = deliveryPolicy;
             WebApplicationFirewallPolicyLink = webApplicationFirewallPolicyLink;
             HostName = hostName;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> A reference to the origin group. </summary>
         internal EndpointPropertiesUpdateParametersDefaultOriginGroup DefaultOriginGroup { get; set; }
         /// <summary> Resource ID. </summary>
-        public string DefaultOriginGroupId
+        public ResourceIdentifier DefaultOriginGroupId
         {
             get => DefaultOriginGroup is null ? default : DefaultOriginGroup.Id;
             set
@@ -113,13 +113,13 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> List of keys used to validate the signed URL hashes. </summary>
-        public IList<UrlSigningKey> UrlSigningKeys { get; set; }
+        public IList<UriSigningKey> UriSigningKeys { get; set; }
         /// <summary> A policy that specifies the delivery rules to be used for an endpoint. </summary>
-        public EndpointPropertiesUpdateParametersDeliveryPolicy DeliveryPolicy { get; set; }
+        public EndpointDeliveryPolicy DeliveryPolicy { get; set; }
         /// <summary> Defines the Web Application Firewall policy for the endpoint (if applicable). </summary>
         internal EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink WebApplicationFirewallPolicyLink { get; set; }
         /// <summary> Resource ID. </summary>
-        public string WebApplicationFirewallPolicyLinkId
+        public ResourceIdentifier WebApplicationFirewallPolicyLinkId
         {
             get => WebApplicationFirewallPolicyLink is null ? default : WebApplicationFirewallPolicyLink.Id;
             set
@@ -141,6 +141,6 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Resource status of the endpoint. </summary>
         public EndpointResourceState? ResourceState { get; }
         /// <summary> Provisioning status of the endpoint. </summary>
-        public string ProvisioningState { get; }
+        public EndpointProvisioningState? ProvisioningState { get; }
     }
 }

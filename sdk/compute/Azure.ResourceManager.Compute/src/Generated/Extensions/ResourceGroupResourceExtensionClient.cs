@@ -31,6 +31,20 @@ namespace Azure.ResourceManager.Compute
             return apiVersion;
         }
 
+        /// <summary> Gets a collection of VirtualMachineScaleSetResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of VirtualMachineScaleSetResources and their operations over a VirtualMachineScaleSetResource. </returns>
+        public virtual VirtualMachineScaleSetCollection GetVirtualMachineScaleSets()
+        {
+            return GetCachedClient(Client => new VirtualMachineScaleSetCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of VirtualMachineResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
+        public virtual VirtualMachineCollection GetVirtualMachines()
+        {
+            return GetCachedClient(Client => new VirtualMachineCollection(Client, Id));
+        }
+
         /// <summary> Gets a collection of AvailabilitySetResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of AvailabilitySetResources and their operations over a AvailabilitySetResource. </returns>
         public virtual AvailabilitySetCollection GetAvailabilitySets()
@@ -59,20 +73,6 @@ namespace Azure.ResourceManager.Compute
             return GetCachedClient(Client => new SshPublicKeyCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualMachineResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
-        public virtual VirtualMachineCollection GetVirtualMachines()
-        {
-            return GetCachedClient(Client => new VirtualMachineCollection(Client, Id));
-        }
-
-        /// <summary> Gets a collection of VirtualMachineScaleSetResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualMachineScaleSetResources and their operations over a VirtualMachineScaleSetResource. </returns>
-        public virtual VirtualMachineScaleSetCollection GetVirtualMachineScaleSets()
-        {
-            return GetCachedClient(Client => new VirtualMachineScaleSetCollection(Client, Id));
-        }
-
         /// <summary> Gets a collection of ImageResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ImageResources and their operations over a ImageResource. </returns>
         public virtual ImageCollection GetImages()
@@ -94,18 +94,18 @@ namespace Azure.ResourceManager.Compute
             return GetCachedClient(Client => new CapacityReservationGroupCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of DiskResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DiskResources and their operations over a DiskResource. </returns>
-        public virtual DiskCollection GetDisks()
+        /// <summary> Gets a collection of ManagedDiskResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ManagedDiskResources and their operations over a ManagedDiskResource. </returns>
+        public virtual ManagedDiskCollection GetManagedDisks()
         {
-            return GetCachedClient(Client => new DiskCollection(Client, Id));
+            return GetCachedClient(Client => new ManagedDiskCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of SnapshotResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SnapshotResources and their operations over a SnapshotResource. </returns>
-        public virtual SnapshotCollection GetSnapshots()
+        /// <summary> Gets a collection of DiskAccessResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DiskAccessResources and their operations over a DiskAccessResource. </returns>
+        public virtual DiskAccessCollection GetDiskAccesses()
         {
-            return GetCachedClient(Client => new SnapshotCollection(Client, Id));
+            return GetCachedClient(Client => new DiskAccessCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of DiskEncryptionSetResources in the ResourceGroupResource. </summary>
@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.Compute
             return GetCachedClient(Client => new DiskEncryptionSetCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of DiskAccessResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DiskAccessResources and their operations over a DiskAccessResource. </returns>
-        public virtual DiskAccessCollection GetDiskAccesses()
+        /// <summary> Gets a collection of SnapshotResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of SnapshotResources and their operations over a SnapshotResource. </returns>
+        public virtual SnapshotCollection GetSnapshots()
         {
-            return GetCachedClient(Client => new DiskAccessCollection(Client, Id));
+            return GetCachedClient(Client => new SnapshotCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of GalleryResources in the ResourceGroupResource. </summary>

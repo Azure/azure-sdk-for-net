@@ -136,7 +136,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-webjobs-sdk/issues/2830")]
         public async Task EventHub_ProducerClient()
         {
             var (jobHost, host) = BuildHost<EventHubTestClientDispatch>();
@@ -313,7 +312,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-webjobs-sdk/issues/2830")]
         public async Task EventHub_PartitionKey()
         {
             var (jobHost, host) = BuildHost<EventHubPartitionKeyTestJobs>();
@@ -386,7 +384,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-webjobs-sdk/issues/2830")]
         public async Task EventHub_InitialOffsetFromEnqueuedTime()
         {
             await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
@@ -458,7 +455,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.AreEqual("value2", properties["TestProp2"]);
 
                 Assert.NotNull(partitionContext.PartitionId);
-                Assert.NotNull(partitionContext.ReadLastEnqueuedEventProperties());
+                Assert.AreNotEqual(default(LastEnqueuedEventProperties), partitionContext.ReadLastEnqueuedEventProperties());
 
                 _eventWait.Set();
             }
@@ -563,7 +560,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public static void ProcessMultipleEvents([EventHubTrigger(TestHubName, Connection = TestHubName)] string[] events,
                 string[] partitionKeyArray, DateTime[] enqueuedTimeUtcArray, IDictionary<string, object>[] propertiesArray,
-                IDictionary<string, object>[] systemPropertiesArray)
+                IDictionary<string, object>[] systemPropertiesArray, PartitionContext partitionContext)
             {
                 Assert.AreEqual(events.Length, partitionKeyArray.Length);
                 Assert.AreEqual(events.Length, enqueuedTimeUtcArray.Length);
@@ -574,6 +571,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 {
                     Assert.AreEqual(s_processedEventCount++, propertiesArray[i]["TestIndex"]);
                 }
+
+                Assert.NotNull(partitionContext.PartitionId);
+                Assert.AreNotEqual(default(LastEnqueuedEventProperties), partitionContext.ReadLastEnqueuedEventProperties());
 
                 if (s_processedEventCount == s_eventCount)
                 {
@@ -628,7 +628,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 string input,
                 [EventHub(TestHubName, Connection = TestHubName)] EventHubProducerClient client)
             {
-                List<EventData> list = new List<EventData>();
                 EventData evt = new EventData(Encoding.UTF8.GetBytes(input));
 
                 // Send event without PK

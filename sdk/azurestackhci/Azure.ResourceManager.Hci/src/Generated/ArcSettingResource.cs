@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Hci.Models;
 
 namespace Azure.ResourceManager.Hci
 {
@@ -214,6 +215,154 @@ namespace Azure.ResourceManager.Hci
                 var operation = new HciArmOperation(_arcSettingClientDiagnostics, Pipeline, _arcSettingRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update ArcSettings for HCI cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/arcSettings/{arcSettingName}
+        /// Operation Id: ArcSettings_Update
+        /// </summary>
+        /// <param name="patch"> ArcSettings parameters that needs to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<ArcSettingResource>> UpdateAsync(ArcSettingPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _arcSettingRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ArcSettingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update ArcSettings for HCI cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/arcSettings/{arcSettingName}
+        /// Operation Id: ArcSettings_Update
+        /// </summary>
+        /// <param name="patch"> ArcSettings parameters that needs to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<ArcSettingResource> Update(ArcSettingPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _arcSettingRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new ArcSettingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generate password for arc settings.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/arcSettings/{arcSettingName}/generatePassword
+        /// Operation Id: ArcSettings_GeneratePassword
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<PasswordCredential>> GeneratePasswordAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingResource.GeneratePassword");
+            scope.Start();
+            try
+            {
+                var response = await _arcSettingRestClient.GeneratePasswordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generate password for arc settings.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/arcSettings/{arcSettingName}/generatePassword
+        /// Operation Id: ArcSettings_GeneratePassword
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<PasswordCredential> GeneratePassword(CancellationToken cancellationToken = default)
+        {
+            using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingResource.GeneratePassword");
+            scope.Start();
+            try
+            {
+                var response = _arcSettingRestClient.GeneratePassword(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create Aad identity for arc settings.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/arcSettings/{arcSettingName}/createArcIdentity
+        /// Operation Id: ArcSettings_CreateIdentity
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<ArcIdentityResponse>> CreateIdentityAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingResource.CreateIdentity");
+            scope.Start();
+            try
+            {
+                var response = await _arcSettingRestClient.CreateIdentityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new HciArmOperation<ArcIdentityResponse>(new ArcIdentityResponseOperationSource(), _arcSettingClientDiagnostics, Pipeline, _arcSettingRestClient.CreateCreateIdentityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create Aad identity for arc settings.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/arcSettings/{arcSettingName}/createArcIdentity
+        /// Operation Id: ArcSettings_CreateIdentity
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<ArcIdentityResponse> CreateIdentity(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingResource.CreateIdentity");
+            scope.Start();
+            try
+            {
+                var response = _arcSettingRestClient.CreateIdentity(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new HciArmOperation<ArcIdentityResponse>(new ArcIdentityResponseOperationSource(), _arcSettingClientDiagnostics, Pipeline, _arcSettingRestClient.CreateCreateIdentityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)

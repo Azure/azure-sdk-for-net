@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB
             Locations = new ChangeTrackingList<DatabaseAccountLocation>();
             FailoverPolicies = new ChangeTrackingList<FailoverPolicy>();
             VirtualNetworkRules = new ChangeTrackingList<VirtualNetworkRule>();
-            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<CosmosDBPrivateEndpointConnectionData>();
             Cors = new ChangeTrackingList<CorsPolicy>();
             NetworkAclBypassResourceIds = new ChangeTrackingList<string>();
         }
@@ -70,13 +70,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="instanceId"> A unique identifier assigned to the database account. </param>
         /// <param name="createMode"> Enum to indicate the mode of account creation. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
-        /// <param name="backupPolicy"> The object representing the policy for taking backups on an account. </param>
+        /// <param name="backupPolicy">
+        /// The object representing the policy for taking backups on an account.
+        /// Please note <see cref="BackupPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ContinuousModeBackupPolicy"/> and <see cref="PeriodicModeBackupPolicy"/>.
+        /// </param>
         /// <param name="cors"> The CORS policy for the Cosmos DB database account. </param>
         /// <param name="networkAclBypass"> Indicates what services are allowed to bypass firewall checks. </param>
         /// <param name="networkAclBypassResourceIds"> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </param>
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </param>
         /// <param name="capacity"> The object that represents all properties related to capacity enforcement on an account. </param>
-        internal DatabaseAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DatabaseAccountKind? kind, ManagedServiceIdentity identity, string provisioningState, string documentEndpoint, string databaseAccountOfferType, IList<IPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, ConsistencyPolicy consistencyPolicy, IList<DatabaseAccountCapability> capabilities, IReadOnlyList<DatabaseAccountLocation> writeLocations, IReadOnlyList<DatabaseAccountLocation> readLocations, IReadOnlyList<DatabaseAccountLocation> locations, IReadOnlyList<FailoverPolicy> failoverPolicies, IList<VirtualNetworkRule> virtualNetworkRules, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, PublicNetworkAccess? publicNetworkAccess, bool? enableFreeTier, ApiProperties apiProperties, bool? enableAnalyticalStorage, AnalyticalStorageConfiguration analyticalStorageConfiguration, string instanceId, CreateMode? createMode, RestoreParameters restoreParameters, BackupPolicy backupPolicy, IList<CorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<string> networkAclBypassResourceIds, bool? disableLocalAuth, Capacity capacity) : base(id, name, resourceType, systemData, tags, location)
+        internal DatabaseAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DatabaseAccountKind? kind, ManagedServiceIdentity identity, string provisioningState, string documentEndpoint, string databaseAccountOfferType, IList<IPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, ConsistencyPolicy consistencyPolicy, IList<DatabaseAccountCapability> capabilities, IReadOnlyList<DatabaseAccountLocation> writeLocations, IReadOnlyList<DatabaseAccountLocation> readLocations, IReadOnlyList<DatabaseAccountLocation> locations, IReadOnlyList<FailoverPolicy> failoverPolicies, IList<VirtualNetworkRule> virtualNetworkRules, IReadOnlyList<CosmosDBPrivateEndpointConnectionData> privateEndpointConnections, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, PublicNetworkAccess? publicNetworkAccess, bool? enableFreeTier, ApiProperties apiProperties, bool? enableAnalyticalStorage, AnalyticalStorageConfiguration analyticalStorageConfiguration, string instanceId, CreateMode? createMode, RestoreParameters restoreParameters, BackupPolicy backupPolicy, IList<CorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<string> networkAclBypassResourceIds, bool? disableLocalAuth, Capacity capacity) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             Identity = identity;
@@ -147,7 +151,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> List of Virtual Network ACL rules configured for the Cosmos DB account. </summary>
         public IList<VirtualNetworkRule> VirtualNetworkRules { get; }
         /// <summary> List of Private Endpoint Connections configured for the Cosmos DB account. </summary>
-        public IReadOnlyList<PrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<CosmosDBPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Enables the account to write in multiple locations. </summary>
         public bool? EnableMultipleWriteLocations { get; set; }
         /// <summary> Enables the cassandra connector on the Cosmos DB C* account. </summary>
@@ -200,7 +204,11 @@ namespace Azure.ResourceManager.CosmosDB
         public CreateMode? CreateMode { get; set; }
         /// <summary> Parameters to indicate the information about the restore. </summary>
         public RestoreParameters RestoreParameters { get; set; }
-        /// <summary> The object representing the policy for taking backups on an account. </summary>
+        /// <summary>
+        /// The object representing the policy for taking backups on an account.
+        /// Please note <see cref="BackupPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ContinuousModeBackupPolicy"/> and <see cref="PeriodicModeBackupPolicy"/>.
+        /// </summary>
         public BackupPolicy BackupPolicy { get; set; }
         /// <summary> The CORS policy for the Cosmos DB database account. </summary>
         public IList<CorsPolicy> Cors { get; }

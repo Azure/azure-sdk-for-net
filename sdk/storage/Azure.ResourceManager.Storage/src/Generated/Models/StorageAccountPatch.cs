@@ -37,13 +37,16 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> KeyPolicy assigned to the storage account. </summary>
         internal KeyPolicy KeyPolicy { get; set; }
         /// <summary> The key expiration period in days. </summary>
-        public int KeyExpirationPeriodInDays
+        public int? KeyExpirationPeriodInDays
         {
-            get => KeyPolicy is null ? default : KeyPolicy.KeyExpirationPeriodInDays;
-            set => KeyPolicy = new KeyPolicy(value);
+            get => KeyPolicy is null ? default(int?) : KeyPolicy.KeyExpirationPeriodInDays;
+            set
+            {
+                KeyPolicy = value.HasValue ? new KeyPolicy(value.Value) : null;
+            }
         }
 
-        /// <summary> Required for storage accounts where kind = BlobStorage. The access tier used for billing. </summary>
+        /// <summary> Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The &apos;Premium&apos; access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type. </summary>
         public AccessTier? AccessTier { get; set; }
         /// <summary> Provides the identity based authentication settings for Azure Files. </summary>
         public AzureFilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get; set; }
@@ -75,5 +78,7 @@ namespace Azure.ResourceManager.Storage.Models
         public ImmutableStorageAccount ImmutableStorageWithVersioning { get; set; }
         /// <summary> Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet. </summary>
         public AllowedCopyScope? AllowedCopyScope { get; set; }
+        /// <summary> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </summary>
+        public DnsEndpointType? DnsEndpointType { get; set; }
     }
 }

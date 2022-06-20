@@ -5,10 +5,13 @@
 
 #nullable disable
 
+using Azure;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Authentication certificates of an application gateway. </summary>
-    public partial class ApplicationGatewayAuthenticationCertificate : SubResource
+    public partial class ApplicationGatewayAuthenticationCertificate : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ApplicationGatewayAuthenticationCertificate. </summary>
         public ApplicationGatewayAuthenticationCertificate()
@@ -17,29 +20,23 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of ApplicationGatewayAuthenticationCertificate. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the authentication certificate that is unique within an Application Gateway. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="data"> Certificate public data. </param>
         /// <param name="provisioningState"> The provisioning state of the authentication certificate resource. </param>
-        internal ApplicationGatewayAuthenticationCertificate(string id, string name, string etag, string resourceType, string data, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayAuthenticationCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string data, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
             Etag = etag;
-            ResourceType = resourceType;
             Data = data;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> Name of the authentication certificate that is unique within an Application Gateway. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
-        /// <summary> Type of the resource. </summary>
-        public string ResourceType { get; }
+        public ETag? Etag { get; }
         /// <summary> Certificate public data. </summary>
         public string Data { get; set; }
         /// <summary> The provisioning state of the authentication certificate resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

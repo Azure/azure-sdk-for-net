@@ -19,39 +19,39 @@ namespace Microsoft.Azure.Management.AppPlatform
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("AppPlatform", "ApiPortalCustomDomains", "2022-01-01-preview"),
-                new Tuple<string, string, string>("AppPlatform", "ApiPortals", "2022-01-01-preview"),
-                new Tuple<string, string, string>("AppPlatform", "Apps", "2022-01-01-preview"),
-                new Tuple<string, string, string>("AppPlatform", "Bindings", "2022-01-01-preview"),
-                new Tuple<string, string, string>("AppPlatform", "BuildService", "2022-01-01-preview"),
-                new Tuple<string, string, string>("AppPlatform", "BuildServiceAgentPool", "2022-01-01-preview"),
-                new Tuple<string, string, string>("AppPlatform", "BuildServiceBuilder", "2022-01-01-preview"),
-                new Tuple<string, string, string>("AppPlatform", "BuildpackBinding", "2022-01-01-preview"),
-                new Tuple<string, string, string>("AppPlatform", "Certificates", "2022-01-01-preview"),
-                new Tuple<string, string, string>("AppPlatform", "ConfigServers", "2022-01-01-preview"),
-                new Tuple<string, string, string>("AppPlatform", "ConfigurationServices", "2022-01-01-preview"),
-                new Tuple<string, string, string>("AppPlatform", "CustomDomains", "2022-01-01-preview"),
-                new Tuple<string, string, string>("AppPlatform", "Deployments", "2022-01-01-preview"),
-                new Tuple<string, string, string>("AppPlatform", "GatewayCustomDomains", "2022-01-01-preview"),
-                new Tuple<string, string, string>("AppPlatform", "GatewayRouteConfigs", "2022-01-01-preview"),
-                new Tuple<string, string, string>("AppPlatform", "Gateways", "2022-01-01-preview"),
-                new Tuple<string, string, string>("AppPlatform", "MonitoringSettings", "2022-01-01-preview"),
-                new Tuple<string, string, string>("AppPlatform", "Operations", "2022-01-01-preview"),
-                new Tuple<string, string, string>("AppPlatform", "RuntimeVersions", "2022-01-01-preview"),
-                new Tuple<string, string, string>("AppPlatform", "ServiceRegistries", "2022-01-01-preview"),
-                new Tuple<string, string, string>("AppPlatform", "Services", "2022-01-01-preview"),
-                new Tuple<string, string, string>("AppPlatform", "Skus", "2022-01-01-preview"),
-                new Tuple<string, string, string>("AppPlatform", "Storages", "2022-01-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "ApiPortalCustomDomains", "2022-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "ApiPortals", "2022-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "Apps", "2022-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "Bindings", "2022-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "BuildService", "2022-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "BuildServiceAgentPool", "2022-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "BuildServiceBuilder", "2022-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "BuildpackBinding", "2022-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "Certificates", "2022-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "ConfigServers", "2022-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "ConfigurationServices", "2022-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "CustomDomains", "2022-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "Deployments", "2022-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "GatewayCustomDomains", "2022-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "GatewayRouteConfigs", "2022-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "Gateways", "2022-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "MonitoringSettings", "2022-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "Operations", "2022-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "RuntimeVersions", "2022-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "ServiceRegistries", "2022-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "Services", "2022-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "Skus", "2022-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "Storages", "2022-05-01-preview"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestVersion = "2.0.4421";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/appplatform/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\Source\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/appplatform/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\\devops\\projects\\release-sdk\\dotnet\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "25949d0ef9e779baf66559411d34a0e5e7aa383d";
+      public static readonly String GithubCommidId = "ace0542cdd24df36b68203f754b1e7a4a1883014";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

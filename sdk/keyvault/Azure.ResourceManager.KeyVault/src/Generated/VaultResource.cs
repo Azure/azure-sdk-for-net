@@ -93,48 +93,11 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of VaultKeyResources in the Vault. </summary>
-        /// <returns> An object representing collection of VaultKeyResources and their operations over a VaultKeyResource. </returns>
-        public virtual VaultKeyCollection GetVaultKeys()
+        /// <summary> Gets a collection of KeyVaultPrivateEndpointConnectionResources in the Vault. </summary>
+        /// <returns> An object representing collection of KeyVaultPrivateEndpointConnectionResources and their operations over a KeyVaultPrivateEndpointConnectionResource. </returns>
+        public virtual KeyVaultPrivateEndpointConnectionCollection GetKeyVaultPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new VaultKeyCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets the current version of the specified key from the specified key vault.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}
-        /// Operation Id: Keys_Get
-        /// </summary>
-        /// <param name="keyName"> The name of the key to be retrieved. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<VaultKeyResource>> GetVaultKeyAsync(string keyName, CancellationToken cancellationToken = default)
-        {
-            return await GetVaultKeys().GetAsync(keyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the current version of the specified key from the specified key vault.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}
-        /// Operation Id: Keys_Get
-        /// </summary>
-        /// <param name="keyName"> The name of the key to be retrieved. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<VaultKeyResource> GetVaultKey(string keyName, CancellationToken cancellationToken = default)
-        {
-            return GetVaultKeys().Get(keyName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the Vault. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnectionResources and their operations over a PrivateEndpointConnectionResource. </returns>
-        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
-        {
-            return GetCachedClient(Client => new PrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(Client => new KeyVaultPrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -147,9 +110,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyVaultPrivateEndpointConnectionResource>> GetKeyVaultPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetKeyVaultPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -162,46 +125,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<KeyVaultPrivateEndpointConnectionResource> GetKeyVaultPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SecretResources in the Vault. </summary>
-        /// <returns> An object representing collection of SecretResources and their operations over a SecretResource. </returns>
-        public virtual SecretCollection GetSecrets()
-        {
-            return GetCachedClient(Client => new SecretCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified secret.  NOTE: This API is intended for internal use in ARM deployments. Users should use the data-plane REST service for interaction with vault secrets.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}
-        /// Operation Id: Secrets_Get
-        /// </summary>
-        /// <param name="secretName"> The name of the secret. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SecretResource>> GetSecretAsync(string secretName, CancellationToken cancellationToken = default)
-        {
-            return await GetSecrets().GetAsync(secretName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified secret.  NOTE: This API is intended for internal use in ARM deployments. Users should use the data-plane REST service for interaction with vault secrets.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}
-        /// Operation Id: Secrets_Get
-        /// </summary>
-        /// <param name="secretName"> The name of the secret. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SecretResource> GetSecret(string secretName, CancellationToken cancellationToken = default)
-        {
-            return GetSecrets().Get(secretName, cancellationToken);
+            return GetKeyVaultPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary>
@@ -416,10 +342,10 @@ namespace Azure.ResourceManager.KeyVault
         /// Operation Id: PrivateLinkResources_ListByVault
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PrivateLinkResourceData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("VaultResource.GetPrivateLinkResources");
                 scope.Start();
@@ -443,10 +369,10 @@ namespace Azure.ResourceManager.KeyVault
         /// Operation Id: PrivateLinkResources_ListByVault
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            Page<PrivateLinkResource> FirstPageFunc(int? pageSizeHint)
+            Page<PrivateLinkResourceData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("VaultResource.GetPrivateLinkResources");
                 scope.Start();

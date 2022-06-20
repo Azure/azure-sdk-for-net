@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.Resources
     /// A Class representing a Tenant along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TenantResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetTenantResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetTenant method.
     /// </summary>
     public partial class TenantResource : ArmResource
     {

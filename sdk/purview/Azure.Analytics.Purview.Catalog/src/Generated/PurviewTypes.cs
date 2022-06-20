@@ -33,6 +33,413 @@ namespace Azure.Analytics.Purview.Catalog
         {
         }
 
+        /// <summary> Initializes a new instance of PurviewTypes. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="tokenCredential"> The token credential to copy. </param>
+        /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        internal PurviewTypes(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = tokenCredential;
+            _endpoint = endpoint;
+            _apiVersion = apiVersion;
+        }
+
+        /// <summary> Get the businessMetadata definition for the given guid. </summary>
+        /// <param name="guid"> businessMetadata guid. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ],
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetBusinessMetadataDefByGuidAsync(string guid, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetBusinessMetadataDefByGuid");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetBusinessMetadataDefByGuidRequest(guid, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get the businessMetadata definition for the given guid. </summary>
+        /// <param name="guid"> businessMetadata guid. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ],
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetBusinessMetadataDefByGuid(string guid, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetBusinessMetadataDefByGuid");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetBusinessMetadataDefByGuidRequest(guid, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get the businessMetadata definition by it&apos;s name (unique). </summary>
+        /// <param name="name"> businessMetadata name. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ],
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetBusinessMetadataDefByNameAsync(string name, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetBusinessMetadataDefByName");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetBusinessMetadataDefByNameRequest(name, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get the businessMetadata definition by it&apos;s name (unique). </summary>
+        /// <param name="name"> businessMetadata name. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;,
+        ///           type: string
+        ///         }
+        ///       ],
+        ///       defaultValue: string,
+        ///       description: string,
+        ///       includeInNotification: boolean,
+        ///       isIndexable: boolean,
+        ///       isOptional: boolean,
+        ///       isUnique: boolean,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       typeName: string,
+        ///       valuesMaxCount: number,
+        ///       valuesMinCount: number
+        ///     }
+        ///   ],
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///   createTime: number,
+        ///   createdBy: string,
+        ///   dateFormatter: {
+        ///     availableLocales: [string],
+        ///     calendar: number,
+        ///     dateInstance: DateFormat,
+        ///     dateTimeInstance: DateFormat,
+        ///     instance: DateFormat,
+        ///     lenient: boolean,
+        ///     numberFormat: {
+        ///       availableLocales: [string],
+        ///       currency: string,
+        ///       currencyInstance: NumberFormat,
+        ///       groupingUsed: boolean,
+        ///       instance: NumberFormat,
+        ///       integerInstance: NumberFormat,
+        ///       maximumFractionDigits: number,
+        ///       maximumIntegerDigits: number,
+        ///       minimumFractionDigits: number,
+        ///       minimumIntegerDigits: number,
+        ///       numberInstance: NumberFormat,
+        ///       parseIntegerOnly: boolean,
+        ///       percentInstance: NumberFormat,
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
+        ///     },
+        ///     timeInstance: DateFormat,
+        ///     timeZone: {
+        ///       dstSavings: number,
+        ///       id: string,
+        ///       availableIds: [string],
+        ///       default: TimeZone,
+        ///       displayName: string,
+        ///       rawOffset: number
+        ///     }
+        ///   },
+        ///   description: string,
+        ///   guid: string,
+        ///   name: string,
+        ///   options: Dictionary&lt;string, string&gt;,
+        ///   serviceType: string,
+        ///   typeVersion: string,
+        ///   updateTime: number,
+        ///   updatedBy: string,
+        ///   version: number,
+        ///   lastModifiedTS: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetBusinessMetadataDefByName(string name, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetBusinessMetadataDefByName");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetBusinessMetadataDefByNameRequest(name, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Get the classification definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the classification. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -2877,7 +3284,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   classificationDefs: [
+        ///   businessMetadataDefs: [
         ///     {
         ///       attributeDefs: [
         ///         {
@@ -2937,6 +3344,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///           rawOffset: number
         ///         }
         ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ],
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
         ///       description: string,
         ///       guid: string,
         ///       name: string,
@@ -3123,7 +3549,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   classificationDefs: [
+        ///   businessMetadataDefs: [
         ///     {
         ///       attributeDefs: [
         ///         {
@@ -3183,6 +3609,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///           rawOffset: number
         ///         }
         ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ],
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
         ///       description: string,
         ///       guid: string,
         ///       name: string,
@@ -3369,7 +3814,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   classificationDefs: [
+        ///   businessMetadataDefs: [
         ///     {
         ///       attributeDefs: [
         ///         {
@@ -3429,6 +3874,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///           rawOffset: number
         ///         }
         ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ],
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
         ///       description: string,
         ///       guid: string,
         ///       name: string,
@@ -3582,7 +4046,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   classificationDefs: [
+        ///   businessMetadataDefs: [
         ///     {
         ///       attributeDefs: [
         ///         {
@@ -3642,6 +4106,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///           rawOffset: number
         ///         }
         ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ],
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
         ///       description: string,
         ///       guid: string,
         ///       name: string,
@@ -3830,7 +4313,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   classificationDefs: [
+        ///   businessMetadataDefs: [
         ///     {
         ///       attributeDefs: [
         ///         {
@@ -3890,6 +4373,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///           rawOffset: number
         ///         }
         ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ],
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
         ///       description: string,
         ///       guid: string,
         ///       name: string,
@@ -4043,7 +4545,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   classificationDefs: [
+        ///   businessMetadataDefs: [
         ///     {
         ///       attributeDefs: [
         ///         {
@@ -4103,6 +4605,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///           rawOffset: number
         ///         }
         ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ],
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
         ///       description: string,
         ///       guid: string,
         ///       name: string,
@@ -4288,7 +4809,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   classificationDefs: [
+        ///   businessMetadataDefs: [
         ///     {
         ///       attributeDefs: [
         ///         {
@@ -4348,6 +4869,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///           rawOffset: number
         ///         }
         ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ],
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
         ///       description: string,
         ///       guid: string,
         ///       name: string,
@@ -4501,7 +5041,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   classificationDefs: [
+        ///   businessMetadataDefs: [
         ///     {
         ///       attributeDefs: [
         ///         {
@@ -4561,6 +5101,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///           rawOffset: number
         ///         }
         ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ],
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
         ///       description: string,
         ///       guid: string,
         ///       name: string,
@@ -4746,7 +5305,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   classificationDefs: [
+        ///   businessMetadataDefs: [
         ///     {
         ///       attributeDefs: [
         ///         {
@@ -4806,6 +5365,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///           rawOffset: number
         ///         }
         ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ],
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
         ///       description: string,
         ///       guid: string,
         ///       name: string,
@@ -4959,7 +5537,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   classificationDefs: [
+        ///   businessMetadataDefs: [
         ///     {
         ///       attributeDefs: [
         ///         {
@@ -5019,6 +5597,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///           rawOffset: number
         ///         }
         ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ],
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
         ///       description: string,
         ///       guid: string,
         ///       name: string,
@@ -5204,7 +5801,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   classificationDefs: [
+        ///   businessMetadataDefs: [
         ///     {
         ///       attributeDefs: [
         ///         {
@@ -5264,6 +5861,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///           rawOffset: number
         ///         }
         ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ],
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
         ///       description: string,
         ///       guid: string,
         ///       name: string,
@@ -5449,7 +6065,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   classificationDefs: [
+        ///   businessMetadataDefs: [
         ///     {
         ///       attributeDefs: [
         ///         {
@@ -5509,6 +6125,25 @@ namespace Azure.Analytics.Purview.Catalog
         ///           rawOffset: number
         ///         }
         ///       },
+        ///       description: string,
+        ///       guid: string,
+        ///       name: string,
+        ///       options: Dictionary&lt;string, string&gt;,
+        ///       serviceType: string,
+        ///       typeVersion: string,
+        ///       updateTime: number,
+        ///       updatedBy: string,
+        ///       version: number,
+        ///       lastModifiedTS: string
+        ///     }
+        ///   ],
+        ///   classificationDefs: [
+        ///     {
+        ///       attributeDefs: [AtlasAttributeDef],
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
+        ///       createTime: number,
+        ///       createdBy: string,
+        ///       dateFormatter: DateFormat,
         ///       description: string,
         ///       guid: string,
         ///       name: string,
@@ -6185,6 +6820,36 @@ namespace Azure.Analytics.Purview.Catalog
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        internal HttpMessage CreateGetBusinessMetadataDefByGuidRequest(string guid, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/businessmetadatadef/guid/", false);
+            uri.AppendPath(guid, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetBusinessMetadataDefByNameRequest(string name, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/businessmetadatadef/name/", false);
+            uri.AppendPath(name, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
         }
 
         internal HttpMessage CreateGetClassificationDefByGuidRequest(string guid, RequestContext context)

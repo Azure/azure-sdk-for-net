@@ -14,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "NetworkSecurityGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NetworkSecurityGroupResource(ArmClient client, NetworkSecurityGroupData data) : this(client, new ResourceIdentifier(data.Id))
+        internal NetworkSecurityGroupResource(ArmClient client, NetworkSecurityGroupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -256,6 +257,58 @@ namespace Azure.ResourceManager.Network
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates a network security group tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}
+        /// Operation Id: NetworkSecurityGroups_UpdateTags
+        /// </summary>
+        /// <param name="tagsObject"> Parameters supplied to update network security group tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual async Task<Response<NetworkSecurityGroupResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+
+            using var scope = _networkSecurityGroupClientDiagnostics.CreateScope("NetworkSecurityGroupResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _networkSecurityGroupRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new NetworkSecurityGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates a network security group tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}
+        /// Operation Id: NetworkSecurityGroups_UpdateTags
+        /// </summary>
+        /// <param name="tagsObject"> Parameters supplied to update network security group tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual Response<NetworkSecurityGroupResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+
+            using var scope = _networkSecurityGroupClientDiagnostics.CreateScope("NetworkSecurityGroupResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _networkSecurityGroupRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken);
+                return Response.FromValue(new NetworkSecurityGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

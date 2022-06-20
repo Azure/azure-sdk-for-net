@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -69,8 +70,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             string fileSystemName = default,
             IDictionary<string, string> metadata = default,
             PublicAccessType? publicAccessType = default,
-            bool premium = default)
-            => await DataLakeClientBuilder.GetNewFileSystem(service, fileSystemName, metadata, publicAccessType, premium);
+            bool premium = default,
+            bool hnsEnabled = true)
+            => await DataLakeClientBuilder.GetNewFileSystem(service, fileSystemName, metadata, publicAccessType, premium, hnsEnabled);
 
         public DataLakeClientOptions GetOptions(bool parallelRange = false)
             => DataLakeClientBuilder.GetOptions(parallelRange);
@@ -132,6 +134,31 @@ namespace Azure.Storage.Files.DataLake.Tests
                     Assert.Fail($"Expected key <{kvp.Key}> with value <{kvp.Value}> not found");
                 }
             }
+        }
+
+        public void AssertAccessControlListEquality(
+            IList<PathAccessControlItem> expected,
+             IList<PathAccessControlItem> actual)
+        {
+            Assert.AreEqual(expected.Count, actual.Count);
+            foreach (PathAccessControlItem expectedItem in expected)
+            {
+                PathAccessControlItem actualItem = actual.Where(
+                    r => r.AccessControlType == expectedItem.AccessControlType).FirstOrDefault();
+                if (actualItem == null)
+                {
+                    Assert.Fail("AccessControlItem not found");
+                }
+                AssertPathAccessControlItemEquality(expectedItem, actualItem);
+            }
+        }
+
+        public void AssertPathAccessControlItemEquality(PathAccessControlItem expected, PathAccessControlItem actual)
+        {
+            Assert.AreEqual(expected.DefaultScope, actual.DefaultScope);
+            Assert.AreEqual(expected.AccessControlType, actual.AccessControlType);
+            Assert.AreEqual(expected.EntityId, actual.EntityId);
+            Assert.AreEqual(expected.Permissions, actual.Permissions);
         }
 
         public DataLakeCustomerProvidedKey GetCustomerProvidedKey()

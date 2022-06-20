@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "P2SVpnGatewayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal P2SVpnGatewayResource(ArmClient client, P2SVpnGatewayData data) : this(client, new ResourceIdentifier(data.Id))
+        internal P2SVpnGatewayResource(ArmClient client, P2SVpnGatewayData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -190,9 +190,69 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Updates virtual wan p2s vpn gateway tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// Operation Id: P2sVpnGateways_UpdateTags
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="p2SVpnGatewayParameters"> Parameters supplied to update a virtual wan p2s vpn gateway tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="p2SVpnGatewayParameters"/> is null. </exception>
+        public virtual async Task<ArmOperation<P2SVpnGatewayResource>> UpdateAsync(WaitUntil waitUntil, TagsObject p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(p2SVpnGatewayParameters, nameof(p2SVpnGatewayParameters));
+
+            using var scope = _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateScope("P2SVpnGatewayResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _p2SVpnGatewayP2sVpnGatewaysRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<P2SVpnGatewayResource>(new P2SVpnGatewayOperationSource(Client), _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics, Pipeline, _p2SVpnGatewayP2sVpnGatewaysRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates virtual wan p2s vpn gateway tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
+        /// Operation Id: P2sVpnGateways_UpdateTags
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="p2SVpnGatewayParameters"> Parameters supplied to update a virtual wan p2s vpn gateway tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="p2SVpnGatewayParameters"/> is null. </exception>
+        public virtual ArmOperation<P2SVpnGatewayResource> Update(WaitUntil waitUntil, TagsObject p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(p2SVpnGatewayParameters, nameof(p2SVpnGatewayParameters));
+
+            using var scope = _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateScope("P2SVpnGatewayResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _p2SVpnGatewayP2sVpnGatewaysRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters, cancellationToken);
+                var operation = new NetworkArmOperation<P2SVpnGatewayResource>(new P2SVpnGatewayOperationSource(Client), _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics, Pipeline, _p2SVpnGatewayP2sVpnGatewaysRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Resets the primary of the p2s vpn gateway in the specified resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}/reset
-        /// Operation Id: P2sVpnGateways_Reset
+        /// Operation Id: P2SVpnGateways_Reset
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -218,7 +278,7 @@ namespace Azure.ResourceManager.Network
         /// <summary>
         /// Resets the primary of the p2s vpn gateway in the specified resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}/reset
-        /// Operation Id: P2sVpnGateways_Reset
+        /// Operation Id: P2SVpnGateways_Reset
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -304,7 +364,7 @@ namespace Azure.ResourceManager.Network
         /// <summary>
         /// Gets the connection health of P2S clients of the virtual wan P2SVpnGateway in the specified resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}/getP2sVpnConnectionHealth
-        /// Operation Id: P2sVpnGateways_GetP2SVpnConnectionHealth
+        /// Operation Id: P2sVpnGateways_GetP2sVpnConnectionHealth
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -330,7 +390,7 @@ namespace Azure.ResourceManager.Network
         /// <summary>
         /// Gets the connection health of P2S clients of the virtual wan P2SVpnGateway in the specified resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}/getP2sVpnConnectionHealth
-        /// Operation Id: P2sVpnGateways_GetP2SVpnConnectionHealth
+        /// Operation Id: P2sVpnGateways_GetP2sVpnConnectionHealth
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -356,7 +416,7 @@ namespace Azure.ResourceManager.Network
         /// <summary>
         /// Gets the sas url to get the connection health detail of P2S clients of the virtual wan P2SVpnGateway in the specified resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}/getP2sVpnConnectionHealthDetailed
-        /// Operation Id: P2sVpnGateways_GetP2SVpnConnectionHealthDetailed
+        /// Operation Id: P2sVpnGateways_GetP2sVpnConnectionHealthDetailed
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request parameters supplied to get p2s vpn connections detailed health. </param>
@@ -386,7 +446,7 @@ namespace Azure.ResourceManager.Network
         /// <summary>
         /// Gets the sas url to get the connection health detail of P2S clients of the virtual wan P2SVpnGateway in the specified resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}/getP2sVpnConnectionHealthDetailed
-        /// Operation Id: P2sVpnGateways_GetP2SVpnConnectionHealthDetailed
+        /// Operation Id: P2sVpnGateways_GetP2sVpnConnectionHealthDetailed
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request parameters supplied to get p2s vpn connections detailed health. </param>
@@ -416,7 +476,7 @@ namespace Azure.ResourceManager.Network
         /// <summary>
         /// Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{p2sVpnGatewayName}/disconnectP2sVpnConnections
-        /// Operation Id: P2sVpnGateways_DisconnectP2SVpnConnections
+        /// Operation Id: P2sVpnGateways_DisconnectP2sVpnConnections
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="request"> The parameters are supplied to disconnect p2s vpn connections. </param>
@@ -446,7 +506,7 @@ namespace Azure.ResourceManager.Network
         /// <summary>
         /// Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{p2sVpnGatewayName}/disconnectP2sVpnConnections
-        /// Operation Id: P2sVpnGateways_DisconnectP2SVpnConnections
+        /// Operation Id: P2sVpnGateways_DisconnectP2sVpnConnections
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="request"> The parameters are supplied to disconnect p2s vpn connections. </param>

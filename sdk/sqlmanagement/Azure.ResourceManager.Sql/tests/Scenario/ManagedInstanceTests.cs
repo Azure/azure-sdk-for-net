@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                         {
                             new Delegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql"}
                         },
-                        RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id.ToString() },
-                        NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id.ToString() },
+                        RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id },
+                        NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id },
                     }
                 },
             };
@@ -103,7 +103,6 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 MaintenanceConfigurationId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
                 ProxyOverride = new ManagedInstanceProxyOverride("Proxy") { },
                 TimezoneId = "UTC",
-                StorageAccountType = new StorageAccountType("GRS"),
                 ZoneRedundant = false,
             };
             var managedInstanceLro = await _resourceGroup.GetManagedInstances().CreateOrUpdateAsync(WaitUntil.Completed, managedInstanceName, data);
@@ -113,6 +112,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
         [Test]
         [RecordedTest]
+        [Ignore("Re-record before GA")]
         public async Task ManagedInstanceApiTests()
         {
             //Because MangedInstance deployment takes a lot of time(more than 4.5 hours), the test cases are not separated separately

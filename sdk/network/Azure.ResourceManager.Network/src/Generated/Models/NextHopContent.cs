@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sourceIPAddress"> The source IP address. </param>
         /// <param name="destinationIPAddress"> The destination IP address. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="sourceIPAddress"/> or <paramref name="destinationIPAddress"/> is null. </exception>
-        public NextHopContent(string targetResourceId, string sourceIPAddress, string destinationIPAddress)
+        public NextHopContent(ResourceIdentifier targetResourceId, string sourceIPAddress, string destinationIPAddress)
         {
             if (targetResourceId == null)
             {
@@ -38,12 +39,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The resource identifier of the target resource against which the action is to be performed. </summary>
-        public string TargetResourceId { get; }
+        public ResourceIdentifier TargetResourceId { get; }
         /// <summary> The source IP address. </summary>
         public string SourceIPAddress { get; }
         /// <summary> The destination IP address. </summary>
         public string DestinationIPAddress { get; }
         /// <summary> The NIC ID. (If VM has multiple NICs and IP forwarding is enabled on any of the nics, then this parameter must be specified. Otherwise optional). </summary>
-        public string TargetNicResourceId { get; set; }
+        public ResourceIdentifier TargetNicResourceId { get; set; }
     }
 }

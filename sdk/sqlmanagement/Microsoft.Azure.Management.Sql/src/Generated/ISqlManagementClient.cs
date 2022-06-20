@@ -98,11 +98,6 @@ namespace Microsoft.Azure.Management.Sql
         IElasticPoolsOperations ElasticPools { get; }
 
         /// <summary>
-        /// Gets the IReplicationLinksOperations.
-        /// </summary>
-        IReplicationLinksOperations ReplicationLinks { get; }
-
-        /// <summary>
         /// Gets the IServerCommunicationLinksOperations.
         /// </summary>
         IServerCommunicationLinksOperations ServerCommunicationLinks { get; }
@@ -126,26 +121,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IServerUsagesOperations.
         /// </summary>
         IServerUsagesOperations ServerUsages { get; }
-
-        /// <summary>
-        /// Gets the IExtendedDatabaseBlobAuditingPoliciesOperations.
-        /// </summary>
-        IExtendedDatabaseBlobAuditingPoliciesOperations ExtendedDatabaseBlobAuditingPolicies { get; }
-
-        /// <summary>
-        /// Gets the IExtendedServerBlobAuditingPoliciesOperations.
-        /// </summary>
-        IExtendedServerBlobAuditingPoliciesOperations ExtendedServerBlobAuditingPolicies { get; }
-
-        /// <summary>
-        /// Gets the IServerBlobAuditingPoliciesOperations.
-        /// </summary>
-        IServerBlobAuditingPoliciesOperations ServerBlobAuditingPolicies { get; }
-
-        /// <summary>
-        /// Gets the IDatabaseBlobAuditingPoliciesOperations.
-        /// </summary>
-        IDatabaseBlobAuditingPoliciesOperations DatabaseBlobAuditingPolicies { get; }
 
         /// <summary>
         /// Gets the IDatabaseAdvisorsOperations.
@@ -343,16 +318,6 @@ namespace Microsoft.Azure.Management.Sql
         IManagedDatabaseSecurityEventsOperations ManagedDatabaseSecurityEvents { get; }
 
         /// <summary>
-        /// Gets the IManagedDatabaseSensitivityLabelsOperations.
-        /// </summary>
-        IManagedDatabaseSensitivityLabelsOperations ManagedDatabaseSensitivityLabels { get; }
-
-        /// <summary>
-        /// Gets the IManagedDatabaseRecommendedSensitivityLabelsOperations.
-        /// </summary>
-        IManagedDatabaseRecommendedSensitivityLabelsOperations ManagedDatabaseRecommendedSensitivityLabels { get; }
-
-        /// <summary>
         /// Gets the IManagedDatabaseTablesOperations.
         /// </summary>
         IManagedDatabaseTablesOperations ManagedDatabaseTables { get; }
@@ -461,16 +426,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IRestorePointsOperations.
         /// </summary>
         IRestorePointsOperations RestorePoints { get; }
-
-        /// <summary>
-        /// Gets the ISensitivityLabelsOperations.
-        /// </summary>
-        ISensitivityLabelsOperations SensitivityLabels { get; }
-
-        /// <summary>
-        /// Gets the IRecommendedSensitivityLabelsOperations.
-        /// </summary>
-        IRecommendedSensitivityLabelsOperations RecommendedSensitivityLabels { get; }
 
         /// <summary>
         /// Gets the IServerAdvisorsOperations.
@@ -671,6 +626,56 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IIPv6FirewallRulesOperations.
         /// </summary>
         IIPv6FirewallRulesOperations IPv6FirewallRules { get; }
+
+        /// <summary>
+        /// Gets the IEndpointCertificatesOperations.
+        /// </summary>
+        IEndpointCertificatesOperations EndpointCertificates { get; }
+
+        /// <summary>
+        /// Gets the IReplicationLinksOperations.
+        /// </summary>
+        IReplicationLinksOperations ReplicationLinks { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseSensitivityLabelsOperations.
+        /// </summary>
+        IManagedDatabaseSensitivityLabelsOperations ManagedDatabaseSensitivityLabels { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseRecommendedSensitivityLabelsOperations.
+        /// </summary>
+        IManagedDatabaseRecommendedSensitivityLabelsOperations ManagedDatabaseRecommendedSensitivityLabels { get; }
+
+        /// <summary>
+        /// Gets the ISensitivityLabelsOperations.
+        /// </summary>
+        ISensitivityLabelsOperations SensitivityLabels { get; }
+
+        /// <summary>
+        /// Gets the IRecommendedSensitivityLabelsOperations.
+        /// </summary>
+        IRecommendedSensitivityLabelsOperations RecommendedSensitivityLabels { get; }
+
+        /// <summary>
+        /// Gets the IServerBlobAuditingPoliciesOperations.
+        /// </summary>
+        IServerBlobAuditingPoliciesOperations ServerBlobAuditingPolicies { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseBlobAuditingPoliciesOperations.
+        /// </summary>
+        IDatabaseBlobAuditingPoliciesOperations DatabaseBlobAuditingPolicies { get; }
+
+        /// <summary>
+        /// Gets the IExtendedDatabaseBlobAuditingPoliciesOperations.
+        /// </summary>
+        IExtendedDatabaseBlobAuditingPoliciesOperations ExtendedDatabaseBlobAuditingPolicies { get; }
+
+        /// <summary>
+        /// Gets the IExtendedServerBlobAuditingPoliciesOperations.
+        /// </summary>
+        IExtendedServerBlobAuditingPoliciesOperations ExtendedServerBlobAuditingPolicies { get; }
 
     }
 }

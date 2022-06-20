@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: CheckNameAvailability
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityAsync(this TenantResource tenantResource, CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<CdnNameAvailabilityResult>> CheckCdnNameAvailabilityAsync(this TenantResource tenantResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(tenantResource).CheckCdnNameAvailabilityAsync(input, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(tenantResource).CheckCdnNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: CheckNameAvailability
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public static Response<CheckNameAvailabilityOutput> CheckCdnNameAvailability(this TenantResource tenantResource, CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<CdnNameAvailabilityResult> CheckCdnNameAvailability(this TenantResource tenantResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(tenantResource).CheckCdnNameAvailability(input, cancellationToken);
+            return GetExtensionClient(tenantResource).CheckCdnNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -101,14 +101,14 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: CheckNameAvailabilityWithSubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityWithSubscriptionAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<CdnNameAvailabilityResult>> CheckCdnNameAvailabilityWithSubscriptionAsync(this SubscriptionResource subscriptionResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckCdnNameAvailabilityWithSubscriptionAsync(input, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckCdnNameAvailabilityWithSubscriptionAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -117,14 +117,14 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: CheckNameAvailabilityWithSubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public static Response<CheckNameAvailabilityOutput> CheckCdnNameAvailabilityWithSubscription(this SubscriptionResource subscriptionResource, CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<CdnNameAvailabilityResult> CheckCdnNameAvailabilityWithSubscription(this SubscriptionResource subscriptionResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckCdnNameAvailabilityWithSubscription(input, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckCdnNameAvailabilityWithSubscription(content, cancellationToken);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<ValidateProbeOutput>> ValidateProbeAsync(this SubscriptionResource subscriptionResource, ValidateProbeContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<ValidateProbeResult>> ValidateProbeAsync(this SubscriptionResource subscriptionResource, ValidateProbeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<ValidateProbeOutput> ValidateProbe(this SubscriptionResource subscriptionResource, ValidateProbeContent content, CancellationToken cancellationToken = default)
+        public static Response<ValidateProbeResult> ValidateProbe(this SubscriptionResource subscriptionResource, ValidateProbeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CheckEndpointNameAvailabilityOutput>> CheckEndpointNameAvailabilityAsync(this ResourceGroupResource resourceGroupResource, CheckEndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<EndpointNameAvailabilityResult>> CheckEndpointNameAvailabilityAsync(this ResourceGroupResource resourceGroupResource, EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -351,179 +351,179 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CheckEndpointNameAvailabilityOutput> CheckEndpointNameAvailability(this ResourceGroupResource resourceGroupResource, CheckEndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<EndpointNameAvailabilityResult> CheckEndpointNameAvailability(this ResourceGroupResource resourceGroupResource, EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
             return GetExtensionClient(resourceGroupResource).CheckEndpointNameAvailability(content, cancellationToken);
         }
 
-        #region AfdCustomDomainResource
+        #region FrontDoorCustomDomainResource
         /// <summary>
-        /// Gets an object representing an <see cref="AfdCustomDomainResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AfdCustomDomainResource.CreateResourceIdentifier" /> to create an <see cref="AfdCustomDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FrontDoorCustomDomainResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorCustomDomainResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorCustomDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AfdCustomDomainResource" /> object. </returns>
-        public static AfdCustomDomainResource GetAfdCustomDomainResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FrontDoorCustomDomainResource" /> object. </returns>
+        public static FrontDoorCustomDomainResource GetFrontDoorCustomDomainResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AfdCustomDomainResource.ValidateResourceId(id);
-                return new AfdCustomDomainResource(client, id);
+                FrontDoorCustomDomainResource.ValidateResourceId(id);
+                return new FrontDoorCustomDomainResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AfdEndpointResource
+        #region FrontDoorEndpointResource
         /// <summary>
-        /// Gets an object representing an <see cref="AfdEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AfdEndpointResource.CreateResourceIdentifier" /> to create an <see cref="AfdEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FrontDoorEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorEndpointResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AfdEndpointResource" /> object. </returns>
-        public static AfdEndpointResource GetAfdEndpointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FrontDoorEndpointResource" /> object. </returns>
+        public static FrontDoorEndpointResource GetFrontDoorEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AfdEndpointResource.ValidateResourceId(id);
-                return new AfdEndpointResource(client, id);
+                FrontDoorEndpointResource.ValidateResourceId(id);
+                return new FrontDoorEndpointResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AfdOriginGroupResource
+        #region FrontDoorOriginGroupResource
         /// <summary>
-        /// Gets an object representing an <see cref="AfdOriginGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AfdOriginGroupResource.CreateResourceIdentifier" /> to create an <see cref="AfdOriginGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FrontDoorOriginGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorOriginGroupResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorOriginGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AfdOriginGroupResource" /> object. </returns>
-        public static AfdOriginGroupResource GetAfdOriginGroupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FrontDoorOriginGroupResource" /> object. </returns>
+        public static FrontDoorOriginGroupResource GetFrontDoorOriginGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AfdOriginGroupResource.ValidateResourceId(id);
-                return new AfdOriginGroupResource(client, id);
+                FrontDoorOriginGroupResource.ValidateResourceId(id);
+                return new FrontDoorOriginGroupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AfdOriginResource
+        #region FrontDoorOriginResource
         /// <summary>
-        /// Gets an object representing an <see cref="AfdOriginResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AfdOriginResource.CreateResourceIdentifier" /> to create an <see cref="AfdOriginResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FrontDoorOriginResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorOriginResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorOriginResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AfdOriginResource" /> object. </returns>
-        public static AfdOriginResource GetAfdOriginResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FrontDoorOriginResource" /> object. </returns>
+        public static FrontDoorOriginResource GetFrontDoorOriginResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AfdOriginResource.ValidateResourceId(id);
-                return new AfdOriginResource(client, id);
+                FrontDoorOriginResource.ValidateResourceId(id);
+                return new FrontDoorOriginResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AfdRouteResource
+        #region FrontDoorRouteResource
         /// <summary>
-        /// Gets an object representing an <see cref="AfdRouteResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AfdRouteResource.CreateResourceIdentifier" /> to create an <see cref="AfdRouteResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FrontDoorRouteResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorRouteResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorRouteResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AfdRouteResource" /> object. </returns>
-        public static AfdRouteResource GetAfdRouteResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FrontDoorRouteResource" /> object. </returns>
+        public static FrontDoorRouteResource GetFrontDoorRouteResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AfdRouteResource.ValidateResourceId(id);
-                return new AfdRouteResource(client, id);
+                FrontDoorRouteResource.ValidateResourceId(id);
+                return new FrontDoorRouteResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AfdRuleSetResource
+        #region FrontDoorRuleSetResource
         /// <summary>
-        /// Gets an object representing an <see cref="AfdRuleSetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AfdRuleSetResource.CreateResourceIdentifier" /> to create an <see cref="AfdRuleSetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FrontDoorRuleSetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorRuleSetResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorRuleSetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AfdRuleSetResource" /> object. </returns>
-        public static AfdRuleSetResource GetAfdRuleSetResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FrontDoorRuleSetResource" /> object. </returns>
+        public static FrontDoorRuleSetResource GetFrontDoorRuleSetResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AfdRuleSetResource.ValidateResourceId(id);
-                return new AfdRuleSetResource(client, id);
+                FrontDoorRuleSetResource.ValidateResourceId(id);
+                return new FrontDoorRuleSetResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AfdRuleResource
+        #region FrontDoorRuleResource
         /// <summary>
-        /// Gets an object representing an <see cref="AfdRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AfdRuleResource.CreateResourceIdentifier" /> to create an <see cref="AfdRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FrontDoorRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorRuleResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AfdRuleResource" /> object. </returns>
-        public static AfdRuleResource GetAfdRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FrontDoorRuleResource" /> object. </returns>
+        public static FrontDoorRuleResource GetFrontDoorRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AfdRuleResource.ValidateResourceId(id);
-                return new AfdRuleResource(client, id);
+                FrontDoorRuleResource.ValidateResourceId(id);
+                return new FrontDoorRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AfdSecurityPolicyResource
+        #region FrontDoorSecurityPolicyResource
         /// <summary>
-        /// Gets an object representing an <see cref="AfdSecurityPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AfdSecurityPolicyResource.CreateResourceIdentifier" /> to create an <see cref="AfdSecurityPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FrontDoorSecurityPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorSecurityPolicyResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorSecurityPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AfdSecurityPolicyResource" /> object. </returns>
-        public static AfdSecurityPolicyResource GetAfdSecurityPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FrontDoorSecurityPolicyResource" /> object. </returns>
+        public static FrontDoorSecurityPolicyResource GetFrontDoorSecurityPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AfdSecurityPolicyResource.ValidateResourceId(id);
-                return new AfdSecurityPolicyResource(client, id);
+                FrontDoorSecurityPolicyResource.ValidateResourceId(id);
+                return new FrontDoorSecurityPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AfdSecretResource
+        #region FrontDoorSecretResource
         /// <summary>
-        /// Gets an object representing an <see cref="AfdSecretResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AfdSecretResource.CreateResourceIdentifier" /> to create an <see cref="AfdSecretResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FrontDoorSecretResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorSecretResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorSecretResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AfdSecretResource" /> object. </returns>
-        public static AfdSecretResource GetAfdSecretResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FrontDoorSecretResource" /> object. </returns>
+        public static FrontDoorSecretResource GetFrontDoorSecretResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AfdSecretResource.ValidateResourceId(id);
-                return new AfdSecretResource(client, id);
+                FrontDoorSecretResource.ValidateResourceId(id);
+                return new FrontDoorSecretResource(client, id);
             }
             );
         }

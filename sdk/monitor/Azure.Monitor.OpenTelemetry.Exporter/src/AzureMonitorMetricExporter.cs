@@ -5,13 +5,13 @@ using System;
 using System.Threading;
 
 using Azure.Core.Pipeline;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    [AggregationTemporality(AggregationTemporality.Delta)]
     internal class AzureMonitorMetricExporter : BaseExporter<Metric>
     {
         private readonly ITransmitter _transmitter;
@@ -59,7 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.Write($"FailedToExport{EventLevelSuffix.Error}", ex.LogAsyncException());
+                AzureMonitorExporterEventSource.Log.WriteError("FailedToExport", ex);
                 return ExportResult.Failure;
             }
         }

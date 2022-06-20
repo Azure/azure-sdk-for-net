@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of RoleInstanceResources in the CloudService. </summary>
-        /// <returns> An object representing collection of RoleInstanceResources and their operations over a RoleInstanceResource. </returns>
-        public virtual RoleInstanceCollection GetRoleInstances()
+        /// <summary> Gets a collection of CloudServiceRoleInstanceResources in the CloudService. </summary>
+        /// <returns> An object representing collection of CloudServiceRoleInstanceResources and their operations over a CloudServiceRoleInstanceResource. </returns>
+        public virtual CloudServiceRoleInstanceCollection GetCloudServiceRoleInstances()
         {
-            return GetCachedClient(Client => new RoleInstanceCollection(Client, Id));
+            return GetCachedClient(Client => new CloudServiceRoleInstanceCollection(Client, Id));
         }
 
         /// <summary>
@@ -111,9 +111,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RoleInstanceResource>> GetRoleInstanceAsync(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CloudServiceRoleInstanceResource>> GetCloudServiceRoleInstanceAsync(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetRoleInstances().GetAsync(roleInstanceName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetCloudServiceRoleInstances().GetAsync(roleInstanceName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -127,9 +127,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RoleInstanceResource> GetRoleInstance(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<CloudServiceRoleInstanceResource> GetCloudServiceRoleInstance(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            return GetRoleInstances().Get(roleInstanceName, expand, cancellationToken);
+            return GetCloudServiceRoleInstances().Get(roleInstanceName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of CloudServiceRoleResources in the CloudService. </summary>
@@ -260,6 +260,66 @@ namespace Azure.ResourceManager.Compute
                 var operation = new ComputeArmOperation(_cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a cloud service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}
+        /// Operation Id: CloudServices_Update
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> The cloud service object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<CloudServiceResource>> UpdateAsync(WaitUntil waitUntil, CloudServicePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _cloudServiceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation<CloudServiceResource>(new CloudServiceOperationSource(Client), _cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a cloud service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}
+        /// Operation Id: CloudServices_Update
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> The cloud service object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<CloudServiceResource> Update(WaitUntil waitUntil, CloudServicePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _cloudServiceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new ComputeArmOperation<CloudServiceResource>(new CloudServiceOperationSource(Client), _cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)

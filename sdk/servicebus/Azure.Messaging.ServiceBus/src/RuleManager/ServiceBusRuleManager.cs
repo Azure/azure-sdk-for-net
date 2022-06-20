@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,7 +16,8 @@ using Azure.Messaging.ServiceBus.Administration;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// Manages rules for subscriptions.
+    /// The <see cref="ServiceBusRuleManager"/> allows rules for a subscription to be managed. The rule manager requires only
+    /// Listen claims, whereas the <see cref="ServiceBusAdministrationClient"/> requires Manage claims.
     /// </summary>
     public class ServiceBusRuleManager : IAsyncDisposable
     {
@@ -107,12 +109,12 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
-        public virtual async Task AddRuleAsync(
+        public virtual async Task CreateRuleAsync(
             string ruleName,
             RuleFilter filter,
             CancellationToken cancellationToken = default)
         {
-            await AddRuleAsync(new CreateRuleOptions(ruleName, filter), cancellationToken).ConfigureAwait(false);
+            await CreateRuleAsync(new CreateRuleOptions(ruleName, filter), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -130,7 +132,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
-        public virtual async Task AddRuleAsync(
+        public virtual async Task CreateRuleAsync(
             CreateRuleOptions options,
             CancellationToken cancellationToken = default)
         {
@@ -138,7 +140,7 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotNull(options, nameof(options));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             EntityNameFormatter.CheckValidRuleName(options.Name);
-            ServiceBusEventSource.Log.AddRuleStart(Identifier, options.Name);
+            ServiceBusEventSource.Log.CreateRuleStart(Identifier, options.Name);
 
             try
             {
@@ -148,12 +150,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.AddRuleException(Identifier, exception.ToString());
+                ServiceBusEventSource.Log.CreateRuleException(Identifier, exception.ToString(), options.Name);
                 throw;
             }
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.AddRuleComplete(Identifier);
+            ServiceBusEventSource.Log.CreateRuleComplete(Identifier, options.Name);
         }
 
         /// <summary>
@@ -164,14 +166,14 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task instance that represents the asynchronous remove rule operation.</returns>
-        public virtual async Task RemoveRuleAsync(
+        public virtual async Task DeleteRuleAsync(
             string ruleName,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusRuleManager));
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.RemoveRuleStart(Identifier, ruleName);
+            ServiceBusEventSource.Log.DeleteRuleStart(Identifier, ruleName);
 
             try
             {
@@ -181,40 +183,51 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.RemoveRuleException(Identifier, exception.ToString());
+                ServiceBusEventSource.Log.DeleteRuleException(Identifier, exception.ToString(), ruleName);
                 throw;
             }
 
-            ServiceBusEventSource.Log.RemoveRuleComplete(Identifier);
+            ServiceBusEventSource.Log.DeleteRuleComplete(Identifier, ruleName);
         }
 
         /// <summary>
-        /// Get all rules associated with the subscription.
+        /// Iterates over the rules associated with the subscription.
         /// </summary>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>Returns a list of <see cref="RuleProperties"/></returns>
-        public virtual async Task<IReadOnlyList<RuleProperties>> GetRulesAsync(CancellationToken cancellationToken = default)
+        /// <returns>Returns each rule on the associated subscription.</returns>
+        public virtual async IAsyncEnumerable<RuleProperties> GetRulesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusRuleManager));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.GetRuleStart(Identifier);
-            List<RuleProperties> rulePropertiesList;
+            ServiceBusEventSource.Log.GetRulesStart(Identifier);
+            int skip = 0;
 
-            try
+            while (!cancellationToken.IsCancellationRequested)
             {
-                rulePropertiesList = await InnerRuleManager.GetRulesAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception exception)
-            {
-                ServiceBusEventSource.Log.GetRuleException(Identifier, exception.ToString());
-                throw;
+                List<RuleProperties> ruleProperties;
+                try
+                {
+                    ruleProperties = await InnerRuleManager.GetRulesAsync(skip, cancellationToken).ConfigureAwait(false);
+                }
+                catch (Exception exception)
+                {
+                    ServiceBusEventSource.Log.GetRulesException(Identifier, exception.ToString());
+                    throw;
+                }
+                skip += ruleProperties.Count;
+                if (ruleProperties.Count == 0)
+                {
+                    break;
+                }
+
+                foreach (var rule in ruleProperties)
+                {
+                    yield return rule;
+                }
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.GetRuleComplete(Identifier);
-            return rulePropertiesList;
+            ServiceBusEventSource.Log.GetRulesComplete(Identifier);
         }
 
         /// <summary>
@@ -234,16 +247,17 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Performs the task needed to clean up resources used by the <see cref="ServiceBusRuleManager" />.
         /// </summary>
-        ///
+        /// <param name="cancellationToken"> An optional<see cref="CancellationToken"/> instance to signal the
+        /// request to cancel the operation.</param>
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public virtual async Task CloseAsync()
+        public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
             IsClosed = true;
 
             ServiceBusEventSource.Log.ClientCloseStart(typeof(ServiceBusRuleManager), Identifier);
             try
             {
-                await InnerRuleManager.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                await InnerRuleManager.CloseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

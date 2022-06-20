@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ApplicationGatewayResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ApplicationGatewayResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ApplicationGatewayData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class ApplicationGatewayData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public ApplicationGatewayData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayAuthenticationCertificate> AuthenticationCertificates { get { throw null; } }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayCustomError> CustomErrorConfigurations { get { throw null; } }
         public bool? EnableFips { get { throw null; } set { } }
         public bool? EnableHttp2 { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.Core.ResourceIdentifier FirewallPolicyId { get { throw null; } set { } }
         public bool? ForceFirewallPolicyAssociation { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayFrontendIPConfiguration> FrontendIPConfigurations { get { throw null; } }
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Network
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.ApplicationGatewayPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayPrivateLinkConfiguration> PrivateLinkConfigurations { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayProbe> Probes { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayRedirectConfiguration> RedirectConfigurations { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayRequestRoutingRule> RequestRoutingRules { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayRewriteRuleSet> RewriteRuleSets { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewaySku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewaySslCertificate> SslCertificates { get { throw null; } }
@@ -67,16 +67,14 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ApplicationGatewayPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ApplicationGatewayPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ApplicationGatewayPrivateEndpointConnectionData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ApplicationGatewayPrivateEndpointConnectionData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayPrivateEndpointConnectionData() { }
-        public string Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string LinkIdentifier { get { throw null; } }
-        public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Network.PrivateEndpointData PrivateEndpoint { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class ApplicationGatewayPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
     {
@@ -89,6 +87,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.ApplicationGatewayPrivateEndpointConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ApplicationGatewayPrivateEndpointConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.ApplicationGatewayPrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.ApplicationGatewayPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.ApplicationGatewayPrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.ApplicationGatewayPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ApplicationGatewayResource : Azure.ResourceManager.ArmResource
     {
@@ -120,6 +120,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Stop(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.ApplicationGatewayResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ApplicationGatewayResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ApplicationSecurityGroupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.ApplicationSecurityGroupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ApplicationSecurityGroupResource>, System.Collections.IEnumerable
     {
@@ -136,12 +138,12 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ApplicationSecurityGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ApplicationSecurityGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ApplicationSecurityGroupData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class ApplicationSecurityGroupData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public ApplicationSecurityGroupData() { }
-        public string Etag { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
     }
     public partial class ApplicationSecurityGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -160,6 +162,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ApplicationSecurityGroupResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.ApplicationSecurityGroupResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ApplicationSecurityGroupResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.ApplicationSecurityGroupResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ApplicationSecurityGroupResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AzureFirewallCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.AzureFirewallResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.AzureFirewallResource>, System.Collections.IEnumerable
     {
@@ -176,20 +180,20 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.AzureFirewallResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.AzureFirewallResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AzureFirewallData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class AzureFirewallData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public AzureFirewallData() { }
         public System.Collections.Generic.IDictionary<string, string> AdditionalProperties { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.AzureFirewallApplicationRuleCollection> ApplicationRuleCollections { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.AzureFirewallApplicationRuleCollectionData> ApplicationRuleCollections { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.Core.ResourceIdentifier FirewallPolicyId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.HubIPAddresses HubIPAddresses { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.AzureFirewallIPConfiguration> IPConfigurations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.AzureFirewallIPGroups> IPGroups { get { throw null; } }
         public Azure.ResourceManager.Network.Models.AzureFirewallIPConfiguration ManagementIPConfiguration { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.AzureFirewallNatRuleCollection> NatRuleCollections { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.AzureFirewallNetworkRuleCollection> NetworkRuleCollections { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.AzureFirewallNatRuleCollectionData> NatRuleCollections { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.AzureFirewallNetworkRuleCollectionData> NetworkRuleCollections { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.AzureFirewallSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.AzureFirewallThreatIntelMode? ThreatIntelMode { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier VirtualHubId { get { throw null; } set { } }
@@ -212,6 +216,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.AzureFirewallResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.AzureFirewallResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.AzureFirewallResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.AzureFirewallResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.AzureFirewallResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AzureWebCategoryCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.AzureWebCategoryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.AzureWebCategoryResource>, System.Collections.IEnumerable
     {
@@ -229,7 +235,7 @@ namespace Azure.ResourceManager.Network
     public partial class AzureWebCategoryData : Azure.ResourceManager.Models.ResourceData
     {
         internal AzureWebCategoryData() { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string Group { get { throw null; } }
     }
     public partial class AzureWebCategoryResource : Azure.ResourceManager.ArmResource
@@ -257,19 +263,17 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.BackendAddressPoolResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.BackendAddressPoolResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class BackendAddressPoolData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class BackendAddressPoolData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public BackendAddressPoolData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData> BackendIPConfigurations { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.LoadBalancerBackendAddress> LoadBalancerBackendAddresses { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> LoadBalancingRules { get { throw null; } }
-        public string Location { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier OutboundRuleId { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier OutboundRuleId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> OutboundRules { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelInterface> TunnelInterfaces { get { throw null; } }
     }
     public partial class BackendAddressPoolResource : Azure.ResourceManager.ArmResource
@@ -283,6 +287,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.BackendAddressPoolResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.BackendAddressPoolResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.BackendAddressPoolResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.BackendAddressPoolData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.BackendAddressPoolResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.BackendAddressPoolData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class BastionHostCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.BastionHostResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.BastionHostResource>, System.Collections.IEnumerable
     {
@@ -299,13 +305,13 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.BastionHostResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.BastionHostResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class BastionHostData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class BastionHostData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public BastionHostData() { }
         public string DnsName { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.BastionHostIPConfiguration> IPConfigurations { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.BastionHostSkuName? SkuName { get { throw null; } set { } }
     }
     public partial class BastionHostResource : Azure.ResourceManager.ArmResource
@@ -325,6 +331,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.BastionHostResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.BastionHostResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.BastionHostResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.BastionHostResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.BastionHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.BastionHostResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.BastionHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class BgpConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.BgpConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.BgpConnectionResource>, System.Collections.IEnumerable
     {
@@ -341,16 +349,14 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.BgpConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.BgpConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class BgpConnectionData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class BgpConnectionData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public BgpConnectionData() { }
         public Azure.ResourceManager.Network.Models.HubBgpConnectionStatus? ConnectionState { get { throw null; } }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public long? PeerAsn { get { throw null; } set { } }
         public string PeerIP { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class BgpConnectionResource : Azure.ResourceManager.ArmResource
     {
@@ -367,6 +373,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.BgpConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PeerRouteList> GetLearnedRoutesVirtualHubBgpConnection(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PeerRouteList>> GetLearnedRoutesVirtualHubBgpConnectionAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.BgpConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.BgpConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.BgpConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.BgpConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ConnectionMonitorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.ConnectionMonitorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ConnectionMonitorResource>, System.Collections.IEnumerable
     {
@@ -390,13 +398,13 @@ namespace Azure.ResourceManager.Network
         public Azure.ResourceManager.Network.Models.ConnectionMonitorType? ConnectionMonitorType { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ConnectionMonitorDestination Destination { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ConnectionMonitorEndpoint> Endpoints { get { throw null; } }
-        public string Etag { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public int? MonitoringIntervalInSeconds { get { throw null; } }
         public string MonitoringStatus { get { throw null; } }
         public string Notes { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ConnectionMonitorOutput> Outputs { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ConnectionMonitorSource Source { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
@@ -426,6 +434,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Stop(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.ConnectionMonitorResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ConnectionMonitorResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CustomIPPrefixCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.CustomIPPrefixResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.CustomIPPrefixResource>, System.Collections.IEnumerable
     {
@@ -442,7 +452,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.CustomIPPrefixResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.CustomIPPrefixResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CustomIPPrefixData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class CustomIPPrefixData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public CustomIPPrefixData() { }
         public string AuthorizationMessage { get { throw null; } set { } }
@@ -450,12 +460,12 @@ namespace Azure.ResourceManager.Network
         public string Cidr { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.CommissionedState? CommissionedState { get { throw null; } set { } }
         public Azure.ResourceManager.Network.CustomIPPrefixData CustomIPPrefixParent { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public string FailedReason { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> PublicIPPrefixes { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
         public string SignedMessage { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
     }
@@ -476,6 +486,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.CustomIPPrefixResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.CustomIPPrefixResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.CustomIPPrefixResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.CustomIPPrefixResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.CustomIPPrefixResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DdosCustomPolicyCollection : Azure.ResourceManager.ArmCollection
     {
@@ -487,14 +499,14 @@ namespace Azure.ResourceManager.Network
         public virtual Azure.Response<Azure.ResourceManager.Network.DdosCustomPolicyResource> Get(string ddosCustomPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.DdosCustomPolicyResource>> GetAsync(string ddosCustomPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DdosCustomPolicyData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class DdosCustomPolicyData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public DdosCustomPolicyData() { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ProtocolCustomSettingsFormat> ProtocolCustomSettings { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> PublicIPAddresses { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
     }
     public partial class DdosCustomPolicyResource : Azure.ResourceManager.ArmResource
     {
@@ -513,6 +525,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.DdosCustomPolicyResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.DdosCustomPolicyResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.DdosCustomPolicyResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.DdosCustomPolicyResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.DdosCustomPolicyResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DdosProtectionPlanCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.DdosProtectionPlanResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.DdosProtectionPlanResource>, System.Collections.IEnumerable
     {
@@ -532,9 +546,9 @@ namespace Azure.ResourceManager.Network
     public partial class DdosProtectionPlanData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DdosProtectionPlanData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string Etag { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> VirtualNetworks { get { throw null; } }
     }
     public partial class DdosProtectionPlanResource : Azure.ResourceManager.ArmResource
@@ -554,6 +568,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.DdosProtectionPlanResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.DdosProtectionPlanResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.DdosProtectionPlanResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.DdosProtectionPlanResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.DdosProtectionPlanResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DefaultSecurityRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.DefaultSecurityRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.DefaultSecurityRuleResource>, System.Collections.IEnumerable
     {
@@ -593,18 +609,18 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.DscpConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.DscpConfigurationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DscpConfigurationData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class DscpConfigurationData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public DscpConfigurationData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.NetworkInterfaceData> AssociatedNetworkInterfaces { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.QosIPRange> DestinationIPRanges { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.QosPortRange> DestinationPortRanges { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IList<int> Markings { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ProtocolType? Protocol { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string QosCollectionId { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.QosIPRange> SourceIPRanges { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.QosPortRange> SourcePortRanges { get { throw null; } }
     }
@@ -625,6 +641,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.DscpConfigurationResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.DscpConfigurationResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.DscpConfigurationResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.DscpConfigurationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.DscpConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.DscpConfigurationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.DscpConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ExpressRouteCircuitAuthorizationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.ExpressRouteCircuitAuthorizationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRouteCircuitAuthorizationResource>, System.Collections.IEnumerable
     {
@@ -641,15 +659,13 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ExpressRouteCircuitAuthorizationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRouteCircuitAuthorizationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ExpressRouteCircuitAuthorizationData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ExpressRouteCircuitAuthorizationData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ExpressRouteCircuitAuthorizationData() { }
         public string AuthorizationKey { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.AuthorizationUseStatus? AuthorizationUseStatus { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class ExpressRouteCircuitAuthorizationResource : Azure.ResourceManager.ArmResource
     {
@@ -662,6 +678,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.ExpressRouteCircuitAuthorizationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ExpressRouteCircuitAuthorizationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.ExpressRouteCircuitAuthorizationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.ExpressRouteCircuitAuthorizationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.ExpressRouteCircuitAuthorizationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.ExpressRouteCircuitAuthorizationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ExpressRouteCircuitCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.ExpressRouteCircuitResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRouteCircuitResource>, System.Collections.IEnumerable
     {
@@ -693,19 +711,17 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ExpressRouteCircuitConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRouteCircuitConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ExpressRouteCircuitConnectionData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ExpressRouteCircuitConnectionData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ExpressRouteCircuitConnectionData() { }
         public string AddressPrefix { get { throw null; } set { } }
         public string AuthorizationKey { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.CircuitConnectionStatus? CircuitConnectionStatus { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.Core.ResourceIdentifier ExpressRouteCircuitPeeringId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPv6CircuitConnectionConfig IPv6CircuitConnectionConfig { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PeerExpressRouteCircuitPeeringId { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class ExpressRouteCircuitConnectionResource : Azure.ResourceManager.ArmResource
     {
@@ -718,20 +734,22 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.ExpressRouteCircuitConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ExpressRouteCircuitConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.ExpressRouteCircuitConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.ExpressRouteCircuitConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.ExpressRouteCircuitConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.ExpressRouteCircuitConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ExpressRouteCircuitData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class ExpressRouteCircuitData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public ExpressRouteCircuitData() { }
         public bool? AllowClassicOperations { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.ExpressRouteCircuitAuthorizationData> Authorizations { get { throw null; } }
         public float? BandwidthInGbps { get { throw null; } set { } }
         public string CircuitProvisioningState { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.Core.ResourceIdentifier ExpressRoutePortId { get { throw null; } set { } }
         public string GatewayManagerEtag { get { throw null; } set { } }
         public bool? GlobalReachEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.ExpressRouteCircuitPeeringData> Peerings { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string ServiceKey { get { throw null; } set { } }
         public string ServiceProviderNotes { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ExpressRouteCircuitServiceProviderProperties ServiceProviderProperties { get { throw null; } set { } }
@@ -754,25 +772,23 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ExpressRouteCircuitPeeringResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRouteCircuitPeeringResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ExpressRouteCircuitPeeringData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ExpressRouteCircuitPeeringData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ExpressRouteCircuitPeeringData() { }
         public int? AzureASN { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.ExpressRouteCircuitConnectionData> Connections { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.Core.ResourceIdentifier ExpressRouteConnectionId { get { throw null; } }
         public string GatewayManagerEtag { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPv6ExpressRouteCircuitPeeringConfig IPv6PeeringConfig { get { throw null; } set { } }
         public string LastModifiedBy { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringConfig MicrosoftPeeringConfig { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public long? PeerASN { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.PeerExpressRouteCircuitConnectionData> PeeredConnections { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExpressRoutePeeringType? PeeringType { get { throw null; } set { } }
         public string PrimaryAzurePort { get { throw null; } set { } }
         public string PrimaryPeerAddressPrefix { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier RouteFilterId { get { throw null; } set { } }
         public string SecondaryAzurePort { get { throw null; } set { } }
         public string SecondaryPeerAddressPrefix { get { throw null; } set { } }
@@ -806,6 +822,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.ExpressRouteCircuitsRoutesTableListResult>> GetRoutesTableExpressRouteCircuitAsync(Azure.WaitUntil waitUntil, string devicePath, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.ExpressRouteCircuitsRoutesTableSummaryListResult> GetRoutesTableSummaryExpressRouteCircuit(Azure.WaitUntil waitUntil, string devicePath, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.ExpressRouteCircuitsRoutesTableSummaryListResult>> GetRoutesTableSummaryExpressRouteCircuitAsync(Azure.WaitUntil waitUntil, string devicePath, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.ExpressRouteCircuitPeeringResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.ExpressRouteCircuitPeeringData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.ExpressRouteCircuitPeeringResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.ExpressRouteCircuitPeeringData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ExpressRouteCircuitResource : Azure.ResourceManager.ArmResource
     {
@@ -832,6 +850,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ExpressRouteCircuitResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.ExpressRouteCircuitResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ExpressRouteCircuitResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.ExpressRouteCircuitResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ExpressRouteCircuitResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ExpressRouteConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.ExpressRouteConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRouteConnectionResource>, System.Collections.IEnumerable
     {
@@ -848,15 +868,14 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ExpressRouteConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRouteConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ExpressRouteConnectionData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ExpressRouteConnectionData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
-        public ExpressRouteConnectionData(string name) { }
+        public ExpressRouteConnectionData() { }
         public string AuthorizationKey { get { throw null; } set { } }
         public bool? EnableInternetSecurity { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ExpressRouteCircuitPeeringId { get { throw null; } set { } }
         public bool? ExpressRouteGatewayBypass { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.RoutingConfiguration RoutingConfiguration { get { throw null; } set { } }
         public int? RoutingWeight { get { throw null; } set { } }
     }
@@ -871,6 +890,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.ExpressRouteConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ExpressRouteConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.ExpressRouteConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.ExpressRouteConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.ExpressRouteConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.ExpressRouteConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ExpressRouteCrossConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.ExpressRouteCrossConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRouteCrossConnectionResource>, System.Collections.IEnumerable
     {
@@ -887,16 +908,16 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ExpressRouteCrossConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRouteCrossConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ExpressRouteCrossConnectionData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class ExpressRouteCrossConnectionData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public ExpressRouteCrossConnectionData() { }
         public int? BandwidthInMbps { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.Core.ResourceIdentifier ExpressRouteCircuitId { get { throw null; } set { } }
         public string PeeringLocation { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.ExpressRouteCrossConnectionPeeringData> Peerings { get { throw null; } }
         public string PrimaryAzurePort { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string SecondaryAzurePort { get { throw null; } }
         public string ServiceProviderNotes { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ServiceProviderProvisioningState? ServiceProviderProvisioningState { get { throw null; } set { } }
@@ -917,21 +938,20 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ExpressRouteCrossConnectionPeeringResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRouteCrossConnectionPeeringResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ExpressRouteCrossConnectionPeeringData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ExpressRouteCrossConnectionPeeringData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ExpressRouteCrossConnectionPeeringData() { }
         public int? AzureASN { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string GatewayManagerEtag { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPv6ExpressRouteCircuitPeeringConfig IPv6PeeringConfig { get { throw null; } set { } }
         public string LastModifiedBy { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringConfig MicrosoftPeeringConfig { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public long? PeerASN { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ExpressRoutePeeringType? PeeringType { get { throw null; } set { } }
         public string PrimaryAzurePort { get { throw null; } }
         public string PrimaryPeerAddressPrefix { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string SecondaryAzurePort { get { throw null; } }
         public string SecondaryPeerAddressPrefix { get { throw null; } set { } }
         public string SharedKey { get { throw null; } set { } }
@@ -955,6 +975,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.ExpressRouteCircuitsRoutesTableListResult>> GetRoutesTableExpressRouteCrossConnectionAsync(Azure.WaitUntil waitUntil, string devicePath, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.ExpressRouteCrossConnectionsRoutesTableSummaryListResult> GetRoutesTableSummaryExpressRouteCrossConnection(Azure.WaitUntil waitUntil, string devicePath, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.ExpressRouteCrossConnectionsRoutesTableSummaryListResult>> GetRoutesTableSummaryExpressRouteCrossConnectionAsync(Azure.WaitUntil waitUntil, string devicePath, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.ExpressRouteCrossConnectionPeeringResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.ExpressRouteCrossConnectionPeeringData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.ExpressRouteCrossConnectionPeeringResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.ExpressRouteCrossConnectionPeeringData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ExpressRouteCrossConnectionResource : Azure.ResourceManager.ArmResource
     {
@@ -974,6 +996,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ExpressRouteCrossConnectionResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.ExpressRouteCrossConnectionResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ExpressRouteCrossConnectionResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.ExpressRouteCrossConnectionResource> Update(Azure.ResourceManager.Network.Models.TagsObject crossConnectionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ExpressRouteCrossConnectionResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject crossConnectionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ExpressRouteGatewayCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.ExpressRouteGatewayResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRouteGatewayResource>, System.Collections.IEnumerable
     {
@@ -990,13 +1014,13 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ExpressRouteGatewayResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRouteGatewayResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ExpressRouteGatewayData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class ExpressRouteGatewayData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public ExpressRouteGatewayData() { }
         public Azure.ResourceManager.Network.Models.ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds AutoScaleBounds { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.ExpressRouteConnectionData> ExpressRouteConnections { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier VirtualHubId { get { throw null; } set { } }
     }
     public partial class ExpressRouteGatewayResource : Azure.ResourceManager.ArmResource
@@ -1019,6 +1043,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ExpressRouteGatewayResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.ExpressRouteGatewayResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ExpressRouteGatewayResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.ExpressRouteGatewayResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.TagsObject expressRouteGatewayParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.ExpressRouteGatewayResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.TagsObject expressRouteGatewayParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ExpressRouteLinkCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.ExpressRouteLinkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRouteLinkResource>, System.Collections.IEnumerable
     {
@@ -1033,17 +1059,16 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ExpressRouteLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRouteLinkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ExpressRouteLinkData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ExpressRouteLinkData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ExpressRouteLinkData() { }
         public Azure.ResourceManager.Network.Models.ExpressRouteLinkAdminState? AdminState { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ExpressRouteLinkConnectorType? ConnectorType { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string InterfaceName { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExpressRouteLinkMacSecConfig MacSecConfig { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public string PatchPanelId { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string RackId { get { throw null; } }
         public string RouterName { get { throw null; } }
     }
@@ -1072,22 +1097,22 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ExpressRoutePortResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRoutePortResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ExpressRoutePortData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class ExpressRoutePortData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public ExpressRoutePortData() { }
         public string AllocationDate { get { throw null; } }
         public int? BandwidthInGbps { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> Circuits { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExpressRoutePortsEncapsulation? Encapsulation { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string EtherType { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.ExpressRouteLinkData> Links { get { throw null; } }
         public string Mtu { get { throw null; } }
         public string PeeringLocation { get { throw null; } set { } }
         public float? ProvisionedBandwidthInGbps { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
     }
     public partial class ExpressRoutePortResource : Azure.ResourceManager.ArmResource
     {
@@ -1111,6 +1136,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ExpressRoutePortResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.ExpressRoutePortResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ExpressRoutePortResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.ExpressRoutePortResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ExpressRoutePortResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ExpressRoutePortsLocationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.ExpressRoutePortsLocationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRoutePortsLocationResource>, System.Collections.IEnumerable
     {
@@ -1125,13 +1152,13 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ExpressRoutePortsLocationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRoutePortsLocationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ExpressRoutePortsLocationData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class ExpressRoutePortsLocationData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public ExpressRoutePortsLocationData() { }
         public string Address { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ExpressRoutePortsLocationBandwidths> AvailableBandwidths { get { throw null; } }
         public string Contact { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class ExpressRoutePortsLocationResource : Azure.ResourceManager.ArmResource
     {
@@ -1164,18 +1191,18 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.FirewallPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.FirewallPolicyResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class FirewallPolicyData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class FirewallPolicyData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public FirewallPolicyData() { }
         public Azure.Core.ResourceIdentifier BasePolicyId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> ChildPolicies { get { throw null; } }
         public Azure.ResourceManager.Network.Models.DnsSettings DnsSettings { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> Firewalls { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.FirewallPolicyInsights Insights { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetection IntrusionDetection { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> RuleCollectionGroups { get { throw null; } }
         public Azure.ResourceManager.Network.Models.FirewallPolicySkuTier? SkuTier { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SnatPrivateRanges { get { throw null; } }
@@ -1203,6 +1230,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.FirewallPolicyResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.FirewallPolicyResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.FirewallPolicyResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.FirewallPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.FirewallPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.FirewallPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.FirewallPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class FirewallPolicyRuleCollectionGroupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.FirewallPolicyRuleCollectionGroupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.FirewallPolicyRuleCollectionGroupResource>, System.Collections.IEnumerable
     {
@@ -1219,15 +1248,13 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.FirewallPolicyRuleCollectionGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.FirewallPolicyRuleCollectionGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class FirewallPolicyRuleCollectionGroupData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class FirewallPolicyRuleCollectionGroupData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public FirewallPolicyRuleCollectionGroupData() { }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public int? Priority { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollection> RuleCollections { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollectionInfo> RuleCollections { get { throw null; } }
     }
     public partial class FirewallPolicyRuleCollectionGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -1240,6 +1267,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.FirewallPolicyRuleCollectionGroupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.FirewallPolicyRuleCollectionGroupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.FirewallPolicyRuleCollectionGroupResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.FirewallPolicyRuleCollectionGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.FirewallPolicyRuleCollectionGroupResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.FirewallPolicyRuleCollectionGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class FlowLogCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.FlowLogResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.FlowLogResource>, System.Collections.IEnumerable
     {
@@ -1256,18 +1285,18 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.FlowLogResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.FlowLogResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class FlowLogData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class FlowLogData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public FlowLogData() { }
         public bool? Enabled { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.FlowLogFormatParameters Format { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.RetentionPolicyParameters RetentionPolicy { get { throw null; } set { } }
         public string StorageId { get { throw null; } set { } }
-        public string TargetResourceGuid { get { throw null; } }
-        public string TargetResourceId { get { throw null; } set { } }
+        public System.Guid? TargetResourceGuid { get { throw null; } }
+        public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
     }
     public partial class FlowLogResource : Azure.ResourceManager.ArmResource
     {
@@ -1286,6 +1315,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.FlowLogResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.FlowLogResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.FlowLogResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.FlowLogResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.FlowLogResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class FrontendIPConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.FrontendIPConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.FrontendIPConfigurationResource>, System.Collections.IEnumerable
     {
@@ -1300,23 +1331,21 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.FrontendIPConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.FrontendIPConfigurationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class FrontendIPConfigurationData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class FrontendIPConfigurationData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public FrontendIPConfigurationData() { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.Core.ResourceIdentifier GatewayLoadBalancerId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> InboundNatPools { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> InboundNatRules { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> LoadBalancingRules { get { throw null; } }
-        public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> OutboundRules { get { throw null; } }
         public string PrivateIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPVersion? PrivateIPAddressVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.PublicIPAddressData PublicIPAddress { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PublicIPPrefixId { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } }
         public Azure.ResourceManager.Network.SubnetData Subnet { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
     }
@@ -1345,16 +1374,14 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.HubIPConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.HubIPConfigurationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class HubIPConfigurationData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class HubIPConfigurationData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public HubIPConfigurationData() { }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string PrivateIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.PublicIPAddressData PublicIPAddress { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } }
         public Azure.ResourceManager.Network.SubnetData Subnet { get { throw null; } set { } }
     }
     public partial class HubIPConfigurationResource : Azure.ResourceManager.ArmResource
@@ -1368,6 +1395,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.HubIPConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.HubIPConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.HubIPConfigurationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.HubIPConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.HubIPConfigurationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.HubIPConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class HubRouteTableCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.HubRouteTableResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.HubRouteTableResource>, System.Collections.IEnumerable
     {
@@ -1384,16 +1413,14 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.HubRouteTableResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.HubRouteTableResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class HubRouteTableData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class HubRouteTableData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public HubRouteTableData() { }
         public System.Collections.Generic.IReadOnlyList<string> AssociatedConnections { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IList<string> Labels { get { throw null; } }
-        public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> PropagatingConnections { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.HubRoute> Routes { get { throw null; } }
     }
     public partial class HubRouteTableResource : Azure.ResourceManager.ArmResource
@@ -1407,6 +1434,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.HubRouteTableResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.HubRouteTableResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.HubRouteTableResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.HubRouteTableData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.HubRouteTableResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.HubRouteTableData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class HubVirtualNetworkConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.HubVirtualNetworkConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.HubVirtualNetworkConnectionResource>, System.Collections.IEnumerable
     {
@@ -1423,15 +1452,14 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.HubVirtualNetworkConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.HubVirtualNetworkConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class HubVirtualNetworkConnectionData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class HubVirtualNetworkConnectionData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public HubVirtualNetworkConnectionData() { }
         public bool? AllowHubToRemoteVnetTransit { get { throw null; } set { } }
         public bool? AllowRemoteVnetToUseHubVnetGateways { get { throw null; } set { } }
         public bool? EnableInternetSecurity { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier RemoteVirtualNetworkId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.RoutingConfiguration RoutingConfiguration { get { throw null; } set { } }
     }
@@ -1446,6 +1474,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.HubVirtualNetworkConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.HubVirtualNetworkConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.HubVirtualNetworkConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.HubVirtualNetworkConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.HubVirtualNetworkConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.HubVirtualNetworkConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class InboundNatRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.InboundNatRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.InboundNatRuleResource>, System.Collections.IEnumerable
     {
@@ -1462,21 +1492,19 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.InboundNatRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.InboundNatRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class InboundNatRuleData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class InboundNatRuleData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public InboundNatRuleData() { }
         public Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData BackendIPConfiguration { get { throw null; } }
         public int? BackendPort { get { throw null; } set { } }
         public bool? EnableFloatingIP { get { throw null; } set { } }
         public bool? EnableTcpReset { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.Core.ResourceIdentifier FrontendIPConfigurationId { get { throw null; } set { } }
         public int? FrontendPort { get { throw null; } set { } }
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.TransportProtocol? Protocol { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class InboundNatRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -1489,6 +1517,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.InboundNatRuleResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.InboundNatRuleResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.InboundNatRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.InboundNatRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.InboundNatRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.InboundNatRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class IPAllocationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.IPAllocationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.IPAllocationResource>, System.Collections.IEnumerable
     {
@@ -1505,18 +1535,18 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.IPAllocationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.IPAllocationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class IPAllocationData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class IPAllocationData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public IPAllocationData() { }
         public System.Collections.Generic.IDictionary<string, string> AllocationTags { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.IPAllocationType? IPAllocationType { get { throw null; } set { } }
         public string IpamAllocationId { get { throw null; } set { } }
         public string Prefix { get { throw null; } set { } }
         public int? PrefixLength { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPVersion? PrefixType { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.IPAllocationType? TypePropertiesType { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier VirtualNetworkId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier VirtualNetworkId { get { throw null; } }
     }
     public partial class IPAllocationResource : Azure.ResourceManager.ArmResource
     {
@@ -1535,6 +1565,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.IPAllocationResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.IPAllocationResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.IPAllocationResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.IPAllocationResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.IPAllocationResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class IPGroupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.IPGroupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.IPGroupResource>, System.Collections.IEnumerable
     {
@@ -1551,14 +1583,14 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.IPGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.IPGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class IPGroupData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class IPGroupData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public IPGroupData() { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> FirewallPolicies { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> Firewalls { get { throw null; } }
         public System.Collections.Generic.IList<string> IPAddresses { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class IPGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -1577,6 +1609,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.IPGroupResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.IPGroupResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.IPGroupResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.IPGroupResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.IPGroupResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LoadBalancerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.LoadBalancerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.LoadBalancerResource>, System.Collections.IEnumerable
     {
@@ -1593,11 +1627,11 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.LoadBalancerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.LoadBalancerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class LoadBalancerData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class LoadBalancerData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public LoadBalancerData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.BackendAddressPoolData> BackendAddressPools { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.FrontendIPConfigurationData> FrontendIPConfigurations { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.InboundNatPool> InboundNatPools { get { throw null; } }
@@ -1605,8 +1639,8 @@ namespace Azure.ResourceManager.Network
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.LoadBalancingRuleData> LoadBalancingRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.OutboundRuleData> OutboundRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.ProbeData> Probes { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
         public Azure.ResourceManager.Network.Models.LoadBalancerSku Sku { get { throw null; } set { } }
     }
     public partial class LoadBalancerResource : Azure.ResourceManager.ArmResource
@@ -1646,6 +1680,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.LoadBalancerResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.LoadBalancerResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.LoadBalancerResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.LoadBalancerResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.LoadBalancerResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LoadBalancingRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.LoadBalancingRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.LoadBalancingRuleResource>, System.Collections.IEnumerable
     {
@@ -1660,7 +1696,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.LoadBalancingRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.LoadBalancingRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class LoadBalancingRuleData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class LoadBalancingRuleData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public LoadBalancingRuleData() { }
         public Azure.Core.ResourceIdentifier BackendAddressPoolId { get { throw null; } set { } }
@@ -1669,16 +1705,14 @@ namespace Azure.ResourceManager.Network
         public bool? DisableOutboundSnat { get { throw null; } set { } }
         public bool? EnableFloatingIP { get { throw null; } set { } }
         public bool? EnableTcpReset { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.Core.ResourceIdentifier FrontendIPConfigurationId { get { throw null; } set { } }
         public int? FrontendPort { get { throw null; } set { } }
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.LoadDistribution? LoadDistribution { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ProbeId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.TransportProtocol? Protocol { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class LoadBalancingRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -1705,16 +1739,16 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.LocalNetworkGatewayResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.LocalNetworkGatewayResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class LocalNetworkGatewayData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class LocalNetworkGatewayData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public LocalNetworkGatewayData() { }
         public Azure.ResourceManager.Network.Models.BgpSettings BgpSettings { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string Fqdn { get { throw null; } set { } }
         public string GatewayIPAddress { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> LocalNetworkAddressPrefixes { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
     }
     public partial class LocalNetworkGatewayResource : Azure.ResourceManager.ArmResource
     {
@@ -1733,6 +1767,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.LocalNetworkGatewayResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.LocalNetworkGatewayResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.LocalNetworkGatewayResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.LocalNetworkGatewayResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.LocalNetworkGatewayResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class NatGatewayCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.NatGatewayResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NatGatewayResource>, System.Collections.IEnumerable
     {
@@ -1749,15 +1785,15 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.NatGatewayResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NatGatewayResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NatGatewayData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class NatGatewayData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public NatGatewayData() { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> PublicIPAddresses { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> PublicIPPrefixes { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NatGatewaySkuName? SkuName { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> Subnets { get { throw null; } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
@@ -1779,15 +1815,17 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NatGatewayResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.NatGatewayResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NatGatewayResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.NatGatewayResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NatGatewayResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class NetworkExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.Network.Models.DnsNameAvailabilityResult> CheckDnsNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, string domainNameLabel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.Models.DnsNameAvailabilityResult>> CheckDnsNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, string domainNameLabel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.WaitUntil waitUntil, string location, Azure.ResourceManager.Network.Models.CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.WaitUntil waitUntil, string location, Azure.ResourceManager.Network.Models.CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityPrivateLinkService(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, string location, Azure.ResourceManager.Network.Models.CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, string location, Azure.ResourceManager.Network.Models.CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Network.Models.DnsNameAvailabilityResult> CheckDnsNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string domainNameLabel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.Models.DnsNameAvailabilityResult>> CheckDnsNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string domainNameLabel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.Network.Models.CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.Network.Models.CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityPrivateLinkService(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.Network.Models.CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.Network.Models.CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Network.ApplicationGatewayResource> GetApplicationGateway(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string applicationGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ApplicationGatewayResource>> GetApplicationGatewayAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string applicationGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1803,30 +1841,30 @@ namespace Azure.ResourceManager.Network
         public static Azure.ResourceManager.Network.ApplicationSecurityGroupCollection GetApplicationSecurityGroups(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Network.ApplicationSecurityGroupResource> GetApplicationSecurityGroups(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Network.ApplicationSecurityGroupResource> GetApplicationSecurityGroupsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Network.Models.AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Network.Models.AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServices(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Network.Models.AvailableDelegation> GetAvailableDelegations(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AvailableDelegation> GetAvailableDelegationsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Network.Models.EndpointServiceResult> GetAvailableEndpointServices(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.EndpointServiceResult> GetAvailableEndpointServicesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Network.Models.AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypes(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Network.Models.AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroup(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Network.Models.AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Network.Models.AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServices(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Network.Models.AvailableDelegation> GetAvailableDelegations(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AvailableDelegation> GetAvailableDelegationsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Network.Models.EndpointServiceResult> GetAvailableEndpointServices(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.EndpointServiceResult> GetAvailableEndpointServicesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Network.Models.AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypes(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Network.Models.AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroup(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<string> GetAvailableRequestHeadersApplicationGateways(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<string> GetAvailableRequestHeadersApplicationGatewaysAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Network.Models.AvailableDelegation> GetAvailableResourceGroupDelegations(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AvailableDelegation> GetAvailableResourceGroupDelegationsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Network.Models.AvailableDelegation> GetAvailableResourceGroupDelegations(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AvailableDelegation> GetAvailableResourceGroupDelegationsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<string> GetAvailableResponseHeadersApplicationGateways(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<string> GetAvailableResponseHeadersApplicationGatewaysAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<string> GetAvailableServerVariablesApplicationGateways(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<string> GetAvailableServerVariablesApplicationGatewaysAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Network.Models.AvailableServiceAlias> GetAvailableServiceAliases(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AvailableServiceAlias> GetAvailableServiceAliasesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Network.Models.AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroup(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Network.Models.AvailableServiceAlias> GetAvailableServiceAliases(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AvailableServiceAlias> GetAvailableServiceAliasesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Network.Models.AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroup(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Network.AzureFirewallResource> GetAzureFirewall(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string azureFirewallName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.AzureFirewallResource>> GetAzureFirewallAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string azureFirewallName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Network.Models.AzureFirewallFqdnTag> GetAzureFirewallFqdnTags(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1959,6 +1997,7 @@ namespace Azure.ResourceManager.Network
         public static Azure.Pageable<Azure.ResourceManager.Network.NetworkInterfaceResource> GetNetworkInterfaces(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Network.NetworkInterfaceResource> GetNetworkInterfacesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Network.NetworkInterfaceTapConfigurationResource GetNetworkInterfaceTapConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionResource GetNetworkPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Network.NetworkProfileResource> GetNetworkProfile(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string networkProfileName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkProfileResource>> GetNetworkProfileAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string networkProfileName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Network.NetworkProfileResource GetNetworkProfileResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1999,7 +2038,6 @@ namespace Azure.ResourceManager.Network
         public static Azure.ResourceManager.Network.PrivateDnsZoneGroupResource GetPrivateDnsZoneGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Network.PrivateEndpointResource> GetPrivateEndpoint(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string privateEndpointName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.PrivateEndpointResource>> GetPrivateEndpointAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string privateEndpointName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Network.PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Network.PrivateEndpointResource GetPrivateEndpointResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Network.PrivateEndpointCollection GetPrivateEndpoints(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Network.PrivateEndpointResource> GetPrivateEndpoints(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2051,11 +2089,11 @@ namespace Azure.ResourceManager.Network
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ServiceEndpointPolicyResource>> GetServiceEndpointPolicyAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string serviceEndpointPolicyName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Network.ServiceEndpointPolicyDefinitionResource GetServiceEndpointPolicyDefinitionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Network.ServiceEndpointPolicyResource GetServiceEndpointPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Network.Models.ServiceTagsListResult> GetServiceTag(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.Models.ServiceTagsListResult>> GetServiceTagAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Network.Models.ServiceTagsListResult> GetServiceTag(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.Models.ServiceTagsListResult>> GetServiceTagAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Network.SubnetResource GetSubnetResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Network.Models.NetworkUsage> GetUsages(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.NetworkUsage> GetUsagesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Network.Models.NetworkUsage> GetUsages(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.NetworkUsage> GetUsagesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Network.VirtualApplianceSiteResource GetVirtualApplianceSiteResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Network.VirtualHubResource> GetVirtualHub(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string virtualHubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VirtualHubResource>> GetVirtualHubAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string virtualHubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2127,8 +2165,8 @@ namespace Azure.ResourceManager.Network
         public static Azure.Response<Azure.ResourceManager.Network.WebApplicationFirewallPolicyResource> GetWebApplicationFirewallPolicy(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.WebApplicationFirewallPolicyResource>> GetWebApplicationFirewallPolicyAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Network.WebApplicationFirewallPolicyResource GetWebApplicationFirewallPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.ArmOperation SwapPublicIPAddressesLoadBalancer(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, string location, Azure.ResourceManager.Network.Models.LoadBalancerVipSwapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> SwapPublicIPAddressesLoadBalancerAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, string location, Azure.ResourceManager.Network.Models.LoadBalancerVipSwapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ArmOperation SwapPublicIPAddressesLoadBalancer(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.Network.Models.LoadBalancerVipSwapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> SwapPublicIPAddressesLoadBalancerAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.Network.Models.LoadBalancerVipSwapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class NetworkInterfaceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.NetworkInterfaceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceResource>, System.Collections.IEnumerable
     {
@@ -2145,14 +2183,14 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.NetworkInterfaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkInterfaceData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class NetworkInterfaceData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public NetworkInterfaceData() { }
         public Azure.ResourceManager.Network.Models.NetworkInterfaceDnsSettings DnsSettings { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier DscpConfigurationId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DscpConfigurationId { get { throw null; } }
         public bool? EnableAcceleratedNetworking { get { throw null; } set { } }
         public bool? EnableIPForwarding { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> HostedWorkloads { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData> IPConfigurations { get { throw null; } }
@@ -2163,10 +2201,10 @@ namespace Azure.ResourceManager.Network
         public bool? Primary { get { throw null; } }
         public Azure.ResourceManager.Network.PrivateEndpointData PrivateEndpoint { get { throw null; } }
         public Azure.ResourceManager.Network.PrivateLinkServiceData PrivateLinkService { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.NetworkInterfaceTapConfigurationData> TapConfigurations { get { throw null; } }
-        public Azure.Core.ResourceIdentifier VirtualMachineId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier VirtualMachineId { get { throw null; } }
         public string WorkloadType { get { throw null; } set { } }
     }
     public partial class NetworkInterfaceIPConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationResource>, System.Collections.IEnumerable
@@ -2182,24 +2220,22 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkInterfaceIPConfigurationData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class NetworkInterfaceIPConfigurationData : Azure.ResourceManager.Network.Models.NetworkWritableResourceData
     {
         public NetworkInterfaceIPConfigurationData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayBackendAddressPool> ApplicationGatewayBackendAddressPools { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.ApplicationSecurityGroupData> ApplicationSecurityGroups { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.Core.ResourceIdentifier GatewayLoadBalancerId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.BackendAddressPoolData> LoadBalancerBackendAddressPools { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.InboundNatRuleData> LoadBalancerInboundNatRules { get { throw null; } }
-        public string Name { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
         public string PrivateIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPVersion? PrivateIPAddressVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties PrivateLinkConnectionProperties { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.PublicIPAddressData PublicIPAddress { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } set { } }
         public Azure.ResourceManager.Network.SubnetData Subnet { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.VirtualNetworkTapData> VirtualNetworkTaps { get { throw null; } }
     }
@@ -2242,6 +2278,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkInterfaceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.NetworkInterfaceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkInterfaceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.NetworkInterfaceResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkInterfaceResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class NetworkInterfaceTapConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.NetworkInterfaceTapConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceTapConfigurationResource>, System.Collections.IEnumerable
     {
@@ -2258,13 +2296,11 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.NetworkInterfaceTapConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceTapConfigurationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkInterfaceTapConfigurationData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class NetworkInterfaceTapConfigurationData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public NetworkInterfaceTapConfigurationData() { }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.VirtualNetworkTapData VirtualNetworkTap { get { throw null; } set { } }
     }
     public partial class NetworkInterfaceTapConfigurationResource : Azure.ResourceManager.ArmResource
@@ -2278,6 +2314,46 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.NetworkInterfaceTapConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkInterfaceTapConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.NetworkInterfaceTapConfigurationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.NetworkInterfaceTapConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.NetworkInterfaceTapConfigurationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.NetworkInterfaceTapConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class NetworkPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionResource>, System.Collections.IEnumerable
+    {
+        protected NetworkPrivateEndpointConnectionCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string peConnectionName, Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string peConnectionName, Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string peConnectionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string peConnectionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionResource> Get(string peConnectionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionResource>> GetAsync(string peConnectionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class NetworkPrivateEndpointConnectionData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    {
+        public NetworkPrivateEndpointConnectionData() { }
+        public Azure.ResourceManager.Network.Models.NetworkPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public string LinkIdentifier { get { throw null; } }
+        public Azure.ResourceManager.Network.PrivateEndpointData PrivateEndpoint { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+    }
+    public partial class NetworkPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected NetworkPrivateEndpointConnectionResource() { }
+        public virtual Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string peConnectionName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class NetworkProfileCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.NetworkProfileResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkProfileResource>, System.Collections.IEnumerable
     {
@@ -2294,14 +2370,14 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.NetworkProfileResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkProfileResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkProfileData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class NetworkProfileData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public NetworkProfileData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ContainerNetworkInterfaceConfiguration> ContainerNetworkInterfaceConfigurations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ContainerNetworkInterface> ContainerNetworkInterfaces { get { throw null; } }
-        public string Etag { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
     }
     public partial class NetworkProfileResource : Azure.ResourceManager.ArmResource
     {
@@ -2320,6 +2396,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkProfileResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.NetworkProfileResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkProfileResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.NetworkProfileResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkProfileResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class NetworkSecurityGroupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.NetworkSecurityGroupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkSecurityGroupResource>, System.Collections.IEnumerable
     {
@@ -2336,15 +2414,15 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.NetworkSecurityGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkSecurityGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkSecurityGroupData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class NetworkSecurityGroupData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public NetworkSecurityGroupData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.SecurityRuleData> DefaultSecurityRules { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.FlowLogData> FlowLogs { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.NetworkInterfaceData> NetworkInterfaces { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.SecurityRuleData> SecurityRules { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.SubnetData> Subnets { get { throw null; } }
     }
@@ -2371,6 +2449,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkSecurityGroupResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.NetworkSecurityGroupResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkSecurityGroupResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.NetworkSecurityGroupResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkSecurityGroupResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class NetworkVirtualApplianceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.NetworkVirtualApplianceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkVirtualApplianceResource>, System.Collections.IEnumerable
     {
@@ -2387,18 +2467,18 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.NetworkVirtualApplianceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkVirtualApplianceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkVirtualApplianceData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class NetworkVirtualApplianceData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public NetworkVirtualApplianceData() { }
         public string AddressPrefix { get { throw null; } }
         public System.Collections.Generic.IList<string> BootStrapConfigurationBlobs { get { throw null; } }
         public string CloudInitConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> CloudInitConfigurationBlobs { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> InboundSecurityRules { get { throw null; } }
         public Azure.ResourceManager.Network.Models.VirtualApplianceSkuProperties NvaSku { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public long? VirtualApplianceAsn { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.VirtualApplianceNicProperties> VirtualApplianceNics { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> VirtualApplianceSites { get { throw null; } }
@@ -2426,6 +2506,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkVirtualApplianceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.NetworkVirtualApplianceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkVirtualApplianceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.NetworkVirtualApplianceResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkVirtualApplianceResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class NetworkVirtualApplianceSkuCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.NetworkVirtualApplianceSkuResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkVirtualApplianceSkuResource>, System.Collections.IEnumerable
     {
@@ -2440,12 +2522,12 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.NetworkVirtualApplianceSkuResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkVirtualApplianceSkuResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkVirtualApplianceSkuData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class NetworkVirtualApplianceSkuData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public NetworkVirtualApplianceSkuData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.NetworkVirtualApplianceSkuInstances> AvailableScaleUnits { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> AvailableVersions { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string Vendor { get { throw null; } }
     }
     public partial class NetworkVirtualApplianceSkuResource : Azure.ResourceManager.ArmResource
@@ -2479,11 +2561,11 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.NetworkWatcherResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkWatcherResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkWatcherData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class NetworkWatcherData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public NetworkWatcherData() { }
-        public string Etag { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class NetworkWatcherResource : Azure.ResourceManager.ArmResource
     {
@@ -2519,8 +2601,8 @@ namespace Azure.ResourceManager.Network
         public virtual Azure.Response<Azure.ResourceManager.Network.PacketCaptureResource> GetPacketCapture(string packetCaptureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.PacketCaptureResource>> GetPacketCaptureAsync(string packetCaptureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Network.PacketCaptureCollection GetPacketCaptures() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Network.Models.Topology> GetTopology(Azure.ResourceManager.Network.Models.TopologyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.Models.Topology>> GetTopologyAsync(Azure.ResourceManager.Network.Models.TopologyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.Models.NetworkTopology> GetTopology(Azure.ResourceManager.Network.Models.TopologyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.Models.NetworkTopology>> GetTopologyAsync(Azure.ResourceManager.Network.Models.TopologyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.TroubleshootingResult> GetTroubleshooting(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.TroubleshootingContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.TroubleshootingResult>> GetTroubleshootingAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.TroubleshootingContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.TroubleshootingResult> GetTroubleshootingResult(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.QueryTroubleshootingContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2533,6 +2615,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.FlowLogInformation>> SetFlowLogConfigurationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.FlowLogInformation flowLogInformation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.NetworkWatcherResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkWatcherResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.NetworkWatcherResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkWatcherResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.VerificationIPFlowResult> VerifyIPFlow(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VerificationIPFlowContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.VerificationIPFlowResult>> VerifyIPFlowAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VerificationIPFlowContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -2549,19 +2633,17 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.OutboundRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.OutboundRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class OutboundRuleData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class OutboundRuleData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public OutboundRuleData() { }
         public int? AllocatedOutboundPorts { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier BackendAddressPoolId { get { throw null; } set { } }
         public bool? EnableTcpReset { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> FrontendIPConfigurations { get { throw null; } }
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.LoadBalancerOutboundRuleProtocol? Protocol { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class OutboundRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -2588,14 +2670,14 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.P2SVpnGatewayResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.P2SVpnGatewayResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class P2SVpnGatewayData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class P2SVpnGatewayData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public P2SVpnGatewayData() { }
         public System.Collections.Generic.IList<string> CustomDnsServers { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public bool? IsRoutingPreferenceInternet { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.P2SConnectionConfiguration> P2SConnectionConfigurations { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier VirtualHubId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.VpnClientConnectionHealth VpnClientConnectionHealth { get { throw null; } }
         public int? VpnGatewayScaleUnit { get { throw null; } set { } }
@@ -2628,6 +2710,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.P2SVpnGatewayResource>> ResetAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.P2SVpnGatewayResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.P2SVpnGatewayResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.P2SVpnGatewayResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.TagsObject p2SVpnGatewayParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.P2SVpnGatewayResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.TagsObject p2SVpnGatewayParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PacketCaptureCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.PacketCaptureResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PacketCaptureResource>, System.Collections.IEnumerable
     {
@@ -2644,15 +2728,13 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.PacketCaptureResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PacketCaptureResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PacketCaptureData
+    public partial class PacketCaptureData : Azure.ResourceManager.Models.ResourceData
     {
         internal PacketCaptureData() { }
         public long? BytesToCapturePerPacket { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.PacketCaptureFilter> Filters { get { throw null; } }
-        public string Id { get { throw null; } }
-        public string Name { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.PacketCaptureStorageLocation StorageLocation { get { throw null; } }
         public string Target { get { throw null; } }
         public int? TimeLimitInSeconds { get { throw null; } }
@@ -2673,6 +2755,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PacketCaptureQueryStatusResult>> GetStatusAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Stop(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.PacketCaptureResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.PacketCaptureCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.PacketCaptureResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.PacketCaptureCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PeerExpressRouteCircuitConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.PeerExpressRouteCircuitConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PeerExpressRouteCircuitConnectionResource>, System.Collections.IEnumerable
     {
@@ -2687,19 +2771,17 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.PeerExpressRouteCircuitConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PeerExpressRouteCircuitConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PeerExpressRouteCircuitConnectionData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class PeerExpressRouteCircuitConnectionData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public PeerExpressRouteCircuitConnectionData() { }
         public string AddressPrefix { get { throw null; } set { } }
         public string AuthResourceGuid { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.CircuitConnectionStatus? CircuitConnectionStatus { get { throw null; } }
         public string ConnectionName { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.Core.ResourceIdentifier ExpressRouteCircuitPeeringId { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PeerExpressRouteCircuitPeeringId { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class PeerExpressRouteCircuitConnectionResource : Azure.ResourceManager.ArmResource
     {
@@ -2726,13 +2808,12 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.PrivateDnsZoneGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PrivateDnsZoneGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PrivateDnsZoneGroupData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class PrivateDnsZoneGroupData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public PrivateDnsZoneGroupData() { }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.PrivateDnsZoneConfig> PrivateDnsZoneConfigs { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class PrivateDnsZoneGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -2745,6 +2826,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.PrivateDnsZoneGroupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.PrivateDnsZoneGroupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.PrivateDnsZoneGroupResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.PrivateDnsZoneGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.PrivateDnsZoneGroupResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.PrivateDnsZoneGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PrivateEndpointCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.PrivateEndpointResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PrivateEndpointResource>, System.Collections.IEnumerable
     {
@@ -2761,54 +2844,16 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.PrivateEndpointResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PrivateEndpointResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.PrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PrivateEndpointConnectionResource>, System.Collections.IEnumerable
-    {
-        protected PrivateEndpointConnectionCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.PrivateEndpointConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string peConnectionName, Azure.ResourceManager.Network.PrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.PrivateEndpointConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string peConnectionName, Azure.ResourceManager.Network.PrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string peConnectionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string peConnectionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Network.PrivateEndpointConnectionResource> Get(string peConnectionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Network.PrivateEndpointConnectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.PrivateEndpointConnectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.PrivateEndpointConnectionResource>> GetAsync(string peConnectionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Network.PrivateEndpointConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.PrivateEndpointConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.PrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Network.Models.SubResource
-    {
-        public PrivateEndpointConnectionData() { }
-        public string Etag { get { throw null; } }
-        public string LinkIdentifier { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.PrivateEndpointData PrivateEndpoint { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
-    }
-    public partial class PrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected PrivateEndpointConnectionResource() { }
-        public virtual Azure.ResourceManager.Network.PrivateEndpointConnectionData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string peConnectionName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Network.PrivateEndpointConnectionResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.PrivateEndpointConnectionResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class PrivateEndpointData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class PrivateEndpointData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public PrivateEndpointData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.CustomDnsConfigPropertiesFormat> CustomDnsConfigs { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.PrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.NetworkInterfaceData> NetworkInterfaces { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.PrivateLinkServiceConnection> PrivateLinkServiceConnections { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.SubnetData Subnet { get { throw null; } set { } }
     }
     public partial class PrivateEndpointResource : Azure.ResourceManager.ArmResource
@@ -2831,6 +2876,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.PrivateEndpointResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.PrivateEndpointResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.PrivateEndpointResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.PrivateEndpointResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.PrivateEndpointData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.PrivateEndpointResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.PrivateEndpointData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PrivateLinkServiceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.PrivateLinkServiceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PrivateLinkServiceResource>, System.Collections.IEnumerable
     {
@@ -2847,20 +2894,20 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.PrivateLinkServiceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PrivateLinkServiceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PrivateLinkServiceData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class PrivateLinkServiceData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public PrivateLinkServiceData() { }
         public string Alias { get { throw null; } }
         public System.Collections.Generic.IList<string> AutoApprovalSubscriptions { get { throw null; } }
         public bool? EnableProxyProtocol { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Fqdns { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.PrivateLinkServiceIPConfiguration> IPConfigurations { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.FrontendIPConfigurationData> LoadBalancerFrontendIPConfigurations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.NetworkInterfaceData> NetworkInterfaces { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.PrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<string> VisibilitySubscriptions { get { throw null; } }
     }
     public partial class PrivateLinkServiceResource : Azure.ResourceManager.ArmResource
@@ -2876,13 +2923,15 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.PrivateLinkServiceResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.PrivateLinkServiceResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Network.PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string peConnectionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string peConnectionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Network.PrivateEndpointConnectionCollection GetPrivateEndpointConnections() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionResource> GetNetworkPrivateEndpointConnection(string peConnectionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionResource>> GetNetworkPrivateEndpointConnectionAsync(string peConnectionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionCollection GetNetworkPrivateEndpointConnections() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.PrivateLinkServiceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.PrivateLinkServiceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.PrivateLinkServiceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.PrivateLinkServiceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.PrivateLinkServiceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.PrivateLinkServiceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.PrivateLinkServiceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.PrivateLinkServiceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ProbeCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.ProbeResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ProbeResource>, System.Collections.IEnumerable
     {
@@ -2897,19 +2946,17 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ProbeResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ProbeResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ProbeData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ProbeData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ProbeData() { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public int? IntervalInSeconds { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> LoadBalancingRules { get { throw null; } }
-        public string Name { get { throw null; } set { } }
         public int? NumberOfProbes { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ProbeProtocol? Protocol { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string RequestPath { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } }
     }
     public partial class ProbeResource : Azure.ResourceManager.ArmResource
     {
@@ -2936,13 +2983,13 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.PublicIPAddressResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PublicIPAddressResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PublicIPAddressData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class PublicIPAddressData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public PublicIPAddressData() { }
         public Azure.ResourceManager.Network.Models.DdosSettings DdosSettings { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.DeleteOptions? DeleteOption { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.PublicIPAddressDnsSettings DnsSettings { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
         public string IPAddress { get { throw null; } set { } }
@@ -2951,11 +2998,11 @@ namespace Azure.ResourceManager.Network
         public Azure.ResourceManager.Network.PublicIPAddressData LinkedPublicIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.PublicIPAddressMigrationPhase? MigrationPhase { get { throw null; } set { } }
         public Azure.ResourceManager.Network.NatGatewayData NatGateway { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.IPVersion? PublicIPAddressVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPAllocationMethod? PublicIPAllocationMethod { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PublicIPPrefixId { get { throw null; } set { } }
-        public string ResourceGuid { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
         public Azure.ResourceManager.Network.PublicIPAddressData ServicePublicIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.PublicIPAddressSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
@@ -2977,6 +3024,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.PublicIPAddressResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.PublicIPAddressResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.PublicIPAddressResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.PublicIPAddressResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.PublicIPAddressResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PublicIPPrefixCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.PublicIPPrefixResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PublicIPPrefixResource>, System.Collections.IEnumerable
     {
@@ -2993,21 +3042,21 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.PublicIPPrefixResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PublicIPPrefixResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PublicIPPrefixData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class PublicIPPrefixData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public PublicIPPrefixData() { }
         public Azure.Core.ResourceIdentifier CustomIPPrefixId { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public string IPPrefix { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.IPTag> IPTags { get { throw null; } }
-        public Azure.Core.ResourceIdentifier LoadBalancerFrontendIPConfigurationId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier LoadBalancerFrontendIPConfigurationId { get { throw null; } }
         public Azure.ResourceManager.Network.NatGatewayData NatGateway { get { throw null; } set { } }
         public int? PrefixLength { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> PublicIPAddresses { get { throw null; } }
         public Azure.ResourceManager.Network.Models.IPVersion? PublicIPAddressVersion { get { throw null; } set { } }
-        public string ResourceGuid { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
         public Azure.ResourceManager.Network.Models.PublicIPPrefixSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
     }
@@ -3028,6 +3077,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.PublicIPPrefixResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.PublicIPPrefixResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.PublicIPPrefixResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.PublicIPPrefixResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.PublicIPPrefixResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class RouteCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.RouteResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.RouteResource>, System.Collections.IEnumerable
     {
@@ -3044,17 +3095,15 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.RouteResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.RouteResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class RouteData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class RouteData : Azure.ResourceManager.Network.Models.NetworkWritableResourceData
     {
         public RouteData() { }
         public string AddressPrefix { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public bool? HasBgpOverride { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public string NextHopIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.RouteNextHopType? NextHopType { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class RouteFilterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.RouteFilterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.RouteFilterResource>, System.Collections.IEnumerable
     {
@@ -3071,13 +3120,13 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.RouteFilterResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.RouteFilterResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class RouteFilterData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class RouteFilterData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public RouteFilterData() { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.ExpressRouteCircuitPeeringData> IPv6Peerings { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.ExpressRouteCircuitPeeringData> Peerings { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.RouteFilterRuleData> Rules { get { throw null; } }
     }
     public partial class RouteFilterResource : Azure.ResourceManager.ArmResource
@@ -3100,6 +3149,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.RouteFilterResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.RouteFilterResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.RouteFilterResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.RouteFilterResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.RouteFilterResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class RouteFilterRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.RouteFilterRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.RouteFilterRuleResource>, System.Collections.IEnumerable
     {
@@ -3116,15 +3167,14 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.RouteFilterRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.RouteFilterRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class RouteFilterRuleData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class RouteFilterRuleData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public RouteFilterRuleData() { }
         public Azure.ResourceManager.Network.Models.Access? Access { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Communities { get { throw null; } }
-        public string Etag { get { throw null; } }
-        public string Location { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.RouteFilterRuleType? RouteFilterRuleType { get { throw null; } set { } }
     }
     public partial class RouteFilterRuleResource : Azure.ResourceManager.ArmResource
@@ -3138,6 +3188,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.RouteFilterRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.RouteFilterRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.RouteFilterRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.RouteFilterRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.RouteFilterRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.RouteFilterRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class RouteResource : Azure.ResourceManager.ArmResource
     {
@@ -3150,6 +3202,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.RouteResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.RouteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.RouteResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.RouteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.RouteResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.RouteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class RouteTableCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.RouteTableResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.RouteTableResource>, System.Collections.IEnumerable
     {
@@ -3166,13 +3220,13 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.RouteTableResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.RouteTableResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class RouteTableData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class RouteTableData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public RouteTableData() { }
         public bool? DisableBgpRoutePropagation { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.RouteData> Routes { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.SubnetData> Subnets { get { throw null; } }
     }
@@ -3196,6 +3250,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.RouteTableResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.RouteTableResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.RouteTableResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.RouteTableResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.RouteTableResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SecurityPartnerProviderCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.SecurityPartnerProviderResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.SecurityPartnerProviderResource>, System.Collections.IEnumerable
     {
@@ -3212,12 +3268,12 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.SecurityPartnerProviderResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.SecurityPartnerProviderResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SecurityPartnerProviderData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class SecurityPartnerProviderData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public SecurityPartnerProviderData() { }
         public Azure.ResourceManager.Network.Models.SecurityPartnerProviderConnectionStatus? ConnectionStatus { get { throw null; } }
-        public string Etag { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.SecurityProviderName? SecurityProviderName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier VirtualHubId { get { throw null; } set { } }
     }
@@ -3238,6 +3294,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.SecurityPartnerProviderResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.SecurityPartnerProviderResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.SecurityPartnerProviderResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.SecurityPartnerProviderResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.SecurityPartnerProviderResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SecurityRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.SecurityRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.SecurityRuleResource>, System.Collections.IEnumerable
     {
@@ -3254,7 +3312,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.SecurityRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.SecurityRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SecurityRuleData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class SecurityRuleData : Azure.ResourceManager.Network.Models.NetworkWritableResourceData
     {
         public SecurityRuleData() { }
         public Azure.ResourceManager.Network.Models.SecurityRuleAccess? Access { get { throw null; } set { } }
@@ -3265,12 +3323,10 @@ namespace Azure.ResourceManager.Network
         public string DestinationPortRange { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DestinationPortRanges { get { throw null; } }
         public Azure.ResourceManager.Network.Models.SecurityRuleDirection? Direction { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public int? Priority { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.SecurityRuleProtocol? Protocol { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string SourceAddressPrefix { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SourceAddressPrefixes { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.ApplicationSecurityGroupData> SourceApplicationSecurityGroups { get { throw null; } }
@@ -3288,6 +3344,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.SecurityRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.SecurityRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.SecurityRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.SecurityRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.SecurityRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.SecurityRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ServiceEndpointPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.ServiceEndpointPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ServiceEndpointPolicyResource>, System.Collections.IEnumerable
     {
@@ -3304,13 +3362,13 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ServiceEndpointPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ServiceEndpointPolicyResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceEndpointPolicyData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class ServiceEndpointPolicyData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public ServiceEndpointPolicyData() { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string Kind { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.ServiceEndpointPolicyDefinitionData> ServiceEndpointPolicyDefinitions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.SubnetData> Subnets { get { throw null; } }
     }
@@ -3329,13 +3387,12 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ServiceEndpointPolicyDefinitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ServiceEndpointPolicyDefinitionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceEndpointPolicyDefinitionData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ServiceEndpointPolicyDefinitionData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ServiceEndpointPolicyDefinitionData() { }
         public string Description { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string Service { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ServiceResources { get { throw null; } }
     }
@@ -3350,6 +3407,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.ServiceEndpointPolicyDefinitionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ServiceEndpointPolicyDefinitionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.ServiceEndpointPolicyDefinitionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.ServiceEndpointPolicyDefinitionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.ServiceEndpointPolicyDefinitionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.ServiceEndpointPolicyDefinitionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ServiceEndpointPolicyResource : Azure.ResourceManager.ArmResource
     {
@@ -3371,6 +3430,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ServiceEndpointPolicyResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.ServiceEndpointPolicyResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ServiceEndpointPolicyResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.ServiceEndpointPolicyResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ServiceEndpointPolicyResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SubnetCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.SubnetResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.SubnetResource>, System.Collections.IEnumerable
     {
@@ -3387,27 +3448,25 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.SubnetResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.SubnetResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SubnetData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class SubnetData : Azure.ResourceManager.Network.Models.NetworkWritableResourceData
     {
         public SubnetData() { }
         public string AddressPrefix { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> AddressPrefixes { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayIPConfiguration> ApplicationGatewayIPConfigurations { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.Delegation> Delegations { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> IPAllocations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.IPConfigurationProfile> IPConfigurationProfiles { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.IPConfiguration> IPConfigurations { get { throw null; } }
-        public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier NatGatewayId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.NetworkSecurityGroupData NetworkSecurityGroup { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicies? PrivateEndpointNetworkPolicies { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.PrivateEndpointData> PrivateEndpoints { get { throw null; } }
         public Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicies? PrivateLinkServiceNetworkPolicies { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string Purpose { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ResourceNavigationLink> ResourceNavigationLinks { get { throw null; } }
-        public string ResourceType { get { throw null; } set { } }
         public Azure.ResourceManager.Network.RouteTableData RouteTable { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ServiceAssociationLink> ServiceAssociationLinks { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.ServiceEndpointPolicyData> ServiceEndpointPolicies { get { throw null; } }
@@ -3432,6 +3491,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PrepareNetworkPoliciesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.PrepareNetworkPoliciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation UnprepareNetworkPolicies(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.UnprepareNetworkPoliciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UnprepareNetworkPoliciesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.UnprepareNetworkPoliciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.SubnetResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.SubnetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.SubnetResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.SubnetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualApplianceSiteCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.VirtualApplianceSiteResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualApplianceSiteResource>, System.Collections.IEnumerable
     {
@@ -3448,15 +3509,13 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VirtualApplianceSiteResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualApplianceSiteResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualApplianceSiteData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class VirtualApplianceSiteData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VirtualApplianceSiteData() { }
         public string AddressPrefix { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.BreakOutCategoryPolicies O365BreakOutCategories { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class VirtualApplianceSiteResource : Azure.ResourceManager.ArmResource
     {
@@ -3469,6 +3528,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.VirtualApplianceSiteResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VirtualApplianceSiteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VirtualApplianceSiteResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.VirtualApplianceSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VirtualApplianceSiteResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.VirtualApplianceSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualHubCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.VirtualHubResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualHubResource>, System.Collections.IEnumerable
     {
@@ -3485,19 +3546,19 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VirtualHubResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualHubResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualHubData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class VirtualHubData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public VirtualHubData() { }
         public string AddressPrefix { get { throw null; } set { } }
         public bool? AllowBranchToBranchTraffic { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier AzureFirewallId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> BgpConnections { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.Core.ResourceIdentifier ExpressRouteGatewayId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> IPConfigurations { get { throw null; } }
         public Azure.Core.ResourceIdentifier P2SVpnGatewayId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.PreferredRoutingGateway? PreferredRoutingGateway { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.VirtualHubRoute> Routes { get { throw null; } }
         public Azure.ResourceManager.Network.Models.RoutingState? RoutingState { get { throw null; } }
         public Azure.Core.ResourceIdentifier SecurityPartnerProviderId { get { throw null; } set { } }
@@ -3543,6 +3604,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VirtualHubResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.VirtualHubResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VirtualHubResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.VirtualHubResource> Update(Azure.ResourceManager.Network.Models.TagsObject virtualHubParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VirtualHubResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject virtualHubParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualHubRouteTableV2Collection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.VirtualHubRouteTableV2Resource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualHubRouteTableV2Resource>, System.Collections.IEnumerable
     {
@@ -3559,13 +3622,12 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VirtualHubRouteTableV2Resource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualHubRouteTableV2Resource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualHubRouteTableV2Data : Azure.ResourceManager.Network.Models.SubResource
+    public partial class VirtualHubRouteTableV2Data : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VirtualHubRouteTableV2Data() { }
         public System.Collections.Generic.IList<string> AttachedConnections { get { throw null; } }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.VirtualHubRouteV2> Routes { get { throw null; } }
     }
     public partial class VirtualHubRouteTableV2Resource : Azure.ResourceManager.ArmResource
@@ -3579,6 +3641,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.VirtualHubRouteTableV2Resource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VirtualHubRouteTableV2Resource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VirtualHubRouteTableV2Resource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.VirtualHubRouteTableV2Data data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VirtualHubRouteTableV2Resource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.VirtualHubRouteTableV2Data data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualNetworkCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.VirtualNetworkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualNetworkResource>, System.Collections.IEnumerable
     {
@@ -3595,7 +3659,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VirtualNetworkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualNetworkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualNetworkData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class VirtualNetworkData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public VirtualNetworkData() { }
         public System.Collections.Generic.IList<string> AddressPrefixes { get { throw null; } }
@@ -3604,12 +3668,12 @@ namespace Azure.ResourceManager.Network
         public System.Collections.Generic.IList<string> DhcpOptionsDnsServers { get { throw null; } }
         public bool? EnableDdosProtection { get { throw null; } set { } }
         public bool? EnableVmProtection { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public int? FlowTimeoutInMinutes { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> IPAllocations { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.SubnetData> Subnets { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.VirtualNetworkPeeringData> VirtualNetworkPeerings { get { throw null; } }
     }
@@ -3643,7 +3707,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VirtualNetworkGatewayConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualNetworkGatewayConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualNetworkGatewayConnectionData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class VirtualNetworkGatewayConnectionData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public VirtualNetworkGatewayConnectionData(Azure.ResourceManager.Network.VirtualNetworkGatewayData virtualNetworkGateway1, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType connectionType) { }
         public string AuthorizationKey { get { throw null; } set { } }
@@ -3655,15 +3719,15 @@ namespace Azure.ResourceManager.Network
         public long? EgressBytesTransferred { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> EgressNatRules { get { throw null; } }
         public bool? EnableBgp { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public bool? ExpressRouteGatewayBypass { get { throw null; } set { } }
         public long? IngressBytesTransferred { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> IngressNatRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.IPsecPolicy> IPsecPolicies { get { throw null; } }
         public Azure.ResourceManager.Network.LocalNetworkGatewayData LocalNetworkGateway2 { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PeerId { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
         public int? RoutingWeight { get { throw null; } set { } }
         public string SharedKey { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.TrafficSelectorPolicy> TrafficSelectorPolicies { get { throw null; } }
@@ -3704,10 +3768,12 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<string>> StartPacketCaptureAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnPacketCaptureStartParameters vpnPacketCaptureStartParameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<string> StopPacketCapture(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnPacketCaptureStopParameters vpnPacketCaptureStopParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<string>> StopPacketCaptureAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnPacketCaptureStopParameters vpnPacketCaptureStopParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VirtualNetworkGatewayConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VirtualNetworkGatewayConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<string> VpnDeviceConfigurationScript(Azure.ResourceManager.Network.Models.VpnDeviceScriptContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<string>> VpnDeviceConfigurationScriptAsync(Azure.ResourceManager.Network.Models.VpnDeviceScriptContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class VirtualNetworkGatewayData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class VirtualNetworkGatewayData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public VirtualNetworkGatewayData() { }
         public bool? Active { get { throw null; } set { } }
@@ -3717,17 +3783,17 @@ namespace Azure.ResourceManager.Network
         public bool? EnableBgpRouteTranslationForNat { get { throw null; } set { } }
         public bool? EnableDnsForwarding { get { throw null; } set { } }
         public bool? EnablePrivateIPAddress { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier GatewayDefaultSiteId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.VirtualNetworkGatewayType? GatewayType { get { throw null; } set { } }
         public string InboundDnsForwardingEndpoint { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.VirtualNetworkGatewayIPConfiguration> IPConfigurations { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.VirtualNetworkGatewayNatRuleData> NatRules { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
         public Azure.ResourceManager.Network.Models.VirtualNetworkGatewaySku Sku { get { throw null; } set { } }
-        public string VNetExtendedLocationResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier VNetExtendedLocationResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.VpnClientConfiguration VpnClientConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.VpnGatewayGeneration? VpnGatewayGeneration { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.VpnType? VpnType { get { throw null; } set { } }
@@ -3747,18 +3813,16 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VirtualNetworkGatewayNatRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualNetworkGatewayNatRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualNetworkGatewayNatRuleData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class VirtualNetworkGatewayNatRuleData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VirtualNetworkGatewayNatRuleData() { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.VpnNatRuleMapping> ExternalMappings { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.VpnNatRuleMapping> InternalMappings { get { throw null; } }
         public string IPConfigurationId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.VpnNatRuleMode? Mode { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.VpnNatRuleType? TypePropertiesType { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.VpnNatRuleType? VpnNatRuleType { get { throw null; } set { } }
     }
     public partial class VirtualNetworkGatewayNatRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -3771,6 +3835,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.VirtualNetworkGatewayNatRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VirtualNetworkGatewayNatRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VirtualNetworkGatewayNatRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.VirtualNetworkGatewayNatRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VirtualNetworkGatewayNatRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.VirtualNetworkGatewayNatRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualNetworkGatewayResource : Azure.ResourceManager.ArmResource
     {
@@ -3824,6 +3890,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<string>> StopPacketCaptureAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnPacketCaptureStopParameters vpnPacketCaptureStopParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<string> SupportedVpnDevices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<string>> SupportedVpnDevicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VirtualNetworkGatewayResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VirtualNetworkGatewayResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualNetworkPeeringCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.VirtualNetworkPeeringResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualNetworkPeeringResource>, System.Collections.IEnumerable
     {
@@ -3840,24 +3908,22 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VirtualNetworkPeeringResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualNetworkPeeringResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualNetworkPeeringData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class VirtualNetworkPeeringData : Azure.ResourceManager.Network.Models.NetworkWritableResourceData
     {
         public VirtualNetworkPeeringData() { }
         public bool? AllowForwardedTraffic { get { throw null; } set { } }
         public bool? AllowGatewayTransit { get { throw null; } set { } }
         public bool? AllowVirtualNetworkAccess { get { throw null; } set { } }
         public bool? DoNotVerifyRemoteGateways { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.VirtualNetworkPeeringState? PeeringState { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.VirtualNetworkPeeringLevel? PeeringSyncLevel { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<string> RemoteAddressPrefixes { get { throw null; } }
         public Azure.ResourceManager.Network.Models.VirtualNetworkBgpCommunities RemoteBgpCommunities { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> RemoteVirtualNetworkAddressPrefixes { get { throw null; } }
         public Azure.Core.ResourceIdentifier RemoteVirtualNetworkId { get { throw null; } set { } }
-        public string ResourceGuid { get { throw null; } }
-        public string ResourceType { get { throw null; } set { } }
+        public System.Guid? ResourceGuid { get { throw null; } }
         public bool? UseRemoteGateways { get { throw null; } set { } }
     }
     public partial class VirtualNetworkPeeringResource : Azure.ResourceManager.ArmResource
@@ -3871,6 +3937,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.VirtualNetworkPeeringResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VirtualNetworkPeeringResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VirtualNetworkPeeringResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.VirtualNetworkPeeringData data, Azure.ResourceManager.Network.Models.SyncRemoteAddressSpace? syncRemoteAddressSpace = default(Azure.ResourceManager.Network.Models.SyncRemoteAddressSpace?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VirtualNetworkPeeringResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.VirtualNetworkPeeringData data, Azure.ResourceManager.Network.Models.SyncRemoteAddressSpace? syncRemoteAddressSpace = default(Azure.ResourceManager.Network.Models.SyncRemoteAddressSpace?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualNetworkResource : Azure.ResourceManager.ArmResource
     {
@@ -3899,6 +3967,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VirtualNetworkResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.VirtualNetworkResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VirtualNetworkResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.VirtualNetworkResource> Update(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VirtualNetworkResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualNetworkTapCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.VirtualNetworkTapResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualNetworkTapResource>, System.Collections.IEnumerable
     {
@@ -3915,16 +3985,16 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VirtualNetworkTapResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualNetworkTapResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualNetworkTapData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class VirtualNetworkTapData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public VirtualNetworkTapData() { }
         public Azure.ResourceManager.Network.FrontendIPConfigurationData DestinationLoadBalancerFrontEndIPConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData DestinationNetworkInterfaceIPConfiguration { get { throw null; } set { } }
         public int? DestinationPort { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.NetworkInterfaceTapConfigurationData> NetworkInterfaceTapConfigurations { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
     }
     public partial class VirtualNetworkTapResource : Azure.ResourceManager.ArmResource
     {
@@ -3943,6 +4013,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VirtualNetworkTapResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.VirtualNetworkTapResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VirtualNetworkTapResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.VirtualNetworkTapResource> Update(Azure.ResourceManager.Network.Models.TagsObject tapParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VirtualNetworkTapResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject tapParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualRouterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.VirtualRouterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualRouterResource>, System.Collections.IEnumerable
     {
@@ -3959,14 +4031,14 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VirtualRouterResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualRouterResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualRouterData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class VirtualRouterData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public VirtualRouterData() { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.Core.ResourceIdentifier HostedGatewayId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier HostedSubnetId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> Peerings { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public long? VirtualRouterAsn { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> VirtualRouterIPs { get { throw null; } }
     }
@@ -3985,15 +4057,13 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VirtualRouterPeeringResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualRouterPeeringResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualRouterPeeringData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class VirtualRouterPeeringData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VirtualRouterPeeringData() { }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public long? PeerAsn { get { throw null; } set { } }
         public string PeerIP { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class VirtualRouterPeeringResource : Azure.ResourceManager.ArmResource
     {
@@ -4006,6 +4076,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.VirtualRouterPeeringResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VirtualRouterPeeringResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VirtualRouterPeeringResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.VirtualRouterPeeringData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VirtualRouterPeeringResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.VirtualRouterPeeringData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualRouterResource : Azure.ResourceManager.ArmResource
     {
@@ -4027,6 +4099,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VirtualRouterResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.VirtualRouterResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VirtualRouterResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VirtualRouterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.VirtualRouterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VirtualRouterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.VirtualRouterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualWanCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.VirtualWanResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualWanResource>, System.Collections.IEnumerable
     {
@@ -4043,17 +4117,17 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VirtualWanResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualWanResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualWanData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class VirtualWanData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public VirtualWanData() { }
         public bool? AllowBranchToBranchTraffic { get { throw null; } set { } }
         public bool? AllowVnetToVnetTraffic { get { throw null; } set { } }
         public bool? DisableVpnEncryption { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.OfficeTrafficCategory? Office365LocalBreakoutCategory { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string TypePropertiesType { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> VirtualHubs { get { throw null; } }
+        public string VirtualWanType { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> VpnSites { get { throw null; } }
     }
     public partial class VirtualWanResource : Azure.ResourceManager.ArmResource
@@ -4081,6 +4155,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VirtualWanResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.Models.VirtualWanSecurityProviders> SupportedSecurityProviders(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.Models.VirtualWanSecurityProviders>> SupportedSecurityProvidersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.VirtualWanResource> Update(Azure.ResourceManager.Network.Models.TagsObject wanParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VirtualWanResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject wanParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VpnConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.VpnConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VpnConnectionResource>, System.Collections.IEnumerable
     {
@@ -4097,7 +4173,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VpnConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VpnConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VpnConnectionData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class VpnConnectionData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VpnConnectionData() { }
         public int? ConnectionBandwidth { get { throw null; } set { } }
@@ -4107,11 +4183,10 @@ namespace Azure.ResourceManager.Network
         public bool? EnableBgp { get { throw null; } set { } }
         public bool? EnableInternetSecurity { get { throw null; } set { } }
         public bool? EnableRateLimiting { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public long? IngressBytesTransferred { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.IPsecPolicy> IPsecPolicies { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier RemoteVpnSiteId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.RoutingConfiguration RoutingConfiguration { get { throw null; } set { } }
         public int? RoutingWeight { get { throw null; } set { } }
@@ -4140,6 +4215,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<string>> StartPacketCaptureAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnConnectionPacketCaptureStartContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<string> StopPacketCapture(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnConnectionPacketCaptureStopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<string>> StopPacketCaptureAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnConnectionPacketCaptureStopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VpnConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.VpnConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VpnConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.VpnConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VpnGatewayCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.VpnGatewayResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VpnGatewayResource>, System.Collections.IEnumerable
     {
@@ -4156,16 +4233,16 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VpnGatewayResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VpnGatewayResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VpnGatewayData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class VpnGatewayData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public VpnGatewayData() { }
         public Azure.ResourceManager.Network.Models.BgpSettings BgpSettings { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.VpnConnectionData> Connections { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.VpnGatewayIPConfiguration> IPConfigurations { get { throw null; } }
         public bool? IsRoutingPreferenceInternet { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.VpnGatewayNatRuleData> NatRules { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier VirtualHubId { get { throw null; } set { } }
         public int? VpnGatewayScaleUnit { get { throw null; } set { } }
     }
@@ -4184,20 +4261,18 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VpnGatewayNatRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VpnGatewayNatRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VpnGatewayNatRuleData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class VpnGatewayNatRuleData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VpnGatewayNatRuleData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> EgressVpnSiteLinkConnections { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.VpnNatRuleMapping> ExternalMappings { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> IngressVpnSiteLinkConnections { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.VpnNatRuleMapping> InternalMappings { get { throw null; } }
         public string IPConfigurationId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.VpnNatRuleMode? Mode { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.VpnNatRuleType? TypePropertiesType { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.VpnNatRuleType? VpnNatRuleType { get { throw null; } set { } }
     }
     public partial class VpnGatewayNatRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -4210,6 +4285,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.VpnGatewayNatRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VpnGatewayNatRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VpnGatewayNatRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.VpnGatewayNatRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VpnGatewayNatRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.VpnGatewayNatRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VpnGatewayResource : Azure.ResourceManager.ArmResource
     {
@@ -4240,6 +4317,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<string>> StartPacketCaptureAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnGatewayPacketCaptureStartContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<string> StopPacketCapture(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnGatewayPacketCaptureStopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<string>> StopPacketCaptureAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnGatewayPacketCaptureStopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VpnGatewayResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.TagsObject vpnGatewayParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VpnGatewayResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.TagsObject vpnGatewayParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VpnServerConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.VpnServerConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VpnServerConfigurationResource>, System.Collections.IEnumerable
     {
@@ -4256,13 +4335,11 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VpnServerConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VpnServerConfigurationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VpnServerConfigurationData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class VpnServerConfigurationData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public VpnServerConfigurationData() { }
         public Azure.ResourceManager.Network.Models.AadAuthenticationParameters AadAuthenticationParameters { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
-        public string EtagPropertiesEtag { get { throw null; } }
-        public string NamePropertiesName { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.P2SVpnGatewayData> P2SVpnGateways { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.VpnServerConfigRadiusClientRootCertificate> RadiusClientRootCertificates { get { throw null; } }
@@ -4293,6 +4370,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VpnServerConfigurationResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.VpnServerConfigurationResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VpnServerConfigurationResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.VpnServerConfigurationResource> Update(Azure.ResourceManager.Network.Models.TagsObject vpnServerConfigurationParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VpnServerConfigurationResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject vpnServerConfigurationParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VpnSiteCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.VpnSiteResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VpnSiteResource>, System.Collections.IEnumerable
     {
@@ -4309,17 +4388,17 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VpnSiteResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VpnSiteResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VpnSiteData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class VpnSiteData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public VpnSiteData() { }
         public System.Collections.Generic.IList<string> AddressPrefixes { get { throw null; } }
         public Azure.ResourceManager.Network.Models.BgpSettings BgpProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.DeviceProperties DeviceProperties { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string IPAddress { get { throw null; } set { } }
         public bool? IsSecuritySite { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.O365BreakOutCategoryPolicies O365BreakOutCategories { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string SiteKey { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier VirtualWanId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.VpnSiteLinkData> VpnSiteLinks { get { throw null; } }
@@ -4350,7 +4429,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.VpnSiteLinkConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VpnSiteLinkConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VpnSiteLinkConnectionData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class VpnSiteLinkConnectionData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VpnSiteLinkConnectionData() { }
         public int? ConnectionBandwidth { get { throw null; } set { } }
@@ -4359,13 +4438,11 @@ namespace Azure.ResourceManager.Network
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> EgressNatRules { get { throw null; } }
         public bool? EnableBgp { get { throw null; } set { } }
         public bool? EnableRateLimiting { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public long? IngressBytesTransferred { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> IngressNatRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.IPsecPolicy> IPsecPolicies { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public int? RoutingWeight { get { throw null; } set { } }
         public string SharedKey { get { throw null; } set { } }
         public bool? UseLocalAzureIPAddress { get { throw null; } set { } }
@@ -4388,17 +4465,15 @@ namespace Azure.ResourceManager.Network
         public virtual Azure.ResourceManager.ArmOperation ResetConnectionVpnLinkConnection(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ResetConnectionVpnLinkConnectionAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class VpnSiteLinkData : Azure.ResourceManager.Network.Models.SubResource
+    public partial class VpnSiteLinkData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VpnSiteLinkData() { }
         public Azure.ResourceManager.Network.Models.VpnLinkBgpSettings BgpProperties { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string Fqdn { get { throw null; } set { } }
         public string IPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.VpnLinkProviderProperties LinkProperties { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class VpnSiteLinkResource : Azure.ResourceManager.ArmResource
     {
@@ -4430,6 +4505,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VpnSiteResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.VpnSiteResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VpnSiteResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.VpnSiteResource> Update(Azure.ResourceManager.Network.Models.TagsObject vpnSiteParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VpnSiteResource>> UpdateAsync(Azure.ResourceManager.Network.Models.TagsObject vpnSiteParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class WebApplicationFirewallPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.WebApplicationFirewallPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.WebApplicationFirewallPolicyResource>, System.Collections.IEnumerable
     {
@@ -4446,17 +4523,17 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.WebApplicationFirewallPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.WebApplicationFirewallPolicyResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WebApplicationFirewallPolicyData : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class WebApplicationFirewallPolicyData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public WebApplicationFirewallPolicyData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.ApplicationGatewayData> ApplicationGateways { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.WebApplicationFirewallCustomRule> CustomRules { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> HttpListeners { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ManagedRulesDefinition ManagedRules { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> PathBasedRules { get { throw null; } }
         public Azure.ResourceManager.Network.Models.PolicySettings PolicySettings { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.WebApplicationFirewallPolicyResourceState? ResourceState { get { throw null; } }
     }
     public partial class WebApplicationFirewallPolicyResource : Azure.ResourceManager.ArmResource
@@ -4476,6 +4553,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.WebApplicationFirewallPolicyResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.WebApplicationFirewallPolicyResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.WebApplicationFirewallPolicyResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.WebApplicationFirewallPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.WebApplicationFirewallPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.WebApplicationFirewallPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.WebApplicationFirewallPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Network.Models
@@ -4505,14 +4584,12 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.Access left, Azure.ResourceManager.Network.Models.Access right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ApplicationGatewayAuthenticationCertificate : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ApplicationGatewayAuthenticationCertificate : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayAuthenticationCertificate() { }
         public string Data { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class ApplicationGatewayAutoscaleConfiguration
     {
@@ -4526,15 +4603,13 @@ namespace Azure.ResourceManager.Network.Models
         public string Fqdn { get { throw null; } set { } }
         public string IPAddress { get { throw null; } set { } }
     }
-    public partial class ApplicationGatewayBackendAddressPool : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ApplicationGatewayBackendAddressPool : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayBackendAddressPool() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayBackendAddress> BackendAddresses { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData> BackendIPConfigurations { get { throw null; } }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class ApplicationGatewayBackendHealth
     {
@@ -4588,25 +4663,23 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHealthServerHealth left, Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHealthServerHealth right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ApplicationGatewayBackendHttpSettings : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ApplicationGatewayBackendHttpSettings : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayBackendHttpSettings() { }
         public string AffinityCookieName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> AuthenticationCertificates { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewayConnectionDraining ConnectionDraining { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewayCookieBasedAffinity? CookieBasedAffinity { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string HostName { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
         public bool? PickHostNameFromBackendAddress { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
         public bool? ProbeEnabled { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ProbeId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol? Protocol { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public int? RequestTimeout { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> TrustedRootCertificates { get { throw null; } }
     }
     public partial class ApplicationGatewayConnectionDraining
@@ -4701,35 +4774,31 @@ namespace Azure.ResourceManager.Network.Models
         public string RuleGroupName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRule> Rules { get { throw null; } }
     }
-    public partial class ApplicationGatewayFirewallRuleSet : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class ApplicationGatewayFirewallRuleSet : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public ApplicationGatewayFirewallRuleSet() { }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRuleGroup> RuleGroups { get { throw null; } }
         public string RuleSetType { get { throw null; } set { } }
         public string RuleSetVersion { get { throw null; } set { } }
     }
-    public partial class ApplicationGatewayFrontendIPConfiguration : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ApplicationGatewayFrontendIPConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayFrontendIPConfiguration() { }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string PrivateIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateLinkConfigurationId { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier PublicIPAddressId { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
     }
-    public partial class ApplicationGatewayFrontendPort : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ApplicationGatewayFrontendPort : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayFrontendPort() { }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public int? Port { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class ApplicationGatewayHeaderConfiguration
     {
@@ -4737,31 +4806,27 @@ namespace Azure.ResourceManager.Network.Models
         public string HeaderName { get { throw null; } set { } }
         public string HeaderValue { get { throw null; } set { } }
     }
-    public partial class ApplicationGatewayHttpListener : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ApplicationGatewayHttpListener : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayHttpListener() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayCustomError> CustomErrorConfigurations { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.Core.ResourceIdentifier FirewallPolicyId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier FrontendIPConfigurationId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier FrontendPortId { get { throw null; } set { } }
         public string HostName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> HostNames { get { throw null; } }
-        public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol? Protocol { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public bool? RequireServerNameIndication { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } }
         public Azure.Core.ResourceIdentifier SslCertificateId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SslProfileId { get { throw null; } set { } }
     }
-    public partial class ApplicationGatewayIPConfiguration : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ApplicationGatewayIPConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayIPConfiguration() { }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
     }
     public partial class ApplicationGatewayOnDemandProbe
@@ -4796,66 +4861,56 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.ApplicationGatewayOperationalState left, Azure.ResourceManager.Network.Models.ApplicationGatewayOperationalState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ApplicationGatewayPathRule : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ApplicationGatewayPathRule : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayPathRule() { }
         public Azure.Core.ResourceIdentifier BackendAddressPoolId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier BackendHttpSettingsId { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.Core.ResourceIdentifier FirewallPolicyId { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Paths { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier RedirectConfigurationId { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } }
         public Azure.Core.ResourceIdentifier RewriteRuleSetId { get { throw null; } set { } }
     }
-    public partial class ApplicationGatewayPrivateLinkConfiguration : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ApplicationGatewayPrivateLinkConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayPrivateLinkConfiguration() { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayPrivateLinkIPConfiguration> IPConfigurations { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
-    public partial class ApplicationGatewayPrivateLinkIPConfiguration : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ApplicationGatewayPrivateLinkIPConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayPrivateLinkIPConfiguration() { }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public bool? Primary { get { throw null; } set { } }
         public string PrivateIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
     }
-    public partial class ApplicationGatewayPrivateLinkResource : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ApplicationGatewayPrivateLinkResource : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayPrivateLinkResource() { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string GroupId { get { throw null; } }
-        public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
-        public string ResourceType { get { throw null; } }
     }
-    public partial class ApplicationGatewayProbe : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ApplicationGatewayProbe : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayProbe() { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string Host { get { throw null; } set { } }
         public int? Interval { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewayProbeHealthResponseMatch Match { get { throw null; } set { } }
         public int? MinServers { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
         public bool? PickHostNameFromBackendHttpSettings { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol? Protocol { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public int? Timeout { get { throw null; } set { } }
         public int? UnhealthyThreshold { get { throw null; } set { } }
     }
@@ -4883,17 +4938,15 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol left, Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ApplicationGatewayRedirectConfiguration : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ApplicationGatewayRedirectConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayRedirectConfiguration() { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public bool? IncludePath { get { throw null; } set { } }
         public bool? IncludeQueryString { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> PathRules { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewayRedirectType? RedirectType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> RequestRoutingRules { get { throw null; } }
-        public string ResourceType { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetListenerId { get { throw null; } set { } }
         public System.Uri TargetUri { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> UrlPathMaps { get { throw null; } }
@@ -4918,18 +4971,16 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.ApplicationGatewayRedirectType left, Azure.ResourceManager.Network.Models.ApplicationGatewayRedirectType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ApplicationGatewayRequestRoutingRule : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ApplicationGatewayRequestRoutingRule : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayRequestRoutingRule() { }
         public Azure.Core.ResourceIdentifier BackendAddressPoolId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier BackendHttpSettingsId { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.Core.ResourceIdentifier HttpListenerId { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public int? Priority { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier RedirectConfigurationId { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } }
         public Azure.Core.ResourceIdentifier RewriteRuleSetId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewayRequestRoutingRuleType? RuleType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier UrlPathMapId { get { throw null; } set { } }
@@ -4975,12 +5026,11 @@ namespace Azure.ResourceManager.Network.Models
         public string Pattern { get { throw null; } set { } }
         public string Variable { get { throw null; } set { } }
     }
-    public partial class ApplicationGatewayRewriteRuleSet : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ApplicationGatewayRewriteRuleSet : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayRewriteRuleSet() { }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayRewriteRule> RewriteRules { get { throw null; } }
     }
     public partial class ApplicationGatewaySku
@@ -5013,17 +5063,15 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.ApplicationGatewaySkuName left, Azure.ResourceManager.Network.Models.ApplicationGatewaySkuName right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ApplicationGatewaySslCertificate : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ApplicationGatewaySslCertificate : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewaySslCertificate() { }
         public string Data { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string KeyVaultSecretId { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string PublicCertData { get { throw null; } }
-        public string ResourceType { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ApplicationGatewaySslCipherSuite : System.IEquatable<Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite>
@@ -5115,13 +5163,11 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyType left, Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ApplicationGatewaySslProfile : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ApplicationGatewaySslProfile : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewaySslProfile() { }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicy SslPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> TrustedClientCertificates { get { throw null; } }
         public bool? VerifyClientCertIssuerDN { get { throw null; } set { } }
@@ -5165,26 +5211,22 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.ApplicationGatewayTier left, Azure.ResourceManager.Network.Models.ApplicationGatewayTier right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ApplicationGatewayTrustedClientCertificate : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ApplicationGatewayTrustedClientCertificate : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayTrustedClientCertificate() { }
         public string ClientCertIssuerDN { get { throw null; } }
         public string Data { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string ValidatedCertData { get { throw null; } }
     }
-    public partial class ApplicationGatewayTrustedRootCertificate : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ApplicationGatewayTrustedRootCertificate : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayTrustedRootCertificate() { }
         public string Data { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string KeyVaultSecretId { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class ApplicationGatewayUrlConfiguration
     {
@@ -5193,18 +5235,16 @@ namespace Azure.ResourceManager.Network.Models
         public string ModifiedQueryString { get { throw null; } set { } }
         public bool? Reroute { get { throw null; } set { } }
     }
-    public partial class ApplicationGatewayUrlPathMap : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ApplicationGatewayUrlPathMap : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayUrlPathMap() { }
         public Azure.Core.ResourceIdentifier DefaultBackendAddressPoolId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DefaultBackendHttpSettingsId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DefaultRedirectConfigurationId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DefaultRewriteRuleSetId { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayPathRule> PathRules { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class ApplicationGatewayWebApplicationFirewallConfiguration
     {
@@ -5318,7 +5358,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class AvailableProvidersListContent
     {
         public AvailableProvidersListContent() { }
-        public System.Collections.Generic.IList<string> AzureLocations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.AzureLocation> AzureLocations { get { throw null; } }
         public string City { get { throw null; } set { } }
         public string Country { get { throw null; } set { } }
         public string State { get { throw null; } set { } }
@@ -5353,14 +5393,13 @@ namespace Azure.ResourceManager.Network.Models
         public System.Collections.Generic.IList<string> SourceIPGroups { get { throw null; } }
         public System.Collections.Generic.IList<string> TargetFqdns { get { throw null; } }
     }
-    public partial class AzureFirewallApplicationRuleCollection : Azure.ResourceManager.Network.Models.SubResource
+    public partial class AzureFirewallApplicationRuleCollectionData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
-        public AzureFirewallApplicationRuleCollection() { }
+        public AzureFirewallApplicationRuleCollectionData() { }
         public Azure.ResourceManager.Network.Models.AzureFirewallRCActionType? ActionType { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public int? Priority { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.AzureFirewallApplicationRule> Rules { get { throw null; } }
     }
     public partial class AzureFirewallApplicationRuleProtocol
@@ -5388,29 +5427,27 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.AzureFirewallApplicationRuleProtocolType left, Azure.ResourceManager.Network.Models.AzureFirewallApplicationRuleProtocolType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AzureFirewallFqdnTag : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class AzureFirewallFqdnTag : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public AzureFirewallFqdnTag() { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string FqdnTagName { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
-    public partial class AzureFirewallIPConfiguration : Azure.ResourceManager.Network.Models.SubResource
+    public partial class AzureFirewallIPConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public AzureFirewallIPConfiguration() { }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string PrivateIPAddress { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier PublicIPAddressId { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
     }
     public partial class AzureFirewallIPGroups
     {
         internal AzureFirewallIPGroups() { }
         public string ChangeNumber { get { throw null; } }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AzureFirewallNatRCActionType : System.IEquatable<Azure.ResourceManager.Network.Models.AzureFirewallNatRCActionType>
@@ -5444,14 +5481,13 @@ namespace Azure.ResourceManager.Network.Models
         public string TranslatedFqdn { get { throw null; } set { } }
         public string TranslatedPort { get { throw null; } set { } }
     }
-    public partial class AzureFirewallNatRuleCollection : Azure.ResourceManager.Network.Models.SubResource
+    public partial class AzureFirewallNatRuleCollectionData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
-        public AzureFirewallNatRuleCollection() { }
+        public AzureFirewallNatRuleCollectionData() { }
         public Azure.ResourceManager.Network.Models.AzureFirewallNatRCActionType? ActionType { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public int? Priority { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.AzureFirewallNatRule> Rules { get { throw null; } }
     }
     public partial class AzureFirewallNetworkRule
@@ -5467,14 +5503,13 @@ namespace Azure.ResourceManager.Network.Models
         public System.Collections.Generic.IList<string> SourceAddresses { get { throw null; } }
         public System.Collections.Generic.IList<string> SourceIPGroups { get { throw null; } }
     }
-    public partial class AzureFirewallNetworkRuleCollection : Azure.ResourceManager.Network.Models.SubResource
+    public partial class AzureFirewallNetworkRuleCollectionData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
-        public AzureFirewallNetworkRuleCollection() { }
+        public AzureFirewallNetworkRuleCollectionData() { }
         public Azure.ResourceManager.Network.Models.AzureFirewallRCActionType? ActionType { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public int? Priority { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.AzureFirewallNetworkRule> Rules { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -5591,7 +5626,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class AzureReachabilityReportContent
     {
         public AzureReachabilityReportContent(Azure.ResourceManager.Network.Models.AzureReachabilityReportLocation providerLocation, System.DateTimeOffset startOn, System.DateTimeOffset endOn) { }
-        public System.Collections.Generic.IList<string> AzureLocations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.AzureLocation> AzureLocations { get { throw null; } }
         public System.DateTimeOffset EndOn { get { throw null; } }
         public Azure.ResourceManager.Network.Models.AzureReachabilityReportLocation ProviderLocation { get { throw null; } }
         public System.Collections.Generic.IList<string> Providers { get { throw null; } }
@@ -5600,7 +5635,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class AzureReachabilityReportItem
     {
         internal AzureReachabilityReportItem() { }
-        public string AzureLocation { get { throw null; } }
+        public Azure.Core.AzureLocation? AzureLocation { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.AzureReachabilityReportLatencyInfo> Latencies { get { throw null; } }
         public string Provider { get { throw null; } }
     }
@@ -5617,15 +5652,13 @@ namespace Azure.ResourceManager.Network.Models
         public string Country { get { throw null; } set { } }
         public string State { get { throw null; } set { } }
     }
-    public partial class BastionHostIPConfiguration : Azure.ResourceManager.Network.Models.SubResource
+    public partial class BastionHostIPConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public BastionHostIPConfiguration() { }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.IPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier PublicIPAddressId { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -5694,7 +5727,7 @@ namespace Azure.ResourceManager.Network.Models
         internal BgpPeerStatusListResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.BgpPeerStatus> Value { get { throw null; } }
     }
-    public partial class BgpServiceCommunity : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class BgpServiceCommunity : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public BgpServiceCommunity() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.BGPCommunity> BgpCommunities { get { throw null; } }
@@ -5767,7 +5800,7 @@ namespace Azure.ResourceManager.Network.Models
         public bool? AutoStart { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ConnectionMonitorDestination Destination { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ConnectionMonitorEndpoint> Endpoints { get { throw null; } }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public int? MonitoringIntervalInSeconds { get { throw null; } set { } }
         public string Notes { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ConnectionMonitorOutput> Outputs { get { throw null; } }
@@ -5781,7 +5814,7 @@ namespace Azure.ResourceManager.Network.Models
         public ConnectionMonitorDestination() { }
         public string Address { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
     }
     public partial class ConnectionMonitorEndpoint
     {
@@ -5791,7 +5824,7 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ResourceManager.Network.Models.EndpointType? EndpointType { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilter Filter { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointScope Scope { get { throw null; } set { } }
     }
     public partial class ConnectionMonitorEndpointFilter
@@ -5865,7 +5898,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public ConnectionMonitorOutput() { }
         public Azure.ResourceManager.Network.Models.OutputType? OutputType { get { throw null; } set { } }
-        public string WorkspaceResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier WorkspaceResourceId { get { throw null; } set { } }
     }
     public partial class ConnectionMonitorQueryResult
     {
@@ -5875,9 +5908,9 @@ namespace Azure.ResourceManager.Network.Models
     }
     public partial class ConnectionMonitorSource
     {
-        public ConnectionMonitorSource(string resourceId) { }
+        public ConnectionMonitorSource(Azure.Core.ResourceIdentifier resourceId) { }
         public int? Port { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConnectionMonitorSourceStatus : System.IEquatable<Azure.ResourceManager.Network.Models.ConnectionMonitorSourceStatus>
@@ -5974,7 +6007,7 @@ namespace Azure.ResourceManager.Network.Models
         public ConnectionResetSharedKey(int keyLength) { }
         public int KeyLength { get { throw null; } set { } }
     }
-    public partial class ConnectionSharedKey : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ConnectionSharedKey : Azure.ResourceManager.Network.Models.NetworkSubResource
     {
         public ConnectionSharedKey(string value) { }
         public string Value { get { throw null; } set { } }
@@ -6046,7 +6079,7 @@ namespace Azure.ResourceManager.Network.Models
         public ConnectivityDestination() { }
         public string Address { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
     }
     public partial class ConnectivityHop
     {
@@ -6059,7 +6092,7 @@ namespace Azure.ResourceManager.Network.Models
         public System.Collections.Generic.IReadOnlyList<string> NextHopIds { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> PreviousHopIds { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.HopLink> PreviousLinks { get { throw null; } }
-        public string ResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
     }
     public partial class ConnectivityInformation
     {
@@ -6082,38 +6115,34 @@ namespace Azure.ResourceManager.Network.Models
     }
     public partial class ConnectivitySource
     {
-        public ConnectivitySource(string resourceId) { }
+        public ConnectivitySource(Azure.Core.ResourceIdentifier resourceId) { }
         public int? Port { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
     }
-    public partial class ContainerNetworkInterface : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ContainerNetworkInterface : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ContainerNetworkInterface() { }
         public Azure.Core.ResourceIdentifier ContainerId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ContainerNetworkInterfaceConfiguration ContainerNetworkInterfaceConfiguration { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ContainerNetworkInterfaceIPConfiguration> IPConfigurations { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
-    public partial class ContainerNetworkInterfaceConfiguration : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ContainerNetworkInterfaceConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ContainerNetworkInterfaceConfiguration() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ContainerNetworkInterfaces { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.IPConfigurationProfile> IPConfigurations { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class ContainerNetworkInterfaceIPConfiguration
     {
         internal ContainerNetworkInterfaceIPConfiguration() { }
         public string ContainerNetworkInterfaceIpConfigurationType { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string Name { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CoverageLevel : System.IEquatable<Azure.ResourceManager.Network.Models.CoverageLevel>
@@ -6207,14 +6236,12 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage left, Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Delegation : Azure.ResourceManager.Network.Models.SubResource
+    public partial class Delegation : Azure.ResourceManager.Network.Models.NetworkWritableResourceData
     {
         public Delegation() { }
         public System.Collections.Generic.IReadOnlyList<string> Actions { get { throw null; } }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string ServiceName { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -6319,15 +6346,15 @@ namespace Azure.ResourceManager.Network.Models
         internal EffectiveNetworkSecurityGroup() { }
         public Azure.ResourceManager.Network.Models.EffectiveNetworkSecurityGroupAssociation Association { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.EffectiveNetworkSecurityRule> EffectiveSecurityRules { get { throw null; } }
-        public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } }
         public string TagMap { get { throw null; } }
     }
     public partial class EffectiveNetworkSecurityGroupAssociation
     {
         internal EffectiveNetworkSecurityGroupAssociation() { }
-        public Azure.Core.ResourceIdentifier NetworkInterfaceId { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier NetworkManagerId { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier NetworkInterfaceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier NetworkManagerId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } }
     }
     public partial class EffectiveNetworkSecurityGroupListResult
     {
@@ -6374,7 +6401,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class EffectiveRoutesContent
     {
         public EffectiveRoutesContent() { }
-        public string ResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
         public string VirtualWanResourceType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -6434,11 +6461,12 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.EffectiveSecurityRuleProtocol left, Azure.ResourceManager.Network.Models.EffectiveSecurityRuleProtocol right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EndpointServiceResult : Azure.ResourceManager.Network.Models.SubResource
+    public partial class EndpointServiceResult
     {
-        public EndpointServiceResult() { }
+        internal EndpointServiceResult() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string Name { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EndpointType : System.IEquatable<Azure.ResourceManager.Network.Models.EndpointType>
@@ -6467,7 +6495,7 @@ namespace Azure.ResourceManager.Network.Models
         internal EvaluatedNetworkSecurityGroup() { }
         public string AppliedTo { get { throw null; } }
         public Azure.ResourceManager.Network.Models.MatchedRule MatchedRule { get { throw null; } }
-        public string NetworkSecurityGroupId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.NetworkSecurityRulesEvaluationResult> RulesEvaluationResult { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -6804,12 +6832,12 @@ namespace Azure.ResourceManager.Network.Models
         public string OfferName { get { throw null; } }
         public int? ValueInGbps { get { throw null; } }
     }
-    public partial class ExpressRouteServiceProvider : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class ExpressRouteServiceProvider : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public ExpressRouteServiceProvider() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ExpressRouteServiceProviderBandwidthsOffered> BandwidthsOffered { get { throw null; } }
         public System.Collections.Generic.IList<string> PeeringLocations { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class ExpressRouteServiceProviderBandwidthsOffered
     {
@@ -6846,12 +6874,6 @@ namespace Azure.ResourceManager.Network.Models
         public string KeyVaultSecretId { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
-    public partial class FirewallPolicyFilterRuleCollection : Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollection
-    {
-        public FirewallPolicyFilterRuleCollection() { }
-        public Azure.ResourceManager.Network.Models.FirewallPolicyFilterRuleCollectionActionType? ActionType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.FirewallPolicyRule> Rules { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FirewallPolicyFilterRuleCollectionActionType : System.IEquatable<Azure.ResourceManager.Network.Models.FirewallPolicyFilterRuleCollectionActionType>
     {
@@ -6869,6 +6891,12 @@ namespace Azure.ResourceManager.Network.Models
         public static implicit operator Azure.ResourceManager.Network.Models.FirewallPolicyFilterRuleCollectionActionType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.FirewallPolicyFilterRuleCollectionActionType left, Azure.ResourceManager.Network.Models.FirewallPolicyFilterRuleCollectionActionType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class FirewallPolicyFilterRuleCollectionInfo : Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollectionInfo
+    {
+        public FirewallPolicyFilterRuleCollectionInfo() { }
+        public Azure.ResourceManager.Network.Models.FirewallPolicyFilterRuleCollectionActionType? ActionType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.FirewallPolicyRule> Rules { get { throw null; } }
     }
     public partial class FirewallPolicyInsights
     {
@@ -6958,12 +6986,6 @@ namespace Azure.ResourceManager.Network.Models
         public string Region { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier WorkspaceIdId { get { throw null; } set { } }
     }
-    public partial class FirewallPolicyNatRuleCollection : Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollection
-    {
-        public FirewallPolicyNatRuleCollection() { }
-        public Azure.ResourceManager.Network.Models.FirewallPolicyNatRuleCollectionActionType? ActionType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.FirewallPolicyRule> Rules { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FirewallPolicyNatRuleCollectionActionType : System.IEquatable<Azure.ResourceManager.Network.Models.FirewallPolicyNatRuleCollectionActionType>
     {
@@ -6980,6 +7002,12 @@ namespace Azure.ResourceManager.Network.Models
         public static implicit operator Azure.ResourceManager.Network.Models.FirewallPolicyNatRuleCollectionActionType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.FirewallPolicyNatRuleCollectionActionType left, Azure.ResourceManager.Network.Models.FirewallPolicyNatRuleCollectionActionType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class FirewallPolicyNatRuleCollectionInfo : Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollectionInfo
+    {
+        public FirewallPolicyNatRuleCollectionInfo() { }
+        public Azure.ResourceManager.Network.Models.FirewallPolicyNatRuleCollectionActionType? ActionType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.FirewallPolicyRule> Rules { get { throw null; } }
     }
     public partial class FirewallPolicyRule
     {
@@ -7011,9 +7039,9 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.FirewallPolicyRuleApplicationProtocolType left, Azure.ResourceManager.Network.Models.FirewallPolicyRuleApplicationProtocolType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class FirewallPolicyRuleCollection
+    public partial class FirewallPolicyRuleCollectionInfo
     {
-        public FirewallPolicyRuleCollection() { }
+        public FirewallPolicyRuleCollectionInfo() { }
         public string Name { get { throw null; } set { } }
         public int? Priority { get { throw null; } set { } }
     }
@@ -7086,18 +7114,18 @@ namespace Azure.ResourceManager.Network.Models
     }
     public partial class FlowLogInformation
     {
-        public FlowLogInformation(string targetResourceId, string storageId, bool enabled) { }
+        public FlowLogInformation(Azure.Core.ResourceIdentifier targetResourceId, string storageId, bool enabled) { }
         public bool Enabled { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.FlowLogFormatParameters Format { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.RetentionPolicyParameters RetentionPolicy { get { throw null; } set { } }
         public string StorageId { get { throw null; } set { } }
-        public string TargetResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
     }
     public partial class FlowLogStatusContent
     {
-        public FlowLogStatusContent(string targetResourceId) { }
-        public string TargetResourceId { get { throw null; } }
+        public FlowLogStatusContent(Azure.Core.ResourceIdentifier targetResourceId) { }
+        public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
     }
     public partial class GatewayLoadBalancerTunnelInterface
     {
@@ -7184,7 +7212,7 @@ namespace Azure.ResourceManager.Network.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ConnectivityIssue> Issues { get { throw null; } }
         public string LinkType { get { throw null; } }
         public string NextHopId { get { throw null; } }
-        public string ResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public long? RoundTripTimeAvg { get { throw null; } }
         public long? RoundTripTimeMax { get { throw null; } }
         public long? RoundTripTimeMin { get { throw null; } }
@@ -7323,29 +7351,25 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.IkeIntegrity left, Azure.ResourceManager.Network.Models.IkeIntegrity right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class InboundNatPool : Azure.ResourceManager.Network.Models.SubResource
+    public partial class InboundNatPool : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public InboundNatPool() { }
         public int? BackendPort { get { throw null; } set { } }
         public bool? EnableFloatingIP { get { throw null; } set { } }
         public bool? EnableTcpReset { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.Core.ResourceIdentifier FrontendIPConfigurationId { get { throw null; } set { } }
         public int? FrontendPortRangeEnd { get { throw null; } set { } }
         public int? FrontendPortRangeStart { get { throw null; } set { } }
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.TransportProtocol? Protocol { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
-    public partial class InboundSecurityRule : Azure.ResourceManager.Network.Models.SubResource
+    public partial class InboundSecurityRule : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public InboundSecurityRule() { }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.InboundSecurityRules> Rules { get { throw null; } }
     }
     public partial class InboundSecurityRules
@@ -7416,14 +7440,13 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.IPAllocationType left, Azure.ResourceManager.Network.Models.IPAllocationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class IPConfiguration : Azure.ResourceManager.Network.Models.SubResource
+    public partial class IPConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public IPConfiguration() { }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string PrivateIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.PublicIPAddressData PublicIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.Network.SubnetData Subnet { get { throw null; } set { } }
     }
@@ -7432,16 +7455,14 @@ namespace Azure.ResourceManager.Network.Models
         public IPConfigurationBgpPeeringAddress() { }
         public System.Collections.Generic.IList<string> CustomBgpIPAddresses { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> DefaultBgpIPAddresses { get { throw null; } }
-        public string IpconfigurationId { get { throw null; } set { } }
+        public string IPConfigurationId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> TunnelIPAddresses { get { throw null; } }
     }
-    public partial class IPConfigurationProfile : Azure.ResourceManager.Network.Models.SubResource
+    public partial class IPConfigurationProfile : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public IPConfigurationProfile() { }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.SubnetData Subnet { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -7591,7 +7612,7 @@ namespace Azure.ResourceManager.Network.Models
         public string IPAddress { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LoadBalancerFrontendIPConfigurationId { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier NetworkInterfaceIPConfigurationId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier NetworkInterfaceIPConfigurationId { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier VirtualNetworkId { get { throw null; } set { } }
     }
@@ -7781,9 +7802,9 @@ namespace Azure.ResourceManager.Network.Models
     }
     public partial class NetworkConfigurationDiagnosticContent
     {
-        public NetworkConfigurationDiagnosticContent(string targetResourceId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkConfigurationDiagnosticProfile> profiles) { }
+        public NetworkConfigurationDiagnosticContent(Azure.Core.ResourceIdentifier targetResourceId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkConfigurationDiagnosticProfile> profiles) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.NetworkConfigurationDiagnosticProfile> Profiles { get { throw null; } }
-        public string TargetResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
         public Azure.ResourceManager.Network.Models.VerbosityLevel? VerbosityLevel { get { throw null; } set { } }
     }
     public partial class NetworkConfigurationDiagnosticProfile
@@ -7806,10 +7827,10 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ResourceManager.Network.Models.NetworkSecurityGroupResult NetworkSecurityGroupResult { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkConfigurationDiagnosticProfile Profile { get { throw null; } }
     }
-    public partial class NetworkIntentPolicy : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class NetworkIntentPolicy : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public NetworkIntentPolicy() { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
     }
     public partial class NetworkIntentPolicyConfiguration
     {
@@ -7820,7 +7841,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class NetworkInterfaceAssociation
     {
         internal NetworkInterfaceAssociation() { }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.SecurityRuleData> SecurityRules { get { throw null; } }
     }
     public partial class NetworkInterfaceDnsSettings
@@ -7878,14 +7899,39 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.NetworkInterfaceNicType left, Azure.ResourceManager.Network.Models.NetworkInterfaceNicType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class NetworkPrivateLinkServiceConnectionState
+    {
+        public NetworkPrivateLinkServiceConnectionState() { }
+        public string ActionsRequired { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string Status { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetworkProvisioningState : System.IEquatable<Azure.ResourceManager.Network.Models.NetworkProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetworkProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.NetworkProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.NetworkProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.NetworkProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.NetworkProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.NetworkProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkProvisioningState left, Azure.ResourceManager.Network.Models.NetworkProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.NetworkProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.NetworkProvisioningState left, Azure.ResourceManager.Network.Models.NetworkProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class NetworkResourceData
     {
         public NetworkResourceData() { }
-        public string Id { get { throw null; } set { } }
-        public string Location { get { throw null; } set { } }
-        public string Name { get { throw null; } }
-        public string ResourceType { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
     }
     public partial class NetworkRule : Azure.ResourceManager.Network.Models.FirewallPolicyRule
     {
@@ -7914,11 +7960,33 @@ namespace Azure.ResourceManager.Network.Models
         public bool? SourceMatched { get { throw null; } }
         public bool? SourcePortMatched { get { throw null; } }
     }
+    public partial class NetworkSubResource
+    {
+        public NetworkSubResource() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+    }
+    public partial class NetworkTopology
+    {
+        internal NetworkTopology() { }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public string Id { get { throw null; } }
+        public System.DateTimeOffset? LastModified { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.TopologyResourceInfo> Resources { get { throw null; } }
+    }
+    public partial class NetworkTrackedResourceData
+    {
+        public NetworkTrackedResourceData() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        public string Name { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
     public partial class NetworkUsage
     {
         internal NetworkUsage() { }
         public long CurrentValue { get { throw null; } }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public long Limit { get { throw null; } }
         public Azure.ResourceManager.Network.Models.UsageName Name { get { throw null; } }
         public Azure.ResourceManager.Network.Models.UsageUnit Unit { get { throw null; } }
@@ -7929,20 +7997,27 @@ namespace Azure.ResourceManager.Network.Models
         public int? InstanceCount { get { throw null; } }
         public string ScaleUnit { get { throw null; } }
     }
+    public partial class NetworkWritableResourceData
+    {
+        public NetworkWritableResourceData() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
+    }
     public partial class NextHopContent
     {
-        public NextHopContent(string targetResourceId, string sourceIPAddress, string destinationIPAddress) { }
+        public NextHopContent(Azure.Core.ResourceIdentifier targetResourceId, string sourceIPAddress, string destinationIPAddress) { }
         public string DestinationIPAddress { get { throw null; } }
         public string SourceIPAddress { get { throw null; } }
-        public string TargetNicResourceId { get { throw null; } set { } }
-        public string TargetResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier TargetNicResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
     }
     public partial class NextHopResult
     {
         internal NextHopResult() { }
         public string NextHopIPAddress { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NextHopType? NextHopType { get { throw null; } }
-        public string RouteTableId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RouteTableId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NextHopType : System.IEquatable<Azure.ResourceManager.Network.Models.NextHopType>
@@ -8076,13 +8151,12 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.OwaspCrsExclusionEntrySelectorMatchOperator left, Azure.ResourceManager.Network.Models.OwaspCrsExclusionEntrySelectorMatchOperator right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class P2SConnectionConfiguration : Azure.ResourceManager.Network.Models.SubResource
+    public partial class P2SConnectionConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public P2SConnectionConfiguration() { }
         public bool? EnableInternetSecurity { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.RoutingConfiguration RoutingConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> VpnClientAddressPrefixes { get { throw null; } }
     }
@@ -8304,36 +8378,25 @@ namespace Azure.ResourceManager.Network.Models
         public string PrivateDnsZoneId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.RecordSet> RecordSets { get { throw null; } }
     }
-    public partial class PrivateLinkServiceConnection : Azure.ResourceManager.Network.Models.SubResource
+    public partial class PrivateLinkServiceConnection : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public PrivateLinkServiceConnection() { }
-        public string Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IList<string> GroupIds { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public string PrivateLinkServiceId { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string RequestMessage { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } }
     }
-    public partial class PrivateLinkServiceConnectionState
-    {
-        public PrivateLinkServiceConnectionState() { }
-        public string ActionsRequired { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public string Status { get { throw null; } set { } }
-    }
-    public partial class PrivateLinkServiceIPConfiguration : Azure.ResourceManager.Network.Models.SubResource
+    public partial class PrivateLinkServiceIPConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public PrivateLinkServiceIPConfiguration() { }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public bool? Primary { get { throw null; } set { } }
         public string PrivateIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPVersion? PrivateIPAddressVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.SubnetData Subnet { get { throw null; } set { } }
     }
     public partial class PrivateLinkServiceVisibility
@@ -8435,26 +8498,6 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(Azure.ResourceManager.Network.Models.ProtocolType left, Azure.ResourceManager.Network.Models.ProtocolType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ProtocolType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.ProtocolType left, Azure.ResourceManager.Network.Models.ProtocolType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.Network.Models.ProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.ProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Network.Models.ProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Network.Models.ProvisioningState left, Azure.ResourceManager.Network.Models.ProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Network.Models.ProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Network.Models.ProvisioningState left, Azure.ResourceManager.Network.Models.ProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class PublicIPAddressDnsSettings
@@ -8582,8 +8625,8 @@ namespace Azure.ResourceManager.Network.Models
     }
     public partial class QueryTroubleshootingContent
     {
-        public QueryTroubleshootingContent(string targetResourceId) { }
-        public string TargetResourceId { get { throw null; } }
+        public QueryTroubleshootingContent(Azure.Core.ResourceIdentifier targetResourceId) { }
+        public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
     }
     public partial class RadiusServer
     {
@@ -8597,20 +8640,18 @@ namespace Azure.ResourceManager.Network.Models
         internal RecordSet() { }
         public string Fqdn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> IPAddresses { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string RecordSetName { get { throw null; } }
         public string RecordType { get { throw null; } }
         public int? Ttl { get { throw null; } }
     }
-    public partial class ResourceNavigationLink : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ResourceNavigationLink : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ResourceNavigationLink() { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string Link { get { throw null; } set { } }
         public string LinkedResourceType { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class RetentionPolicyParameters
     {
@@ -8691,8 +8732,8 @@ namespace Azure.ResourceManager.Network.Models
     }
     public partial class SecurityGroupViewContent
     {
-        public SecurityGroupViewContent(string targetResourceId) { }
-        public string TargetResourceId { get { throw null; } }
+        public SecurityGroupViewContent(Azure.Core.ResourceIdentifier targetResourceId) { }
+        public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
     }
     public partial class SecurityGroupViewResult
     {
@@ -8804,23 +8845,21 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.SecurityRuleProtocol left, Azure.ResourceManager.Network.Models.SecurityRuleProtocol right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServiceAssociationLink : Azure.ResourceManager.Network.Models.SubResource
+    public partial class ServiceAssociationLink : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ServiceAssociationLink() { }
         public bool? AllowDelete { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string Link { get { throw null; } set { } }
         public string LinkedResourceType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Locations { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.AzureLocation> Locations { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class ServiceEndpointPropertiesFormat
     {
         public ServiceEndpointPropertiesFormat() { }
-        public System.Collections.Generic.IList<string> Locations { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.AzureLocation> Locations { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string Service { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -8895,13 +8934,8 @@ namespace Azure.ResourceManager.Network.Models
     public partial class SubnetAssociation
     {
         internal SubnetAssociation() { }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.SecurityRuleData> SecurityRules { get { throw null; } }
-    }
-    public partial class SubResource
-    {
-        public SubResource() { }
-        public string Id { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SyncRemoteAddressSpace : System.IEquatable<Azure.ResourceManager.Network.Models.SyncRemoteAddressSpace>
@@ -8920,20 +8954,17 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.SyncRemoteAddressSpace left, Azure.ResourceManager.Network.Models.SyncRemoteAddressSpace right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Topology
+    public partial class TagsObject
     {
-        internal Topology() { }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public string Id { get { throw null; } }
-        public System.DateTimeOffset? LastModified { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.TopologyResource> Resources { get { throw null; } }
+        public TagsObject() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class TopologyAssociation
     {
         internal TopologyAssociation() { }
         public Azure.ResourceManager.Network.Models.AssociationType? AssociationType { get { throw null; } }
         public string Name { get { throw null; } }
-        public string ResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
     }
     public partial class TopologyContent
     {
@@ -8942,12 +8973,12 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.Core.ResourceIdentifier TargetSubnetId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TargetVirtualNetworkId { get { throw null; } set { } }
     }
-    public partial class TopologyResource
+    public partial class TopologyResourceInfo
     {
-        internal TopologyResource() { }
+        internal TopologyResourceInfo() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.TopologyAssociation> Associations { get { throw null; } }
         public string Id { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string Name { get { throw null; } }
     }
     public partial class TrafficAnalyticsConfigurationProperties
@@ -8957,7 +8988,7 @@ namespace Azure.ResourceManager.Network.Models
         public int? TrafficAnalyticsInterval { get { throw null; } set { } }
         public string WorkspaceId { get { throw null; } set { } }
         public string WorkspaceRegion { get { throw null; } set { } }
-        public string WorkspaceResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier WorkspaceResourceId { get { throw null; } set { } }
     }
     public partial class TrafficSelectorPolicy
     {
@@ -8986,10 +9017,10 @@ namespace Azure.ResourceManager.Network.Models
     }
     public partial class TroubleshootingContent
     {
-        public TroubleshootingContent(string targetResourceId, string storageId, string storagePath) { }
+        public TroubleshootingContent(Azure.Core.ResourceIdentifier targetResourceId, string storageId, string storagePath) { }
         public string StorageId { get { throw null; } }
         public string StoragePath { get { throw null; } }
-        public string TargetResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
     }
     public partial class TroubleshootingDetails
     {
@@ -9074,15 +9105,15 @@ namespace Azure.ResourceManager.Network.Models
     }
     public partial class VerificationIPFlowContent
     {
-        public VerificationIPFlowContent(string targetResourceId, Azure.ResourceManager.Network.Models.Direction direction, Azure.ResourceManager.Network.Models.IPFlowProtocol protocol, string localPort, string remotePort, string localIPAddress, string remoteIPAddress) { }
+        public VerificationIPFlowContent(Azure.Core.ResourceIdentifier targetResourceId, Azure.ResourceManager.Network.Models.Direction direction, Azure.ResourceManager.Network.Models.IPFlowProtocol protocol, string localPort, string remotePort, string localIPAddress, string remoteIPAddress) { }
         public Azure.ResourceManager.Network.Models.Direction Direction { get { throw null; } }
         public string LocalIPAddress { get { throw null; } }
         public string LocalPort { get { throw null; } }
         public Azure.ResourceManager.Network.Models.IPFlowProtocol Protocol { get { throw null; } }
         public string RemoteIPAddress { get { throw null; } }
         public string RemotePort { get { throw null; } }
-        public string TargetNicResourceId { get { throw null; } set { } }
-        public string TargetResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier TargetNicResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
     }
     public partial class VerificationIPFlowResult
     {
@@ -9124,7 +9155,7 @@ namespace Azure.ResourceManager.Network.Models
         public string RegionalCommunity { get { throw null; } }
         public string VirtualNetworkCommunity { get { throw null; } set { } }
     }
-    public partial class VirtualNetworkGatewayConnectionListEntity : Azure.ResourceManager.Network.Models.NetworkResourceData
+    public partial class VirtualNetworkGatewayConnectionListEntity : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public VirtualNetworkGatewayConnectionListEntity(Azure.ResourceManager.Resources.Models.WritableSubResource virtualNetworkGateway1, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType connectionType) { }
         public string AuthorizationKey { get { throw null; } set { } }
@@ -9134,14 +9165,14 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType ConnectionType { get { throw null; } set { } }
         public long? EgressBytesTransferred { get { throw null; } }
         public bool? EnableBgp { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public bool? ExpressRouteGatewayBypass { get { throw null; } set { } }
         public long? IngressBytesTransferred { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.IPsecPolicy> IPsecPolicies { get { throw null; } }
         public Azure.Core.ResourceIdentifier LocalNetworkGateway2Id { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PeerId { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
         public int? RoutingWeight { get { throw null; } set { } }
         public string SharedKey { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.TrafficSelectorPolicy> TrafficSelectorPolicies { get { throw null; } }
@@ -9227,14 +9258,13 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType left, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class VirtualNetworkGatewayIPConfiguration : Azure.ResourceManager.Network.Models.SubResource
+    public partial class VirtualNetworkGatewayIPConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VirtualNetworkGatewayIPConfiguration() { }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string PrivateIPAddress { get { throw null; } }
         public Azure.ResourceManager.Network.Models.IPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier PublicIPAddressId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
     }
@@ -9454,7 +9484,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public VirtualWanVpnProfileContent() { }
         public Azure.ResourceManager.Network.Models.AuthenticationMethod? AuthenticationMethod { get { throw null; } set { } }
-        public string VpnServerConfigurationResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier VpnServerConfigurationResourceId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VpnAuthenticationType : System.IEquatable<Azure.ResourceManager.Network.Models.VpnAuthenticationType>
@@ -9559,20 +9589,18 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.VpnClientProtocol left, Azure.ResourceManager.Network.Models.VpnClientProtocol right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class VpnClientRevokedCertificate : Azure.ResourceManager.Network.Models.SubResource
+    public partial class VpnClientRevokedCertificate : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VpnClientRevokedCertificate() { }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string Thumbprint { get { throw null; } set { } }
     }
-    public partial class VpnClientRootCertificate : Azure.ResourceManager.Network.Models.SubResource
+    public partial class VpnClientRootCertificate : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VpnClientRootCertificate(string publicCertData) { }
-        public string Etag { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string PublicCertData { get { throw null; } set { } }
     }
     public partial class VpnConnectionPacketCaptureStartContent
@@ -9825,7 +9853,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public WebApplicationFirewallCustomRule(int priority, Azure.ResourceManager.Network.Models.WebApplicationFirewallRuleType ruleType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.MatchCondition> matchConditions, Azure.ResourceManager.Network.Models.WebApplicationFirewallAction action) { }
         public Azure.ResourceManager.Network.Models.WebApplicationFirewallAction Action { get { throw null; } set { } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.MatchCondition> MatchConditions { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public int Priority { get { throw null; } set { } }

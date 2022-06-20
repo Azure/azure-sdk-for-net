@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             string namespaceName = await CreateValidNamespaceName(namespacePrefix);
             ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
-            PrivateEndpointConnectionCollection privateEndpointConnectionCollection = serviceBusNamespace.GetPrivateEndpointConnections();
+            ServiceBusPrivateEndpointConnectionCollection privateEndpointConnectionCollection = serviceBusNamespace.GetServiceBusPrivateEndpointConnections();
 
             //create another namespace for connection
             string namespaceName2 = await CreateValidNamespaceName(namespacePrefix);
@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //create an endpoint connection
             string connectionName = Recording.GenerateAssetName("endpointconnection");
-            PrivateEndpointConnectionData parameter = new PrivateEndpointConnectionData()
+            ServiceBusPrivateEndpointConnectionData parameter = new ServiceBusPrivateEndpointConnectionData()
             {
                 PrivateEndpoint = new WritableSubResource()
                 {
                     Id = serviceBusNamespace2.Id
                 }
             };
-            PrivateEndpointConnectionResource privateEndpointConnection = (await privateEndpointConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, parameter)).Value;
+            ServiceBusPrivateEndpointConnectionResource privateEndpointConnection = (await privateEndpointConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, parameter)).Value;
             Assert.NotNull(privateEndpointConnection);
             Assert.AreEqual(privateEndpointConnection.Data.PrivateEndpoint.Id, serviceBusNamespace2.Id.ToString());
             connectionName = privateEndpointConnection.Id.Name;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.AreEqual(privateEndpointConnection.Data.PrivateEndpoint.Id, serviceBusNamespace2.Id.ToString());
 
             //get all endpoint connections and validate
-            List<PrivateEndpointConnectionResource> privateEndpointConnections = await privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
+            List<ServiceBusPrivateEndpointConnectionResource> privateEndpointConnections = await privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(privateEndpointConnections, 1);
             Assert.AreEqual(privateEndpointConnections.First().Data.PrivateEndpoint.Id, serviceBusNamespace2.Id.ToString());
 
@@ -318,14 +318,14 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.NotNull(keys1.PrimaryConnectionString);
             Assert.NotNull(keys1.SecondaryConnectionString);
 
-            AccessKeys keys2 = await authorizationRule.RegenerateKeysAsync(new RegenerateAccessKeyOptions(KeyType.PrimaryKey));
+            AccessKeys keys2 = await authorizationRule.RegenerateKeysAsync(new RegenerateAccessKeyContent(KeyType.PrimaryKey));
             if (Mode != RecordedTestMode.Playback)
             {
                 Assert.AreNotEqual(keys1.PrimaryKey, keys2.PrimaryKey);
                 Assert.AreEqual(keys1.SecondaryKey, keys2.SecondaryKey);
             }
 
-            AccessKeys keys3 = await authorizationRule.RegenerateKeysAsync(new RegenerateAccessKeyOptions(KeyType.SecondaryKey));
+            AccessKeys keys3 = await authorizationRule.RegenerateKeysAsync(new RegenerateAccessKeyContent(KeyType.SecondaryKey));
             if (Mode != RecordedTestMode.Playback)
             {
                 Assert.AreEqual(keys2.PrimaryKey, keys3.PrimaryKey);

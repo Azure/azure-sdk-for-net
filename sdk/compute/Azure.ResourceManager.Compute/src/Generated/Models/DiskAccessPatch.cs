@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Used for updating a disk access resource. </summary>
-    internal partial class DiskAccessPatch
+    public partial class DiskAccessPatch
     {
         /// <summary> Initializes a new instance of DiskAccessPatch. </summary>
         public DiskAccessPatch()

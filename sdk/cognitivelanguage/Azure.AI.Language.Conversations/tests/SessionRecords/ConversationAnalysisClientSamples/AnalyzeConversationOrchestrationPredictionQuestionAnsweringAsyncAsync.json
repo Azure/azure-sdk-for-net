@@ -1,57 +1,58 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://westeurope.api.cognitive.microsoft.com/language/:analyze-conversations?api-version=2022-03-01-preview",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "219",
+        "Content-Length": "236",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-bec7ae85cad863498c98b2971403737c-87c8db895718bc49-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220405.1 (.NET Core 3.1.23; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "83d1b21a8865158da7e237d16e3f415c",
+        "traceparent": "00-72f002685e7e79594a453827d6efa3cc-be93bdbe09f1ec23-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220614.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "8249bad3e88cda82aadfb38cfc3c2fe8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "analysisInput": {
           "conversationItem": {
             "text": "How are you?",
-            "participantId": "1",
             "id": "1",
-            "modality": "text"
+            "participantId": "1"
           }
         },
         "parameters": {
-          "projectName": "OrchestrationProject",
-          "deploymentName": "ShabanTest"
+          "projectName": "OrchestrationScriptDeployed",
+          "deploymentName": "production",
+          "stringIndexType": "Utf16CodeUnit"
         },
-        "kind": "CustomConversation"
+        "kind": "Conversation"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "25e479d0-65ac-45da-8df6-f94adb16dec7",
+        "apim-request-id": "c1c203d6-22be-4558-8ef2-caf5ff162b1a",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 05 Apr 2022 12:34:00 GMT",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.OrchestrationWorkflow.Prediction=1",
+        "Date": "Tue, 14 Jun 2022 20:30:58 GMT",
         "Pragma": "no-cache",
-        "request-id": "25e479d0-65ac-45da-8df6-f94adb16dec7",
+        "request-id": "c1c203d6-22be-4558-8ef2-caf5ff162b1a",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "220"
+        "x-envoy-upstream-service-time": "395"
       },
       "ResponseBody": {
-        "kind": "CustomConversationResult",
-        "results": {
+        "kind": "ConversationResult",
+        "result": {
           "query": "How are you?",
           "prediction": {
             "topIntent": "ChitChat-QnA",
-            "projectKind": "workflow",
+            "projectKind": "Orchestration",
             "intents": {
               "ChitChat-QnA": {
-                "confidenceScore": 0.99826396,
-                "targetKind": "question_answering",
+                "confidenceScore": 1,
+                "targetProjectKind": "QuestionAnswering",
                 "result": {
                   "answers": [
                     {
@@ -105,16 +106,12 @@
                 }
               },
               "EmailIntent": {
-                "confidenceScore": 0.7892474,
-                "targetKind": "conversation"
-              },
-              "RestaurantIntent": {
-                "confidenceScore": 0.53074795,
-                "targetKind": "luis"
+                "confidenceScore": 0.2013731,
+                "targetProjectKind": "Conversation"
               },
               "None": {
-                "confidenceScore": 0.16826314,
-                "targetKind": "non_linked"
+                "confidenceScore": 0.1674014,
+                "targetProjectKind": "NonLinked"
               }
             }
           }
@@ -123,10 +120,10 @@
     }
   ],
   "Variables": {
-    "AZURE_CONVERSATIONS_ENDPOINT": "https://westeurope.api.cognitive.microsoft.com",
-    "AZURE_CONVERSATIONS_KEY": "Sanitized",
-    "AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "ShabanTest",
-    "AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationProject",
-    "RandomSeed": "566617429"
+    "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
+    "CONVERSATIONS_KEY": "Sanitized",
+    "CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
+    "CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationScriptDeployed",
+    "RandomSeed": "1430188584"
   }
 }

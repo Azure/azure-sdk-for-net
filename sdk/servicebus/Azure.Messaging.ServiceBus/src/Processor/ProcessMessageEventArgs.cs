@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,7 +26,10 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public CancellationToken CancellationToken { get; }
 
+        internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> Messages => _receiveActions.Messages;
+
         private readonly ServiceBusReceiver _receiver;
+        private readonly ProcessorReceiveActions _receiveActions;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProcessMessageEventArgs"/> class.
@@ -36,11 +40,34 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled
         /// in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.
         /// </param>
-        public ProcessMessageEventArgs(ServiceBusReceivedMessage message, ServiceBusReceiver receiver, CancellationToken cancellationToken)
+        public ProcessMessageEventArgs(ServiceBusReceivedMessage message, ServiceBusReceiver receiver, CancellationToken cancellationToken) :
+            this(message, manager: null, cancellationToken)
+        {
+            _receiver = receiver;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProcessMessageEventArgs"/> class.
+        /// </summary>
+        ///
+        /// <param name="message">The message to be processed.</param>
+        /// <param name="manager">The receiver manager for these event args.</param>
+        /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled
+        /// in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.
+        /// </param>
+        internal ProcessMessageEventArgs(
+            ServiceBusReceivedMessage message,
+            ReceiverManager manager,
+            CancellationToken cancellationToken)
         {
             Message = message;
-            _receiver = receiver;
+
+            // manager would be null in scenarios where customers are using the public constructor for testing purposes.
+            _receiver = manager?.Receiver;
             CancellationToken = cancellationToken;
+
+            bool autoRenew = manager?.ShouldAutoRenewMessageLock() == true;
+            _receiveActions = new ProcessorReceiveActions(message, manager, autoRenew);
         }
 
         ///<inheritdoc cref="ServiceBusReceiver.AbandonMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
@@ -117,5 +144,14 @@ namespace Azure.Messaging.ServiceBus
         {
             await _receiver.RenewMessageLockAsync(message, cancellationToken).ConfigureAwait(false);
         }
+
+        /// <summary>
+        /// Gets a <see cref="ProcessorReceiveActions"/> instance which enables receiving additional messages within the scope of the current event.
+        /// </summary>
+        public virtual ProcessorReceiveActions GetReceiveActions() => _receiveActions;
+
+        internal void EndExecutionScope() => _receiveActions.EndExecutionScope();
+
+        internal async Task CancelMessageLockRenewalAsync() => await _receiveActions.CancelMessageLockRenewalAsync().ConfigureAwait(false);
     }
 }

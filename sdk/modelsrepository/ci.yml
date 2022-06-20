@@ -22,7 +22,7 @@ pr:
     - sdk/modelsrepository/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: modelsrepository
     ArtifactName: packages

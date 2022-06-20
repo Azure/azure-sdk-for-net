@@ -102,11 +102,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// operations should be allowed on the virtual machine.
         /// &lt;br&gt;&lt;br&gt;This may only be set to False when no
         /// extensions are present on the virtual machine.</param>
-        /// <param name="requireGuestProvisionSignal">Specifies whether the
-        /// guest provision signal is required to infer provision success of
-        /// the virtual machine.  **Note: This property is for private testing
-        /// only, and all customers must not set the property to
-        /// false.**</param>
+        /// <param name="requireGuestProvisionSignal">Optional property which
+        /// must either be set to True or omitted.</param>
         public OSProfile(string computerName = default(string), string adminUsername = default(string), string adminPassword = default(string), string customData = default(string), WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), LinuxConfiguration linuxConfiguration = default(LinuxConfiguration), IList<VaultSecretGroup> secrets = default(IList<VaultSecretGroup>), bool? allowExtensionOperations = default(bool?), bool? requireGuestProvisionSignal = default(bool?))
         {
             ComputerName = computerName;
@@ -243,10 +240,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public bool? AllowExtensionOperations { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies whether the guest provision signal is
-        /// required to infer provision success of the virtual machine.
-        /// **Note: This property is for private testing only, and all
-        /// customers must not set the property to false.**
+        /// Gets or sets optional property which must either be set to True or
+        /// omitted.
         /// </summary>
         [JsonProperty(PropertyName = "requireGuestProvisionSignal")]
         public bool? RequireGuestProvisionSignal { get; set; }

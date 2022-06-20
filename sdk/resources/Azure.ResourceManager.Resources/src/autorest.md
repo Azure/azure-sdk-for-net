@@ -8,8 +8,7 @@ library-name: Resources
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
 tag: package-resources-2022-04
-
-output-folder: Generated/
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 model-namespace: true
@@ -17,7 +16,6 @@ public-clients: false
 head-as-boolean: false
 
 request-path-to-parent:
-  /{scope}/providers/Microsoft.Resources/links: /{linkId}
   # setting these to the same parent will automatically merge these operations
   /providers/Microsoft.Resources/deployments/{deploymentName}/whatIf: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
   /subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
@@ -46,7 +44,7 @@ override-operation-name:
   Deployments_WhatIfAtSubscriptionScope: WhatIf
   Deployments_WhatIfAtTenantScope: WhatIf
   Deployments_CheckExistenceAtScope: CheckExistence
-  JitRequests_ListBySubscription: GetJitRequestDefinitions
+  jitRequests_ListBySubscription: GetJitRequestDefinitions
   Deployments_CalculateTemplateHash: CalculateDeploymentTemplateHash 
 
 operation-groups-to-omit:
@@ -76,15 +74,6 @@ rename-rules:
   Urls: Uris
 
 directive:
-# TODO - remove when Azure.ErrorResponse is marked as PropertyReferenceType
-  - from: types.json
-    where: $.definitions.ErrorResponse
-    transform: $["x-ms-client-name"] = "ResourcesResponseError" # we have to change the name of this type because resourcemanager has a class with the same name in the same namespace
-# TODO - remove when ErrorAdditionalInfo is introduced to Azure.Core and marked as PropertyReferenceType
-  - from: types.json
-    where: $.definitions.ErrorAdditionalInfo
-    transform: $["x-ms-client-name"] = "ResourcesErrorAdditionalInfo" # we have to change the name of this type because resourcemanager has a class with the same name in the same namespace
-
   - remove-operation: checkResourceName
   # Use AtScope methods to replace the following operations
   # Keep the get method at each scope so that generator can know the possible values of container's parent
@@ -135,8 +124,8 @@ directive:
   - remove-operation: Applications_UpdateById
 
   - from: managedapplications.json
-    where: $["x-ms-paths"]
-    transform: delete $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy"]
+    where: $['x-ms-paths']
+    transform: delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy']
     reason: The operations duplicate with the ones in /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}
   - rename-operation:
       from: ListOperations
@@ -144,52 +133,52 @@ directive:
   - from: resources.json
     where: $.definitions.DeploymentOperationProperties
     transform: >
-      $.properties.statusMessage["x-nullable"] = true;
+      $.properties.statusMessage['x-nullable'] = true;
 
   - from: deploymentScripts.json
-    where: $.definitions.ManagedServiceIdentity.properties.type["x-ms-enum"]
+    where: $.definitions.ManagedServiceIdentity.properties.type['x-ms-enum']
     transform: >
-      $.name = "ArmDeploymentScriptManagedIdentityType"
+      $.name = 'ArmDeploymentScriptManagedIdentityType'
   - from: deploymentScripts.json
     where: $.definitions
     transform: >
-      $["ManagedServiceIdentity"]["x-ms-client-name"] = "ArmDeploymentScriptManagedIdentity";
-      $.ManagedServiceIdentity.properties.tenantId.format = "uuid";
-      $["AzureResourceBase"]["x-ms-client-name"] = "ArmDeploymentScriptResourceBase";
-      $["DeploymentScriptPropertiesBase"]["x-ms-client-name"] = "ArmDeploymentScriptPropertiesBase";
-      $["DeploymentScriptsError"]["x-ms-client-name"] = "ArmDeploymentScriptsError";
+      $.ManagedServiceIdentity['x-ms-client-name'] = 'ArmDeploymentScriptManagedIdentity';
+      $.ManagedServiceIdentity.properties.tenantId['format'] = 'uuid';
+      $.AzureResourceBase['x-ms-client-name'] = 'ArmDeploymentScriptResourceBase';
+      $.DeploymentScriptPropertiesBase['x-ms-client-name'] = 'ArmDeploymentScriptPropertiesBase';
+      $.DeploymentScriptsError['x-ms-client-name'] = 'ArmDeploymentScriptsError';
       $.DeploymentScript['x-ms-client-name'] = 'ArmDeploymentScript';
-      $.DeploymentScript.properties.location["x-ms-format"] = "azure-location";
+      $.DeploymentScript.properties.location['x-ms-format'] = 'azure-location';
       $.DeploymentScriptListResult['x-ms-client-name'] = 'ArmDeploymentScriptListResult';
-      $.DeploymentScriptPropertiesBase.properties.cleanupPreference["x-ms-enum"].name = "scriptCleanupOptions";
+      $.DeploymentScriptPropertiesBase.properties.cleanupPreference['x-ms-enum'].name = 'scriptCleanupOptions';
       $.EnvironmentVariable['x-ms-client-name'] = 'ScriptEnvironmentVariable';
       $.StorageAccountConfiguration['x-ms-client-name'] = 'ScriptStorageConfiguration';
 
   - from: managedapplications.json
     where: $.definitions
     transform: >
-      $["Identity"]["x-ms-client-name"] = "ArmApplicationManagedIdentity";
-      $["Identity"]["properties"]["type"]["x-ms-enum"]["name"] = "ArmApplicationManagedIdentityType";
-      $["Identity"]["properties"]["principalId"]["format"] = "uuid";
-      $["Identity"]["properties"]["tenantId"]["format"] = "uuid";
-      $["JitRequestProperties"]["properties"]["publisherTenantId"]["format"] = "uuid";
-      $["ApplicationProperties"]["properties"]["publisherTenantId"]["format"] = "uuid";
-      $["GenericResource"]["x-ms-client-name"] = "ArmApplicationResourceData";
-      $["Resource"]["x-ms-client-name"] = "ArmApplicationResourceBase";
-      $["Plan"]["x-ms-client-name"] = "ArmApplicationPlan";
-      $["Sku"]["x-ms-client-name"] = "ArmApplicationSku";
-      $["ErrorResponse"]["x-ms-client-name"] = "ArmApplicationErrorResponse";
-      $["OperationListResult"]["x-ms-client-name"] = "ArmApplicationOperationListResult";
-      $["Operation"]["x-ms-client-name"] = "ArmApplicationOperation";
-      $["Operation"]["properties"]["displayOfApplication"] = $["Operation"]["properties"]["display"];
-      $["Operation"]["properties"]["display"] = undefined;
-      $["JitRequestDefinition"]["x-ms-client-name"] = "JitRequest";
-      $["JitRequestDefinitionListResult"]["x-ms-client-name"] = "JitRequestListResult";
-      $["Application"]["x-ms-client-name"] = "ArmApplication";
-      $["ApplicationPackageLockingPolicyDefinition"]["x-ms-client-name"] = "ApplicationPackageLockingPolicy";
-      $["ApplicationBillingDetailsDefinition"]["x-ms-client-name"] = "ApplicationBillingDetails";
-      $["JitApproverDefinition"]["x-ms-client-name"] = "JitApprover";
-      $["DeploymentMode"]["x-ms-enum"]["name"] = "ArmApplicationDeploymentMode";
+      $.Identity['x-ms-client-name'] = 'ArmApplicationManagedIdentity';
+      $.Identity.properties.type['x-ms-enum']['name'] = 'ArmApplicationManagedIdentityType';
+      $.Identity.properties.principalId['format'] = 'uuid';
+      $.Identity.properties.tenantId['format'] = 'uuid';
+      $.JitRequestProperties.properties.publisherTenantId['format'] = 'uuid';
+      $.ApplicationProperties.properties.publisherTenantId['format'] = 'uuid';
+      $.GenericResource['x-ms-client-name'] = 'ArmApplicationResourceData';
+      $.Resource['x-ms-client-name'] = 'ArmApplicationResourceBase';
+      $.Plan['x-ms-client-name'] = 'ArmApplicationPlan';
+      $.Sku['x-ms-client-name'] = 'ArmApplicationSku';
+      $.ErrorResponse['x-ms-client-name'] = 'ArmApplicationErrorResponse';
+      $.OperationListResult['x-ms-client-name'] = 'ArmApplicationOperationListResult';
+      $.Operation['x-ms-client-name'] = 'ArmApplicationOperation';
+      $.Operation.properties.displayOfApplication = $.Operation.properties.display;
+      $.Operation.properties['display'] = undefined;
+      $.JitRequestDefinition['x-ms-client-name'] = 'JitRequest';
+      $.JitRequestDefinitionListResult['x-ms-client-name'] = 'JitRequestListResult';
+      $.Application['x-ms-client-name'] = 'ArmApplication';
+      $.ApplicationPackageLockingPolicyDefinition['x-ms-client-name'] = 'ApplicationPackageLockingPolicy';
+      $.ApplicationBillingDetailsDefinition['x-ms-client-name'] = 'ApplicationBillingDetails';
+      $.JitApproverDefinition['x-ms-client-name'] = 'JitApprover';
+      $.DeploymentMode['x-ms-enum']['name'] = 'ArmApplicationDeploymentMode';
       $.Application['x-ms-client-name'] = 'ArmApplication';
       $.ApplicationDefinition['x-ms-client-name'] = 'ArmApplicationDefinition';
       $.ApplicationPackageLockingPolicyDefinition['x-ms-client-name'] = 'ArmApplicationPackageLockingPolicy';
@@ -221,26 +210,26 @@ directive:
       $.ApplicationDefinitionArtifactName['x-ms-enum'].name = 'ArmApplicationDefinitionArtifactName';
       $.ApplicationLockLevel['x-ms-enum'].name = 'ArmApplicationLockLevel';
       $.ApplicationManagementMode['x-ms-enum'].name = 'ArmApplicationManagementMode';
-      $.ApplicationJitAccessPolicy.properties.maximumJitAccessDuration["format"] = "duration";
-      $.JitSchedulingPolicy.properties.duration["format"] = "duration";
-      $.ProvisioningState["x-ms-enum"].name = "ResourcesProvisioningState";
-      $.ProvisioningState["x-ms-client-name"] = "ResourcesProvisioningState";
-      $.userAssignedResourceIdentity.properties.principalId.format = "uuid";
-      $.userAssignedResourceIdentity.properties.tenantId.format = "uuid";
-      $.userAssignedResourceIdentity["x-ms-client-name"] = "ArmApplicationUserAssignedIdentity";
-      $.ApplicationProperties.properties.applicationDefinitionId["x-ms-format"] = "arm-id";
-      $.ApplicationProperties.properties.managedResourceGroupId["x-ms-format"] = "arm-id";
-      $.ApplicationPropertiesPatchable.properties.applicationDefinitionId["x-ms-format"] = "arm-id";
-      $.ApplicationPropertiesPatchable.properties.managedResourceGroupId["x-ms-format"] = "arm-id";
+      $.ApplicationJitAccessPolicy.properties.maximumJitAccessDuration['format'] = 'duration';
+      $.JitSchedulingPolicy.properties.duration['format'] = 'duration';
+      $.ProvisioningState['x-ms-enum'].name = 'ResourcesProvisioningState';
+      $.ProvisioningState['x-ms-client-name'] = 'ResourcesProvisioningState';
+      $.userAssignedResourceIdentity.properties.principalId.format = 'uuid';
+      $.userAssignedResourceIdentity.properties.tenantId.format = 'uuid';
+      $.userAssignedResourceIdentity['x-ms-client-name'] = 'ArmApplicationUserAssignedIdentity';
+      $.ApplicationProperties.properties.applicationDefinitionId['x-ms-format'] = 'arm-id';
+      $.ApplicationProperties.properties.managedResourceGroupId['x-ms-format'] = 'arm-id';
+      $.ApplicationPropertiesPatchable.properties.applicationDefinitionId['x-ms-format'] = 'arm-id';
+      $.ApplicationPropertiesPatchable.properties.managedResourceGroupId['x-ms-format'] = 'arm-id';
   - from: resources.json
     where: $.definitions
     transform: >
       $.DeploymentProperties.properties.mode['x-ms-enum'].name = 'ArmDeploymentMode';
       $.DeploymentPropertiesExtended.properties.mode['x-ms-enum'].name = 'ArmDeploymentMode';
       $.DeploymentExtended['x-ms-client-name'] = 'ArmDeployment';
-      $.DeploymentExtended.properties.location["x-ms-format"] = "azure-location";
+      $.DeploymentExtended.properties.location['x-ms-format'] = 'azure-location';
       $.Deployment['x-ms-client-name'] = 'ArmDeploymentContent';
-      $.Deployment.properties.location["x-ms-format"] = "azure-location";
+      $.Deployment.properties.location['x-ms-format'] = 'azure-location';
       $.DeploymentExportResult['x-ms-client-name'] = 'ArmDeploymentExportResult';
       $.DeploymentExtendedFilter['x-ms-client-name'] = 'ArmDeploymentExtendedFilter';
       $.DeploymentListResult['x-ms-client-name'] = 'ArmDeploymentListResult';
@@ -250,20 +239,20 @@ directive:
       $.DeploymentOperationsListResult['x-ms-client-name'] = 'ArmDeploymentOperationsListResult';
       $.DeploymentValidateResult['x-ms-client-name'] = 'ArmDeploymentValidateResult';
       $.DeploymentWhatIf['x-ms-client-name'] = 'ArmDeploymentWhatIfContent';
-      $.DeploymentWhatIf.properties.location["x-ms-format"] = "azure-location";
+      $.DeploymentWhatIf.properties.location['x-ms-format'] = 'azure-location';
       $.DeploymentWhatIfSettings['x-ms-client-name'] = 'ArmDeploymentWhatIfSettings';
       $.DeploymentWhatIfProperties['x-ms-client-name'] = 'ArmDeploymentWhatIfProperties';
       $.DeploymentProperties['x-ms-client-name'] = 'ArmDeploymentProperties';
       $.DeploymentPropertiesExtended['x-ms-client-name'] = 'ArmDeploymentPropertiesExtended';
-      $.Dependency["x-ms-client-name"] = "ArmDependency";
-      $.BasicDependency["x-ms-client-name"] = "BasicArmDependency";
+      $.Dependency['x-ms-client-name'] = 'ArmDependency';
+      $.BasicDependency['x-ms-client-name'] = 'BasicArmDependency';
       $.Dependency.properties.resourceType['x-ms-format'] = 'resource-type';
       $.BasicDependency.properties.resourceType['x-ms-format'] = 'resource-type';
       $.TargetResource.properties.resourceType['x-ms-format'] = 'resource-type';
-      $.DeploymentPropertiesExtended.properties.provisioningState["x-ms-enum"].name = "ResourcesProvisioningState";
-      $.DeploymentPropertiesExtended.properties.duration["format"] = "duration";
+      $.DeploymentPropertiesExtended.properties.provisioningState['x-ms-enum'].name = 'ResourcesProvisioningState';
+      $.DeploymentPropertiesExtended.properties.duration['format'] = 'duration';
       $.DeploymentPropertiesExtended.properties.onErrorDeployment['x-ms-client-name'] = 'ErrorDeployment';
-      $.DeploymentOperationProperties.properties.duration["format"] = "duration";
+      $.DeploymentOperationProperties.properties.duration['format'] = 'duration';
       $.ExpressionEvaluationOptions.properties.scope['x-ms-enum']['name'] = 'ExpressionEvaluationScope';
       $.OnErrorDeployment['x-ms-client-name'] = 'ErrorDeployment';
       $.OnErrorDeployment.properties.type['x-ms-enum'].name = 'ErrorDeploymentType';
@@ -271,8 +260,8 @@ directive:
       $.OnErrorDeploymentExtended.properties.type['x-ms-enum'].name = 'ErrorDeploymentType';
       $.ParametersLink['x-ms-client-name'] = 'ArmDeploymentParametersLink';
       $.TemplateLink['x-ms-client-name'] = 'ArmDeploymentTemplateLink';
-      $.WhatIfChange.properties.changeType["x-ms-enum"].name = "WhatIfChangeType";
-      $.WhatIfPropertyChange.properties.propertyChangeType["x-ms-enum"].name = "WhatIfPropertyChangeType";
+      $.WhatIfChange.properties.changeType['x-ms-enum'].name = 'WhatIfChangeType';
+      $.WhatIfPropertyChange.properties.propertyChangeType['x-ms-enum'].name = 'WhatIfPropertyChangeType';
   - from: resources.json
     where: $.paths['/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf'].post.parameters[1].schema
     transform: $['$ref'] = '#/definitions/DeploymentWhatIf'
@@ -285,48 +274,48 @@ directive:
   - from: resources.json
     where: $.definitions.Alias
     transform:
-      $["x-ms-client-name"] = "ResourceTypeAlias";
+      $['x-ms-client-name'] = 'ResourceTypeAlias';
   - from: resources.json
     where: $.definitions.AliasPath
     transform:
-      $["x-ms-client-name"] = "ResourceTypeAliasPath";
+      $['x-ms-client-name'] = 'ResourceTypeAliasPath';
   - from: resources.json
-    where: $.definitions.AliasPathMetadata.properties.attributes["x-ms-enum"]
+    where: $.definitions.AliasPathMetadata.properties.attributes['x-ms-enum']
     transform:
-      $["name"] = "ResourceTypeAliasPathAttributes";
+      $['name'] = 'ResourceTypeAliasPathAttributes';
   - from: resources.json
     where: $.definitions.AliasPathMetadata
     transform:
-      $["x-ms-client-name"] = "ResourceTypeAliasPathMetadata";
+      $['x-ms-client-name'] = 'ResourceTypeAliasPathMetadata';
   - from: resources.json
-    where: $.definitions.AliasPathMetadata.properties.type["x-ms-enum"]
+    where: $.definitions.AliasPathMetadata.properties.type['x-ms-enum']
     transform:
-      $["name"] = "ResourceTypeAliasPathTokenType";
+      $['name'] = 'ResourceTypeAliasPathTokenType';
   - from: resources.json
     where: $.definitions.AliasPattern
     transform:
-      $["x-ms-client-name"] = "ResourceTypeAliasPattern";
+      $['x-ms-client-name'] = 'ResourceTypeAliasPattern';
   - from: resources.json
-    where: $.definitions.AliasPattern.properties.type["x-ms-enum"]
+    where: $.definitions.AliasPattern.properties.type['x-ms-enum']
     transform:
-      $["name"] = "ResourceTypeAliasPatternType";
+      $['name'] = 'ResourceTypeAliasPatternType';
   - from: resources.json
-    where: $.definitions.Alias.properties.type["x-ms-enum"]
+    where: $.definitions.Alias.properties.type['x-ms-enum']
     transform:
-      $["name"] = "ResourceTypeAliasType";
+      $['name'] = 'ResourceTypeAliasType';
   - from: templateSpecs.json
     where: $.definitions
     transform: >
-      $.TemplateSpec.properties.location["x-ms-format"] = "azure-location";
-      $.TemplateSpecVersion.properties.location["x-ms-format"] = "azure-location";
+      $.TemplateSpec.properties.location['x-ms-format'] = 'azure-location';
+      $.TemplateSpecVersion.properties.location['x-ms-format'] = 'azure-location';
   - from: resources.json
     where: $.definitions.DeploymentProperties.properties.expressionEvaluationOptions
     transform: >
-      $["x-ms-client-name"] = "ExpressionEvaluation"
+      $['x-ms-client-name'] = 'ExpressionEvaluation'
   - from: resources.json
     where: $.definitions.DeploymentProperties.properties.onErrorDeployment
     transform: >
-      $["x-ms-client-name"] = "ErrorDeployment"
+      $['x-ms-client-name'] = 'ErrorDeployment'
   - from: deploymentScripts.json
     where: $.definitions.DeploymentScriptPropertiesBase.properties.outputs
     transform: >

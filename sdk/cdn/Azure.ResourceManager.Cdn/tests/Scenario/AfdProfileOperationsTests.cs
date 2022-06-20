@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             int count = 0;
-            await foreach (var tempUsage in afdProfile.GetResourceUsageAfdProfilesAsync())
+            await foreach (var tempUsage in afdProfile.GetFrontDoorProfileResourceUsagesAsync())
             {
                 count++;
                 Assert.AreEqual(tempUsage.Unit, UsageUnit.Count);
@@ -101,14 +101,14 @@ namespace Azure.ResourceManager.Cdn.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
             ProfileResource afdProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
-            List<LogRanking> rankings = new List<LogRanking>() { LogRanking.Url };
+            List<LogRanking> rankings = new List<LogRanking>() { LogRanking.Uri };
             List<LogRankingMetric> metric = new List<LogRankingMetric>() { LogRankingMetric.ClientRequestCount };
             int maxRankings = 5;
             DateTimeOffset dateTimeBegin = new DateTimeOffset(2021, 9, 23, 0, 0, 0, TimeSpan.Zero);
             DateTimeOffset dateTimeEnd = new DateTimeOffset(2021, 9, 25, 0, 0, 0, TimeSpan.Zero);
             RankingsResponse rankingsResponse = await afdProfile.GetLogAnalyticsRankingsAsync(rankings, metric, maxRankings, dateTimeBegin, dateTimeEnd);
             Assert.AreEqual(rankingsResponse.Tables.Count, 1);
-            Assert.AreEqual(rankingsResponse.Tables[0].Ranking, LogRanking.Url.ToString());
+            Assert.AreEqual(rankingsResponse.Tables[0].Ranking, LogRanking.Uri.ToString());
             Assert.AreEqual(rankingsResponse.Tables[0].Data.Count, 0);
         }
 
@@ -168,8 +168,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
-            CheckHostNameAvailabilityContent input = new CheckHostNameAvailabilityContent("customdomain4afdtest.azuretest.net");
-            CheckNameAvailabilityOutput result = await afdProfile.CheckAfdProfileHostNameAvailabilityAsync(input);
+            HostNameAvailabilityContent input = new HostNameAvailabilityContent("customdomain4afdtest.azuretest.net");
+            CdnNameAvailabilityResult result = await afdProfile.CheckFrontDoorProfileHostNameAvailabilityAsync(input);
             Assert.AreEqual(result.NameAvailable, true);
         }
     }

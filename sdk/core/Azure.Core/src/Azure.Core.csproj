@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Remove="Shared\**\*.cs" />
     <Compile Include="Shared\AppContextSwitchHelper.cs" />
+    <Compile Include="Shared\AsyncLockWithValue.cs" />
     <Compile Include="Shared\Argument.cs" />
     <Compile Include="Shared\AuthorizationChallengeParser.cs" />
     <Compile Include="Shared\AzureEventSource.cs" />
@@ -59,6 +60,10 @@
     <Compile Include="Shared\HttpMessageSanitizer.cs" />
     <Compile Include="Shared\InitializationConstructorAttribute.cs" />
     <Compile Include="Shared\NullableAttributes.cs" />
+    <Compile Include="Shared\OperationInternalBase.cs" />
+    <Compile Include="Shared\VoidValue.cs" />
+    <Compile Include="Shared\OperationInternal.cs" />
+    <Compile Include="Shared\OperationInternalOfT.cs" />
     <Compile Include="Shared\RetryAfterDelayStrategy.cs" />
     <Compile Include="Shared\SerializationConstructorAttribute.cs" />
     <Compile Include="Shared\TaskExtensions.cs" />

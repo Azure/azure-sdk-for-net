@@ -1,14 +1,17 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
-
-### Features Added
+## 1.0.0-beta.4 (Unreleased)
 
 ### Breaking Changes
 
-### Bugs Fixed
+- `ConversationAnalysisClient.AnalyzeConversation` and `AnalyzeConversationAsync` now take a `RequestContent` and `RequestContext` for more control and flexibility.
+- Removed all models. See README.md for samples to use this client library.
 
-### Other Changes
+## 1.0.0-beta.3 (2022-04-20)
+
+### Breaking Changes
+
+- Some models and model properties were renamed based on the latest 2022-03-01-preview service version that was published.
 
 ## 1.0.0-beta.2 (2022-02-08)
 

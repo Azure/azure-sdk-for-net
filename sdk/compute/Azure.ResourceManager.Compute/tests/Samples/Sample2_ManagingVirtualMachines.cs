@@ -4,6 +4,7 @@
 #region Snippet:Managing_VirtualMachines_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
@@ -41,15 +42,12 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                     LinuxConfiguration = new LinuxConfiguration()
                     {
                         DisablePasswordAuthentication = true,
-                        Ssh = new SshConfiguration()
-                        {
-                            PublicKeys = {
-                    new SshPublicKeyInfo()
-                    {
-                        Path = $"/home/adminUser/.ssh/authorized_keys",
-                        KeyData = "<value of the public ssh key>",
-                    }
-                }
+                        SshPublicKeys = {
+                            new SshPublicKeyInfo()
+                            {
+                                Path = $"/home/adminUser/.ssh/authorized_keys",
+                                KeyData = "<value of the public ssh key>",
+                            }
                         }
                     }
                 },
@@ -59,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                     {
                         new NetworkInterfaceReference()
                         {
-                            Id = "/subscriptions/<subscriptionId>/resourceGroups/<rgName>/providers/Microsoft.Network/networkInterfaces/<nicName>",
+                            Id = new ResourceIdentifier("/subscriptions/<subscriptionId>/resourceGroups/<rgName>/providers/Microsoft.Network/networkInterfaces/<nicName>"),
                             Primary = true,
                         }
                     }

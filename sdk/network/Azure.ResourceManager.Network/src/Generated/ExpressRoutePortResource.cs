@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "ExpressRoutePortResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ExpressRoutePortResource(ArmClient client, ExpressRoutePortData data) : this(client, new ResourceIdentifier(data.Id))
+        internal ExpressRoutePortResource(ArmClient client, ExpressRoutePortData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -218,6 +218,58 @@ namespace Azure.ResourceManager.Network
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update ExpressRoutePort tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}
+        /// Operation Id: ExpressRoutePorts_UpdateTags
+        /// </summary>
+        /// <param name="tagsObject"> Parameters supplied to update ExpressRoutePort resource tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual async Task<Response<ExpressRoutePortResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+
+            using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _expressRoutePortRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ExpressRoutePortResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update ExpressRoutePort tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}
+        /// Operation Id: ExpressRoutePorts_UpdateTags
+        /// </summary>
+        /// <param name="tagsObject"> Parameters supplied to update ExpressRoutePort resource tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual Response<ExpressRoutePortResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+
+            using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _expressRoutePortRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken);
+                return Response.FromValue(new ExpressRoutePortResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

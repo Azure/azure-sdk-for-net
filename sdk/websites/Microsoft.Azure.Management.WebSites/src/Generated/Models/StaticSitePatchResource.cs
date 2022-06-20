@@ -68,7 +68,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// registered with the static site</param>
         /// <param name="provider">The provider that submitted the last
         /// deployment to the primary environment of the static site.</param>
-        public StaticSitePatchResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string defaultHostname = default(string), string repositoryUrl = default(string), string branch = default(string), IList<string> customDomains = default(IList<string>), string repositoryToken = default(string), StaticSiteBuildProperties buildProperties = default(StaticSiteBuildProperties), IList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = default(IList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>), StagingEnvironmentPolicy? stagingEnvironmentPolicy = default(StagingEnvironmentPolicy?), bool? allowConfigFileUpdates = default(bool?), StaticSiteTemplateOptions templateProperties = default(StaticSiteTemplateOptions), string contentDistributionEndpoint = default(string), string keyVaultReferenceIdentity = default(string), IList<StaticSiteUserProvidedFunctionApp> userProvidedFunctionApps = default(IList<StaticSiteUserProvidedFunctionApp>), string provider = default(string))
+        /// <param name="enterpriseGradeCdnStatus">State indicating the status
+        /// of the enterprise grade CDN serving traffic to the static web app.
+        /// Possible values include: 'Enabled', 'Enabling', 'Disabled',
+        /// 'Disabling'</param>
+        public StaticSitePatchResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string defaultHostname = default(string), string repositoryUrl = default(string), string branch = default(string), IList<string> customDomains = default(IList<string>), string repositoryToken = default(string), StaticSiteBuildProperties buildProperties = default(StaticSiteBuildProperties), IList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = default(IList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>), StagingEnvironmentPolicy? stagingEnvironmentPolicy = default(StagingEnvironmentPolicy?), bool? allowConfigFileUpdates = default(bool?), StaticSiteTemplateOptions templateProperties = default(StaticSiteTemplateOptions), string contentDistributionEndpoint = default(string), string keyVaultReferenceIdentity = default(string), IList<StaticSiteUserProvidedFunctionApp> userProvidedFunctionApps = default(IList<StaticSiteUserProvidedFunctionApp>), string provider = default(string), string enterpriseGradeCdnStatus = default(string))
             : base(id, name, kind, type)
         {
             DefaultHostname = defaultHostname;
@@ -85,6 +89,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             KeyVaultReferenceIdentity = keyVaultReferenceIdentity;
             UserProvidedFunctionApps = userProvidedFunctionApps;
             Provider = provider;
+            EnterpriseGradeCdnStatus = enterpriseGradeCdnStatus;
             CustomInit();
         }
 
@@ -177,11 +182,19 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public IList<StaticSiteUserProvidedFunctionApp> UserProvidedFunctionApps { get; private set; }
 
         /// <summary>
-        /// Gets the provider that submitted the last deployment to the primary
-        /// environment of the static site.
+        /// Gets or sets the provider that submitted the last deployment to the
+        /// primary environment of the static site.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provider")]
-        public string Provider { get; private set; }
+        public string Provider { get; set; }
+
+        /// <summary>
+        /// Gets or sets state indicating the status of the enterprise grade
+        /// CDN serving traffic to the static web app. Possible values include:
+        /// 'Enabled', 'Enabling', 'Disabled', 'Disabling'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enterpriseGradeCdnStatus")]
+        public string EnterpriseGradeCdnStatus { get; set; }
 
     }
 }

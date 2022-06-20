@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "PrivateLinkServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrivateLinkServiceResource(ArmClient client, PrivateLinkServiceData data) : this(client, new ResourceIdentifier(data.Id))
+        internal PrivateLinkServiceResource(ArmClient client, PrivateLinkServiceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the PrivateLinkService. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnectionResources and their operations over a PrivateEndpointConnectionResource. </returns>
-        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        /// <summary> Gets a collection of NetworkPrivateEndpointConnectionResources in the PrivateLinkService. </summary>
+        /// <returns> An object representing collection of NetworkPrivateEndpointConnectionResources and their operations over a NetworkPrivateEndpointConnectionResource. </returns>
+        public virtual NetworkPrivateEndpointConnectionCollection GetNetworkPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new PrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkPrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkPrivateEndpointConnectionResource>> GetNetworkPrivateEndpointConnectionAsync(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetPrivateEndpointConnections().GetAsync(peConnectionName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkPrivateEndpointConnections().GetAsync(peConnectionName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkPrivateEndpointConnectionResource> GetNetworkPrivateEndpointConnection(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetPrivateEndpointConnections().Get(peConnectionName, expand, cancellationToken);
+            return GetNetworkPrivateEndpointConnections().Get(peConnectionName, expand, cancellationToken);
         }
 
         /// <summary>
@@ -220,6 +220,66 @@ namespace Azure.ResourceManager.Network
                 var operation = new NetworkArmOperation(_privateLinkServiceClientDiagnostics, Pipeline, _privateLinkServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates an private link service in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}
+        /// Operation Id: PrivateLinkServices_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Parameters supplied to the create or update private link service operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<PrivateLinkServiceResource>> UpdateAsync(WaitUntil waitUntil, PrivateLinkServiceData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _privateLinkServiceClientDiagnostics.CreateScope("PrivateLinkServiceResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _privateLinkServiceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<PrivateLinkServiceResource>(new PrivateLinkServiceOperationSource(Client), _privateLinkServiceClientDiagnostics, Pipeline, _privateLinkServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates an private link service in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}
+        /// Operation Id: PrivateLinkServices_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Parameters supplied to the create or update private link service operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<PrivateLinkServiceResource> Update(WaitUntil waitUntil, PrivateLinkServiceData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _privateLinkServiceClientDiagnostics.CreateScope("PrivateLinkServiceResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _privateLinkServiceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var operation = new NetworkArmOperation<PrivateLinkServiceResource>(new PrivateLinkServiceOperationSource(Client), _privateLinkServiceClientDiagnostics, Pipeline, _privateLinkServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)

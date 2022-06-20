@@ -1,88 +1,89 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://westeurope.api.cognitive.microsoft.com/language/:analyze-conversations?api-version=2022-03-01-preview",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "250",
+        "Content-Length": "263",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220405.1 (.NET Core 3.1.23; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "16faba7b0df983693f73160114db2256",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220614.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "3aafb96c1ef7eb111e5e5f8cdbf0b97e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "analysisInput": {
           "conversationItem": {
-            "text": "Send an email to Carol about the tomorrow\u0027s demo.",
-            "participantId": "1",
+            "text": "Send an email to Carol about tomorrow\u0027s demo",
             "id": "1",
-            "modality": "text"
+            "participantId": "1"
           }
         },
         "parameters": {
-          "projectName": "SampleProject",
-          "deploymentName": "MoTest"
+          "projectName": "CLUScriptDeployed",
+          "deploymentName": "production",
+          "stringIndexType": "Utf16CodeUnit"
         },
-        "kind": "CustomConversation"
+        "kind": "Conversation"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "36a4d549-448c-40f9-a95a-0b9783a3e730",
+        "apim-request-id": "81d39124-2948-4524-b1e6-15c84d908a07",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 05 Apr 2022 12:33:57 GMT",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.ConversationalLanguageUnderstanding.Prediction=1",
+        "Date": "Tue, 14 Jun 2022 20:30:54 GMT",
         "Pragma": "no-cache",
-        "request-id": "36a4d549-448c-40f9-a95a-0b9783a3e730",
+        "request-id": "81d39124-2948-4524-b1e6-15c84d908a07",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "98"
+        "x-envoy-upstream-service-time": "135"
       },
       "ResponseBody": {
-        "kind": "CustomConversationResult",
-        "results": {
-          "query": "Send an email to Carol about the tomorrow\u0027s demo.",
+        "kind": "ConversationResult",
+        "result": {
+          "query": "Send an email to Carol about tomorrow\u0027s demo",
           "prediction": {
-            "topIntent": "Read",
-            "projectKind": "conversation",
+            "topIntent": "Send",
+            "projectKind": "Conversation",
             "intents": [
               {
-                "category": "Read",
-                "confidenceScore": 0.72393185
+                "category": "Send",
+                "confidenceScore": 0.93409747
               },
               {
-                "category": "Send",
-                "confidenceScore": 0.14929298
+                "category": "Read",
+                "confidenceScore": 0.5374636
               },
               {
                 "category": "Setup",
-                "confidenceScore": 0.076164305
-              },
-              {
-                "category": "Find",
-                "confidenceScore": 0.04118208
+                "confidenceScore": 0.48374596
               },
               {
                 "category": "Set",
-                "confidenceScore": 0.00614006
+                "confidenceScore": 0.2737239
               },
               {
-                "category": "Call",
-                "confidenceScore": 0.0025622917
-              },
-              {
-                "category": "Open",
-                "confidenceScore": 0.000411571
+                "category": "Find",
+                "confidenceScore": 0.2394025
               },
               {
                 "category": "None",
-                "confidenceScore": 0.00028198693
+                "confidenceScore": 0.2147143
+              },
+              {
+                "category": "Call",
+                "confidenceScore": 0.18309219
               },
               {
                 "category": "Play",
-                "confidenceScore": 3.289273E-05
+                "confidenceScore": 0.14325047
+              },
+              {
+                "category": "Open",
+                "confidenceScore": 0.13483635
               }
             ],
             "entities": [
@@ -102,15 +103,15 @@
               {
                 "category": "MeetingDate",
                 "text": "tomorrow",
-                "offset": 33,
+                "offset": 29,
                 "length": 8,
                 "confidenceScore": 1,
                 "resolutions": [
                   {
                     "resolutionKind": "DateTimeResolution",
                     "dateTimeSubKind": "Date",
-                    "timex": "2022-04-06",
-                    "value": "2022-04-06"
+                    "timex": "2022-06-15",
+                    "value": "2022-06-15"
                   }
                 ],
                 "extraInformation": [
@@ -119,13 +120,6 @@
                     "value": "datetime.date"
                   }
                 ]
-              },
-              {
-                "category": "Location",
-                "text": "demo",
-                "offset": 44,
-                "length": 4,
-                "confidenceScore": 1
               }
             ]
           }
@@ -134,10 +128,10 @@
     }
   ],
   "Variables": {
-    "AZURE_CONVERSATIONS_DEPLOYMENT_NAME": "MoTest",
-    "AZURE_CONVERSATIONS_ENDPOINT": "https://westeurope.api.cognitive.microsoft.com",
-    "AZURE_CONVERSATIONS_KEY": "Sanitized",
-    "AZURE_CONVERSATIONS_PROJECT_NAME": "SampleProject",
-    "RandomSeed": "642953683"
+    "CONVERSATIONS_DEPLOYMENT_NAME": "production",
+    "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
+    "CONVERSATIONS_KEY": "Sanitized",
+    "CONVERSATIONS_PROJECT_NAME": "CLUScriptDeployed",
+    "RandomSeed": "263144396"
   }
 }

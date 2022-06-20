@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.WebPubSub
             Optional<int> publicPort = default;
             Optional<int> serverPort = default;
             Optional<string> version = default;
-            Optional<IReadOnlyList<PrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<WebPubSubPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<IReadOnlyList<SharedPrivateLinkData>> sharedPrivateLinkResources = default;
             Optional<WebPubSubTlsSettings> tls = default;
             Optional<string> hostNamePrefix = default;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.WebPubSub
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.WebPubSub
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -223,10 +223,10 @@ namespace Azure.ResourceManager.WebPubSub
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PrivateEndpointConnectionData> array = new List<PrivateEndpointConnectionData>();
+                            List<WebPubSubPrivateEndpointConnectionData> array = new List<WebPubSubPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(item));
+                                array.Add(WebPubSubPrivateEndpointConnectionData.DeserializeWebPubSubPrivateEndpointConnectionData(item));
                             }
                             privateEndpointConnections = array;
                             continue;

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="scheduledPurgeOn"> The scheduled purged date. </param>
         /// <param name="tags"> Tags of the original vault. </param>
         /// <param name="purgeProtectionEnabled"> Purge protection status of the original vault. </param>
-        internal DeletedVaultProperties(string vaultId, string location, DateTimeOffset? deletionOn, DateTimeOffset? scheduledPurgeOn, IReadOnlyDictionary<string, string> tags, bool? purgeProtectionEnabled)
+        internal DeletedVaultProperties(ResourceIdentifier vaultId, AzureLocation? location, DateTimeOffset? deletionOn, DateTimeOffset? scheduledPurgeOn, IReadOnlyDictionary<string, string> tags, bool? purgeProtectionEnabled)
         {
             VaultId = vaultId;
             Location = location;
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> The resource id of the original vault. </summary>
-        public string VaultId { get; }
+        public ResourceIdentifier VaultId { get; }
         /// <summary> The location of the original vault. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> The deleted date. </summary>
         public DateTimeOffset? DeletionOn { get; }
         /// <summary> The scheduled purged date. </summary>

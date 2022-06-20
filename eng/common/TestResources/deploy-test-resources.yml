@@ -4,6 +4,7 @@ parameters:
   DeleteAfterHours: 8
   Location: ''
   SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+  ResourceType: test
 
 # SubscriptionConfiguration will be splatted into the parameters of the test
 # resources script. It should be JSON in the form:
@@ -48,7 +49,7 @@ steps:
       # pass those in via the ArmTemplateParameters flag, and handle any
       # additional parameters from the pipelines via AdditionalParameters
       eng/common/TestResources/New-TestResources.ps1 `
-        -BaseName 'Generated' `
+        -ResourceType '${{ parameters.ResourceType }}' `
         -ServiceDirectory '${{ parameters.ServiceDirectory }}' `
         -Location '${{ parameters.Location }}' `
         -DeleteAfterHours '${{ parameters.DeleteAfterHours }}' `

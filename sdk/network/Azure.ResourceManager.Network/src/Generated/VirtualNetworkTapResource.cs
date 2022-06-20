@@ -14,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "VirtualNetworkTapResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VirtualNetworkTapResource(ArmClient client, VirtualNetworkTapData data) : this(client, new ResourceIdentifier(data.Id))
+        internal VirtualNetworkTapResource(ArmClient client, VirtualNetworkTapData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -180,6 +181,58 @@ namespace Azure.ResourceManager.Network
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an VirtualNetworkTap tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}
+        /// Operation Id: VirtualNetworkTaps_UpdateTags
+        /// </summary>
+        /// <param name="tapParameters"> Parameters supplied to update VirtualNetworkTap tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tapParameters"/> is null. </exception>
+        public virtual async Task<Response<VirtualNetworkTapResource>> UpdateAsync(TagsObject tapParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tapParameters, nameof(tapParameters));
+
+            using var scope = _virtualNetworkTapClientDiagnostics.CreateScope("VirtualNetworkTapResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _virtualNetworkTapRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tapParameters, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VirtualNetworkTapResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an VirtualNetworkTap tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}
+        /// Operation Id: VirtualNetworkTaps_UpdateTags
+        /// </summary>
+        /// <param name="tapParameters"> Parameters supplied to update VirtualNetworkTap tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tapParameters"/> is null. </exception>
+        public virtual Response<VirtualNetworkTapResource> Update(TagsObject tapParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tapParameters, nameof(tapParameters));
+
+            using var scope = _virtualNetworkTapClientDiagnostics.CreateScope("VirtualNetworkTapResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _virtualNetworkTapRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tapParameters, cancellationToken);
+                return Response.FromValue(new VirtualNetworkTapResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

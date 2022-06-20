@@ -16,6 +16,7 @@ using NUnit.Framework.Interfaces;
 
 namespace Azure.Core.TestFramework
 {
+    [NonParallelizable]
     public abstract class RecordedTestBase : ClientTestBase
     {
         public TestRecording Recording { get; private set; }
@@ -97,6 +98,27 @@ namespace Azure.Core.TestFramework
         /// </summary>
         public List<(string Header, string QueryParameter)> SanitizedQueryParametersInHeaders { get; } = new();
 
+        /// <summary>
+        /// Flag you can (temporarily) enable to save failed test recordings
+        /// and debug/re-run at the point of failure without re-running
+        /// potentially lengthy live tests.  This should never be checked in
+        /// and will throw an exception from CI builds to help make that easier
+        /// to spot.
+        /// </summary>
+        public bool SaveDebugRecordingsOnFailure
+        {
+            get => _saveDebugRecordingsOnFailure;
+            set
+            {
+                if (value && TestEnvironment.GlobalIsRunningInCI)
+                {
+                    throw new AssertionException($"Setting {nameof(SaveDebugRecordingsOnFailure)} must not be merged");
+                }
+                _saveDebugRecordingsOnFailure = value;
+            }
+        }
+        private bool _saveDebugRecordingsOnFailure;
+
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string ReplacementHost
         {
@@ -155,6 +177,11 @@ namespace Azure.Core.TestFramework
         {
         };
 
+        /// <summary>
+        /// Creats a new instance of <see cref="RecordedTestBase"/>.
+        /// </summary>
+        /// <param name="isAsync">True if this instance is testing the async API variants false otherwise.</param>
+        /// <param name="mode">Indicates which <see cref="RecordedTestMode" /> this instance should run under.</param>
         protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
         {
             Mode = mode ?? TestEnvironment.GlobalTestMode;
@@ -185,7 +212,12 @@ namespace Azure.Core.TestFramework
 
             string name = new string(testAdapter.Name.Select(c => s_invalidChars.Contains(c) ? '%' : c).ToArray());
 
-            string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
+            string versionQualifier = testAdapter.Properties.Get(ClientTestFixtureAttribute.VersionQualifierProperty) as string;
+
+            string async = IsAsync ? "Async" : string.Empty;
+            string version = versionQualifier is null ? string.Empty : $"[{versionQualifier}]";
+
+            string fileName = $"{name}{version}{async}.json";
 
             return Path.Combine(
                 GetSessionFileDirectory(),
@@ -331,9 +363,13 @@ namespace Azure.Core.TestFramework
                 throw new InvalidOperationException("The test didn't instrument any clients but had recordings. Please call InstrumentClient for the client being recorded.");
             }
 
+            bool save = testPassed;
+#if DEBUG
+            save |= SaveDebugRecordingsOnFailure;
+#endif
             if (Recording != null)
             {
-                await Recording.DisposeAsync();
+                await Recording.DisposeAsync(save);
             }
 
             _proxy?.CheckForErrors();

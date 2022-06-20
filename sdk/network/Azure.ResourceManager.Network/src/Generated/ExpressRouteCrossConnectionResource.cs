@@ -14,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "ExpressRouteCrossConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ExpressRouteCrossConnectionResource(ArmClient client, ExpressRouteCrossConnectionData data) : this(client, new ResourceIdentifier(data.Id))
+        internal ExpressRouteCrossConnectionResource(ArmClient client, ExpressRouteCrossConnectionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -164,6 +165,58 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteCrossConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCrossConnectionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an express route cross connection tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}
+        /// Operation Id: ExpressRouteCrossConnections_UpdateTags
+        /// </summary>
+        /// <param name="crossConnectionParameters"> Parameters supplied to update express route cross connection tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionParameters"/> is null. </exception>
+        public virtual async Task<Response<ExpressRouteCrossConnectionResource>> UpdateAsync(TagsObject crossConnectionParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(crossConnectionParameters, nameof(crossConnectionParameters));
+
+            using var scope = _expressRouteCrossConnectionClientDiagnostics.CreateScope("ExpressRouteCrossConnectionResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _expressRouteCrossConnectionRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, crossConnectionParameters, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ExpressRouteCrossConnectionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an express route cross connection tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}
+        /// Operation Id: ExpressRouteCrossConnections_UpdateTags
+        /// </summary>
+        /// <param name="crossConnectionParameters"> Parameters supplied to update express route cross connection tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionParameters"/> is null. </exception>
+        public virtual Response<ExpressRouteCrossConnectionResource> Update(TagsObject crossConnectionParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(crossConnectionParameters, nameof(crossConnectionParameters));
+
+            using var scope = _expressRouteCrossConnectionClientDiagnostics.CreateScope("ExpressRouteCrossConnectionResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _expressRouteCrossConnectionRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, crossConnectionParameters, cancellationToken);
                 return Response.FromValue(new ExpressRouteCrossConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

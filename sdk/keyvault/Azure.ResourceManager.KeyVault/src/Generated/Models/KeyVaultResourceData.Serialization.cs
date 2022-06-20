@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static KeyVaultResourceData DeserializeKeyVaultResourceData(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -32,7 +32,12 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -62,7 +67,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -71,7 +76,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new KeyVaultResourceData(id, name, type, systemData, location.Value, Optional.ToDictionary(tags));
+            return new KeyVaultResourceData(id, name, type, systemData, Optional.ToNullable(location), Optional.ToDictionary(tags));
         }
     }
 }

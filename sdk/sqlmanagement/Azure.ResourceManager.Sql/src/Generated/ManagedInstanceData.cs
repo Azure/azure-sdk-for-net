@@ -67,12 +67,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this managed instance. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections on a managed instance. </param>
         /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: &apos;None&apos;, &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;. </param>
-        /// <param name="storageAccountType"> The storage account type used to store backups for this instance. The options are LRS (LocallyRedundantStorage), ZRS (ZoneRedundantStorage) and GRS (GeoRedundantStorage). </param>
+        /// <param name="currentBackupStorageRedundancy"> The storage account type used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </param>
+        /// <param name="requestedBackupStorageRedundancy"> The storage account type to be used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </param>
         /// <param name="zoneRedundant"> Whether or not the multi-az is enabled. </param>
         /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
         /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
         /// <param name="administrators"> The Azure Active Directory administrator of the server. </param>
-        internal ManagedInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, SqlSku sku, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, string administratorLogin, string administratorLoginPassword, string subnetId, string state, ManagedInstanceLicenseType? licenseType, int? vCores, int? storageSizeInGB, string collation, string dnsZone, string dnsZonePartner, bool? publicDataEndpointEnabled, string sourceManagedInstanceId, DateTimeOffset? restorePointInOn, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, string instancePoolId, string maintenanceConfigurationId, IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, StorageAccountType? storageAccountType, bool? zoneRedundant, string primaryUserAssignedIdentityId, string keyId, ManagedInstanceExternalAdministrator administrators) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="servicePrincipal"> The managed instance&apos;s service principal. </param>
+        internal ManagedInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, SqlSku sku, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, string administratorLogin, string administratorLoginPassword, string subnetId, string state, ManagedInstanceLicenseType? licenseType, int? vCores, int? storageSizeInGB, string collation, string dnsZone, string dnsZonePartner, bool? publicDataEndpointEnabled, string sourceManagedInstanceId, DateTimeOffset? restorePointInOn, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, string instancePoolId, string maintenanceConfigurationId, IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, BackupStorageRedundancy? currentBackupStorageRedundancy, BackupStorageRedundancy? requestedBackupStorageRedundancy, bool? zoneRedundant, string primaryUserAssignedIdentityId, string keyId, ManagedInstanceExternalAdministrator administrators, ServicePrincipal servicePrincipal) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -98,11 +100,13 @@ namespace Azure.ResourceManager.Sql
             MaintenanceConfigurationId = maintenanceConfigurationId;
             PrivateEndpointConnections = privateEndpointConnections;
             MinimalTlsVersion = minimalTlsVersion;
-            StorageAccountType = storageAccountType;
+            CurrentBackupStorageRedundancy = currentBackupStorageRedundancy;
+            RequestedBackupStorageRedundancy = requestedBackupStorageRedundancy;
             ZoneRedundant = zoneRedundant;
             PrimaryUserAssignedIdentityId = primaryUserAssignedIdentityId;
             KeyId = keyId;
             Administrators = administrators;
+            ServicePrincipal = servicePrincipal;
         }
 
         /// <summary> The Azure Active Directory identity of the managed instance. </summary>
@@ -166,8 +170,10 @@ namespace Azure.ResourceManager.Sql
         public IReadOnlyList<ManagedInstancePecProperty> PrivateEndpointConnections { get; }
         /// <summary> Minimal TLS version. Allowed values: &apos;None&apos;, &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;. </summary>
         public string MinimalTlsVersion { get; set; }
-        /// <summary> The storage account type used to store backups for this instance. The options are LRS (LocallyRedundantStorage), ZRS (ZoneRedundantStorage) and GRS (GeoRedundantStorage). </summary>
-        public StorageAccountType? StorageAccountType { get; set; }
+        /// <summary> The storage account type used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </summary>
+        public BackupStorageRedundancy? CurrentBackupStorageRedundancy { get; }
+        /// <summary> The storage account type to be used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </summary>
+        public BackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
         /// <summary> Whether or not the multi-az is enabled. </summary>
         public bool? ZoneRedundant { get; set; }
         /// <summary> The resource id of a user assigned identity to be used by default. </summary>
@@ -176,5 +182,7 @@ namespace Azure.ResourceManager.Sql
         public string KeyId { get; set; }
         /// <summary> The Azure Active Directory administrator of the server. </summary>
         public ManagedInstanceExternalAdministrator Administrators { get; set; }
+        /// <summary> The managed instance&apos;s service principal. </summary>
+        public ServicePrincipal ServicePrincipal { get; set; }
     }
 }

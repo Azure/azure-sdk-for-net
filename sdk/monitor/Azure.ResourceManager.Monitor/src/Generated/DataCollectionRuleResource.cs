@@ -15,6 +15,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor
@@ -186,6 +187,58 @@ namespace Azure.ResourceManager.Monitor
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates part of a data collection rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
+        /// Operation Id: DataCollectionRules_Update
+        /// </summary>
+        /// <param name="body"> The payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual async Task<Response<DataCollectionRuleResource>> UpdateAsync(ResourceForUpdate body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _dataCollectionRuleRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DataCollectionRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates part of a data collection rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
+        /// Operation Id: DataCollectionRules_Update
+        /// </summary>
+        /// <param name="body"> The payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual Response<DataCollectionRuleResource> Update(ResourceForUpdate body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _dataCollectionRuleRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                return Response.FromValue(new DataCollectionRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

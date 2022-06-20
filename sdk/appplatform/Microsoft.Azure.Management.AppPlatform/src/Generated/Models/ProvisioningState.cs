@@ -18,6 +18,8 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
     {
         public const string Creating = "Creating";
         public const string Updating = "Updating";
+        public const string Starting = "Starting";
+        public const string Stopping = "Stopping";
         public const string Deleting = "Deleting";
         public const string Deleted = "Deleted";
         public const string Succeeded = "Succeeded";

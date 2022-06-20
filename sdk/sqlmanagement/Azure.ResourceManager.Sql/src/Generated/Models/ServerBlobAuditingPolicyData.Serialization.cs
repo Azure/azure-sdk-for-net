@@ -56,6 +56,11 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("queueDelayMs");
                 writer.WriteNumberValue(QueueDelayMs.Value);
             }
+            if (Optional.IsDefined(IsManagedIdentityInUse))
+            {
+                writer.WritePropertyName("isManagedIdentityInUse");
+                writer.WriteBooleanValue(IsManagedIdentityInUse.Value);
+            }
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state");
@@ -92,6 +97,7 @@ namespace Azure.ResourceManager.Sql
             Optional<bool> isStorageSecondaryKeyInUse = default;
             Optional<bool> isAzureMonitorTargetEnabled = default;
             Optional<int> queueDelayMs = default;
+            Optional<bool> isManagedIdentityInUse = default;
             Optional<BlobAuditingPolicyState> state = default;
             Optional<string> storageEndpoint = default;
             Optional<string> storageAccountAccessKey = default;
@@ -110,7 +116,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -192,6 +198,16 @@ namespace Azure.ResourceManager.Sql
                             queueDelayMs = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("isManagedIdentityInUse"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            isManagedIdentityInUse = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("state"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -226,7 +242,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ServerBlobAuditingPolicyData(id, name, type, systemData, Optional.ToNullable(isDevopsAuditEnabled), Optional.ToNullable(retentionDays), Optional.ToList(auditActionsAndGroups), Optional.ToNullable(isStorageSecondaryKeyInUse), Optional.ToNullable(isAzureMonitorTargetEnabled), Optional.ToNullable(queueDelayMs), Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(storageAccountSubscriptionId));
+            return new ServerBlobAuditingPolicyData(id, name, type, systemData, Optional.ToNullable(isDevopsAuditEnabled), Optional.ToNullable(retentionDays), Optional.ToList(auditActionsAndGroups), Optional.ToNullable(isStorageSecondaryKeyInUse), Optional.ToNullable(isAzureMonitorTargetEnabled), Optional.ToNullable(queueDelayMs), Optional.ToNullable(isManagedIdentityInUse), Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(storageAccountSubscriptionId));
         }
     }
 }

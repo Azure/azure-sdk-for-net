@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP configuration profile child resource. </summary>
-    public partial class IPConfigurationProfile : SubResource
+    public partial class IPConfigurationProfile : NetworkResourceData
     {
         /// <summary> Initializes a new instance of IPConfigurationProfile. </summary>
         public IPConfigurationProfile()
@@ -19,29 +21,23 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of IPConfigurationProfile. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> The name of the resource. This name can be used to access the resource. </param>
-        /// <param name="resourceType"> Sub Resource type. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="subnet"> The reference to the subnet resource to create a container network interface ip configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the IP configuration profile resource. </param>
-        internal IPConfigurationProfile(string id, string name, string resourceType, string etag, SubnetData subnet, ProvisioningState? provisioningState) : base(id)
+        internal IPConfigurationProfile(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, SubnetData subnet, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
-            ResourceType = resourceType;
             Etag = etag;
             Subnet = subnet;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> The name of the resource. This name can be used to access the resource. </summary>
-        public string Name { get; set; }
-        /// <summary> Sub Resource type. </summary>
-        public string ResourceType { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> The reference to the subnet resource to create a container network interface ip configuration. </summary>
         public SubnetData Subnet { get; set; }
         /// <summary> The provisioning state of the IP configuration profile resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

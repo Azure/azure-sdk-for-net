@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("diskSizeGB");
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Optional.IsDefined(EncryptionSettingsCollection))
+            if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection");
-                writer.WriteObjectValue(EncryptionSettingsCollection);
+                writer.WriteObjectValue(EncryptionSettingsGroup);
             }
             if (Optional.IsDefined(Encryption))
             {
@@ -72,6 +72,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("publicNetworkAccess");
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
+            if (Optional.IsDefined(DataAccessAuthMode))
+            {
+                writer.WritePropertyName("dataAccessAuthMode");
+                writer.WriteStringValue(DataAccessAuthMode.Value.ToString());
             }
             if (Optional.IsDefined(SupportedCapabilities))
             {

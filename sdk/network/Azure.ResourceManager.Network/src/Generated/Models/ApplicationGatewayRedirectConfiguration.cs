@@ -7,13 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Redirect configuration of an application gateway. </summary>
-    public partial class ApplicationGatewayRedirectConfiguration : SubResource
+    public partial class ApplicationGatewayRedirectConfiguration : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ApplicationGatewayRedirectConfiguration. </summary>
         public ApplicationGatewayRedirectConfiguration()
@@ -25,9 +26,9 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of ApplicationGatewayRedirectConfiguration. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the redirect configuration that is unique within an Application Gateway. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="redirectType"> HTTP redirection type. </param>
         /// <param name="targetListener"> Reference to a listener to redirect the request to. </param>
         /// <param name="targetUri"> Url to redirect the request to. </param>
@@ -36,11 +37,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="requestRoutingRules"> Request routing specifying redirect configuration. </param>
         /// <param name="urlPathMaps"> Url path maps specifying default redirect configuration. </param>
         /// <param name="pathRules"> Path rules specifying redirect configuration. </param>
-        internal ApplicationGatewayRedirectConfiguration(string id, string name, string etag, string resourceType, ApplicationGatewayRedirectType? redirectType, WritableSubResource targetListener, Uri targetUri, bool? includePath, bool? includeQueryString, IList<WritableSubResource> requestRoutingRules, IList<WritableSubResource> urlPathMaps, IList<WritableSubResource> pathRules) : base(id)
+        internal ApplicationGatewayRedirectConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ApplicationGatewayRedirectType? redirectType, WritableSubResource targetListener, Uri targetUri, bool? includePath, bool? includeQueryString, IList<WritableSubResource> requestRoutingRules, IList<WritableSubResource> urlPathMaps, IList<WritableSubResource> pathRules) : base(id, name, resourceType)
         {
-            Name = name;
             Etag = etag;
-            ResourceType = resourceType;
             RedirectType = redirectType;
             TargetListener = targetListener;
             TargetUri = targetUri;
@@ -51,12 +50,8 @@ namespace Azure.ResourceManager.Network.Models
             PathRules = pathRules;
         }
 
-        /// <summary> Name of the redirect configuration that is unique within an Application Gateway. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
-        /// <summary> Type of the resource. </summary>
-        public string ResourceType { get; }
+        public ETag? Etag { get; }
         /// <summary> HTTP redirection type. </summary>
         public ApplicationGatewayRedirectType? RedirectType { get; set; }
         /// <summary> Reference to a listener to redirect the request to. </summary>

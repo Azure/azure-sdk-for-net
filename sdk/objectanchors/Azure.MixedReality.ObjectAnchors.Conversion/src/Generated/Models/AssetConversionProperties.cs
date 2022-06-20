@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.MixedReality.ObjectAnchors.Conversion.Models;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
@@ -24,7 +25,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="inputAssetUriString"> The Uri to the Asset to be ingested by the AOA asset conversion service. This asset needs to have been uploaded to the service using an endpoint provided from a call to the GetUploadUri API. </param>
         /// <param name="accountIdInternal"> Identifier for the Account owning the asset conversion job. </param>
         /// <param name="conversionConfiguration"> Configuration settings for the asset conversion job. </param>
-        internal AssetConversionProperties(string clientErrorDetails, string serverErrorDetails, ConversionErrorCode errorCode, Guid? jobIdInternal, string outputModelUriString, AssetConversionStatus? conversionStatus, string assetFileTypeString, string inputAssetUriString, Guid? accountIdInternal, AssetConversionConfiguration conversionConfiguration)
+        /// <param name="scaledAssetDimensionsWrapper"> The scaled dimensions of the asset. </param>
+        internal AssetConversionProperties(string clientErrorDetails, string serverErrorDetails, ConversionErrorCode errorCode, Guid? jobIdInternal, string outputModelUriString, AssetConversionStatus? conversionStatus, string assetFileTypeString, string inputAssetUriString, Guid? accountIdInternal, AssetConversionConfiguration conversionConfiguration, Vector3 scaledAssetDimensionsWrapper)
         {
             ClientErrorDetails = clientErrorDetails;
             ServerErrorDetails = serverErrorDetails;
@@ -36,6 +38,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             InputAssetUriString = inputAssetUriString;
             AccountIdInternal = accountIdInternal;
             ConversionConfiguration = conversionConfiguration;
+            ScaledAssetDimensionsWrapper = scaledAssetDimensionsWrapper;
         }
 
         /// <summary> Information about the cause of a ClientError JobStatus. </summary>

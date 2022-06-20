@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "VirtualWanResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VirtualWanResource(ArmClient client, VirtualWanData data) : this(client, new ResourceIdentifier(data.Id))
+        internal VirtualWanResource(ArmClient client, VirtualWanData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -202,6 +202,58 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Updates a VirtualWAN tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}
+        /// Operation Id: VirtualWans_UpdateTags
+        /// </summary>
+        /// <param name="wanParameters"> Parameters supplied to Update VirtualWAN tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="wanParameters"/> is null. </exception>
+        public virtual async Task<Response<VirtualWanResource>> UpdateAsync(TagsObject wanParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(wanParameters, nameof(wanParameters));
+
+            using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _virtualWanRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, wanParameters, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VirtualWanResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates a VirtualWAN tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}
+        /// Operation Id: VirtualWans_UpdateTags
+        /// </summary>
+        /// <param name="wanParameters"> Parameters supplied to Update VirtualWAN tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="wanParameters"/> is null. </exception>
+        public virtual Response<VirtualWanResource> Update(TagsObject wanParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(wanParameters, nameof(wanParameters));
+
+            using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _virtualWanRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, wanParameters, cancellationToken);
+                return Response.FromValue(new VirtualWanResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Gives the supported security providers for the virtual wan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/supportedSecurityProviders
         /// Operation Id: SupportedSecurityProviders
@@ -248,7 +300,7 @@ namespace Azure.ResourceManager.Network
         /// <summary>
         /// Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/GenerateVpnProfile
-        /// Operation Id: Generatevirtualwanvpnserverconfigurationvpnprofile
+        /// Operation Id: generatevirtualwanvpnserverconfigurationvpnprofile
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
@@ -278,7 +330,7 @@ namespace Azure.ResourceManager.Network
         /// <summary>
         /// Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/GenerateVpnProfile
-        /// Operation Id: Generatevirtualwanvpnserverconfigurationvpnprofile
+        /// Operation Id: generatevirtualwanvpnserverconfigurationvpnprofile
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>

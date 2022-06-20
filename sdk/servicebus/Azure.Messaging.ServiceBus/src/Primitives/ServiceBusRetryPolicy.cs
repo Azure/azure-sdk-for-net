@@ -118,7 +118,8 @@ namespace Azure.Messaging.ServiceBus
             Func<T1, TimeSpan, CancellationToken, ValueTask<TResult>> operation,
             T1 t1,
             TransportConnectionScope scope,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            bool logRetriesAsVerbose = false)
       {
             var failedAttemptCount = 0;
 
@@ -160,7 +161,15 @@ namespace Azure.Messaging.ServiceBus
                     TimeSpan? retryDelay = CalculateRetryDelay(activeEx, failedAttemptCount);
                     if (retryDelay.HasValue && !scope.IsDisposed && !cancellationToken.IsCancellationRequested)
                     {
-                        Logger.RunOperationExceptionEncountered(activeEx.ToString());
+                        if (logRetriesAsVerbose)
+                        {
+                            Logger.RunOperationExceptionEncounteredVerbose(activeEx.ToString());
+                        }
+                        else
+                        {
+                            Logger.RunOperationExceptionEncountered(activeEx.ToString());
+                        }
+
                         await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
                         tryTimeout = CalculateTryTimeout(failedAttemptCount);
                     }

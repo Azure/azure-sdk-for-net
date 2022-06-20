@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -31,6 +32,21 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Initializes a new instance of PurviewGlossaries for mocking. </summary>
         protected PurviewGlossaries()
         {
+        }
+
+        /// <summary> Initializes a new instance of PurviewGlossaries. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="tokenCredential"> The token credential to copy. </param>
+        /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        internal PurviewGlossaries(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = tokenCredential;
+            _endpoint = endpoint;
+            _apiVersion = apiVersion;
         }
 
         /// <summary> Get all glossaries registered with Atlas. </summary>
@@ -2428,6 +2444,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Get a specific glossary term by its GUID. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="excludeRelationshipTypeList"> An array of relationship types which need to be excluded. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2542,7 +2559,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> GetGlossaryTermAsync(string termGuid, bool? includeTermHierarchy = null, RequestContext context = null)
+        public virtual async Task<Response> GetGlossaryTermAsync(string termGuid, bool? includeTermHierarchy = null, IEnumerable<string> excludeRelationshipTypeList = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
@@ -2550,7 +2567,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy, context);
+                using HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy, excludeRelationshipTypeList, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2563,6 +2580,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Get a specific glossary term by its GUID. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="excludeRelationshipTypeList"> An array of relationship types which need to be excluded. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2677,7 +2695,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response GetGlossaryTerm(string termGuid, bool? includeTermHierarchy = null, RequestContext context = null)
+        public virtual Response GetGlossaryTerm(string termGuid, bool? includeTermHierarchy = null, IEnumerable<string> excludeRelationshipTypeList = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
@@ -2685,7 +2703,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy, context);
+                using HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy, excludeRelationshipTypeList, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2698,6 +2716,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update the given glossary term by its GUID. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2913,7 +2932,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> UpdateGlossaryTermAsync(string termGuid, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> UpdateGlossaryTermAsync(string termGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
             Argument.AssertNotNull(content, nameof(content));
@@ -2922,7 +2941,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, content, context);
+                using HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, content, includeTermHierarchy, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2935,6 +2954,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update the given glossary term by its GUID. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
@@ -3150,7 +3170,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response UpdateGlossaryTerm(string termGuid, RequestContent content, RequestContext context = null)
+        public virtual Response UpdateGlossaryTerm(string termGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
             Argument.AssertNotNull(content, nameof(content));
@@ -3159,7 +3179,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, content, context);
+                using HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, content, includeTermHierarchy, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -6860,7 +6880,7 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetGlossaryTermRequest(string termGuid, bool? includeTermHierarchy, RequestContext context)
+        internal HttpMessage CreateGetGlossaryTermRequest(string termGuid, bool? includeTermHierarchy, IEnumerable<string> excludeRelationshipTypeList, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -6874,12 +6894,19 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
             }
+            if (excludeRelationshipTypeList != null)
+            {
+                foreach (var param in excludeRelationshipTypeList)
+                {
+                    uri.AppendQuery("excludeRelationshipTypes", param, true);
+                }
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateUpdateGlossaryTermRequest(string termGuid, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateGlossaryTermRequest(string termGuid, RequestContent content, bool? includeTermHierarchy, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -6889,6 +6916,10 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/term/", false);
             uri.AppendPath(termGuid, true);
+            if (includeTermHierarchy != null)
+            {
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");

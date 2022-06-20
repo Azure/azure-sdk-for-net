@@ -8,7 +8,7 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 Install the Azure App Configuration management library for .NET with [NuGet](https://www.nuget.org/):
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.ResourceManager.AppConfiguration --prerelease
 ```
 

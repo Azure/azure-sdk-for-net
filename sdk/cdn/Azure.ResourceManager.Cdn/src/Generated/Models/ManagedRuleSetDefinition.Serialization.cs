@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<CdnSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             SystemData systemData = default;
             Optional<string> provisioningState = default;
             Optional<string> ruleSetType = default;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))

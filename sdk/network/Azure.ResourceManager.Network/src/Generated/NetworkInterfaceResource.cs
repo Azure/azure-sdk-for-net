@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "NetworkInterfaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NetworkInterfaceResource(ArmClient client, NetworkInterfaceData data) : this(client, new ResourceIdentifier(data.Id))
+        internal NetworkInterfaceResource(ArmClient client, NetworkInterfaceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -262,6 +262,58 @@ namespace Azure.ResourceManager.Network
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates a network interface tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// Operation Id: NetworkInterfaces_UpdateTags
+        /// </summary>
+        /// <param name="tagsObject"> Parameters supplied to update network interface tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual async Task<Response<NetworkInterfaceResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _networkInterfaceRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new NetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates a network interface tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
+        /// Operation Id: NetworkInterfaces_UpdateTags
+        /// </summary>
+        /// <param name="tagsObject"> Parameters supplied to update network interface tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual Response<NetworkInterfaceResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _networkInterfaceRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken);
+                return Response.FromValue(new NetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

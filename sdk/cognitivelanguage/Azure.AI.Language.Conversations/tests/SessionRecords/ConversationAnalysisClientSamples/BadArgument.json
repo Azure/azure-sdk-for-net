@@ -1,60 +1,56 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://westeurope.api.cognitive.microsoft.com/language/:analyze-conversations?api-version=2022-03-01-preview",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "255",
+        "Content-Length": "261",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220405.1 (.NET Core 3.1.23; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "c95d563b1f0329aad9d954c63f53d7bd",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220614.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "4a638668d79e8dc4ce99e0cf610d610a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "analysisInput": {
           "conversationItem": {
-            "text": "Send an email to Carol about the tomorrow\u0027s demo",
-            "participantId": "1",
+            "text": "Send an email to Carol about tomorrow\u0027s demo",
             "id": "1",
-            "modality": "text"
+            "participantId": "1"
           }
         },
         "parameters": {
           "projectName": "invalid-project",
-          "deploymentName": "production"
+          "deploymentName": "production",
+          "stringIndexType": "Utf16CodeUnit"
         },
-        "kind": "CustomConversation"
+        "kind": "Conversation"
       },
-      "StatusCode": 401,
+      "StatusCode": 404,
       "ResponseHeaders": {
-        "apim-request-id": "59ea92b1-47c5-424f-b9e3-a50d2c7f3bea",
+        "apim-request-id": "8199ce37-1985-41bf-9180-2c4a3f8843af",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json",
-        "Date": "Tue, 05 Apr 2022 12:33:59 GMT",
+        "Date": "Tue, 14 Jun 2022 20:30:57 GMT",
         "Pragma": "no-cache",
-        "request-id": "59ea92b1-47c5-424f-b9e3-a50d2c7f3bea",
+        "request-id": "8199ce37-1985-41bf-9180-2c4a3f8843af",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "23"
+        "x-envoy-upstream-service-time": "136"
       },
       "ResponseBody": {
         "error": {
-          "code": "Unauthorized",
-          "message": "One or more authorization parameter is invalid or missing.",
-          "innerError": {
-            "code": "Forbidden",
-            "message": "The provided authorization parameters cannot access the requested resource."
-          }
+          "code": "NotFound",
+          "message": "The specified deployment cannot be found within the provided subscription."
         }
       }
     }
   ],
   "Variables": {
-    "AZURE_CONVERSATIONS_ENDPOINT": "https://westeurope.api.cognitive.microsoft.com",
-    "AZURE_CONVERSATIONS_KEY": "Sanitized",
-    "RandomSeed": "38619725"
+    "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
+    "CONVERSATIONS_KEY": "Sanitized",
+    "RandomSeed": "1266134977"
   }
 }

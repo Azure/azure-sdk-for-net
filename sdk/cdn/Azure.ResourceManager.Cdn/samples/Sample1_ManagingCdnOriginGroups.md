@@ -96,7 +96,7 @@ CdnOriginGroupResource originGroup = await originGroupCollection.GetAsync("myOri
 // With UpdateAsync(), we can update the origin group
 CdnOriginGroupPatch input = new CdnOriginGroupPatch()
 {
-    HealthProbeSettings = new HealthProbeParameters
+    HealthProbeSettings = new HealthProbeSettings
     {
         ProbePath = "/healthz",
         ProbeRequestType = HealthProbeRequestType.Head,
@@ -123,4 +123,4 @@ await originGroup.DeleteAsync(WaitUntil.Completed);
 
 
 ## Next steps
-Take a look at the [Managing Azure Front Door Rules](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cdn/Azure.ResourceManager.Cdn/samples/Sample2_ManagingAfdRules.md) samples.
+Take a look at the [Managing Azure Front Door Rules](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cdn/Azure.ResourceManager.Cdn/samples/Sample2_ManagingFrontDoorRules.md) samples.

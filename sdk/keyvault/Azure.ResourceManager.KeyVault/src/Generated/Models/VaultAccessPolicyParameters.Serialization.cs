@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static VaultAccessPolicyParameters DeserializeVaultAccessPolicyParameters(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             VaultAccessPolicyProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -33,7 +33,12 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -53,7 +58,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -62,7 +67,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new VaultAccessPolicyParameters(id, name, type, systemData, location.Value, properties);
+            return new VaultAccessPolicyParameters(id, name, type, systemData, Optional.ToNullable(location), properties);
         }
     }
 }
