@@ -189,16 +189,10 @@ namespace Azure.Maps.Search.Models
         public int? SuccessfulRequests { get { throw null; } }
         public int? TotalRequests { get { throw null; } }
     }
-    public partial class BoundingBox
-    {
-        internal BoundingBox() { }
-        public Azure.Maps.Search.Models.LatLongPairAbbreviated BottomRight { get { throw null; } }
-        public Azure.Maps.Search.Models.LatLongPairAbbreviated TopLeft { get { throw null; } }
-    }
     public partial class BoundingBoxCompassNotation
     {
         internal BoundingBoxCompassNotation() { }
-        public Azure.Maps.Search.Models.Entity? Entity { get { throw null; } }
+        public Azure.Maps.Search.Models.EntityType? Entity { get { throw null; } }
         public string NorthEast { get { throw null; } }
         public string SouthWest { get { throw null; } }
     }
@@ -246,20 +240,20 @@ namespace Azure.Maps.Search.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Entity : System.IEquatable<Azure.Maps.Search.Models.Entity>
+    public readonly partial struct EntityType : System.IEquatable<Azure.Maps.Search.Models.EntityType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public Entity(string value) { throw null; }
-        public static Azure.Maps.Search.Models.Entity Position { get { throw null; } }
-        public bool Equals(Azure.Maps.Search.Models.Entity other) { throw null; }
+        public EntityType(string value) { throw null; }
+        public static Azure.Maps.Search.Models.EntityType Position { get { throw null; } }
+        public bool Equals(Azure.Maps.Search.Models.EntityType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Search.Models.Entity left, Azure.Maps.Search.Models.Entity right) { throw null; }
-        public static implicit operator Azure.Maps.Search.Models.Entity (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Search.Models.Entity left, Azure.Maps.Search.Models.Entity right) { throw null; }
+        public static bool operator ==(Azure.Maps.Search.Models.EntityType left, Azure.Maps.Search.Models.EntityType right) { throw null; }
+        public static implicit operator Azure.Maps.Search.Models.EntityType (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.Search.Models.EntityType left, Azure.Maps.Search.Models.EntityType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class EntryPoint
@@ -610,16 +604,16 @@ namespace Azure.Maps.Search.Models
         public static bool operator !=(Azure.Maps.Search.Models.PointOfInterestExtendedPostalCodes left, Azure.Maps.Search.Models.PointOfInterestExtendedPostalCodes right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Polygon
+    public partial class PolygonObject
     {
-        internal Polygon() { }
+        internal PolygonObject() { }
         public Azure.Maps.Search.Models.GeoJsonFeatureCollection GeometryData { get { throw null; } }
         public string ProviderId { get { throw null; } }
     }
     public partial class PolygonResult
     {
         internal PolygonResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.Polygon> Polygons { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.PolygonObject> Polygons { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct QueryType : System.IEquatable<Azure.Maps.Search.Models.QueryType>
@@ -920,8 +914,7 @@ namespace Azure.Maps.Search.Models
         public static Azure.Maps.Search.Models.AddressDetails AddressDetails(string buildingNumber = null, string street = null, string crossStreet = null, string streetNumber = null, System.Collections.Generic.IEnumerable<string> routeNumbers = null, string streetName = null, string streetNameAndNumber = null, string municipality = null, string municipalitySubdivision = null, string countryTertiarySubdivision = null, string countrySecondarySubdivision = null, string countrySubdivision = null, string postalCode = null, string extendedPostalCode = null, string countryCode = null, string country = null, string countryCodeISO3 = null, string freeformAddress = null, string countrySubdivisionName = null, string localName = null, Azure.Maps.Search.Models.BoundingBoxCompassNotation boundingBox = null) { throw null; }
         public static Azure.Maps.Search.Models.BatchResultItem BatchResultItem(int? statusCode = default(int?)) { throw null; }
         public static Azure.Maps.Search.Models.BatchResultSummary BatchResultSummary(int? successfulRequests = default(int?), int? totalRequests = default(int?)) { throw null; }
-        public static Azure.Maps.Search.Models.BoundingBox BoundingBox(Azure.Maps.Search.Models.LatLongPairAbbreviated topLeft = null, Azure.Maps.Search.Models.LatLongPairAbbreviated bottomRight = null) { throw null; }
-        public static Azure.Maps.Search.Models.BoundingBoxCompassNotation BoundingBoxCompassNotation(string northEast = null, string southWest = null, Azure.Maps.Search.Models.Entity? entity = default(Azure.Maps.Search.Models.Entity?)) { throw null; }
+        public static Azure.Maps.Search.Models.BoundingBoxCompassNotation BoundingBoxCompassNotation(string northEast = null, string southWest = null, Azure.Maps.Search.Models.EntityType? entity = default(Azure.Maps.Search.Models.EntityType?)) { throw null; }
         public static Azure.Maps.Search.Models.BrandName BrandName(string name = null) { throw null; }
         public static Azure.Maps.Search.Models.ClassificationName ClassificationName(string nameLocale = null, string name = null) { throw null; }
         public static Azure.Maps.Search.Models.DataSource DataSource(Azure.Maps.Search.Models.GeometryIdentifier geometry = null) { throw null; }
@@ -936,8 +929,8 @@ namespace Azure.Maps.Search.Models
         public static Azure.Maps.Search.Models.PointOfInterestCategorySet PointOfInterestCategorySet(int? id = default(int?)) { throw null; }
         public static Azure.Maps.Search.Models.PointOfInterestCategoryTreeResult PointOfInterestCategoryTreeResult(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.PointOfInterestCategory> categories = null) { throw null; }
         public static Azure.Maps.Search.Models.PointOfInterestClassification PointOfInterestClassification(string code = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ClassificationName> names = null) { throw null; }
-        public static Azure.Maps.Search.Models.Polygon Polygon(string providerId = null, Azure.Maps.Search.Models.GeoJsonFeatureCollection geometryData = null) { throw null; }
-        public static Azure.Maps.Search.Models.PolygonResult PolygonResult(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.Polygon> polygons = null) { throw null; }
+        public static Azure.Maps.Search.Models.PolygonObject PolygonObject(string providerId = null, Azure.Maps.Search.Models.GeoJsonFeatureCollection geometryData = null) { throw null; }
+        public static Azure.Maps.Search.Models.PolygonResult PolygonResult(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.PolygonObject> polygons = null) { throw null; }
         public static Azure.Maps.Search.Models.ReverseSearchAddressBatchItemResponse ReverseSearchAddressBatchItemResponse(Azure.Maps.Search.Models.SearchSummary summary = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ReverseSearchAddressResultItem> addresses = null, Azure.Maps.Search.Models.ErrorDetail error = null) { throw null; }
         public static Azure.Maps.Search.Models.ReverseSearchAddressBatchResult ReverseSearchAddressBatchResult(Azure.Maps.Search.Models.BatchResultSummary batchSummary = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ReverseSearchAddressBatchItem> batchItems = null) { throw null; }
         public static Azure.Maps.Search.Models.ReverseSearchAddressResultItem ReverseSearchAddressResultItem(Azure.Maps.Search.Models.AddressDetails address = null, string position = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.RoadUseType> roadUse = null, Azure.Maps.Search.Models.MatchType? matchType = default(Azure.Maps.Search.Models.MatchType?)) { throw null; }

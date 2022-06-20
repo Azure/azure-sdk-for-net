@@ -33,6 +33,48 @@ namespace Azure.Maps.Search
             RestClient = null;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchClient"/>
+        /// class for the specified service instance.
+        /// </summary>
+        /// <param name="credential">A <see cref="AzureKeyCredential"/> used to
+        /// authenticate requests to the service, such as DefaultAzureCredential.</param>
+        /// <param name="endpoint"> server parameter. </param>
+        public SearchClient(AzureKeyCredential credential, Uri endpoint)
+            : this(credential, endpoint, new SearchClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of SearchClient. </summary>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="credential"> Shared key credential used to authenticate to an Azure Maps Search Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public SearchClient(AzureKeyCredential credential, Uri endpoint = null, SearchClientOptions options = null)
+        {
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
+            endpoint ??= new Uri("https://atlas.microsoft.com");
+            options ??= new SearchClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "subscription-key"));   
+            RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchClient"/>
+        /// class for the specified service instance.
+        /// </summary>
+        /// <param name="credential">A <see cref="TokenCredential"/> used to
+        /// authenticate requests to the service, such as DefaultAzureCredential.</param>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following [articles](https://aka.ms/amauthdetails) for guidance. </param>
+        public SearchClient(TokenCredential credential, Uri endpoint, string clientId)
+            : this(credential, endpoint, clientId, new SearchClientOptions())
+        {
+        }
+
         /// <summary> Initializes a new instance of SearchClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Maps Search Service. </param>
         /// <param name="endpoint"> server parameter. </param>
@@ -54,32 +96,15 @@ namespace Azure.Maps.Search
         }
 
         /// <summary> Initializes a new instance of SearchClient. </summary>
-        /// <param name="credential"> Shared key credential used to authenticate to an Azure Maps Search Service. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public SearchClient(AzureKeyCredential credential, Uri endpoint = null, SearchClientOptions options = null)
-        {
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-            endpoint ??= new Uri("https://atlas.microsoft.com");
-
-            options ??= new SearchClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "subscription-key"));   
-            RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
-        }
-
-        /// <summary> Initializes a new instance of SearchClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following [articles](https://aka.ms/amauthdetails) for guidance. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        internal SearchClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string clientId = null, string apiVersion = "1.0")
+        internal SearchClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string clientId = null, SearchClientOptions.ServiceVersion apiVersion = SearchClientOptions.LatestVersion)
         {
-            RestClient = new SearchRestClient(clientDiagnostics, pipeline, endpoint, clientId, apiVersion);
+            var options = new SearchClientOptions(apiVersion);
+            RestClient = new SearchRestClient(clientDiagnostics, pipeline, endpoint, clientId, options.Version);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

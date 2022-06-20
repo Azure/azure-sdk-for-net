@@ -13,7 +13,7 @@ namespace Azure.Maps.Search
     /// <summary> Client options for SearchClient. </summary>
     public partial class SearchClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V1_0;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V1_0;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
