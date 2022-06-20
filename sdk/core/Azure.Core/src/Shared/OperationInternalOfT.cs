@@ -244,7 +244,7 @@ namespace Azure.Core
                 return Response.FromValue(Value, rawResponse!);
             }
 
-            using var scope = CreateScope(_waitForCompletionScopeName!);
+            using var scope = CreateScope(_waitForCompletionScopeName);
             try
             {
                 rawResponse = async
@@ -270,7 +270,7 @@ namespace Azure.Core
                 return GetResponseFromState(asyncLock.Value);
             }
 
-            using var scope = CreateScope(_updateStatusScopeName!);
+            using var scope = CreateScope(_updateStatusScopeName);
             try
             {
                 var state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);

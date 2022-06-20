@@ -19,13 +19,16 @@ namespace Azure.Core
         private readonly DelayStrategy? _fallbackStrategy;
         private readonly AsyncLockWithValue<Response> _responseLock;
 
-        private readonly string? _waitForCompletionResponseScopeName;
-        protected readonly string? _updateStatusScopeName;
-        protected readonly string? _waitForCompletionScopeName;
+        private readonly string _waitForCompletionResponseScopeName;
+        protected readonly string _updateStatusScopeName;
+        protected readonly string _waitForCompletionScopeName;
 
         protected OperationInternalBase(Response rawResponse)
         {
             _diagnostics = new ClientDiagnostics(ClientOptions.Default);
+            _updateStatusScopeName = string.Empty;
+            _waitForCompletionResponseScopeName = string.Empty;
+            _waitForCompletionScopeName = string.Empty;
             _scopeAttributes = default;
             _fallbackStrategy = default;
             _responseLock = new AsyncLockWithValue<Response>(rawResponse);
@@ -192,7 +195,7 @@ namespace Azure.Core
                 return lockOrValue.Value;
             }
 
-            using var scope = CreateScope(_waitForCompletionResponseScopeName!);
+            using var scope = CreateScope(_waitForCompletionResponseScopeName);
             try
             {
                 var poller = new OperationPoller(_fallbackStrategy);
