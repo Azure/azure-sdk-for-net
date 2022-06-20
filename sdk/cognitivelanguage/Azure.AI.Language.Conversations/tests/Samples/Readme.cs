@@ -2,8 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
 using Azure.Core.TestFramework;
+
+#region Snippet:ConversationAnalysisClient_Namespaces
+using Azure.Core;
+using Azure.AI.Language.Conversations;
+#endregion
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
 {
