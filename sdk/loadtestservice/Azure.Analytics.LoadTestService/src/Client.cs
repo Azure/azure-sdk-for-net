@@ -29,7 +29,7 @@ namespace Azure.Analytics.LoadTestService
 
             ClientDiagnostics = new ClientDiagnostics(new_options, true);
             string scopes =  "https://loadtest.azure-dev.com/.default" ;
-            _pipeline = HttpPipelineBuilder.Build(new_options, new BearerTokenAuthenticationPolicy(credential, scopes), Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(new_options, new BearerTokenAuthenticationPolicy(credential, scopes), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = new_options.Version;
         }
@@ -173,7 +173,7 @@ namespace Azure.Analytics.LoadTestService
             _apiVersion = new_options.Version;
         }
         /// <summary> </summary>
-        public TestClient(Uri endpoint, TokenCredential credential, AzureLoadTestingClientOptions options)
+        public TesRuntClient(Uri endpoint, TokenCredential credential, AzureLoadTestingClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new AzureLoadTestingClientOptions();
