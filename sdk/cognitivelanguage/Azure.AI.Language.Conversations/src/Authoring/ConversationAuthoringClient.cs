@@ -5,31 +5,31 @@ using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-[assembly: CodeGenSuppressType("ConversationAnalysisProjectsClientOptions")]
+[assembly: CodeGenSuppressType("ConversationAuthoringClientOptions")]
 
-namespace Azure.AI.Language.Conversations
+namespace Azure.AI.Language.Conversations.Authoring
 {
     [CodeGenClient("ConversationalAnalysisAuthoringClient")]
-    public partial class ConversationAnalysisProjectsClient
+    public partial class ConversationAuthoringClient
     {
         /// <summary>
-        /// Initializes a new instance of ConversationAnalysisProjectsClient.
+        /// Initializes a new instance of ConversationAuthoringClient.
         /// </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ConversationAnalysisProjectsClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new ConversationAnalysisClientOptions())
+        public ConversationAuthoringClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new ConversationAnalysisClientOptions())
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of ConversationAnalysisProjectsClient.
+        /// Initializes a new instance of ConversationAuthoringClient.
         /// </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ConversationAnalysisProjectsClient(Uri endpoint, AzureKeyCredential credential, ConversationAnalysisClientOptions options)
+        public ConversationAuthoringClient(Uri endpoint, AzureKeyCredential credential, ConversationAnalysisClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
