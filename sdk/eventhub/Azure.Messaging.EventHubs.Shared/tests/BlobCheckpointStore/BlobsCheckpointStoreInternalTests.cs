@@ -416,7 +416,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(checkpoint, Is.InstanceOf<BlobCheckpointStoreInternal.BlobStorageCheckpoint>(), "Checkpoint instance was not the expected type.");
             var blobCheckpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoint;
-            Assert.IsNull(blobCheckpoint.Offset);
+            Assert.That(blobCheckpoint.Offset, Is.Null, "The offset should have been null.");
             Assert.That(expectedSequence, Is.EqualTo(blobCheckpoint.SequenceNumber), "Checkpoint sequence number did not have the correct value.");
         }
 
