@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Optional<UserAccessPolicy> policy = default;
             Optional<string> accessToken = default;
-            Optional<string> dataPlaneUrl = default;
+            Optional<Uri> dataPlaneUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policy"))
@@ -36,7 +37,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("dataPlaneUrl"))
                 {
-                    dataPlaneUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        dataPlaneUrl = null;
+                        continue;
+                    }
+                    dataPlaneUrl = new Uri(property.Value.GetString());
                     continue;
                 }
             }

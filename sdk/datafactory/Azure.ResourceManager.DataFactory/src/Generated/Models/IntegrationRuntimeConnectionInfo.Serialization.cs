@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Optional<string> serviceToken = default;
             Optional<string> identityCertThumbprint = default;
-            Optional<string> hostServiceUri = default;
+            Optional<Uri> hostServiceUri = default;
             Optional<string> version = default;
             Optional<string> publicKey = default;
             Optional<bool> isIdentityCertExprired = default;
@@ -38,7 +38,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("hostServiceUri"))
                 {
-                    hostServiceUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        hostServiceUri = null;
+                        continue;
+                    }
+                    hostServiceUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("version"))
