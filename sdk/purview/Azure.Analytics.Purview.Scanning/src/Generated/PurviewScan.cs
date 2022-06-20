@@ -64,7 +64,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// Response response = await client.GetFilterAsync();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -127,7 +127,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// Response response = client.GetFilter();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -191,7 +191,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// var data = new {};
         /// 
@@ -203,7 +203,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// var data = new {
         ///     properties = new {
@@ -288,7 +288,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// var data = new {};
         /// 
@@ -300,7 +300,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// var data = new {
         ///     properties = new {
@@ -386,7 +386,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// var data = new {
         ///     kind = "<AzureSubscriptionCredential>",
@@ -569,7 +569,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// var data = new {
         ///     kind = "<AzureSubscriptionCredential>",
@@ -750,7 +750,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// Response response = await client.GetPropertiesAsync();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -876,7 +876,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// Response response = client.GetProperties();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -1002,7 +1002,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// Response response = await client.DeleteAsync();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -1128,7 +1128,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// Response response = client.Delete();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -1258,7 +1258,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// Response response = await client.RunScanAsync("<runId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -1268,7 +1268,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// Response response = await client.RunScanAsync("<runId>", "<scanLevel>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -1354,7 +1354,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// Response response = client.RunScan("<runId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -1364,7 +1364,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// Response response = client.RunScan("<runId>", "<scanLevel>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -1449,7 +1449,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// Response response = await client.CancelScanAsync("<runId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -1534,7 +1534,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// Response response = client.CancelScan("<runId>");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -1616,7 +1616,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// Response response = await client.GetTriggerAsync();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -1721,7 +1721,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// Response response = client.GetTrigger();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -1828,7 +1828,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// var data = new {};
         /// 
@@ -1840,7 +1840,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// var data = new {
         ///     properties = new {
@@ -2025,7 +2025,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// var data = new {};
         /// 
@@ -2037,7 +2037,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// var data = new {
         ///     properties = new {
@@ -2220,7 +2220,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// Response response = await client.DeleteTriggerAsync();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -2325,7 +2325,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// Response response = client.DeleteTrigger();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -2430,7 +2430,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// Response response = await client.GetRunsAsync();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
@@ -2560,7 +2560,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewScanClient("<scanName>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// Response response = client.GetRuns();
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
