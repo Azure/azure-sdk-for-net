@@ -35,5 +35,10 @@ namespace Azure.ResourceManager
 
             ResourceApiVersionOverrides[resourceType] = apiVersion;
         }
+
+        /// <summary>
+        /// Gets or sets whether to use the TagResource API when managing a resources tags.
+        /// </summary>
+        public bool? ShouldUseTagResourceApi { get; set; }
     }
 }

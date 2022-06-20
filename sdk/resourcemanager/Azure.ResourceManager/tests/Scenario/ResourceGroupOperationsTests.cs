@@ -145,9 +145,14 @@ namespace Azure.ResourceManager.Tests
         }
 
         [RecordedTest]
-        public async Task SetTags()
+        [TestCase(false)]
+        [TestCase(null)]
+        public async Task SetTags(bool? isTagResourcePresent)
         {
-            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
+            ArmClientOptions options = new ArmClientOptions();
+            options.ShouldUseTagResourceApi = isTagResourcePresent;
+            ArmClient client = GetArmClient(options);
+            SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var rg1Op = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testrg"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroupResource rg1 = rg1Op.Value;
             Assert.AreEqual(0, rg1.Data.Tags.Count);

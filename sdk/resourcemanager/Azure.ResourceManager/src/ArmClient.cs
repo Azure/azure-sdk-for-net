@@ -24,6 +24,7 @@ namespace Azure.ResourceManager
         private TenantResource _tenant;
         private SubscriptionResource _defaultSubscription;
         private readonly ClientDiagnostics _subscriptionClientDiagnostics;
+        private bool? _isTagResourcePresent;
 
         internal virtual Dictionary<ResourceType, string> ApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
 
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="defaultSubscriptionId"> The id of the default Azure subscription. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
-        public ArmClient(TokenCredential credential, string defaultSubscriptionId): this(credential, defaultSubscriptionId, default)
+        public ArmClient(TokenCredential credential, string defaultSubscriptionId) : this(credential, defaultSubscriptionId, default)
         {
         }
 
@@ -86,6 +87,22 @@ namespace Azure.ResourceManager
             _tenant = new TenantResource(this);
             _defaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) ? null :
                 new SubscriptionResource(this, SubscriptionResource.CreateResourceIdentifier(defaultSubscriptionId));
+
+            _isTagResourcePresent = options.ShouldUseTagResourceApi;
+        }
+
+        /// <summary>
+        /// Checks to see if the TagResource API is deployed in the current environment.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool IsTagResourcePresent()
+        {
+            if (_isTagResourcePresent == null)
+            {
+                var tagRp = GetDefaultSubscription().GetResourceProvider(TagResource.ResourceType.Namespace);
+                _isTagResourcePresent = tagRp.Value.Data.ResourceTypes.Any(rp => rp.ResourceType == TagResource.ResourceType.Type);
+            }
+            return _isTagResourcePresent.Value;
         }
 
         private void CopyApiVersionOverrides(ArmClientOptions options)

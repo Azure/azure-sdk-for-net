@@ -536,12 +536,25 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _resourceGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
-                return Response.FromValue(new ResourceGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (Client.IsTagResourcePresent())
+                {
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _resourceGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
+                    return Response.FromValue(new ResourceGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    ResourceGroupPatch patch = new ResourceGroupPatch();
+                    foreach (var tag in tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    var originalResponse = _resourceGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, patch, cancellationToken);
+                    return Response.FromValue(new ResourceGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
