@@ -76,6 +76,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new AttachmentsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAttachmentAsync("<farmerId>", "<attachmentId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -156,6 +157,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new AttachmentsClient(endpoint, credential);
         /// 
         /// Response response = client.GetAttachment("<farmerId>", "<attachmentId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -239,6 +241,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var data = File.OpenRead("<binary.data>");
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<attachmentId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -322,6 +325,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var data = File.OpenRead("<binary.data>");
         /// 
         /// Response response = client.CreateOrUpdate("<farmerId>", "<attachmentId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -635,6 +639,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new AttachmentsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAttachmentsByFarmerIdAsync("<farmerId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -645,6 +650,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new AttachmentsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAttachmentsByFarmerIdAsync("<farmerId>", new String[]{"<resourceIds>"}, new String[]{"<resourceTypes>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("resourceId").ToString());
@@ -755,6 +761,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new AttachmentsClient(endpoint, credential);
         /// 
         /// Response response = client.GetAttachmentsByFarmerId("<farmerId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -765,6 +772,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new AttachmentsClient(endpoint, credential);
         /// 
         /// Response response = client.GetAttachmentsByFarmerId("<farmerId>", new String[]{"<resourceIds>"}, new String[]{"<resourceTypes>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("resourceId").ToString());

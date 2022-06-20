@@ -75,6 +75,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetKeyVaultReferenceAsync("<keyVaultName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
@@ -143,6 +144,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GetKeyVaultReference("<keyVaultName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
@@ -214,6 +216,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var data = new {};
         /// 
         /// Response response = await client.CreateOrUpdateKeyVaultReferenceAsync("<keyVaultName>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -231,6 +234,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateKeyVaultReferenceAsync("<keyVaultName>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
@@ -313,6 +317,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var data = new {};
         /// 
         /// Response response = client.CreateOrUpdateKeyVaultReference("<keyVaultName>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -330,6 +335,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// };
         /// 
         /// Response response = client.CreateOrUpdateKeyVaultReference("<keyVaultName>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
@@ -409,6 +415,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.DeleteKeyVaultReferenceAsync("<keyVaultName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
@@ -477,6 +484,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.DeleteKeyVaultReference("<keyVaultName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
@@ -545,6 +553,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetScanRulesetAsync("<scanRulesetName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -615,6 +624,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GetScanRuleset("<scanRulesetName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -690,6 +700,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateScanRulesetAsync("<scanRulesetName>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -705,6 +716,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateScanRulesetAsync("<scanRulesetName>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -790,6 +802,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// };
         /// 
         /// Response response = client.CreateOrUpdateScanRuleset("<scanRulesetName>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -805,6 +818,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// };
         /// 
         /// Response response = client.CreateOrUpdateScanRuleset("<scanRulesetName>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -885,6 +899,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.DeleteScanRulesetAsync("<scanRulesetName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -955,6 +970,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.DeleteScanRuleset("<scanRulesetName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -1025,6 +1041,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSystemRulesetsForDataSourceAsync("<dataSourceType>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -1095,6 +1112,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GetSystemRulesetsForDataSource("<dataSourceType>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -1164,6 +1182,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSystemRulesetsForVersionAsync(1234);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -1174,6 +1193,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSystemRulesetsForVersionAsync(1234, "<dataSourceType>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -1241,6 +1261,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GetSystemRulesetsForVersion(1234);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -1251,6 +1272,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GetSystemRulesetsForVersion(1234, "<dataSourceType>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -1317,6 +1339,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetLatestSystemRulesetsAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -1327,6 +1350,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetLatestSystemRulesetsAsync("<dataSourceType>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -1393,6 +1417,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GetLatestSystemRulesets();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -1403,6 +1428,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GetLatestSystemRulesets("<dataSourceType>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -1468,6 +1494,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetKeyVaultReferencesAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
@@ -1545,6 +1572,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GetKeyVaultReferences();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
@@ -1622,6 +1650,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetClassificationRulesAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
@@ -1695,6 +1724,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GetClassificationRules();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
@@ -1768,6 +1798,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetDataSourcesAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
@@ -1918,6 +1949,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GetDataSources();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
@@ -2068,6 +2100,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetScanRulesetsAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
@@ -2147,6 +2180,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GetScanRulesets();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
@@ -2226,6 +2260,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSystemRulesetsAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
@@ -2305,6 +2340,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GetSystemRulesets();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
@@ -2385,6 +2421,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSystemRulesetsVersionsAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -2395,6 +2432,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSystemRulesetsVersionsAsync("<dataSourceType>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
@@ -2475,6 +2513,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GetSystemRulesetsVersions();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -2485,6 +2524,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GetSystemRulesetsVersions("<dataSourceType>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());

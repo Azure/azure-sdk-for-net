@@ -76,6 +76,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ApplicationDataClient(endpoint, credential);
         /// 
         /// Response response = await client.GetApplicationDataAsync("<farmerId>", "<applicationDataId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("applicationProductDetails").Item[0].GetProperty("productName").ToString());
         /// Console.WriteLine(result.GetProperty("applicationProductDetails").Item[0].GetProperty("isCarrier").ToString());
@@ -192,6 +193,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ApplicationDataClient(endpoint, credential);
         /// 
         /// Response response = client.GetApplicationData("<farmerId>", "<applicationDataId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("applicationProductDetails").Item[0].GetProperty("productName").ToString());
         /// Console.WriteLine(result.GetProperty("applicationProductDetails").Item[0].GetProperty("isCarrier").ToString());
@@ -311,6 +313,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var data = new {};
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<applicationDataId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -362,6 +365,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<applicationDataId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("applicationProductDetails").Item[0].GetProperty("productName").ToString());
         /// Console.WriteLine(result.GetProperty("applicationProductDetails").Item[0].GetProperty("isCarrier").ToString());
@@ -515,6 +519,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var data = new {};
         /// 
         /// Response response = client.CreateOrUpdate("<farmerId>", "<applicationDataId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -566,6 +571,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = client.CreateOrUpdate("<farmerId>", "<applicationDataId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("applicationProductDetails").Item[0].GetProperty("productName").ToString());
         /// Console.WriteLine(result.GetProperty("applicationProductDetails").Item[0].GetProperty("isCarrier").ToString());
@@ -854,6 +860,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ApplicationDataClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAllApplicationDataByFarmerIdAsync("<farmerId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -864,6 +871,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ApplicationDataClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAllApplicationDataByFarmerIdAsync("<farmerId>", 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("productName").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("isCarrier").ToString());
@@ -1023,6 +1031,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ApplicationDataClient(endpoint, credential);
         /// 
         /// Response response = client.GetAllApplicationDataByFarmerId("<farmerId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -1033,6 +1042,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ApplicationDataClient(endpoint, credential);
         /// 
         /// Response response = client.GetAllApplicationDataByFarmerId("<farmerId>", 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("productName").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("isCarrier").ToString());
@@ -1189,6 +1199,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ApplicationDataClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAllApplicationDataAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -1199,6 +1210,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ApplicationDataClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAllApplicationDataAsync(1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("productName").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("isCarrier").ToString());
@@ -1353,6 +1365,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ApplicationDataClient(endpoint, credential);
         /// 
         /// Response response = client.GetAllApplicationData();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -1363,6 +1376,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ApplicationDataClient(endpoint, credential);
         /// 
         /// Response response = client.GetAllApplicationData(1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("productName").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("isCarrier").ToString());

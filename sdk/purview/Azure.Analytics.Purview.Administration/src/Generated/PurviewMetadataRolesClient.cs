@@ -44,6 +44,7 @@ namespace Azure.Analytics.Purview.Administration
         /// var client = new PurviewMetadataRolesClient(endpoint, credential);
         /// 
         /// Response response = await client.GetMetadataRolesAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("name").ToString());
@@ -132,6 +133,7 @@ namespace Azure.Analytics.Purview.Administration
         /// var client = new PurviewMetadataRolesClient(endpoint, credential);
         /// 
         /// Response response = client.GetMetadataRoles();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("name").ToString());

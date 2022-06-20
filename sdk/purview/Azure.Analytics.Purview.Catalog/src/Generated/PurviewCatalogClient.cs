@@ -74,6 +74,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = await client.SearchAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -108,6 +109,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.SearchAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("@search.count").ToString());
         /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("assetType").Item[0].GetProperty("count").ToString());
@@ -207,6 +209,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = client.Search(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -241,6 +244,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.Search(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("@search.count").ToString());
         /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("assetType").Item[0].GetProperty("count").ToString());
@@ -340,6 +344,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = await client.SuggestAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -356,6 +361,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.SuggestAsync(RequestContent.Create(data));
+        /// 
         /// Console.WriteLine(response.ToString());
         /// ]]></code>
         /// </example>
@@ -413,6 +419,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = client.Suggest(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -429,6 +436,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.Suggest(RequestContent.Create(data));
+        /// 
         /// Console.WriteLine(response.ToString());
         /// ]]></code>
         /// </example>
@@ -486,6 +494,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = await client.BrowseAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -503,6 +512,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.BrowseAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("@search.count").ToString());
         /// ]]></code>
@@ -563,6 +573,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = client.Browse(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -580,6 +591,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.Browse(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("@search.count").ToString());
         /// ]]></code>
@@ -640,6 +652,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = await client.AutoCompleteAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -656,6 +669,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.AutoCompleteAsync(RequestContent.Create(data));
+        /// 
         /// Console.WriteLine(response.ToString());
         /// ]]></code>
         /// </example>
@@ -713,6 +727,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = client.AutoComplete(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -729,6 +744,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.AutoComplete(RequestContent.Create(data));
+        /// 
         /// Console.WriteLine(response.ToString());
         /// ]]></code>
         /// </example>

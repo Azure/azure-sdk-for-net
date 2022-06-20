@@ -54,6 +54,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetConstitutionAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("digest").ToString());
         /// Console.WriteLine(result.GetProperty("script").ToString());
@@ -103,6 +104,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetConstitution();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("digest").ToString());
         /// Console.WriteLine(result.GetProperty("script").ToString());
@@ -152,6 +154,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetConsortiumMembersAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("members").Item[0].GetProperty("certificate").ToString());
         /// Console.WriteLine(result.GetProperty("members").Item[0].GetProperty("id").ToString());
@@ -205,6 +208,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetConsortiumMembers();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("members").Item[0].GetProperty("certificate").ToString());
         /// Console.WriteLine(result.GetProperty("members").Item[0].GetProperty("id").ToString());
@@ -258,6 +262,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetEnclaveQuotesAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("currentNodeId").ToString());
         /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("nodeId").ToString());
@@ -310,6 +315,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetEnclaveQuotes();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("currentNodeId").ToString());
         /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("nodeId").ToString());
@@ -368,6 +374,7 @@ namespace Azure.Security.ConfidentialLedger
         /// };
         /// 
         /// Response response = await client.PostLedgerEntryAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("subLedgerId").ToString());
         /// ]]></code>
@@ -382,6 +389,7 @@ namespace Azure.Security.ConfidentialLedger
         /// };
         /// 
         /// Response response = await client.PostLedgerEntryAsync(RequestContent.Create(data), "<subLedgerId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("subLedgerId").ToString());
         /// ]]></code>
@@ -442,6 +450,7 @@ namespace Azure.Security.ConfidentialLedger
         /// };
         /// 
         /// Response response = client.PostLedgerEntry(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("subLedgerId").ToString());
         /// ]]></code>
@@ -456,6 +465,7 @@ namespace Azure.Security.ConfidentialLedger
         /// };
         /// 
         /// Response response = client.PostLedgerEntry(RequestContent.Create(data), "<subLedgerId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("subLedgerId").ToString());
         /// ]]></code>
@@ -514,6 +524,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetLedgerEntryAsync("<transactionId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// ]]></code>
@@ -524,6 +535,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetLedgerEntryAsync("<transactionId>", "<subLedgerId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// Console.WriteLine(result.GetProperty("entry").GetProperty("contents").ToString());
@@ -585,6 +597,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetLedgerEntry("<transactionId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// ]]></code>
@@ -595,6 +608,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetLedgerEntry("<transactionId>", "<subLedgerId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// Console.WriteLine(result.GetProperty("entry").GetProperty("contents").ToString());
@@ -655,6 +669,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetReceiptAsync("<transactionId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("leaf").ToString());
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("nodeId").ToString());
@@ -727,6 +742,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetReceipt("<transactionId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("leaf").ToString());
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("nodeId").ToString());
@@ -799,6 +815,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetTransactionStatusAsync("<transactionId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// Console.WriteLine(result.GetProperty("transactionId").ToString());
@@ -853,6 +870,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetTransactionStatus("<transactionId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// Console.WriteLine(result.GetProperty("transactionId").ToString());
@@ -905,6 +923,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetCurrentLedgerEntryAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("contents").ToString());
         /// ]]></code>
@@ -915,6 +934,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetCurrentLedgerEntryAsync("<subLedgerId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("contents").ToString());
         /// Console.WriteLine(result.GetProperty("subLedgerId").ToString());
@@ -967,6 +987,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetCurrentLedgerEntry();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("contents").ToString());
         /// ]]></code>
@@ -977,6 +998,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetCurrentLedgerEntry("<subLedgerId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("contents").ToString());
         /// Console.WriteLine(result.GetProperty("subLedgerId").ToString());
@@ -1123,6 +1145,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetUserAsync("<userId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("assignedRole").ToString());
         /// Console.WriteLine(result.GetProperty("userId").ToString());
@@ -1177,6 +1200,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetUser("<userId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("assignedRole").ToString());
         /// Console.WriteLine(result.GetProperty("userId").ToString());
@@ -1236,6 +1260,7 @@ namespace Azure.Security.ConfidentialLedger
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateUserAsync("<userId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("assignedRole").ToString());
         /// Console.WriteLine(result.GetProperty("userId").ToString());
@@ -1302,6 +1327,7 @@ namespace Azure.Security.ConfidentialLedger
         /// };
         /// 
         /// Response response = client.CreateOrUpdateUser("<userId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("assignedRole").ToString());
         /// Console.WriteLine(result.GetProperty("userId").ToString());
@@ -1363,6 +1389,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetLedgerEntriesAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("contents").ToString());
@@ -1374,6 +1401,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetLedgerEntriesAsync("<subLedgerId>", "<fromTransactionId>", "<toTransactionId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// Console.WriteLine(result.GetProperty("@nextLink").ToString());
@@ -1442,6 +1470,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetLedgerEntries();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("contents").ToString());
@@ -1453,6 +1482,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetLedgerEntries("<subLedgerId>", "<fromTransactionId>", "<toTransactionId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// Console.WriteLine(result.GetProperty("@nextLink").ToString());

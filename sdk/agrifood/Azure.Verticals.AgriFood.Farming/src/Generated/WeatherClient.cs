@@ -75,6 +75,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// Response response = await client.GetDataIngestionJobDetailsAsync("<jobId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -167,6 +168,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// Response response = client.GetDataIngestionJobDetails("<jobId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -259,6 +261,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// Response response = await client.GetDataDeleteJobDetailsAsync("<jobId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -351,6 +354,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// Response response = client.GetDataDeleteJobDetails("<jobId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -453,6 +457,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// Response response = await client.GetWeathersAsync("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -463,6 +468,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// Response response = await client.GetWeathersAsync("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("boundaryId").ToString());
@@ -627,6 +633,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// Response response = client.GetWeathers("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -637,6 +644,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// Response response = client.GetWeathers("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("boundaryId").ToString());
@@ -803,6 +811,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -834,6 +843,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -960,6 +970,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -991,6 +1002,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -1113,6 +1125,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -1140,6 +1153,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -1262,6 +1276,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = client.CreateDataDeleteJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
@@ -1289,6 +1304,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = client.CreateDataDeleteJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());

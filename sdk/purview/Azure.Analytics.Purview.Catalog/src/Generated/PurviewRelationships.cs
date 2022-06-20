@@ -59,6 +59,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = await client.CreateAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -101,6 +102,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.CreateAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("typeName").ToString());
@@ -211,6 +213,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = client.Create(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -253,6 +256,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.Create(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("typeName").ToString());
@@ -363,6 +367,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = await client.UpdateAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -405,6 +410,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.UpdateAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("typeName").ToString());
@@ -515,6 +521,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = client.Update(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -557,6 +564,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.Update(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("typeName").ToString());
@@ -667,6 +675,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
         /// 
         /// Response response = await client.GetPurviewRelationshipAsync("<guid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -677,6 +686,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
         /// 
         /// Response response = await client.GetPurviewRelationshipAsync("<guid>", true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
@@ -796,6 +806,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
         /// 
         /// Response response = client.GetPurviewRelationship("<guid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -806,6 +817,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
         /// 
         /// Response response = client.GetPurviewRelationship("<guid>", true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());

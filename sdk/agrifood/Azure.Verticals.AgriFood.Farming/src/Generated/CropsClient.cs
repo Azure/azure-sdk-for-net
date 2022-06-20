@@ -75,6 +75,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new CropsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetCropAsync("<cropId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("phenotype").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -149,6 +150,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new CropsClient(endpoint, credential);
         /// 
         /// Response response = client.GetCrop("<cropId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("phenotype").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -226,6 +228,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var data = new {};
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<cropId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -246,6 +249,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<cropId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("phenotype").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -336,6 +340,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var data = new {};
         /// 
         /// Response response = client.CreateOrUpdate("<cropId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -356,6 +361,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = client.CreateOrUpdate("<cropId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("phenotype").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -561,6 +567,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new CropsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetCropsAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -571,6 +578,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new CropsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetCropsAsync(new String[]{"<phenotypes>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("phenotype").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
@@ -671,6 +679,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new CropsClient(endpoint, credential);
         /// 
         /// Response response = client.GetCrops();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -681,6 +690,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new CropsClient(endpoint, credential);
         /// 
         /// Response response = client.GetCrops(new String[]{"<phenotypes>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("phenotype").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());

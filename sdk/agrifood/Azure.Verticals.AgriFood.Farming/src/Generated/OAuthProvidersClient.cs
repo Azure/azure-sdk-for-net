@@ -75,6 +75,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
         /// Response response = await client.GetOAuthProviderAsync("<oauthProviderId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("appId").ToString());
         /// Console.WriteLine(result.GetProperty("appSecret").ToString());
@@ -153,6 +154,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
         /// Response response = client.GetOAuthProvider("<oauthProviderId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("appId").ToString());
         /// Console.WriteLine(result.GetProperty("appSecret").ToString());
@@ -234,6 +236,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var data = new {};
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<oauthProviderId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -256,6 +259,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<oauthProviderId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("appId").ToString());
         /// Console.WriteLine(result.GetProperty("appSecret").ToString());
@@ -352,6 +356,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var data = new {};
         /// 
         /// Response response = client.CreateOrUpdate("<oauthProviderId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -374,6 +379,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = client.CreateOrUpdate("<oauthProviderId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("appId").ToString());
         /// Console.WriteLine(result.GetProperty("appSecret").ToString());
@@ -584,6 +590,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
         /// Response response = await client.GetOAuthProvidersAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -594,6 +601,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
         /// Response response = await client.GetOAuthProvidersAsync(new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("appId").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("appSecret").ToString());
@@ -697,6 +705,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
         /// Response response = client.GetOAuthProviders();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -707,6 +716,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
         /// Response response = client.GetOAuthProviders(new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("appId").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("appSecret").ToString());

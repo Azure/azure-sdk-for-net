@@ -69,6 +69,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
@@ -266,6 +267,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// };
         /// 
         /// Response response = client.CreateOrUpdate(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
@@ -458,6 +460,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>");
         /// 
         /// Response response = await client.GetPropertiesAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
@@ -594,6 +597,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>");
         /// 
         /// Response response = client.GetProperties();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
@@ -730,6 +734,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>");
         /// 
         /// Response response = await client.DeleteAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
@@ -866,6 +871,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>");
         /// 
         /// Response response = client.Delete();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
@@ -1002,6 +1008,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>");
         /// 
         /// Response response = await client.GetScansAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
@@ -1142,6 +1149,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>");
         /// 
         /// Response response = client.GetScans();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());

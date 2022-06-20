@@ -62,6 +62,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossariesAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
@@ -72,6 +73,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossariesAsync(1234, 1234, "<sort>", true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -199,6 +201,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaries();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
@@ -209,6 +212,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaries(1234, 1234, "<sort>", true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -336,6 +340,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = await client.CreateGlossaryAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -401,6 +406,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.CreateGlossaryAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -582,6 +588,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = client.CreateGlossary(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -647,6 +654,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.CreateGlossary(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -893,6 +901,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.CreateGlossaryCategoriesAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -1153,6 +1162,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.CreateGlossaryCategories(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -1348,6 +1358,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = await client.CreateGlossaryCategoryAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -1423,6 +1434,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.CreateGlossaryCategoryAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -1618,6 +1630,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = client.CreateGlossaryCategory(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -1693,6 +1706,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.CreateGlossaryCategory(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -1887,6 +1901,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryCategoryAsync("<categoryGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -2025,6 +2040,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaryCategory("<categoryGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -2166,6 +2182,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = await client.UpdateGlossaryCategoryAsync("<categoryGuid>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -2241,6 +2258,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.UpdateGlossaryCategoryAsync("<categoryGuid>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -2439,6 +2457,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = client.UpdateGlossaryCategory("<categoryGuid>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -2514,6 +2533,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.UpdateGlossaryCategory("<categoryGuid>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -2802,6 +2822,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.PartialUpdateGlossaryCategoryAsync("<categoryGuid>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -2946,6 +2967,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.PartialUpdateGlossaryCategory("<categoryGuid>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -3088,6 +3110,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetRelatedCategoriesAsync("<categoryGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("<test>").Item[0].ToString());
         /// ]]></code>
@@ -3098,6 +3121,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetRelatedCategoriesAsync("<categoryGuid>", 1234, 1234, "<sort>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("<test>").Item[0].GetProperty("categoryGuid").ToString());
         /// Console.WriteLine(result.GetProperty("<test>").Item[0].GetProperty("description").ToString());
@@ -3159,6 +3183,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetRelatedCategories("<categoryGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("<test>").Item[0].ToString());
         /// ]]></code>
@@ -3169,6 +3194,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetRelatedCategories("<categoryGuid>", 1234, 1234, "<sort>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("<test>").Item[0].GetProperty("categoryGuid").ToString());
         /// Console.WriteLine(result.GetProperty("<test>").Item[0].GetProperty("description").ToString());
@@ -3230,6 +3256,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetCategoryTermsAsync("<categoryGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
@@ -3240,6 +3267,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetCategoryTermsAsync("<categoryGuid>", 1234, 1234, "<sort>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("displayText").ToString());
@@ -3307,6 +3335,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetCategoryTerms("<categoryGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
@@ -3317,6 +3346,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetCategoryTerms("<categoryGuid>", 1234, 1234, "<sort>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("displayText").ToString());
@@ -3383,6 +3413,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = await client.CreateGlossaryTermAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -3648,6 +3679,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.CreateGlossaryTermAsync(RequestContent.Create(data), true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -4050,6 +4082,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = client.CreateGlossaryTerm(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -4315,6 +4348,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.CreateGlossaryTerm(RequestContent.Create(data), true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -4716,6 +4750,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryTermAsync("<termGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -4726,6 +4761,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryTermAsync("<termGuid>", true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -5026,6 +5062,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaryTerm("<termGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -5036,6 +5073,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaryTerm("<termGuid>", true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -5338,6 +5376,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = await client.UpdateGlossaryTermAsync("<termGuid>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -5603,6 +5642,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.UpdateGlossaryTermAsync("<termGuid>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -6007,6 +6047,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = client.UpdateGlossaryTerm("<termGuid>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -6272,6 +6313,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.UpdateGlossaryTerm("<termGuid>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -6767,6 +6809,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.PartialUpdateGlossaryTermAsync("<termGuid>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -6781,6 +6824,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.PartialUpdateGlossaryTermAsync("<termGuid>", RequestContent.Create(data), true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -7087,6 +7131,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.PartialUpdateGlossaryTerm("<termGuid>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -7101,6 +7146,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.PartialUpdateGlossaryTerm("<termGuid>", RequestContent.Create(data), true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -7405,6 +7451,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.CreateGlossaryTermsAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
@@ -7672,6 +7719,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.CreateGlossaryTermsAsync(RequestContent.Create(data), true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -8076,6 +8124,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.CreateGlossaryTerms(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
@@ -8343,6 +8392,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.CreateGlossaryTerms(RequestContent.Create(data), true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -8746,6 +8796,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetEntitiesAssignedWithTermAsync("<termGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
@@ -8756,6 +8807,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetEntitiesAssignedWithTermAsync("<termGuid>", 1234, 1234, "<sort>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("typeName").ToString());
@@ -8831,6 +8883,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetEntitiesAssignedWithTerm("<termGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
@@ -8841,6 +8894,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetEntitiesAssignedWithTerm("<termGuid>", 1234, 1234, "<sort>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("typeName").ToString());
@@ -9426,6 +9480,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetRelatedTermsAsync("<termGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("<test>").Item[0].ToString());
         /// ]]></code>
@@ -9436,6 +9491,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetRelatedTermsAsync("<termGuid>", 1234, 1234, "<sort>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("<test>").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("<test>").Item[0].GetProperty("displayText").ToString());
@@ -9503,6 +9559,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetRelatedTerms("<termGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("<test>").Item[0].ToString());
         /// ]]></code>
@@ -9513,6 +9570,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetRelatedTerms("<termGuid>", 1234, 1234, "<sort>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("<test>").Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("<test>").Item[0].GetProperty("displayText").ToString());
@@ -9577,6 +9635,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryAsync("<glossaryGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -9705,6 +9764,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossary("<glossaryGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -9836,6 +9896,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = await client.UpdateGlossaryAsync("<glossaryGuid>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -9901,6 +9962,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.UpdateGlossaryAsync("<glossaryGuid>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -10085,6 +10147,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = client.UpdateGlossary("<glossaryGuid>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -10150,6 +10213,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.UpdateGlossary("<glossaryGuid>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -10422,6 +10486,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryCategoriesAsync("<glossaryGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
@@ -10432,6 +10497,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryCategoriesAsync("<glossaryGuid>", 1234, 1234, "<sort>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -10573,6 +10639,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaryCategories("<glossaryGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
@@ -10583,6 +10650,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaryCategories("<glossaryGuid>", 1234, 1234, "<sort>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -10724,6 +10792,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryCategoriesHeadersAsync("<glossaryGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
@@ -10734,6 +10803,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryCategoriesHeadersAsync("<glossaryGuid>", 1234, 1234, "<sort>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("categoryGuid").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("description").ToString());
@@ -10795,6 +10865,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaryCategoriesHeaders("<glossaryGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
@@ -10805,6 +10876,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaryCategoriesHeaders("<glossaryGuid>", 1234, 1234, "<sort>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("categoryGuid").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("description").ToString());
@@ -10864,6 +10936,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetDetailedGlossaryAsync("<glossaryGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -10874,6 +10947,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetDetailedGlossaryAsync("<glossaryGuid>", true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
         /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("description").ToString());
@@ -11197,6 +11271,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetDetailedGlossary("<glossaryGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -11207,6 +11282,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetDetailedGlossary("<glossaryGuid>", true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("categoryGuid").ToString());
         /// Console.WriteLine(result.GetProperty("categories").Item[0].GetProperty("description").ToString());
@@ -11535,6 +11611,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.PartialUpdateGlossaryAsync("<glossaryGuid>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -11549,6 +11626,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.PartialUpdateGlossaryAsync("<glossaryGuid>", RequestContent.Create(data), true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -11684,6 +11762,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.PartialUpdateGlossary("<glossaryGuid>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -11698,6 +11777,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.PartialUpdateGlossary("<glossaryGuid>", RequestContent.Create(data), true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -11831,6 +11911,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryTermsAsync("<glossaryGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
@@ -11841,6 +11922,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryTermsAsync("<glossaryGuid>", true, 1234, 1234, "<sort>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -12144,6 +12226,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaryTerms("<glossaryGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
@@ -12154,6 +12237,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaryTerms("<glossaryGuid>", true, 1234, 1234, "<sort>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -12456,6 +12540,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryTermHeadersAsync("<glossaryGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
@@ -12466,6 +12551,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryTermHeadersAsync("<glossaryGuid>", 1234, 1234, "<sort>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("displayText").ToString());
@@ -12533,6 +12619,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaryTermHeaders("<glossaryGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
@@ -12543,6 +12630,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaryTermHeaders("<glossaryGuid>", 1234, 1234, "<sort>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("description").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("displayText").ToString());
@@ -12607,6 +12695,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetImportCsvOperationStatusAsync("<operationGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -12675,6 +12764,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetImportCsvOperationStatus("<operationGuid>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -12878,6 +12968,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetTermsByGlossaryNameAsync("<glossaryName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
@@ -12888,6 +12979,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetTermsByGlossaryNameAsync("<glossaryName>", 1234, 1234, true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -13190,6 +13282,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetTermsByGlossaryName("<glossaryName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
@@ -13200,6 +13293,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetTermsByGlossaryName("<glossaryName>", 1234, 1234, true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("classifications").Item[0].GetProperty("typeName").ToString());
@@ -13504,6 +13598,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = File.OpenRead("<binary.data>");
         /// 
         /// Response response = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -13516,6 +13611,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = File.OpenRead("<binary.data>");
         /// 
         /// Response response = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data), true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -13590,6 +13686,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = File.OpenRead("<binary.data>");
         /// 
         /// Response response = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -13602,6 +13699,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = File.OpenRead("<binary.data>");
         /// 
         /// Response response = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data), true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -13676,6 +13774,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = File.OpenRead("<binary.data>");
         /// 
         /// Response response = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -13688,6 +13787,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = File.OpenRead("<binary.data>");
         /// 
         /// Response response = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data), true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -13762,6 +13862,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = File.OpenRead("<binary.data>");
         /// 
         /// Response response = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -13774,6 +13875,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = File.OpenRead("<binary.data>");
         /// 
         /// Response response = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data), true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());

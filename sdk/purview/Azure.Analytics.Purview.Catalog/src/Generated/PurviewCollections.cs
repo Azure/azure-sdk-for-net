@@ -68,6 +68,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = await client.CreateOrUpdateEntityAsync("<collection>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -221,6 +222,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateEntityAsync("<collection>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
@@ -440,6 +442,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = client.CreateOrUpdateEntity("<collection>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -593,6 +596,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.CreateOrUpdateEntity("<collection>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
@@ -812,6 +816,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = await client.CreateOrUpdateEntityInBulkAsync("<collection>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -967,6 +972,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateEntityInBulkAsync("<collection>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
@@ -1188,6 +1194,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = client.CreateOrUpdateEntityInBulk("<collection>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -1343,6 +1350,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.CreateOrUpdateEntityInBulk("<collection>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
@@ -1560,6 +1568,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = await client.MoveEntitiesToCollectionAsync("<collection>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -1576,6 +1585,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = await client.MoveEntitiesToCollectionAsync("<collection>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
@@ -1739,6 +1749,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var data = new {};
         /// 
         /// Response response = client.MoveEntitiesToCollection("<collection>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -1755,6 +1766,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// };
         /// 
         /// Response response = client.MoveEntitiesToCollection("<collection>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());

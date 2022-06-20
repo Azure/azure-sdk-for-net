@@ -75,6 +75,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSatelliteDataIngestionJobDetailsAsync("<jobId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -173,6 +174,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// Response response = client.GetSatelliteDataIngestionJobDetails("<jobId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -387,6 +389,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// Response response = await client.GetScenesAsync("<provider>", "<farmerId>", "<boundaryId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -397,6 +400,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// Response response = await client.GetScenesAsync("<provider>", "<farmerId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<imageNames>"}, new Double[]{1234}, new String[]{"<imageFormats>"}, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sceneDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("provider").ToString());
@@ -517,6 +521,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// Response response = client.GetScenes("<provider>", "<farmerId>", "<boundaryId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -527,6 +532,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// Response response = client.GetScenes("<provider>", "<farmerId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<imageNames>"}, new Double[]{1234}, new String[]{"<imageFormats>"}, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sceneDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("provider").ToString());
@@ -642,6 +648,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -680,6 +687,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -813,6 +821,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -851,6 +860,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());

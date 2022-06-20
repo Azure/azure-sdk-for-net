@@ -75,6 +75,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSeasonAsync("<seasonId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
@@ -153,6 +154,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonsClient(endpoint, credential);
         /// 
         /// Response response = client.GetSeason("<seasonId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
@@ -234,6 +236,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var data = new {};
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<seasonId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -256,6 +259,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<seasonId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
@@ -352,6 +356,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var data = new {};
         /// 
         /// Response response = client.CreateOrUpdate("<seasonId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -374,6 +379,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = client.CreateOrUpdate("<seasonId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
@@ -589,6 +595,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSeasonsAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -599,6 +606,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSeasonsAsync(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new Int32[]{1234}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("startDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("endDateTime").ToString());
@@ -707,6 +715,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonsClient(endpoint, credential);
         /// 
         /// Response response = client.GetSeasons();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -717,6 +726,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonsClient(endpoint, credential);
         /// 
         /// Response response = client.GetSeasons(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new Int32[]{1234}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("startDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("endDateTime").ToString());

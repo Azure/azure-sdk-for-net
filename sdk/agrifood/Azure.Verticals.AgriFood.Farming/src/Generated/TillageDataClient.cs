@@ -76,6 +76,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new TillageDataClient(endpoint, credential);
         /// 
         /// Response response = await client.GetTillageDataAsync("<farmerId>", "<tillageDataId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
         /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("value").ToString());
@@ -178,6 +179,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new TillageDataClient(endpoint, credential);
         /// 
         /// Response response = client.GetTillageData("<farmerId>", "<tillageDataId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
         /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("value").ToString());
@@ -283,6 +285,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var data = new {};
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<tillageDataId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -320,6 +323,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<tillageDataId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
         /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("value").ToString());
@@ -451,6 +455,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var data = new {};
         /// 
         /// Response response = client.CreateOrUpdate("<farmerId>", "<tillageDataId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -488,6 +493,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = client.CreateOrUpdate("<farmerId>", "<tillageDataId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
         /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("value").ToString());
@@ -754,6 +760,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new TillageDataClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAllTillageDataByFarmerIdAsync("<farmerId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -764,6 +771,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new TillageDataClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAllTillageDataByFarmerIdAsync("<farmerId>", 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillageDepth").GetProperty("unit").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillageDepth").GetProperty("value").ToString());
@@ -909,6 +917,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new TillageDataClient(endpoint, credential);
         /// 
         /// Response response = client.GetAllTillageDataByFarmerId("<farmerId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -919,6 +928,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new TillageDataClient(endpoint, credential);
         /// 
         /// Response response = client.GetAllTillageDataByFarmerId("<farmerId>", 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillageDepth").GetProperty("unit").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillageDepth").GetProperty("value").ToString());
@@ -1061,6 +1071,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new TillageDataClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAllTillageDataAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -1071,6 +1082,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new TillageDataClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAllTillageDataAsync(1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillageDepth").GetProperty("unit").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillageDepth").GetProperty("value").ToString());
@@ -1211,6 +1223,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new TillageDataClient(endpoint, credential);
         /// 
         /// Response response = client.GetAllTillageData();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -1221,6 +1234,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new TillageDataClient(endpoint, credential);
         /// 
         /// Response response = client.GetAllTillageData(1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillageDepth").GetProperty("unit").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tillageDepth").GetProperty("value").ToString());

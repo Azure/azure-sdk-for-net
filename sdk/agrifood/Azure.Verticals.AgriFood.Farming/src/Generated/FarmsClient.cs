@@ -76,6 +76,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FarmsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetFarmAsync("<farmerId>", "<farmId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -152,6 +153,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FarmsClient(endpoint, credential);
         /// 
         /// Response response = client.GetFarm("<farmerId>", "<farmId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -231,6 +233,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var data = new {};
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<farmId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -250,6 +253,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<farmId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -342,6 +346,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var data = new {};
         /// 
         /// Response response = client.CreateOrUpdate("<farmerId>", "<farmId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -361,6 +366,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = client.CreateOrUpdate("<farmerId>", "<farmId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -557,6 +563,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FarmsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -641,6 +648,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FarmsClient(endpoint, credential);
         /// 
         /// Response response = client.GetCascadeDeleteJobDetails("<jobId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -741,6 +749,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FarmsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetFarmsByFarmerIdAsync("<farmerId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -751,6 +760,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FarmsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetFarmsByFarmerIdAsync("<farmerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
@@ -855,6 +865,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FarmsClient(endpoint, credential);
         /// 
         /// Response response = client.GetFarmsByFarmerId("<farmerId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -865,6 +876,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FarmsClient(endpoint, credential);
         /// 
         /// Response response = client.GetFarmsByFarmerId("<farmerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
@@ -966,6 +978,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FarmsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetFarmsAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -976,6 +989,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FarmsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetFarmsAsync(new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
@@ -1075,6 +1089,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FarmsClient(endpoint, credential);
         /// 
         /// Response response = client.GetFarms();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -1085,6 +1100,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FarmsClient(endpoint, credential);
         /// 
         /// Response response = client.GetFarms(new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
@@ -1174,6 +1190,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FarmsClient(endpoint, credential);
         /// 
         /// Response response = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<farmerId>", "<farmId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -1263,6 +1280,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FarmsClient(endpoint, credential);
         /// 
         /// Response response = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<farmerId>", "<farmId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());

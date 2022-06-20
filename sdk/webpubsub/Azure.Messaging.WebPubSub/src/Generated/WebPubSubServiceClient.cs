@@ -46,6 +46,7 @@ namespace Azure.Messaging.WebPubSub
         /// var client = new WebPubSubServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GenerateClientTokenImplAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -56,6 +57,7 @@ namespace Azure.Messaging.WebPubSub
         /// var client = new WebPubSubServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GenerateClientTokenImplAsync("<userId>", new String[]{"<role>"}, 1234);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("token").ToString());
         /// ]]></code>
@@ -109,6 +111,7 @@ namespace Azure.Messaging.WebPubSub
         /// var client = new WebPubSubServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GenerateClientTokenImpl();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -119,6 +122,7 @@ namespace Azure.Messaging.WebPubSub
         /// var client = new WebPubSubServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GenerateClientTokenImpl("<userId>", new String[]{"<role>"}, 1234);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("token").ToString());
         /// ]]></code>

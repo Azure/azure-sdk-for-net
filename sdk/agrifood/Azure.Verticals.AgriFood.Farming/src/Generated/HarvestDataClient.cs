@@ -76,6 +76,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// Response response = await client.GetHarvestDataAsync("<farmerId>", "<harvestDataId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("totalYield").GetProperty("unit").ToString());
         /// Console.WriteLine(result.GetProperty("totalYield").GetProperty("value").ToString());
@@ -214,6 +215,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// Response response = client.GetHarvestData("<farmerId>", "<harvestDataId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("totalYield").GetProperty("unit").ToString());
         /// Console.WriteLine(result.GetProperty("totalYield").GetProperty("value").ToString());
@@ -355,6 +357,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var data = new {};
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<harvestDataId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -437,6 +440,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<harvestDataId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("totalYield").GetProperty("unit").ToString());
         /// Console.WriteLine(result.GetProperty("totalYield").GetProperty("value").ToString());
@@ -619,6 +623,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var data = new {};
         /// 
         /// Response response = client.CreateOrUpdate("<farmerId>", "<harvestDataId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -701,6 +706,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = client.CreateOrUpdate("<farmerId>", "<harvestDataId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("totalYield").GetProperty("unit").ToString());
         /// Console.WriteLine(result.GetProperty("totalYield").GetProperty("value").ToString());
@@ -1026,6 +1032,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAllHarvestDataByFarmerIdAsync("<farmerId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -1036,6 +1043,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAllHarvestDataByFarmerIdAsync("<farmerId>", 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalYield").GetProperty("unit").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalYield").GetProperty("value").ToString());
@@ -1225,6 +1233,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// Response response = client.GetAllHarvestDataByFarmerId("<farmerId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -1235,6 +1244,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// Response response = client.GetAllHarvestDataByFarmerId("<farmerId>", 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalYield").GetProperty("unit").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalYield").GetProperty("value").ToString());
@@ -1421,6 +1431,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAllHarvestDataAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -1431,6 +1442,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAllHarvestDataAsync(1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalYield").GetProperty("unit").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalYield").GetProperty("value").ToString());
@@ -1615,6 +1627,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// Response response = client.GetAllHarvestData();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -1625,6 +1638,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// Response response = client.GetAllHarvestData(1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalYield").GetProperty("unit").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalYield").GetProperty("value").ToString());

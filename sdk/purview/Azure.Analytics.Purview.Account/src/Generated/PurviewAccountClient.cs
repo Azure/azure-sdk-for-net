@@ -72,6 +72,7 @@ namespace Azure.Analytics.Purview.Account
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAccountPropertiesAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("identity").GetProperty("principalId").ToString());
@@ -225,6 +226,7 @@ namespace Azure.Analytics.Purview.Account
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// Response response = client.GetAccountProperties();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("identity").GetProperty("principalId").ToString());
@@ -382,6 +384,7 @@ namespace Azure.Analytics.Purview.Account
         /// var data = new {};
         /// 
         /// Response response = await client.UpdateAccountPropertiesAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -396,6 +399,7 @@ namespace Azure.Analytics.Purview.Account
         /// };
         /// 
         /// Response response = await client.UpdateAccountPropertiesAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("identity").GetProperty("principalId").ToString());
@@ -560,6 +564,7 @@ namespace Azure.Analytics.Purview.Account
         /// var data = new {};
         /// 
         /// Response response = client.UpdateAccountProperties(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -574,6 +579,7 @@ namespace Azure.Analytics.Purview.Account
         /// };
         /// 
         /// Response response = client.UpdateAccountProperties(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("identity").GetProperty("principalId").ToString());
@@ -734,6 +740,7 @@ namespace Azure.Analytics.Purview.Account
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAccessKeysAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
         /// Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
@@ -791,6 +798,7 @@ namespace Azure.Analytics.Purview.Account
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// Response response = client.GetAccessKeys();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
         /// Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
@@ -852,6 +860,7 @@ namespace Azure.Analytics.Purview.Account
         /// var data = new {};
         /// 
         /// Response response = await client.RegenerateAccessKeyAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -866,6 +875,7 @@ namespace Azure.Analytics.Purview.Account
         /// };
         /// 
         /// Response response = await client.RegenerateAccessKeyAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
         /// Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
@@ -934,6 +944,7 @@ namespace Azure.Analytics.Purview.Account
         /// var data = new {};
         /// 
         /// Response response = client.RegenerateAccessKey(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -948,6 +959,7 @@ namespace Azure.Analytics.Purview.Account
         /// };
         /// 
         /// Response response = client.RegenerateAccessKey(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
         /// Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
@@ -1013,6 +1025,7 @@ namespace Azure.Analytics.Purview.Account
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// Response response = await client.GetCollectionsAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].ToString());
         /// ]]></code>
@@ -1023,6 +1036,7 @@ namespace Azure.Analytics.Purview.Account
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// Response response = await client.GetCollectionsAsync("<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("count").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
@@ -1119,6 +1133,7 @@ namespace Azure.Analytics.Purview.Account
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// Response response = client.GetCollections();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].ToString());
         /// ]]></code>
@@ -1129,6 +1144,7 @@ namespace Azure.Analytics.Purview.Account
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// Response response = client.GetCollections("<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("count").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
@@ -1225,6 +1241,7 @@ namespace Azure.Analytics.Purview.Account
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// Response response = await client.GetResourceSetRulesAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].ToString());
         /// ]]></code>
@@ -1235,6 +1252,7 @@ namespace Azure.Analytics.Purview.Account
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// Response response = await client.GetResourceSetRulesAsync("<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("count").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
@@ -1478,6 +1496,7 @@ namespace Azure.Analytics.Purview.Account
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// Response response = client.GetResourceSetRules();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].ToString());
         /// ]]></code>
@@ -1488,6 +1507,7 @@ namespace Azure.Analytics.Purview.Account
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// Response response = client.GetResourceSetRules("<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("count").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());

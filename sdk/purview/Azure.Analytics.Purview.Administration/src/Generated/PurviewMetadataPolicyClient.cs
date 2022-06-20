@@ -52,6 +52,7 @@ namespace Azure.Analytics.Purview.Administration
         /// var data = new {};
         /// 
         /// Response response = await client.UpdateMetadataPolicyAsync("<policyId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -116,6 +117,7 @@ namespace Azure.Analytics.Purview.Administration
         /// };
         /// 
         /// Response response = await client.UpdateMetadataPolicyAsync("<policyId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -248,6 +250,7 @@ namespace Azure.Analytics.Purview.Administration
         /// var data = new {};
         /// 
         /// Response response = client.UpdateMetadataPolicy("<policyId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -312,6 +315,7 @@ namespace Azure.Analytics.Purview.Administration
         /// };
         /// 
         /// Response response = client.UpdateMetadataPolicy("<policyId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -441,6 +445,7 @@ namespace Azure.Analytics.Purview.Administration
         /// var client = new PurviewMetadataPolicyClient(endpoint, credential);
         /// 
         /// Response response = await client.GetMetadataPolicyAsync("<policyId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -540,6 +545,7 @@ namespace Azure.Analytics.Purview.Administration
         /// var client = new PurviewMetadataPolicyClient(endpoint, credential);
         /// 
         /// Response response = client.GetMetadataPolicy("<policyId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -636,6 +642,7 @@ namespace Azure.Analytics.Purview.Administration
         /// var client = new PurviewMetadataPolicyClient(endpoint, credential);
         /// 
         /// Response response = await client.GetMetadataPoliciesAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("id").ToString());
@@ -742,6 +749,7 @@ namespace Azure.Analytics.Purview.Administration
         /// var client = new PurviewMetadataPolicyClient(endpoint, credential);
         /// 
         /// Response response = client.GetMetadataPolicies();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("id").ToString());

@@ -44,6 +44,7 @@ namespace Azure.AI.Language.Conversations
         /// };
         /// 
         /// Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// ]]></code>
@@ -112,6 +113,7 @@ namespace Azure.AI.Language.Conversations
         /// };
         /// 
         /// Response response = client.AnalyzeConversation(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// ]]></code>
@@ -176,6 +178,7 @@ namespace Azure.AI.Language.Conversations
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// Response response = await client.JobStatusAsync(Guid.NewGuid());
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -194,6 +197,7 @@ namespace Azure.AI.Language.Conversations
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// Response response = await client.JobStatusAsync(Guid.NewGuid(), true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("displayName").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -324,6 +328,7 @@ namespace Azure.AI.Language.Conversations
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// Response response = client.JobStatus(Guid.NewGuid());
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -342,6 +347,7 @@ namespace Azure.AI.Language.Conversations
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// Response response = client.JobStatus(Guid.NewGuid(), true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("displayName").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());

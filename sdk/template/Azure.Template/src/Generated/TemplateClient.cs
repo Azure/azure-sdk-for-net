@@ -72,6 +72,7 @@ namespace Azure.Template
         /// var client = new TemplateClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSecretAsync("<secretName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
@@ -125,6 +126,7 @@ namespace Azure.Template
         /// var client = new TemplateClient(endpoint, credential);
         /// 
         /// Response response = client.GetSecret("<secretName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());

@@ -46,6 +46,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerIdentityServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetLedgerIdentityAsync("<ledgerId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("ledgerId").ToString());
         /// Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
@@ -100,6 +101,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerIdentityServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GetLedgerIdentity("<ledgerId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("ledgerId").ToString());
         /// Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());

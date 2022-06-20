@@ -55,6 +55,7 @@ namespace Azure.Analytics.Purview.Administration
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
         /// 
         /// Response response = await client.GetResourceSetRuleAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
         /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("resourceSetProcessing").ToString());
@@ -283,6 +284,7 @@ namespace Azure.Analytics.Purview.Administration
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
         /// 
         /// Response response = client.GetResourceSetRule();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
         /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("resourceSetProcessing").ToString());
@@ -515,6 +517,7 @@ namespace Azure.Analytics.Purview.Administration
         /// var data = new {};
         /// 
         /// Response response = await client.CreateOrUpdateResourceSetRuleAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -652,6 +655,7 @@ namespace Azure.Analytics.Purview.Administration
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateResourceSetRuleAsync(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
         /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("resourceSetProcessing").ToString());
@@ -980,6 +984,7 @@ namespace Azure.Analytics.Purview.Administration
         /// var data = new {};
         /// 
         /// Response response = client.CreateOrUpdateResourceSetRule(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -1117,6 +1122,7 @@ namespace Azure.Analytics.Purview.Administration
         /// };
         /// 
         /// Response response = client.CreateOrUpdateResourceSetRule(RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
         /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("resourceSetProcessing").ToString());

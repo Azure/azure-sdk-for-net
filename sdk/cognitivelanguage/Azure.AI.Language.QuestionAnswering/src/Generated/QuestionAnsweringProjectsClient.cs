@@ -76,6 +76,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetProjectDetailsAsync("<projectName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("projectName").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
@@ -152,6 +153,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetProjectDetails("<projectName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("projectName").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
@@ -233,6 +235,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// };
         /// 
         /// Response response = await client.CreateProjectAsync("<projectName>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -252,6 +255,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// };
         /// 
         /// Response response = await client.CreateProjectAsync("<projectName>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("projectName").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
@@ -344,6 +348,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// };
         /// 
         /// Response response = client.CreateProject("<projectName>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -363,6 +368,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// };
         /// 
         /// Response response = client.CreateProject("<projectName>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("projectName").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
@@ -450,6 +456,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetDeleteStatusAsync("<jobId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -547,6 +554,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetDeleteStatus("<jobId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -645,6 +653,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -746,6 +755,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetExportStatus("<projectName>", "<jobId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -847,6 +857,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -946,6 +957,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetImportStatus("<projectName>", "<jobId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1046,6 +1058,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetDeployStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1147,6 +1160,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetDeployStatus("<projectName>", "<deploymentName>", "<jobId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1419,6 +1433,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetUpdateSourcesStatusAsync("<projectName>", "<jobId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1518,6 +1533,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetUpdateSourcesStatus("<projectName>", "<jobId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1617,6 +1633,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetUpdateQnasStatusAsync("<projectName>", "<jobId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1716,6 +1733,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetUpdateQnasStatus("<projectName>", "<jobId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1990,6 +2008,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetProjectsAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -2000,6 +2019,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetProjectsAsync(1234, 1234, 1234);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("projectName").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
@@ -2086,6 +2106,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetProjects();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -2096,6 +2117,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetProjects(1234, 1234, 1234);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("projectName").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
@@ -2185,6 +2207,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetDeploymentsAsync("<projectName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -2195,6 +2218,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetDeploymentsAsync("<projectName>", 1234, 1234, 1234);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentName").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeployedDateTime").ToString());
@@ -2272,6 +2296,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetDeployments("<projectName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -2282,6 +2307,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetDeployments("<projectName>", 1234, 1234, 1234);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentName").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeployedDateTime").ToString());
@@ -2359,6 +2385,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSynonymsAsync("<projectName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -2369,6 +2396,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSynonymsAsync("<projectName>", 1234, 1234, 1234);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("alterations").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
@@ -2444,6 +2472,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetSynonyms("<projectName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -2454,6 +2483,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetSynonyms("<projectName>", 1234, 1234, 1234);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("alterations").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
@@ -2529,6 +2559,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSourcesAsync("<projectName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -2539,6 +2570,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSourcesAsync("<projectName>", 1234, 1234, 1234);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("displayName").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
@@ -2624,6 +2656,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetSources("<projectName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -2634,6 +2667,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetSources("<projectName>", 1234, 1234, 1234);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("displayName").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
@@ -2720,6 +2754,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetQnasAsync("<projectName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -2730,6 +2765,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetQnasAsync("<projectName>", "<source>", 1234, 1234, 1234);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("answer").ToString());
@@ -2864,6 +2900,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetQnas("<projectName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -2874,6 +2911,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetQnas("<projectName>", "<source>", 1234, 1234, 1234);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("answer").ToString());
@@ -3117,6 +3155,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.ExportAsync(WaitUntil.Completed, "<projectName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -3132,6 +3171,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -3234,6 +3274,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.Export(WaitUntil.Completed, "<projectName>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -3249,6 +3290,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.Export(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());

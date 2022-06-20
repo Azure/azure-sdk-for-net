@@ -66,6 +66,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
         /// 
         /// Response response = await client.GetLineageGraphAsync("<guid>", "<direction>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -76,6 +77,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
         /// 
         /// Response response = await client.GetLineageGraphAsync("<guid>", "<direction>", 1234, 1234, true, true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
@@ -194,6 +196,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
         /// 
         /// Response response = client.GetLineageGraph("<guid>", "<direction>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -204,6 +207,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
         /// 
         /// Response response = client.GetLineageGraph("<guid>", "<direction>", 1234, 1234, true, true);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
@@ -321,6 +325,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
         /// 
         /// Response response = await client.NextPageLineageAsync("<guid>", "<direction>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -331,6 +336,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
         /// 
         /// Response response = await client.NextPageLineageAsync("<guid>", "<direction>", true, 1234, 1234);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
@@ -448,6 +454,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
         /// 
         /// Response response = client.NextPageLineage("<guid>", "<direction>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -458,6 +465,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
         /// 
         /// Response response = client.NextPageLineage("<guid>", "<direction>", true, 1234, 1234);
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());

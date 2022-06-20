@@ -76,6 +76,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonalFieldsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSeasonalFieldAsync("<farmerId>", "<seasonalFieldId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
@@ -176,6 +177,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonalFieldsClient(endpoint, credential);
         /// 
         /// Response response = client.GetSeasonalField("<farmerId>", "<seasonalFieldId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
@@ -279,6 +281,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var data = new {};
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<seasonalFieldId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -310,6 +313,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<seasonalFieldId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
@@ -438,6 +442,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var data = new {};
         /// 
         /// Response response = client.CreateOrUpdate("<farmerId>", "<seasonalFieldId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -469,6 +474,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// };
         /// 
         /// Response response = client.CreateOrUpdate("<farmerId>", "<seasonalFieldId>", RequestContent.Create(data));
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
@@ -701,6 +707,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonalFieldsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -785,6 +792,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonalFieldsClient(endpoint, credential);
         /// 
         /// Response response = client.GetCascadeDeleteJobDetails("<jobId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -898,6 +906,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonalFieldsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSeasonalFieldsByFarmerIdAsync("<farmerId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -908,6 +917,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonalFieldsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSeasonalFieldsByFarmerIdAsync("<farmerId>", new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("primaryBoundaryId").ToString());
@@ -1049,6 +1059,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonalFieldsClient(endpoint, credential);
         /// 
         /// Response response = client.GetSeasonalFieldsByFarmerId("<farmerId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -1059,6 +1070,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonalFieldsClient(endpoint, credential);
         /// 
         /// Response response = client.GetSeasonalFieldsByFarmerId("<farmerId>", new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("primaryBoundaryId").ToString());
@@ -1197,6 +1209,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonalFieldsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSeasonalFieldsAsync();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -1207,6 +1220,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonalFieldsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSeasonalFieldsAsync(new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("primaryBoundaryId").ToString());
@@ -1343,6 +1357,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonalFieldsClient(endpoint, credential);
         /// 
         /// Response response = client.GetSeasonalFields();
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
@@ -1353,6 +1368,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonalFieldsClient(endpoint, credential);
         /// 
         /// Response response = client.GetSeasonalFields(new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("primaryBoundaryId").ToString());
@@ -1466,6 +1482,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonalFieldsClient(endpoint, credential);
         /// 
         /// Response response = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<farmerId>", "<seasonalFieldId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -1555,6 +1572,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonalFieldsClient(endpoint, credential);
         /// 
         /// Response response = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<farmerId>", "<seasonalFieldId>");
+        /// 
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
