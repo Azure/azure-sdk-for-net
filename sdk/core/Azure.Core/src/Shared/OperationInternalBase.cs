@@ -34,8 +34,8 @@ namespace Azure.Core
         protected OperationInternalBase(ClientDiagnostics clientDiagnostics, string operationTypeName, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null, DelayStrategy? fallbackStrategy = null)
         {
             _diagnostics = clientDiagnostics;
-            _updateStatusScopeName = $"{operationTypeName}.UpdateStatus";
-            _waitForCompletionResponseScopeName = $"{operationTypeName}.WaitForCompletionResponse";
+            _updateStatusScopeName = $"{operationTypeName}.{nameof(UpdateStatus)}";
+            _waitForCompletionResponseScopeName = $"{operationTypeName}.{nameof(WaitForCompletionResponse)}";
             _waitForCompletionScopeName = $"{operationTypeName}.WaitForCompletion";
             _scopeAttributes = scopeAttributes?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             _fallbackStrategy = fallbackStrategy;
