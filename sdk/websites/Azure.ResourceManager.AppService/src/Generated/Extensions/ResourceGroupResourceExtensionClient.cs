@@ -83,13 +83,6 @@ namespace Azure.ResourceManager.AppService
             return GetCachedClient(Client => new CertificateCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ContainerAppResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ContainerAppResources and their operations over a ContainerAppResource. </returns>
-        public virtual ContainerAppCollection GetContainerApps()
-        {
-            return GetCachedClient(Client => new ContainerAppCollection(Client, Id));
-        }
-
         /// <summary> Gets a collection of KubeEnvironmentResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of KubeEnvironmentResources and their operations over a KubeEnvironmentResource. </returns>
         public virtual KubeEnvironmentCollection GetKubeEnvironments()

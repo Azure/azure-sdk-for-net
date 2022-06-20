@@ -42,8 +42,6 @@ namespace Azure.ResourceManager.AppService
         private readonly RecommendationsRestOperations _recommendationsRestClient;
         private readonly ClientDiagnostics _siteRecommendationRecommendationsClientDiagnostics;
         private readonly RecommendationsRestOperations _siteRecommendationRecommendationsRestClient;
-        private readonly ClientDiagnostics _siteExtensionWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _siteExtensionWebAppsRestClient;
         private readonly WebSiteData _data;
 
         /// <summary> Initializes a new instance of the <see cref="WebSiteResource"/> class for mocking. </summary>
@@ -73,9 +71,6 @@ namespace Azure.ResourceManager.AppService
             _siteRecommendationRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteRecommendationResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SiteRecommendationResource.ResourceType, out string siteRecommendationRecommendationsApiVersion);
             _siteRecommendationRecommendationsRestClient = new RecommendationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecommendationRecommendationsApiVersion);
-            _siteExtensionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteExtensionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SiteExtensionResource.ResourceType, out string siteExtensionWebAppsApiVersion);
-            _siteExtensionWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteExtensionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -432,13 +427,6 @@ namespace Azure.ResourceManager.AppService
         public virtual ScmSiteBasicPublishingCredentialsPolicyResource GetScmSiteBasicPublishingCredentialsPolicy()
         {
             return new ScmSiteBasicPublishingCredentialsPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/scm"));
-        }
-
-        /// <summary> Gets an object representing a SiteAuthSettingsV2Resource along with the instance operations that can be performed on it in the WebSite. </summary>
-        /// <returns> Returns a <see cref="SiteAuthSettingsV2Resource" /> object. </returns>
-        public virtual SiteAuthSettingsV2Resource GetSiteAuthSettingsV2()
-        {
-            return new SiteAuthSettingsV2Resource(Client, new ResourceIdentifier(Id.ToString() + "/config/authsettingsV2"));
         }
 
         /// <summary> Gets a collection of SiteConfigAppsettingResources in the WebSite. </summary>
@@ -1892,6 +1880,102 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// Description for Updates site&apos;s Authentication / Authorization settings for apps via the V2 format
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/authsettingsV2
+        /// Operation Id: WebApps_UpdateAuthSettingsV2
+        /// </summary>
+        /// <param name="siteAuthSettingsV2"> Auth settings associated with web app. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteAuthSettingsV2"/> is null. </exception>
+        public virtual async Task<Response<SiteAuthSettingsV2>> UpdateAuthSettingsV2Async(SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(siteAuthSettingsV2, nameof(siteAuthSettingsV2));
+
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.UpdateAuthSettingsV2");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteWebAppsRestClient.UpdateAuthSettingsV2Async(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteAuthSettingsV2, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Updates site&apos;s Authentication / Authorization settings for apps via the V2 format
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/authsettingsV2
+        /// Operation Id: WebApps_UpdateAuthSettingsV2
+        /// </summary>
+        /// <param name="siteAuthSettingsV2"> Auth settings associated with web app. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteAuthSettingsV2"/> is null. </exception>
+        public virtual Response<SiteAuthSettingsV2> UpdateAuthSettingsV2(SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(siteAuthSettingsV2, nameof(siteAuthSettingsV2));
+
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.UpdateAuthSettingsV2");
+            scope.Start();
+            try
+            {
+                var response = _webSiteWebAppsRestClient.UpdateAuthSettingsV2(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteAuthSettingsV2, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Gets site&apos;s Authentication / Authorization settings for apps via the V2 format
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/authsettingsV2/list
+        /// Operation Id: WebApps_GetAuthSettingsV2
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SiteAuthSettingsV2>> GetAuthSettingsV2Async(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetAuthSettingsV2");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteWebAppsRestClient.GetAuthSettingsV2Async(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Gets site&apos;s Authentication / Authorization settings for apps via the V2 format
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/authsettingsV2/list
+        /// Operation Id: WebApps_GetAuthSettingsV2
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SiteAuthSettingsV2> GetAuthSettingsV2(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetAuthSettingsV2");
+            scope.Start();
+            try
+            {
+                var response = _webSiteWebAppsRestClient.GetAuthSettingsV2(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Description for Updates the Azure storage account configurations of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/azurestorageaccounts
         /// Operation Id: WebApps_UpdateAzureStorageAccounts
@@ -2598,94 +2682,6 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteWebAppsRestClient.DiscoverBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Invoke onedeploy status API /api/deployments and gets the deployment status for the site
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/onedeploy
-        /// Operation Id: WebApps_GetOneDeployStatus
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BinaryData>> GetOneDeployStatusAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetOneDeployStatus");
-            scope.Start();
-            try
-            {
-                var response = await _webSiteWebAppsRestClient.GetOneDeployStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Invoke onedeploy status API /api/deployments and gets the deployment status for the site
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/onedeploy
-        /// Operation Id: WebApps_GetOneDeployStatus
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BinaryData> GetOneDeployStatus(CancellationToken cancellationToken = default)
-        {
-            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetOneDeployStatus");
-            scope.Start();
-            try
-            {
-                var response = _webSiteWebAppsRestClient.GetOneDeployStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Invoke the OneDeploy publish web app extension.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/onedeploy
-        /// Operation Id: WebApps_CreateOneDeployOperation
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BinaryData>> CreateOneDeployOperationAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _siteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteResource.CreateOneDeployOperation");
-            scope.Start();
-            try
-            {
-                var response = await _siteExtensionWebAppsRestClient.CreateOneDeployOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Invoke the OneDeploy publish web app extension.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/onedeploy
-        /// Operation Id: WebApps_CreateOneDeployOperation
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BinaryData> CreateOneDeployOperation(CancellationToken cancellationToken = default)
-        {
-            using var scope = _siteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteResource.CreateOneDeployOperation");
-            scope.Start();
-            try
-            {
-                var response = _siteExtensionWebAppsRestClient.CreateOneDeployOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

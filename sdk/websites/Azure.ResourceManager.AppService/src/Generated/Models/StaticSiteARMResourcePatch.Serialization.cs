@@ -60,16 +60,6 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("templateProperties");
                 writer.WriteObjectValue(TemplateProperties);
             }
-            if (Optional.IsDefined(Provider))
-            {
-                writer.WritePropertyName("provider");
-                writer.WriteStringValue(Provider);
-            }
-            if (Optional.IsDefined(EnterpriseGradeCdnStatus))
-            {
-                writer.WritePropertyName("enterpriseGradeCdnStatus");
-                writer.WriteStringValue(EnterpriseGradeCdnStatus.Value.ToString());
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -95,7 +85,6 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> keyVaultReferenceIdentity = default;
             Optional<IReadOnlyList<StaticSiteUserProvidedFunctionApp>> userProvidedFunctionApps = default;
             Optional<string> provider = default;
-            Optional<EnterpriseGradeCdnStatus> enterpriseGradeCdnStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -257,21 +246,11 @@ namespace Azure.ResourceManager.AppService.Models
                             provider = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("enterpriseGradeCdnStatus"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            enterpriseGradeCdnStatus = new EnterpriseGradeCdnStatus(property0.Value.GetString());
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new StaticSiteARMResourcePatch(id, name, type, systemData, kind.Value, defaultHostname.Value, repositoryUrl.Value, branch.Value, Optional.ToList(customDomains), repositoryToken.Value, buildProperties.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(stagingEnvironmentPolicy), Optional.ToNullable(allowConfigFileUpdates), templateProperties.Value, contentDistributionEndpoint.Value, keyVaultReferenceIdentity.Value, Optional.ToList(userProvidedFunctionApps), provider.Value, Optional.ToNullable(enterpriseGradeCdnStatus));
+            return new StaticSiteARMResourcePatch(id, name, type, systemData, kind.Value, defaultHostname.Value, repositoryUrl.Value, branch.Value, Optional.ToList(customDomains), repositoryToken.Value, buildProperties.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(stagingEnvironmentPolicy), Optional.ToNullable(allowConfigFileUpdates), templateProperties.Value, contentDistributionEndpoint.Value, keyVaultReferenceIdentity.Value, Optional.ToList(userProvidedFunctionApps), provider.Value);
         }
     }
 }

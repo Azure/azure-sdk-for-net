@@ -5,15 +5,13 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ContainerAppData : IUtf8JsonSerializable
+    public partial class SiteAuthSettingsV2 : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,72 +21,54 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("kind");
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
-            }
-            writer.WriteEndObject();
-            writer.WritePropertyName("location");
-            writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(KubeEnvironmentId))
+            if (Optional.IsDefined(Platform))
             {
-                writer.WritePropertyName("kubeEnvironmentId");
-                writer.WriteStringValue(KubeEnvironmentId);
+                writer.WritePropertyName("platform");
+                writer.WriteObjectValue(Platform);
             }
-            if (Optional.IsDefined(Configuration))
+            if (Optional.IsDefined(GlobalValidation))
             {
-                writer.WritePropertyName("configuration");
-                writer.WriteObjectValue(Configuration);
+                writer.WritePropertyName("globalValidation");
+                writer.WriteObjectValue(GlobalValidation);
             }
-            if (Optional.IsDefined(Template))
+            if (Optional.IsDefined(IdentityProviders))
             {
-                writer.WritePropertyName("template");
-                writer.WriteObjectValue(Template);
+                writer.WritePropertyName("identityProviders");
+                writer.WriteObjectValue(IdentityProviders);
+            }
+            if (Optional.IsDefined(Login))
+            {
+                writer.WritePropertyName("login");
+                writer.WriteObjectValue(Login);
+            }
+            if (Optional.IsDefined(HttpSettings))
+            {
+                writer.WritePropertyName("httpSettings");
+                writer.WriteObjectValue(HttpSettings);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppData DeserializeContainerAppData(JsonElement element)
+        internal static SiteAuthSettingsV2 DeserializeSiteAuthSettingsV2(JsonElement element)
         {
             Optional<string> kind = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<ContainerAppProvisioningState> provisioningState = default;
-            Optional<string> kubeEnvironmentId = default;
-            Optional<string> latestRevisionName = default;
-            Optional<string> latestRevisionFqdn = default;
-            Optional<Configuration> configuration = default;
-            Optional<Template> template = default;
+            Optional<AuthPlatform> platform = default;
+            Optional<GlobalValidation> globalValidation = default;
+            Optional<IdentityProviders> identityProviders = default;
+            Optional<LoginInformation> login = default;
+            Optional<HttpSettings> httpSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
                 {
                     kind = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("tags"))
-                {
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -120,56 +100,61 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("platform"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ContainerAppProvisioningState(property0.Value.GetString());
+                            platform = AuthPlatform.DeserializeAuthPlatform(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("kubeEnvironmentId"))
-                        {
-                            kubeEnvironmentId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("latestRevisionName"))
-                        {
-                            latestRevisionName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("latestRevisionFqdn"))
-                        {
-                            latestRevisionFqdn = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("configuration"))
+                        if (property0.NameEquals("globalValidation"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            configuration = Configuration.DeserializeConfiguration(property0.Value);
+                            globalValidation = GlobalValidation.DeserializeGlobalValidation(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("template"))
+                        if (property0.NameEquals("identityProviders"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            template = Template.DeserializeTemplate(property0.Value);
+                            identityProviders = IdentityProviders.DeserializeIdentityProviders(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("login"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            login = LoginInformation.DeserializeLoginInformation(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("httpSettings"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            httpSettings = HttpSettings.DeserializeHttpSettings(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ContainerAppData(id, name, type, systemData, tags, location, kind.Value, Optional.ToNullable(provisioningState), kubeEnvironmentId.Value, latestRevisionName.Value, latestRevisionFqdn.Value, configuration.Value, template.Value);
+            return new SiteAuthSettingsV2(id, name, type, systemData, kind.Value, platform.Value, globalValidation.Value, identityProviders.Value, login.Value, httpSettings.Value);
         }
     }
 }

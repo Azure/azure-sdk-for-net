@@ -6,20 +6,19 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> A class representing the SiteAuthSettingsV2 data model. </summary>
-    public partial class SiteAuthSettingsV2Data : ProxyOnlyResource
+    /// <summary> Configuration settings for the Azure App Service Authentication / Authorization V2 feature. </summary>
+    public partial class SiteAuthSettingsV2 : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of SiteAuthSettingsV2Data. </summary>
-        public SiteAuthSettingsV2Data()
+        /// <summary> Initializes a new instance of SiteAuthSettingsV2. </summary>
+        public SiteAuthSettingsV2()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteAuthSettingsV2Data. </summary>
+        /// <summary> Initializes a new instance of SiteAuthSettingsV2. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="identityProviders"> The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization. </param>
         /// <param name="login"> The configuration settings of the login flow of users using App Service Authentication/Authorization. </param>
         /// <param name="httpSettings"> The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization. </param>
-        internal SiteAuthSettingsV2Data(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AuthPlatform platform, GlobalValidation globalValidation, IdentityProviders identityProviders, LoginInformation login, HttpSettings httpSettings) : base(id, name, resourceType, systemData, kind)
+        internal SiteAuthSettingsV2(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AuthPlatform platform, GlobalValidation globalValidation, IdentityProviders identityProviders, LoginInformation login, HttpSettings httpSettings) : base(id, name, resourceType, systemData, kind)
         {
             Platform = platform;
             GlobalValidation = globalValidation;
