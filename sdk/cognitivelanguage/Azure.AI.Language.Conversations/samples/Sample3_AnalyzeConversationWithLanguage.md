@@ -48,33 +48,8 @@ Response response = client.AnalyzeConversation(RequestContent.Create(data));
 
 ## Asynchronous
 
+Using the same `data` definition above, you can make an asynchronous request by calling `AnalyzeConversationAsync`:
+
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguageAsync
-string projectName = "Menu";
-string deploymentName = "production";
-
-var data = new
-{
-    analysisInput = new
-    {
-        conversationItem = new
-        {
-            text = "Enviar un email a Carol acerca de la presentación de mañana",
-            language = "es",
-            id = "1",
-            participantId = "1",
-        }
-    },
-    parameters = new
-    {
-        projectName,
-        deploymentName,
-        verbose = true,
-
-        // Use Utf16CodeUnit for strings in .NET.
-        stringIndexType = "Utf16CodeUnit",
-    },
-    kind = "Conversation",
-};
-
 Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
 ```
