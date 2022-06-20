@@ -173,7 +173,7 @@ namespace Azure.Analytics.LoadTestService
             _apiVersion = new_options.Version;
         }
         /// <summary> </summary>
-        public TesRuntClient(Uri endpoint, TokenCredential credential, AzureLoadTestingClientOptions options)
+        public TestRunClient(Uri endpoint, TokenCredential credential, AzureLoadTestingClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new AzureLoadTestingClientOptions();
