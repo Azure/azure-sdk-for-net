@@ -239,9 +239,7 @@ namespace Azure.Core
 
         private async ValueTask<Response<T>> WaitForCompletionAsync(bool async, TimeSpan? pollingInterval, CancellationToken cancellationToken)
         {
-            var rawResponse = async
-                ? await WaitForCompletionResponseAsync(async: true, pollingInterval, _waitForCompletionScopeName, cancellationToken).ConfigureAwait(false)
-                : WaitForCompletionResponseAsync(async: false, pollingInterval, _waitForCompletionScopeName, cancellationToken).EnsureCompleted();
+            var rawResponse = await WaitForCompletionResponseAsync(async, pollingInterval, _waitForCompletionScopeName, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(Value, rawResponse);
         }
 
