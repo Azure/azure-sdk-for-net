@@ -95,16 +95,13 @@ namespace Microsoft.Azure.Management.LabServices.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Interval != null)
+            if (Interval > 365)
             {
-                if (Interval > 365)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Interval", 365);
-                }
-                if (Interval < 1)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Interval", 1);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "Interval", 365);
+            }
+            if (Interval < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Interval", 1);
             }
         }
     }
