@@ -234,10 +234,5 @@ namespace Azure.Core
         protected async ValueTask<RequestFailedException> CreateException(bool async, Response response) => async
             ? await _diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false)
             : _diagnostics.CreateRequestFailedException(response);
-
-        protected bool TryGetResponseValue(out Response? value)
-        {
-            return _responseLock.TryGetValue(out value);
-        }
     }
 }
