@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EventHubs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<bool> trustedServiceAccessEnabled = default;
             Optional<DefaultAction> defaultAction = default;
             Optional<IList<NetworkRuleSetVirtualNetworkRules>> virtualNetworkRules = default;
@@ -100,6 +100,11 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -176,7 +181,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new NetworkRuleSetData(id, name, type, systemData, Optional.ToNullable(location), Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), Optional.ToNullable(publicNetworkAccess));
+            return new NetworkRuleSetData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), Optional.ToNullable(publicNetworkAccess));
         }
     }
 }

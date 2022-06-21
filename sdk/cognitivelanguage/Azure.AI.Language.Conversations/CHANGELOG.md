@@ -1,15 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-* Added `ConversationAnalysisProjectsClient` to manage projects.
-* Added conversation issue summarization as a long-running operation.
-* Added conversation personally identifiable information (PII) extraction as a long-running operation.
+## 1.0.0-beta.4 (Unreleased)
 
 ### Breaking Changes
 
+- `ConversationAnalysisClient.AnalyzeConversation` and `AnalyzeConversationAsync` now take a `RequestContent` and `RequestContext` for more control and flexibility.
 - Removed all models. See README.md for samples to use this client library.
 
 ## 1.0.0-beta.3 (2022-04-20)

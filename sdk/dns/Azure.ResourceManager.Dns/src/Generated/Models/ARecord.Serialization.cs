@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Dns.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Ipv4Address))
+            if (Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ipv4Address");
-                writer.WriteStringValue(Ipv4Address);
+                writer.WriteStringValue(IPv4Address);
             }
             writer.WriteEndObject();
         }

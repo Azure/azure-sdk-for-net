@@ -9,7 +9,7 @@ namespace Azure.AI.Language.Conversations
     /// <summary>
     /// Client options for <see cref="ConversationAnalysisClient"/>.
     /// </summary>
-    [CodeGenModel("ConversationAnalysisProjectsClientOptions")]
+    [CodeGenModel("ConversationAuthoringClientOptions")]
     public partial class ConversationAnalysisClientOptions : ClientOptions
     {
         internal string Version { get; }
@@ -21,7 +21,7 @@ namespace Azure.AI.Language.Conversations
         {
             Version = version switch
             {
-                ServiceVersion.V2022_05_15_Preview => "2022-05-15-preview",
+                ServiceVersion.V2022_05_01 => "2022-05-01",
                 _ => throw new NotSupportedException()
             };
 

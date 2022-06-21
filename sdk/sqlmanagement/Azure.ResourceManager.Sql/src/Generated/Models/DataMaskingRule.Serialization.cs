@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> id0 = default;
             Optional<string> aliasName = default;
             Optional<DataMaskingRuleState> ruleState = default;
@@ -131,6 +131,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -217,7 +222,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new DataMaskingRule(id, name, type, systemData, Optional.ToNullable(location), kind.Value, id0.Value, aliasName.Value, Optional.ToNullable(ruleState), schemaName.Value, tableName.Value, columnName.Value, Optional.ToNullable(maskingFunction), numberFrom.Value, numberTo.Value, prefixSize.Value, suffixSize.Value, replacementString.Value);
+            return new DataMaskingRule(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, id0.Value, aliasName.Value, Optional.ToNullable(ruleState), schemaName.Value, tableName.Value, columnName.Value, Optional.ToNullable(maskingFunction), numberFrom.Value, numberTo.Value, prefixSize.Value, suffixSize.Value, replacementString.Value);
         }
     }
 }

@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public int Port { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.Scheme? Scheme { get { throw null; } set { } }
     }
-    public partial class ContainerInstanceCapabilities : Azure.ResourceManager.Models.ResourceData
+    public partial class ContainerInstanceCapabilities
     {
         internal ContainerInstanceCapabilities() { }
         public Azure.ResourceManager.ContainerInstance.Models.Capabilities Capabilities { get { throw null; } }
@@ -268,6 +268,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public string IPAddressType { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string OSType { get { throw null; } }
+        public string ResourceType { get { throw null; } }
     }
     public partial class ContainerInstanceContainer
     {

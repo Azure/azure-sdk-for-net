@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> appAlias = default;
             Optional<string> filePath = default;
             Optional<string> commandLineArguments = default;
@@ -77,6 +77,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -123,7 +128,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     continue;
                 }
             }
-            return new StartMenuItem(id, name, type, systemData, appAlias.Value, filePath.Value, commandLineArguments.Value, iconPath.Value, Optional.ToNullable(iconIndex));
+            return new StartMenuItem(id, name, type, systemData.Value, appAlias.Value, filePath.Value, commandLineArguments.Value, iconPath.Value, Optional.ToNullable(iconIndex));
         }
     }
 }

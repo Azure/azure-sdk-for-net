@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> group = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -51,6 +51,11 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -72,7 +77,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new AzureWebCategoryData(id, name, type, systemData, Optional.ToNullable(etag), group.Value);
+            return new AzureWebCategoryData(id, name, type, systemData.Value, Optional.ToNullable(etag), group.Value);
         }
     }
 }

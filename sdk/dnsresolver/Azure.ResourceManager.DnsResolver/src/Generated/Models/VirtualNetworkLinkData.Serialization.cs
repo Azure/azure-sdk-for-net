@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DnsResolver
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<WritableSubResource> virtualNetwork = default;
             Optional<IDictionary<string, string>> metadata = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -81,6 +81,11 @@ namespace Azure.ResourceManager.DnsResolver
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -132,7 +137,7 @@ namespace Azure.ResourceManager.DnsResolver
                     continue;
                 }
             }
-            return new VirtualNetworkLinkData(id, name, type, systemData, Optional.ToNullable(etag), virtualNetwork, Optional.ToDictionary(metadata), Optional.ToNullable(provisioningState));
+            return new VirtualNetworkLinkData(id, name, type, systemData.Value, Optional.ToNullable(etag), virtualNetwork, Optional.ToDictionary(metadata), Optional.ToNullable(provisioningState));
         }
     }
 }
