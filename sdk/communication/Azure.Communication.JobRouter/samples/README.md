@@ -37,7 +37,7 @@ description: Samples for the Azure.Communication.JobRouter client library
 
 
 <!-- LINKS -->
-<!-- [classificationPolicyCrudOps]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.JobRouter/samples/ClassificationPolicyCrud.md
+[classificationPolicyCrudOps]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.JobRouter/samples/ClassificationPolicyCrud.md
 [classificationPolicyCrudOpsAsync]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.JobRouter/samples/ClassificationPolicyCrudAsync.md
 [distributionPolicyCrudOps]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.JobRouter/samples/DistributionPolicyCrud.md
 [distributionPolicyCrudOpsAsync]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.JobRouter/samples/DistributionPolicyCrudAsync.md
@@ -58,4 +58,4 @@ description: Samples for the Azure.Communication.JobRouter client library
 [distributingOffersSimpleAsync]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.JobRouter/samples/Sample3_SimpleDistributionAsync.md
 [distributingOffersAdvancedAsync]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.JobRouter/samples/Sample3_AdvancedDistributionAsync.md
 [waitTimeExceptionTriggerAsync]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.JobRouter/samples/Sample4_WaitTimeExceptionAsync.md
-[queueLengthExceptionTriggerAsync]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.JobRouter/samples/Sample4_QueueLengthExceptionTriggerAsync.md -->
+[queueLengthExceptionTriggerAsync]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.JobRouter/samples/Sample4_QueueLengthExceptionTriggerAsync.md
