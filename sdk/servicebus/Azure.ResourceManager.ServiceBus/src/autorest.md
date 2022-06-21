@@ -6,7 +6,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.ServiceBus
-require: https://github.com/Azure/azure-rest-api-specs/blob/a5f8ef67c8170e4081527e400473c6deddcfabfd/specification/servicebus/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/c2d2b523575031790b8672640ea762bdf9ad4964/specification/servicebus/resource-manager/readme.md
+tag: package-2021-11
 clear-output-folder: true
 skip-csproj: true
 request-path-to-resource-name:
@@ -14,10 +15,6 @@ request-path-to-resource-name:
 override-operation-name:
   Namespaces_CheckNameAvailability: CheckServiceBusNameAvailability
   DisasterRecoveryConfigs_CheckNameAvailability: CheckDisasterRecoveryNameAvailability
-
-# temporary enable this because of a bug in modeler v4: https://github.com/Azure/autorest/issues/4524
-modelerfour:
-  lenient-model-deduplication: true
 
 rename-rules:
   CPU: Cpu
