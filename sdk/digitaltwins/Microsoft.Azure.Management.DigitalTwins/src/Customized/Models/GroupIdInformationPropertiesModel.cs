@@ -3,7 +3,7 @@
 
 namespace Microsoft.Azure.Management.DigitalTwins.Models
 {
-    internal class GroupIdInformationPropertiesModel : GroupIdInformationProperties
+    public partial class GroupIdInformationPropertiesModel : GroupIdInformationProperties
     {
     }
 }

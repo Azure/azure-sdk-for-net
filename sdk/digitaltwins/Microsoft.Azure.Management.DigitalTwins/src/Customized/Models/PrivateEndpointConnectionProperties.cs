@@ -3,7 +3,7 @@
 
 namespace Microsoft.Azure.Management.DigitalTwins.Models
 {
-    internal class PrivateEndpointConnectionProperties : ConnectionProperties
+    public partial class PrivateEndpointConnectionProperties : ConnectionProperties
     {
     }
 }
