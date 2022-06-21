@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Buffers;
 using System.IO;
 using System.Security.Cryptography;
 using System.Threading;
@@ -110,45 +109,37 @@ namespace Azure.Storage.Cryptography
             // refill _buffer with transformed contents from innerStream
             if (_bufferPos >= _buffer.Length)
             {
-                byte[] transformInputBuffer = null;
-                try
+                var transformInputBuffer = new byte[_tempRefillBufferSize];
+
+                int totalRead = 0;
+                while (totalRead < transformInputBuffer.Length)
                 {
-                    transformInputBuffer = ArrayPool<byte>.Shared.Rent(_tempRefillBufferSize);
+                    int read = async
+                        ? await _innerStream.ReadAsync(
+                            transformInputBuffer,
+                            totalRead,
+                            transformInputBuffer.Length - totalRead,
+                            cancellationToken).ConfigureAwait(false)
+                        : _innerStream.Read(
+                            transformInputBuffer,
+                            totalRead,
+                            transformInputBuffer.Length - totalRead);
 
-                    int totalRead = 0;
-                    while (totalRead < _tempRefillBufferSize)
+                    totalRead += read;
+                    if (read == 0)
                     {
-                        int read = async
-                            ? await _innerStream.ReadAsync(
-                                transformInputBuffer,
-                                totalRead,
-                                _tempRefillBufferSize - totalRead,
-                                cancellationToken).ConfigureAwait(false)
-                            : _innerStream.Read(
-                                transformInputBuffer,
-                                totalRead,
-                                _tempRefillBufferSize - totalRead);
-
-                        totalRead += read;
-                        if (read == 0)
-                        {
-                            break;
-                        }
+                        break;
                     }
-                    if (totalRead == 0)
-                    {
-                        return 0;
-                    }
-
-                    _bufferPopulatedLength = _transform.TransformAuthenticationBlock(
-                        input: new ReadOnlySpan<byte>(transformInputBuffer, 0, totalRead),
-                        output: _buffer);
-                    _bufferPos = 0;
                 }
-                finally
+                if (totalRead == 0)
                 {
-                    ArrayPool<byte>.Shared.Return(transformInputBuffer);
+                    return 0;
                 }
+
+                _bufferPopulatedLength = _transform.TransformAuthenticationBlock(
+                    input: new ReadOnlySpan<byte>(transformInputBuffer, 0, totalRead),
+                    output: _buffer);
+                _bufferPos = 0;
             }
 
             // return buffered content
@@ -204,38 +195,30 @@ namespace Azure.Storage.Cryptography
             // flush buffer if full, else ignore
             if (_bufferPos >= _buffer.Length)
             {
-                byte[] transformedContentsBuffer = null;
-                try
-                {
-                    transformedContentsBuffer = ArrayPool<byte>.Shared.Rent(_tempRefillBufferSize);
-                    int outputBytes = _transform.TransformAuthenticationBlock(
-                        input: _buffer,
-                        output: transformedContentsBuffer);
+                var transformedContentsBuffer = new byte[_tempRefillBufferSize];
+                int outputBytes = _transform.TransformAuthenticationBlock(
+                    input: _buffer,
+                    output: transformedContentsBuffer);
 
-                    if (async)
-                    {
-                        await _innerStream.WriteAsync(
-                            transformedContentsBuffer,
-                            offset: 0,
-                            count: outputBytes,
-                            cancellationToken).ConfigureAwait(false);
-                        await _innerStream.FlushAsync(cancellationToken).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        _innerStream.Write(
-                            transformedContentsBuffer,
-                            offset: 0,
-                            count: outputBytes);
-                        _innerStream.Flush();
-                    }
-
-                    _bufferPos = 0;
-                }
-                finally
+                if (async)
                 {
-                    ArrayPool<byte>.Shared.Return(transformedContentsBuffer);
+                    await _innerStream.WriteAsync(
+                        transformedContentsBuffer,
+                        offset: 0,
+                        count: outputBytes,
+                        cancellationToken).ConfigureAwait(false);
+                    await _innerStream.FlushAsync(cancellationToken).ConfigureAwait(false);
                 }
+                else
+                {
+                    _innerStream.Write(
+                        transformedContentsBuffer,
+                        offset: 0,
+                        count: outputBytes);
+                    _innerStream.Flush();
+                }
+
+                _bufferPos = 0;
             }
         }
 
@@ -256,35 +239,27 @@ namespace Azure.Storage.Cryptography
             // if there is a final partial block, force-flush
             if (_bufferPos != 0)
             {
-                byte[] transformedContentsBuffer = null;
-                try
-                {
-                    transformedContentsBuffer = ArrayPool<byte>.Shared.Rent(_tempRefillBufferSize);
-                    int outputBytes = _transform.TransformAuthenticationBlock(
-                        input: new ReadOnlySpan<byte>(_buffer, 0, _bufferPos),
-                        output: transformedContentsBuffer);
+                var transformedContentsBuffer = new byte[_tempRefillBufferSize];
+                int outputBytes = _transform.TransformAuthenticationBlock(
+                    input: new ReadOnlySpan<byte>(_buffer, 0, _bufferPos),
+                    output: transformedContentsBuffer);
 
-                    if (async)
-                    {
-                        await _innerStream.WriteAsync(
-                            transformedContentsBuffer,
-                            offset: 0,
-                            count: outputBytes,
-                            cancellationToken).ConfigureAwait(false);
-                        await _innerStream.FlushAsync(cancellationToken).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        _innerStream.Write(
-                            transformedContentsBuffer,
-                            offset: 0,
-                            count: outputBytes);
-                        _innerStream.Flush();
-                    }
-                }
-                finally
+                if (async)
                 {
-                    ArrayPool<byte>.Shared.Return(transformedContentsBuffer);
+                    await _innerStream.WriteAsync(
+                        transformedContentsBuffer,
+                        offset: 0,
+                        count: outputBytes,
+                        cancellationToken).ConfigureAwait(false);
+                    await _innerStream.FlushAsync(cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    _innerStream.Write(
+                        transformedContentsBuffer,
+                        offset: 0,
+                        count: outputBytes);
+                    _innerStream.Flush();
                 }
             }
 
