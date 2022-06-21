@@ -33,7 +33,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Azure.Messaging.WebPubSub/Azure.Messaging.WebPubSub.WebPubSubServiceClient.html",
-          "hash": "6EgcrdRi+z0wSsLqdl0+SQ=="
+          "hash": "l5tP7fldFr5xsCamAse+5Q=="
         }
       },
       "is_incremental": false,
@@ -154,16 +154,16 @@
           "total_file_count": 0,
           "skipped_file_count": 0
         },
-        "ConceptualDocumentProcessor": {
-          "can_incremental": false,
-          "incrementalPhase": "build",
-          "total_file_count": 2,
-          "skipped_file_count": 0
-        },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
           "total_file_count": 7,
+          "skipped_file_count": 0
+        },
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 2,
           "skipped_file_count": 0
         }
       }
