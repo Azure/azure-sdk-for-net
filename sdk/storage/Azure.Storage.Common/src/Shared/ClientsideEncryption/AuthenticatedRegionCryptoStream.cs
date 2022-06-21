@@ -88,25 +88,18 @@ namespace Azure.Storage.Cryptography
 
         #region Read
         public override int Read(byte[] buffer, int offset, int count)
-        {
-            if (!CanRead)
-            {
-                throw new NotSupportedException();
-            }
-            return ReadInternal(buffer, offset, count, false, default).EnsureCompleted();
-        }
+            => ReadInternal(buffer, offset, count, false, default).EnsureCompleted();
 
         public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
-        {
-            if (!CanRead)
-            {
-                throw new NotSupportedException();
-            }
-            return await ReadInternal(buffer, offset, count, true, cancellationToken).ConfigureAwait(false);
-        }
+            => await ReadInternal(buffer, offset, count, true, cancellationToken).ConfigureAwait(false);
 
         private async Task<int> ReadInternal(byte[] buffer, int offset, int count, bool async, CancellationToken cancellationToken)
         {
+            if (!CanRead)
+            {
+                throw new NotSupportedException();
+            }
+
             // refill _buffer with transformed contents from innerStream
             if (_bufferPos >= _buffer.Length)
             {
