@@ -69,7 +69,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -188,7 +188,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -329,7 +329,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -468,7 +468,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -612,7 +612,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -755,7 +755,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -900,6 +900,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -956,6 +957,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Response"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1012,7 +1014,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1154,7 +1156,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1296,6 +1298,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1353,6 +1356,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Response"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1409,7 +1413,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="AsyncPageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1477,7 +1481,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Pageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1548,7 +1552,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="AsyncPageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1613,7 +1617,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Pageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1678,7 +1682,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="AsyncPageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1742,7 +1746,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Pageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1806,7 +1810,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="AsyncPageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1875,7 +1879,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Pageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1945,7 +1949,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="AsyncPageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2046,7 +2050,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Pageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2144,6 +2148,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Operation}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -2189,6 +2194,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Operation"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -2236,7 +2242,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Operation}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2309,7 +2315,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Operation{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2383,6 +2389,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Operation}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2493,6 +2500,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Operation"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2601,6 +2609,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Operation}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -2648,6 +2657,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Operation"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -2695,6 +2705,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Operation}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2755,6 +2766,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Operation"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2815,6 +2827,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Operation}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2897,6 +2910,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Operation"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{

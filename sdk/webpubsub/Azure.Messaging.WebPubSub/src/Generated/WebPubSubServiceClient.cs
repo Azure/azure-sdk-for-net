@@ -39,7 +39,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -124,6 +124,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="reason"> The reason closing the client connection. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -160,6 +161,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="reason"> The reason closing the client connection. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Response"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -198,6 +200,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -238,6 +241,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Response"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -277,6 +281,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -316,6 +321,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Response"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -356,6 +362,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -396,6 +403,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Response"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -437,6 +445,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -479,6 +488,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Response"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -519,6 +529,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -558,6 +569,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Response"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -599,6 +611,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -640,6 +653,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Response"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -682,6 +696,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -725,6 +740,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Response"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -766,6 +782,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -807,6 +824,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Response"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -848,6 +866,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -889,6 +908,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Response"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -929,6 +949,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -968,6 +989,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Response"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1009,6 +1031,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1050,6 +1073,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Response"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1091,6 +1115,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1133,6 +1158,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Response"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1173,6 +1199,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1212,6 +1239,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Response"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1253,6 +1281,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1295,6 +1324,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Response"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1337,6 +1367,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1379,6 +1410,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Response"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1421,6 +1453,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1463,6 +1496,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Response"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{

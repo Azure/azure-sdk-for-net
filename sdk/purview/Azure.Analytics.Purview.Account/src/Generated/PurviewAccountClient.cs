@@ -65,7 +65,7 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> Get an account. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -279,7 +279,7 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -507,7 +507,7 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> List the authorization keys associated with this account. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -601,7 +601,7 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -710,7 +710,7 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="AsyncPageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -783,7 +783,7 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Pageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -856,7 +856,7 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="AsyncPageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1003,7 +1003,7 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Pageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{

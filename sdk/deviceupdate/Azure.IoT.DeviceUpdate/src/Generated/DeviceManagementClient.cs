@@ -73,7 +73,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -185,7 +185,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -342,7 +342,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> or <paramref name="moduleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceId"/> or <paramref name="moduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -498,7 +498,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Gets the breakdown of how many devices are on their latest update, have new updates available, or are in progress receiving new updates. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -597,7 +597,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="tagName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -699,7 +699,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -812,7 +812,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -949,6 +949,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -993,6 +994,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Response"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1037,7 +1039,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1144,7 +1146,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1267,7 +1269,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1420,6 +1422,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1466,6 +1469,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Response"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1512,7 +1516,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1626,7 +1630,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1764,7 +1768,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1917,7 +1921,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2037,7 +2041,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2167,7 +2171,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/> or <paramref name="action"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2293,7 +2297,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/> or <paramref name="action"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2414,7 +2418,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Gets a list of all device classes (unique combinations of device manufacturer and model) for all devices connected to Device Update for IoT Hub. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="AsyncPageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2476,7 +2480,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Gets a list of all device classes (unique combinations of device manufacturer and model) for all devices connected to Device Update for IoT Hub. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Pageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2541,7 +2545,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="AsyncPageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2604,7 +2608,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Pageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2665,7 +2669,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="filter"> Restricts the set of devices returned. You can filter on device GroupId or DeviceClassId. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="AsyncPageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2750,7 +2754,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="filter"> Restricts the set of devices returned. You can filter on device GroupId or DeviceClassId. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Pageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2834,7 +2838,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Gets a list of available group device tags for all devices connected to Device Update for IoT Hub. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="AsyncPageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2891,7 +2895,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Gets a list of available group device tags for all devices connected to Device Update for IoT Hub. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Pageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2948,7 +2952,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Gets a list of all device groups. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="AsyncPageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3010,7 +3014,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Gets a list of all device groups. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Pageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3076,7 +3080,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="AsyncPageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3143,7 +3147,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Pageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3210,7 +3214,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="AsyncPageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3281,7 +3285,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Pageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3353,7 +3357,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="AsyncPageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3421,7 +3425,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Pageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3486,7 +3490,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="AsyncPageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3562,7 +3566,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Pageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3636,7 +3640,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Get all device diagnostics log collection operations. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="AsyncPageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3702,7 +3706,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Get all device diagnostics log collection operations. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Pageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3772,6 +3776,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Operation}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -3818,6 +3823,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Operation"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{

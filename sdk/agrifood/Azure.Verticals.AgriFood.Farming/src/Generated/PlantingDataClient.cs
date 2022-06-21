@@ -69,7 +69,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -230,7 +230,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -461,6 +461,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -505,6 +506,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Response"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -581,7 +583,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="AsyncPageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -704,7 +706,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Pageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -824,7 +826,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="AsyncPageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -942,7 +944,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Pageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{

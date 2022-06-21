@@ -33,7 +33,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -141,7 +141,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -318,6 +318,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Operation}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -383,6 +384,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Operation"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{

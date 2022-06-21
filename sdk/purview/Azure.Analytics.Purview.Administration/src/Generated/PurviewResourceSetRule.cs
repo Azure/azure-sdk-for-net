@@ -48,7 +48,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <summary> Get a resource set config service model. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -318,7 +318,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -780,6 +780,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <summary> Deletes a ResourceSetRuleConfig resource. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -819,6 +820,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <summary> Deletes a ResourceSetRuleConfig resource. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns cref="Response"> The response returned from the service. </returns>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
