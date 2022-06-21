@@ -1,38 +1,40 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/ab716eee-96d3-4021-9fa7-1b01da5de034/providers/Microsoft.Resources?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Resources?api-version=2021-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-04fd208bd588ca4ca78759e18a3577f6-c112353731d93547-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220307.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 ) azsdk-net-ResourceManager/1.0.0-alpha.20220307.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "ea8e876cdf8ab34701e2956d67ee2e89",
+        "traceparent": "00-238f903ad1d6cfbf2709652b048b0485-7a1f2df92d82758a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220621.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "5f5014a1edcffb79d41d7cf76b97fa67",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "17088",
+        "Content-Length": "17337",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 08 Mar 2022 01:14:11 GMT",
+        "Date": "Tue, 21 Jun 2022 12:39:21 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "23a40fee-2a4c-4daa-8481-61740aadaca8",
-        "x-ms-ratelimit-remaining-subscription-reads": "11975",
-        "x-ms-request-id": "23a40fee-2a4c-4daa-8481-61740aadaca8",
-        "x-ms-routing-request-id": "WESTUS:20220308T011411Z:23a40fee-2a4c-4daa-8481-61740aadaca8"
+        "x-ms-correlation-request-id": "93a4370c-54d1-46be-bb09-bcd86b8e86b7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11886",
+        "x-ms-request-id": "93a4370c-54d1-46be-bb09-bcd86b8e86b7",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220621T123922Z:93a4370c-54d1-46be-bb09-bcd86b8e86b7"
       },
       "ResponseBody": {
-        "id": "/subscriptions/ab716eee-96d3-4021-9fa7-1b01da5de034/providers/Microsoft.Resources",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Resources",
         "namespace": "Microsoft.Resources",
-        "authorization": {
-          "applicationId": "3b990c8b-9607-4c2a-8b04-1d41985facca"
-        },
+        "authorizations": [
+          {
+            "applicationId": "3b990c8b-9607-4c2a-8b04-1d41985facca"
+          }
+        ],
         "resourceTypes": [
           {
             "resourceType": "tenants",
@@ -554,6 +556,7 @@
               "Switzerland North",
               "Germany West Central",
               "Norway East",
+              "Jio India West",
               "West US 3",
               "Sweden Central"
             ],
@@ -629,6 +632,7 @@
               "Switzerland North",
               "Germany West Central",
               "Norway East",
+              "Jio India West",
               "West US 3",
               "Sweden Central"
             ],
@@ -1016,6 +1020,7 @@
               "UK West",
               "Central India",
               "South India",
+              "Jio India West",
               "Japan East",
               "Japan West",
               "Korea Central",
@@ -1057,6 +1062,7 @@
               "UK West",
               "Central India",
               "South India",
+              "Jio India West",
               "Japan East",
               "Japan West",
               "Korea Central",
@@ -1098,6 +1104,7 @@
               "UK West",
               "Central India",
               "South India",
+              "Jio India West",
               "Japan East",
               "Japan West",
               "Korea Central",
@@ -1141,6 +1148,7 @@
               "UK West",
               "Central India",
               "West India",
+              "Jio India West",
               "South India",
               "Japan East",
               "Japan West",
@@ -1189,6 +1197,7 @@
               "UK West",
               "Central India",
               "West India",
+              "Jio India West",
               "South India",
               "Japan East",
               "Japan West",
@@ -1229,6 +1238,15 @@
               "2022-02-01"
             ],
             "capabilities": "None"
+          },
+          {
+            "resourceType": "changes",
+            "locations": [],
+            "apiVersions": [
+              "2022-05-01",
+              "2022-03-01-preview"
+            ],
+            "capabilities": "SupportsExtension"
           }
         ],
         "registrationState": "Registered",
@@ -1236,38 +1254,37 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/ab716eee-96d3-4021-9fa7-1b01da5de034/resourceGroups/testRg-7701?api-version=2019-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRg-5636?api-version=2019-05-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-04fd208bd588ca4ca78759e18a3577f6-bc0f16924adf3d4b-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220307.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 ) azsdk-net-ResourceManager/1.0.0-alpha.20220307.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "ee279b512bf22386e26d22f4004fc266",
+        "traceparent": "00-238f903ad1d6cfbf2709652b048b0485-7512d5201ee98959-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220621.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "33fb702a8061bc18376f3e0ace7bb003",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "237",
+        "Content-Length": "227",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 08 Mar 2022 01:14:11 GMT",
+        "Date": "Tue, 21 Jun 2022 12:39:21 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "21e7c0e9-3715-4f68-adf1-cfb0a4a496c3",
-        "x-ms-ratelimit-remaining-subscription-reads": "11974",
-        "x-ms-request-id": "21e7c0e9-3715-4f68-adf1-cfb0a4a496c3",
-        "x-ms-routing-request-id": "WESTUS:20220308T011412Z:21e7c0e9-3715-4f68-adf1-cfb0a4a496c3"
+        "x-ms-correlation-request-id": "5640d4f5-43da-4fc7-a1ca-d96027a6122d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11885",
+        "x-ms-request-id": "5640d4f5-43da-4fc7-a1ca-d96027a6122d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220621T123922Z:5640d4f5-43da-4fc7-a1ca-d96027a6122d"
       },
       "ResponseBody": {
-        "id": "/subscriptions/ab716eee-96d3-4021-9fa7-1b01da5de034/resourceGroups/testRg-7701",
-        "name": "testRg-7701",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRg-5636",
+        "name": "testRg-5636",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "southcentralus",
-        "tags": {},
         "properties": {
           "provisioningState": "Succeeded"
         }
@@ -1275,8 +1292,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "834783304",
-    "RESOURCE_MANAGER_URL": null,
-    "SUBSCRIPTION_ID": "ab716eee-96d3-4021-9fa7-1b01da5de034"
+    "RandomSeed": "1407882773",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com",
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }
