@@ -14,9 +14,9 @@ using System.Linq;
 
 namespace Azure.Monitor.Ingestion.Tests
 {
-    public class IngestionClientTest : RecordedTestBase<IngestionClientTestEnvironment>
+    public class IngestionClientLiveTest : RecordedTestBase<IngestionClientTestEnvironment>
     {
-        public IngestionClientTest(bool isAsync) : base(isAsync)
+        public IngestionClientLiveTest(bool isAsync) : base(isAsync)
         {
         }
 
@@ -69,7 +69,6 @@ namespace Azure.Monitor.Ingestion.Tests
 
             // Check the response
             Assert.AreEqual(204, response.Status);
-            Assert.AreEqual("", response.Content.ToString());
 
             LogsQueryClient logsQueryClient = new LogsQueryClient(TestEnvironment.ClientSecretCredential);
             var batch = new LogsBatchQuery();
@@ -100,7 +99,6 @@ namespace Azure.Monitor.Ingestion.Tests
 
             // Check the response
             Assert.AreEqual(204, response.Status);
-            Assert.AreEqual("", response.Content.ToString());
 
             LogsQueryClient logsQueryClient = new LogsQueryClient(TestEnvironment.ClientSecretCredential);
             var batch = new LogsBatchQuery();
