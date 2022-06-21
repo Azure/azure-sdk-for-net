@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Ingestion client library for developing .NET applications with rich experience.</Description>
-    <AssemblyTitle>Azure SDK Code Generation Ingestion for Azure Data Plane</AssemblyTitle>
+    <Description>A library for ingesting data to Azure Monitor.</Description>
+    <AssemblyTitle>Azure Monitor Ingestion client library</AssemblyTitle>
     <Version>1.0.3-beta.20</Version>
-    <PackageTags>Azure Ingestion</PackageTags>
+    <PackageTags>Azure Monitor Ingestion</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
@@ -17,7 +17,6 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
-    <PackageReference Include="Azure.Monitor.Query" />
   </ItemGroup>
 
 </Project>

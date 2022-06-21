@@ -30,6 +30,7 @@ namespace Azure.Monitor.Ingestion.Perf
             await Task.Run(() =>
             {
                 Console.WriteLine("exec some async operation");
+                throw new NotImplementedException();
             });
         }
     }

@@ -1,4 +1,4 @@
-# Azure Ingestion client library for .NET
+# Azure Monitor Ingestion client library for .NET
 
 This section should give out brief introduction of the client library.
 
@@ -15,7 +15,7 @@ This section should include everything a developer needs to do to install and cr
 
 First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `dotnet add package package-name`, but should enable a developer to successfully install the package from NuGet, npm, or even cloning a GitHub repository.
 
-Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
+Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.Monitor.Ingestion --prerelease

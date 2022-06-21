@@ -4,9 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Identity;
 using Azure.Test.Stress;
-using CommandLine;
 
 namespace Azure.Monitor.Ingestion.Stress
 {
@@ -23,6 +21,7 @@ namespace Azure.Monitor.Ingestion.Stress
             await Task.Run(() =>
             {
                 Console.WriteLine("exec some async operation");
+                throw new NotImplementedException();
             });
         }
         public class IngestionClientStressMetrics : StressMetrics

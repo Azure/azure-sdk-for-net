@@ -13,14 +13,14 @@ security: AADToken
 security-scopes: https://monitor.azure.com//.default
 ```
 
-### todo: rename streamName
+### Renames paramter in Upload methods to streamName
 ``` yaml
 directive:
 - from: swagger-document
   where: $.paths["/dataCollectionRules/{ruleId}/streams/{stream}"].post.parameters[1]
   transform: $["x-ms-client-name"] = "streamName";
 ```
-### todo: change type of string uri
+### Updates type of endpoint in LogsIngestionClient to Uri
 ``` yaml
 directive:
 - from: swagger-document
