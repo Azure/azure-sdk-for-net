@@ -36,7 +36,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net-pr/issues/1726")]
         public async Task StartBuildModelCanAuthenticateWithTokenCredential()
         {
             var client = CreateDocumentModelAdministrationClient(useTokenCredential: true);
@@ -202,7 +201,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net-pr/issues/1726")]
+        [TestCase(true)]
         [TestCase(false)]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/28705")]
         public async Task AdminOps(bool useTokenCredential)
@@ -253,7 +252,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net-pr/issues/1726")]
+        [TestCase(true)]
         [TestCase(false)]
         public async Task GetAndListOperations(bool useTokenCredential)
         {
@@ -325,7 +324,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         #region copy
         [RecordedTest]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net-pr/issues/1726")]
+        [TestCase(true)]
         [TestCase(false)]
         public async Task CopyModel(bool useTokenCredential)
         {
@@ -415,7 +414,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         [RecordedTest]
         [TestCase(false)]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net-pr/issues/1726")]
+        [TestCase(true)]
         public async Task StartCreateComposedModel(bool useTokenCredential)
         {
             var client = CreateDocumentModelAdministrationClient(useTokenCredential);

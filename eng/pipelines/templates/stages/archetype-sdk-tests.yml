@@ -114,6 +114,9 @@ stages:
         jobs:
         - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
           parameters:
+            SparseCheckoutPaths:
+              - "sdk/${{ parameters.ServiceDirectory }}/**/*.json"
+              - '!sdk/**/SessionRecords/*'
             JobTemplatePath: /eng/pipelines/templates/jobs/live.tests.yml
             AdditionalParameters:
               PreSteps:

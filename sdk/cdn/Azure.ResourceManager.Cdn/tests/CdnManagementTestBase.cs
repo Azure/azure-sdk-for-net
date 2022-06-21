@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             FrontDoorSecurityPolicyData input = ResourceDataHelper.CreateAfdSecurityPolicyData(endpoint);
             SecurityPolicyWebApplicationFirewallAssociation securityPolicyWebApplicationFirewallAssociation = new SecurityPolicyWebApplicationFirewallAssociation();
-            securityPolicyWebApplicationFirewallAssociation.Domains.Add(new ActivatedResourceReference
+            securityPolicyWebApplicationFirewallAssociation.Domains.Add(new FrontDoorActivatedResourceInfo
             {
                 Id = endpoint.Id
             });

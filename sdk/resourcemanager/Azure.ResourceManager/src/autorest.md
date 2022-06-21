@@ -94,6 +94,7 @@ directive:
       $["x-accessibility"] = "public";
       $["x-csharp-formats"] = "json";
       $["x-csharp-usage"] = "model,input,output";
+# Workaround for the issue that SystemData lost readonly attribute: https://github.com/Azure/autorest/issues/4269
   - from: types.json
     where: $.definitions.systemData.properties.*
     transform: >
@@ -119,6 +120,12 @@ directive:
     transform: >
       $["x-namespace"] = "Azure.ResourceManager.Models";
       $["x-accessibility"] = "public";
+  - from: types.json
+    where: $.definitions['OperationStatusResult']
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = false;
+      $["x-ms-mgmt-typeReferenceType"] = true;
+      $["x-csharp-usage"] = "model,output";
   - from: managedidentity.json
     where: $.definitions.SystemAssignedServiceIdentity
     transform: >

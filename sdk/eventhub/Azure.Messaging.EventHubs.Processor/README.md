@@ -240,7 +240,7 @@ When using Azure Active Directory with Azure Storage, your principal must be ass
 
 ## Troubleshooting
 
-For detailed troubleshooting information, please refer to the [Event Hubs Troubleshooting Guide](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs\TROUBLESHOOTING.md).
+For detailed troubleshooting information, please refer to the [Event Hubs Troubleshooting Guide](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/TROUBLESHOOTING.md).
 
 ### Exception handling
 

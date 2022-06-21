@@ -51,6 +51,11 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku");
+                writer.WriteStringValue(Sku.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -68,6 +73,8 @@ namespace Azure.ResourceManager.DeviceUpdate
             Optional<string> hostName = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
             Optional<IList<DeviceUpdatePrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<DeviceUpdateSku> sku = default;
+            Optional<IReadOnlyList<DeviceUpdateAccountLocationDetail>> locations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -165,11 +172,36 @@ namespace Azure.ResourceManager.DeviceUpdate
                             privateEndpointConnections = array;
                             continue;
                         }
+                        if (property0.NameEquals("sku"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sku = new DeviceUpdateSku(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("locations"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<DeviceUpdateAccountLocationDetail> array = new List<DeviceUpdateAccountLocationDetail>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DeviceUpdateAccountLocationDetail.DeserializeDeviceUpdateAccountLocationDetail(item));
+                            }
+                            locations = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new DeviceUpdateAccountData(id, name, type, systemData, tags, location, identity, Optional.ToNullable(provisioningState), hostName.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections));
+            return new DeviceUpdateAccountData(id, name, type, systemData, tags, location, identity, Optional.ToNullable(provisioningState), hostName.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections), Optional.ToNullable(sku), Optional.ToList(locations));
         }
     }
 }

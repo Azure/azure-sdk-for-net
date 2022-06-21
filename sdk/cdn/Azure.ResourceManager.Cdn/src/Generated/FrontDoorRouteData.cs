@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Initializes a new instance of FrontDoorRouteData. </summary>
         public FrontDoorRouteData()
         {
-            CustomDomains = new ChangeTrackingList<ActivatedResourceReference>();
+            CustomDomains = new ChangeTrackingList<FrontDoorActivatedResourceInfo>();
             RuleSets = new ChangeTrackingList<WritableSubResource>();
             SupportedProtocols = new ChangeTrackingList<FrontDoorEndpointProtocol>();
             PatternsToMatch = new ChangeTrackingList<string>();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
-        internal FrontDoorRouteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string endpointName, IList<ActivatedResourceReference> customDomains, WritableSubResource originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<FrontDoorEndpointProtocol> supportedProtocols, IList<string> patternsToMatch, FrontDoorRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus) : base(id, name, resourceType, systemData)
+        internal FrontDoorRouteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string endpointName, IList<FrontDoorActivatedResourceInfo> customDomains, WritableSubResource originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<FrontDoorEndpointProtocol> supportedProtocols, IList<string> patternsToMatch, FrontDoorRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus) : base(id, name, resourceType, systemData)
         {
             EndpointName = endpointName;
             CustomDomains = customDomains;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> The name of the endpoint which holds the route. </summary>
         public string EndpointName { get; }
         /// <summary> Domains referenced by this endpoint. </summary>
-        public IList<ActivatedResourceReference> CustomDomains { get; }
+        public IList<FrontDoorActivatedResourceInfo> CustomDomains { get; }
         /// <summary> A reference to the origin group. </summary>
         internal WritableSubResource OriginGroup { get; set; }
         /// <summary> Gets or sets Id. </summary>

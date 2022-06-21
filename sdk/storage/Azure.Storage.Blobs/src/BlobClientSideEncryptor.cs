@@ -16,9 +16,9 @@ namespace Azure.Storage.Blobs
 {
     internal class BlobClientSideEncryptor
     {
-        private readonly ClientSideEncryptor _encryptor;
+        private readonly IClientSideEncryptor _encryptor;
 
-        public BlobClientSideEncryptor(ClientSideEncryptor encryptor)
+        public BlobClientSideEncryptor(IClientSideEncryptor encryptor)
         {
             _encryptor = encryptor;
         }
@@ -86,6 +86,7 @@ namespace Azure.Storage.Blobs
             Stream encryptionWriteStream = await _encryptor.EncryptedOpenWriteInternal(
                 async (encryptiondata, funcAsync, funcCancellationToken) =>
                 {
+                    options ??= new BlockBlobOpenWriteOptions();
                     options.Metadata = TransformMetadata(options.Metadata, encryptiondata);
 
                     return await blobClient.OpenWriteInternal(
