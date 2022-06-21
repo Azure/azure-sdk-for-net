@@ -1,6 +1,10 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0 (2022-06-24)
+
+### Features Added
+
+- Added `ConversationAuthoringClient` to manage authoring projects.
 
 ### Breaking Changes
 

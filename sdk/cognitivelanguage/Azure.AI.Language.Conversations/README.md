@@ -14,7 +14,7 @@ Conversational Language Understanding - aka CLU for short - is a cloud-based con
 Install the Azure Cognitive Language Services Conversations client library for .NET with [NuGet][nuget]:
 
 ```powershell
-dotnet add package Azure.AI.Language.Conversations --prerelease
+dotnet add package Azure.AI.Language.Conversations
 ```
 
 ### Prerequisites
