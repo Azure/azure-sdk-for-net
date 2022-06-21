@@ -24,7 +24,7 @@ namespace Azure.Storage.Cryptography
         // need to record how much data in buffer is legitimate
         private int _bufferPopulatedLength;
 
-        private readonly int _tempRefilBufferSize;
+        private readonly int _tempRefillBufferSize;
 
         public override bool CanRead => _mode == CryptoStreamMode.Read;
 
@@ -56,7 +56,7 @@ namespace Azure.Storage.Cryptography
                 (transform.TransformMode == TransformMode.Decrypt && streamMode == CryptoStreamMode.Read))
             {
                 bufferSize = regionDataSize;
-                _tempRefilBufferSize = transform.NonceLength + regionDataSize + transform.TagLength;
+                _tempRefillBufferSize = transform.NonceLength + regionDataSize + transform.TagLength;
             }
                 // read and encrypt plaintext from innerStream, then store ciphertext results in _buffer to be read by caller
             else if ((transform.TransformMode == TransformMode.Encrypt && streamMode == CryptoStreamMode.Read) ||
@@ -64,7 +64,7 @@ namespace Azure.Storage.Cryptography
                 (transform.TransformMode == TransformMode.Decrypt && streamMode == CryptoStreamMode.Write))
             {
                 bufferSize = transform.NonceLength + regionDataSize + transform.TagLength;
-                _tempRefilBufferSize = regionDataSize;
+                _tempRefillBufferSize = regionDataSize;
             }
             else
             {
@@ -109,7 +109,7 @@ namespace Azure.Storage.Cryptography
             // refill _buffer with transformed contents from innerStream
             if (_bufferPos >= _buffer.Length)
             {
-                var transformInputBuffer = new byte[_tempRefilBufferSize];
+                var transformInputBuffer = new byte[_tempRefillBufferSize];
 
                 int totalRead = 0;
                 while (totalRead < transformInputBuffer.Length)
@@ -195,7 +195,7 @@ namespace Azure.Storage.Cryptography
             // flush buffer if full, else ignore
             if (_bufferPos >= _buffer.Length)
             {
-                var transformedContentsBuffer = new byte[_tempRefilBufferSize];
+                var transformedContentsBuffer = new byte[_tempRefillBufferSize];
                 int outputBytes = _transform.TransformAuthenticationBlock(
                     input: _buffer,
                     output: transformedContentsBuffer);
@@ -239,7 +239,7 @@ namespace Azure.Storage.Cryptography
             // if there is a final partial block, force-flush
             if (_bufferPos != 0)
             {
-                var transformedContentsBuffer = new byte[_tempRefilBufferSize];
+                var transformedContentsBuffer = new byte[_tempRefillBufferSize];
                 int outputBytes = _transform.TransformAuthenticationBlock(
                     input: new ReadOnlySpan<byte>(_buffer, 0, _bufferPos),
                     output: transformedContentsBuffer);
