@@ -1,0 +1,33 @@
+trigger: none
+pr: none
+schedules:
+- cron: "0 20 * * *"
+  displayName: "4AM (UTC +8) daily mock test"
+  branches:
+    include:
+    - main
+
+variables:
+  OfficialBuildId: $(Build.BuildNumber)
+  NugetSecurityAnalysisWarningLevel: 'none'
+
+stages:
+  - stage: 'smoke'
+    jobs:
+      - job: Generate_And_Build
+        timeoutInMinutes: 120
+        pool:
+          name: azsdk-pool-mms-win-2019-general
+          vmImage: MMS2019
+        steps:
+          - script: |
+              cd eng\ScenarioSmoke\Azure.ResourceManager.SmokeScenario\src
+              dotnet build /t:GenerateCode
+            displayName: "Generate Code"
+          - script: |
+              cd eng\ScenarioSmoke\Azure.ResourceManager.SmokeScenario\tests
+              dotnet build /t:GenerateTest
+            displayName: "Generate Test"
+          - script: |
+              dotnet build
+            displayName: "Build Test"

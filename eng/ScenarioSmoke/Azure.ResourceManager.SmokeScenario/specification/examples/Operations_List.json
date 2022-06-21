@@ -1,0 +1,25 @@
+{
+  "parameters": {
+    "api-version": "2020-07-01-preview"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "value": [
+          {
+            "name": "Microsoft.SignalRService/SignalR/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.SignalRService",
+              "resource": "SignalR",
+              "operation": "Manage SignalR (read-only)",
+              "description": "View the SignalR's settings and configurations in the management portal or through API"
+            },
+            "properties": {}
+          }
+        ],
+        "nextLink": "providers/Microsoft.SignalRService?$skipToken={opaqueString}"
+      }
+    }
+  }
+}

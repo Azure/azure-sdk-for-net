@@ -1,0 +1,114 @@
+{
+  "parameters": {
+    "api-version": "2020-07-01-preview",
+    "subscriptionId": "00000000-0000-0000-0000-000000000000",
+    "resourceGroupName": "myResourceGroup",
+    "resourceName": "mySignalRService"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "sku": {
+          "name": "Standard_S1",
+          "tier": "Standard",
+          "size": "S1",
+          "capacity": 1
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "externalIP": "10.0.0.1",
+          "hostName": "mysignalrservice.service.signalr.net",
+          "publicPort": 443,
+          "serverPort": 443,
+          "version": "1.0",
+          "privateEndpointConnections": [
+            {
+              "properties": {
+                "provisioningState": "Succeeded",
+                "privateEndpoint": {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"
+                },
+                "privateLinkServiceConnectionState": {
+                  "status": "Approved",
+                  "description": null,
+                  "actionsRequired": "None"
+                }
+              },
+              "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mySignalRService.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+              "name": "mySignalRService.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+              "type": "Microsoft.SignalRService/SignalR/privateEndpointConnections"
+            }
+          ],
+          "tls": {
+            "clientCertEnabled": true
+          },
+          "features": [
+            {
+              "flag": "ServiceMode",
+              "value": "Serverless",
+              "properties": {}
+            },
+            {
+              "flag": "EnableConnectivityLogs",
+              "value": "True",
+              "properties": {}
+            },
+            {
+              "flag": "EnableMessagingLogs",
+              "value": "False",
+              "properties": {}
+            }
+          ],
+          "cors": {
+            "allowedOrigins": [
+              "https://foo.com",
+              "https://bar.com"
+            ]
+          },
+          "upstream": {
+            "templates": [
+              {
+                "hubPattern": null,
+                "eventPattern": null,
+                "categoryPattern": null,
+                "urlTemplate": "http://foo.com",
+                "auth": null
+              }
+            ]
+          },
+          "networkACLs": {
+            "defaultAction": "Deny",
+            "publicNetwork": {
+              "allow": [
+                "ClientConnection"
+              ],
+              "deny": null
+            },
+            "privateEndpoints": [
+              {
+                "name": "mySignalRService.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+                "allow": [
+                  "ServerConnection"
+                ],
+                "deny": null
+              }
+            ]
+          }
+        },
+        "kind": "SignalR",
+        "identity": {
+          "type": "SystemAssigned",
+          "principalId": "00000000-0000-0000-0000-000000000000",
+          "tenantId": "00000000-0000-0000-0000-000000000000"
+        },
+        "location": "eastus",
+        "tags": {
+          "key1": "value1"
+        },
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService",
+        "name": "mySignalRService",
+        "type": "Microsoft.SignalRService/SignalR"
+      }
+    }
+  }
+}

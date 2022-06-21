@@ -1,0 +1,25 @@
+{
+  "parameters": {
+    "parameters": {
+      "keyType": "Primary"
+    },
+    "api-version": "2020-07-01-preview",
+    "subscriptionId": "00000000-0000-0000-0000-000000000000",
+    "resourceGroupName": "myResourceGroup",
+    "resourceName": "mySignalRService"
+  },
+  "responses": {
+    "201": {
+      "body": {
+        "primaryKey": "primaryAccessKey",
+        "secondaryKey": "secondaryAccessKey",
+        "primaryConnectionString": "Endpoint=https://yourServiceName.service.signalr.net;AccessKey=primaryAccessKey;Version=1.0;",
+        "secondaryConnectionString": "Endpoint=https://yourServiceName.service.signalr.net;AccessKey=secondaryAccessKey;Version=1.0;"
+      },
+      "headers": {
+        "Location": "https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus..."
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.ResourceManager.SmokeScenario.csproj" />
+    <ProjectReference Include="..\..\..\..\sdk\resources\Azure.ResourceManager.Resources\src\Azure.ResourceManager.Resources.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,24 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "SignalR_sgrctrgeastus783_name": {
+            "value": null
+        },
+        "privateEndpoints_sgrctrgeastus783pe_name": {
+            "value": null
+        },
+        "virtualNetworks_sgrctrgeastus783vnet_name": {
+            "value": null
+        },
+        "privateDnsZones_privatelink_service_signalr_net_name": {
+            "value": null
+        },
+        "networkInterfaces_sgrctrgeastus783pe_nic_7a8d427e_f2da_4f54_b8e6_776233d07330_name": {
+            "value": null
+        },
+        "networkSecurityGroups_rg_cleanupservice_nsg_externalid": {
+            "value": null
+        }
+    }
+}

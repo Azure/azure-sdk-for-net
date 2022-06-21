@@ -1,0 +1,18 @@
+{
+  "parameters": {
+    "api-version": "2020-07-01-preview",
+    "subscriptionId": "00000000-0000-0000-0000-000000000000",
+    "resourceGroupName": "myResourceGroup",
+    "resourceName": "mySignalRService",
+    "privateEndpointConnectionName": "mySignalRService.1fa229cd-bf3f-47f0-8c49-afb36723997e"
+  },
+  "responses": {
+    "202": {
+      "headers": {
+        "Location": "https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus..."
+      }
+    },
+    "204": {}
+  }
+}

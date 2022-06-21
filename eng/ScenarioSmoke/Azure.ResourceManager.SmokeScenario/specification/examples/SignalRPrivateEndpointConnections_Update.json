@@ -1,0 +1,45 @@
+{
+  "parameters": {
+    "parameters": {
+      "properties": {
+        "privateEndpoint": {
+          "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"
+        },
+        "privateLinkServiceConnectionState": {
+          "status": "Approved",
+          "description": null,
+          "actionsRequired": "None"
+        }
+      }
+    },
+    "api-version": "2020-07-01-preview",
+    "subscriptionId": "00000000-0000-0000-0000-000000000000",
+    "resourceGroupName": "myResourceGroup",
+    "resourceName": "mySignalRService",
+    "privateEndpointConnectionName": "mySignalRService.1fa229cd-bf3f-47f0-8c49-afb36723997e"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "properties": {
+          "provisioningState": "Succeeded",
+          "privateEndpoint": {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"
+          },
+          "privateLinkServiceConnectionState": {
+            "status": "Approved",
+            "description": null,
+            "actionsRequired": "None"
+          }
+        },
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mySignalRService.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+        "name": "mySignalRService.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+        "type": "Microsoft.SignalRService/SignalR/privateEndpointConnections"
+      },
+      "headers": {
+        "Location": "https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus..."
+      }
+    }
+  }
+}

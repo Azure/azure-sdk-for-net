@@ -1,0 +1,30 @@
+scope: ResourceGroup
+variables:
+  resourceName: signalrswaggertest4
+scenarios:
+  - description: Microsoft.SignalRService/Basic_CRUD
+    steps:
+      - step: Generate_Unique_Name
+        armTemplate: ./peArmTemplate/Generate_Unique_name_template.json
+      - step: SignalR_CheckNameAvailability
+        exampleFile: ../examples/SignalR_CheckNameAvailability.json
+      - step: SignalR_CreateOrUpdate
+        exampleFile: ../examples/SignalR_CreateOrUpdate.json
+      - step: SignalR_Get
+        exampleFile: ../examples/SignalR_Get.json
+      - step: SignalR_Update
+        exampleFile: ../examples/SignalR_Update.json
+      - step: SignalR_ListKeys
+        exampleFile: ../examples/SignalR_ListKeys.json
+      - step: SignalR_RegenerateKey
+        exampleFile: ../examples/SignalR_RegenerateKey.json
+      - step: SignalR_Restart
+        exampleFile: ../examples/SignalR_Restart.json
+      - step: Usages_List
+        exampleFile: ../examples/Usages_List.json
+      - step: SignalR_ListByResourceGroup
+        exampleFile: ../examples/SignalR_ListByResourceGroup.json
+      - step: SignalR_ListBySubscription
+        exampleFile: ../examples/SignalR_ListBySubscription.json
+      - step: SignalR_Delete
+        exampleFile: ../examples/SignalR_Delete.json

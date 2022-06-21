@@ -1,0 +1,36 @@
+{
+  "parameters": {
+    "location": "eastus",
+    "api-version": "2020-07-01-preview",
+    "subscriptionId": "00000000-0000-0000-0000-000000000000"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "value": [
+          {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.SignalRService/locations/eastus/usages/Usage1",
+            "currentValue": 0,
+            "limit": 100,
+            "name": {
+              "value": "Usage1",
+              "localizedValue": "Usage1"
+            },
+            "unit": "Count"
+          },
+          {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.SignalRService/locations/eastus/usages/Usage2",
+            "currentValue": 0,
+            "limit": 100,
+            "name": {
+              "value": "Usage2",
+              "localizedValue": "Usage2"
+            },
+            "unit": "Count"
+          }
+        ],
+        "nextLink": "https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToMoreResults..."
+      }
+    }
+  }
+}

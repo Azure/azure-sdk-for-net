@@ -1,0 +1,1854 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2020-07-01-preview",
+    "title": "SignalRManagementClient",
+    "description": "REST API for Azure SignalR Service"
+  },
+  "host": "management.azure.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/providers/Microsoft.SignalRService/operations": {
+      "get": {
+        "tags": [
+          "SignalR"
+        ],
+        "description": "Lists all of the available REST API operations of the Microsoft.SignalRService provider.",
+        "operationId": "Operations_List",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. The response describes the list of operations.",
+            "schema": {
+              "$ref": "#/definitions/OperationList"
+            }
+          },
+          "default": {
+            "description": "An unexpected error occurred during the operation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "x-ms-examples": {
+          "Operations_List": {
+            "$ref": "./examples/Operations_List.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability": {
+      "post": {
+        "tags": [
+          "SignalR"
+        ],
+        "description": "Checks that the resource name is valid and is not already in use.",
+        "operationId": "SignalR_CheckNameAvailability",
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "the region",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "description": "Parameters supplied to the operation.",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/NameAvailabilityParameters"
+            }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. The response describes the name availability.",
+            "schema": {
+              "$ref": "#/definitions/NameAvailability"
+            }
+          },
+          "default": {
+            "description": "An unexpected error occurred during the operation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "SignalR_CheckNameAvailability": {
+            "$ref": "./examples/SignalR_CheckNameAvailability.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages": {
+      "get": {
+        "tags": [
+          "SignalR"
+        ],
+        "description": "List resource usage quotas by location.",
+        "operationId": "Usages_List",
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "the location like \"eastus\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. The response describe the usage quotas of a subscription in specified region.",
+            "schema": {
+              "$ref": "#/definitions/SignalRUsageList"
+            }
+          },
+          "default": {
+            "description": "An unexpected error occurred during the operation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "x-ms-examples": {
+          "Usages_List": {
+            "$ref": "./examples/Usages_List.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/signalR": {
+      "get": {
+        "tags": [
+          "SignalR"
+        ],
+        "description": "Handles requests to list all resources in a subscription.",
+        "operationId": "SignalR_ListBySubscription",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. The response describes the list of resources in the subscription.",
+            "schema": {
+              "$ref": "#/definitions/SignalRResourceList"
+            }
+          },
+          "default": {
+            "description": "An unexpected error occurred during the operation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "x-ms-examples": {
+          "SignalR_ListBySubscription": {
+            "$ref": "./examples/SignalR_ListBySubscription.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR": {
+      "get": {
+        "tags": [
+          "SignalR"
+        ],
+        "description": "Handles requests to list all resources in a resource group.",
+        "operationId": "SignalR_ListByResourceGroup",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. The response describes the list of resources in a resourceGroup.",
+            "schema": {
+              "$ref": "#/definitions/SignalRResourceList"
+            }
+          },
+          "default": {
+            "description": "An unexpected error occurred during the operation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "x-ms-examples": {
+          "SignalR_ListByResourceGroup": {
+            "$ref": "./examples/SignalR_ListByResourceGroup.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}": {
+      "get": {
+        "tags": [
+          "SignalR"
+        ],
+        "description": "Get the resource and its properties.",
+        "operationId": "SignalR_Get",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
+            "$ref": "#/parameters/SignalRServiceName"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. The response describes the corresponding resource.",
+            "schema": {
+              "$ref": "#/definitions/SignalRResource"
+            }
+          },
+          "default": {
+            "description": "An unexpected error occurred during the operation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "SignalR_Get": {
+            "$ref": "./examples/SignalR_Get.json"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "SignalR"
+        ],
+        "description": "Create or update a resource.",
+        "operationId": "SignalR_CreateOrUpdate",
+        "parameters": [
+          {
+            "name": "parameters",
+            "in": "body",
+            "description": "Parameters for the create or update operation",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/SignalRResource"
+            }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
+            "$ref": "#/parameters/SignalRServiceName"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. The response describes a resource.",
+            "schema": {
+              "$ref": "#/definitions/SignalRResource"
+            }
+          },
+          "201": {
+            "description": "Created. The response describes the new resource and contains a Location header to query the operation result.",
+            "schema": {
+              "$ref": "#/definitions/SignalRResource"
+            }
+          },
+          "202": {
+            "description": "Accepted. The response indicates the exiting resource is now updating and contains a Location header to query the operation result.."
+          },
+          "default": {
+            "description": "An unexpected error occurred during the operation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "x-ms-examples": {
+          "SignalR_CreateOrUpdate": {
+            "$ref": "./examples/SignalR_CreateOrUpdate.json"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "SignalR"
+        ],
+        "description": "Operation to delete a resource.",
+        "operationId": "SignalR_Delete",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
+            "$ref": "#/parameters/SignalRServiceName"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted. The response indicates the delete operation is performed in the background."
+          },
+          "204": {
+            "description": "Success. The response indicates the resource is already deleted."
+          },
+          "default": {
+            "description": "An unexpected error occurred during the operation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "x-ms-examples": {
+          "SignalR_Delete": {
+            "$ref": "./examples/SignalR_Delete.json"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "SignalR"
+        ],
+        "description": "Operation to update an exiting resource.",
+        "operationId": "SignalR_Update",
+        "parameters": [
+          {
+            "name": "parameters",
+            "in": "body",
+            "description": "Parameters for the update operation",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/SignalRResource"
+            }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
+            "$ref": "#/parameters/SignalRServiceName"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. The response describes a resource.",
+            "schema": {
+              "$ref": "#/definitions/SignalRResource"
+            }
+          },
+          "202": {
+            "description": "Accepted. The response indicates the exiting resource is now updating and contains a Location header to query the operation result.."
+          },
+          "default": {
+            "description": "An unexpected error occurred during the operation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "x-ms-examples": {
+          "SignalR_Update": {
+            "$ref": "./examples/SignalR_Update.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/listKeys": {
+      "post": {
+        "tags": [
+          "SignalR"
+        ],
+        "description": "Get the access keys of the resource.",
+        "operationId": "SignalR_ListKeys",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
+            "$ref": "#/parameters/SignalRServiceName"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. The response describes access keys of the resource.",
+            "schema": {
+              "$ref": "#/definitions/SignalRKeys"
+            }
+          },
+          "default": {
+            "description": "An unexpected error occurred during the operation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "SignalR_ListKeys": {
+            "$ref": "./examples/SignalR_ListKeys.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}": {
+      "get": {
+        "tags": [
+          "SignalR"
+        ],
+        "description": "Get the specified private endpoint connection associated with a SignalR resource.",
+        "operationId": "SignalRPrivateEndpointConnections_Get",
+        "parameters": [
+          {
+            "name": "privateEndpointConnectionName",
+            "in": "path",
+            "description": "The name of the private endpoint connection associated with the SignalR resource.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
+            "$ref": "#/parameters/SignalRServiceName"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. The response describes a list of private link resources.",
+            "schema": {
+              "$ref": "#/definitions/PrivateEndpointConnection"
+            }
+          },
+          "default": {
+            "description": "An unexpected error occurred during the operation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "SignalRPrivateEndpointConnections_Get": {
+            "$ref": "./examples/SignalRPrivateEndpointConnections_Get.json"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "SignalR"
+        ],
+        "description": "Update the state of specified private endpoint connection associated with a SignalR resource.",
+        "operationId": "SignalRPrivateEndpointConnections_Update",
+        "parameters": [
+          {
+            "name": "privateEndpointConnectionName",
+            "in": "path",
+            "description": "The name of the private endpoint connection associated with the SignalR resource.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "description": "The resource of private endpoint and its properties.",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/PrivateEndpointConnection"
+            }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
+            "$ref": "#/parameters/SignalRServiceName"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK. The response indicates the private endpoint connection is updated successfully.",
+            "schema": {
+              "$ref": "#/definitions/PrivateEndpointConnection"
+            }
+          },
+          "default": {
+            "description": "An unexpected error occurred during the operation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "SignalRPrivateEndpointConnections_Update": {
+            "$ref": "./examples/SignalRPrivateEndpointConnections_Update.json"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "SignalR"
+        ],
+        "description": "Delete the specified private endpoint connection associated with a SignalR resource.",
+        "operationId": "SignalRPrivateEndpointConnections_Delete",
+        "parameters": [
+          {
+            "name": "privateEndpointConnectionName",
+            "in": "path",
+            "description": "The name of the private endpoint connection associated with the SignalR resource.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
+            "$ref": "#/parameters/SignalRServiceName"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "Success. The response indicates the private endpoint connection is already deleted."
+          },
+          "default": {
+            "description": "An unexpected error occurred during the operation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "x-ms-examples": {
+          "SignalRPrivateEndpointConnections_Delete": {
+            "$ref": "./examples/SignalRPrivateEndpointConnections_Delete.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/privateLinkResources": {
+      "get": {
+        "tags": [
+          "SignalR"
+        ],
+        "description": "Get the private link resources that need to be created for a SignalR resource.",
+        "operationId": "SignalRPrivateLinkResources_List",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
+            "$ref": "#/parameters/SignalRServiceName"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. The response describes a list of private link resources.",
+            "schema": {
+              "$ref": "#/definitions/PrivateLinkResourceList"
+            }
+          },
+          "default": {
+            "description": "An unexpected error occurred during the operation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "x-ms-examples": {
+          "SignalRPrivateLinkResources_List": {
+            "$ref": "./examples/SignalRPrivateLinkResources_List.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/regenerateKey": {
+      "post": {
+        "tags": [
+          "SignalR"
+        ],
+        "description": "Regenerate the access key for the resource. PrimaryKey and SecondaryKey cannot be regenerated at the same time.",
+        "operationId": "SignalR_RegenerateKey",
+        "parameters": [
+          {
+            "name": "parameters",
+            "in": "body",
+            "description": "Parameter that describes the Regenerate Key Operation.",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/RegenerateKeyParameters"
+            }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
+            "$ref": "#/parameters/SignalRServiceName"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created and an async operation is executing in background to make the new key to take effect. The response contains new keys and a Location header to query the async operation result.",
+            "schema": {
+              "$ref": "#/definitions/SignalRKeys"
+            }
+          },
+          "default": {
+            "description": "An unexpected error occurred during the operation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "x-ms-long-running-operation-options": {
+          "final-state-via": "azure-async-operation"
+        },
+        "x-ms-examples": {
+          "SignalR_RegenerateKey": {
+            "$ref": "./examples/SignalR_RegenerateKey.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/restart": {
+      "post": {
+        "tags": [
+          "SignalR"
+        ],
+        "description": "Operation to restart a resource.",
+        "operationId": "SignalR_Restart",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
+            "$ref": "#/parameters/SignalRServiceName"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted. The response indicates the restart operation is performed in the background."
+          },
+          "204": {
+            "description": "Success. The response indicates the operation is successful and no content will be returned."
+          },
+          "default": {
+            "description": "An unexpected error occurred during the operation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "x-ms-long-running-operation-options": {
+          "final-state-via": "azure-async-operation"
+        },
+        "x-ms-examples": {
+          "SignalR_Restart": {
+            "$ref": "./examples/SignalR_Restart.json"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ACLAction": {
+      "description": "Default action when no other rule matches",
+      "enum": [
+        "Allow",
+        "Deny"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "ACLAction",
+        "modelAsString": true
+      }
+    },
+    "Dimension": {
+      "description": "Specifications of the Dimension of metrics.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The public facing name of the dimension.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Localized friendly display name of the dimension.",
+          "type": "string"
+        },
+        "internalName": {
+          "description": "Name of the dimension as it appears in MDM.",
+          "type": "string"
+        },
+        "toBeExportedForShoebox": {
+          "description": "A Boolean flag indicating whether this dimension should be included for the shoebox export scenario.",
+          "type": "boolean"
+        }
+      }
+    },
+    "ErrorResponse": {
+      "description": "Contains information about an API error.",
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/ErrorResponseBody",
+          "description": "Describes a particular API error with an error code and a message."
+        }
+      }
+    },
+    "ErrorResponseBody": {
+      "description": "Describes a particular API error with an error code and a message.",
+      "required": [
+        "code",
+        "message"
+      ],
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "An error code that describes the error condition more precisely than an HTTP status code. \r\nCan be used to programmatically handle specific error cases.",
+          "type": "string"
+        },
+        "message": {
+          "description": "A message that describes the error in detail and provides debugging information.",
+          "type": "string"
+        },
+        "target": {
+          "description": "The target of the particular error (for example, the name of the property in error).",
+          "type": "string"
+        },
+        "details": {
+          "description": "Contains nested errors that are related to this error.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorResponseBody"
+          }
+        }
+      }
+    },
+    "FeatureFlags": {
+      "description": "FeatureFlags is the supported features of Azure SignalR service.\r\n- ServiceMode: Flag for backend server for SignalR service. Values allowed: \"Default\": have your own backend server; \"Serverless\": your application doesn't have a backend server; \"Classic\": for backward compatibility. Support both Default and Serverless mode but not recommended; \"PredefinedOnly\": for future use.\r\n- EnableConnectivityLogs: \"true\"/\"false\", to enable/disable the connectivity log category respectively.",
+      "enum": [
+        "ServiceMode",
+        "EnableConnectivityLogs",
+        "EnableMessagingLogs"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "FeatureFlags",
+        "modelAsString": true
+      }
+    },
+    "KeyType": {
+      "description": "The keyType to regenerate. Must be either 'primary' or 'secondary'(case-insensitive).",
+      "enum": [
+        "Primary",
+        "Secondary"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "KeyType",
+        "modelAsString": true
+      }
+    },
+    "LogSpecification": {
+      "description": "Specifications of the Logs for Azure Monitoring.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name of the log.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Localized friendly display name of the log.",
+          "type": "string"
+        }
+      }
+    },
+    "ManagedIdentity": {
+      "description": "A class represent managed identities used for request and response",
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/ManagedIdentityType",
+          "description": "Represent the identity type: systemAssigned, userAssigned, None"
+        },
+        "userAssignedIdentities": {
+          "description": "Get or set the user assigned identities",
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/UserAssignedIdentityProperty"
+          }
+        },
+        "principalId": {
+          "description": "Get the principal id for the system assigned identity.\r\nOnly be used in response.",
+          "type": "string",
+          "readOnly": true
+        },
+        "tenantId": {
+          "description": "Get the tenant id for the system assigned identity.\r\nOnly be used in response",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "ManagedIdentitySettings": {
+      "description": "Managed identity settings for upstream.",
+      "type": "object",
+      "properties": {
+        "resource": {
+          "description": "The Resource indicating the App ID URI of the target resource.\r\nIt also appears in the aud (audience) claim of the issued token.",
+          "type": "string"
+        }
+      }
+    },
+    "ManagedIdentityType": {
+      "description": "Represent the identity type: systemAssigned, userAssigned, None",
+      "enum": [
+        "None",
+        "SystemAssigned",
+        "UserAssigned"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "ManagedIdentityType",
+        "modelAsString": true
+      }
+    },
+    "MetricSpecification": {
+      "description": "Specifications of the Metrics for Azure Monitoring.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name of the metric.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Localized friendly display name of the metric.",
+          "type": "string"
+        },
+        "displayDescription": {
+          "description": "Localized friendly description of the metric.",
+          "type": "string"
+        },
+        "unit": {
+          "description": "The unit that makes sense for the metric.",
+          "type": "string"
+        },
+        "aggregationType": {
+          "description": "Only provide one value for this field. Valid values: Average, Minimum, Maximum, Total, Count.",
+          "type": "string"
+        },
+        "fillGapWithZero": {
+          "description": "Optional. If set to true, then zero will be returned for time duration where no metric is emitted/published. \r\nEx. a metric that returns the number of times a particular error code was emitted. The error code may not appear \r\noften, instead of the RP publishing 0, Shoebox can auto fill in 0s for time periods where nothing was emitted.",
+          "type": "string"
+        },
+        "category": {
+          "description": "The name of the metric category that the metric belongs to. A metric can only belong to a single category.",
+          "type": "string"
+        },
+        "dimensions": {
+          "description": "The dimensions of the metrics.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Dimension"
+          }
+        }
+      }
+    },
+    "NameAvailability": {
+      "description": "Result of the request to check name availability. It contains a flag and possible reason of failure.",
+      "type": "object",
+      "properties": {
+        "nameAvailable": {
+          "description": "Indicates whether the name is available or not.",
+          "type": "boolean"
+        },
+        "reason": {
+          "description": "The reason of the availability. Required if name is not available.",
+          "type": "string"
+        },
+        "message": {
+          "description": "The message of the operation.",
+          "type": "string"
+        }
+      }
+    },
+    "NameAvailabilityParameters": {
+      "description": "Data POST-ed to the nameAvailability action",
+      "required": [
+        "type",
+        "name"
+      ],
+      "type": "object",
+      "properties": {
+        "type": {
+          "description": "The resource type. Can be \"Microsoft.SignalRService/SignalR\" or \"Microsoft.SignalRService/webPubSub\"",
+          "type": "string"
+        },
+        "name": {
+          "description": "The SignalR service name to validate. e.g.\"my-signalR-name-here\"",
+          "type": "string"
+        }
+      }
+    },
+    "NetworkACL": {
+      "description": "Network ACL",
+      "type": "object",
+      "properties": {
+        "allow": {
+          "description": "Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SignalRRequestType"
+          }
+        },
+        "deny": {
+          "description": "Denied request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SignalRRequestType"
+          }
+        }
+      }
+    },
+    "Operation": {
+      "description": "REST API operation supported by resource provider.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name of the operation with format: {provider}/{resource}/{operation}",
+          "type": "string"
+        },
+        "isDataAction": {
+          "description": "If the operation is a data action. (for data plane rbac)",
+          "type": "boolean"
+        },
+        "display": {
+          "$ref": "#/definitions/OperationDisplay",
+          "description": "The object that describes the operation."
+        },
+        "origin": {
+          "description": "Optional. The intended executor of the operation; governs the display of the operation in the RBAC UX and the audit logs UX.",
+          "type": "string"
+        },
+        "properties": {
+          "$ref": "#/definitions/OperationProperties",
+          "description": "Extra properties for the operation.",
+          "x-ms-client-flatten": false
+        }
+      }
+    },
+    "OperationDisplay": {
+      "description": "The object that describes a operation.",
+      "type": "object",
+      "properties": {
+        "provider": {
+          "description": "Friendly name of the resource provider",
+          "type": "string"
+        },
+        "resource": {
+          "description": "Resource type on which the operation is performed.",
+          "type": "string"
+        },
+        "operation": {
+          "description": "The localized friendly name for the operation.",
+          "type": "string"
+        },
+        "description": {
+          "description": "The localized friendly description for the operation",
+          "type": "string"
+        }
+      }
+    },
+    "OperationList": {
+      "description": "Result of the request to list REST API operations. It contains a list of operations.",
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "List of operations supported by the resource provider.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Operation"
+          }
+        },
+        "nextLink": {
+          "description": "The URL the client should use to fetch the next page (per server side paging).\r\nIt's null for now, added for future use.",
+          "type": "string"
+        }
+      }
+    },
+    "OperationProperties": {
+      "description": "Extra Operation properties.",
+      "type": "object",
+      "properties": {
+        "serviceSpecification": {
+          "$ref": "#/definitions/ServiceSpecification",
+          "description": "The service specifications."
+        }
+      }
+    },
+    "PrivateEndpoint": {
+      "description": "Private endpoint",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Full qualified Id of the private endpoint",
+          "type": "string"
+        }
+      }
+    },
+    "PrivateEndpointACL": {
+      "description": "ACL for a private endpoint",
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/NetworkACL"
+        }
+      ],
+      "properties": {
+        "name": {
+          "description": "Name of the private endpoint connection",
+          "type": "string"
+        }
+      }
+    },
+    "PrivateEndpointConnection": {
+      "description": "A private endpoint connection to SignalR resource",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ProxyResource"
+        }
+      ],
+      "properties": {
+        "properties": {
+          "$ref": "#/definitions/PrivateEndpointConnectionProperties",
+          "description": "Properties of the private endpoint connection",
+          "x-ms-client-flatten": true
+        }
+      }
+    },
+    "PrivateEndpointConnectionProperties": {
+      "description": "Private endpoint connection properties",
+      "type": "object",
+      "properties": {
+        "provisioningState": {
+          "$ref": "#/definitions/ProvisioningState",
+          "description": "Provisioning state of the private endpoint connection",
+          "readOnly": true
+        },
+        "privateEndpoint": {
+          "$ref": "#/definitions/PrivateEndpoint",
+          "description": "Private endpoint associated with the private endpoint connection"
+        },
+        "privateLinkServiceConnectionState": {
+          "$ref": "#/definitions/PrivateLinkServiceConnectionState",
+          "description": "Connection state"
+        }
+      }
+    },
+    "PrivateLinkResource": {
+      "description": "Private link resource",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ProxyResource"
+        }
+      ],
+      "properties": {
+        "properties": {
+          "$ref": "#/definitions/PrivateLinkResourceProperties",
+          "description": "Properties of a private link resource",
+          "x-ms-client-flatten": true
+        }
+      }
+    },
+    "PrivateLinkResourceList": {
+      "description": "Contains a list of AzSignalR.Models.Response.PrivateLink.PrivateLinkResource and a possible link to query more results",
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "List of PrivateLinkResource",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PrivateLinkResource"
+          }
+        },
+        "nextLink": {
+          "description": "The URL the client should use to fetch the next page (per server side paging).\r\nIt's null for now, added for future use.",
+          "type": "string"
+        }
+      }
+    },
+    "PrivateLinkResourceProperties": {
+      "description": "Private link resource properties",
+      "type": "object",
+      "properties": {
+        "groupId": {
+          "description": "Group Id of the private link resource",
+          "type": "string"
+        },
+        "requiredMembers": {
+          "description": "Required members of the private link resource",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "requiredZoneNames": {
+          "description": "Required private DNS zone names",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "PrivateLinkServiceConnectionState": {
+      "description": "Connection state of the private endpoint connection",
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/PrivateLinkServiceConnectionStatus",
+          "description": "Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service."
+        },
+        "description": {
+          "description": "The reason for approval/rejection of the connection.",
+          "type": "string"
+        },
+        "actionsRequired": {
+          "description": "A message indicating if changes on the service provider require any updates on the consumer.",
+          "type": "string"
+        }
+      }
+    },
+    "PrivateLinkServiceConnectionStatus": {
+      "description": "Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service.",
+      "enum": [
+        "Pending",
+        "Approved",
+        "Rejected",
+        "Disconnected"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "PrivateLinkServiceConnectionStatus",
+        "modelAsString": true
+      }
+    },
+    "ProvisioningState": {
+      "description": "Provisioning state of the resource.",
+      "enum": [
+        "Unknown",
+        "Succeeded",
+        "Failed",
+        "Canceled",
+        "Running",
+        "Creating",
+        "Updating",
+        "Deleting",
+        "Moving"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "ProvisioningState",
+        "modelAsString": true
+      }
+    },
+    "ProxyResource": {
+      "description": "The resource model definition for a ARM proxy resource. It will have everything other than required location and tags",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Resource"
+        }
+      ],
+      "properties": {}
+    },
+    "RegenerateKeyParameters": {
+      "description": "Parameters describes the request to regenerate access keys",
+      "type": "object",
+      "properties": {
+        "keyType": {
+          "$ref": "#/definitions/KeyType",
+          "description": "The keyType to regenerate. Must be either 'primary' or 'secondary'(case-insensitive)."
+        }
+      }
+    },
+    "Resource": {
+      "description": "The core properties of ARM resources.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Fully qualified resource Id for the resource.",
+          "type": "string",
+          "readOnly": true
+        },
+        "name": {
+          "description": "The name of the resource.",
+          "type": "string",
+          "readOnly": true
+        },
+        "type": {
+          "description": "The type of the resource - e.g. \"Microsoft.SignalRService/SignalR\"",
+          "type": "string",
+          "readOnly": true
+        }
+      },
+      "x-ms-azure-resource": true
+    },
+    "ResourceSku": {
+      "description": "The billing information of the resource.",
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The name of the SKU. Required.\r\n\r\nAllowed values: Standard_S1, Free_F1",
+          "type": "string"
+        },
+        "tier": {
+          "$ref": "#/definitions/SignalRSkuTier",
+          "description": "Optional tier of this particular SKU. 'Standard' or 'Free'. \r\n\r\n`Basic` is deprecated, use `Standard` instead."
+        },
+        "size": {
+          "description": "Not used. Retained for future use.",
+          "type": "string",
+          "readOnly": true
+        },
+        "family": {
+          "description": "Not used. Retained for future use.",
+          "type": "string",
+          "readOnly": true
+        },
+        "capacity": {
+          "format": "int32",
+          "description": "Optional, integer. The unit count of SignalR resource. 1 by default.\r\n\r\nIf present, following values are allowed:\r\n    Free: 1\r\n    Standard: 1,2,5,10,20,50,100",
+          "type": "integer"
+        }
+      }
+    },
+    "ServerlessUpstreamSettings": {
+      "description": "The settings for the Upstream when the service is in server-less mode.",
+      "type": "object",
+      "properties": {
+        "templates": {
+          "description": "Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UpstreamTemplate"
+          }
+        }
+      }
+    },
+    "ServiceKind": {
+      "description": "The kind of the service - e.g. \"SignalR\" for \"Microsoft.SignalRService/SignalR\"",
+      "enum": [
+        "SignalR",
+        "RawWebSockets"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "ServiceKind",
+        "modelAsString": true
+      }
+    },
+    "ServiceSpecification": {
+      "description": "An object that describes a specification.",
+      "type": "object",
+      "properties": {
+        "metricSpecifications": {
+          "description": "Specifications of the Metrics for Azure Monitoring.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MetricSpecification"
+          }
+        },
+        "logSpecifications": {
+          "description": "Specifications of the Logs for Azure Monitoring.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LogSpecification"
+          }
+        }
+      }
+    },
+    "SignalRCorsSettings": {
+      "description": "Cross-Origin Resource Sharing (CORS) settings.",
+      "type": "object",
+      "properties": {
+        "allowedOrigins": {
+          "description": "Gets or sets the list of origins that should be allowed to make cross-origin calls (for example: http://example.com:12345). Use \"*\" to allow all. If omitted, allow all by default.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "SignalRCreateOrUpdateProperties": {
+      "description": "Settings used to provision or configure the resource.",
+      "type": "object",
+      "properties": {
+        "features": {
+          "description": "List of SignalR featureFlags. e.g. ServiceMode.\r\n\r\nFeatureFlags that are not included in the parameters for the update operation will not be modified.\r\nAnd the response will only include featureFlags that are explicitly set. \r\nWhen a featureFlag is not explicitly set, SignalR service will use its globally default value. \r\nBut keep in mind, the default value doesn't mean \"false\". It varies in terms of different FeatureFlags.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SignalRFeature"
+          }
+        },
+        "cors": {
+          "$ref": "#/definitions/SignalRCorsSettings",
+          "description": "Cross-Origin Resource Sharing (CORS) settings."
+        },
+        "upstream": {
+          "$ref": "#/definitions/ServerlessUpstreamSettings",
+          "description": "Upstream settings when the Azure SignalR is in server-less mode."
+        },
+        "networkACLs": {
+          "$ref": "#/definitions/SignalRNetworkACLs",
+          "description": "Network ACLs"
+        }
+      }
+    },
+    "SignalRFeature": {
+      "description": "Feature of a SignalR resource, which controls the SignalR runtime behavior.",
+      "required": [
+        "flag",
+        "value"
+      ],
+      "type": "object",
+      "properties": {
+        "flag": {
+          "$ref": "#/definitions/FeatureFlags",
+          "description": "FeatureFlags is the supported features of Azure SignalR service.\r\n- ServiceMode: Flag for backend server for SignalR service. Values allowed: \"Default\": have your own backend server; \"Serverless\": your application doesn't have a backend server; \"Classic\": for backward compatibility. Support both Default and Serverless mode but not recommended; \"PredefinedOnly\": for future use.\r\n- EnableConnectivityLogs: \"true\"/\"false\", to enable/disable the connectivity log category respectively."
+        },
+        "value": {
+          "description": "Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values.",
+          "maxLength": 128,
+          "minLength": 1,
+          "type": "string"
+        },
+        "properties": {
+          "description": "Optional properties related to this feature.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "SignalRKeys": {
+      "description": "A class represents the access keys of the resource.",
+      "type": "object",
+      "properties": {
+        "primaryKey": {
+          "description": "The primary access key.",
+          "type": "string"
+        },
+        "secondaryKey": {
+          "description": "The secondary access key.",
+          "type": "string"
+        },
+        "primaryConnectionString": {
+          "description": "Connection string constructed via the primaryKey",
+          "type": "string"
+        },
+        "secondaryConnectionString": {
+          "description": "Connection string constructed via the secondaryKey",
+          "type": "string"
+        }
+      }
+    },
+    "SignalRNetworkACLs": {
+      "description": "Network ACLs for the resource",
+      "type": "object",
+      "properties": {
+        "defaultAction": {
+          "$ref": "#/definitions/ACLAction",
+          "description": "Default action when no other rule matches",
+          "default": "Deny"
+        },
+        "publicNetwork": {
+          "$ref": "#/definitions/NetworkACL",
+          "description": "ACL for requests from public network"
+        },
+        "privateEndpoints": {
+          "description": "ACLs for requests from private endpoints",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PrivateEndpointACL"
+          }
+        }
+      }
+    },
+    "SignalRProperties": {
+      "description": "A class that describes the properties of the resource",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/SignalRCreateOrUpdateProperties"
+        }
+      ],
+      "properties": {
+        "provisioningState": {
+          "$ref": "#/definitions/ProvisioningState",
+          "description": "Provisioning state of the resource.",
+          "readOnly": true
+        },
+        "externalIP": {
+          "description": "The publicly accessible IP of the resource.",
+          "type": "string",
+          "readOnly": true
+        },
+        "hostName": {
+          "description": "FQDN of the service instance.",
+          "type": "string",
+          "readOnly": true
+        },
+        "publicPort": {
+          "format": "int32",
+          "description": "The publicly accessible port of the resource which is designed for browser/client side usage.",
+          "type": "integer",
+          "readOnly": true
+        },
+        "serverPort": {
+          "format": "int32",
+          "description": "The publicly accessible port of the resource which is designed for customer server side usage.",
+          "type": "integer",
+          "readOnly": true
+        },
+        "version": {
+          "description": "Version of the resource. Probably you need the same or higher version of client SDKs.",
+          "type": "string",
+          "readOnly": true
+        },
+        "privateEndpointConnections": {
+          "description": "Private endpoint connections to the resource.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PrivateEndpointConnection"
+          },
+          "readOnly": true
+        },
+        "tls": {
+          "$ref": "#/definitions/SignalRTlsSettings",
+          "description": "TLS settings."
+        }
+      }
+    },
+    "SignalRRequestType": {
+      "description": "Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI.",
+      "enum": [
+        "ClientConnection",
+        "ServerConnection",
+        "RESTAPI"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "SignalRRequestType",
+        "modelAsString": true
+      }
+    },
+    "SignalRResource": {
+      "description": "A class represent a resource.",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/TrackedResource"
+        }
+      ],
+      "properties": {
+        "sku": {
+          "$ref": "#/definitions/ResourceSku",
+          "description": "The billing information of the resource.(e.g. Free, Standard)"
+        },
+        "properties": {
+          "$ref": "#/definitions/SignalRProperties",
+          "description": "Settings used to provision or configure the resource",
+          "x-ms-client-flatten": true
+        },
+        "kind": {
+          "$ref": "#/definitions/ServiceKind",
+          "description": "The kind of the service - e.g. \"SignalR\" for \"Microsoft.SignalRService/SignalR\"",
+          "x-ms-mutability": [
+            "read",
+            "create"
+          ]
+        },
+        "identity": {
+          "$ref": "#/definitions/ManagedIdentity",
+          "description": "The managed identity response"
+        }
+      }
+    },
+    "SignalRResourceList": {
+      "description": "Object that includes an array of resources and a possible link for next set.",
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "List of the resources",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SignalRResource"
+          }
+        },
+        "nextLink": {
+          "description": "The URL the client should use to fetch the next page (per server side paging).\r\nIt's null for now, added for future use.",
+          "type": "string"
+        }
+      }
+    },
+    "SignalRSkuTier": {
+      "description": "Optional tier of this particular SKU. 'Standard' or 'Free'. \r\n\r\n`Basic` is deprecated, use `Standard` instead.",
+      "enum": [
+        "Free",
+        "Basic",
+        "Standard",
+        "Premium"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "SignalRSkuTier",
+        "modelAsString": true
+      }
+    },
+    "SignalRTlsSettings": {
+      "description": "TLS settings for the resource",
+      "type": "object",
+      "properties": {
+        "clientCertEnabled": {
+          "description": "Request client certificate during TLS handshake if enabled",
+          "type": "boolean"
+        }
+      }
+    },
+    "SignalRUsage": {
+      "description": "Object that describes a specific usage of the resources.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Fully qualified ARM resource id",
+          "type": "string"
+        },
+        "currentValue": {
+          "format": "int64",
+          "description": "Current value for the usage quota.",
+          "type": "integer"
+        },
+        "limit": {
+          "format": "int64",
+          "description": "The maximum permitted value for the usage quota. If there is no limit, this value will be -1.",
+          "type": "integer"
+        },
+        "name": {
+          "$ref": "#/definitions/SignalRUsageName",
+          "description": "Localizable String object containing the name and a localized value."
+        },
+        "unit": {
+          "description": "Representing the units of the usage quota. Possible values are: Count, Bytes, Seconds, Percent, CountPerSecond, BytesPerSecond.",
+          "type": "string"
+        }
+      }
+    },
+    "SignalRUsageList": {
+      "description": "Object that includes an array of the resource usages and a possible link for next set.",
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "List of the resource usages",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SignalRUsage"
+          }
+        },
+        "nextLink": {
+          "description": "The URL the client should use to fetch the next page (per server side paging).\r\nIt's null for now, added for future use.",
+          "type": "string"
+        }
+      }
+    },
+    "SignalRUsageName": {
+      "description": "Localizable String object containing the name and a localized value.",
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "The identifier of the usage.",
+          "type": "string"
+        },
+        "localizedValue": {
+          "description": "Localized name of the usage.",
+          "type": "string"
+        }
+      }
+    },
+    "TrackedResource": {
+      "description": "The resource model definition for a ARM tracked top level resource.",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Resource"
+        }
+      ],
+      "properties": {
+        "location": {
+          "description": "The GEO location of the resource. e.g. West US | East US | North Central US | South Central US.",
+          "type": "string",
+          "x-ms-mutability": [
+            "read",
+            "create"
+          ]
+        },
+        "tags": {
+          "description": "Tags of the service which is a list of key value pairs that describe the resource.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "UpstreamAuthSettings": {
+      "description": "Upstream auth settings.",
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/UpstreamAuthType",
+          "description": "Gets or sets the type of auth. None or ManagedIdentity is supported now."
+        },
+        "managedIdentity": {
+          "$ref": "#/definitions/ManagedIdentitySettings",
+          "description": "Gets or sets the managed identity settings. It's required if the auth type is set to ManagedIdentity."
+        }
+      }
+    },
+    "UpstreamAuthType": {
+      "description": "Gets or sets the type of auth. None or ManagedIdentity is supported now.",
+      "enum": [
+        "None",
+        "ManagedIdentity"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "UpstreamAuthType",
+        "modelAsString": true
+      }
+    },
+    "UpstreamTemplate": {
+      "description": "Upstream template item settings. It defines the Upstream URL of the incoming requests.\r\nThe template defines the pattern of the event, the hub or the category of the incoming request that matches current URL template.",
+      "required": [
+        "urlTemplate"
+      ],
+      "type": "object",
+      "properties": {
+        "hubPattern": {
+          "description": "Gets or sets the matching pattern for hub names. If not set, it matches any hub.\r\nThere are 3 kind of patterns supported:\r\n    1. \"*\", it to matches any hub name\r\n    2. Combine multiple hubs with \",\", for example \"hub1,hub2\", it matches \"hub1\" and \"hub2\"\r\n    3. The single hub name, for example, \"hub1\", it matches \"hub1\"",
+          "type": "string"
+        },
+        "eventPattern": {
+          "description": "Gets or sets the matching pattern for event names. If not set, it matches any event.\r\nThere are 3 kind of patterns supported:\r\n    1. \"*\", it to matches any event name\r\n    2. Combine multiple events with \",\", for example \"connect,disconnect\", it matches event \"connect\" and \"disconnect\"\r\n    3. The single event name, for example, \"connect\", it matches \"connect\"",
+          "type": "string"
+        },
+        "categoryPattern": {
+          "description": "Gets or sets the matching pattern for category names. If not set, it matches any category.\r\nThere are 3 kind of patterns supported:\r\n    1. \"*\", it to matches any category name\r\n    2. Combine multiple categories with \",\", for example \"connections,messages\", it matches category \"connections\" and \"messages\"\r\n    3. The single category name, for example, \"connections\", it matches the category \"connections\"",
+          "type": "string"
+        },
+        "urlTemplate": {
+          "description": "Gets or sets the Upstream URL template. You can use 3 predefined parameters {hub}, {category} {event} inside the template, the value of the Upstream URL is dynamically calculated when the client request comes in.\r\nFor example, if the urlTemplate is `http://example.com/{hub}/api/{event}`, with a client request from hub `chat` connects, it will first POST to this URL: `http://example.com/chat/api/connect`.",
+          "type": "string"
+        },
+        "auth": {
+          "$ref": "#/definitions/UpstreamAuthSettings",
+          "description": "Gets or sets the auth settings for an upstream. If not set, no auth is used for upstream messages."
+        }
+      }
+    },
+    "UserAssignedIdentityProperty": {
+      "description": "Properties of user assigned identity.",
+      "type": "object",
+      "properties": {
+        "principalId": {
+          "description": "Get the principal id for the user assigned identity",
+          "type": "string",
+          "readOnly": true
+        },
+        "clientId": {
+          "description": "Get the client id for the user assigned identity",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    }
+  },
+  "parameters": {
+    "ApiVersionParameter": {
+      "name": "api-version",
+      "in": "query",
+      "description": "Client Api Version.",
+      "required": true,
+      "type": "string"
+    },
+    "SubscriptionIdParameter": {
+      "name": "subscriptionId",
+      "in": "path",
+      "description": "Gets subscription Id which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+      "required": true,
+      "type": "string"
+    },
+    "ResourceGroupParameter": {
+      "name": "resourceGroupName",
+      "in": "path",
+      "description": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "SignalRServiceName": {
+      "name": "resourceName",
+      "in": "path",
+      "description": "The name of the SignalR resource.",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    }
+  },
+  "securityDefinitions": {
+    "azure_auth": {
+      "flow": "implicit",
+      "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+      "scopes": {
+        "user_impersonation": "impersonate your user account"
+      },
+      "type": "oauth2",
+      "description": "Azure Active Directory OAuth2 Flow"
+    }
+  },
+  "security": [
+    {
+      "azure_auth": [
+        "user_impersonation"
+      ]
+    }
+  ]
+}
