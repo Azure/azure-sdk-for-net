@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -34,7 +33,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="consoleUri"> Link to the console to web app instance. </param>
         /// <param name="healthCheckUri"> Link to the console to web app instance. </param>
         /// <param name="containers"> Dictionary of &lt;ContainerInfo&gt;. </param>
-        internal WebSiteInstanceStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, SiteRuntimeState? state, Uri statusUri, Uri detectorUri, Uri consoleUri, Uri healthCheckUri, IDictionary<string, ContainerInfo> containers) : base(id, name, resourceType, systemData, kind)
+        internal WebSiteInstanceStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, SiteRuntimeState? state, string statusUri, string detectorUri, string consoleUri, string healthCheckUri, IDictionary<string, ContainerInfo> containers) : base(id, name, resourceType, systemData, kind)
         {
             State = state;
             StatusUri = statusUri;
@@ -47,13 +46,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Gets or sets the state. </summary>
         public SiteRuntimeState? State { get; set; }
         /// <summary> Link to the GetStatusApi in Kudu. </summary>
-        public Uri StatusUri { get; set; }
+        public string StatusUri { get; set; }
         /// <summary> Link to the Diagnose and Solve Portal. </summary>
-        public Uri DetectorUri { get; set; }
+        public string DetectorUri { get; set; }
         /// <summary> Link to the console to web app instance. </summary>
-        public Uri ConsoleUri { get; set; }
+        public string ConsoleUri { get; set; }
         /// <summary> Link to the console to web app instance. </summary>
-        public Uri HealthCheckUri { get; set; }
+        public string HealthCheckUri { get; set; }
         /// <summary> Dictionary of &lt;ContainerInfo&gt;. </summary>
         public IDictionary<string, ContainerInfo> Containers { get; }
     }

@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Routing rules for ramp up testing. This rule allows to redirect static traffic % to a slot or to gradually change routing % based on performance. </summary>
@@ -33,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// https://www.siteextensions.net/packages/TiPCallback/
         /// </param>
         /// <param name="name"> Name of the routing rule. The recommended name would be to point to the slot which will receive the traffic in the experiment. </param>
-        internal RampUpRule(string actionHostName, double? reroutePercentage, double? changeStep, int? changeIntervalInMinutes, double? minReroutePercentage, double? maxReroutePercentage, Uri changeDecisionCallbackUri, string name)
+        internal RampUpRule(string actionHostName, double? reroutePercentage, double? changeStep, int? changeIntervalInMinutes, double? minReroutePercentage, double? maxReroutePercentage, string changeDecisionCallbackUri, string name)
         {
             ActionHostName = actionHostName;
             ReroutePercentage = reroutePercentage;
@@ -65,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Custom decision algorithm can be provided in TiPCallback site extension which URL can be specified. See TiPCallback site extension for the scaffold and contracts.
         /// https://www.siteextensions.net/packages/TiPCallback/
         /// </summary>
-        public Uri ChangeDecisionCallbackUri { get; set; }
+        public string ChangeDecisionCallbackUri { get; set; }
         /// <summary> Name of the routing rule. The recommended name would be to point to the slot which will receive the traffic in the experiment. </summary>
         public string Name { get; set; }
     }

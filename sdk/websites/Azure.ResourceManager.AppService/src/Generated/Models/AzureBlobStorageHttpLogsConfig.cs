@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Http logs to azure blob storage configuration. </summary>
@@ -25,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// 0 or lower means no retention.
         /// </param>
         /// <param name="enabled"> True if configuration is enabled, false if it is disabled and null if configuration is not set. </param>
-        internal AzureBlobStorageHttpLogsConfig(Uri sasUri, int? retentionInDays, bool? enabled)
+        internal AzureBlobStorageHttpLogsConfig(string sasUri, int? retentionInDays, bool? enabled)
         {
             SasUri = sasUri;
             RetentionInDays = retentionInDays;
@@ -33,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> SAS url to a azure blob container with read/write/list/delete permissions. </summary>
-        public Uri SasUri { get; set; }
+        public string SasUri { get; set; }
         /// <summary>
         /// Retention in days.
         /// Remove blobs older than X days.

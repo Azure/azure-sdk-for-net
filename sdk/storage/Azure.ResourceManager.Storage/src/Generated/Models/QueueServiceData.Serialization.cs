@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<CorsRules> cors = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.Storage
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -80,7 +85,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new QueueServiceData(id, name, type, systemData, cors.Value);
+            return new QueueServiceData(id, name, type, systemData.Value, cors.Value);
         }
     }
 }

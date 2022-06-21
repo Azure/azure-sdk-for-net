@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -19,14 +18,17 @@ namespace Azure.ResourceManager.Compute
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(PackageUri))
             {
                 writer.WritePropertyName("packageUrl");
-                writer.WriteStringValue(PackageUri.AbsoluteUri);
+                writer.WriteStringValue(PackageUri);
             }
             if (Optional.IsDefined(Configuration))
             {
@@ -44,7 +46,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(ConfigurationUri))
             {
                 writer.WritePropertyName("configurationUrl");
-                writer.WriteStringValue(ConfigurationUri.AbsoluteUri);
+                writer.WriteStringValue(ConfigurationUri);
             }
             if (Optional.IsDefined(StartCloudService))
             {
@@ -87,15 +89,15 @@ namespace Azure.ResourceManager.Compute
 
         internal static CloudServiceData DeserializeCloudServiceData(JsonElement element)
         {
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<Uri> packageUrl = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> packageUrl = default;
             Optional<string> configuration = default;
-            Optional<Uri> configurationUrl = default;
+            Optional<string> configurationUrl = default;
             Optional<bool> startCloudService = default;
             Optional<bool> allowModelOverride = default;
             Optional<CloudServiceUpgradeMode> upgradeMode = default;
@@ -109,6 +111,11 @@ namespace Azure.ResourceManager.Compute
             {
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -139,6 +146,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -153,12 +165,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         if (property0.NameEquals("packageUrl"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                packageUrl = null;
-                                continue;
-                            }
-                            packageUrl = new Uri(property0.Value.GetString());
+                            packageUrl = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("configuration"))
@@ -168,12 +175,7 @@ namespace Azure.ResourceManager.Compute
                         }
                         if (property0.NameEquals("configurationUrl"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                configurationUrl = null;
-                                continue;
-                            }
-                            configurationUrl = new Uri(property0.Value.GetString());
+                            configurationUrl = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("startCloudService"))
@@ -260,7 +262,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new CloudServiceData(id, name, type, systemData, tags, location, packageUrl.Value, configuration.Value, configurationUrl.Value, Optional.ToNullable(startCloudService), Optional.ToNullable(allowModelOverride), Optional.ToNullable(upgradeMode), roleProfile.Value, osProfile.Value, networkProfile.Value, extensionProfile.Value, provisioningState.Value, uniqueId.Value);
+            return new CloudServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, packageUrl.Value, configuration.Value, configurationUrl.Value, Optional.ToNullable(startCloudService), Optional.ToNullable(allowModelOverride), Optional.ToNullable(upgradeMode), roleProfile.Value, osProfile.Value, networkProfile.Value, extensionProfile.Value, provisioningState.Value, uniqueId.Value);
         }
     }
 }

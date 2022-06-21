@@ -19,14 +19,17 @@ namespace Azure.ResourceManager.Sql
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -54,7 +57,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(StorageContainerUri))
             {
                 writer.WritePropertyName("storageContainerUri");
-                writer.WriteStringValue(StorageContainerUri.AbsoluteUri);
+                writer.WriteStringValue(StorageContainerUri);
             }
             if (Optional.IsDefined(SourceDatabaseId))
             {
@@ -97,12 +100,12 @@ namespace Azure.ResourceManager.Sql
 
         internal static ManagedDatabaseData DeserializeManagedDatabaseData(JsonElement element)
         {
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> collation = default;
             Optional<ManagedDatabaseStatus> status = default;
             Optional<DateTimeOffset> creationDate = default;
@@ -111,7 +114,7 @@ namespace Azure.ResourceManager.Sql
             Optional<string> defaultSecondaryLocation = default;
             Optional<CatalogCollationType> catalogCollation = default;
             Optional<ManagedDatabaseCreateMode> createMode = default;
-            Optional<Uri> storageContainerUri = default;
+            Optional<string> storageContainerUri = default;
             Optional<string> sourceDatabaseId = default;
             Optional<string> restorableDroppedDatabaseId = default;
             Optional<string> storageContainerSasToken = default;
@@ -124,6 +127,11 @@ namespace Azure.ResourceManager.Sql
             {
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -154,6 +162,11 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -238,12 +251,7 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("storageContainerUri"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                storageContainerUri = null;
-                                continue;
-                            }
-                            storageContainerUri = new Uri(property0.Value.GetString());
+                            storageContainerUri = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("sourceDatabaseId"))
@@ -295,7 +303,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ManagedDatabaseData(id, name, type, systemData, tags, location, collation.Value, Optional.ToNullable(status), Optional.ToNullable(creationDate), Optional.ToNullable(earliestRestorePoint), Optional.ToNullable(restorePointInTime), defaultSecondaryLocation.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(createMode), storageContainerUri.Value, sourceDatabaseId.Value, restorableDroppedDatabaseId.Value, storageContainerSasToken.Value, failoverGroupId.Value, recoverableDatabaseId.Value, longTermRetentionBackupResourceId.Value, Optional.ToNullable(autoCompleteRestore), lastBackupName.Value);
+            return new ManagedDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, collation.Value, Optional.ToNullable(status), Optional.ToNullable(creationDate), Optional.ToNullable(earliestRestorePoint), Optional.ToNullable(restorePointInTime), defaultSecondaryLocation.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(createMode), storageContainerUri.Value, sourceDatabaseId.Value, restorableDroppedDatabaseId.Value, storageContainerSasToken.Value, failoverGroupId.Value, recoverableDatabaseId.Value, longTermRetentionBackupResourceId.Value, Optional.ToNullable(autoCompleteRestore), lastBackupName.Value);
         }
     }
 }

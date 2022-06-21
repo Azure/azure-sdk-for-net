@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="vnetName"> The Virtual Network name. </param>
         /// <param name="vpnPackageUri"> The URI where the VPN package can be downloaded. </param>
-        internal VnetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string vnetName, Uri vpnPackageUri) : base(id, name, resourceType, systemData, kind)
+        internal VnetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string vnetName, string vpnPackageUri) : base(id, name, resourceType, systemData, kind)
         {
             VnetName = vnetName;
             VpnPackageUri = vpnPackageUri;
@@ -37,6 +36,6 @@ namespace Azure.ResourceManager.AppService
         /// <summary> The Virtual Network name. </summary>
         public string VnetName { get; set; }
         /// <summary> The URI where the VPN package can be downloaded. </summary>
-        public Uri VpnPackageUri { get; set; }
+        public string VpnPackageUri { get; set; }
     }
 }

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="deploymentRollbackEnabled"> &lt;code&gt;true&lt;/code&gt; to enable deployment rollback; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isMercurial"> &lt;code&gt;true&lt;/code&gt; for a Mercurial repository; &lt;code&gt;false&lt;/code&gt; for a Git repository. </param>
         /// <param name="gitHubActionConfiguration"> If GitHub Action is selected, than the associated configuration. </param>
-        internal SiteSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, Uri repoUri, string branch, bool? isManualIntegration, bool? isGitHubAction, bool? deploymentRollbackEnabled, bool? isMercurial, GitHubActionConfiguration gitHubActionConfiguration) : base(id, name, resourceType, systemData, kind)
+        internal SiteSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string repoUri, string branch, bool? isManualIntegration, bool? isGitHubAction, bool? deploymentRollbackEnabled, bool? isMercurial, GitHubActionConfiguration gitHubActionConfiguration) : base(id, name, resourceType, systemData, kind)
         {
             RepoUri = repoUri;
             Branch = branch;
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Repository or source control URL. </summary>
-        public Uri RepoUri { get; set; }
+        public string RepoUri { get; set; }
         /// <summary> Name of branch to use for deployment. </summary>
         public string Branch { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to limit to manual integration; &lt;code&gt;false&lt;/code&gt; to enable continuous integration (which configures webhooks into online repos like GitHub). </summary>

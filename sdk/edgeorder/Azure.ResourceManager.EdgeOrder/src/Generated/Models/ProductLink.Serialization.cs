@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         internal static ProductLink DeserializeProductLink(JsonElement element)
         {
             Optional<LinkType> linkType = default;
-            Optional<Uri> linkUrl = default;
+            Optional<string> linkUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkType"))
@@ -31,12 +30,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (property.NameEquals("linkUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        linkUrl = null;
-                        continue;
-                    }
-                    linkUrl = new Uri(property.Value.GetString());
+                    linkUrl = property.Value.GetString();
                     continue;
                 }
             }

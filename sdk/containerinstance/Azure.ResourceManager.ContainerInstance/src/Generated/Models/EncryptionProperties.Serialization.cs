@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,7 +16,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("vaultBaseUrl");
-            writer.WriteStringValue(VaultBaseUri.AbsoluteUri);
+            writer.WriteStringValue(VaultBaseUri);
             writer.WritePropertyName("keyName");
             writer.WriteStringValue(KeyName);
             writer.WritePropertyName("keyVersion");
@@ -27,14 +26,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static EncryptionProperties DeserializeEncryptionProperties(JsonElement element)
         {
-            Uri vaultBaseUrl = default;
+            string vaultBaseUrl = default;
             string keyName = default;
             string keyVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vaultBaseUrl"))
                 {
-                    vaultBaseUrl = new Uri(property.Value.GetString());
+                    vaultBaseUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("keyName"))

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DnsResolver
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> domainName = default;
             Optional<IList<TargetDnsServer>> targetDnsServers = default;
             Optional<IDictionary<string, string>> metadata = default;
@@ -91,6 +91,11 @@ namespace Azure.ResourceManager.DnsResolver
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -162,7 +167,7 @@ namespace Azure.ResourceManager.DnsResolver
                     continue;
                 }
             }
-            return new ForwardingRuleData(id, name, type, systemData, etag.Value, domainName.Value, Optional.ToList(targetDnsServers), Optional.ToDictionary(metadata), Optional.ToNullable(forwardingRuleState), Optional.ToNullable(provisioningState));
+            return new ForwardingRuleData(id, name, type, systemData.Value, etag.Value, domainName.Value, Optional.ToList(targetDnsServers), Optional.ToDictionary(metadata), Optional.ToNullable(forwardingRuleState), Optional.ToNullable(provisioningState));
         }
     }
 }

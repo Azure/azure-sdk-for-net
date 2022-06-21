@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ModelUri != null)
                 {
                     writer.WritePropertyName("modelUri");
-                    writer.WriteStringValue(ModelUri.AbsoluteUri);
+                    writer.WriteStringValue(ModelUri);
                 }
                 else
                 {
@@ -130,7 +129,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IDictionary<string, FlavorData>> flavors = default;
             Optional<string> jobName = default;
             Optional<ModelType> modelType = default;
-            Optional<Uri> modelUri = default;
+            Optional<string> modelUri = default;
             Optional<bool> isAnonymous = default;
             Optional<bool> isArchived = default;
             Optional<string> description = default;
@@ -187,7 +186,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         modelUri = null;
                         continue;
                     }
-                    modelUri = new Uri(property.Value.GetString());
+                    modelUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("isAnonymous"))

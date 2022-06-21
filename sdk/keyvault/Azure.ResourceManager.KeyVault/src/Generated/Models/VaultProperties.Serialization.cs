@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             if (Optional.IsDefined(VaultUri))
             {
                 writer.WritePropertyName("vaultUri");
-                writer.WriteStringValue(VaultUri.AbsoluteUri);
+                writer.WriteStringValue(VaultUri);
             }
             if (Optional.IsDefined(EnabledForDeployment))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Guid tenantId = default;
             KeyVaultSku sku = default;
             Optional<IList<VaultAccessPolicy>> accessPolicies = default;
-            Optional<Uri> vaultUri = default;
+            Optional<string> vaultUri = default;
             Optional<string> hsmPoolResourceId = default;
             Optional<bool> enabledForDeployment = default;
             Optional<bool> enabledForDiskEncryption = default;
@@ -142,12 +142,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("vaultUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        vaultUri = null;
-                        continue;
-                    }
-                    vaultUri = new Uri(property.Value.GetString());
+                    vaultUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("hsmPoolResourceId"))

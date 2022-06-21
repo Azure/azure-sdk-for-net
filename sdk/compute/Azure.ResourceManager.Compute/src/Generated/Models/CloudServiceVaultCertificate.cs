@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a single certificate reference in a Key Vault, and where the certificate should reside on the role instance. </summary>
@@ -19,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of CloudServiceVaultCertificate. </summary>
         /// <param name="certificateUri"> This is the URL of a certificate that has been uploaded to Key Vault as a secret. </param>
-        internal CloudServiceVaultCertificate(Uri certificateUri)
+        internal CloudServiceVaultCertificate(string certificateUri)
         {
             CertificateUri = certificateUri;
         }
 
         /// <summary> This is the URL of a certificate that has been uploaded to Key Vault as a secret. </summary>
-        public Uri CertificateUri { get; set; }
+        public string CertificateUri { get; set; }
     }
 }

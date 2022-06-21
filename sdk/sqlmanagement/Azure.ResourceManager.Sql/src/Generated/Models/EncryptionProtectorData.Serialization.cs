@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -46,11 +45,11 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> subregion = default;
             Optional<string> serverKeyName = default;
             Optional<ServerKeyType> serverKeyType = default;
-            Optional<Uri> uri = default;
+            Optional<string> uri = default;
             Optional<string> thumbprint = default;
             Optional<bool> autoRotationEnabled = default;
             foreach (var property in element.EnumerateObject())
@@ -82,6 +81,11 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -116,12 +120,7 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("uri"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                uri = null;
-                                continue;
-                            }
-                            uri = new Uri(property0.Value.GetString());
+                            uri = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("thumbprint"))
@@ -143,7 +142,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new EncryptionProtectorData(id, name, type, systemData, kind.Value, location.Value, subregion.Value, serverKeyName.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(autoRotationEnabled));
+            return new EncryptionProtectorData(id, name, type, systemData.Value, kind.Value, location.Value, subregion.Value, serverKeyName.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(autoRotationEnabled));
         }
     }
 }

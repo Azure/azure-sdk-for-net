@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The information for the output stream from container attach. </summary>
@@ -20,14 +18,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of ContainerAttachResult. </summary>
         /// <param name="webSocketUri"> The uri for the output stream from the attach. </param>
         /// <param name="password"> The password to the output stream from the attach. Send as an Authorization header value when connecting to the websocketUri. </param>
-        internal ContainerAttachResult(Uri webSocketUri, string password)
+        internal ContainerAttachResult(string webSocketUri, string password)
         {
             WebSocketUri = webSocketUri;
             Password = password;
         }
 
         /// <summary> The uri for the output stream from the attach. </summary>
-        public Uri WebSocketUri { get; }
+        public string WebSocketUri { get; }
         /// <summary> The password to the output stream from the attach. Send as an Authorization header value when connecting to the websocketUri. </summary>
         public string Password { get; }
     }

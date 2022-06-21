@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(VpnPackageUri))
             {
                 writer.WritePropertyName("vpnPackageUri");
-                writer.WriteStringValue(VpnPackageUri.AbsoluteUri);
+                writer.WriteStringValue(VpnPackageUri);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -44,9 +43,9 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> vnetName = default;
-            Optional<Uri> vpnPackageUri = default;
+            Optional<string> vpnPackageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -71,6 +70,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -90,19 +94,14 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("vpnPackageUri"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                vpnPackageUri = null;
-                                continue;
-                            }
-                            vpnPackageUri = new Uri(property0.Value.GetString());
+                            vpnPackageUri = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new VnetGatewayData(id, name, type, systemData, kind.Value, vnetName.Value, vpnPackageUri.Value);
+            return new VnetGatewayData(id, name, type, systemData.Value, kind.Value, vnetName.Value, vpnPackageUri.Value);
         }
     }
 }

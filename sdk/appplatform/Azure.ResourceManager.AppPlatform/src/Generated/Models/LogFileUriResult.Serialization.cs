@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,12 +14,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static LogFileUriResult DeserializeLogFileUriResult(JsonElement element)
         {
-            Uri url = default;
+            string url = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"))
                 {
-                    url = new Uri(property.Value.GetString());
+                    url = property.Value.GetString();
                     continue;
                 }
             }

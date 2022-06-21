@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(PackageUri))
             {
                 writer.WritePropertyName("packageUri");
-                writer.WriteStringValue(PackageUri.AbsoluteUri);
+                writer.WriteStringValue(PackageUri);
             }
             if (Optional.IsDefined(ConnectionString))
             {
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(SetParametersXmlFileUri))
             {
                 writer.WritePropertyName("setParametersXmlFileUri");
-                writer.WriteStringValue(SetParametersXmlFileUri.AbsoluteUri);
+                writer.WriteStringValue(SetParametersXmlFileUri);
             }
             if (Optional.IsCollectionDefined(SetParameters))
             {
@@ -76,11 +75,11 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<Uri> packageUri = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> packageUri = default;
             Optional<string> connectionString = default;
             Optional<string> dbType = default;
-            Optional<Uri> setParametersXmlFileUri = default;
+            Optional<string> setParametersXmlFileUri = default;
             Optional<IDictionary<string, string>> setParameters = default;
             Optional<bool> skipAppData = default;
             Optional<bool> appOffline = default;
@@ -108,6 +107,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -122,12 +126,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         if (property0.NameEquals("packageUri"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                packageUri = null;
-                                continue;
-                            }
-                            packageUri = new Uri(property0.Value.GetString());
+                            packageUri = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("connectionString"))
@@ -142,12 +141,7 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("setParametersXmlFileUri"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                setParametersXmlFileUri = null;
-                                continue;
-                            }
-                            setParametersXmlFileUri = new Uri(property0.Value.GetString());
+                            setParametersXmlFileUri = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("setParameters"))
@@ -189,7 +183,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new MsDeploy(id, name, type, systemData, kind.Value, packageUri.Value, connectionString.Value, dbType.Value, setParametersXmlFileUri.Value, Optional.ToDictionary(setParameters), Optional.ToNullable(skipAppData), Optional.ToNullable(appOffline));
+            return new MsDeploy(id, name, type, systemData.Value, kind.Value, packageUri.Value, connectionString.Value, dbType.Value, setParametersXmlFileUri.Value, Optional.ToDictionary(setParameters), Optional.ToNullable(skipAppData), Optional.ToNullable(appOffline));
         }
     }
 }

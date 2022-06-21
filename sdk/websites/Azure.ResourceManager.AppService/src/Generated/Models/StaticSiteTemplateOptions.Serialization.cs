@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(TemplateRepositoryUri))
             {
                 writer.WritePropertyName("templateRepositoryUrl");
-                writer.WriteStringValue(TemplateRepositoryUri.AbsoluteUri);
+                writer.WriteStringValue(TemplateRepositoryUri);
             }
             if (Optional.IsDefined(Owner))
             {
@@ -46,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static StaticSiteTemplateOptions DeserializeStaticSiteTemplateOptions(JsonElement element)
         {
-            Optional<Uri> templateRepositoryUrl = default;
+            Optional<string> templateRepositoryUrl = default;
             Optional<string> owner = default;
             Optional<string> repositoryName = default;
             Optional<string> description = default;
@@ -55,12 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (property.NameEquals("templateRepositoryUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        templateRepositoryUrl = null;
-                        continue;
-                    }
-                    templateRepositoryUrl = new Uri(property.Value.GetString());
+                    templateRepositoryUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("owner"))

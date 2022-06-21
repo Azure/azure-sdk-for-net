@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,7 +16,7 @@ namespace Azure.ResourceManager.Workloads.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("bomUrl");
-            writer.WriteStringValue(BomUri.AbsoluteUri);
+            writer.WriteStringValue(BomUri);
             writer.WritePropertyName("softwareVersion");
             writer.WriteStringValue(SoftwareVersion);
             writer.WritePropertyName("sapBitsStorageAccountId");
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static ServiceInitiatedSoftwareConfiguration DeserializeServiceInitiatedSoftwareConfiguration(JsonElement element)
         {
-            Uri bomUrl = default;
+            string bomUrl = default;
             string softwareVersion = default;
             string sapBitsStorageAccountId = default;
             string sapFqdn = default;
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 if (property.NameEquals("bomUrl"))
                 {
-                    bomUrl = new Uri(property.Value.GetString());
+                    bomUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("softwareVersion"))

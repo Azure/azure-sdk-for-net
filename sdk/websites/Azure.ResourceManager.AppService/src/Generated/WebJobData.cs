@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="error"> Error information. </param>
         /// <param name="usingSdk"> Using SDK?. </param>
         /// <param name="settings"> Job settings. </param>
-        internal WebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, BinaryData> settings) : base(id, name, resourceType, systemData, kind)
+        internal WebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string runCommand, string uri, string extraInfoUri, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, BinaryData> settings) : base(id, name, resourceType, systemData, kind)
         {
             RunCommand = runCommand;
             Uri = uri;
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Run command. </summary>
         public string RunCommand { get; set; }
         /// <summary> Job URL. </summary>
-        public Uri Uri { get; set; }
+        public string Uri { get; set; }
         /// <summary> Extra Info URL. </summary>
-        public Uri ExtraInfoUri { get; set; }
+        public string ExtraInfoUri { get; set; }
         /// <summary> Job type. </summary>
         public WebJobType? WebJobType { get; set; }
         /// <summary> Error information. </summary>

@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<int> id0 = default;
-            Optional<Uri> storageAccountUrl = default;
+            Optional<string> storageAccountUrl = default;
             Optional<string> blobName = default;
             Optional<string> name0 = default;
             Optional<BackupItemStatus> status = default;
@@ -75,6 +75,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -99,12 +104,7 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("storageAccountUrl"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                storageAccountUrl = null;
-                                continue;
-                            }
-                            storageAccountUrl = new Uri(property0.Value.GetString());
+                            storageAccountUrl = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("blobName"))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new BackupItemData(id, name, type, systemData, kind.Value, Optional.ToNullable(id0), storageAccountUrl.Value, blobName.Value, name0.Value, Optional.ToNullable(status), Optional.ToNullable(sizeInBytes), Optional.ToNullable(created), log.Value, Optional.ToList(databases), Optional.ToNullable(scheduled), Optional.ToNullable(lastRestoreTimeStamp), Optional.ToNullable(finishedTimeStamp), correlationId.Value, Optional.ToNullable(websiteSizeInBytes));
+            return new BackupItemData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(id0), storageAccountUrl.Value, blobName.Value, name0.Value, Optional.ToNullable(status), Optional.ToNullable(sizeInBytes), Optional.ToNullable(created), log.Value, Optional.ToList(databases), Optional.ToNullable(scheduled), Optional.ToNullable(lastRestoreTimeStamp), Optional.ToNullable(finishedTimeStamp), correlationId.Value, Optional.ToNullable(websiteSizeInBytes));
         }
     }
 }

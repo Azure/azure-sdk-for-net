@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<CorsRules> cors = default;
             Optional<DeleteRetentionPolicy> shareDeleteRetentionPolicy = default;
             Optional<ProtocolSettings> protocolSettings = default;
@@ -77,6 +77,11 @@ namespace Azure.ResourceManager.Storage
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -123,7 +128,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new FileServiceData(id, name, type, systemData, sku.Value, cors.Value, shareDeleteRetentionPolicy.Value, protocolSettings.Value);
+            return new FileServiceData(id, name, type, systemData.Value, sku.Value, cors.Value, shareDeleteRetentionPolicy.Value, protocolSettings.Value);
         }
     }
 }

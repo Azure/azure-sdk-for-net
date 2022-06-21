@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -48,8 +47,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         internal static LedgerProperties DeserializeLedgerProperties(JsonElement element)
         {
             Optional<string> ledgerName = default;
-            Optional<Uri> ledgerUri = default;
-            Optional<Uri> identityServiceUri = default;
+            Optional<string> ledgerUri = default;
+            Optional<string> identityServiceUri = default;
             Optional<string> ledgerInternalNamespace = default;
             Optional<LedgerType> ledgerType = default;
             Optional<LedgerProvisioningState> provisioningState = default;
@@ -64,22 +63,12 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
                 if (property.NameEquals("ledgerUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        ledgerUri = null;
-                        continue;
-                    }
-                    ledgerUri = new Uri(property.Value.GetString());
+                    ledgerUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("identityServiceUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        identityServiceUri = null;
-                        continue;
-                    }
-                    identityServiceUri = new Uri(property.Value.GetString());
+                    identityServiceUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("ledgerInternalNamespace"))

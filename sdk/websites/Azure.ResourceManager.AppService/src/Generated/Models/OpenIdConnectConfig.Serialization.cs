@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -34,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CertificationUri))
             {
                 writer.WritePropertyName("certificationUri");
-                writer.WriteStringValue(CertificationUri.AbsoluteUri);
+                writer.WriteStringValue(CertificationUri);
             }
             if (Optional.IsDefined(WellKnownOpenIdConfiguration))
             {
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> authorizationEndpoint = default;
             Optional<string> tokenEndpoint = default;
             Optional<string> issuer = default;
-            Optional<Uri> certificationUri = default;
+            Optional<string> certificationUri = default;
             Optional<string> wellKnownOpenIdConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -70,12 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("certificationUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        certificationUri = null;
-                        continue;
-                    }
-                    certificationUri = new Uri(property.Value.GetString());
+                    certificationUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("wellKnownOpenIdConfiguration"))

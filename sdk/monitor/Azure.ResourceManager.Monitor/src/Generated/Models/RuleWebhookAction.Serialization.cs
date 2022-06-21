@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUri");
-                writer.WriteStringValue(ServiceUri.AbsoluteUri);
+                writer.WriteStringValue(ServiceUri);
             }
             if (Optional.IsCollectionDefined(Properties))
             {
@@ -40,19 +39,14 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static RuleWebhookAction DeserializeRuleWebhookAction(JsonElement element)
         {
-            Optional<Uri> serviceUri = default;
+            Optional<string> serviceUri = default;
             Optional<IDictionary<string, string>> properties = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        serviceUri = null;
-                        continue;
-                    }
-                    serviceUri = new Uri(property.Value.GetString());
+                    serviceUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUrl");
-                writer.WriteStringValue(SasUri.AbsoluteUri);
+                writer.WriteStringValue(SasUri);
             }
             writer.WriteEndObject();
         }

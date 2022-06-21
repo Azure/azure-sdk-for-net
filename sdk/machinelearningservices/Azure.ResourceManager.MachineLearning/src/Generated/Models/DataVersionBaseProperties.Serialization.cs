@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WritePropertyName("dataType");
             writer.WriteStringValue(DataType.ToString());
             writer.WritePropertyName("dataUri");
-            writer.WriteStringValue(DataUri.AbsoluteUri);
+            writer.WriteStringValue(DataUri);
             if (Optional.IsDefined(IsAnonymous))
             {
                 writer.WritePropertyName("isAnonymous");
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             DataType dataType = default;
-            Uri dataUri = default;
+            string dataUri = default;
             Optional<bool> isAnonymous = default;
             Optional<bool> isArchived = default;
             Optional<string> description = default;
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("dataUri"))
                 {
-                    dataUri = new Uri(property.Value.GetString());
+                    dataUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("isAnonymous"))

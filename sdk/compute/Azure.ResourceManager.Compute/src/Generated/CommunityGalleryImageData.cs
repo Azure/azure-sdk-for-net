@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="architecture"> The architecture of the image. Applicable to OS disks only. </param>
         /// <param name="privacyStatementUri"> Privacy statement uri for the current community gallery image. </param>
         /// <param name="eula"> End-user license agreement for the current community gallery image. </param>
-        internal CommunityGalleryImageData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, OperatingSystemTypes? osType, OperatingSystemStateTypes? osState, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IReadOnlyList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, ArchitectureTypes? architecture, Uri privacyStatementUri, string eula) : base(name, location, resourceType, uniqueId)
+        internal CommunityGalleryImageData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, OperatingSystemTypes? osType, OperatingSystemStateTypes? osState, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IReadOnlyList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, ArchitectureTypes? architecture, string privacyStatementUri, string eula) : base(name, location, resourceType, uniqueId)
         {
             OSType = osType;
             OSState = osState;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The architecture of the image. Applicable to OS disks only. </summary>
         public ArchitectureTypes? Architecture { get; }
         /// <summary> Privacy statement uri for the current community gallery image. </summary>
-        public Uri PrivacyStatementUri { get; }
+        public string PrivacyStatementUri { get; }
         /// <summary> End-user license agreement for the current community gallery image. </summary>
         public string Eula { get; }
         /// <summary> The resource identifier. </summary>

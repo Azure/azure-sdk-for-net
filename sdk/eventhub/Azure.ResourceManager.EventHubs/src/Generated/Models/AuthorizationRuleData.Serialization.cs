@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EventHubs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<IList<AccessRights>> rights = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -66,6 +66,11 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -97,7 +102,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new AuthorizationRuleData(id, name, type, systemData, location.Value, Optional.ToList(rights));
+            return new AuthorizationRuleData(id, name, type, systemData.Value, location.Value, Optional.ToList(rights));
         }
     }
 }

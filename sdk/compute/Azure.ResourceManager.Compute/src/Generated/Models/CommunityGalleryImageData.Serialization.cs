@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute
             Optional<IReadOnlyList<GalleryImageFeature>> features = default;
             Optional<ImagePurchasePlan> purchasePlan = default;
             Optional<ArchitectureTypes> architecture = default;
-            Optional<Uri> privacyStatementUri = default;
+            Optional<string> privacyStatementUri = default;
             Optional<string> eula = default;
             Optional<string> uniqueId = default;
             foreach (var property in element.EnumerateObject())
@@ -176,12 +176,7 @@ namespace Azure.ResourceManager.Compute
                         }
                         if (property0.NameEquals("privacyStatementUri"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                privacyStatementUri = null;
-                                continue;
-                            }
-                            privacyStatementUri = new Uri(property0.Value.GetString());
+                            privacyStatementUri = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("eula"))

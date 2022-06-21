@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the operating system disk used by the virtual machine. &lt;br&gt;&lt;br&gt; For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </summary>
@@ -57,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The virtual hard disk. </summary>
         internal VirtualHardDisk Vhd { get; set; }
         /// <summary> Specifies the virtual hard disk&apos;s uri. </summary>
-        public Uri VhdUri
+        public string VhdUri
         {
             get => Vhd is null ? default : Vhd.Uri;
             set
@@ -71,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The source user image virtual hard disk. The virtual hard disk will be copied before being attached to the virtual machine. If SourceImage is provided, the destination virtual hard drive must not exist. </summary>
         internal VirtualHardDisk Image { get; set; }
         /// <summary> Specifies the virtual hard disk&apos;s uri. </summary>
-        public Uri ImageUri
+        public string ImageUri
         {
             get => Image is null ? default : Image.Uri;
             set

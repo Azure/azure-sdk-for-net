@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.Compute.Models
                 JsonSerializer.Serialize(writer, SourceVault);
             }
             writer.WritePropertyName("keyUrl");
-            writer.WriteStringValue(KeyUri.AbsoluteUri);
+            writer.WriteStringValue(KeyUri);
             writer.WriteEndObject();
         }
 
         internal static KeyForDiskEncryptionSet DeserializeKeyForDiskEncryptionSet(JsonElement element)
         {
             Optional<WritableSubResource> sourceVault = default;
-            Uri keyUrl = default;
+            string keyUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceVault"))
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("keyUrl"))
                 {
-                    keyUrl = new Uri(property.Value.GetString());
+                    keyUrl = property.Value.GetString();
                     continue;
                 }
             }

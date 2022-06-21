@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(IdentityUri))
             {
                 writer.WritePropertyName("identityUrl");
-                writer.WriteStringValue(IdentityUri.AbsoluteUri);
+                writer.WriteStringValue(IdentityUri);
             }
             writer.WriteEndObject();
         }
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             string username = default;
             Optional<string> password = default;
             Optional<string> identity = default;
-            Optional<Uri> identityUrl = default;
+            Optional<string> identityUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("server"))
@@ -69,12 +68,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 if (property.NameEquals("identityUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        identityUrl = null;
-                        continue;
-                    }
-                    identityUrl = new Uri(property.Value.GetString());
+                    identityUrl = property.Value.GetString();
                     continue;
                 }
             }

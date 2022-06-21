@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,17 +14,12 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static SsoUri DeserializeSsoUri(JsonElement element)
         {
-            Optional<Uri> ssoUriValue = default;
+            Optional<string> ssoUriValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ssoUriValue"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        ssoUriValue = null;
-                        continue;
-                    }
-                    ssoUriValue = new Uri(property.Value.GetString());
+                    ssoUriValue = property.Value.GetString();
                     continue;
                 }
             }

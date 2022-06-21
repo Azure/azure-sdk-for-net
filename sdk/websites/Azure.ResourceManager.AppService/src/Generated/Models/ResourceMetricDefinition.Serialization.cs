@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -35,11 +34,11 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> unit = default;
             Optional<string> primaryAggregationType = default;
             Optional<IReadOnlyList<ResourceMetricAvailability>> metricAvailabilities = default;
-            Optional<Uri> resourceUri = default;
+            Optional<string> resourceUri = default;
             Optional<IReadOnlyDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -65,6 +64,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -104,12 +108,7 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("resourceUri"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                resourceUri = null;
-                                continue;
-                            }
-                            resourceUri = new Uri(property0.Value.GetString());
+                            resourceUri = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("properties"))
@@ -131,7 +130,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new ResourceMetricDefinition(id, name, type, systemData, kind.Value, unit.Value, primaryAggregationType.Value, Optional.ToList(metricAvailabilities), resourceUri.Value, Optional.ToDictionary(properties));
+            return new ResourceMetricDefinition(id, name, type, systemData.Value, kind.Value, unit.Value, primaryAggregationType.Value, Optional.ToList(metricAvailabilities), resourceUri.Value, Optional.ToDictionary(properties));
         }
     }
 }

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -44,11 +43,11 @@ namespace Azure.ResourceManager.Workloads
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<WordPressVersion> version = default;
             Optional<string> databaseName = default;
             Optional<string> databaseUser = default;
-            Optional<Uri> siteUrl = default;
+            Optional<string> siteUrl = default;
             Optional<ApplicationProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -69,6 +68,11 @@ namespace Azure.ResourceManager.Workloads
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -103,12 +107,7 @@ namespace Azure.ResourceManager.Workloads
                         }
                         if (property0.NameEquals("siteUrl"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                siteUrl = null;
-                                continue;
-                            }
-                            siteUrl = new Uri(property0.Value.GetString());
+                            siteUrl = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.Workloads
                     continue;
                 }
             }
-            return new WordPressInstanceResourceData(id, name, type, systemData, Optional.ToNullable(version), databaseName.Value, databaseUser.Value, siteUrl.Value, Optional.ToNullable(provisioningState));
+            return new WordPressInstanceResourceData(id, name, type, systemData.Value, Optional.ToNullable(version), databaseName.Value, databaseUser.Value, siteUrl.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

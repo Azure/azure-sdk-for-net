@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(ServerUri))
             {
                 writer.WritePropertyName("serverUrl");
-                writer.WriteStringValue(ServerUri.AbsoluteUri);
+                writer.WriteStringValue(ServerUri);
             }
             writer.WriteEndObject();
         }
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> description = default;
             Optional<string> documentation = default;
             Optional<string> version = default;
-            Optional<Uri> serverUrl = default;
+            Optional<string> serverUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("title"))
@@ -75,12 +74,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (property.NameEquals("serverUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        serverUrl = null;
-                        continue;
-                    }
-                    serverUrl = new Uri(property.Value.GetString());
+                    serverUrl = property.Value.GetString();
                     continue;
                 }
             }

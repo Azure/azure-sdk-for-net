@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the managed hsm pool. </param>
         /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
         /// <param name="scheduledPurgeOn"> The scheduled purge date in UTC. </param>
-        internal ManagedHsmProperties(Guid? tenantId, IList<string> initialAdminObjectIds, Uri hsmUri, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enablePurgeProtection, ManagedHsmCreateMode? createMode, string statusMessage, ManagedHsmProvisioningState? provisioningState, ManagedHsmNetworkRuleSet networkRuleSet, IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, DateTimeOffset? scheduledPurgeOn)
+        internal ManagedHsmProperties(Guid? tenantId, IList<string> initialAdminObjectIds, string hsmUri, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enablePurgeProtection, ManagedHsmCreateMode? createMode, string statusMessage, ManagedHsmProvisioningState? provisioningState, ManagedHsmNetworkRuleSet networkRuleSet, IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, DateTimeOffset? scheduledPurgeOn)
         {
             TenantId = tenantId;
             InitialAdminObjectIds = initialAdminObjectIds;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Array of initial administrators object ids for this managed hsm pool. </summary>
         public IList<string> InitialAdminObjectIds { get; }
         /// <summary> The URI of the managed hsm pool for performing operations on keys. </summary>
-        public Uri HsmUri { get; }
+        public string HsmUri { get; }
         /// <summary> Property to specify whether the &apos;soft delete&apos; functionality is enabled for this managed HSM pool. If it&apos;s not set to any value(true or false) when creating new managed HSM pool, it will be set to true by default. Once set to true, it cannot be reverted to false. </summary>
         public bool? EnableSoftDelete { get; set; }
         /// <summary> softDelete data retention days. It accepts &gt;=7 and &lt;=90. </summary>
