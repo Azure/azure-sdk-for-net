@@ -10,6 +10,7 @@ namespace Azure.Storage
     }
     public enum ClientSideEncryptionVersion
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         V1_0 = 1,
         V2_0 = 2,
     }
