@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="error"> Error information. </param>
         /// <param name="usingSdk"> Using SDK?. </param>
         /// <param name="settings"> Job settings. </param>
-        internal ContinuousWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ContinuousWebJobStatus? status, string detailedStatus, Uri logUri, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, BinaryData> settings) : base(id, name, resourceType, systemData, kind)
+        internal ContinuousWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ContinuousWebJobStatus? status, string detailedStatus, string logUri, string runCommand, string uri, string extraInfoUri, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, BinaryData> settings) : base(id, name, resourceType, systemData, kind)
         {
             Status = status;
             DetailedStatus = detailedStatus;
@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Detailed status. </summary>
         public string DetailedStatus { get; set; }
         /// <summary> Log URL. </summary>
-        public Uri LogUri { get; set; }
+        public string LogUri { get; set; }
         /// <summary> Run command. </summary>
         public string RunCommand { get; set; }
         /// <summary> Job URL. </summary>
-        public Uri Uri { get; set; }
+        public string Uri { get; set; }
         /// <summary> Extra Info URL. </summary>
-        public Uri ExtraInfoUri { get; set; }
+        public string ExtraInfoUri { get; set; }
         /// <summary> Job type. </summary>
         public WebJobType? WebJobType { get; set; }
         /// <summary> Error information. </summary>

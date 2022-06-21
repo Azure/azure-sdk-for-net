@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             Optional<Guid> tenantId = default;
             Optional<IList<string>> initialAdminObjectIds = default;
-            Optional<Uri> hsmUri = default;
+            Optional<string> hsmUri = default;
             Optional<bool> enableSoftDelete = default;
             Optional<int> softDeleteRetentionInDays = default;
             Optional<bool> enablePurgeProtection = default;
@@ -109,12 +109,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("hsmUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        hsmUri = null;
-                        continue;
-                    }
-                    hsmUri = new Uri(property.Value.GetString());
+                    hsmUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("enableSoftDelete"))

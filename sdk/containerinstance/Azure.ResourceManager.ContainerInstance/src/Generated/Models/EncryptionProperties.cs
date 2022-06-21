@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="keyName"> The encryption key name. </param>
         /// <param name="keyVersion"> The encryption key version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUri"/>, <paramref name="keyName"/> or <paramref name="keyVersion"/> is null. </exception>
-        public EncryptionProperties(Uri vaultBaseUri, string keyName, string keyVersion)
+        public EncryptionProperties(string vaultBaseUri, string keyName, string keyVersion)
         {
             if (vaultBaseUri == null)
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> The keyvault base url. </summary>
-        public Uri VaultBaseUri { get; set; }
+        public string VaultBaseUri { get; set; }
         /// <summary> The encryption key name. </summary>
         public string KeyName { get; set; }
         /// <summary> The encryption key version. </summary>

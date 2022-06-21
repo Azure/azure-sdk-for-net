@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -34,7 +33,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             if (Optional.IsDefined(LandingUri))
             {
                 writer.WritePropertyName("landingURL");
-                writer.WriteStringValue(LandingUri.AbsoluteUri);
+                writer.WriteStringValue(LandingUri);
             }
             writer.WriteEndObject();
         }
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             Optional<string> environmentId = default;
             Optional<string> ingestionKey = default;
             Optional<string> logsIngestionEndpoint = default;
-            Optional<Uri> landingURL = default;
+            Optional<string> landingURL = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("environmentId"))
@@ -64,12 +63,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
                 if (property.NameEquals("landingURL"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        landingURL = null;
-                        continue;
-                    }
-                    landingURL = new Uri(property.Value.GetString());
+                    landingURL = property.Value.GetString();
                     continue;
                 }
             }

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,17 +14,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static BuildResultLog DeserializeBuildResultLog(JsonElement element)
         {
-            Optional<Uri> blobUrl = default;
+            Optional<string> blobUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blobUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        blobUrl = null;
-                        continue;
-                    }
-                    blobUrl = new Uri(property.Value.GetString());
+                    blobUrl = property.Value.GetString();
                     continue;
                 }
             }

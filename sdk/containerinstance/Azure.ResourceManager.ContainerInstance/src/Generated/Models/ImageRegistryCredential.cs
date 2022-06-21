@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="password"> The password for the private registry. </param>
         /// <param name="identity"> The identity for the private registry. </param>
         /// <param name="identityUri"> The identity URL for the private registry. </param>
-        internal ImageRegistryCredential(string server, string username, string password, string identity, Uri identityUri)
+        internal ImageRegistryCredential(string server, string username, string password, string identity, string identityUri)
         {
             Server = server;
             Username = username;
@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The identity for the private registry. </summary>
         public string Identity { get; set; }
         /// <summary> The identity URL for the private registry. </summary>
-        public Uri IdentityUri { get; set; }
+        public string IdentityUri { get; set; }
     }
 }

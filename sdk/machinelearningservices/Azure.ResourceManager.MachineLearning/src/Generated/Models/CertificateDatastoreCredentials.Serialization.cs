@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AuthorityUri != null)
                 {
                     writer.WritePropertyName("authorityUrl");
-                    writer.WriteStringValue(AuthorityUri.AbsoluteUri);
+                    writer.WriteStringValue(AuthorityUri);
                 }
                 else
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ResourceUri != null)
                 {
                     writer.WritePropertyName("resourceUrl");
-                    writer.WriteStringValue(ResourceUri.AbsoluteUri);
+                    writer.WriteStringValue(ResourceUri);
                 }
                 else
                 {
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static CertificateDatastoreCredentials DeserializeCertificateDatastoreCredentials(JsonElement element)
         {
-            Optional<Uri> authorityUrl = default;
+            Optional<string> authorityUrl = default;
             Guid clientId = default;
-            Optional<Uri> resourceUrl = default;
+            Optional<string> resourceUrl = default;
             CertificateDatastoreSecrets secrets = default;
             Guid tenantId = default;
             string thumbprint = default;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         authorityUrl = null;
                         continue;
                     }
-                    authorityUrl = new Uri(property.Value.GetString());
+                    authorityUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("clientId"))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         resourceUrl = null;
                         continue;
                     }
-                    resourceUrl = new Uri(property.Value.GetString());
+                    resourceUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("secrets"))

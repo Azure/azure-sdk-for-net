@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(BiztalkUri))
             {
                 writer.WritePropertyName("biztalkUri");
-                writer.WriteStringValue(BiztalkUri.AbsoluteUri);
+                writer.WriteStringValue(BiztalkUri);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -64,13 +63,13 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> entityName = default;
             Optional<string> entityConnectionString = default;
             Optional<string> resourceConnectionString = default;
             Optional<string> hostname = default;
             Optional<int> port = default;
-            Optional<Uri> biztalkUri = default;
+            Optional<string> biztalkUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -95,6 +94,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -139,19 +143,14 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("biztalkUri"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                biztalkUri = null;
-                                continue;
-                            }
-                            biztalkUri = new Uri(property0.Value.GetString());
+                            biztalkUri = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new RelayServiceConnectionEntityData(id, name, type, systemData, kind.Value, entityName.Value, entityConnectionString.Value, resourceConnectionString.Value, hostname.Value, Optional.ToNullable(port), biztalkUri.Value);
+            return new RelayServiceConnectionEntityData(id, name, type, systemData.Value, kind.Value, entityName.Value, entityConnectionString.Value, resourceConnectionString.Value, hostname.Value, Optional.ToNullable(port), biztalkUri.Value);
         }
     }
 }

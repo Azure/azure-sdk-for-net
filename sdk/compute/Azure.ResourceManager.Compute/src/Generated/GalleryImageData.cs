@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="features"> A list of gallery image features. </param>
         /// <param name="architecture"> The architecture of the image. Applicable to OS disks only. </param>
-        internal GalleryImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, OperatingSystemTypes? osType, OperatingSystemStateTypes? osState, HyperVGeneration? hyperVGeneration, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, ImagePurchasePlan purchasePlan, GalleryProvisioningState? provisioningState, IList<GalleryImageFeature> features, ArchitectureTypes? architecture) : base(id, name, resourceType, systemData, tags, location)
+        internal GalleryImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string eula, string privacyStatementUri, string releaseNoteUri, OperatingSystemTypes? osType, OperatingSystemStateTypes? osState, HyperVGeneration? hyperVGeneration, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, ImagePurchasePlan purchasePlan, GalleryProvisioningState? provisioningState, IList<GalleryImageFeature> features, ArchitectureTypes? architecture) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
             Eula = eula;
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The Eula agreement for the gallery image definition. </summary>
         public string Eula { get; set; }
         /// <summary> The privacy statement uri. </summary>
-        public Uri PrivacyStatementUri { get; set; }
+        public string PrivacyStatementUri { get; set; }
         /// <summary> The release note uri. </summary>
-        public Uri ReleaseNoteUri { get; set; }
+        public string ReleaseNoteUri { get; set; }
         /// <summary> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </summary>
         public OperatingSystemTypes? OSType { get; set; }
         /// <summary> This property allows the user to specify whether the virtual machines created under this image are &apos;Generalized&apos; or &apos;Specialized&apos;. </summary>

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -17,7 +16,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         internal static CostInformation DeserializeCostInformation(JsonElement element)
         {
             Optional<IReadOnlyList<BillingMeterDetails>> billingMeterDetails = default;
-            Optional<Uri> billingInfoUrl = default;
+            Optional<string> billingInfoUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("billingMeterDetails"))
@@ -37,12 +36,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (property.NameEquals("billingInfoUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        billingInfoUrl = null;
-                        continue;
-                    }
-                    billingInfoUrl = new Uri(property.Value.GetString());
+                    billingInfoUrl = property.Value.GetString();
                     continue;
                 }
             }

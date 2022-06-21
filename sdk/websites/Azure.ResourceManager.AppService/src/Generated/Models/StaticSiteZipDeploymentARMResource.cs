@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="deploymentTitle"> A title to label the deployment. </param>
         /// <param name="provider"> The provider submitting this deployment. </param>
         /// <param name="functionLanguage"> The language of the api content, if it exists. </param>
-        internal StaticSiteZipDeploymentARMResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, Uri appZipUri, Uri apiZipUri, string deploymentTitle, string provider, string functionLanguage) : base(id, name, resourceType, systemData, kind)
+        internal StaticSiteZipDeploymentARMResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string appZipUri, string apiZipUri, string deploymentTitle, string provider, string functionLanguage) : base(id, name, resourceType, systemData, kind)
         {
             AppZipUri = appZipUri;
             ApiZipUri = apiZipUri;
@@ -40,9 +39,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> URL for the zipped app content. </summary>
-        public Uri AppZipUri { get; set; }
+        public string AppZipUri { get; set; }
         /// <summary> URL for the zipped api content. </summary>
-        public Uri ApiZipUri { get; set; }
+        public string ApiZipUri { get; set; }
         /// <summary> A title to label the deployment. </summary>
         public string DeploymentTitle { get; set; }
         /// <summary> The provider submitting this deployment. </summary>

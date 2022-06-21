@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="finishedTimeStamp"> Timestamp when this backup finished. </param>
         /// <param name="correlationId"> Unique correlation identifier. Please use this along with the timestamp while communicating with Azure support. </param>
         /// <param name="websiteSizeInBytes"> Size of the original web app which has been backed up. </param>
-        internal BackupItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? backupId, Uri storageAccountUri, string blobName, string namePropertiesName, BackupItemStatus? status, long? sizeInBytes, DateTimeOffset? created, string log, IReadOnlyList<DatabaseBackupSetting> databases, bool? scheduled, DateTimeOffset? lastRestoreTimeStamp, DateTimeOffset? finishedTimeStamp, string correlationId, long? websiteSizeInBytes) : base(id, name, resourceType, systemData, kind)
+        internal BackupItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? backupId, string storageAccountUri, string blobName, string namePropertiesName, BackupItemStatus? status, long? sizeInBytes, DateTimeOffset? created, string log, IReadOnlyList<DatabaseBackupSetting> databases, bool? scheduled, DateTimeOffset? lastRestoreTimeStamp, DateTimeOffset? finishedTimeStamp, string correlationId, long? websiteSizeInBytes) : base(id, name, resourceType, systemData, kind)
         {
             BackupId = backupId;
             StorageAccountUri = storageAccountUri;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Id of the backup. </summary>
         public int? BackupId { get; }
         /// <summary> SAS URL for the storage account container which contains this backup. </summary>
-        public Uri StorageAccountUri { get; }
+        public string StorageAccountUri { get; }
         /// <summary> Name of the blob which contains data for this backup. </summary>
         public string BlobName { get; }
         /// <summary> Name of this backup. </summary>

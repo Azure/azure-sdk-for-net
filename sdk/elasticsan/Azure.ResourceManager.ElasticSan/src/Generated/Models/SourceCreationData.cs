@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Data used when creating a disk. </summary>
@@ -22,7 +20,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Initializes a new instance of SourceCreationData. </summary>
         /// <param name="createSource"> This enumerates the possible sources of a volume creation. </param>
         /// <param name="sourceUri"> If createOption is Copy, this is the ARM id of the source snapshot or disk. If createOption is Restore, this is the ARM-like id of the source disk restore point. </param>
-        internal SourceCreationData(ElasticSanVolumeCreateOption createSource, Uri sourceUri)
+        internal SourceCreationData(ElasticSanVolumeCreateOption createSource, string sourceUri)
         {
             CreateSource = createSource;
             SourceUri = sourceUri;
@@ -31,6 +29,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> This enumerates the possible sources of a volume creation. </summary>
         public ElasticSanVolumeCreateOption CreateSource { get; set; }
         /// <summary> If createOption is Copy, this is the ARM id of the source snapshot or disk. If createOption is Restore, this is the ARM-like id of the source disk restore point. </summary>
-        public Uri SourceUri { get; set; }
+        public string SourceUri { get; set; }
     }
 }

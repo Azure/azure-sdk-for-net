@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The information for the container exec command. </summary>
@@ -20,14 +18,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of ContainerExecResult. </summary>
         /// <param name="webSocketUri"> The uri for the exec websocket. </param>
         /// <param name="password"> The password to start the exec command. </param>
-        internal ContainerExecResult(Uri webSocketUri, string password)
+        internal ContainerExecResult(string webSocketUri, string password)
         {
             WebSocketUri = webSocketUri;
             Password = password;
         }
 
         /// <summary> The uri for the exec websocket. </summary>
-        public Uri WebSocketUri { get; }
+        public string WebSocketUri { get; }
         /// <summary> The password to start the exec command. </summary>
         public string Password { get; }
     }

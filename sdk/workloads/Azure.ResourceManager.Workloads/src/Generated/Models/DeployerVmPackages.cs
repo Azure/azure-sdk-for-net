@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Defines the url and storage account ID where deployer VM packages are uploaded. </summary>
@@ -20,14 +18,14 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of DeployerVmPackages. </summary>
         /// <param name="uri"> The URL to the deployer VM packages file. </param>
         /// <param name="storageAccountId"> The deployer VM packages storage account id. </param>
-        internal DeployerVmPackages(Uri uri, string storageAccountId)
+        internal DeployerVmPackages(string uri, string storageAccountId)
         {
             Uri = uri;
             StorageAccountId = storageAccountId;
         }
 
         /// <summary> The URL to the deployer VM packages file. </summary>
-        public Uri Uri { get; set; }
+        public string Uri { get; set; }
         /// <summary> The deployer VM packages storage account id. </summary>
         public string StorageAccountId { get; set; }
     }

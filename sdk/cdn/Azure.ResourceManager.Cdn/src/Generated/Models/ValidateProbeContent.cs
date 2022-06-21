@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of ValidateProbeContent. </summary>
         /// <param name="probeUri"> The probe URL to validate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="probeUri"/> is null. </exception>
-        public ValidateProbeContent(Uri probeUri)
+        public ValidateProbeContent(string probeUri)
         {
             if (probeUri == null)
             {
@@ -26,6 +26,6 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The probe URL to validate. </summary>
-        public Uri ProbeUri { get; }
+        public string ProbeUri { get; }
     }
 }

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -18,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("vaultUri");
-            writer.WriteStringValue(VaultUri.AbsoluteUri);
+            writer.WriteStringValue(VaultUri);
             writer.WritePropertyName("keyVaultCertName");
             writer.WriteStringValue(KeyVaultCertName);
             if (Optional.IsDefined(CertVersion))
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static KeyVaultCertificateProperties DeserializeKeyVaultCertificateProperties(JsonElement element)
         {
-            Uri vaultUri = default;
+            string vaultUri = default;
             string keyVaultCertName = default;
             Optional<string> certVersion = default;
             Optional<bool> excludePrivateKey = default;
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 if (property.NameEquals("vaultUri"))
                 {
-                    vaultUri = new Uri(property.Value.GetString());
+                    vaultUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("keyVaultCertName"))

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ServerUri))
             {
                 writer.WritePropertyName("serverUrl");
-                writer.WriteStringValue(ServerUri.AbsoluteUri);
+                writer.WriteStringValue(ServerUri);
             }
             if (Optional.IsDefined(ImageName))
             {
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static GitHubActionContainerConfiguration DeserializeGitHubActionContainerConfiguration(JsonElement element)
         {
-            Optional<Uri> serverUrl = default;
+            Optional<string> serverUrl = default;
             Optional<string> imageName = default;
             Optional<string> username = default;
             Optional<string> password = default;
@@ -49,12 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (property.NameEquals("serverUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        serverUrl = null;
-                        continue;
-                    }
-                    serverUrl = new Uri(property.Value.GetString());
+                    serverUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("imageName"))

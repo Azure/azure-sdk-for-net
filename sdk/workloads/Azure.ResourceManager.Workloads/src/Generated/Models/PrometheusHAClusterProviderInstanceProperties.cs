@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Gets or sets the PrometheusHaCluster provider properties. </summary>
@@ -24,7 +22,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="hostname"> Gets or sets the target machine name. </param>
         /// <param name="sid"> Gets or sets the cluster sid. </param>
         /// <param name="clusterName"> Gets or sets the clusterName. </param>
-        internal PrometheusHAClusterProviderInstanceProperties(string providerType, Uri prometheusUri, string hostname, string sid, string clusterName) : base(providerType)
+        internal PrometheusHAClusterProviderInstanceProperties(string providerType, string prometheusUri, string hostname, string sid, string clusterName) : base(providerType)
         {
             PrometheusUri = prometheusUri;
             Hostname = hostname;
@@ -34,7 +32,7 @@ namespace Azure.ResourceManager.Workloads.Models
         }
 
         /// <summary> URL of the Node Exporter endpoint. </summary>
-        public Uri PrometheusUri { get; set; }
+        public string PrometheusUri { get; set; }
         /// <summary> Gets or sets the target machine name. </summary>
         public string Hostname { get; set; }
         /// <summary> Gets or sets the cluster sid. </summary>

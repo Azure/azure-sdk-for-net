@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ArmApplicationNotificationEndpoint. </summary>
         /// <param name="uri"> The managed application notification endpoint uri. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public ArmApplicationNotificationEndpoint(Uri uri)
+        public ArmApplicationNotificationEndpoint(string uri)
         {
             if (uri == null)
             {
@@ -26,6 +26,6 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The managed application notification endpoint uri. </summary>
-        public Uri Uri { get; set; }
+        public string Uri { get; set; }
     }
 }

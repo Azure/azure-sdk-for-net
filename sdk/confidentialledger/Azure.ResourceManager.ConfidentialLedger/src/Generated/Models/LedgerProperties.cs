@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="provisioningState"> Provisioning state of Ledger Resource. </param>
         /// <param name="aadBasedSecurityPrincipals"> Array of all AAD based Security Principals. </param>
         /// <param name="certBasedSecurityPrincipals"> Array of all cert based Security Principals. </param>
-        internal LedgerProperties(string ledgerName, Uri ledgerUri, Uri identityServiceUri, string ledgerInternalNamespace, LedgerType? ledgerType, LedgerProvisioningState? provisioningState, IList<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals, IList<CertBasedSecurityPrincipal> certBasedSecurityPrincipals)
+        internal LedgerProperties(string ledgerName, string ledgerUri, string identityServiceUri, string ledgerInternalNamespace, LedgerType? ledgerType, LedgerProvisioningState? provisioningState, IList<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals, IList<CertBasedSecurityPrincipal> certBasedSecurityPrincipals)
         {
             LedgerName = ledgerName;
             LedgerUri = ledgerUri;
@@ -45,9 +44,9 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <summary> Unique name for the Confidential Ledger. </summary>
         public string LedgerName { get; }
         /// <summary> Endpoint for calling Ledger Service. </summary>
-        public Uri LedgerUri { get; }
+        public string LedgerUri { get; }
         /// <summary> Endpoint for accessing network identity. </summary>
-        public Uri IdentityServiceUri { get; }
+        public string IdentityServiceUri { get; }
         /// <summary> Internal namespace for the Ledger. </summary>
         public string LedgerInternalNamespace { get; }
         /// <summary> Type of Confidential Ledger. </summary>

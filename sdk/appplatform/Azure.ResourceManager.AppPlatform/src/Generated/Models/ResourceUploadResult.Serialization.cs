@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         internal static ResourceUploadResult DeserializeResourceUploadResult(JsonElement element)
         {
             Optional<string> relativePath = default;
-            Optional<Uri> uploadUrl = default;
+            Optional<string> uploadUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("relativePath"))
@@ -26,12 +25,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (property.NameEquals("uploadUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        uploadUrl = null;
-                        continue;
-                    }
-                    uploadUrl = new Uri(property.Value.GetString());
+                    uploadUrl = property.Value.GetString();
                     continue;
                 }
             }

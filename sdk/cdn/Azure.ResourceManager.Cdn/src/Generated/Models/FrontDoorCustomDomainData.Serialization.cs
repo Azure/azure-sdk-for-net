@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> profileName = default;
             Optional<FrontDoorCustomDomainHttpsContent> tlsSettings = default;
             Optional<WritableSubResource> azureDnsZone = default;
@@ -85,6 +85,11 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -181,7 +186,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new FrontDoorCustomDomainData(id, name, type, systemData, profileName.Value, tlsSettings.Value, azureDnsZone, preValidatedCustomDomainResourceId.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), Optional.ToNullable(domainValidationState), hostName.Value, validationProperties.Value);
+            return new FrontDoorCustomDomainData(id, name, type, systemData.Value, profileName.Value, tlsSettings.Value, azureDnsZone, preValidatedCustomDomainResourceId.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), Optional.ToNullable(domainValidationState), hostName.Value, validationProperties.Value);
         }
     }
 }

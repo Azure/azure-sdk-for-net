@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WritePropertyName("intervalLength");
             writer.WriteStringValue(IntervalLength.ToSerialString());
             writer.WritePropertyName("blobContainerSasUri");
-            writer.WriteStringValue(BlobContainerSasUri.AbsoluteUri);
+            writer.WriteStringValue(BlobContainerSasUri);
             writer.WritePropertyName("fromTime");
             writer.WriteStringValue(FromTime, "O");
             writer.WritePropertyName("toTime");

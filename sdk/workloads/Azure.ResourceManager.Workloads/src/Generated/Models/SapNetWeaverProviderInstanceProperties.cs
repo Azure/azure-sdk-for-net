@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="sapClientId"> Gets or sets the SAP Client ID. </param>
         /// <param name="sapPortNumber"> Gets or sets the SAP HTTP port number. </param>
         /// <param name="sapSslCertificateUri"> Gets or sets the blob URI to SSL certificate for the SAP system. </param>
-        internal SapNetWeaverProviderInstanceProperties(string providerType, string sapSid, string sapHostname, string sapInstanceNr, IList<string> sapHostFileEntries, string sapUsername, string sapPassword, Uri sapPasswordUri, string sapClientId, string sapPortNumber, Uri sapSslCertificateUri) : base(providerType)
+        internal SapNetWeaverProviderInstanceProperties(string providerType, string sapSid, string sapHostname, string sapInstanceNr, IList<string> sapHostFileEntries, string sapUsername, string sapPassword, string sapPasswordUri, string sapClientId, string sapPortNumber, string sapSslCertificateUri) : base(providerType)
         {
             SapSid = sapSid;
             SapHostname = sapHostname;
@@ -61,12 +60,12 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Sets the SAP password. </summary>
         public string SapPassword { get; set; }
         /// <summary> Gets or sets the key vault URI to secret with the SAP password. </summary>
-        public Uri SapPasswordUri { get; set; }
+        public string SapPasswordUri { get; set; }
         /// <summary> Gets or sets the SAP Client ID. </summary>
         public string SapClientId { get; set; }
         /// <summary> Gets or sets the SAP HTTP port number. </summary>
         public string SapPortNumber { get; set; }
         /// <summary> Gets or sets the blob URI to SSL certificate for the SAP system. </summary>
-        public Uri SapSslCertificateUri { get; set; }
+        public string SapSslCertificateUri { get; set; }
     }
 }

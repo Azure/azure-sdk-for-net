@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Information about the formal API definition for the app. </summary>
         internal ApiDefinitionInfo ApiDefinition { get; set; }
         /// <summary> The URL of the API definition. </summary>
-        public Uri ApiDefinitionUri
+        public string ApiDefinitionUri
         {
             get => ApiDefinition is null ? default : ApiDefinition.Uri;
             set

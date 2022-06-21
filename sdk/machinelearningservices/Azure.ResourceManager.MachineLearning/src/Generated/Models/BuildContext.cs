@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// &lt;seealso href=&quot;https://docs.docker.com/engine/reference/commandline/build/#extended-description&quot; /&gt;
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contextUri"/> is null. </exception>
-        public BuildContext(Uri contextUri)
+        public BuildContext(string contextUri)
         {
             if (contextUri == null)
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Path to the Dockerfile in the build context.
         /// &lt;seealso href=&quot;https://docs.docker.com/engine/reference/builder/&quot; /&gt;
         /// </param>
-        internal BuildContext(Uri contextUri, string dockerfilePath)
+        internal BuildContext(string contextUri, string dockerfilePath)
         {
             ContextUri = contextUri;
             DockerfilePath = dockerfilePath;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] URI of the Docker build context used to build the image. Supports blob URIs on environment creation and may return blob or Git URIs.
         /// &lt;seealso href=&quot;https://docs.docker.com/engine/reference/commandline/build/#extended-description&quot; /&gt;
         /// </summary>
-        public Uri ContextUri { get; set; }
+        public string ContextUri { get; set; }
         /// <summary>
         /// Path to the Dockerfile in the build context.
         /// &lt;seealso href=&quot;https://docs.docker.com/engine/reference/builder/&quot; /&gt;

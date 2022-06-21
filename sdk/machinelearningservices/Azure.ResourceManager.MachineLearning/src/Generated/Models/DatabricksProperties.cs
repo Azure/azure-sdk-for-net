@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Properties of Databricks. </summary>
@@ -20,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of DatabricksProperties. </summary>
         /// <param name="databricksAccessToken"> Databricks access token. </param>
         /// <param name="workspaceUri"> Workspace Url. </param>
-        internal DatabricksProperties(string databricksAccessToken, Uri workspaceUri)
+        internal DatabricksProperties(string databricksAccessToken, string workspaceUri)
         {
             DatabricksAccessToken = databricksAccessToken;
             WorkspaceUri = workspaceUri;
@@ -29,6 +27,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Databricks access token. </summary>
         public string DatabricksAccessToken { get; set; }
         /// <summary> Workspace Url. </summary>
-        public Uri WorkspaceUri { get; set; }
+        public string WorkspaceUri { get; set; }
     }
 }

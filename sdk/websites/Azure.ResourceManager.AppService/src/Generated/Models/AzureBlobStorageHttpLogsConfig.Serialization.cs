@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUrl");
-                writer.WriteStringValue(SasUri.AbsoluteUri);
+                writer.WriteStringValue(SasUri);
             }
             if (Optional.IsDefined(RetentionInDays))
             {
@@ -36,19 +35,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AzureBlobStorageHttpLogsConfig DeserializeAzureBlobStorageHttpLogsConfig(JsonElement element)
         {
-            Optional<Uri> sasUrl = default;
+            Optional<string> sasUrl = default;
             Optional<int> retentionInDays = default;
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sasUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        sasUrl = null;
-                        continue;
-                    }
-                    sasUrl = new Uri(property.Value.GetString());
+                    sasUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("retentionInDays"))

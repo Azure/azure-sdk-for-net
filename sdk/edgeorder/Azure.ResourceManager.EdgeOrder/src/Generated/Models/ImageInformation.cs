@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Image for the product. </summary>
@@ -20,7 +18,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of ImageInformation. </summary>
         /// <param name="imageType"> Type of the image. </param>
         /// <param name="imageUri"> Url of the image. </param>
-        internal ImageInformation(ImageType? imageType, Uri imageUri)
+        internal ImageInformation(ImageType? imageType, string imageUri)
         {
             ImageType = imageType;
             ImageUri = imageUri;
@@ -29,6 +27,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Type of the image. </summary>
         public ImageType? ImageType { get; }
         /// <summary> Url of the image. </summary>
-        public Uri ImageUri { get; }
+        public string ImageUri { get; }
     }
 }

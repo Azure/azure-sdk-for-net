@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of WebhookNotification. </summary>
         /// <param name="serviceUri"> the service address to receive the notification. </param>
         /// <param name="properties"> a property bag of settings. This value can be empty. </param>
-        internal WebhookNotification(Uri serviceUri, IDictionary<string, string> properties)
+        internal WebhookNotification(string serviceUri, IDictionary<string, string> properties)
         {
             ServiceUri = serviceUri;
             Properties = properties;
         }
 
         /// <summary> the service address to receive the notification. </summary>
-        public Uri ServiceUri { get; set; }
+        public string ServiceUri { get; set; }
         /// <summary> a property bag of settings. This value can be empty. </summary>
         public IDictionary<string, string> Properties { get; }
     }

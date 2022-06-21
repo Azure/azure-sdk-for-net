@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MLTableJobOutput. </summary>
@@ -23,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
         /// <param name="mode"> Output Asset Delivery Mode. </param>
         /// <param name="uri"> Output Asset URI. </param>
-        internal MLTableJobOutput(string description, JobOutputType jobOutputType, OutputDeliveryMode? mode, Uri uri) : base(description, jobOutputType)
+        internal MLTableJobOutput(string description, JobOutputType jobOutputType, OutputDeliveryMode? mode, string uri) : base(description, jobOutputType)
         {
             Mode = mode;
             Uri = uri;
@@ -33,6 +31,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Output Asset Delivery Mode. </summary>
         public OutputDeliveryMode? Mode { get; set; }
         /// <summary> Output Asset URI. </summary>
-        public Uri Uri { get; set; }
+        public string Uri { get; set; }
     }
 }

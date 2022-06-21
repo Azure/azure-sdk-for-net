@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The instance view of a virtual machine boot diagnostics. </summary>
@@ -21,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="consoleScreenshotBlobUri"> The console screenshot blob URI. &lt;br&gt;&lt;br&gt;NOTE: This will **not** be set if boot diagnostics is currently enabled with managed storage. </param>
         /// <param name="serialConsoleLogBlobUri"> The serial console log blob Uri. &lt;br&gt;&lt;br&gt;NOTE: This will **not** be set if boot diagnostics is currently enabled with managed storage. </param>
         /// <param name="status"> The boot diagnostics status information for the VM. &lt;br&gt;&lt;br&gt; NOTE: It will be set only if there are errors encountered in enabling boot diagnostics. </param>
-        internal BootDiagnosticsInstanceView(Uri consoleScreenshotBlobUri, Uri serialConsoleLogBlobUri, InstanceViewStatus status)
+        internal BootDiagnosticsInstanceView(string consoleScreenshotBlobUri, string serialConsoleLogBlobUri, InstanceViewStatus status)
         {
             ConsoleScreenshotBlobUri = consoleScreenshotBlobUri;
             SerialConsoleLogBlobUri = serialConsoleLogBlobUri;
@@ -29,9 +27,9 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The console screenshot blob URI. &lt;br&gt;&lt;br&gt;NOTE: This will **not** be set if boot diagnostics is currently enabled with managed storage. </summary>
-        public Uri ConsoleScreenshotBlobUri { get; }
+        public string ConsoleScreenshotBlobUri { get; }
         /// <summary> The serial console log blob Uri. &lt;br&gt;&lt;br&gt;NOTE: This will **not** be set if boot diagnostics is currently enabled with managed storage. </summary>
-        public Uri SerialConsoleLogBlobUri { get; }
+        public string SerialConsoleLogBlobUri { get; }
         /// <summary> The boot diagnostics status information for the VM. &lt;br&gt;&lt;br&gt; NOTE: It will be set only if there are errors encountered in enabling boot diagnostics. </summary>
         public InstanceViewStatus Status { get; }
     }

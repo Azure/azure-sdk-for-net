@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Gets or sets the DB2 provider properties. </summary>
@@ -27,7 +25,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="dbPassword"> Gets or sets the db2 database password. </param>
         /// <param name="dbPasswordUri"> Gets or sets the key vault URI to secret with the database password. </param>
         /// <param name="sapSid"> Gets or sets the SAP System Identifier. </param>
-        internal DB2ProviderInstanceProperties(string providerType, string hostname, string dbName, string dbPort, string dbUsername, string dbPassword, Uri dbPasswordUri, string sapSid) : base(providerType)
+        internal DB2ProviderInstanceProperties(string providerType, string hostname, string dbName, string dbPort, string dbUsername, string dbPassword, string dbPasswordUri, string sapSid) : base(providerType)
         {
             Hostname = hostname;
             DBName = dbName;
@@ -50,7 +48,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Gets or sets the db2 database password. </summary>
         public string DBPassword { get; set; }
         /// <summary> Gets or sets the key vault URI to secret with the database password. </summary>
-        public Uri DBPasswordUri { get; set; }
+        public string DBPasswordUri { get; set; }
         /// <summary> Gets or sets the SAP System Identifier. </summary>
         public string SapSid { get; set; }
     }

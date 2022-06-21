@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,18 +14,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static ContainerAttachResult DeserializeContainerAttachResult(JsonElement element)
         {
-            Optional<Uri> webSocketUri = default;
+            Optional<string> webSocketUri = default;
             Optional<string> password = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("webSocketUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        webSocketUri = null;
-                        continue;
-                    }
-                    webSocketUri = new Uri(property.Value.GetString());
+                    webSocketUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("password"))

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="name"> The name of the config server settings error record. </param>
         /// <param name="uri"> The uri of the config server settings error record. </param>
         /// <param name="messages"> The detail error messages of the record. </param>
-        internal ConfigServerSettingsErrorRecord(string name, Uri uri, IReadOnlyList<string> messages)
+        internal ConfigServerSettingsErrorRecord(string name, string uri, IReadOnlyList<string> messages)
         {
             Name = name;
             Uri = uri;
@@ -34,7 +33,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> The name of the config server settings error record. </summary>
         public string Name { get; }
         /// <summary> The uri of the config server settings error record. </summary>
-        public Uri Uri { get; }
+        public string Uri { get; }
         /// <summary> The detail error messages of the record. </summary>
         public IReadOnlyList<string> Messages { get; }
     }

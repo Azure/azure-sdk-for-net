@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> storageAccountResourceId = default;
             Optional<string> location = default;
             Optional<string> restoreReference = default;
@@ -52,6 +52,11 @@ namespace Azure.ResourceManager.Storage
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -93,7 +98,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new DeletedAccountData(id, name, type, systemData, storageAccountResourceId.Value, location.Value, restoreReference.Value, creationTime.Value, deletionTime.Value);
+            return new DeletedAccountData(id, name, type, systemData.Value, storageAccountResourceId.Value, location.Value, restoreReference.Value, creationTime.Value, deletionTime.Value);
         }
     }
 }

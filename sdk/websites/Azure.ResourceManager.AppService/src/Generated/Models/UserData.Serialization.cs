@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(ScmUri))
             {
                 writer.WritePropertyName("scmUri");
-                writer.WriteStringValue(ScmUri.AbsoluteUri);
+                writer.WriteStringValue(ScmUri);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -59,12 +58,12 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> publishingUserName = default;
             Optional<string> publishingPassword = default;
             Optional<string> publishingPasswordHash = default;
             Optional<string> publishingPasswordHashSalt = default;
-            Optional<Uri> scmUri = default;
+            Optional<string> scmUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -89,6 +88,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -123,19 +127,14 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("scmUri"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                scmUri = null;
-                                continue;
-                            }
-                            scmUri = new Uri(property0.Value.GetString());
+                            scmUri = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new UserData(id, name, type, systemData, kind.Value, publishingUserName.Value, publishingPassword.Value, publishingPasswordHash.Value, publishingPasswordHashSalt.Value, scmUri.Value);
+            return new UserData(id, name, type, systemData.Value, kind.Value, publishingUserName.Value, publishingPassword.Value, publishingPasswordHash.Value, publishingPasswordHashSalt.Value, scmUri.Value);
         }
     }
 }

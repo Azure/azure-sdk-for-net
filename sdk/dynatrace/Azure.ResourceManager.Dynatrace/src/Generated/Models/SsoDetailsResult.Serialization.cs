@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -17,8 +16,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
         internal static SsoDetailsResult DeserializeSsoDetailsResult(JsonElement element)
         {
             Optional<SsoStatus> isSsoEnabled = default;
-            Optional<Uri> metadataUrl = default;
-            Optional<Uri> singleSignOnUrl = default;
+            Optional<string> metadataUrl = default;
+            Optional<string> singleSignOnUrl = default;
             Optional<IReadOnlyList<string>> aadDomains = default;
             Optional<IReadOnlyList<string>> adminUsers = default;
             foreach (var property in element.EnumerateObject())
@@ -35,22 +34,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
                 if (property.NameEquals("metadataUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        metadataUrl = null;
-                        continue;
-                    }
-                    metadataUrl = new Uri(property.Value.GetString());
+                    metadataUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("singleSignOnUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        singleSignOnUrl = null;
-                        continue;
-                    }
-                    singleSignOnUrl = new Uri(property.Value.GetString());
+                    singleSignOnUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("aadDomains"))

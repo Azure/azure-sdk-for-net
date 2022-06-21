@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SecretUri))
             {
                 writer.WritePropertyName("secretUrl");
-                writer.WriteStringValue(SecretUri.AbsoluteUri);
+                writer.WriteStringValue(SecretUri);
             }
             writer.WriteEndObject();
         }
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static CloudServiceVaultAndSecretReference DeserializeCloudServiceVaultAndSecretReference(JsonElement element)
         {
             Optional<WritableSubResource> sourceVault = default;
-            Optional<Uri> secretUrl = default;
+            Optional<string> secretUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceVault"))
@@ -48,12 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("secretUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        secretUrl = null;
-                        continue;
-                    }
-                    secretUrl = new Uri(property.Value.GetString());
+                    secretUrl = property.Value.GetString();
                     continue;
                 }
             }

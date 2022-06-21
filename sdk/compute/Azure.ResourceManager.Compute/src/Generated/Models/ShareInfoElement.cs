@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The ShareInfoElement. </summary>
@@ -19,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of ShareInfoElement. </summary>
         /// <param name="vmUri"> A relative URI containing the ID of the VM that has the disk attached. </param>
-        internal ShareInfoElement(Uri vmUri)
+        internal ShareInfoElement(string vmUri)
         {
             VmUri = vmUri;
         }
 
         /// <summary> A relative URI containing the ID of the VM that has the disk attached. </summary>
-        public Uri VmUri { get; }
+        public string VmUri { get; }
     }
 }

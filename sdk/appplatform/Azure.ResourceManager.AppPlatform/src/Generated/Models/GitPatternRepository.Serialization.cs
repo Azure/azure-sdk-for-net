@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("uri");
-            writer.WriteStringValue(Uri.AbsoluteUri);
+            writer.WriteStringValue(Uri);
             if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label");
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             string name = default;
             Optional<IList<string>> pattern = default;
-            Uri uri = default;
+            string uri = default;
             Optional<string> label = default;
             Optional<IList<string>> searchPaths = default;
             Optional<string> username = default;
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (property.NameEquals("uri"))
                 {
-                    uri = new Uri(property.Value.GetString());
+                    uri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("label"))

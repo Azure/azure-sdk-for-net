@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("functionName");
             writer.WriteStringValue(FunctionName);
             writer.WritePropertyName("httpTriggerUrl");
-            writer.WriteStringValue(HttpTriggerUri.AbsoluteUri);
+            writer.WriteStringValue(HttpTriggerUri);
             if (Optional.IsDefined(UseCommonAlertSchema))
             {
                 writer.WritePropertyName("useCommonAlertSchema");
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string name = default;
             string functionAppResourceId = default;
             string functionName = default;
-            Uri httpTriggerUrl = default;
+            string httpTriggerUrl = default;
             Optional<bool> useCommonAlertSchema = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("httpTriggerUrl"))
                 {
-                    httpTriggerUrl = new Uri(property.Value.GetString());
+                    httpTriggerUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("useCommonAlertSchema"))

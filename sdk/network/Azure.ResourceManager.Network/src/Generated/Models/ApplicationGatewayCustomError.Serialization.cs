@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(CustomErrorPageUri))
             {
                 writer.WritePropertyName("customErrorPageUrl");
-                writer.WriteStringValue(CustomErrorPageUri.AbsoluteUri);
+                writer.WriteStringValue(CustomErrorPageUri);
             }
             writer.WriteEndObject();
         }
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static ApplicationGatewayCustomError DeserializeApplicationGatewayCustomError(JsonElement element)
         {
             Optional<ApplicationGatewayCustomErrorStatusCode> statusCode = default;
-            Optional<Uri> customErrorPageUrl = default;
+            Optional<string> customErrorPageUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statusCode"))
@@ -47,12 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("customErrorPageUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        customErrorPageUrl = null;
-                        continue;
-                    }
-                    customErrorPageUrl = new Uri(property.Value.GetString());
+                    customErrorPageUrl = property.Value.GetString();
                     continue;
                 }
             }

@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(KeyVaultKeyUri))
             {
                 writer.WritePropertyName("keyVaultKeyUri");
-                writer.WriteStringValue(KeyVaultKeyUri.AbsoluteUri);
+                writer.WriteStringValue(KeyVaultKeyUri);
             }
             if (Optional.IsDefined(DefaultIdentity))
             {

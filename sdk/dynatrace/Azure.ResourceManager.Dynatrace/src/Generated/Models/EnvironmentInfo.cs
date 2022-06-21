@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> Dynatrace Environment Information. </summary>
@@ -22,7 +20,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="ingestionKey"> Ingestion key of the environment. </param>
         /// <param name="logsIngestionEndpoint"> Ingestion endpoint used for sending logs. </param>
         /// <param name="landingUri"> Landing URL for Dynatrace environment. </param>
-        internal EnvironmentInfo(string environmentId, string ingestionKey, string logsIngestionEndpoint, Uri landingUri)
+        internal EnvironmentInfo(string environmentId, string ingestionKey, string logsIngestionEndpoint, string landingUri)
         {
             EnvironmentId = environmentId;
             IngestionKey = ingestionKey;
@@ -37,6 +35,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> Ingestion endpoint used for sending logs. </summary>
         public string LogsIngestionEndpoint { get; set; }
         /// <summary> Landing URL for Dynatrace environment. </summary>
-        public Uri LandingUri { get; set; }
+        public string LandingUri { get; set; }
     }
 }

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static ComputeInstanceApplication DeserializeComputeInstanceApplication(JsonElement element)
         {
             Optional<string> displayName = default;
-            Optional<Uri> endpointUri = default;
+            Optional<string> endpointUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"))
@@ -26,12 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("endpointUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        endpointUri = null;
-                        continue;
-                    }
-                    endpointUri = new Uri(property.Value.GetString());
+                    endpointUri = property.Value.GetString();
                     continue;
                 }
             }

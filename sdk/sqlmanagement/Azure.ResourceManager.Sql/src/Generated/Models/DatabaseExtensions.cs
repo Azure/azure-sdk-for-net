@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="storageKeyType"> Storage key type. </param>
         /// <param name="storageKey"> Storage key. </param>
         /// <param name="storageUri"> Storage Uri. </param>
-        internal DatabaseExtensions(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, OperationMode? operationMode, StorageKeyType? storageKeyType, string storageKey, Uri storageUri) : base(id, name, resourceType, systemData)
+        internal DatabaseExtensions(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, OperationMode? operationMode, StorageKeyType? storageKeyType, string storageKey, string storageUri) : base(id, name, resourceType, systemData)
         {
             OperationMode = operationMode;
             StorageKeyType = storageKeyType;
@@ -43,6 +42,6 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Storage key. </summary>
         public string StorageKey { get; set; }
         /// <summary> Storage Uri. </summary>
-        public Uri StorageUri { get; set; }
+        public string StorageUri { get; set; }
     }
 }
