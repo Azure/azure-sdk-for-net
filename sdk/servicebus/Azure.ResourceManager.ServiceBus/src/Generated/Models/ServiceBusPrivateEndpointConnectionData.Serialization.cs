@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         internal static ServiceBusPrivateEndpointConnectionData DeserializeServiceBusPrivateEndpointConnectionData(JsonElement element)
         {
+            Optional<string> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -50,6 +51,11 @@ namespace Azure.ResourceManager.ServiceBus
             Optional<EndpointProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("location"))
+                {
+                    location = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -113,7 +119,7 @@ namespace Azure.ResourceManager.ServiceBus
                     continue;
                 }
             }
-            return new ServiceBusPrivateEndpointConnectionData(id, name, type, systemData, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new ServiceBusPrivateEndpointConnectionData(id, name, type, systemData, location.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

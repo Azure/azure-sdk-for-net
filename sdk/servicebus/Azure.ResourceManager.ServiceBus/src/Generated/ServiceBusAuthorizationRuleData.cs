@@ -13,7 +13,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing the ServiceBusAuthorizationRule data model. </summary>
-    public partial class ServiceBusAuthorizationRuleData : ResourceData
+    public partial class ServiceBusAuthorizationRuleData : ProxyResource
     {
         /// <summary> Initializes a new instance of ServiceBusAuthorizationRuleData. </summary>
         public ServiceBusAuthorizationRuleData()
@@ -26,8 +26,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="rights"> The rights associated with the rule. </param>
-        internal ServiceBusAuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<AccessRights> rights) : base(id, name, resourceType, systemData)
+        internal ServiceBusAuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, IList<AccessRights> rights) : base(id, name, resourceType, systemData, location)
         {
             Rights = rights;
         }

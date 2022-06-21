@@ -45,6 +45,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         internal static ServiceBusRuleData DeserializeServiceBusRuleData(JsonElement element)
         {
+            Optional<string> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -55,6 +56,11 @@ namespace Azure.ResourceManager.ServiceBus
             Optional<CorrelationFilter> correlationFilter = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("location"))
+                {
+                    location = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -128,7 +134,7 @@ namespace Azure.ResourceManager.ServiceBus
                     continue;
                 }
             }
-            return new ServiceBusRuleData(id, name, type, systemData, action.Value, Optional.ToNullable(filterType), sqlFilter.Value, correlationFilter.Value);
+            return new ServiceBusRuleData(id, name, type, systemData, location.Value, action.Value, Optional.ToNullable(filterType), sqlFilter.Value, correlationFilter.Value);
         }
     }
 }
