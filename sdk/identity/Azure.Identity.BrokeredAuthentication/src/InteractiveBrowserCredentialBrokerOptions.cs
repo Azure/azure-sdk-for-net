@@ -3,9 +3,7 @@
 
 using System;
 using Microsoft.Identity.Client;
-#if (NETFRAMEWORK)
-using Microsoft.Identity.Client.Desktop;
-#endif
+using Microsoft.Identity.Client.Broker;
 
 namespace Azure.Identity.BrokeredAuthentication
 {
@@ -14,15 +12,22 @@ namespace Azure.Identity.BrokeredAuthentication
     /// </summary>
     public class InteractiveBrowserCredentialBrokerOptions : InteractiveBrowserCredentialOptions, IMsalPublicClientInitializerOptions
     {
+        private IntPtr _parentWindowHandle;
+
+        /// <summary>
+        /// Creates a new instance of <see cref="InteractiveBrowserCredentialBrokerOptions"/> to configure a <see cref="InteractiveBrowserCredential"/>.
+        /// </summary>
+        /// <param name="parentWindowHandle">Handle of the parent window the system authentication broker should be docked to.</param>
+        public InteractiveBrowserCredentialBrokerOptions(IntPtr parentWindowHandle) : base()
+        {
+            _parentWindowHandle = parentWindowHandle;
+        }
+
         Action<PublicClientApplicationBuilder> IMsalPublicClientInitializerOptions.BeforeBuildClient => AddBroker;
 
         private void AddBroker(PublicClientApplicationBuilder builder)
         {
-#if (NETFRAMEWORK)
-            builder.WithWindowsBroker();
-#else
-            builder.WithBroker();
-#endif
+            builder.WithBrokerPreview().WithParentActivityOrWindow(() => _parentWindowHandle);
         }
     }
 }
