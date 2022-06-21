@@ -125,6 +125,7 @@ directive:
     transform: >
       $["x-ms-mgmt-propertyReferenceType"] = false;
       $["x-ms-mgmt-typeReferenceType"] = true;
+      $["x-csharp-formats"] = "json";
       $["x-csharp-usage"] = "model,output";
   - from: managedidentity.json
     where: $.definitions.SystemAssignedServiceIdentity
