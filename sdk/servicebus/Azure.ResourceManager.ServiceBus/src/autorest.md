@@ -16,10 +16,6 @@ override-operation-name:
   Namespaces_CheckNameAvailability: CheckServiceBusNameAvailability
   DisasterRecoveryConfigs_CheckNameAvailability: CheckDisasterRecoveryNameAvailability
 
-# temporary enable this because of a bug in modeler v4: https://github.com/Azure/autorest/issues/4524
-modelerfour:
-  lenient-model-deduplication: true
-
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
