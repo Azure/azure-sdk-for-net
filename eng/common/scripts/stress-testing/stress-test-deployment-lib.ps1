@@ -94,7 +94,17 @@ function DeployStressTests(
         Login -subscription $subscription -clusterGroup $clusterGroup -pushImages:$pushImages
     }
 
-    RunOrExitOnFailure helm repo add stress-test-charts https://stresstestcharts.blob.core.windows.net/helm/
+    $chartRepoName = 'stress-test-charts'
+    if ($LocalAddonsPath) {
+        $absAddonsPath = Resolve-Path $LocalAddonsPath
+        if (!(helm plugin list | Select-String 'file')) {
+            helm plugin add (Join-Path $absAddonsPath file-plugin)
+        }
+        RunOrExitOnFailure helm repo add --force-update $chartRepoName file://$absAddonsPath
+    } else {
+        RunOrExitOnFailure helm repo add --force-update $chartRepoName https://stresstestcharts.blob.core.windows.net/helm/
+    }
+
     Run helm repo update
     if ($LASTEXITCODE) { return $LASTEXITCODE }
 
