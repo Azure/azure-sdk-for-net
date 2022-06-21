@@ -7,11 +7,11 @@
 		<PackageId>Microsoft.Azure.Management.ServiceBus</PackageId>
 		<Description>Provides developers with libraries to create and manage Namespaces and manage Authorization Rules. Note: This client library is for ServiceBus under Azure Resource Manager.</Description>
 		<AssemblyName>Microsoft.Azure.Management.ServiceBus</AssemblyName>
-		<Version>3.0.0</Version>
+		<Version>4.0.0</Version>
 		<PackageTags>Microsoft Azure ServiceBus Management;ServiceBus;ServiceBus management;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-		Service Bus : : 2021-06-01-preview
+		Service Bus : : 2021-11-01
     1) Namespace
 		2) DisasterRecoveryConfig
 		3) Migrationconfigs
