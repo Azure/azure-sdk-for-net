@@ -40,8 +40,8 @@ namespace ServiceBus.Tests.ScenarioTests
                         Location = location,
                         Sku = new SBSku
                         {
-                            Name = SkuName.Standard,
-                            Tier = SkuTier.Standard
+                            Name = SkuName.Premium,
+                            Tier = SkuTier.Premium
                         }
                     });
 
@@ -123,8 +123,67 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.True(getSubscriptionsResponse.EnableBatchedOperations);
                 Assert.NotEqual(getSubscriptionsResponse.UpdatedAt, createSubscriptionResponse.UpdatedAt);
 
+                var subscriptionName2 = TestUtilities.GenerateName(ServiceBusManagementHelper.SubscritpitonPrefix);
+
+                var subscriptionResponse = ServiceBusManagementClient.Subscriptions.CreateOrUpdate(resourceGroup, namespaceName, topicName, subscriptionName2,
+                                            new SBSubscription()
+                                            {
+                                                LockDuration = new TimeSpan(0, 3, 0),
+                                                DeadLetteringOnMessageExpiration = true,
+                                                MaxDeliveryCount = 12,
+                                                Status = EntityStatus.Active,
+                                                EnableBatchedOperations = true,
+                                                ForwardTo = topicName1,
+                                                ForwardDeadLetteredMessagesTo = topicName1,
+                                                DefaultMessageTimeToLive = new TimeSpan(428, 3, 2, 7)
+                                            });
+
+                Assert.Equal(new TimeSpan(0, 3, 0), subscriptionResponse.LockDuration);
+                Assert.Equal(new TimeSpan(428, 3, 2, 7), subscriptionResponse.DefaultMessageTimeToLive);
+                Assert.Equal(12, subscriptionResponse.MaxDeliveryCount);
+                Assert.Equal(EntityStatus.Active, subscriptionResponse.Status);
+                Assert.Equal(topicName1, subscriptionResponse.ForwardTo);
+                Assert.Equal(topicName1, subscriptionResponse.ForwardDeadLetteredMessagesTo);
+                Assert.True(subscriptionResponse.EnableBatchedOperations);
+
+                var subscriptionName3 = TestUtilities.GenerateName(ServiceBusManagementHelper.SubscritpitonPrefix);
+
+                subscriptionResponse = ServiceBusManagementClient.Subscriptions.CreateOrUpdate(resourceGroup, namespaceName, topicName, subscriptionName3 + "$$D",
+                                        new SBSubscription()
+                                        {
+                                            AutoDeleteOnIdle = new TimeSpan(7, 0, 0, 0),
+                                            RequiresSession = true,
+                                            DeadLetteringOnFilterEvaluationExceptions = true
+                                        });
+
+
+                Assert.Equal(new TimeSpan(7, 0, 0, 0), subscriptionResponse.AutoDeleteOnIdle);
+                Assert.True(subscriptionResponse.RequiresSession);
+                Assert.True(subscriptionResponse.DeadLetteringOnFilterEvaluationExceptions);
+
+                var subscriptionName4 = "s1$$D";
+
+                subscriptionResponse = ServiceBusManagementClient.Subscriptions.CreateOrUpdate(resourceGroup, namespaceName, topicName, subscriptionName4,
+                                            new SBSubscription()
+                                            {
+                                                IsClientAffine = true,
+                                                ClientAffineProperties = new SBClientAffineProperties()
+                                                {
+                                                    ClientId = "clientid",
+                                                    IsDurable = true,
+                                                    IsShared = true
+                                                }
+                                            });
+
+                Assert.Equal("clientid", subscriptionResponse.ClientAffineProperties.ClientId);
+                Assert.True(subscriptionResponse.ClientAffineProperties.IsDurable);
+                Assert.True(subscriptionResponse.ClientAffineProperties.IsShared);
+                Assert.True(subscriptionResponse.IsClientAffine);
+
                 // Delete Created Subscription
                 ServiceBusManagementClient.Subscriptions.Delete(resourceGroup, namespaceName, topicName, subscriptionName);
+
+                Assert.Throws<ErrorResponseException>(() => ServiceBusManagementClient.Subscriptions.Get(resourceGroup, namespaceName, topicName, subscriptionName));
                 
                 // Delete Created Topics
                 ServiceBusManagementClient.Topics.Delete(resourceGroup, namespaceName, topicName);

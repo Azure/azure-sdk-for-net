@@ -67,6 +67,8 @@ namespace EventHub.Tests.ScenarioTests
                     TestUtilities.Wait(TimeSpan.FromSeconds(10));
 
                     // Standard Namespace 
+
+                    //TEST AUTOINFLATE and MINTLS
                     var createNamespaceStandardResponse = this.EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceNamestandard,
                         new EHNamespace()
                         {
@@ -82,7 +84,8 @@ namespace EventHub.Tests.ScenarioTests
                             {"tag2", "value2"}
                             },
                             IsAutoInflateEnabled = true,
-                            MaximumThroughputUnits = 40
+                            MaximumThroughputUnits = 40,
+                            MinimumTlsVersion = "1.2"
 
                         });
 
@@ -91,6 +94,32 @@ namespace EventHub.Tests.ScenarioTests
                     Assert.Equal(40, createNamespaceStandardResponse.MaximumThroughputUnits);
                     Assert.Equal(createNamespaceStandardResponse.Sku.Name, SkuName.Standard);
                     Assert.Equal(createNamespaceStandardResponse.Sku.Tier, SkuTier.Standard);
+                    Assert.True(createNamespaceStandardResponse.IsAutoInflateEnabled);
+                    Assert.Equal("1.2", createNamespaceStandardResponse.MinimumTlsVersion);
+
+                    createNamespaceStandardResponse.MinimumTlsVersion = "1.1";
+
+                    createNamespaceStandardResponse = this.EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceNamestandard, createNamespaceStandardResponse);
+
+                    Assert.NotNull(createNamespaceStandardResponse);
+                    Assert.Equal(createNamespaceStandardResponse.Name, namespaceNamestandard);
+                    Assert.Equal(40, createNamespaceStandardResponse.MaximumThroughputUnits);
+                    Assert.Equal(createNamespaceStandardResponse.Sku.Name, SkuName.Standard);
+                    Assert.Equal(createNamespaceStandardResponse.Sku.Tier, SkuTier.Standard);
+                    Assert.True(createNamespaceStandardResponse.IsAutoInflateEnabled);
+                    Assert.Equal("1.1", createNamespaceStandardResponse.MinimumTlsVersion);
+
+                    createNamespaceStandardResponse.MinimumTlsVersion = "1.0";
+
+                    createNamespaceStandardResponse = this.EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceNamestandard, createNamespaceStandardResponse);
+
+                    Assert.NotNull(createNamespaceStandardResponse);
+                    Assert.Equal(createNamespaceStandardResponse.Name, namespaceNamestandard);
+                    Assert.Equal(40, createNamespaceStandardResponse.MaximumThroughputUnits);
+                    Assert.Equal(createNamespaceStandardResponse.Sku.Name, SkuName.Standard);
+                    Assert.Equal(createNamespaceStandardResponse.Sku.Tier, SkuTier.Standard);
+                    Assert.True(createNamespaceStandardResponse.IsAutoInflateEnabled);
+                    Assert.Equal("1.0", createNamespaceStandardResponse.MinimumTlsVersion);
 
 
                     // Standard Namespace 

@@ -10,11 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class OSDiskImageEncryption : IUtf8JsonSerializable
+    public partial class OSDiskImageEncryption : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                writer.WritePropertyName("securityProfile");
+                writer.WriteObjectValue(SecurityProfile);
+            }
             if (Optional.IsDefined(DiskEncryptionSetId))
             {
                 writer.WritePropertyName("diskEncryptionSetId");
@@ -25,9 +30,20 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static OSDiskImageEncryption DeserializeOSDiskImageEncryption(JsonElement element)
         {
+            Optional<OSDiskImageSecurityProfile> securityProfile = default;
             Optional<ResourceIdentifier> diskEncryptionSetId = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("securityProfile"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    securityProfile = OSDiskImageSecurityProfile.DeserializeOSDiskImageSecurityProfile(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("diskEncryptionSetId"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -39,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new OSDiskImageEncryption(diskEncryptionSetId.Value);
+            return new OSDiskImageEncryption(diskEncryptionSetId.Value, securityProfile.Value);
         }
     }
 }

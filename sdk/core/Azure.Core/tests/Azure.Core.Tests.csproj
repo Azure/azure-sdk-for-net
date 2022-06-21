@@ -43,6 +43,7 @@
     <Compile Include="..\src\Shared\TypeBinder.cs" LinkBase="Shared" /> 
     <Compile Include="..\..\..\..\common\ManagementTestShared\Redesign\*.cs" LinkBase="Shared\Mgmt" />
     <Compile Include="..\..\Azure.Core.TestFramework\src\Instrumentation\ZeroPollingStrategy.cs" LinkBase="Shared\TestFramework" />
+    <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="PemReaderTests.Keys.cs" DependentUpon="PemReaderTests.cs" />

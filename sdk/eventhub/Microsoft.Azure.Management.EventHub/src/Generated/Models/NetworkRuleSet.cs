@@ -49,8 +49,11 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <param name="virtualNetworkRules">List VirtualNetwork Rules</param>
         /// <param name="ipRules">List of IpRules</param>
         /// <param name="publicNetworkAccess">This determines if traffic is
-        /// allowed over public network. By default it is enabled. Possible
-        /// values include: 'Enabled', 'Disabled'</param>
+        /// allowed over public network. By default it is enabled. If value is
+        /// SecuredByPerimeter then Inbound and Outbound communication is
+        /// controlled by the network security perimeter and profile's access
+        /// rules. Possible values include: 'Enabled', 'Disabled',
+        /// 'SecuredByPerimeter'</param>
         /// <param name="systemData">The system meta data relating to this
         /// resource.</param>
         public NetworkRuleSet(string id = default(string), string name = default(string), string type = default(string), string location = default(string), bool? trustedServiceAccessEnabled = default(bool?), string defaultAction = default(string), IList<NWRuleSetVirtualNetworkRules> virtualNetworkRules = default(IList<NWRuleSetVirtualNetworkRules>), IList<NWRuleSetIpRules> ipRules = default(IList<NWRuleSetIpRules>), string publicNetworkAccess = default(string), SystemData systemData = default(SystemData))
@@ -98,8 +101,10 @@ namespace Microsoft.Azure.Management.EventHub.Models
 
         /// <summary>
         /// Gets or sets this determines if traffic is allowed over public
-        /// network. By default it is enabled. Possible values include:
-        /// 'Enabled', 'Disabled'
+        /// network. By default it is enabled. If value is SecuredByPerimeter
+        /// then Inbound and Outbound communication is controlled by the
+        /// network security perimeter and profile's access rules. Possible
+        /// values include: 'Enabled', 'Disabled', 'SecuredByPerimeter'
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
         public string PublicNetworkAccess { get; set; }

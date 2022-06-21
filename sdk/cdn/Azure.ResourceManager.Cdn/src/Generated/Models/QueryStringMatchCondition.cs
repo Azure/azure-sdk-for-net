@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Initializes a new instance of QueryStringMatchCondition. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="operator"> Describes operator to be matched. </param>
-        public QueryStringMatchCondition(QueryStringMatchConditionType conditionType, QueryStringOperator @operator)
+        /// <param name="queryStringOperator"> Describes operator to be matched. </param>
+        public QueryStringMatchCondition(QueryStringMatchConditionType conditionType, QueryStringOperator queryStringOperator)
         {
             ConditionType = conditionType;
-            Operator = @operator;
+            QueryStringOperator = queryStringOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
         /// <summary> Initializes a new instance of QueryStringMatchCondition. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="operator"> Describes operator to be matched. </param>
+        /// <param name="queryStringOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal QueryStringMatchCondition(QueryStringMatchConditionType conditionType, QueryStringOperator @operator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
+        internal QueryStringMatchCondition(QueryStringMatchConditionType conditionType, QueryStringOperator queryStringOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
         {
             ConditionType = conditionType;
-            Operator = @operator;
+            QueryStringOperator = queryStringOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Gets or sets the condition type. </summary>
         public QueryStringMatchConditionType ConditionType { get; set; }
         /// <summary> Describes operator to be matched. </summary>
-        public QueryStringOperator Operator { get; set; }
+        public QueryStringOperator QueryStringOperator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>
         public bool? NegateCondition { get; set; }
         /// <summary> The match value for the condition of the delivery rule. </summary>

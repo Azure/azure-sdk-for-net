@@ -7,7 +7,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests

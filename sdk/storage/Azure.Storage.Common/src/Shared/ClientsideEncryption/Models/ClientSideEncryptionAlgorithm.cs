@@ -13,6 +13,8 @@ namespace Azure.Storage.Cryptography.Models
     {
         internal const string AesCbc256Value = "AES_CBC_256";
 
+        internal const string AesGcm256Value = "AES_GCM_256";
+
         private readonly string _value;
 
         /// <summary>
@@ -28,6 +30,11 @@ namespace Azure.Storage.Cryptography.Models
         /// AES-CBC using a 256 bit key.
         /// </summary>
         public static ClientSideEncryptionAlgorithm AesCbc256 { get; } = new ClientSideEncryptionAlgorithm(AesCbc256Value);
+
+        /// <summary>
+        /// AES-GCM using a 256 bit key.
+        /// </summary>
+        public static ClientSideEncryptionAlgorithm AesGcm256 { get; } = new ClientSideEncryptionAlgorithm(AesGcm256Value);
 
         /// <summary>
         /// Determines if two <see cref="ClientSideEncryptionAlgorithm"/> values are the same.

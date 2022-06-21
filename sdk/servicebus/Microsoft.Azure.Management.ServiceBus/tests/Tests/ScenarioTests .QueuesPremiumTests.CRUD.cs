@@ -87,8 +87,7 @@ namespace ServiceBus.Tests.ScenarioTests
                     MaxSizeInMegabytes = 1024,
                     ForwardTo = queueName1,
                     ForwardDeadLetteredMessagesTo = queueName1,
-                    MaxMessageSizeInKilobytes = 13312
-
+                    MaxMessageSizeInKilobytes = 13312,
                 };
 
                 var updateQueueResponse = ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName, updateQueuesParameter);
@@ -96,6 +95,15 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.Equal(updateQueueResponse.ForwardTo, queueName1);
                 Assert.Equal(updateQueueResponse.ForwardDeadLetteredMessagesTo, queueName1);
                 Assert.Equal(13312, updateQueueResponse.MaxMessageSizeInKilobytes);
+
+                var largeMessageQueueName = TestUtilities.GenerateName(ServiceBusManagementHelper.QueuesPrefix);
+                var largeMessageQueueResponse = ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, largeMessageQueueName,
+                    new SBQueue()
+                    {
+                        MaxMessageSizeInKilobytes = 102400
+                    });
+
+                Assert.Equal(102400, largeMessageQueueResponse.MaxMessageSizeInKilobytes);
 
                 // Delete Created Queue 
                 ServiceBusManagementClient.Queues.Delete(resourceGroup, namespaceName, queueName);

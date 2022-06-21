@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppConfiguration
     public partial class DeletedConfigurationStoreResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DeletedConfigurationStoreResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string configStoreName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string configStoreName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}";
             return new ResourceIdentifier(resourceId);

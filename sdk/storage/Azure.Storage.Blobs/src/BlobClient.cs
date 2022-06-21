@@ -1635,11 +1635,12 @@ namespace Azure.Storage.Blobs
 
                 // if content length was known, we retain that for dividing REST requests appropriately
                 expectedContentLength = content.GetLengthOrDefault();
+                IClientSideEncryptor encryptor = ClientSideEncryption.GetClientSideEncryptor();
                 if (expectedContentLength.HasValue)
                 {
-                    expectedContentLength = ClientSideEncryptor.ExpectedCiphertextLength(expectedContentLength.Value);
+                    expectedContentLength = encryptor.ExpectedOutputContentLength(expectedContentLength.Value);
                 }
-                (content, options.Metadata) = await new BlobClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
+                (content, options.Metadata) = await new BlobClientSideEncryptor(encryptor)
                     .ClientSideEncryptInternal(content, options.Metadata, async, cancellationToken).ConfigureAwait(false);
             }
 
@@ -1747,6 +1748,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
+        [ForwardsClientCalls]
         public virtual Stream OpenWrite(
 #pragma warning restore AZC0015 // Unexpected client method return type.
             bool overwrite,
@@ -1780,6 +1782,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
+        [ForwardsClientCalls]
         public virtual async Task<Stream> OpenWriteAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
             bool overwrite,
@@ -1804,19 +1807,19 @@ namespace Azure.Storage.Blobs
                 //{
                 //    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
                 //}
-
-                return await new BlobClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
+                IClientSideEncryptor encryptor = ClientSideEncryption.GetClientSideEncryptor();
+                return await new BlobClientSideEncryptor(encryptor)
                     .ClientSideEncryptionOpenWriteInternal(
                         BlockBlobClient,
                         overwrite,
-                        options.ToBlockBlobOpenWriteOptions(),
+                        options?.ToBlockBlobOpenWriteOptions(),
                         async,
                         cancellationToken).ConfigureAwait(false);
             }
 
             return await BlockBlobClient.OpenWriteInternal(
                 overwrite,
-                options.ToBlockBlobOpenWriteOptions(),
+                options?.ToBlockBlobOpenWriteOptions(),
                 async,
                 cancellationToken).ConfigureAwait(false);
         }
