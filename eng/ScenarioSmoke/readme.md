@@ -1,6 +1,4 @@
-## Management plane concepts and configurations
-
-See the documentation [here](./docs/mgmt/readme.md)
+## Configurations for ScenarioSmoke
 
 ```yaml
 # autorest-core version
