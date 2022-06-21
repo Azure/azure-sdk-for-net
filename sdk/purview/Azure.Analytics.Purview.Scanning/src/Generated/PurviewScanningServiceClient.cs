@@ -76,7 +76,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.GetKeyVaultReferenceAsync("<keyVaultName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("baseUrl").ToString());
@@ -145,7 +145,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.GetKeyVaultReference("<keyVaultName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("baseUrl").ToString());
@@ -217,7 +217,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.CreateOrUpdateKeyVaultReferenceAsync("<keyVaultName>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdateKeyVaultReferenceAsync with all parameters and request content, and how to parse the result.
@@ -235,7 +235,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.CreateOrUpdateKeyVaultReferenceAsync("<keyVaultName>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("baseUrl").ToString());
@@ -318,7 +318,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.CreateOrUpdateKeyVaultReference("<keyVaultName>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdateKeyVaultReference with all parameters and request content, and how to parse the result.
@@ -336,7 +336,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.CreateOrUpdateKeyVaultReference("<keyVaultName>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("baseUrl").ToString());
@@ -416,7 +416,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.DeleteKeyVaultReferenceAsync("<keyVaultName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("baseUrl").ToString());
@@ -485,7 +485,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.DeleteKeyVaultReference("<keyVaultName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("baseUrl").ToString());
@@ -554,7 +554,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.GetScanRulesetAsync("<scanRulesetName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
@@ -625,7 +625,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.GetScanRuleset("<scanRulesetName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
@@ -701,7 +701,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.CreateOrUpdateScanRulesetAsync("<scanRulesetName>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdateScanRulesetAsync with all parameters and request content, and how to parse the result.
@@ -717,7 +717,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.CreateOrUpdateScanRulesetAsync("<scanRulesetName>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
@@ -803,7 +803,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.CreateOrUpdateScanRuleset("<scanRulesetName>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdateScanRuleset with all parameters and request content, and how to parse the result.
@@ -819,7 +819,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.CreateOrUpdateScanRuleset("<scanRulesetName>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
@@ -900,7 +900,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.DeleteScanRulesetAsync("<scanRulesetName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
@@ -971,7 +971,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.DeleteScanRuleset("<scanRulesetName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
@@ -1042,7 +1042,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.GetSystemRulesetsForDataSourceAsync("<dataSourceType>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
@@ -1113,7 +1113,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.GetSystemRulesetsForDataSource("<dataSourceType>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
@@ -1183,7 +1183,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.GetSystemRulesetsForVersionAsync(1234);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GetSystemRulesetsForVersionAsync with all parameters, and how to parse the result.
@@ -1194,7 +1194,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.GetSystemRulesetsForVersionAsync(1234, "<dataSourceType>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
@@ -1262,7 +1262,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.GetSystemRulesetsForVersion(1234);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GetSystemRulesetsForVersion with all parameters, and how to parse the result.
@@ -1273,7 +1273,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.GetSystemRulesetsForVersion(1234, "<dataSourceType>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
@@ -1340,7 +1340,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.GetLatestSystemRulesetsAsync();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GetLatestSystemRulesetsAsync with all parameters, and how to parse the result.
@@ -1351,7 +1351,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.GetLatestSystemRulesetsAsync("<dataSourceType>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
@@ -1418,7 +1418,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.GetLatestSystemRulesets();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GetLatestSystemRulesets with all parameters, and how to parse the result.
@@ -1429,7 +1429,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.GetLatestSystemRulesets("<dataSourceType>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());

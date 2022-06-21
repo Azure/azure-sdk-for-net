@@ -77,7 +77,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response response = await client.GetApplicationDataAsync("<farmerId>", "<applicationDataId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("applicationProductDetails").Item[0].GetProperty("productName").ToString());
         /// Console.WriteLine(result.GetProperty("applicationProductDetails").Item[0].GetProperty("isCarrier").ToString());
         /// Console.WriteLine(result.GetProperty("applicationProductDetails").Item[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
@@ -194,7 +194,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response response = client.GetApplicationData("<farmerId>", "<applicationDataId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("applicationProductDetails").Item[0].GetProperty("productName").ToString());
         /// Console.WriteLine(result.GetProperty("applicationProductDetails").Item[0].GetProperty("isCarrier").ToString());
         /// Console.WriteLine(result.GetProperty("applicationProductDetails").Item[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
@@ -314,7 +314,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<applicationDataId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
@@ -366,7 +366,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<applicationDataId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("applicationProductDetails").Item[0].GetProperty("productName").ToString());
         /// Console.WriteLine(result.GetProperty("applicationProductDetails").Item[0].GetProperty("isCarrier").ToString());
         /// Console.WriteLine(result.GetProperty("applicationProductDetails").Item[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
@@ -520,7 +520,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response response = client.CreateOrUpdate("<farmerId>", "<applicationDataId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
@@ -572,7 +572,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response response = client.CreateOrUpdate("<farmerId>", "<applicationDataId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("applicationProductDetails").Item[0].GetProperty("productName").ToString());
         /// Console.WriteLine(result.GetProperty("applicationProductDetails").Item[0].GetProperty("isCarrier").ToString());
         /// Console.WriteLine(result.GetProperty("applicationProductDetails").Item[0].GetProperty("avgMaterial").GetProperty("unit").ToString());

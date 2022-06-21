@@ -73,7 +73,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response response = await client.GetRasterizeJobAsync("<jobId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileColumnNames").Item[0].ToString());
@@ -143,7 +143,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response response = client.GetRasterizeJob("<jobId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileColumnNames").Item[0].ToString());
@@ -223,7 +223,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// var operation = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
-        /// BinaryData data = await operation.WaitForCompleteAsync();
+        /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
@@ -250,7 +250,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// var operation = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
-        /// BinaryData data = await operation.WaitForCompleteAsync();
+        /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
@@ -349,7 +349,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// var operation = client.CreateRasterizeJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
-        /// BinaryData data = operation.WaitForComplete();
+        /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
@@ -376,7 +376,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// var operation = client.CreateRasterizeJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
-        /// BinaryData data = operation.WaitForComplete();
+        /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());

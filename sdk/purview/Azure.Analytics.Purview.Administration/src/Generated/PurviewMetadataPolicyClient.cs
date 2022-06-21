@@ -53,7 +53,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// Response response = await client.UpdateMetadataPolicyAsync("<policyId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call UpdateMetadataPolicyAsync with all parameters and request content, and how to parse the result.
@@ -118,7 +118,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// Response response = await client.UpdateMetadataPolicyAsync("<policyId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
@@ -251,7 +251,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// Response response = client.UpdateMetadataPolicy("<policyId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call UpdateMetadataPolicy with all parameters and request content, and how to parse the result.
@@ -316,7 +316,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// Response response = client.UpdateMetadataPolicy("<policyId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
@@ -446,7 +446,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// Response response = await client.GetMetadataPolicyAsync("<policyId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());
@@ -546,7 +546,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// Response response = client.GetMetadataPolicy("<policyId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("version").ToString());

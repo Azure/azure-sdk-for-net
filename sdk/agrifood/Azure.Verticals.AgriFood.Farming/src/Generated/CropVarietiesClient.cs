@@ -77,7 +77,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response response = await client.GetCropVarietyAsync("<cropId>", "<cropVarietyId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("cropId").ToString());
         /// Console.WriteLine(result.GetProperty("brand").ToString());
         /// Console.WriteLine(result.GetProperty("product").ToString());
@@ -158,7 +158,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response response = client.GetCropVariety("<cropId>", "<cropVarietyId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("cropId").ToString());
         /// Console.WriteLine(result.GetProperty("brand").ToString());
         /// Console.WriteLine(result.GetProperty("product").ToString());
@@ -242,7 +242,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<cropId>", "<cropVarietyId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
@@ -264,7 +264,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<cropId>", "<cropVarietyId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("cropId").ToString());
         /// Console.WriteLine(result.GetProperty("brand").ToString());
         /// Console.WriteLine(result.GetProperty("product").ToString());
@@ -363,7 +363,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response response = client.CreateOrUpdate("<cropId>", "<cropVarietyId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
@@ -385,7 +385,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response response = client.CreateOrUpdate("<cropId>", "<cropVarietyId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("cropId").ToString());
         /// Console.WriteLine(result.GetProperty("brand").ToString());
         /// Console.WriteLine(result.GetProperty("product").ToString());

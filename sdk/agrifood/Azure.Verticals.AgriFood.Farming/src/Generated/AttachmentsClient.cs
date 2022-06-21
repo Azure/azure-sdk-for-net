@@ -77,7 +77,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response response = await client.GetAttachmentAsync("<farmerId>", "<attachmentId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceType").ToString());
@@ -158,7 +158,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response response = client.GetAttachment("<farmerId>", "<attachmentId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceType").ToString());
@@ -242,7 +242,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<attachmentId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceType").ToString());
@@ -326,7 +326,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// Response response = client.CreateOrUpdate("<farmerId>", "<attachmentId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceType").ToString());

@@ -65,7 +65,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdateAsync with all request content, and how to parse the result.
@@ -219,7 +219,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("typeName").ToString());
@@ -436,7 +436,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.CreateOrUpdate(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdate with all request content, and how to parse the result.
@@ -590,7 +590,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.CreateOrUpdate(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("typeName").ToString());
@@ -804,7 +804,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.GetByGuidsAsync(new String[]{"<guids>"});
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GetByGuidsAsync with all parameters, and how to parse the result.
@@ -815,7 +815,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.GetByGuidsAsync(new String[]{"<guids>"}, true, true, new String[]{"<excludeRelationshipTypes>"});
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
@@ -999,7 +999,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.GetByGuids(new String[]{"<guids>"});
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GetByGuids with all parameters, and how to parse the result.
@@ -1010,7 +1010,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.GetByGuids(new String[]{"<guids>"}, true, true, new String[]{"<excludeRelationshipTypes>"});
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
@@ -1197,7 +1197,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.CreateOrUpdateEntitiesAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdateEntitiesAsync with all request content, and how to parse the result.
@@ -1353,7 +1353,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.CreateOrUpdateEntitiesAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("typeName").ToString());
@@ -1572,7 +1572,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.CreateOrUpdateEntities(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdateEntities with all request content, and how to parse the result.
@@ -1728,7 +1728,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.CreateOrUpdateEntities(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("typeName").ToString());
@@ -1941,7 +1941,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.DeleteByGuidsAsync(new String[]{"<guids>"});
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("typeName").ToString());
@@ -2095,7 +2095,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.DeleteByGuids(new String[]{"<guids>"});
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("typeName").ToString());
@@ -2458,7 +2458,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.GetByGuidAsync("<guid>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GetByGuidAsync with all parameters, and how to parse the result.
@@ -2469,7 +2469,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.GetByGuidAsync("<guid>", true, true);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
@@ -2651,7 +2651,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.GetByGuid("<guid>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GetByGuid with all parameters, and how to parse the result.
@@ -2662,7 +2662,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.GetByGuid("<guid>", true, true);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
@@ -2851,7 +2851,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.PartialUpdateEntityAttributeByGuidAsync("<guid>", "<name>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("typeName").ToString());
@@ -3017,7 +3017,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.PartialUpdateEntityAttributeByGuid("<guid>", "<name>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("typeName").ToString());
@@ -3174,7 +3174,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.DeleteByGuidAsync("<guid>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("typeName").ToString());
@@ -3329,7 +3329,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.DeleteByGuid("<guid>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("typeName").ToString());
@@ -3485,7 +3485,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.GetClassificationAsync("<guid>", "<classificationName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
@@ -3562,7 +3562,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.GetClassification("<guid>", "<classificationName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
@@ -3730,7 +3730,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.GetClassificationsAsync("<guid>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("list").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("pageSize").ToString());
         /// Console.WriteLine(result.GetProperty("sortBy").ToString());
@@ -3791,7 +3791,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.GetClassifications("<guid>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("list").Item[0].ToString());
         /// Console.WriteLine(result.GetProperty("pageSize").ToString());
         /// Console.WriteLine(result.GetProperty("sortBy").ToString());
@@ -4218,7 +4218,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.GetByUniqueAttributesAsync("<typeName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GetByUniqueAttributesAsync with all parameters, and how to parse the result.
@@ -4229,7 +4229,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.GetByUniqueAttributesAsync("<typeName>", true, true, "<attrQualifiedName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
@@ -4419,7 +4419,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.GetByUniqueAttributes("<typeName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GetByUniqueAttributes with all parameters, and how to parse the result.
@@ -4430,7 +4430,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.GetByUniqueAttributes("<typeName>", true, true, "<attrQualifiedName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
@@ -4623,7 +4623,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.PartialUpdateEntityByUniqueAttributesAsync("<typeName>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call PartialUpdateEntityByUniqueAttributesAsync with all parameters and request content, and how to parse the result.
@@ -4777,7 +4777,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.PartialUpdateEntityByUniqueAttributesAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("typeName").ToString());
@@ -5003,7 +5003,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.PartialUpdateEntityByUniqueAttributes("<typeName>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call PartialUpdateEntityByUniqueAttributes with all parameters and request content, and how to parse the result.
@@ -5157,7 +5157,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.PartialUpdateEntityByUniqueAttributes("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("typeName").ToString());
@@ -5378,7 +5378,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.DeleteByUniqueAttributeAsync("<typeName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call DeleteByUniqueAttributeAsync with all parameters, and how to parse the result.
@@ -5389,7 +5389,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.DeleteByUniqueAttributeAsync("<typeName>", "<attrQualifiedName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("typeName").ToString());
@@ -5552,7 +5552,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.DeleteByUniqueAttribute("<typeName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call DeleteByUniqueAttribute with all parameters, and how to parse the result.
@@ -5563,7 +5563,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.DeleteByUniqueAttribute("<typeName>", "<attrQualifiedName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("typeName").ToString());
@@ -6243,7 +6243,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.SetClassificationsAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
         /// This sample shows how to call SetClassificationsAsync with all request content, and how to parse the result.
@@ -6312,7 +6312,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.SetClassificationsAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
         /// </example>
@@ -6364,7 +6364,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.SetClassifications(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
         /// This sample shows how to call SetClassifications with all request content, and how to parse the result.
@@ -6433,7 +6433,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.SetClassifications(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
         /// </example>
@@ -6499,7 +6499,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.GetEntitiesByUniqueAttributesAsync("<typeName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GetEntitiesByUniqueAttributesAsync with all parameters, and how to parse the result.
@@ -6510,7 +6510,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.GetEntitiesByUniqueAttributesAsync("<typeName>", true, true, "<attrNQualifiedName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
@@ -6707,7 +6707,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.GetEntitiesByUniqueAttributes("<typeName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GetEntitiesByUniqueAttributes with all parameters, and how to parse the result.
@@ -6718,7 +6718,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.GetEntitiesByUniqueAttributes("<typeName>", true, true, "<attrNQualifiedName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
@@ -6900,7 +6900,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.GetHeaderAsync("<guid>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
@@ -7019,7 +7019,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.GetHeader("<guid>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());

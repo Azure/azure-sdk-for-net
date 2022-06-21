@@ -69,7 +69,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.CreateOrUpdateEntityAsync("<collection>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdateEntityAsync with all parameters and request content, and how to parse the result.
@@ -223,7 +223,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.CreateOrUpdateEntityAsync("<collection>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("typeName").ToString());
@@ -443,7 +443,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.CreateOrUpdateEntity("<collection>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdateEntity with all parameters and request content, and how to parse the result.
@@ -597,7 +597,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.CreateOrUpdateEntity("<collection>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("typeName").ToString());
@@ -817,7 +817,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.CreateOrUpdateEntityInBulkAsync("<collection>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdateEntityInBulkAsync with all parameters and request content, and how to parse the result.
@@ -973,7 +973,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.CreateOrUpdateEntityInBulkAsync("<collection>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("typeName").ToString());
@@ -1195,7 +1195,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.CreateOrUpdateEntityInBulk("<collection>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdateEntityInBulk with all parameters and request content, and how to parse the result.
@@ -1351,7 +1351,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.CreateOrUpdateEntityInBulk("<collection>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("typeName").ToString());
@@ -1569,7 +1569,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.MoveEntitiesToCollectionAsync("<collection>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call MoveEntitiesToCollectionAsync with all parameters and request content, and how to parse the result.
@@ -1586,7 +1586,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.MoveEntitiesToCollectionAsync("<collection>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("typeName").ToString());
@@ -1750,7 +1750,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.MoveEntitiesToCollection("<collection>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call MoveEntitiesToCollection with all parameters and request content, and how to parse the result.
@@ -1767,7 +1767,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.MoveEntitiesToCollection("<collection>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>").Item[0].GetProperty("typeName").ToString());

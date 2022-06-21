@@ -81,7 +81,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.GetDeviceClassAsync("<deviceClassId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("deviceClassId").ToString());
         /// Console.WriteLine(result.GetProperty("compatProperties").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("bestCompatibleUpdateId").GetProperty("provider").ToString());
@@ -152,7 +152,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.GetDeviceClass("<deviceClassId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("deviceClassId").ToString());
         /// Console.WriteLine(result.GetProperty("compatProperties").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("bestCompatibleUpdateId").GetProperty("provider").ToString());
@@ -223,7 +223,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.GetDeviceAsync("<deviceId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("deviceId").ToString());
         /// Console.WriteLine(result.GetProperty("moduleId").ToString());
         /// Console.WriteLine(result.GetProperty("deviceClassId").ToString());
@@ -336,7 +336,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.GetDevice("<deviceId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("deviceId").ToString());
         /// Console.WriteLine(result.GetProperty("moduleId").ToString());
         /// Console.WriteLine(result.GetProperty("deviceClassId").ToString());
@@ -450,7 +450,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.GetDeviceModuleAsync("<deviceId>", "<moduleId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("deviceId").ToString());
         /// Console.WriteLine(result.GetProperty("moduleId").ToString());
         /// Console.WriteLine(result.GetProperty("deviceClassId").ToString());
@@ -565,7 +565,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.GetDeviceModule("<deviceId>", "<moduleId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("deviceId").ToString());
         /// Console.WriteLine(result.GetProperty("moduleId").ToString());
         /// Console.WriteLine(result.GetProperty("deviceClassId").ToString());
@@ -676,7 +676,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.GetUpdateComplianceAsync();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("totalDeviceCount").ToString());
         /// Console.WriteLine(result.GetProperty("onLatestUpdateDeviceCount").ToString());
         /// Console.WriteLine(result.GetProperty("newUpdatesAvailableDeviceCount").ToString());
@@ -738,7 +738,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.GetUpdateCompliance();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("totalDeviceCount").ToString());
         /// Console.WriteLine(result.GetProperty("onLatestUpdateDeviceCount").ToString());
         /// Console.WriteLine(result.GetProperty("newUpdatesAvailableDeviceCount").ToString());
@@ -803,7 +803,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.GetDeviceTagAsync("<tagName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("tagName").ToString());
         /// Console.WriteLine(result.GetProperty("deviceCount").ToString());
         /// ]]></code>
@@ -866,7 +866,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.GetDeviceTag("<tagName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("tagName").ToString());
         /// Console.WriteLine(result.GetProperty("deviceCount").ToString());
         /// ]]></code>
@@ -929,7 +929,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.GetGroupAsync("<groupId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("groupId").ToString());
         /// Console.WriteLine(result.GetProperty("groupType").ToString());
         /// Console.WriteLine(result.GetProperty("tags").Item[0].ToString());
@@ -1002,7 +1002,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.GetGroup("<groupId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("groupId").ToString());
         /// Console.WriteLine(result.GetProperty("groupType").ToString());
         /// Console.WriteLine(result.GetProperty("tags").Item[0].ToString());
@@ -1085,7 +1085,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.CreateOrUpdateGroupAsync("<groupId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("groupId").ToString());
         /// Console.WriteLine(result.GetProperty("groupType").ToString());
         /// Console.WriteLine(result.GetProperty("tags").Item[0].ToString());
@@ -1111,7 +1111,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.CreateOrUpdateGroupAsync("<groupId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("groupId").ToString());
         /// Console.WriteLine(result.GetProperty("groupType").ToString());
         /// Console.WriteLine(result.GetProperty("tags").Item[0].ToString());
@@ -1206,7 +1206,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.CreateOrUpdateGroup("<groupId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("groupId").ToString());
         /// Console.WriteLine(result.GetProperty("groupType").ToString());
         /// Console.WriteLine(result.GetProperty("tags").Item[0].ToString());
@@ -1232,7 +1232,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.CreateOrUpdateGroup("<groupId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("groupId").ToString());
         /// Console.WriteLine(result.GetProperty("groupType").ToString());
         /// Console.WriteLine(result.GetProperty("tags").Item[0].ToString());
@@ -1425,7 +1425,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.GetGroupUpdateComplianceAsync("<groupId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("totalDeviceCount").ToString());
         /// Console.WriteLine(result.GetProperty("onLatestUpdateDeviceCount").ToString());
         /// Console.WriteLine(result.GetProperty("newUpdatesAvailableDeviceCount").ToString());
@@ -1492,7 +1492,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.GetGroupUpdateCompliance("<groupId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("totalDeviceCount").ToString());
         /// Console.WriteLine(result.GetProperty("onLatestUpdateDeviceCount").ToString());
         /// Console.WriteLine(result.GetProperty("newUpdatesAvailableDeviceCount").ToString());
@@ -1560,7 +1560,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.GetDeploymentAsync("<groupId>", "<deploymentId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
         /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
@@ -1639,7 +1639,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.GetDeployment("<groupId>", "<deploymentId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
         /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
@@ -1730,7 +1730,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.CreateOrUpdateDeploymentAsync("<groupId>", "<deploymentId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
         /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
@@ -1759,7 +1759,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.CreateOrUpdateDeploymentAsync("<groupId>", "<deploymentId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
         /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
@@ -1865,7 +1865,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.CreateOrUpdateDeployment("<groupId>", "<deploymentId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
         /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
@@ -1894,7 +1894,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.CreateOrUpdateDeployment("<groupId>", "<deploymentId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
         /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
@@ -2100,7 +2100,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.GetDeploymentStatusAsync("<groupId>", "<deploymentId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("deploymentState").ToString());
         /// Console.WriteLine(result.GetProperty("totalDevices").ToString());
         /// Console.WriteLine(result.GetProperty("devicesInProgressCount").ToString());
@@ -2173,7 +2173,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.GetDeploymentStatus("<groupId>", "<deploymentId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("deploymentState").ToString());
         /// Console.WriteLine(result.GetProperty("totalDevices").ToString());
         /// Console.WriteLine(result.GetProperty("devicesInProgressCount").ToString());
@@ -2246,7 +2246,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.GetOperationAsync("<operationId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("operationId").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
@@ -2260,7 +2260,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.GetOperationAsync("<operationId>", null);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("operationId").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
@@ -2352,7 +2352,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.GetOperation("<operationId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("operationId").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
@@ -2366,7 +2366,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.GetOperation("<operationId>", null);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("operationId").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
@@ -2466,7 +2466,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.CollectLogsAsync("<operationId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("deviceList").Item[0].GetProperty("deviceId").ToString());
         /// ]]></code>
         /// This sample shows how to call CollectLogsAsync with all parameters and request content, and how to parse the result.
@@ -2488,7 +2488,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.CollectLogsAsync("<operationId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("operationId").ToString());
         /// Console.WriteLine(result.GetProperty("deviceList").Item[0].GetProperty("deviceId").ToString());
         /// Console.WriteLine(result.GetProperty("deviceList").Item[0].GetProperty("moduleId").ToString());
@@ -2590,7 +2590,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.CollectLogs("<operationId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("deviceList").Item[0].GetProperty("deviceId").ToString());
         /// ]]></code>
         /// This sample shows how to call CollectLogs with all parameters and request content, and how to parse the result.
@@ -2612,7 +2612,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.CollectLogs("<operationId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("operationId").ToString());
         /// Console.WriteLine(result.GetProperty("deviceList").Item[0].GetProperty("deviceId").ToString());
         /// Console.WriteLine(result.GetProperty("deviceList").Item[0].GetProperty("moduleId").ToString());
@@ -2705,7 +2705,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.GetLogCollectionOperationAsync("<operationId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("operationId").ToString());
         /// Console.WriteLine(result.GetProperty("deviceList").Item[0].GetProperty("deviceId").ToString());
         /// Console.WriteLine(result.GetProperty("deviceList").Item[0].GetProperty("moduleId").ToString());
@@ -2782,7 +2782,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.GetLogCollectionOperation("<operationId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("operationId").ToString());
         /// Console.WriteLine(result.GetProperty("deviceList").Item[0].GetProperty("deviceId").ToString());
         /// Console.WriteLine(result.GetProperty("deviceList").Item[0].GetProperty("moduleId").ToString());
@@ -2859,7 +2859,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.GetLogCollectionOperationDetailedStatusAsync("<operationId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("operationId").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
@@ -2944,7 +2944,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.GetLogCollectionOperationDetailedStatus("<operationId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("operationId").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
@@ -3031,7 +3031,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.StopDeploymentAsync("<groupId>", "<deploymentId>", "<action>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
         /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
@@ -3112,7 +3112,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.StopDeployment("<groupId>", "<deploymentId>", "<action>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
         /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
@@ -3193,7 +3193,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.RetryDeploymentAsync("<groupId>", "<deploymentId>", "<action>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
         /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
@@ -3274,7 +3274,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.RetryDeployment("<groupId>", "<deploymentId>", "<action>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
         /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
@@ -5264,7 +5264,8 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// var operation = await client.ImportDevicesAsync(WaitUntil.Completed, "<action>", RequestContent.Create(data));
         /// 
-        /// await operation.WaitForCompleteResponseAsync();
+        /// var response = await operation.WaitForCompletionResponseAsync();
+        /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -5323,7 +5324,8 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// var operation = client.ImportDevices(WaitUntil.Completed, "<action>", RequestContent.Create(data));
         /// 
-        /// operation.WaitForCompleteResponse();
+        /// var response = operation.WaitForCompletionResponse();
+        /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// </example>
         /// <remarks>

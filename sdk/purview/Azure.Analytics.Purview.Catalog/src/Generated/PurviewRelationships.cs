@@ -60,7 +60,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.CreateAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateAsync with all request content, and how to parse the result.
@@ -103,7 +103,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.CreateAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
@@ -214,7 +214,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.Create(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call Create with all request content, and how to parse the result.
@@ -257,7 +257,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.Create(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
@@ -368,7 +368,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.UpdateAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call UpdateAsync with all request content, and how to parse the result.
@@ -411,7 +411,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.UpdateAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
@@ -522,7 +522,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.Update(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call Update with all request content, and how to parse the result.
@@ -565,7 +565,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.Update(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
@@ -676,7 +676,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.GetPurviewRelationshipAsync("<guid>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GetPurviewRelationshipAsync with all parameters, and how to parse the result.
@@ -687,7 +687,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.GetPurviewRelationshipAsync("<guid>", true);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
@@ -807,7 +807,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.GetPurviewRelationship("<guid>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GetPurviewRelationship with all parameters, and how to parse the result.
@@ -818,7 +818,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.GetPurviewRelationship("<guid>", true);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
         /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());

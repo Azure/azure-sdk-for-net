@@ -47,7 +47,7 @@ namespace Azure.Messaging.WebPubSub
         /// 
         /// Response response = await client.GenerateClientTokenImplAsync();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GenerateClientTokenImplAsync with all parameters, and how to parse the result.
@@ -58,7 +58,7 @@ namespace Azure.Messaging.WebPubSub
         /// 
         /// Response response = await client.GenerateClientTokenImplAsync("<userId>", new String[]{"<role>"}, 1234);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("token").ToString());
         /// ]]></code>
         /// </example>
@@ -112,7 +112,7 @@ namespace Azure.Messaging.WebPubSub
         /// 
         /// Response response = client.GenerateClientTokenImpl();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GenerateClientTokenImpl with all parameters, and how to parse the result.
@@ -123,7 +123,7 @@ namespace Azure.Messaging.WebPubSub
         /// 
         /// Response response = client.GenerateClientTokenImpl("<userId>", new String[]{"<role>"}, 1234);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("token").ToString());
         /// ]]></code>
         /// </example>

@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response response = await client.GetRoleDefinitionsAsync();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
         /// This sample shows how to call GetRoleDefinitionsAsync with all parameters, and how to parse the result.
@@ -83,7 +83,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response response = await client.GetRoleDefinitionsAsync(true, "<scope>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("name").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("isBuiltIn").ToString());
@@ -162,7 +162,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response response = client.GetRoleDefinitions();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
         /// This sample shows how to call GetRoleDefinitions with all parameters, and how to parse the result.
@@ -173,7 +173,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response response = client.GetRoleDefinitions(true, "<scope>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.Item[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("name").ToString());
         /// Console.WriteLine(result.Item[0].GetProperty("isBuiltIn").ToString());
@@ -253,7 +253,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response response = await client.GetRoleDefinitionByIdAsync("<roleDefinitionId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("isBuiltIn").ToString());
@@ -335,7 +335,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response response = client.GetRoleDefinitionById("<roleDefinitionId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("isBuiltIn").ToString());
@@ -414,7 +414,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response response = await client.GetScopesAsync();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
         /// </example>
@@ -464,7 +464,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response response = client.GetScopes();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.Item[0].ToString());
         /// ]]></code>
         /// </example>

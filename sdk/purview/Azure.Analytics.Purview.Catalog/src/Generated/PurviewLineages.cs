@@ -67,7 +67,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.GetLineageGraphAsync("<guid>", "<direction>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GetLineageGraphAsync with all parameters, and how to parse the result.
@@ -78,7 +78,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.GetLineageGraphAsync("<guid>", "<direction>", 1234, 1234, true, true);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("typeName").ToString());
@@ -197,7 +197,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.GetLineageGraph("<guid>", "<direction>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GetLineageGraph with all parameters, and how to parse the result.
@@ -208,7 +208,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.GetLineageGraph("<guid>", "<direction>", 1234, 1234, true, true);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("typeName").ToString());
@@ -326,7 +326,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.NextPageLineageAsync("<guid>", "<direction>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call NextPageLineageAsync with all parameters, and how to parse the result.
@@ -337,7 +337,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.NextPageLineageAsync("<guid>", "<direction>", true, 1234, 1234);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("typeName").ToString());
@@ -455,7 +455,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.NextPageLineage("<guid>", "<direction>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call NextPageLineage with all parameters, and how to parse the result.
@@ -466,7 +466,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.NextPageLineage("<guid>", "<direction>", true, 1234, 1234);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("guidEntityMap").GetProperty("<test>").GetProperty("typeName").ToString());

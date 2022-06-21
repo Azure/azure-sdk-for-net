@@ -77,7 +77,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response response = await client.GetProjectDetailsAsync("<projectName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("projectName").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("language").ToString());
@@ -154,7 +154,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response response = client.GetProjectDetails("<projectName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("projectName").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("language").ToString());
@@ -236,7 +236,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response response = await client.CreateProjectAsync("<projectName>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateProjectAsync with all parameters and request content, and how to parse the result.
@@ -256,7 +256,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response response = await client.CreateProjectAsync("<projectName>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("projectName").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("language").ToString());
@@ -349,7 +349,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response response = client.CreateProject("<projectName>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateProject with all parameters and request content, and how to parse the result.
@@ -369,7 +369,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response response = client.CreateProject("<projectName>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("projectName").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
         /// Console.WriteLine(result.GetProperty("language").ToString());
@@ -457,7 +457,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response response = await client.GetDeleteStatusAsync("<jobId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -555,7 +555,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response response = client.GetDeleteStatus("<jobId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -654,7 +654,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -756,7 +756,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response response = client.GetExportStatus("<projectName>", "<jobId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -858,7 +858,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -958,7 +958,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response response = client.GetImportStatus("<projectName>", "<jobId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1059,7 +1059,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response response = await client.GetDeployStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1161,7 +1161,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response response = client.GetDeployStatus("<projectName>", "<deploymentName>", "<jobId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1434,7 +1434,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response response = await client.GetUpdateSourcesStatusAsync("<projectName>", "<jobId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1534,7 +1534,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response response = client.GetUpdateSourcesStatus("<projectName>", "<jobId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1634,7 +1634,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response response = await client.GetUpdateQnasStatusAsync("<projectName>", "<jobId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1734,7 +1734,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response response = client.GetUpdateQnasStatus("<projectName>", "<jobId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -3064,7 +3064,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
         /// 
-        /// await operation.WaitForCompleteResponseAsync();
+        /// var response = await operation.WaitForCompletionResponseAsync();
+        /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3120,7 +3121,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
         /// 
-        /// operation.WaitForCompleteResponse();
+        /// var response = operation.WaitForCompletionResponse();
+        /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3178,7 +3180,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>");
         /// 
-        /// BinaryData data = await operation.WaitForCompleteAsync();
+        /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -3195,7 +3197,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
         /// 
-        /// BinaryData data = await operation.WaitForCompleteAsync();
+        /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -3299,7 +3301,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var operation = client.Export(WaitUntil.Completed, "<projectName>");
         /// 
-        /// BinaryData data = operation.WaitForComplete();
+        /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -3316,7 +3318,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var operation = client.Export(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
         /// 
-        /// BinaryData data = operation.WaitForComplete();
+        /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -3423,7 +3425,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
         /// 
-        /// await operation.WaitForCompleteResponseAsync();
+        /// var response = await operation.WaitForCompletionResponseAsync();
+        /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// This sample shows how to call ImportAsync with all parameters and request content.
         /// <code><![CDATA[
@@ -3513,7 +3516,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>");
         /// 
-        /// await operation.WaitForCompleteResponseAsync();
+        /// var response = await operation.WaitForCompletionResponseAsync();
+        /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3636,7 +3640,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var operation = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
         /// 
-        /// operation.WaitForCompleteResponse();
+        /// var response = operation.WaitForCompletionResponse();
+        /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// This sample shows how to call Import with all parameters and request content.
         /// <code><![CDATA[
@@ -3726,7 +3731,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var operation = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>");
         /// 
-        /// operation.WaitForCompleteResponse();
+        /// var response = operation.WaitForCompletionResponse();
+        /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3845,7 +3851,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
         /// 
-        /// await operation.WaitForCompleteResponseAsync();
+        /// var response = await operation.WaitForCompletionResponseAsync();
+        /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3903,7 +3910,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>");
         /// 
-        /// operation.WaitForCompleteResponse();
+        /// var response = operation.WaitForCompletionResponse();
+        /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3975,7 +3983,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var operation = await client.UpdateSourcesAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
         /// 
-        /// await operation.WaitForCompleteResponseAsync();
+        /// var response = await operation.WaitForCompletionResponseAsync();
+        /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4060,7 +4069,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var operation = client.UpdateSources(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
         /// 
-        /// operation.WaitForCompleteResponse();
+        /// var response = operation.WaitForCompletionResponse();
+        /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4171,7 +4181,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var operation = await client.UpdateQnasAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
         /// 
-        /// await operation.WaitForCompleteResponseAsync();
+        /// var response = await operation.WaitForCompletionResponseAsync();
+        /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4304,7 +4315,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var operation = client.UpdateQnas(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
         /// 
-        /// operation.WaitForCompleteResponse();
+        /// var response = operation.WaitForCompletionResponse();
+        /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// </example>
         /// <remarks>

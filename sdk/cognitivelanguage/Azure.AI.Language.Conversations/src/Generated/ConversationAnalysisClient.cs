@@ -45,7 +45,7 @@ namespace Azure.AI.Language.Conversations
         /// 
         /// Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// ]]></code>
         /// </example>
@@ -114,7 +114,7 @@ namespace Azure.AI.Language.Conversations
         /// 
         /// Response response = client.AnalyzeConversation(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// ]]></code>
         /// </example>
@@ -179,7 +179,7 @@ namespace Azure.AI.Language.Conversations
         /// 
         /// Response response = await client.JobStatusAsync(Guid.NewGuid());
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdateDateTime").ToString());
@@ -198,7 +198,7 @@ namespace Azure.AI.Language.Conversations
         /// 
         /// Response response = await client.JobStatusAsync(Guid.NewGuid(), true);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("displayName").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -329,7 +329,7 @@ namespace Azure.AI.Language.Conversations
         /// 
         /// Response response = client.JobStatus(Guid.NewGuid());
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdateDateTime").ToString());
@@ -348,7 +348,7 @@ namespace Azure.AI.Language.Conversations
         /// 
         /// Response response = client.JobStatus(Guid.NewGuid(), true);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("displayName").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -497,7 +497,8 @@ namespace Azure.AI.Language.Conversations
         /// 
         /// var operation = await client.SubmitJobAsync(WaitUntil.Completed, RequestContent.Create(data));
         /// 
-        /// await operation.WaitForCompleteResponseAsync();
+        /// var response = await operation.WaitForCompletionResponseAsync();
+        /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// This sample shows how to call SubmitJobAsync with all parameters and request content.
         /// <code><![CDATA[
@@ -527,7 +528,8 @@ namespace Azure.AI.Language.Conversations
         /// 
         /// var operation = await client.SubmitJobAsync(WaitUntil.Completed, RequestContent.Create(data));
         /// 
-        /// await operation.WaitForCompleteResponseAsync();
+        /// var response = await operation.WaitForCompletionResponseAsync();
+        /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -620,7 +622,8 @@ namespace Azure.AI.Language.Conversations
         /// 
         /// var operation = client.SubmitJob(WaitUntil.Completed, RequestContent.Create(data));
         /// 
-        /// operation.WaitForCompleteResponse();
+        /// var response = operation.WaitForCompletionResponse();
+        /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// This sample shows how to call SubmitJob with all parameters and request content.
         /// <code><![CDATA[
@@ -650,7 +653,8 @@ namespace Azure.AI.Language.Conversations
         /// 
         /// var operation = client.SubmitJob(WaitUntil.Completed, RequestContent.Create(data));
         /// 
-        /// operation.WaitForCompleteResponse();
+        /// var response = operation.WaitForCompletionResponse();
+        /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// </example>
         /// <remarks>

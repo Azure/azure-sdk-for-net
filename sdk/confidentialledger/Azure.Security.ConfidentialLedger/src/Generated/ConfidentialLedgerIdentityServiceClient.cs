@@ -47,7 +47,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = await client.GetLedgerIdentityAsync("<ledgerId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("ledgerId").ToString());
         /// Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
         /// ]]></code>
@@ -102,7 +102,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = client.GetLedgerIdentity("<ledgerId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("ledgerId").ToString());
         /// Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
         /// ]]></code>

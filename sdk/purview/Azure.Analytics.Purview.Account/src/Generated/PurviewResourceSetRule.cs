@@ -59,7 +59,7 @@ namespace Azure.Analytics.Purview.Account
         /// 
         /// Response response = await client.GetResourceSetRuleAsync();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
         /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("resourceSetProcessing").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
@@ -288,7 +288,7 @@ namespace Azure.Analytics.Purview.Account
         /// 
         /// Response response = client.GetResourceSetRule();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
         /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("resourceSetProcessing").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
@@ -521,7 +521,7 @@ namespace Azure.Analytics.Purview.Account
         /// 
         /// Response response = await client.CreateOrUpdateResourceSetRuleAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdateResourceSetRuleAsync with all request content, and how to parse the result.
@@ -659,7 +659,7 @@ namespace Azure.Analytics.Purview.Account
         /// 
         /// Response response = await client.CreateOrUpdateResourceSetRuleAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
         /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("resourceSetProcessing").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
@@ -988,7 +988,7 @@ namespace Azure.Analytics.Purview.Account
         /// 
         /// Response response = client.CreateOrUpdateResourceSetRule(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdateResourceSetRule with all request content, and how to parse the result.
@@ -1126,7 +1126,7 @@ namespace Azure.Analytics.Purview.Account
         /// 
         /// Response response = client.CreateOrUpdateResourceSetRule(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
         /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("resourceSetProcessing").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());

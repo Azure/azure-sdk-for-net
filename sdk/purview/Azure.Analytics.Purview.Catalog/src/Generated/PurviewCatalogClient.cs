@@ -75,7 +75,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.SearchAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call SearchAsync with all request content, and how to parse the result.
@@ -110,7 +110,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.SearchAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("@search.count").ToString());
         /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("assetType").Item[0].GetProperty("count").ToString());
         /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("assetType").Item[0].GetProperty("value").ToString());
@@ -210,7 +210,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.Search(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call Search with all request content, and how to parse the result.
@@ -245,7 +245,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.Search(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("@search.count").ToString());
         /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("assetType").Item[0].GetProperty("count").ToString());
         /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("assetType").Item[0].GetProperty("value").ToString());
@@ -345,7 +345,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.SuggestAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call SuggestAsync with all request content, and how to parse the result.
@@ -420,7 +420,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.Suggest(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call Suggest with all request content, and how to parse the result.
@@ -495,7 +495,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.BrowseAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call BrowseAsync with all request content, and how to parse the result.
@@ -513,7 +513,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.BrowseAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("@search.count").ToString());
         /// ]]></code>
         /// </example>
@@ -574,7 +574,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.Browse(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call Browse with all request content, and how to parse the result.
@@ -592,7 +592,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.Browse(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("@search.count").ToString());
         /// ]]></code>
         /// </example>
@@ -653,7 +653,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = await client.AutoCompleteAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call AutoCompleteAsync with all request content, and how to parse the result.
@@ -728,7 +728,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response response = client.AutoComplete(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call AutoComplete with all request content, and how to parse the result.

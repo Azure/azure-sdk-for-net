@@ -86,7 +86,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response response = await client.CheckPrincipalAccessAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CheckPrincipalAccessAsync with all parameters and request content, and how to parse the result.
@@ -113,7 +113,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response response = await client.CheckPrincipalAccessAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("accessDecision").ToString());
         /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("actionId").ToString());
         /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("roleAssignment").GetProperty("id").ToString());
@@ -219,7 +219,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response response = client.CheckPrincipalAccess(RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CheckPrincipalAccess with all parameters and request content, and how to parse the result.
@@ -246,7 +246,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response response = client.CheckPrincipalAccess(RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("accessDecision").ToString());
         /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("actionId").ToString());
         /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("roleAssignment").GetProperty("id").ToString());
@@ -340,7 +340,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response response = await client.GetRoleAssignmentsAsync();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GetRoleAssignmentsAsync with all parameters, and how to parse the result.
@@ -351,7 +351,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response response = await client.GetRoleAssignmentsAsync("<roleId>", "<principalId>", "<scope>", "<continuationToken>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("count").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("roleDefinitionId").ToString());
@@ -424,7 +424,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response response = client.GetRoleAssignments();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GetRoleAssignments with all parameters, and how to parse the result.
@@ -435,7 +435,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response response = client.GetRoleAssignments("<roleId>", "<principalId>", "<scope>", "<continuationToken>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("count").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("roleDefinitionId").ToString());
@@ -515,7 +515,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response response = await client.CreateRoleAssignmentAsync("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateRoleAssignmentAsync with all parameters and request content, and how to parse the result.
@@ -533,7 +533,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response response = await client.CreateRoleAssignmentAsync("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("roleDefinitionId").ToString());
         /// Console.WriteLine(result.GetProperty("principalId").ToString());
@@ -618,7 +618,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response response = client.CreateRoleAssignment("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateRoleAssignment with all parameters and request content, and how to parse the result.
@@ -636,7 +636,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response response = client.CreateRoleAssignment("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("roleDefinitionId").ToString());
         /// Console.WriteLine(result.GetProperty("principalId").ToString());
@@ -713,7 +713,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response response = await client.GetRoleAssignmentByIdAsync("<roleAssignmentId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("roleDefinitionId").ToString());
         /// Console.WriteLine(result.GetProperty("principalId").ToString());
@@ -781,7 +781,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response response = client.GetRoleAssignmentById("<roleAssignmentId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("roleDefinitionId").ToString());
         /// Console.WriteLine(result.GetProperty("principalId").ToString());

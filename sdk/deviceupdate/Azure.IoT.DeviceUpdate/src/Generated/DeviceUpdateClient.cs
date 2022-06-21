@@ -84,7 +84,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.GetUpdateAsync("<provider>", "<name>", "<version>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
@@ -101,7 +101,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.GetUpdateAsync("<provider>", "<name>", "<version>", null);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
@@ -219,7 +219,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.GetUpdate("<provider>", "<name>", "<version>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
@@ -236,7 +236,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.GetUpdate("<provider>", "<name>", "<version>", null);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
@@ -355,7 +355,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.GetFileAsync("<provider>", "<name>", "<version>", "<fileId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("fileId").ToString());
         /// Console.WriteLine(result.GetProperty("fileName").ToString());
         /// Console.WriteLine(result.GetProperty("sizeInBytes").ToString());
@@ -369,7 +369,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.GetFileAsync("<provider>", "<name>", "<version>", "<fileId>", null);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("fileId").ToString());
         /// Console.WriteLine(result.GetProperty("fileName").ToString());
         /// Console.WriteLine(result.GetProperty("sizeInBytes").ToString());
@@ -451,7 +451,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.GetFile("<provider>", "<name>", "<version>", "<fileId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("fileId").ToString());
         /// Console.WriteLine(result.GetProperty("fileName").ToString());
         /// Console.WriteLine(result.GetProperty("sizeInBytes").ToString());
@@ -465,7 +465,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.GetFile("<provider>", "<name>", "<version>", "<fileId>", null);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("fileId").ToString());
         /// Console.WriteLine(result.GetProperty("fileName").ToString());
         /// Console.WriteLine(result.GetProperty("sizeInBytes").ToString());
@@ -544,7 +544,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.GetOperationAsync("<operationId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("operationId").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
@@ -558,7 +558,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = await client.GetOperationAsync("<operationId>", null);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("operationId").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
@@ -660,7 +660,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.GetOperation("<operationId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("operationId").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
@@ -674,7 +674,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Response response = client.GetOperation("<operationId>", null);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("operationId").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
@@ -1917,7 +1917,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// var operation = await client.ImportUpdateAsync(WaitUntil.Completed, "<action>", RequestContent.Create(data));
         /// 
-        /// BinaryData data = await operation.WaitForCompleteAsync();
+        /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
@@ -2068,7 +2068,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// var operation = client.ImportUpdate(WaitUntil.Completed, "<action>", RequestContent.Create(data));
         /// 
-        /// BinaryData data = operation.WaitForComplete();
+        /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
         /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
@@ -2202,7 +2202,8 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// var operation = await client.DeleteUpdateAsync(WaitUntil.Completed, "<provider>", "<name>", "<version>");
         /// 
-        /// await operation.WaitForCompleteResponseAsync();
+        /// var response = await operation.WaitForCompletionResponseAsync();
+        /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2262,7 +2263,8 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// var operation = client.DeleteUpdate(WaitUntil.Completed, "<provider>", "<name>", "<version>");
         /// 
-        /// operation.WaitForCompleteResponse();
+        /// var response = operation.WaitForCompletionResponse();
+        /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// </example>
         /// <remarks>

@@ -55,7 +55,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = await client.GetConstitutionAsync();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("digest").ToString());
         /// Console.WriteLine(result.GetProperty("script").ToString());
         /// ]]></code>
@@ -105,7 +105,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = client.GetConstitution();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("digest").ToString());
         /// Console.WriteLine(result.GetProperty("script").ToString());
         /// ]]></code>
@@ -155,7 +155,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = await client.GetConsortiumMembersAsync();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("members").Item[0].GetProperty("certificate").ToString());
         /// Console.WriteLine(result.GetProperty("members").Item[0].GetProperty("id").ToString());
         /// ]]></code>
@@ -209,7 +209,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = client.GetConsortiumMembers();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("members").Item[0].GetProperty("certificate").ToString());
         /// Console.WriteLine(result.GetProperty("members").Item[0].GetProperty("id").ToString());
         /// ]]></code>
@@ -263,7 +263,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = await client.GetEnclaveQuotesAsync();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("currentNodeId").ToString());
         /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("nodeId").ToString());
         /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("mrenclave").ToString());
@@ -316,7 +316,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = client.GetEnclaveQuotes();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("currentNodeId").ToString());
         /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("nodeId").ToString());
         /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("mrenclave").ToString());
@@ -375,7 +375,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = await client.PostLedgerEntryAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("subLedgerId").ToString());
         /// ]]></code>
         /// This sample shows how to call PostLedgerEntryAsync with all parameters and request content, and how to parse the result.
@@ -390,7 +390,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = await client.PostLedgerEntryAsync(RequestContent.Create(data), "<subLedgerId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("subLedgerId").ToString());
         /// ]]></code>
         /// </example>
@@ -451,7 +451,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = client.PostLedgerEntry(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("subLedgerId").ToString());
         /// ]]></code>
         /// This sample shows how to call PostLedgerEntry with all parameters and request content, and how to parse the result.
@@ -466,7 +466,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = client.PostLedgerEntry(RequestContent.Create(data), "<subLedgerId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("subLedgerId").ToString());
         /// ]]></code>
         /// </example>
@@ -525,7 +525,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = await client.GetLedgerEntryAsync("<transactionId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// ]]></code>
         /// This sample shows how to call GetLedgerEntryAsync with all parameters, and how to parse the result.
@@ -536,7 +536,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = await client.GetLedgerEntryAsync("<transactionId>", "<subLedgerId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// Console.WriteLine(result.GetProperty("entry").GetProperty("contents").ToString());
         /// Console.WriteLine(result.GetProperty("entry").GetProperty("subLedgerId").ToString());
@@ -598,7 +598,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = client.GetLedgerEntry("<transactionId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// ]]></code>
         /// This sample shows how to call GetLedgerEntry with all parameters, and how to parse the result.
@@ -609,7 +609,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = client.GetLedgerEntry("<transactionId>", "<subLedgerId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// Console.WriteLine(result.GetProperty("entry").GetProperty("contents").ToString());
         /// Console.WriteLine(result.GetProperty("entry").GetProperty("subLedgerId").ToString());
@@ -670,7 +670,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = await client.GetReceiptAsync("<transactionId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("leaf").ToString());
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("nodeId").ToString());
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("proof").Item[0].GetProperty("left").ToString());
@@ -743,7 +743,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = client.GetReceipt("<transactionId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("leaf").ToString());
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("nodeId").ToString());
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("proof").Item[0].GetProperty("left").ToString());
@@ -816,7 +816,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = await client.GetTransactionStatusAsync("<transactionId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// Console.WriteLine(result.GetProperty("transactionId").ToString());
         /// ]]></code>
@@ -871,7 +871,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = client.GetTransactionStatus("<transactionId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("state").ToString());
         /// Console.WriteLine(result.GetProperty("transactionId").ToString());
         /// ]]></code>
@@ -924,7 +924,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = await client.GetCurrentLedgerEntryAsync();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("contents").ToString());
         /// ]]></code>
         /// This sample shows how to call GetCurrentLedgerEntryAsync with all parameters, and how to parse the result.
@@ -935,7 +935,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = await client.GetCurrentLedgerEntryAsync("<subLedgerId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("contents").ToString());
         /// Console.WriteLine(result.GetProperty("subLedgerId").ToString());
         /// Console.WriteLine(result.GetProperty("transactionId").ToString());
@@ -988,7 +988,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = client.GetCurrentLedgerEntry();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("contents").ToString());
         /// ]]></code>
         /// This sample shows how to call GetCurrentLedgerEntry with all parameters, and how to parse the result.
@@ -999,7 +999,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = client.GetCurrentLedgerEntry("<subLedgerId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("contents").ToString());
         /// Console.WriteLine(result.GetProperty("subLedgerId").ToString());
         /// Console.WriteLine(result.GetProperty("transactionId").ToString());
@@ -1146,7 +1146,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = await client.GetUserAsync("<userId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("assignedRole").ToString());
         /// Console.WriteLine(result.GetProperty("userId").ToString());
         /// ]]></code>
@@ -1201,7 +1201,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = client.GetUser("<userId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("assignedRole").ToString());
         /// Console.WriteLine(result.GetProperty("userId").ToString());
         /// ]]></code>
@@ -1261,7 +1261,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = await client.CreateOrUpdateUserAsync("<userId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("assignedRole").ToString());
         /// Console.WriteLine(result.GetProperty("userId").ToString());
         /// ]]></code>
@@ -1328,7 +1328,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response response = client.CreateOrUpdateUser("<userId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("assignedRole").ToString());
         /// Console.WriteLine(result.GetProperty("userId").ToString());
         /// ]]></code>

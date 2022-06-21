@@ -68,7 +68,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.GetFilterAsync();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes").Item[0].ToString());
@@ -132,7 +132,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.GetFilter();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes").Item[0].ToString());
@@ -199,7 +199,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdateFilterAsync with all request content, and how to parse the result.
@@ -221,7 +221,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes").Item[0].ToString());
@@ -298,7 +298,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.CreateOrUpdateFilter(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdateFilter with all request content, and how to parse the result.
@@ -320,7 +320,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.CreateOrUpdateFilter(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes").Item[0].ToString());
@@ -400,7 +400,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("kind").ToString());
@@ -584,7 +584,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.CreateOrUpdate(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("kind").ToString());
@@ -762,7 +762,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.GetPropertiesAsync();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("kind").ToString());
@@ -889,7 +889,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.GetProperties();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("kind").ToString());
@@ -1016,7 +1016,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.DeleteAsync();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("kind").ToString());
@@ -1143,7 +1143,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.Delete();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("kind").ToString());
@@ -1274,7 +1274,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.RunScanAsync("<runId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call RunScanAsync with all parameters, and how to parse the result.
@@ -1285,7 +1285,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.RunScanAsync("<runId>", "<scanLevel>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("scanResultId").ToString());
         /// Console.WriteLine(result.GetProperty("startTime").ToString());
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
@@ -1372,7 +1372,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.RunScan("<runId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call RunScan with all parameters, and how to parse the result.
@@ -1383,7 +1383,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.RunScan("<runId>", "<scanLevel>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("scanResultId").ToString());
         /// Console.WriteLine(result.GetProperty("startTime").ToString());
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
@@ -1469,7 +1469,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.CancelScanAsync("<runId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("scanResultId").ToString());
         /// Console.WriteLine(result.GetProperty("startTime").ToString());
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
@@ -1555,7 +1555,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.CancelScan("<runId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("scanResultId").ToString());
         /// Console.WriteLine(result.GetProperty("startTime").ToString());
         /// Console.WriteLine(result.GetProperty("endTime").ToString());
@@ -1638,7 +1638,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.GetTriggerAsync();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
@@ -1744,7 +1744,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.GetTrigger();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
@@ -1854,7 +1854,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.CreateOrUpdateTriggerAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdateTriggerAsync with all request content, and how to parse the result.
@@ -1906,7 +1906,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.CreateOrUpdateTriggerAsync(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
@@ -2053,7 +2053,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.CreateOrUpdateTrigger(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdateTrigger with all request content, and how to parse the result.
@@ -2105,7 +2105,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.CreateOrUpdateTrigger(RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
@@ -2248,7 +2248,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = await client.DeleteTriggerAsync();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
@@ -2354,7 +2354,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Response response = client.DeleteTrigger();
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
