@@ -1022,10 +1022,11 @@ namespace Azure.Analytics.Purview.Administration
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetCollectionsAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].ToString());
+        /// await foreach (var data in client.GetCollectionsAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetCollectionsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -1033,23 +1034,24 @@ namespace Azure.Analytics.Purview.Administration
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetCollectionsAsync("<skipToken>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("count").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("collectionProvisioningState").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("friendlyName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentCollection").GetProperty("referenceName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentCollection").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("createdAt").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("createdByType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+        /// await foreach (var data in client.GetCollectionsAsync("<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("count").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("collectionProvisioningState").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("friendlyName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentCollection").GetProperty("referenceName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentCollection").GetProperty("type").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("createdAt").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("createdByType").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1130,10 +1132,11 @@ namespace Azure.Analytics.Purview.Administration
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
-        /// Response response = client.GetCollections();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].ToString());
+        /// foreach (var data in client.GetCollections())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetCollections with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -1141,23 +1144,24 @@ namespace Azure.Analytics.Purview.Administration
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
-        /// Response response = client.GetCollections("<skipToken>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("count").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("collectionProvisioningState").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("friendlyName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentCollection").GetProperty("referenceName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentCollection").GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("createdAt").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("createdByType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+        /// foreach (var data in client.GetCollections("<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("count").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("collectionProvisioningState").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("friendlyName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentCollection").GetProperty("referenceName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("parentCollection").GetProperty("type").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("createdAt").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("createdByType").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1238,10 +1242,11 @@ namespace Azure.Analytics.Purview.Administration
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetResourceSetRulesAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].ToString());
+        /// await foreach (var data in client.GetResourceSetRulesAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetResourceSetRulesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -1249,96 +1254,97 @@ namespace Azure.Analytics.Purview.Administration
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetResourceSetRulesAsync("<skipToken>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("count").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("advancedResourceSet").GetProperty("resourceSetProcessing").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("filterType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("modifiedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("path").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("disabled").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("disableRecursiveReplacerApplication").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("modifiedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("enableDefaultPatterns").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("lastUpdatedTimestamp").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("modifiedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("disabled").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("dynamicReplacement").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("entityTypes").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("maxDigits").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("maxLetters").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minDashes").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minDigits").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minDigitsOrLetters").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minDots").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minHex").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minLetters").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minUnderscores").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("options").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("regexStr").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("replaceWith").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("condition").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("disabled").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("disableRecursiveReplacerApplication").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("maxDigits").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("maxLetters").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minDashes").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minDigits").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minDigitsOrLetters").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minDots").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minHex").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minLetters").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minUnderscores").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("options").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("regexStr").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("modifiedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("maxDigits").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("maxLetters").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minDashes").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minDigits").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minDigitsOrLetters").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minDots").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minHex").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minLetters").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minUnderscores").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("options").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("regexStr").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("replaceWith").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("filterType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("modifiedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("path").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("bindingUrl").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("rules").Item[0].GetProperty("displayName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("rules").Item[0].GetProperty("isResourceSet").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("rules").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("rules").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("rules").Item[0].GetProperty("qualifiedName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("storeType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("version").ToString());
+        /// await foreach (var data in client.GetResourceSetRulesAsync("<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("count").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("advancedResourceSet").GetProperty("resourceSetProcessing").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("filterType").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("modifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("path").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("disabled").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("disableRecursiveReplacerApplication").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("modifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("typeName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("enableDefaultPatterns").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("modifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("disabled").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("dynamicReplacement").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("entityTypes").Item[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("maxDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("maxLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minDashes").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minDigitsOrLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minDots").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minHex").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minUnderscores").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("options").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("regexStr").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("replaceWith").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("condition").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("disabled").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("disableRecursiveReplacerApplication").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("maxDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("maxLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minDashes").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minDigitsOrLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minDots").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minHex").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minUnderscores").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("options").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("regexStr").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("modifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("maxDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("maxLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minDashes").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minDigitsOrLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minDots").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minHex").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minUnderscores").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("options").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("regexStr").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("replaceWith").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("filterType").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("modifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("path").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("bindingUrl").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("rules").Item[0].GetProperty("displayName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("rules").Item[0].GetProperty("isResourceSet").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("rules").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("rules").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("rules").Item[0].GetProperty("qualifiedName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("storeType").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("version").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1493,10 +1499,11 @@ namespace Azure.Analytics.Purview.Administration
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
-        /// Response response = client.GetResourceSetRules();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].ToString());
+        /// foreach (var data in client.GetResourceSetRules())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetResourceSetRules with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -1504,96 +1511,97 @@ namespace Azure.Analytics.Purview.Administration
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
-        /// Response response = client.GetResourceSetRules("<skipToken>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("count").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("advancedResourceSet").GetProperty("resourceSetProcessing").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("filterType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("modifiedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("path").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("disabled").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("disableRecursiveReplacerApplication").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("modifiedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("enableDefaultPatterns").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("lastUpdatedTimestamp").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("modifiedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("disabled").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("dynamicReplacement").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("entityTypes").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("maxDigits").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("maxLetters").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minDashes").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minDigits").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minDigitsOrLetters").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minDots").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minHex").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minLetters").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minUnderscores").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("options").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("regexStr").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("replaceWith").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("condition").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("disabled").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("disableRecursiveReplacerApplication").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("maxDigits").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("maxLetters").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minDashes").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minDigits").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minDigitsOrLetters").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minDots").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minHex").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minLetters").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minUnderscores").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("options").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("regexStr").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("modifiedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("maxDigits").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("maxLetters").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minDashes").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minDigits").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minDigitsOrLetters").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minDots").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minHex").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minLetters").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minUnderscores").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("options").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("regexStr").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("replaceWith").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("filterType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("modifiedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("path").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("bindingUrl").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("rules").Item[0].GetProperty("displayName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("rules").Item[0].GetProperty("isResourceSet").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("rules").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("rules").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("rules").Item[0].GetProperty("qualifiedName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("storeType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("version").ToString());
+        /// foreach (var data in client.GetResourceSetRules("<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("count").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("advancedResourceSet").GetProperty("resourceSetProcessing").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("filterType").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("modifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("acceptedPatterns").Item[0].GetProperty("path").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("disabled").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("disableRecursiveReplacerApplication").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("modifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("complexReplacers").Item[0].GetProperty("typeName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("enableDefaultPatterns").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("modifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("disabled").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("dynamicReplacement").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("entityTypes").Item[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("maxDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("maxLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minDashes").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minDigitsOrLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minDots").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minHex").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("minUnderscores").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("options").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("regex").GetProperty("regexStr").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("replaceWith").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("normalizationRules").Item[0].GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("condition").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("disabled").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("disableRecursiveReplacerApplication").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("maxDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("maxLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minDashes").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minDigitsOrLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minDots").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minHex").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("minUnderscores").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("options").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("doNotReplaceRegex").GetProperty("regexStr").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("modifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("maxDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("maxLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minDashes").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minDigitsOrLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minDots").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minHex").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("minUnderscores").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("options").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("regex").GetProperty("regexStr").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("regexReplacers").Item[0].GetProperty("replaceWith").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("filterType").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("modifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("rejectedPatterns").Item[0].GetProperty("path").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("bindingUrl").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("rules").Item[0].GetProperty("displayName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("rules").Item[0].GetProperty("isResourceSet").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("rules").Item[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("rules").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("rules").Item[0].GetProperty("qualifiedName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("scopedRules").Item[0].GetProperty("storeType").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pathPatternConfig").GetProperty("version").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>

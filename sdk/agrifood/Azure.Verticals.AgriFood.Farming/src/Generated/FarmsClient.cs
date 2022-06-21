@@ -748,10 +748,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new FarmsClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetFarmsByFarmerIdAsync("<farmerId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// await foreach (var data in client.GetFarmsByFarmerIdAsync("<farmerId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetFarmsByFarmerIdAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -759,20 +760,21 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new FarmsClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetFarmsByFarmerIdAsync("<farmerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// await foreach (var data in client.GetFarmsByFarmerIdAsync("<farmerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -864,10 +866,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new FarmsClient(endpoint, credential);
         /// 
-        /// Response response = client.GetFarmsByFarmerId("<farmerId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// foreach (var data in client.GetFarmsByFarmerId("<farmerId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetFarmsByFarmerId with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -875,20 +878,21 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new FarmsClient(endpoint, credential);
         /// 
-        /// Response response = client.GetFarmsByFarmerId("<farmerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// foreach (var data in client.GetFarmsByFarmerId("<farmerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -977,10 +981,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new FarmsClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetFarmsAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// await foreach (var data in client.GetFarmsAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetFarmsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -988,20 +993,21 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new FarmsClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetFarmsAsync(new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// await foreach (var data in client.GetFarmsAsync(new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1088,10 +1094,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new FarmsClient(endpoint, credential);
         /// 
-        /// Response response = client.GetFarms();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// foreach (var data in client.GetFarms())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetFarms with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -1099,20 +1106,21 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new FarmsClient(endpoint, credential);
         /// 
-        /// Response response = client.GetFarms(new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// foreach (var data in client.GetFarms(new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1189,9 +1197,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new FarmsClient(endpoint, credential);
         /// 
-        /// Response response = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<farmerId>", "<farmId>");
+        /// var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<farmerId>", "<farmId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = await operation.WaitForCompleteAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceType").ToString());
@@ -1279,9 +1288,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new FarmsClient(endpoint, credential);
         /// 
-        /// Response response = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<farmerId>", "<farmId>");
+        /// var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<farmerId>", "<farmId>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = operation.WaitForComplete();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceId").ToString());
         /// Console.WriteLine(result.GetProperty("resourceType").ToString());

@@ -253,9 +253,10 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     startYear = 1234,
         /// };
         /// 
-        /// Response response = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// var operation = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = await operation.WaitForCompleteAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
         /// Console.WriteLine(result.GetProperty("startYear").ToString());
@@ -280,9 +281,10 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// var operation = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = await operation.WaitForCompleteAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
         /// Console.WriteLine(result.GetProperty("operations").Item[0].ToString());
@@ -394,9 +396,10 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     startYear = 1234,
         /// };
         /// 
-        /// Response response = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// var operation = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = operation.WaitForComplete();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
         /// Console.WriteLine(result.GetProperty("startYear").ToString());
@@ -421,9 +424,10 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// var operation = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = operation.WaitForComplete();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
         /// Console.WriteLine(result.GetProperty("operations").Item[0].ToString());

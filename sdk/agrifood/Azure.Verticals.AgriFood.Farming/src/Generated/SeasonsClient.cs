@@ -594,10 +594,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new SeasonsClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetSeasonsAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// await foreach (var data in client.GetSeasonsAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetSeasonsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -605,22 +606,23 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new SeasonsClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetSeasonsAsync(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new Int32[]{1234}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("year").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// await foreach (var data in client.GetSeasonsAsync(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new Int32[]{1234}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("startDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("endDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("year").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -714,10 +716,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new SeasonsClient(endpoint, credential);
         /// 
-        /// Response response = client.GetSeasons();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// foreach (var data in client.GetSeasons())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetSeasons with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -725,22 +728,23 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new SeasonsClient(endpoint, credential);
         /// 
-        /// Response response = client.GetSeasons(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new Int32[]{1234}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("year").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// foreach (var data in client.GetSeasons(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new Int32[]{1234}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("startDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("endDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("year").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>

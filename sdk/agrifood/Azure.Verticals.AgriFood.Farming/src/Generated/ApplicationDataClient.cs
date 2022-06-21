@@ -859,10 +859,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ApplicationDataClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetAllApplicationDataByFarmerIdAsync("<farmerId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// await foreach (var data in client.GetAllApplicationDataByFarmerIdAsync("<farmerId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetAllApplicationDataByFarmerIdAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -870,39 +871,40 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ApplicationDataClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetAllApplicationDataByFarmerIdAsync("<farmerId>", 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("productName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("isCarrier").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("avgMaterial").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("totalMaterial").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgMaterial").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalMaterial").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationModifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationStartDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationEndDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("attachmentsLink").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("associatedBoundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationBoundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// await foreach (var data in client.GetAllApplicationDataByFarmerIdAsync("<farmerId>", 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("productName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("isCarrier").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationModifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationStartDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationEndDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("attachmentsLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("associatedBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1030,10 +1032,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ApplicationDataClient(endpoint, credential);
         /// 
-        /// Response response = client.GetAllApplicationDataByFarmerId("<farmerId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// foreach (var data in client.GetAllApplicationDataByFarmerId("<farmerId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetAllApplicationDataByFarmerId with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -1041,39 +1044,40 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ApplicationDataClient(endpoint, credential);
         /// 
-        /// Response response = client.GetAllApplicationDataByFarmerId("<farmerId>", 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("productName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("isCarrier").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("avgMaterial").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("totalMaterial").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgMaterial").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalMaterial").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationModifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationStartDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationEndDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("attachmentsLink").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("associatedBoundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationBoundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// foreach (var data in client.GetAllApplicationDataByFarmerId("<farmerId>", 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("productName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("isCarrier").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationModifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationStartDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationEndDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("attachmentsLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("associatedBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1198,10 +1202,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ApplicationDataClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetAllApplicationDataAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// await foreach (var data in client.GetAllApplicationDataAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetAllApplicationDataAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -1209,39 +1214,40 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ApplicationDataClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetAllApplicationDataAsync(1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("productName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("isCarrier").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("avgMaterial").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("totalMaterial").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgMaterial").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalMaterial").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationModifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationStartDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationEndDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("attachmentsLink").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("associatedBoundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationBoundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// await foreach (var data in client.GetAllApplicationDataAsync(1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("productName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("isCarrier").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationModifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationStartDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationEndDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("attachmentsLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("associatedBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1364,10 +1370,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ApplicationDataClient(endpoint, credential);
         /// 
-        /// Response response = client.GetAllApplicationData();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// foreach (var data in client.GetAllApplicationData())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetAllApplicationData with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -1375,39 +1382,40 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ApplicationDataClient(endpoint, credential);
         /// 
-        /// Response response = client.GetAllApplicationData(1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("productName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("isCarrier").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("avgMaterial").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("totalMaterial").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgMaterial").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalMaterial").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationModifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationStartDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationEndDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("attachmentsLink").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("associatedBoundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationBoundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// foreach (var data in client.GetAllApplicationData(1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("productName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("isCarrier").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("applicationProductDetails").Item[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("area").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationModifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationStartDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationEndDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("attachmentsLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("associatedBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>

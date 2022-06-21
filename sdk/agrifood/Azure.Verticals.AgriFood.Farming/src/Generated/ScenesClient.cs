@@ -388,10 +388,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ScenesClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetScenesAsync("<provider>", "<farmerId>", "<boundaryId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// await foreach (var data in client.GetScenesAsync("<provider>", "<farmerId>", "<boundaryId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetScenesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -399,26 +400,27 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ScenesClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetScenesAsync("<provider>", "<farmerId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<imageNames>"}, new Double[]{1234}, new String[]{"<imageFormats>"}, 1234, "<skipToken>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sceneDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("fileLink").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("imageFormat").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("resolution").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFormat").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cloudCoverPercentage").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("darkPixelPercentage").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("ndviMedianValue").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("boundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// await foreach (var data in client.GetScenesAsync("<provider>", "<farmerId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<imageNames>"}, new Double[]{1234}, new String[]{"<imageFormats>"}, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sceneDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("fileLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("imageFormat").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("resolution").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFormat").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cloudCoverPercentage").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("darkPixelPercentage").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("ndviMedianValue").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("boundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -520,10 +522,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ScenesClient(endpoint, credential);
         /// 
-        /// Response response = client.GetScenes("<provider>", "<farmerId>", "<boundaryId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// foreach (var data in client.GetScenes("<provider>", "<farmerId>", "<boundaryId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetScenes with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -531,26 +534,27 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ScenesClient(endpoint, credential);
         /// 
-        /// Response response = client.GetScenes("<provider>", "<farmerId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<imageNames>"}, new Double[]{1234}, new String[]{"<imageFormats>"}, 1234, "<skipToken>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sceneDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("fileLink").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("imageFormat").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("resolution").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFormat").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cloudCoverPercentage").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("darkPixelPercentage").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("ndviMedianValue").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("boundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// foreach (var data in client.GetScenes("<provider>", "<farmerId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<imageNames>"}, new Double[]{1234}, new String[]{"<imageFormats>"}, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sceneDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("fileLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("imageFormat").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("resolution").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFormat").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cloudCoverPercentage").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("darkPixelPercentage").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("ndviMedianValue").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("boundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -647,9 +651,10 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     endDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
         /// };
         /// 
-        /// Response response = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// var operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = await operation.WaitForCompleteAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
@@ -686,9 +691,10 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// var operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = await operation.WaitForCompleteAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
@@ -820,9 +826,10 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     endDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
         /// };
         /// 
-        /// Response response = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// var operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = operation.WaitForComplete();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
@@ -859,9 +866,10 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// var operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = operation.WaitForComplete();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("startDateTime").ToString());

@@ -13597,9 +13597,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// var data = File.OpenRead("<binary.data>");
         /// 
-        /// Response response = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data));
+        /// var operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = await operation.WaitForCompleteAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call ImportGlossaryTermsViaCsvAsync with all parameters and request content, and how to parse the result.
@@ -13610,9 +13611,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// var data = File.OpenRead("<binary.data>");
         /// 
-        /// Response response = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data), true);
+        /// var operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data), true);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = await operation.WaitForCompleteAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());
@@ -13685,9 +13687,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// var data = File.OpenRead("<binary.data>");
         /// 
-        /// Response response = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data));
+        /// var operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = operation.WaitForComplete();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call ImportGlossaryTermsViaCsv with all parameters and request content, and how to parse the result.
@@ -13698,9 +13701,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// var data = File.OpenRead("<binary.data>");
         /// 
-        /// Response response = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data), true);
+        /// var operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data), true);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = operation.WaitForComplete();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());
@@ -13773,9 +13777,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// var data = File.OpenRead("<binary.data>");
         /// 
-        /// Response response = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data));
+        /// var operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = await operation.WaitForCompleteAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call ImportGlossaryTermsViaCsvByGlossaryNameAsync with all parameters and request content, and how to parse the result.
@@ -13786,9 +13791,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// var data = File.OpenRead("<binary.data>");
         /// 
-        /// Response response = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data), true);
+        /// var operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data), true);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = await operation.WaitForCompleteAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());
@@ -13861,9 +13867,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// var data = File.OpenRead("<binary.data>");
         /// 
-        /// Response response = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data));
+        /// var operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = operation.WaitForComplete();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call ImportGlossaryTermsViaCsvByGlossaryName with all parameters and request content, and how to parse the result.
@@ -13874,9 +13881,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// var data = File.OpenRead("<binary.data>");
         /// 
-        /// Response response = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data), true);
+        /// var operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data), true);
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = operation.WaitForComplete();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("createTime").ToString());

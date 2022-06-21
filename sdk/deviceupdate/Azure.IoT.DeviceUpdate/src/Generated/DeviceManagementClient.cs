@@ -3348,15 +3348,16 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetDeviceClassesAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("compatProperties").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("bestCompatibleUpdateId").GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("bestCompatibleUpdateId").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("bestCompatibleUpdateId").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// await foreach (var data in client.GetDeviceClassesAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("compatProperties").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("bestCompatibleUpdateId").GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("bestCompatibleUpdateId").GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("bestCompatibleUpdateId").GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3426,15 +3427,16 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = client.GetDeviceClasses();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("compatProperties").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("bestCompatibleUpdateId").GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("bestCompatibleUpdateId").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("bestCompatibleUpdateId").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// foreach (var data in client.GetDeviceClasses())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("compatProperties").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("bestCompatibleUpdateId").GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("bestCompatibleUpdateId").GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("bestCompatibleUpdateId").GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3507,13 +3509,14 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetInstallableUpdatesForDeviceClassesAsync("<deviceClassId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// await foreach (var data in client.GetInstallableUpdatesForDeviceClassesAsync("<deviceClassId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3584,13 +3587,14 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = client.GetInstallableUpdatesForDeviceClasses("<deviceClassId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// foreach (var data in client.GetInstallableUpdatesForDeviceClasses("<deviceClassId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3659,14 +3663,15 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetDevicesAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("manufacturer").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("model").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("onLatestUpdate").ToString());
+        /// await foreach (var data in client.GetDevicesAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("manufacturer").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("model").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("onLatestUpdate").ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetDevicesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -3674,35 +3679,36 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetDevicesAsync("<filter>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("moduleId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("manufacturer").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("model").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastAttemptedUpdateId").GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastAttemptedUpdateId").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastAttemptedUpdateId").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("installedUpdateId").GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("installedUpdateId").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("installedUpdateId").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("onLatestUpdate").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeploymentId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("resultCode").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("extendedResultCode").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("resultDetails").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("resultCode").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("extendedResultCode").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("resultDetails").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// await foreach (var data in client.GetDevicesAsync("<filter>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("moduleId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("manufacturer").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("model").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastAttemptedUpdateId").GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastAttemptedUpdateId").GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastAttemptedUpdateId").GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentStatus").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("installedUpdateId").GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("installedUpdateId").GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("installedUpdateId").GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("onLatestUpdate").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeploymentId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("resultCode").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("extendedResultCode").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("resultDetails").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("resultCode").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("extendedResultCode").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("resultDetails").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3795,14 +3801,15 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = client.GetDevices();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("manufacturer").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("model").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("onLatestUpdate").ToString());
+        /// foreach (var data in client.GetDevices())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("manufacturer").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("model").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("onLatestUpdate").ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetDevices with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -3810,35 +3817,36 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = client.GetDevices("<filter>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("moduleId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("manufacturer").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("model").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastAttemptedUpdateId").GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastAttemptedUpdateId").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastAttemptedUpdateId").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("installedUpdateId").GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("installedUpdateId").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("installedUpdateId").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("onLatestUpdate").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeploymentId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("resultCode").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("extendedResultCode").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("resultDetails").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("resultCode").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("extendedResultCode").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("resultDetails").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// foreach (var data in client.GetDevices("<filter>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("moduleId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("manufacturer").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("model").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastAttemptedUpdateId").GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastAttemptedUpdateId").GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastAttemptedUpdateId").GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentStatus").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("installedUpdateId").GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("installedUpdateId").GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("installedUpdateId").GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("onLatestUpdate").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeploymentId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("resultCode").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("extendedResultCode").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("resultDetails").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("resultCode").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("extendedResultCode").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("resultDetails").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3930,12 +3938,13 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetDeviceTagsAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tagName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// await foreach (var data in client.GetDeviceTagsAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tagName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4000,12 +4009,13 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = client.GetDeviceTags();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tagName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// foreach (var data in client.GetDeviceTags())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tagName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4070,17 +4080,18 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetGroupsAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tags").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// await foreach (var data in client.GetGroupsAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupType").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tags").Item[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4150,17 +4161,18 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = client.GetGroups();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tags").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// foreach (var data in client.GetGroups())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupType").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tags").Item[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4234,13 +4246,14 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetBestUpdatesForGroupsAsync("<groupId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
+        /// await foreach (var data in client.GetBestUpdatesForGroupsAsync("<groupId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetBestUpdatesForGroupsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -4248,14 +4261,15 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetBestUpdatesForGroupsAsync("<groupId>", "<filter>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// await foreach (var data in client.GetBestUpdatesForGroupsAsync("<groupId>", "<filter>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4330,13 +4344,14 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = client.GetBestUpdatesForGroups("<groupId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
+        /// foreach (var data in client.GetBestUpdatesForGroups("<groupId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetBestUpdatesForGroups with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -4344,14 +4359,15 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = client.GetBestUpdatesForGroups("<groupId>", "<filter>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// foreach (var data in client.GetBestUpdatesForGroups("<groupId>", "<filter>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4426,15 +4442,16 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetDeploymentsForGroupsAsync("<groupId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
+        /// await foreach (var data in client.GetDeploymentsForGroupsAsync("<groupId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("startDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetDeploymentsForGroupsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -4442,18 +4459,19 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetDeploymentsForGroupsAsync("<groupId>", "<filter>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isCanceled").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isRetried").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// await foreach (var data in client.GetDeploymentsForGroupsAsync("<groupId>", "<filter>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("startDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isCanceled").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isRetried").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4532,15 +4550,16 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = client.GetDeploymentsForGroups("<groupId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
+        /// foreach (var data in client.GetDeploymentsForGroups("<groupId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("startDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetDeploymentsForGroups with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -4548,18 +4567,19 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = client.GetDeploymentsForGroups("<groupId>", "<filter>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isCanceled").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isRetried").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// foreach (var data in client.GetDeploymentsForGroups("<groupId>", "<filter>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("startDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isCanceled").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isRetried").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4639,13 +4659,14 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetDeploymentDevicesAsync("<groupId>", "<deploymentId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("retryCount").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("movedOnToNewDeployment").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceState").ToString());
+        /// await foreach (var data in client.GetDeploymentDevicesAsync("<groupId>", "<deploymentId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("retryCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("movedOnToNewDeployment").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceState").ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetDeploymentDevicesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -4653,15 +4674,16 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetDeploymentDevicesAsync("<groupId>", "<deploymentId>", "<filter>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("moduleId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("retryCount").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("movedOnToNewDeployment").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceState").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// await foreach (var data in client.GetDeploymentDevicesAsync("<groupId>", "<deploymentId>", "<filter>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("moduleId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("retryCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("movedOnToNewDeployment").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceState").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4737,13 +4759,14 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = client.GetDeploymentDevices("<groupId>", "<deploymentId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("retryCount").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("movedOnToNewDeployment").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceState").ToString());
+        /// foreach (var data in client.GetDeploymentDevices("<groupId>", "<deploymentId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("retryCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("movedOnToNewDeployment").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceState").ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetDeploymentDevices with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -4751,15 +4774,16 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = client.GetDeploymentDevices("<groupId>", "<deploymentId>", "<filter>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("moduleId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("retryCount").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("movedOnToNewDeployment").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceState").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// foreach (var data in client.GetDeploymentDevices("<groupId>", "<deploymentId>", "<filter>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("moduleId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("retryCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("movedOnToNewDeployment").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceState").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4832,13 +4856,14 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetOperationsAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastActionDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// await foreach (var data in client.GetOperationsAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastActionDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetOperationsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -4846,23 +4871,24 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetOperationsAsync("<filter>", 1234);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("innererror").GetProperty("errorDetail").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("occurredDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("traceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastActionDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("etag").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// await foreach (var data in client.GetOperationsAsync("<filter>", 1234))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("code").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("message").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("target").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("innererror").GetProperty("errorDetail").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("occurredDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("traceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastActionDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("etag").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4946,13 +4972,14 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = client.GetOperations();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastActionDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// foreach (var data in client.GetOperations())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastActionDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetOperations with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -4960,23 +4987,24 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = client.GetOperations("<filter>", 1234);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("innererror").GetProperty("errorDetail").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("occurredDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("traceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastActionDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("etag").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// foreach (var data in client.GetOperations("<filter>", 1234))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("code").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("message").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("target").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("innererror").GetProperty("errorDetail").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("occurredDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("traceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastActionDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("etag").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -5058,17 +5086,18 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetLogCollectionOperationsAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceList").Item[0].GetProperty("deviceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceList").Item[0].GetProperty("moduleId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastActionDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// await foreach (var data in client.GetLogCollectionOperationsAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceList").Item[0].GetProperty("deviceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceList").Item[0].GetProperty("moduleId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastActionDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -5142,17 +5171,18 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, credential);
         /// 
-        /// Response response = client.GetLogCollectionOperations();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceList").Item[0].GetProperty("deviceId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceList").Item[0].GetProperty("moduleId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastActionDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// foreach (var data in client.GetLogCollectionOperations())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceList").Item[0].GetProperty("deviceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceList").Item[0].GetProperty("moduleId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastActionDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -5232,8 +5262,9 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// var data = "<Devices>";
         /// 
-        /// Response response = await client.ImportDevicesAsync(WaitUntil.Completed, "<action>", RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
+        /// var operation = await client.ImportDevicesAsync(WaitUntil.Completed, "<action>", RequestContent.Create(data));
+        /// 
+        /// await operation.WaitForCompleteResponseAsync();
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -5290,8 +5321,9 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// var data = "<Devices>";
         /// 
-        /// Response response = client.ImportDevices(WaitUntil.Completed, "<action>", RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
+        /// var operation = client.ImportDevices(WaitUntil.Completed, "<action>", RequestContent.Create(data));
+        /// 
+        /// operation.WaitForCompleteResponse();
         /// ]]></code>
         /// </example>
         /// <remarks>

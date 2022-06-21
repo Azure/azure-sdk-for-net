@@ -696,10 +696,11 @@ namespace Azure.Analytics.Purview.Account
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
-        /// Response response = await client.GetChildCollectionNamesAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].ToString());
+        /// await foreach (var data in client.GetChildCollectionNamesAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetChildCollectionNamesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -707,13 +708,14 @@ namespace Azure.Analytics.Purview.Account
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
-        /// Response response = await client.GetChildCollectionNamesAsync("<skipToken>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("count").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("friendlyName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// await foreach (var data in client.GetChildCollectionNamesAsync("<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("count").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("friendlyName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -780,10 +782,11 @@ namespace Azure.Analytics.Purview.Account
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
-        /// Response response = client.GetChildCollectionNames();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].ToString());
+        /// foreach (var data in client.GetChildCollectionNames())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetChildCollectionNames with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -791,13 +794,14 @@ namespace Azure.Analytics.Purview.Account
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
-        /// Response response = client.GetChildCollectionNames("<skipToken>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("count").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("friendlyName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// foreach (var data in client.GetChildCollectionNames("<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("count").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("friendlyName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>

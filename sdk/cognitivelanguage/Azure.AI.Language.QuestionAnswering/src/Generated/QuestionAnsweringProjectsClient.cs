@@ -2007,10 +2007,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetProjectsAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// await foreach (var data in client.GetProjectsAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetProjectsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -2018,18 +2019,19 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetProjectsAsync(1234, 1234, 1234);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("projectName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("language").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("multilingualResource").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("settings").GetProperty("defaultAnswer").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastModifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeployedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// await foreach (var data in client.GetProjectsAsync(1234, 1234, 1234))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("projectName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("language").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("multilingualResource").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("settings").GetProperty("defaultAnswer").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastModifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeployedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2105,10 +2107,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = client.GetProjects();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// foreach (var data in client.GetProjects())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetProjects with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -2116,18 +2119,19 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = client.GetProjects(1234, 1234, 1234);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("projectName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("language").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("multilingualResource").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("settings").GetProperty("defaultAnswer").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastModifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeployedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// foreach (var data in client.GetProjects(1234, 1234, 1234))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("projectName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("language").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("multilingualResource").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("settings").GetProperty("defaultAnswer").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastModifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeployedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2206,10 +2210,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetDeploymentsAsync("<projectName>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// await foreach (var data in client.GetDeploymentsAsync("<projectName>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetDeploymentsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -2217,12 +2222,13 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetDeploymentsAsync("<projectName>", 1234, 1234, 1234);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeployedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// await foreach (var data in client.GetDeploymentsAsync("<projectName>", 1234, 1234, 1234))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeployedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2295,10 +2301,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = client.GetDeployments("<projectName>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// foreach (var data in client.GetDeployments("<projectName>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetDeployments with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -2306,12 +2313,13 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = client.GetDeployments("<projectName>", 1234, 1234, 1234);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeployedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// foreach (var data in client.GetDeployments("<projectName>", 1234, 1234, 1234))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeployedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2384,10 +2392,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetSynonymsAsync("<projectName>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// await foreach (var data in client.GetSynonymsAsync("<projectName>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetSynonymsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -2395,11 +2404,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetSynonymsAsync("<projectName>", 1234, 1234, 1234);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("alterations").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// await foreach (var data in client.GetSynonymsAsync("<projectName>", 1234, 1234, 1234))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("alterations").Item[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2471,10 +2481,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = client.GetSynonyms("<projectName>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// foreach (var data in client.GetSynonyms("<projectName>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetSynonyms with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -2482,11 +2493,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = client.GetSynonyms("<projectName>", 1234, 1234, 1234);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("alterations").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// foreach (var data in client.GetSynonyms("<projectName>", 1234, 1234, 1234))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("alterations").Item[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2558,10 +2570,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetSourcesAsync("<projectName>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// await foreach (var data in client.GetSourcesAsync("<projectName>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetSourcesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -2569,16 +2582,17 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetSourcesAsync("<projectName>", 1234, 1234, 1234);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("displayName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sourceUri").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sourceKind").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("contentStructureKind").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// await foreach (var data in client.GetSourcesAsync("<projectName>", 1234, 1234, 1234))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("displayName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sourceUri").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sourceKind").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("contentStructureKind").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastUpdatedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2655,10 +2669,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = client.GetSources("<projectName>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// foreach (var data in client.GetSources("<projectName>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetSources with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -2666,16 +2681,17 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = client.GetSources("<projectName>", 1234, 1234, 1234);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("displayName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sourceUri").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sourceKind").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("contentStructureKind").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// foreach (var data in client.GetSources("<projectName>", 1234, 1234, 1234))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("displayName").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sourceUri").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sourceKind").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("contentStructureKind").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastUpdatedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2753,10 +2769,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetQnasAsync("<projectName>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// await foreach (var data in client.GetQnasAsync("<projectName>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetQnasAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -2764,33 +2781,34 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetQnasAsync("<projectName>", "<source>", 1234, 1234, 1234);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("answer").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("questions").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("metadata").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("isContextOnly").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("displayOrder").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qnaId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("answer").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("questions").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("metadata").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("clusterHead").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("question").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("userSuggestedCount").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("autoSuggestedCount").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("displayText").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("clusterHead").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("question").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("userSuggestedCount").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("autoSuggestedCount").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// await foreach (var data in client.GetQnasAsync("<projectName>", "<source>", 1234, 1234, 1234))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("answer").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("questions").Item[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("metadata").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("isContextOnly").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("displayOrder").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qnaId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("answer").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("questions").Item[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("metadata").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("clusterHead").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("question").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("userSuggestedCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("autoSuggestedCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("displayText").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("clusterHead").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("question").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("userSuggestedCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("autoSuggestedCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastUpdatedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2899,10 +2917,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = client.GetQnas("<projectName>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// foreach (var data in client.GetQnas("<projectName>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetQnas with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -2910,33 +2929,34 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = client.GetQnas("<projectName>", "<source>", 1234, 1234, 1234);
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("answer").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("questions").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("metadata").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("isContextOnly").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("displayOrder").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qnaId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("answer").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("questions").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("metadata").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("clusterHead").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("question").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("userSuggestedCount").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("autoSuggestedCount").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("displayText").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("clusterHead").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("question").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("userSuggestedCount").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("autoSuggestedCount").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// foreach (var data in client.GetQnas("<projectName>", "<source>", 1234, 1234, 1234))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("answer").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("questions").Item[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("metadata").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("isContextOnly").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("displayOrder").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qnaId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("answer").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("questions").Item[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("metadata").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("clusterHead").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("question").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("userSuggestedCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("autoSuggestedCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("displayText").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("clusterHead").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("question").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("userSuggestedCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("autoSuggestedCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastUpdatedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3042,8 +3062,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
-        /// Console.WriteLine(response.Status);
+        /// var operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
+        /// 
+        /// await operation.WaitForCompleteResponseAsync();
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3097,8 +3118,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = client.DeleteProject(WaitUntil.Completed, "<projectName>");
-        /// Console.WriteLine(response.Status);
+        /// var operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
+        /// 
+        /// operation.WaitForCompleteResponse();
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3154,9 +3176,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = await client.ExportAsync(WaitUntil.Completed, "<projectName>");
+        /// var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = await operation.WaitForCompleteAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -3170,9 +3193,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
+        /// var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = await operation.WaitForCompleteAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -3273,9 +3297,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = client.Export(WaitUntil.Completed, "<projectName>");
+        /// var operation = client.Export(WaitUntil.Completed, "<projectName>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = operation.WaitForComplete();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -3289,9 +3314,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = client.Export(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
+        /// var operation = client.Export(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = operation.WaitForComplete();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -3395,8 +3421,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var data = new {};
         /// 
-        /// Response response = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
+        /// var operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+        /// 
+        /// await operation.WaitForCompleteResponseAsync();
         /// ]]></code>
         /// This sample shows how to call ImportAsync with all parameters and request content.
         /// <code><![CDATA[
@@ -3484,8 +3511,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     fileUri = "<ImportJobOptionsFileUri>",
         /// };
         /// 
-        /// Response response = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>");
-        /// Console.WriteLine(response.Status);
+        /// var operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>");
+        /// 
+        /// await operation.WaitForCompleteResponseAsync();
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3606,8 +3634,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var data = new {};
         /// 
-        /// Response response = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
+        /// var operation = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+        /// 
+        /// operation.WaitForCompleteResponse();
         /// ]]></code>
         /// This sample shows how to call Import with all parameters and request content.
         /// <code><![CDATA[
@@ -3695,8 +3724,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     fileUri = "<ImportJobOptionsFileUri>",
         /// };
         /// 
-        /// Response response = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>");
-        /// Console.WriteLine(response.Status);
+        /// var operation = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>");
+        /// 
+        /// operation.WaitForCompleteResponse();
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3813,8 +3843,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
-        /// Console.WriteLine(response.Status);
+        /// var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
+        /// 
+        /// await operation.WaitForCompleteResponseAsync();
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3870,8 +3901,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
-        /// Response response = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>");
-        /// Console.WriteLine(response.Status);
+        /// var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>");
+        /// 
+        /// operation.WaitForCompleteResponse();
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3941,8 +3973,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     }
         /// };
         /// 
-        /// Response response = await client.UpdateSourcesAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
+        /// var operation = await client.UpdateSourcesAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+        /// 
+        /// await operation.WaitForCompleteResponseAsync();
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4025,8 +4058,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     }
         /// };
         /// 
-        /// Response response = client.UpdateSources(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
+        /// var operation = client.UpdateSources(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+        /// 
+        /// operation.WaitForCompleteResponse();
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4135,8 +4169,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     }
         /// };
         /// 
-        /// Response response = await client.UpdateQnasAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
+        /// var operation = await client.UpdateQnasAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+        /// 
+        /// await operation.WaitForCompleteResponseAsync();
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4267,8 +4302,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     }
         /// };
         /// 
-        /// Response response = client.UpdateQnas(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
+        /// var operation = client.UpdateQnas(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+        /// 
+        /// operation.WaitForCompleteResponse();
         /// ]]></code>
         /// </example>
         /// <remarks>

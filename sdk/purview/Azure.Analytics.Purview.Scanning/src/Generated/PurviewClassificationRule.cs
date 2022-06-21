@@ -619,14 +619,15 @@ namespace Azure.Analytics.Purview.Scanning
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("<classificationRuleName>");
         /// 
-        /// Response response = await client.GetVersionsAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("kind").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// Console.WriteLine(result.GetProperty("count").ToString());
+        /// await foreach (var data in client.GetVersionsAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("kind").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("count").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -693,14 +694,15 @@ namespace Azure.Analytics.Purview.Scanning
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("<classificationRuleName>");
         /// 
-        /// Response response = client.GetVersions();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("kind").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// Console.WriteLine(result.GetProperty("count").ToString());
+        /// foreach (var data in client.GetVersions())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("kind").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("count").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>

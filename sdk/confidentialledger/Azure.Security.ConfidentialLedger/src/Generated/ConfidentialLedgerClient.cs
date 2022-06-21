@@ -1388,11 +1388,12 @@ namespace Azure.Security.ConfidentialLedger
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetLedgerEntriesAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("state").ToString());
-        /// Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("contents").ToString());
+        /// await foreach (var data in client.GetLedgerEntriesAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("state").ToString());
+        ///     Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("contents").ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetLedgerEntriesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -1400,14 +1401,15 @@ namespace Azure.Security.ConfidentialLedger
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetLedgerEntriesAsync("<subLedgerId>", "<fromTransactionId>", "<toTransactionId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("state").ToString());
-        /// Console.WriteLine(result.GetProperty("@nextLink").ToString());
-        /// Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("contents").ToString());
-        /// Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("subLedgerId").ToString());
-        /// Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("transactionId").ToString());
+        /// await foreach (var data in client.GetLedgerEntriesAsync("<subLedgerId>", "<fromTransactionId>", "<toTransactionId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("state").ToString());
+        ///     Console.WriteLine(result.GetProperty("@nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("contents").ToString());
+        ///     Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("subLedgerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("transactionId").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1469,11 +1471,12 @@ namespace Azure.Security.ConfidentialLedger
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
-        /// Response response = client.GetLedgerEntries();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("state").ToString());
-        /// Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("contents").ToString());
+        /// foreach (var data in client.GetLedgerEntries())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("state").ToString());
+        ///     Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("contents").ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetLedgerEntries with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -1481,14 +1484,15 @@ namespace Azure.Security.ConfidentialLedger
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
-        /// Response response = client.GetLedgerEntries("<subLedgerId>", "<fromTransactionId>", "<toTransactionId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("state").ToString());
-        /// Console.WriteLine(result.GetProperty("@nextLink").ToString());
-        /// Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("contents").ToString());
-        /// Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("subLedgerId").ToString());
-        /// Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("transactionId").ToString());
+        /// foreach (var data in client.GetLedgerEntries("<subLedgerId>", "<fromTransactionId>", "<toTransactionId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("state").ToString());
+        ///     Console.WriteLine(result.GetProperty("@nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("contents").ToString());
+        ///     Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("subLedgerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("transactionId").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>

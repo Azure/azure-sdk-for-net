@@ -456,10 +456,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetWeathersAsync("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// await foreach (var data in client.GetWeathersAsync("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetWeathersAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -467,56 +468,57 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
-        /// Response response = await client.GetWeathersAsync("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("boundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("extensionId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("location").GetProperty("latitude").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("location").GetProperty("longitude").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("unitSystemCode").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("extensionVersion").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("weatherDataType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("granularity").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cloudCover").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cloudCover").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dewPoint").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dewPoint").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("growingDegreeDay").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("growingDegreeDay").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("precipitation").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("precipitation").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pressure").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pressure").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("relativeHumidity").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("relativeHumidity").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilMoisture").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilMoisture").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilTemperature").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilTemperature").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("temperature").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("temperature").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("visibility").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("visibility").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("wetBulbTemperature").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("wetBulbTemperature").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windChill").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windChill").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windDirection").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windDirection").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windGust").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windGust").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windSpeed").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windSpeed").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// await foreach (var data in client.GetWeathersAsync("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("boundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("extensionId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("location").GetProperty("latitude").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("location").GetProperty("longitude").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("unitSystemCode").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("extensionVersion").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("weatherDataType").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("granularity").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cloudCover").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cloudCover").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dewPoint").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dewPoint").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("growingDegreeDay").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("growingDegreeDay").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("precipitation").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("precipitation").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pressure").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pressure").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("relativeHumidity").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("relativeHumidity").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilMoisture").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilMoisture").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilTemperature").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilTemperature").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("temperature").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("temperature").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("visibility").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("visibility").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("wetBulbTemperature").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("wetBulbTemperature").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windChill").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windChill").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windDirection").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windDirection").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windGust").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windGust").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windSpeed").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windSpeed").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -632,10 +634,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
-        /// Response response = client.GetWeathers("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// foreach (var data in client.GetWeathers("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
         /// ]]></code>
         /// This sample shows how to call GetWeathers with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -643,56 +646,57 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
-        /// Response response = client.GetWeathers("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("boundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("extensionId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("location").GetProperty("latitude").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("location").GetProperty("longitude").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("unitSystemCode").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("extensionVersion").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("weatherDataType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("granularity").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cloudCover").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cloudCover").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dewPoint").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dewPoint").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("growingDegreeDay").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("growingDegreeDay").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("precipitation").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("precipitation").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pressure").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pressure").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("relativeHumidity").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("relativeHumidity").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilMoisture").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilMoisture").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilTemperature").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilTemperature").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("temperature").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("temperature").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("visibility").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("visibility").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("wetBulbTemperature").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("wetBulbTemperature").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windChill").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windChill").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windDirection").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windDirection").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windGust").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windGust").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windSpeed").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windSpeed").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// foreach (var data in client.GetWeathers("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("boundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("extensionId").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("location").GetProperty("latitude").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("location").GetProperty("longitude").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("unitSystemCode").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("extensionVersion").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("weatherDataType").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("granularity").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cloudCover").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cloudCover").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dewPoint").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dewPoint").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("growingDegreeDay").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("growingDegreeDay").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("precipitation").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("precipitation").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pressure").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pressure").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("relativeHumidity").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("relativeHumidity").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilMoisture").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilMoisture").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilTemperature").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilTemperature").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("temperature").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("temperature").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("visibility").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("visibility").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("wetBulbTemperature").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("wetBulbTemperature").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windChill").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windChill").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windDirection").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windDirection").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windGust").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windGust").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windSpeed").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windSpeed").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
+        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -810,9 +814,10 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// var operation = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = await operation.WaitForCompleteAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
@@ -842,9 +847,10 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// var operation = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = await operation.WaitForCompleteAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
@@ -969,9 +975,10 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// var operation = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = operation.WaitForComplete();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
@@ -1001,9 +1008,10 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// var operation = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = operation.WaitForComplete();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
@@ -1124,9 +1132,10 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     boundaryId = "<WeatherDataDeleteJobBoundaryId>",
         /// };
         /// 
-        /// Response response = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// var operation = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = await operation.WaitForCompleteAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -1152,9 +1161,10 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// var operation = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = await operation.WaitForCompleteAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -1275,9 +1285,10 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     boundaryId = "<WeatherDataDeleteJobBoundaryId>",
         /// };
         /// 
-        /// Response response = client.CreateDataDeleteJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// var operation = client.CreateDataDeleteJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = operation.WaitForComplete();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -1303,9 +1314,10 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     },
         /// };
         /// 
-        /// Response response = client.CreateDataDeleteJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// var operation = client.CreateDataDeleteJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
         /// 
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// BinaryData data = operation.WaitForComplete();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("extensionId").ToString());
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("boundaryId").ToString());

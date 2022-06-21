@@ -495,8 +495,9 @@ namespace Azure.AI.Language.Conversations
         ///     },
         /// };
         /// 
-        /// Response response = await client.SubmitJobAsync(WaitUntil.Completed, RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
+        /// var operation = await client.SubmitJobAsync(WaitUntil.Completed, RequestContent.Create(data));
+        /// 
+        /// await operation.WaitForCompleteResponseAsync();
         /// ]]></code>
         /// This sample shows how to call SubmitJobAsync with all parameters and request content.
         /// <code><![CDATA[
@@ -524,8 +525,9 @@ namespace Azure.AI.Language.Conversations
         ///     },
         /// };
         /// 
-        /// Response response = await client.SubmitJobAsync(WaitUntil.Completed, RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
+        /// var operation = await client.SubmitJobAsync(WaitUntil.Completed, RequestContent.Create(data));
+        /// 
+        /// await operation.WaitForCompleteResponseAsync();
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -616,8 +618,9 @@ namespace Azure.AI.Language.Conversations
         ///     },
         /// };
         /// 
-        /// Response response = client.SubmitJob(WaitUntil.Completed, RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
+        /// var operation = client.SubmitJob(WaitUntil.Completed, RequestContent.Create(data));
+        /// 
+        /// operation.WaitForCompleteResponse();
         /// ]]></code>
         /// This sample shows how to call SubmitJob with all parameters and request content.
         /// <code><![CDATA[
@@ -645,8 +648,9 @@ namespace Azure.AI.Language.Conversations
         ///     },
         /// };
         /// 
-        /// Response response = client.SubmitJob(WaitUntil.Completed, RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
+        /// var operation = client.SubmitJob(WaitUntil.Completed, RequestContent.Create(data));
+        /// 
+        /// operation.WaitForCompleteResponse();
         /// ]]></code>
         /// </example>
         /// <remarks>
