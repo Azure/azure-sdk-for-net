@@ -239,24 +239,10 @@ namespace Azure.Core
 
         private async ValueTask<Response<T>> WaitForCompletionAsync(bool async, TimeSpan? pollingInterval, CancellationToken cancellationToken)
         {
-            if (TryGetResponseValue(out var rawResponse))
-            {
-                return Response.FromValue(Value, rawResponse!);
-            }
-
-            using var scope = CreateScope(_waitForCompletionScopeName);
-            try
-            {
-                rawResponse = async
-                    ? await WaitForCompletionResponseAsync(async: true, pollingInterval, cancellationToken).ConfigureAwait(false)
-                    : WaitForCompletionResponseAsync(async: false, pollingInterval, cancellationToken).EnsureCompleted();
-                return Response.FromValue(Value, rawResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var rawResponse = async
+                ? await WaitForCompletionResponseAsync(async: true, pollingInterval, _waitForCompletionScopeName, cancellationToken).ConfigureAwait(false)
+                : WaitForCompletionResponseAsync(async: false, pollingInterval, _waitForCompletionScopeName, cancellationToken).EnsureCompleted();
+            return Response.FromValue(Value, rawResponse);
         }
 
         protected override async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
