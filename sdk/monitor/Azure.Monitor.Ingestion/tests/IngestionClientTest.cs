@@ -22,32 +22,16 @@ namespace Azure.Monitor.Ingestion.Tests
 
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
 
-        [RecordedTest]
-        public void TestOperation()
+        private LogsIngestionClient CreateClient()
         {
-            Assert.IsTrue(true);
+            return new LogsIngestionClient(new Uri(TestEnvironment.DCREndpoint), TestEnvironment.ClientSecretCredential);
         }
-
-        #region Helpers
-
-        private static BinaryData GetContentFromResponse(Response r)
-        {
-            // Workaround azure/azure-sdk-for-net#21048, which prevents .Content from working when dealing with responses
-            // from the playback system.
-
-            MemoryStream ms = new MemoryStream();
-            r.ContentStream.CopyTo(ms);
-            return new BinaryData(ms.ToArray());
-        }
-        #endregion
 
         [Test]
         public async Task ValidInputFromObjectAsJson()
         {
-            ClientSecretCredential clientSecretCrendential = new ClientSecretCredential("<tenantId>", "<cliendId>",  "<clientSecret>");
-            var dcrImmutableId = "<dcrImmutableId>";
-            var dcrEndpoint = "https://nibhati-dce-ku6s.westus2-1.ingest.monitor.azure.com";
-            var currentTime = DateTimeOffset.UtcNow.ToString("O");
+            LogsIngestionClient client = CreateClient();
+            var currentTime = Recording.UtcNow;
 
             BinaryData data = BinaryData.FromObjectAsJson(
                 // Use an anonymous type to create the payload
@@ -80,22 +64,18 @@ namespace Azure.Monitor.Ingestion.Tests
                     },
                 });
 
-            LogsIngestionClient client = new(
-                new Uri(dcrEndpoint),
-                clientSecretCrendential);
-
             // Make the request
-            Response response = client.Upload(dcrImmutableId, "Custom-MyTableRawData", RequestContent.Create(data)); //takes StreamName not tablename
+            Response response = client.Upload(TestEnvironment.DCRImmutableId, "Custom-MyTableRawData", RequestContent.Create(data)); //takes StreamName not tablename
 
             // Check the response
             Assert.AreEqual(204, response.Status);
             Assert.AreEqual("", response.Content.ToString());
 
-            LogsQueryClient logsQueryClient = new LogsQueryClient(clientSecretCrendential);
+            LogsQueryClient logsQueryClient = new LogsQueryClient(TestEnvironment.ClientSecretCredential);
             var batch = new LogsBatchQuery();
-            string workspaceId = "22101c38-d67f-4ded-994e-67f093aff9f4";
+
             string countQueryId = batch.AddWorkspaceQuery(
-                workspaceId,
+                TestEnvironment.WorkspaceId,
                 "MyTable_CL | count;",
                 new QueryTimeRange(TimeSpan.FromDays(1)));
 
@@ -107,33 +87,25 @@ namespace Azure.Monitor.Ingestion.Tests
             Assert.IsTrue(responseLogsQuery.Value.GetResult<int>(countQueryId).Single() >= 2);
         }
 
+        [LiveOnly]
         [Test]
-        public async Task ValidInputFromStreamAsync() //need Workspace id
+        public async Task ValidInputFromStreamAsync()
         {
-            ClientSecretCredential clientSecretCrendential = new ClientSecretCredential("<tenantId>", "<cliendId>", "<clientSecret>");
-            var dcrImmutableId = "<dcrImmutableId>";
-            var dcrEndpoint = "https://nibhati-dce-ku6s.westus2-1.ingest.monitor.azure.com";
-            var currentTime = DateTimeOffset.UtcNow.ToString("O");
-
+            LogsIngestionClient client = CreateClient();
             Stream stream = BinaryData.FromString("{\"Time\"=currentTime,\"Computer\"=\"Computer1\",\"AdditionalContext\":[{\"InstanceName\"=\"user1\",\"TimeZone\"=\"PacificTime\",\"Level\"=4,\"CounterName\"=\"AppMetric1\",\"CounterValue\"=15.3}]}").ToStream();
 
             BinaryData data = BinaryData.FromStream(stream);
-            LogsIngestionClient client = new(
-                new Uri(dcrEndpoint),
-                clientSecretCrendential);
-
             // Make the request
-            Response response = client.Upload(dcrImmutableId, "Custom-MyTableRawData", RequestContent.Create(data));
+            Response response = client.Upload(TestEnvironment.DCRImmutableId, "Custom-MyTableRawData", RequestContent.Create(data));
 
             // Check the response
             Assert.AreEqual(204, response.Status);
             Assert.AreEqual("", response.Content.ToString());
 
-            LogsQueryClient logsQueryClient = new LogsQueryClient(clientSecretCrendential);
+            LogsQueryClient logsQueryClient = new LogsQueryClient(TestEnvironment.ClientSecretCredential);
             var batch = new LogsBatchQuery();
-            string workspaceId = "22101c38-d67f-4ded-994e-67f093aff9f4";
             string countQueryId = batch.AddWorkspaceQuery(
-                workspaceId,
+                TestEnvironment.WorkspaceId,
                 "MyTable_CL | count;",
                 new QueryTimeRange(TimeSpan.FromDays(1)));
 
@@ -145,80 +117,59 @@ namespace Azure.Monitor.Ingestion.Tests
             Assert.IsTrue(responseLogsQuery.Value.GetResult<int>(countQueryId).Single() >= 2);
         }
 
+        [LiveOnly]
         [Test]
         public void NullInput()
         {
-            ClientSecretCredential clientSecretCrendential = new ClientSecretCredential("<tenantId>", "<cliendId>", "<clientSecret>");
-            var dcrImmutableId = "<dcrImmutableId>";
-            var dcrEndpoint = "https://nibhati-dce-ku6s.westus2-1.ingest.monitor.azure.com";
+            LogsIngestionClient client = CreateClient();
 
-            //var data = BinaryData.FromString(null).ToStream();
-
-            LogsIngestionClient client = new(
-                new Uri(dcrEndpoint),
-                clientSecretCrendential);
-
-            var exception = Assert.Throws<RequestFailedException>(() => client.Upload(dcrImmutableId, "Custom-MyTableRawData", RequestContent.Create(Stream.Null)));
+            var exception = Assert.Throws<RequestFailedException>(() => client.Upload(TestEnvironment.DCRImmutableId, "Custom-MyTableRawData", RequestContent.Create(Stream.Null)));
 
             Assert.AreEqual(null, exception.ErrorCode);
             Assert.AreEqual(500, exception.Status);
             StringAssert.StartsWith("Service request failed.", exception.Message);
         }
 
+        [LiveOnly]
         [Test]
         public void GreaterThan1MbData() //Should fail when we don't have batching
         {
-            ClientSecretCredential clientSecretCrendential = new ClientSecretCredential("<tenantId>", "<cliendId>", "<clientSecret>");
-            var dcrImmutableId = "<dcrImmutableId>";
-            var dcrEndpoint = "https://nibhati-dce-ku6s.westus2-1.ingest.monitor.azure.com";
+            LogsIngestionClient client = CreateClient();
 
-            var currentTime = DateTimeOffset.UtcNow.ToString("O");
+            var currentTime = Recording.UtcNow;
             const int Mb = 1024 * 1024;
             string greaterThan1Mb = new string('*', Mb + 5); //1,048,576 is 1 Mb
 
-            LogsIngestionClient client = new(
-                new Uri(dcrEndpoint),
-                clientSecretCrendential);
-
-            var exception = Assert.Throws<RequestFailedException>(() => client.Upload(dcrImmutableId, "Custom-MyTableRawData", RequestContent.Create(greaterThan1Mb)));
+            var exception = Assert.Throws<RequestFailedException>(() => client.Upload(TestEnvironment.DCRImmutableId, "Custom-MyTableRawData", RequestContent.Create(greaterThan1Mb)));
 
             Assert.AreEqual("ContentLengthLimitExceeded", exception.ErrorCode);
             Assert.AreEqual(413, exception.Status);
             StringAssert.StartsWith("Maximum allowed content length: 1048576 bytes (1 MB).", exception.Message);
         }
 
+        [LiveOnly]
         [Test]
         public void EmptyData()
         {
-            ClientSecretCredential clientSecretCrendential = new ClientSecretCredential("<tenantId>", "<cliendId>", "<clientSecret>");
-            var dcrImmutableId = "<dcrImmutableId>";
-            var dcrEndpoint = "https://nibhati-dce-ku6s.westus2-1.ingest.monitor.azure.com";
+            LogsIngestionClient client = CreateClient();
 
             var data = BinaryData.FromString("").ToStream();
 
-            LogsIngestionClient client = new(
-                new Uri(dcrEndpoint),
-                clientSecretCrendential);
-
-            var exception = Assert.Throws<RequestFailedException>(() => client.Upload(dcrImmutableId, "Custom-MyTableRawData", RequestContent.Create(data)));
+            var exception = Assert.Throws<RequestFailedException>(() => client.Upload(TestEnvironment.DCRImmutableId, "Custom-MyTableRawData", RequestContent.Create(data)));
 
             Assert.AreEqual(null, exception.ErrorCode);
             Assert.AreEqual(500, exception.Status);
             StringAssert.StartsWith("Service request failed.", exception.Message);
         }
 
+        [LiveOnly]
+        [Test]
         public void NullStream()
         {
-            ClientSecretCredential clientSecretCrendential = new ClientSecretCredential("<tenantId>", "<cliendId>", "<clientSecret>");
-            var dcrImmutableId = "<dcrImmutableId>";
-            var dcrEndpoint = "https://nibhati-dce-ku6s.westus2-1.ingest.monitor.azure.com";
-
-            LogsIngestionClient client = new(
-                new Uri(dcrEndpoint),
-                clientSecretCrendential);
+            LogsIngestionClient client = CreateClient();
 
             Stream stream = null;
-            var exception = Assert.Throws<RequestFailedException>(() => client.Upload(dcrImmutableId, "Custom-MyTableRawData", RequestContent.Create(stream)));
+            var exception = Assert.Throws<RequestFailedException>(() => client.Upload(TestEnvironment.DCRImmutableId, "Custom-MyTableRawData", RequestContent.Create(stream)));
 
             Assert.AreEqual("BadArgumentError", exception.ErrorCode);
             StringAssert.StartsWith("Batch query with id '0' failed.", exception.Message);
