@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class UserSet : IUtf8JsonSerializable
+    public partial class UserInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteEndObject();
         }
 
-        internal static UserSet DeserializeUserSet(JsonElement element)
+        internal static UserInfo DeserializeUserInfo(JsonElement element)
         {
             Optional<UserType> userType = default;
             Optional<bool> isBackup = default;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new UserSet(Optional.ToNullable(userType), Optional.ToNullable(isBackup), id.Value, description.Value);
+            return new UserInfo(Optional.ToNullable(userType), Optional.ToNullable(isBackup), id.Value, description.Value);
         }
     }
 }

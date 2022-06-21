@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> The detail of a user. </summary>
-    public partial class UserSet
+    public partial class UserInfo
     {
-        /// <summary> Initializes a new instance of UserSet. </summary>
-        public UserSet()
+        /// <summary> Initializes a new instance of UserInfo. </summary>
+        public UserInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of UserSet. </summary>
+        /// <summary> Initializes a new instance of UserInfo. </summary>
         /// <param name="userType"> The type of user. </param>
         /// <param name="isBackup"> The value indicating whether the user is a backup fallback approver. </param>
         /// <param name="id"> The object id of the user. </param>
         /// <param name="description"> The description of the user. </param>
-        internal UserSet(UserType? userType, bool? isBackup, string id, string description)
+        internal UserInfo(UserType? userType, bool? isBackup, string id, string description)
         {
             UserType = userType;
             IsBackup = isBackup;

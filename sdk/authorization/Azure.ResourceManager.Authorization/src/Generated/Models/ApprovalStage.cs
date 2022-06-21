@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of ApprovalStage. </summary>
         public ApprovalStage()
         {
-            PrimaryApprovers = new ChangeTrackingList<UserSet>();
-            EscalationApprovers = new ChangeTrackingList<UserSet>();
+            PrimaryApprovers = new ChangeTrackingList<UserInfo>();
+            EscalationApprovers = new ChangeTrackingList<UserInfo>();
         }
 
         /// <summary> Initializes a new instance of ApprovalStage. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="primaryApprovers"> The primary approver of the request. </param>
         /// <param name="isEscalationEnabled"> The value determine whether escalation feature is enabled. </param>
         /// <param name="escalationApprovers"> The escalation approver of the request. </param>
-        internal ApprovalStage(int? approvalStageTimeOutInDays, bool? isApproverJustificationRequired, int? escalationTimeInMinutes, IList<UserSet> primaryApprovers, bool? isEscalationEnabled, IList<UserSet> escalationApprovers)
+        internal ApprovalStage(int? approvalStageTimeOutInDays, bool? isApproverJustificationRequired, int? escalationTimeInMinutes, IList<UserInfo> primaryApprovers, bool? isEscalationEnabled, IList<UserInfo> escalationApprovers)
         {
             ApprovalStageTimeOutInDays = approvalStageTimeOutInDays;
             IsApproverJustificationRequired = isApproverJustificationRequired;
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> The time in minutes when the approval request would be escalated if the primary approver does not approve. </summary>
         public int? EscalationTimeInMinutes { get; set; }
         /// <summary> The primary approver of the request. </summary>
-        public IList<UserSet> PrimaryApprovers { get; }
+        public IList<UserInfo> PrimaryApprovers { get; }
         /// <summary> The value determine whether escalation feature is enabled. </summary>
         public bool? IsEscalationEnabled { get; set; }
         /// <summary> The escalation approver of the request. </summary>
-        public IList<UserSet> EscalationApprovers { get; }
+        public IList<UserInfo> EscalationApprovers { get; }
     }
 }

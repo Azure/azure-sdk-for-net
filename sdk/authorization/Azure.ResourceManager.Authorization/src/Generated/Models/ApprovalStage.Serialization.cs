@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<int> approvalStageTimeOutInDays = default;
             Optional<bool> isApproverJustificationRequired = default;
             Optional<int> escalationTimeInMinutes = default;
-            Optional<IList<UserSet>> primaryApprovers = default;
+            Optional<IList<UserInfo>> primaryApprovers = default;
             Optional<bool> isEscalationEnabled = default;
-            Optional<IList<UserSet>> escalationApprovers = default;
+            Optional<IList<UserInfo>> escalationApprovers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("approvalStageTimeOutInDays"))
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<UserSet> array = new List<UserSet>();
+                    List<UserInfo> array = new List<UserInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserSet.DeserializeUserSet(item));
+                        array.Add(UserInfo.DeserializeUserInfo(item));
                     }
                     primaryApprovers = array;
                     continue;
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<UserSet> array = new List<UserSet>();
+                    List<UserInfo> array = new List<UserInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserSet.DeserializeUserSet(item));
+                        array.Add(UserInfo.DeserializeUserInfo(item));
                     }
                     escalationApprovers = array;
                     continue;

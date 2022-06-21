@@ -13,8 +13,6 @@ require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/a416080c85
 output-folder: Generated/
 clear-output-folder: true
 skip-csproj: true
-modelerfour:
-  lenient-model-deduplication: true
 
 rename-rules:
   CPU: Cpu
@@ -42,6 +40,11 @@ list-exception:
 - /{roleAssignmentId}
 
 directive:
+  # Duplicate Schema name
+  - from: RoleAssignmentScheduleRequest.json
+    where: $.definitions.RoleAssignmentScheduleRequestProperties
+    transform: $['x-ms-client-name'] = 'RoleAssignmentScheduleRequestProperties' 
+
   - from: RoleAssignmentScheduleRequest.json
     where: $.definitions.RoleAssignmentScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.type
     transform: $['x-ms-client-name'] = 'RoleAssignmentExpirationType' 
@@ -110,15 +113,14 @@ directive:
   - rename-model:
       from: ProviderOperationsMetadata
       to: ProviderOperations
+  - rename-model:
+      from: UserSet
+      to: UserInfo
 
-  # Assign the specified type
-  # - from: RoleAssignmentSchedule.json
-  #   where: $.definitions.RoleAssignmentScheduleProperties.properties.linkedRoleEligibilityScheduleId
-  #   transform: $['x-ms-format'] = 'resource-type'
-  # - from: RoleAssignmentScheduleInstance.json
-  #   where: $.definitions.RoleAssignmentScheduleInstanceProperties.properties.linkedRoleEligibilityScheduleId
-  #   transform: $['x-ms-format'] = 'duration-constant' 
-  # - from: RoleAssignmentScheduleRequest.json
-  #   where: $.definitions.RoleAssignmentScheduleRequestProperties.properties.linkedRoleEligibilityScheduleId
-  #   transform: $['x-ms-format'] = 'azure-location'
+  - from: authorization-RoleDefinitionsCalls.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/permissions'].get
+    transform: $.operationId = "AzurePermissionsForResourceGroup_List"
+  - from: authorization-RoleDefinitionsCalls.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/permissions'].get
+    transform: $.operationId = "AzurePermissionsForResource_List" 
 ```
