@@ -37,3 +37,4 @@ stages:
           - script: |
               dotnet build
             displayName: "Build Test"
+            workingDirectory: eng\ScenarioSmoke\Azure.ResourceManager.SmokeScenario\tests
