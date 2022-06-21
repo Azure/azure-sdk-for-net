@@ -24,7 +24,6 @@ param(
     [string]$Namespace,
 
     # Override remote stress-test-addons with local on-disk addons for development
-    [ValidateScript({ Test-Path $_ })]
     [System.IO.FileInfo]$LocalAddonsPath
 )
 
