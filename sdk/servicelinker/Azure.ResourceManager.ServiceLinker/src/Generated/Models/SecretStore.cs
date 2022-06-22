@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> An option to store secret value in secure place. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> Initializes a new instance of SecretStore. </summary>
         /// <param name="keyVaultId"> The key vault id to store secret. </param>
-        internal SecretStore(string keyVaultId)
+        internal SecretStore(ResourceIdentifier keyVaultId)
         {
             KeyVaultId = keyVaultId;
         }
 
         /// <summary> The key vault id to store secret. </summary>
-        public string KeyVaultId { get; set; }
+        public ResourceIdentifier KeyVaultId { get; set; }
     }
 }

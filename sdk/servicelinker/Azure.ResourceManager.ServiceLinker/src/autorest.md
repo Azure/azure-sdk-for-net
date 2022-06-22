@@ -45,4 +45,15 @@ rename-rules:
   URI: Uri
   VNet: Vnet
 
+directive:
+  - from: servicelinker.json
+    where: $.definitions
+    transform: >
+      $.SecretStore.properties.keyVaultId['x-ms-format'] = 'arm-id';
+      $.AzureResource.properties.id['x-ms-format'] = 'arm-id';
+      $.AzureResource.properties.resourceProperties['x-ms-client-flatten'] = true;
+      $.LinkerProperties.properties.clientType['x-ms-enum']['name'] = 'ApplicationClientType';
+      $.ValidateResult.properties.sourceId['x-ms-format'] = 'arm-id';
+      $.ValidateResult.properties.targetId['x-ms-format'] = 'arm-id';
+
 ```

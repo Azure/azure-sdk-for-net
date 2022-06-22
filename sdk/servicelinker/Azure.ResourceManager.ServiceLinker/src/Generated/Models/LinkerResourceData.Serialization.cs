@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceLinker
             Optional<SystemData> systemData = default;
             Optional<TargetServiceBase> targetService = default;
             Optional<AuthInfoBase> authInfo = default;
-            Optional<ClientType> clientType = default;
+            Optional<ApplicationClientType> clientType = default;
             Optional<string> provisioningState = default;
             Optional<VnetSolution> vNetSolution = default;
             Optional<SecretStore> secretStore = default;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ServiceLinker
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clientType = new ClientType(property0.Value.GetString());
+                            clientType = new ApplicationClientType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

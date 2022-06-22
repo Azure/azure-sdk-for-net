@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             Optional<bool?> isConnectionAvailable = default;
             Optional<DateTimeOffset?> reportStartTimeUtc = default;
             Optional<DateTimeOffset?> reportEndTimeUtc = default;
-            Optional<string> sourceId = default;
-            Optional<string> targetId = default;
+            Optional<ResourceIdentifier> sourceId = default;
+            Optional<ResourceIdentifier> targetId = default;
             Optional<AuthType?> authType = default;
             Optional<IReadOnlyList<ValidationResultItem>> validationDetail = default;
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                                 sourceId = null;
                                 continue;
                             }
-                            sourceId = property0.Value.GetString();
+                            sourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("targetId"))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                                 targetId = null;
                                 continue;
                             }
-                            targetId = property0.Value.GetString();
+                            targetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("authType"))

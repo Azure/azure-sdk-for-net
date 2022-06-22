@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The azure resource info when target service type is AzureResource. </summary>
@@ -19,25 +21,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Initializes a new instance of AzureResource. </summary>
         /// <param name="serviceType"> The target service type. </param>
         /// <param name="id"> The Id of azure resource. </param>
-        /// <param name="resourceProperties">
-        /// The azure resource connection related properties.
-        /// Please note <see cref="AzureResourcePropertiesBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureKeyVaultProperties"/>.
-        /// </param>
-        internal AzureResource(TargetServiceType serviceType, string id, AzureResourcePropertiesBase resourceProperties) : base(serviceType)
+        /// <param name="typeResourcePropertiesType"> The azure resource type. </param>
+        internal AzureResource(TargetServiceType serviceType, ResourceIdentifier id, AzureResourceType? typeResourcePropertiesType) : base(serviceType)
         {
             Id = id;
-            ResourceProperties = resourceProperties;
+            TypeResourcePropertiesType = typeResourcePropertiesType;
             ServiceType = serviceType;
         }
 
         /// <summary> The Id of azure resource. </summary>
-        public string Id { get; set; }
-        /// <summary>
-        /// The azure resource connection related properties.
-        /// Please note <see cref="AzureResourcePropertiesBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureKeyVaultProperties"/>.
-        /// </summary>
-        public AzureResourcePropertiesBase ResourceProperties { get; set; }
+        public ResourceIdentifier Id { get; set; }
+        /// <summary> The azure resource type. </summary>
+        internal AzureResourceType? TypeResourcePropertiesType { get; set; }
     }
 }

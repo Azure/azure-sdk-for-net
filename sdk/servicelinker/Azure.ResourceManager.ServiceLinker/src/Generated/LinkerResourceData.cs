@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="vnetSolution"> The VNet solution. </param>
         /// <param name="secretStore"> An option to store secret value in secure place. </param>
         /// <param name="scope"> connection scope in source service. </param>
-        internal LinkerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetServiceBase targetService, AuthInfoBase authInfo, ClientType? clientType, string provisioningState, VnetSolution vnetSolution, SecretStore secretStore, string scope) : base(id, name, resourceType, systemData)
+        internal LinkerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetServiceBase targetService, AuthInfoBase authInfo, ApplicationClientType? clientType, string provisioningState, VnetSolution vnetSolution, SecretStore secretStore, string scope) : base(id, name, resourceType, systemData)
         {
             TargetService = targetService;
             AuthInfo = authInfo;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </summary>
         public AuthInfoBase AuthInfo { get; set; }
         /// <summary> The application client type. </summary>
-        public ClientType? ClientType { get; set; }
+        public ApplicationClientType? ClientType { get; set; }
         /// <summary> The provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> The VNet solution. </summary>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <summary> An option to store secret value in secure place. </summary>
         internal SecretStore SecretStore { get; set; }
         /// <summary> The key vault id to store secret. </summary>
-        public string SecretStoreKeyVaultId
+        public ResourceIdentifier SecretStoreKeyVaultId
         {
             get => SecretStore is null ? default : SecretStore.KeyVaultId;
             set

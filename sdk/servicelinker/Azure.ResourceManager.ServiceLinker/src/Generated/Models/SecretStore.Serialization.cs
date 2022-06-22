@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static SecretStore DeserializeSecretStore(JsonElement element)
         {
-            Optional<string> keyVaultId = default;
+            Optional<ResourceIdentifier> keyVaultId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultId"))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         keyVaultId = null;
                         continue;
                     }
-                    keyVaultId = property.Value.GetString();
+                    keyVaultId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

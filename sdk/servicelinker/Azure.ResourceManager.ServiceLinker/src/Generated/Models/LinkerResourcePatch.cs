@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> A linker to be updated. </summary>
@@ -28,7 +30,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// </summary>
         public AuthInfoBase AuthInfo { get; set; }
         /// <summary> The application client type. </summary>
-        public ClientType? ClientType { get; set; }
+        public ApplicationClientType? ClientType { get; set; }
         /// <summary> The provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> The VNet solution. </summary>
@@ -48,7 +50,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> An option to store secret value in secure place. </summary>
         internal SecretStore SecretStore { get; set; }
         /// <summary> The key vault id to store secret. </summary>
-        public string SecretStoreKeyVaultId
+        public ResourceIdentifier SecretStoreKeyVaultId
         {
             get => SecretStore is null ? default : SecretStore.KeyVaultId;
             set
