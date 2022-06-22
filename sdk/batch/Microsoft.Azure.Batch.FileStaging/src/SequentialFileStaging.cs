@@ -17,7 +17,9 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
-
+using Azure.Storage.Blobs;
+using Azure.Storage;
+using Azure.Storage.Blobs.Models;
 
 namespace Microsoft.Azure.Batch.FileStaging
 {
@@ -181,8 +183,9 @@ namespace Microsoft.Azure.Batch.FileStaging
         /// <returns>the SAS for the container, in full URI format.</returns>
         private static string CreateContainerWithPolicySASIfNotExist(string account, string key, Uri blobUri, string container, string policy, DateTime start, DateTime end, SharedAccessBlobPermissions permissions)
         {
+
             // 1. form the credentail and initial client
-            CloudStorageAccount storageaccount = new CloudStorageAccount(new WindowsAzure.Storage.Auth.StorageCredentials(account, key), 
+            CloudStorageAccount storageaccount = new CloudStorageAccount(new WindowsAzure.Storage.Auth.StorageCredentials(account, key),
                                                                          blobEndpoint: blobUri,
                                                                          queueEndpoint: null,
                                                                          tableEndpoint: null,
@@ -234,6 +237,73 @@ namespace Microsoft.Azure.Batch.FileStaging
 
             return container_url;
         }
+
+        //private static string CreateContainerWithPolicySASIfNotExistUpdate(string account, string key, Uri blobUri, string container, string policy, DateTime start, DateTime end, string permissions)
+        //{
+        //    //With new SDK
+
+        //    // 1. form the credentail and initial client
+        //    BlobServiceClient blobServiceClient = new BlobServiceClient(blobUri, new StorageSharedKeyCredential(account, key));
+
+        //    //// 2. create container if it doesn't exist
+        //    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(container);
+        //    containerClient.CreateIfNotExistsAsync();
+
+            
+        //    //CloudStorageAccount storageaccount = new CloudStorageAccount(new WindowsAzure.Storage.Auth.StorageCredentials(account, key), 
+        //    //                                                             blobEndpoint: blobUri,
+        //    //                                                             queueEndpoint: null,
+        //    //                                                             tableEndpoint: null,
+        //    //                                                             fileEndpoint: null);
+
+        //    //CloudBlobClient client = storageaccount.CreateCloudBlobClient();
+
+            
+        //    //CloudBlobContainer storagecontainer = client.GetContainerReference(container);
+        //    //storagecontainer.CreateIfNotExistsAsync().GetAwaiter().GetResult();
+
+        //    // 3. validate policy, create/overwrite if doesn't match
+        //    bool policyFound = false;
+
+        //    BlobAccessPolicy accesspolicy = new BlobAccessPolicy()
+        //    {
+        //        PolicyExpiresOn = end,
+        //        PolicyStartsOn = start,
+        //        Permissions = permissions
+        //    };
+
+        //    BlobContainerAccessPolicy blobPermissions = containerClient.GetAccessPolicyAsync().GetAwaiter().GetResult();
+
+        //    blobPermissions.SignedIdentifiers.
+
+        //    if (blobPermissions.SharedAccessPolicies.ContainsKey(policy))
+        //    {
+        //        SharedAccessBlobPolicy containerpolicy = blobPermissions.SharedAccessPolicies[policy];
+        //        if (!(permissions == (containerpolicy.Permissions & permissions) && start <= containerpolicy.SharedAccessStartTime && end >= containerpolicy.SharedAccessExpiryTime))
+        //        {
+        //            blobPermissions.SharedAccessPolicies[policy] = accesspolicy;
+        //        }
+        //        else
+        //        {
+        //            policyFound = true;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        blobPermissions.SharedAccessPolicies.Add(policy, accesspolicy);
+        //    }
+
+        //    if (!policyFound)
+        //    {
+        //        storagecontainer.SetPermissionsAsync(blobPermissions).GetAwaiter().GetResult();
+        //    }
+
+        //    // 4. genereate SAS and return
+        //    string container_sas = storagecontainer.GetSharedAccessSignature(new SharedAccessBlobPolicy(), policy);
+        //    string container_url = storagecontainer.Uri.AbsoluteUri + container_sas;
+
+        //    return container_url;
+        //}
 
         private static void CreateDefaultBlobContainerAndSASIfNeededReturn(List<IFileStagingProvider> filesToStage, SequentialFileStagingArtifact seqArtifact)
         {
