@@ -131,6 +131,14 @@ public class Program
                         var processorTest = new ProcessorTest(testConfiguration, metrics, opts.Role);
                         testScenarioTasks.Add(processorTest.RunTestAsync(cancellationSource.Token));
                         break;
+
+                    case TestScenario.ConsumerTest:
+                        environment.TryGetValue(EnvironmentVariables.EventHubBurstBufferedProducerTest, out eventHubName);
+                        testConfiguration.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
+
+                        var consumerTest = new ConsumerTest(testConfiguration, metrics, opts.Role);
+                        testScenarioTasks.Add(consumerTest.RunTestAsync(cancellationSource.Token));
+                        break;
                 }
             }
 
@@ -168,21 +176,39 @@ public class Program
         }
     }
 
+    /// <summary>
+    ///   Converts a <see cref="TestScenario"/> value to a string.
+    /// </summary>
+    ///
+    /// <param name="testScenario">The <see cref="TestScenario"/> instance to convert.</param>
+    ///
+    /// <returns>The string version of the <see cref="TestScenario"/> input.</returns>
+    ///
     public static string TestScenarioToString(TestScenario testScenario) => testScenario switch
     {
         TestScenario.BufferedProducerTest => "BufferedProducerTest",
         TestScenario.BurstBufferedProducerTest => "BurstBufferedProducerTest",
         TestScenario.EventProducerTest => "EventProducerTest",
         TestScenario.ProcessorTest => "ProcessorTest",
+        TestScenario.ConsumerTest => "ConsumerTest",
         _ => string.Empty,
     };
 
+    /// <summary>
+    ///   Converts a string into a <see cref="TestScenario"/> value.
+    /// </summary>
+    ///
+    /// <param name="testScenario">The string to convert to a <see cref="TestScenario"/>.</param>
+    ///
+    /// <returns>The <see cref="TestScenario"/> of the string input.</returns>
+    ///
     public static TestScenario StringToTestScenario(string testScenario) => testScenario switch
     {
         "BufferedProducerTest" or "BuffProd"=> TestScenario.BufferedProducerTest,
-        "BurstBufferedProducerTest" => TestScenario.BurstBufferedProducerTest,
+        "BurstBufferedProducerTest" or "BurstBuffProd" => TestScenario.BurstBufferedProducerTest,
         "EventProducerTest" or "EventProd"=> TestScenario.EventProducerTest,
         "ProcessorTest" or "Processor"=> TestScenario.ProcessorTest,
+        "ConsumerTest" or "Consumer" => TestScenario.ConsumerTest,
         _ => throw new ArgumentNullException(),
     };
 
@@ -193,6 +219,10 @@ public class Program
     /// <param name="resourceName">The name of the needed resource.</param>
     /// <param name="testName">Which test(s) for which the resource is needed.</param>
     /// <param name="currentValue">The current value of the resource.</param>
+    ///
+    /// <returns>The value of the <paramref name="resourceName"/> either previously provided or received through the command line.</returns>
+    ///
+    /// <exception cref="ArgumentNullException">Occurs when no resource was provided for the test through the environment file or the command line.</exception>
     ///
     private static string PromptForResources(string resourceName, string testName, string currentValue, bool interactive)
     {

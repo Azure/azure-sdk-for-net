@@ -12,45 +12,45 @@ using Azure.Messaging.EventHubs.Producer;
 using Azure.Messaging.EventHubs.Tests;
 using Microsoft.ApplicationInsights;
 
-// TODO: update all documentation
-
 namespace Azure.Messaging.EventHubs.Stress;
 
 /// <summary>
 ///   The role responsible for running a <see cref="EventHubProducerClient" \>, and testing its performance over
 ///   a long period of time. It collects metrics about the run and sends them to application insights using a
 ///   <see cref="TelemetryClient" \>. The metrics collected are garbage collection information, any exceptions
-///   thrown or heard, and how many events are processed and read. It stops sending events and cleans up resources
+///   thrown or heard, and how many events are published. It stops sending events and cleans up resources
 ///   at the end of the test run.
 /// </summary>
 ///
 internal class PartitionPublisher
 {
-    /// <summary>The <see cref="Metrics" /> instance associated with this <see cref="Publisher" /> instance.</summary>
+    /// <summary>The <see cref="Metrics" /> instance associated with this <see cref="PartitionPublisher" /> instance.</summary>
     private readonly Metrics _metrics;
 
     /// <summary>The <see cref="TestConfiguration" /> used to configure this test run.</summary>
     private readonly TestConfiguration _testConfiguration;
 
-    /// <summary>The <see cref="PublisherConfiguration" /> used to configure the instance of this role.</summary>
-    private readonly PublisherConfiguration _publisherconfiguration;
+    /// <summary>The <see cref="PartitionPublisherConfiguration" /> used to configure the instance of this role.</summary>
+    private readonly PartitionPublisherConfiguration _publisherconfiguration;
 
-    private readonly string[] _assignedPartitions;
+    /// <summary>The list of partitions that this publisher should publish to.</summary>
+    private readonly List<string> _assignedPartitions;
 
+    /// <summary>A dictionary mapping the partitionId to the last sent index number to that partition</summary>
     private ConcurrentDictionary<string, int> _lastSentPerPartition;
 
     /// <summary>
-    ///   Initializes a new <see cref="Publisher" \> instance.
+    ///   Initializes a new <see cref="PartitionPublisher" \> instance.
     /// </summary>
     ///
     /// <param name="testConfiguration">The <see cref="TestConfiguration" /> used to configure the processor test scenario run.</param>
-    /// <param name="publisherConfiguration">The <see cref="PublisherConfiguration" /> instance used to configure this instance of <see cref="Publisher" />.</param>
+    /// <param name="publisherConfiguration">The <see cref="PartitionPublisherConfiguration" /> instance used to configure this instance of <see cref="PartitionPublisher" />.</param>
     /// <param name="metrics">The <see cref="Metrics" /> instance used to send metrics to Application Insights.</param>
     ///
-    public PartitionPublisher(PublisherConfiguration publisherConfiguration,
+    public PartitionPublisher(PartitionPublisherConfiguration publisherConfiguration,
                               TestConfiguration testConfiguration,
                               Metrics metrics,
-                              string[] assignedPartitions)
+                              List<string> assignedPartitions)
     {
         _testConfiguration = testConfiguration;
         _publisherconfiguration = publisherConfiguration;
@@ -58,21 +58,16 @@ internal class PartitionPublisher
         _assignedPartitions = assignedPartitions;
 
         _lastSentPerPartition = new ConcurrentDictionary<string, int>();
-
-        foreach(var partition in _assignedPartitions)
-        {
-            _lastSentPerPartition[partition] = -1;
-        }
     }
 
     /// <summary>
-    ///   Starts an instance of a <see cref="Publisher"/> role. This role creates an <see cref="EventHubProducerClient"/>
-    ///   and monitors it while it sends events to this test's dedicated Event Hub.
+    ///   Starts an instance of a <see cref="PartitionPublisher"/> role. This role creates an <see cref="EventHubProducerClient"/>
+    ///   and monitors it while it sends events to the assigned partitions of this test's dedicated Event Hub.
     /// </summary>
     ///
     /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    public async Task Start(CancellationToken cancellationToken)
+    public async Task StartAsync(CancellationToken cancellationToken)
     {
         var producersRunning = new List<Task>();
 
@@ -80,35 +75,53 @@ internal class PartitionPublisher
         {
             using var backgroundCancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
-            foreach(var partition in _assignedPartitions)
+            foreach (var partition in _assignedPartitions)
             {
-                producersRunning.Add(RunPartitionSpecificProducer(partition, backgroundCancellationSource.Token));
+                producersRunning.Add(RunPartitionSpecificProducerAsync(partition, backgroundCancellationSource.Token));
             }
 
             await Task.WhenAll(producersRunning).ConfigureAwait(false);
         }
     }
 
-    private async Task RunPartitionSpecificProducer(string partitionId, CancellationToken cancellationToken)
+    /// <summary>
+    ///   Starts an instance of a <see cref="PartitionPublisher"/> role. This role creates an <see cref="EventHubProducerClient"/>
+    ///   and monitors it while it sends events to the assigned partitions of this test's dedicated Event Hub.
+    /// </summary>
+    ///
+    /// <param name="partitionId">The Id of the partition to send events to.</param>
+    /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+    ///
+    private async Task RunPartitionSpecificProducerAsync(string partitionId, CancellationToken cancellationToken)
     {
-        var options = new EventHubProducerClientOptions
-        {
-            RetryOptions = new EventHubsRetryOptions
-            {
-                TryTimeout = _publisherconfiguration.SendTimeout
-            }
-        };
-        var producer = new EventHubProducerClient(_testConfiguration.EventHubsConnectionString, _testConfiguration.EventHub, options);
         while (!cancellationToken.IsCancellationRequested)
         {
+            var options = new EventHubProducerClientOptions
+            {
+                RetryOptions = new EventHubsRetryOptions
+                {
+                    TryTimeout = _publisherconfiguration.SendTimeout
+                }
+            };
+            var producer = new EventHubProducerClient(_testConfiguration.EventHubsConnectionString, _testConfiguration.EventHub, options);
             try
             {
-                // send 
-                await PerformSend(producer, partitionId, cancellationToken).ConfigureAwait(false);
-                // 
-                if ((_publisherconfiguration.ProducerPublishingDelay.HasValue) && (_publisherconfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
+                while (!cancellationToken.IsCancellationRequested)
                 {
-                    await Task.Delay(_publisherconfiguration.ProducerPublishingDelay.Value, cancellationToken).ConfigureAwait(false);
+                    try
+                    {
+                        // send
+                        await PerformSend(producer, partitionId, cancellationToken).ConfigureAwait(false);
+                        if ((_publisherconfiguration.ProducerPublishingDelay.HasValue) && (_publisherconfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
+                        {
+                            await Task.Delay(_publisherconfiguration.ProducerPublishingDelay.Value, cancellationToken).ConfigureAwait(false);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _metrics.Client.GetMetric(Metrics.EventsFailedToPublish).TrackValue(1);
+                        _metrics.Client.TrackException(ex);
+                    }
                 }
             }
             catch (Exception ex)
@@ -121,15 +134,15 @@ internal class PartitionPublisher
                 await producer.CloseAsync().ConfigureAwait(false);
             }
         }
-
     }
 
     /// <summary>
     ///   Performs the actual sends to the Event Hub for this particular test, using the <see cref="EventHubProducerClient" /> parameter.
-    ///   This method generates events using the <see cref="PublisherConfiguration" />  configurations.
+    ///   This method generates events using the <see cref="PartitionPublisherConfiguration" />  configurations.
     /// </summary>
     ///
     /// <param name="producer">The <see cref="EventHubProducerClient" /> to send events to.</param>
+    /// <param name="partitionId">The Id of the partition within the Event Hub to send events to.</param>
     /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
     private async Task PerformSend(EventHubProducerClient producer,
@@ -157,8 +170,9 @@ internal class PartitionPublisher
 
         foreach (var currentEvent in events)
         {
-            var currentSequenceNumber = _lastSentPerPartition.AddOrUpdate(partitionId, -1, (k,v) => v++);
-            EventTracking.AugmentEvent(currentEvent, currentSequenceNumber, partitionId);
+            var currentIndexNumber = _lastSentPerPartition.AddOrUpdate(partitionId, -1, (k,v) => v + 1);
+            Console.WriteLine(currentIndexNumber);
+            EventTracking.AugmentEvent(currentEvent, currentIndexNumber, partitionId);
 
             if (!batch.TryAdd(currentEvent))
             {
@@ -197,10 +211,10 @@ internal class PartitionPublisher
 
             foreach (var failedEvent in observableBatch)
             {
-                failedEvent.Properties.TryGetValue(EventTracking.SequencePropertyName, out var failedSequenceNumber);
+                failedEvent.Properties.TryGetValue(EventTracking.IndexNumberPropertyName, out var failedIndexNumber);
                 var eventProperties = new Dictionary<String, String>();
                 eventProperties.Add(Metrics.PartitionId, partitionId);
-                eventProperties.Add(Metrics.PublisherAssignedSequenceValue, failedSequenceNumber.ToString());
+                eventProperties.Add(Metrics.PublisherAssignedIndex, failedIndexNumber.ToString());
 
                 _metrics.Client.TrackEvent(Metrics.EventsFailedToPublish, eventProperties);
             }

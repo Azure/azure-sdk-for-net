@@ -2,30 +2,39 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using CommandLine;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Consumer;
-using Azure.Messaging.EventHubs.Producer;
-using System.Diagnostics.Tracing;
-using Azure.Core.Diagnostics;
 
 namespace Azure.Messaging.EventHubs.Stress;
 
+/// <summary>
+///   The test scenario responsible for running all of the roles needed for the burst Buffered Producer test scenario.
+/// <summary/>
+///
 public class BurstBufferedProducerTest
 {
+    /// <summary>The <see cref="TestConfiguration"/> used to configure this test scenario.</summary>
     private readonly TestConfiguration _testConfiguration;
+
+    /// <summary>The index used to determine which role should be run if this is a distributed test run.</summary>
     private readonly string _jobIndex;
+
+    /// <summary> The <see cref="Metrics"/> instance used to send metrics to application insights.</summary>
     private Metrics _metrics;
 
-    private static Role[] _roles = {Role.BufferedPublisher, Role.BufferedPublisher};
+    /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
 
+    private static Role[] _roles = {Role.BufferedPublisher};
+
+    /// <summary>
+    ///  Initializes a new <see cref="BurstBufferedProducerTest"/> instance.
+    /// </summary>
+    ///
+    /// <param name="testConfiguration">The <see cref="TestConfiguration"/> to use to configure this test run.</param>
+    /// <param name="metrics">The <see cref="Metrics"/> to use to send metrics to Application Insights.</param>
+    /// <param name="jobIndex">An optional index used to determine which role should be run if this is a distributed run.</param>
+    ///
     public BurstBufferedProducerTest(TestConfiguration testConfiguration, Metrics metrics, string jobIndex = default)
     {
         _testConfiguration = testConfiguration;
@@ -34,6 +43,12 @@ public class BurstBufferedProducerTest
         _metrics.Client.Context.GlobalProperties["TestRunID"] = $"net-burst-buff-{Guid.NewGuid().ToString()}";
     }
 
+    /// <summary>
+    ///   Runs all of the roles required for this instance of the burst Buffered Producer test scenario.
+    /// </summary>
+    ///
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+    ///
     public async Task RunTestAsync(CancellationToken cancellationToken)
     {
         var runAllRoles = !int.TryParse(_jobIndex, out var roleIndex);
@@ -54,6 +69,13 @@ public class BurstBufferedProducerTest
         await Task.WhenAll(testRunTasks).ConfigureAwait(false);
     }
 
+    /// <summary>
+    ///   Creates a role instance and runs that role.
+    /// </summary>
+    ///
+    /// <param name="role">The <see cref="Role"/> to run.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+    ///
     public async Task RunRoleAsync(Role role, CancellationToken cancellationToken)
     {
         switch (role)
@@ -61,7 +83,7 @@ public class BurstBufferedProducerTest
             case Role.BufferedPublisher:
                 var publisherConfiguration = new BufferedPublisherConfiguration();
                 var publisher = new BufferedPublisher(_testConfiguration, publisherConfiguration, _metrics);
-                await publisher.Start(cancellationToken).ConfigureAwait(false);
+                await publisher.StartAsync(cancellationToken).ConfigureAwait(false);
                 break;
 
             default:

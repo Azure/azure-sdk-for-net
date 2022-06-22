@@ -1,2 +1,6 @@
 scenarios:
-- "PartOwn"
+- "Consumer"
+- "EventProd"
+- "BuffProd"
+- "BurstBuffProd"
+- "Processor"

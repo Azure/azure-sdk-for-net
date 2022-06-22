@@ -155,11 +155,55 @@ public class Metrics
     ///
     public const string EventsProcessed = "EventsProcessed";
 
+    /// <summary>
+    ///   This is the metric name used to collect metrics on the number of duplicate events processed by the processor.
+    /// </summary>
+    ///
     public const string DuplicateEventsDiscarded = "DuplicateEventsDiscarded";
 
+    /// <summary>
+    ///   This is the metric name used by the partition publisher to collect metrics on the number of events that failed to publish.
+    /// </summary>
+    ///
     public const string EventsFailedToPublish = "EventsFailedToPublish";
 
-    public const string PublisherAssignedSequenceValue = "PublisherAssignedSequenceValue";
+    /// <summary>
+    ///   This is the property name used to send information about the publisher assigned index to Application Insights for further
+    ///   investigation.
+    /// </summary>
+    ///
+    public const string PublisherAssignedIndex = "PublisherAssignedIndex";
+
+    /// <summary>
+    ///   This is the metric name used by the processor when a received event was received from the partition that it was not intended
+    ///   to be sent to.
+    /// </summary>
+    ///
+    public const string EventReceivedFromWrongPartition = "EventReceivedFromWrongPartition";
+
+    /// <summary>
+    ///   This is the metric name used by the processor when an event is received in the wrong order or an event is missing.
+    /// </summary>
+    ///
+    public const string MissingOrOutOfOrderEvent = "MissingOrOutOfOrderEvent";
+
+    /// <summary>
+    ///   The property to use to send the event body to Application Insights for further investigation.
+    /// </summary>
+    ///
+    public const string EventBody = "EventBody";
+
+    /// <summary>
+    ///   This is the metric name used by the processor when an event has an invalid body.
+    /// </summary>
+    ///
+    public const string InvalidBodies = "InvalidBodies";
+
+    /// <summary>
+    ///   This is the metric name used by the processor when an unknown event has been processed.
+    /// </summary>
+    ///
+    public const string UnknownEventsProcessed = "UnknownEventsProcessed";
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="Metrics" /> class.

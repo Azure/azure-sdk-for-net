@@ -18,6 +18,4 @@ internal class ProcessorConfiguration
     /// </summary>
     ///
     public TimeSpan ReadTimeout = TimeSpan.FromMinutes(1);
-
-    public bool ValidateEventsSent = true;
 }

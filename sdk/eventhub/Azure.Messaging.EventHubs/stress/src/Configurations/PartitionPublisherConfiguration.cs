@@ -6,7 +6,7 @@ using System;
 namespace Azure.Messaging.EventHubs.Stress;
 
 /// <summary>
-///   The set of configurations that can be specified when creating a <see cref="Publisher" />
+///   The set of configurations that can be specified when creating a <see cref="PartitionPublisher" />
 ///   role.
 /// </summary>
 ///

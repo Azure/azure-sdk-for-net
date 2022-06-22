@@ -20,17 +20,17 @@ namespace Azure.Messaging.EventHubs.Stress;
 ///
 internal class BufferedPublisher
 {
-    /// <summary>The <see cref="Metrics" /> instance associated with this <see cref="Publisher" /> instance.</summary>
+    /// <summary>The <see cref="Metrics"/> instance associated with this <see cref="BufferedPublisher"/> instance.</summary>
     private readonly Metrics _metrics;
 
-    /// <summary>The <see cref="BufferedPublisherConfiguration" /> used to configure the instance of this role.</summary>
+    /// <summary>The <see cref="BufferedPublisherConfiguration"/> used to configure the instance of this role.</summary>
     private readonly BufferedPublisherConfiguration _bufferedPublisherConfiguration;
 
-    /// <summary>The <see cref="TestConfiguration" /> used to configure this test run.</summary>
+    /// <summary>The <see cref="TestConfiguration"/> used to configure this test run.</summary>
     private readonly TestConfiguration _testConfiguration;
 
     /// <summary>
-    ///   Initializes a new <see cref="BufferedPublisher" \> instance.
+    ///   Initializes a new <see cref="BufferedPublisher"\> instance.
     /// </summary>
     ///
     /// <param name="testConfiguration">The <see cref="TestConfiguration" /> used to configure the processor test scenario run.</param>
@@ -53,7 +53,7 @@ internal class BufferedPublisher
     ///
     /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    public async Task Start(CancellationToken cancellationToken)
+    public async Task StartAsync(CancellationToken cancellationToken)
     {
         var enqueueTasks = new List<Task>();
 
@@ -168,7 +168,7 @@ internal class BufferedPublisher
     /// </summary>
     ///
     /// <param name="producer">The <see cref="EventHubBufferedProducerClient" /> to enqueue events to for this test scenario run.</param>
-    /// <param name="cancellationToken">The <see cref="CancellationToke"/> instance to signal the request to cancel the operation.</param>
+    /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
     private async Task PerformEnqueue(EventHubBufferedProducerClient producer,
                                       CancellationToken cancellationToken)

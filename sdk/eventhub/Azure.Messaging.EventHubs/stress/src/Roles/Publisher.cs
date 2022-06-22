@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventHubs.Stress;
 ///   The role responsible for running a <see cref="EventHubProducerClient" \>, and testing its performance over
 ///   a long period of time. It collects metrics about the run and sends them to application insights using a
 ///   <see cref="TelemetryClient" \>. The metrics collected are garbage collection information, any exceptions
-///   thrown or heard, and how many events are processed and read. It stops sending events and cleans up resources
+///   thrown or heard, and how many events and batches are published. It stops sending events and cleans up resources
 ///   at the end of the test run.
 /// </summary>
 ///
@@ -57,7 +57,7 @@ internal class Publisher
     ///
     /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    public async Task Start(CancellationToken cancellationToken)
+    public async Task StartAsync(CancellationToken cancellationToken)
     {
         var sendTasks = new List<Task>();
 
@@ -88,7 +88,7 @@ internal class Publisher
                         {
                             while (!backgroundCancellationSource.Token.IsCancellationRequested)
                             {
-                                await PerformSend(producer, backgroundCancellationSource.Token).ConfigureAwait(false);
+                                await PerformSendAsync(producer, backgroundCancellationSource.Token).ConfigureAwait(false);
 
                                 if ((_publisherconfiguration.ProducerPublishingDelay.HasValue) && (_publisherconfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
                                 {
@@ -105,7 +105,7 @@ internal class Publisher
                 {
                     try
                     {
-                        await PerformSend(producer, cancellationToken).ConfigureAwait(false);
+                        await PerformSendAsync(producer, cancellationToken).ConfigureAwait(false);
 
                         if ((_publisherconfiguration.ProducerPublishingDelay.HasValue) && (_publisherconfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
                         {
@@ -156,7 +156,7 @@ internal class Publisher
     /// <param name="producer">The <see cref="EventHubProducerClient" /> to send events to.</param>
     /// <param name="cancellationToken">The <see cref="CancellationToke"/> instance to signal the request to cancel the operation.</param>
     ///
-    private async Task PerformSend(EventHubProducerClient producer,
+    private async Task PerformSendAsync(EventHubProducerClient producer,
                                     CancellationToken cancellationToken)
     {
         // Create the batch and generate a set of random events, keeping only those that were able to fit into the batch.

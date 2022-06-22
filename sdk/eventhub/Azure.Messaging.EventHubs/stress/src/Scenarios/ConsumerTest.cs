@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 namespace Azure.Messaging.EventHubs.Stress;
 
 /// <summary>
-///   The test scenario responsible for running all of the roles needed for the Buffered Producer test scenario.
+///   The test scenario responsible for running all of the roles needed for the Consumer test scenario.
 /// <summary/>
 ///
-public class BufferedProducerTest
+public class ConsumerTest
 {
     /// <summary>The <see cref="TestConfiguration"/> used to configure this test scenario.</summary>
     private readonly TestConfiguration _testConfiguration;
@@ -23,27 +23,30 @@ public class BufferedProducerTest
     /// <summary> The <see cref="Metrics"/> instance used to send metrics to application insights.</summary>
     private Metrics _metrics;
 
+    /// <sumarry>The <see cref="EventTracking" instance used to validate events upon reading them.</summary>
+    private EventTracking _eventProcessing = new EventTracking();
+
     /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
-    private static Role[] _roles = {Role.BufferedPublisher, Role.BufferedPublisher};
+    private static Role[] _roles = {Role.PartitionPublisher, Role.Consumer};
 
     /// <summary>
-    ///  Initializes a new <see cref="BufferedProducerTest"/> instance.
+    ///  Initializes a new <see cref="ConsumerTest"/> instance.
     /// </summary>
     ///
     /// <param name="testConfiguration">The <see cref="TestConfiguration"/> to use to configure this test run.</param>
     /// <param name="metrics">The <see cref="Metrics"/> to use to send metrics to Application Insights.</param>
     /// <param name="jobIndex">An optional index used to determine which role should be run if this is a distributed run.</param>
     ///
-    public BufferedProducerTest(TestConfiguration testConfiguration, Metrics metrics, string jobIndex = default)
+    public ConsumerTest(TestConfiguration testConfiguration, Metrics metrics, string jobIndex = default)
     {
         _testConfiguration = testConfiguration;
         _jobIndex = jobIndex;
         _metrics = metrics;
-        _metrics.Client.Context.GlobalProperties["TestRunID"] = $"net-buff-prod-{Guid.NewGuid().ToString()}";
+        _metrics.Client.Context.GlobalProperties["TestRunID"] = $"net-consumer-{Guid.NewGuid().ToString()}";
     }
 
     /// <summary>
-    ///   Runs all of the roles required for this instance of the Buffered Producer test scenario.
+    ///   Runs all of the roles required for this instance of the Consumer test scenario.
     /// </summary>
     ///
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
@@ -57,12 +60,12 @@ public class BufferedProducerTest
         {
             foreach (Role role in _roles)
             {
-                testRunTasks.Add(RunRoleAsync(role, cancellationToken));
+                testRunTasks.Add(RunRoleAsync(role, roleIndex, cancellationToken));
             }
         }
         else
         {
-            testRunTasks.Add(RunRoleAsync(_roles[roleIndex], cancellationToken));
+            testRunTasks.Add(RunRoleAsync(_roles[roleIndex], roleIndex, cancellationToken));
         }
 
         await Task.WhenAll(testRunTasks).ConfigureAwait(false);
@@ -75,14 +78,25 @@ public class BufferedProducerTest
     /// <param name="role">The <see cref="Role"/> to run.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    public async Task RunRoleAsync(Role role, CancellationToken cancellationToken)
+    public async Task RunRoleAsync(Role role, int roleIndex, CancellationToken cancellationToken)
     {
+        //GetEventHubPartitionKeysAsync
         switch (role)
         {
-            case Role.BufferedPublisher:
-                var publisherConfiguration = new BufferedPublisherConfiguration();
-                var publisher = new BufferedPublisher(_testConfiguration, publisherConfiguration, _metrics);
-                await publisher.StartAsync(cancellationToken).ConfigureAwait(false);
+            case Role.Consumer:
+                var consumerConfiguration = new ConsumerConfiguration();
+                var consumer = new Consumer(_testConfiguration, consumerConfiguration, _metrics);
+                await consumer.StartAsync(cancellationToken).ConfigureAwait(false);
+                break;
+
+            case Role.PartitionPublisher:
+                var partitionPublisherConfiguration = new PartitionPublisherConfiguration();
+                var partitionsCount = await _testConfiguration.GetEventHubPartitionCountAsync().ConfigureAwait(false);
+                var partitionIds = await _testConfiguration.GetEventHubPartitionKeysAsync().ConfigureAwait(false);
+                var partitions = EventTracking.GetAssignedPartitions(partitionsCount, roleIndex, partitionIds, _roles);
+
+                var partitionPublisher = new PartitionPublisher(partitionPublisherConfiguration, _testConfiguration, _metrics, partitions);
+                await partitionPublisher.StartAsync(cancellationToken).ConfigureAwait(false);
                 break;
 
             default:
