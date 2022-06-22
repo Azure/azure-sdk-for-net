@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class EventHubNamespaceData : IUtf8JsonSerializable
+    public partial class EventHubsNamespaceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.EventHubs
             writer.WriteEndObject();
         }
 
-        internal static EventHubNamespaceData DeserializeEventHubNamespaceData(JsonElement element)
+        internal static EventHubsNamespaceData DeserializeEventHubsNamespaceData(JsonElement element)
         {
             Optional<EventHubsSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
@@ -113,13 +113,13 @@ namespace Azure.ResourceManager.EventHubs
             Optional<DateTimeOffset> createdAt = default;
             Optional<DateTimeOffset> updatedAt = default;
             Optional<string> serviceBusEndpoint = default;
-            Optional<string> clusterArmId = default;
+            Optional<ResourceIdentifier> clusterArmId = default;
             Optional<string> metricId = default;
             Optional<bool> isAutoInflateEnabled = default;
             Optional<int> maximumThroughputUnits = default;
             Optional<bool> kafkaEnabled = default;
             Optional<bool> zoneRedundant = default;
-            Optional<EventHubEncryption> encryption = default;
+            Optional<EventHubsEncryption> encryption = default;
             Optional<IList<EventHubsPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<bool> disableLocalAuth = default;
             Optional<string> alternateName = default;
@@ -236,7 +236,12 @@ namespace Azure.ResourceManager.EventHubs
                         }
                         if (property0.NameEquals("clusterArmId"))
                         {
-                            clusterArmId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            clusterArmId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("metricId"))
@@ -291,7 +296,7 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = EventHubEncryption.DeserializeEventHubEncryption(property0.Value);
+                            encryption = EventHubsEncryption.DeserializeEventHubsEncryption(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"))
@@ -328,7 +333,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventHubNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, clusterArmId.Value, metricId.Value, Optional.ToNullable(isAutoInflateEnabled), Optional.ToNullable(maximumThroughputUnits), Optional.ToNullable(kafkaEnabled), Optional.ToNullable(zoneRedundant), encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth), alternateName.Value);
+            return new EventHubsNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, clusterArmId.Value, metricId.Value, Optional.ToNullable(isAutoInflateEnabled), Optional.ToNullable(maximumThroughputUnits), Optional.ToNullable(kafkaEnabled), Optional.ToNullable(zoneRedundant), encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth), alternateName.Value);
         }
     }
 }

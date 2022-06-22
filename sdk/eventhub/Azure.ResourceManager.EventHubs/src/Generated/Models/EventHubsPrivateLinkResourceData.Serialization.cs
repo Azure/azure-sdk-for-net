@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubsPrivateLinkResource
+    public partial class EventHubsPrivateLinkResourceData
     {
-        internal static EventHubsPrivateLinkResource DeserializeEventHubsPrivateLinkResource(JsonElement element)
+        internal static EventHubsPrivateLinkResourceData DeserializeEventHubsPrivateLinkResourceData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new EventHubsPrivateLinkResource(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            return new EventHubsPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
         }
     }
 }

@@ -12,15 +12,15 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing the ConsumerGroup data model. </summary>
-    public partial class ConsumerGroupData : ProxyResource
+    /// <summary> A class representing the EventHubsConsumerGroup data model. </summary>
+    public partial class EventHubsConsumerGroupData : ProxyResource
     {
-        /// <summary> Initializes a new instance of ConsumerGroupData. </summary>
-        public ConsumerGroupData()
+        /// <summary> Initializes a new instance of EventHubsConsumerGroupData. </summary>
+        public EventHubsConsumerGroupData()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumerGroupData. </summary>
+        /// <summary> Initializes a new instance of EventHubsConsumerGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="createdOn"> Exact time the message was created. </param>
         /// <param name="updatedOn"> The exact time the message was updated. </param>
         /// <param name="userMetadata"> User Metadata is a placeholder to store user-defined string data with maximum length 1024. e.g. it can be used to store descriptive data, such as list of teams and their contact information also user-defined configuration settings can be stored. </param>
-        internal ConsumerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string userMetadata) : base(id, name, resourceType, systemData, location)
+        internal EventHubsConsumerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string userMetadata) : base(id, name, resourceType, systemData, location)
         {
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;

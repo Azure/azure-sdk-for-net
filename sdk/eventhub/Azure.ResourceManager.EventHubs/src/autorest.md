@@ -7,9 +7,13 @@ azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.EventHubs
 tag: package-2021-11
+output-folder: $(this-folder)/Generated
 require: https://github.com/Azure/azure-rest-api-specs/blob/8fb0263a6adbb529a9a7bf3e56110f3abdd55c72/specification/eventhub/resource-manager/readme.md
 clear-output-folder: true
 skip-csproj: true
+
+modelerfour:
+  flatten-payloads: false
 
 request-path-to-resource-name:
     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}: EventHubsDisasterRecovery
@@ -20,6 +24,14 @@ request-path-to-resource-name:
 override-operation-name:
     Namespaces_CheckNameAvailability: CheckEventHubsNamespaceNameAvailability
     DisasterRecoveryConfigs_CheckNameAvailability: CheckEventHubsDisasterRecoveryNameAvailability
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -89,9 +101,6 @@ directive:
         $.ConnectionState.properties.status['x-ms-enum'].name = 'EventHubsPrivateLinkConnectionStatus';
         $.Encryption['x-ms-client-name'] = 'EventHubsEncryption';
         $.KeyVaultProperties['x-ms-client-name'] = 'EventHubsKeyVaultProperties';
-        $.Encryption['x-ms-client-flatten'] = false;
-        $.Identity['x-ms-client-flatten'] = false;
-        $.userAssignedIdentityProperties['x-ms-client-flatten'] = false;
     - from: CheckNameAvailability.json
       where: $.definitions
       transform: >

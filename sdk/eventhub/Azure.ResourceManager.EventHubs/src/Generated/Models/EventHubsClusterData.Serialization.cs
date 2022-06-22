@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class EventHubClusterData : IUtf8JsonSerializable
+    public partial class EventHubsClusterData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -42,17 +43,17 @@ namespace Azure.ResourceManager.EventHubs
             writer.WriteEndObject();
         }
 
-        internal static EventHubClusterData DeserializeEventHubClusterData(JsonElement element)
+        internal static EventHubsClusterData DeserializeEventHubsClusterData(JsonElement element)
         {
-            Optional<ClusterSku> sku = default;
+            Optional<EventHubsClusterSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> createdAt = default;
-            Optional<string> updatedAt = default;
+            Optional<DateTimeOffset> createdAt = default;
+            Optional<DateTimeOffset> updatedAt = default;
             Optional<string> metricId = default;
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.EventHubs
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = ClusterSku.DeserializeClusterSku(property.Value);
+                    sku = EventHubsClusterSku.DeserializeEventHubsClusterSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -123,12 +124,22 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         if (property0.NameEquals("createdAt"))
                         {
-                            createdAt = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            createdAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("updatedAt"))
                         {
-                            updatedAt = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            updatedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("metricId"))
@@ -145,7 +156,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventHubClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, createdAt.Value, updatedAt.Value, metricId.Value, status.Value);
+            return new EventHubsClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), metricId.Value, status.Value);
         }
     }
 }

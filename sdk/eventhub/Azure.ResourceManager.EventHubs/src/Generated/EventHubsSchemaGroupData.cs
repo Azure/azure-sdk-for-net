@@ -7,22 +7,23 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing the SchemaGroup data model. </summary>
-    public partial class SchemaGroupData : ProxyResource
+    /// <summary> A class representing the EventHubsSchemaGroup data model. </summary>
+    public partial class EventHubsSchemaGroupData : ProxyResource
     {
-        /// <summary> Initializes a new instance of SchemaGroupData. </summary>
-        public SchemaGroupData()
+        /// <summary> Initializes a new instance of EventHubsSchemaGroupData. </summary>
+        public EventHubsSchemaGroupData()
         {
             GroupProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SchemaGroupData. </summary>
+        /// <summary> Initializes a new instance of EventHubsSchemaGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="groupProperties"> dictionary object for SchemaGroup group properties. </param>
         /// <param name="schemaCompatibility"></param>
         /// <param name="schemaType"></param>
-        internal SchemaGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DateTimeOffset? updatedAtUtc, DateTimeOffset? createdAtUtc, Guid? eTag, IDictionary<string, string> groupProperties, SchemaCompatibility? schemaCompatibility, SchemaType? schemaType) : base(id, name, resourceType, systemData, location)
+        internal EventHubsSchemaGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DateTimeOffset? updatedAtUtc, DateTimeOffset? createdAtUtc, ETag? eTag, IDictionary<string, string> groupProperties, SchemaCompatibility? schemaCompatibility, SchemaType? schemaType) : base(id, name, resourceType, systemData, location)
         {
             UpdatedAtUtc = updatedAtUtc;
             CreatedAtUtc = createdAtUtc;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Exact time the Schema Group was created. </summary>
         public DateTimeOffset? CreatedAtUtc { get; }
         /// <summary> The ETag value. </summary>
-        public Guid? ETag { get; }
+        public ETag? ETag { get; }
         /// <summary> dictionary object for SchemaGroup group properties. </summary>
         public IDictionary<string, string> GroupProperties { get; }
         /// <summary> Gets or sets the schema compatibility. </summary>
