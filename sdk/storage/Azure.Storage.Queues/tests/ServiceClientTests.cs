@@ -11,6 +11,7 @@ using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Azure.Storage.Test.Shared;
 using Moq;
 using NUnit.Framework;
 
@@ -124,11 +125,12 @@ namespace Azure.Storage.Queues.Test
             QueueServiceClient service = GetServiceClient_SharedKey();
             await using DisposingQueue test = await GetTestQueueAsync(service);
 
-            var marker = default(string);
+            var continuationToken = default(string);
             var queues = new List<QueueItem>();
-            await foreach (Page<QueueItem> page in service.GetQueuesAsync().AsPages(marker))
+            await foreach (Page<QueueItem> page in service.GetQueuesAsync().AsPages(continuationToken))
             {
                 queues.AddRange(page.Values);
+                continuationToken = page.ContinuationToken;
             }
 
             Assert.AreNotEqual(0, queues.Count);
@@ -536,6 +538,112 @@ namespace Azure.Storage.Queues.Test
         }
         #endregion
 
+        #region AccountSas
+        [RecordedTest]
+        [TestCase("sco")]
+        [TestCase("soc")]
+        [TestCase("cos")]
+        [TestCase("ocs")]
+        [TestCase("cs")]
+        [TestCase("oc")]
+        [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task AccountSas_ResourceTypeOrder(string resourceType)
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            QueueClient queue = test.Queue;
+            await queue.CreateAsync().ConfigureAwait(false);
+
+            // Generate a SAS that would set the srt / ResourceTypes in a different order than
+            // the .NET SDK would normally create the SAS
+            string permissions = "rwdylacuptfi";
+            string services = "bqtf";
+            TestAccountSasBuilder accountSasBuilder = new TestAccountSasBuilder(
+                permissions: permissions,
+                expiresOn: Recording.UtcNow.AddDays(1),
+                services: services,
+                resourceTypes: resourceType);
+
+            UriBuilder blobUriBuilder = new UriBuilder(queue.Uri)
+            {
+                Query = accountSasBuilder.ToTestSasQueryParameters(Tenants.GetNewSharedKeyCredentials()).ToString()
+            };
+
+            // Assert
+            QueueClient sasBlobClient = InstrumentClient(new QueueClient(blobUriBuilder.Uri, GetOptions()));
+            await sasBlobClient.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        [TestCase("bfqt")]
+        [TestCase("qftb")]
+        [TestCase("tqfb")]
+        [TestCase("fqt")]
+        [TestCase("qb")]
+        [TestCase("fq")]
+        [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task AccountSas_ServiceOrder(string services)
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            QueueClient queue = test.Queue;
+            await queue.CreateAsync().ConfigureAwait(false);
+
+            // Generate a SAS that would set the srt / ResourceTypes in a different order than
+            // the .NET SDK would normally create the SAS
+            string permissions = "rwdylacuptfi";
+            string resourceTypes = "sco";
+            TestAccountSasBuilder accountSasBuilder = new TestAccountSasBuilder(
+                permissions: permissions,
+                expiresOn: Recording.UtcNow.AddDays(1),
+                services: services,
+                resourceTypes: resourceTypes);
+
+            UriBuilder blobUriBuilder = new UriBuilder(queue.Uri)
+            {
+                Query = accountSasBuilder.ToTestSasQueryParameters(Tenants.GetNewSharedKeyCredentials()).ToString()
+            };
+
+            // Assert
+            QueueClient sasBlobClient = InstrumentClient(new QueueClient(blobUriBuilder.Uri, GetOptions()));
+            await sasBlobClient.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        [TestCase("rwdylacuptfi")]
+        [TestCase("cuprwdylatfi")]
+        [TestCase("cudypafitrwl")]
+        [TestCase("cuprwdyla")]
+        [TestCase("rywdlcaup")]
+        [TestCase("larwdycup")]
+        [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task AccountSas_PermissionsOrder(string permissions)
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            QueueClient queue = test.Queue;
+            await queue.CreateAsync().ConfigureAwait(false);
+
+            // Generate a SAS that would set the srt / ResourceTypes in a different order than
+            // the .NET SDK would normally create the SAS
+            string services = "bqtf";
+            string resourceTypes = "sco";
+            TestAccountSasBuilder accountSasBuilder = new TestAccountSasBuilder(
+                permissions: permissions,
+                expiresOn: Recording.UtcNow.AddDays(1),
+                services: services,
+                resourceTypes: resourceTypes);
+
+            UriBuilder blobUriBuilder = new UriBuilder(queue.Uri)
+            {
+                Query = accountSasBuilder.ToTestSasQueryParameters(Tenants.GetNewSharedKeyCredentials()).ToString()
+            };
+
+            // Assert
+            QueueClient sasBlobClient = InstrumentClient(new QueueClient(blobUriBuilder.Uri, GetOptions()));
+            await sasBlobClient.GetPropertiesAsync();
+        }
+        #endregion
         [RecordedTest]
         public void CanMockClientConstructors()
         {

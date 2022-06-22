@@ -12,6 +12,7 @@ using Azure.Identity;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Azure.Storage.Test.Shared;
 using Moq;
 using NUnit.Framework;
 
@@ -975,31 +976,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             UriBuilder expectedUri = new UriBuilder(serviceUri);
             expectedUri.Query += sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString();
             Assert.AreEqual(expectedUri.Uri, sasUri);
-        }
-
-        [RecordedTest]
-        public void GenerateAccountSas_WrongService_Service()
-        {
-            TestConstants constants = TestConstants.Create(this);
-            Uri serviceUri = new Uri($"https://{constants.Sas.Account}.dfs.core.windows.net");
-            AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
-            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
-            AccountSasServices services = AccountSasServices.Files; // Wrong Service
-            AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
-            DataLakeServiceClient serviceClient = InstrumentClient(new DataLakeServiceClient(
-                serviceUri,
-                constants.Sas.SharedKeyCredential,
-                GetOptions()));
-
-            AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes);
-
-            // Add more properties on the builder
-            sasBuilder.SetPermissions(permissions);
-
-            // Act
-            TestHelper.AssertExpectedException(
-                () => serviceClient.GenerateAccountSasUri(sasBuilder),
-                new InvalidOperationException("SAS Uri cannot be generated. builder.Services does specify Blobs. builder.Services must either specify Blobs or specify all Services are accessible in the value."));
         }
         #endregion
 
