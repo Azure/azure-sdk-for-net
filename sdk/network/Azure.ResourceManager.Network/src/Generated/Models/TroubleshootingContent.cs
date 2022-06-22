@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="storageId"> The ID for the storage account to save the troubleshoot result. </param>
         /// <param name="storagePath"> The path to the blob to save the troubleshoot result in. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="storageId"/> or <paramref name="storagePath"/> is null. </exception>
-        public TroubleshootingContent(ResourceIdentifier targetResourceId, string storageId, string storagePath)
+        public TroubleshootingContent(ResourceIdentifier targetResourceId, ResourceIdentifier storageId, string storagePath)
         {
             if (targetResourceId == null)
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The target resource to troubleshoot. </summary>
         public ResourceIdentifier TargetResourceId { get; }
         /// <summary> The ID for the storage account to save the troubleshoot result. </summary>
-        public string StorageId { get; }
+        public ResourceIdentifier StorageId { get; }
         /// <summary> The path to the blob to save the troubleshoot result in. </summary>
         public string StoragePath { get; }
     }

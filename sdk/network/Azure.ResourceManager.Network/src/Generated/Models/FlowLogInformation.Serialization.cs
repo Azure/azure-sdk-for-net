@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             ResourceIdentifier targetResourceId = default;
             Optional<TrafficAnalyticsProperties> flowAnalyticsConfiguration = default;
-            string storageId = default;
+            ResourceIdentifier storageId = default;
             bool enabled = default;
             Optional<RetentionPolicyParameters> retentionPolicy = default;
             Optional<FlowLogFormatParameters> format = default;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         if (property0.NameEquals("storageId"))
                         {
-                            storageId = property0.Value.GetString();
+                            storageId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("enabled"))
