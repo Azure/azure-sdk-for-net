@@ -14,16 +14,31 @@ namespace Azure.Analytics.LoadTestService.Tests
 {
     public class LoadTestServiceClientTest: RecordedTestBase<LoadTestServiceClientTestEnvironment>
     {
-        public LoadTestServiceClientTest(bool isAsync) : base(isAsync)
+        public LoadTestServiceClientTest(bool isAsync) : base(isAsync,RecordedTestMode.Record)
         {
         }
 
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
-
+        private TestClient CreateClient()
+        {
+            return InstrumentClient(new TestClient (
+                TestEnvironment.Endpoint,
+                TestEnvironment.Credential,
+                InstrumentClientOptions(new AzureLoadTestingClientOptions())
+            ));
+        }
         [RecordedTest]
         public void TestOperation()
         {
             Assert.IsTrue(true);
+        }
+        [RecordedTest]
+        public void GetTest()
+        {
+            TestClient client = CreateClient();
+            string test_id = "a011890b-12cd-004d-015d-12aed8880000?";
+            var response =  client.GetLoadTest(test_id);
+            Assert.IsNotNull(response);
         }
 
         #region Helpers
