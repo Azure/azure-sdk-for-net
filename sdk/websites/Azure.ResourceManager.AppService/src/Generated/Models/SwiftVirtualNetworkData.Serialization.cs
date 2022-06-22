@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> subnetResourceId = default;
             Optional<bool> swiftSupported = default;
             foreach (var property in element.EnumerateObject())
@@ -70,6 +70,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -101,7 +106,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new SwiftVirtualNetworkData(id, name, type, systemData, kind.Value, subnetResourceId.Value, Optional.ToNullable(swiftSupported));
+            return new SwiftVirtualNetworkData(id, name, type, systemData.Value, kind.Value, subnetResourceId.Value, Optional.ToNullable(swiftSupported));
         }
     }
 }

@@ -17,24 +17,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId");
             writer.WriteStringValue(ResourceId);
-            if (Optional.IsDefined(IoTHubConnectionString))
-            {
-                writer.WritePropertyName("ioTHubConnectionString");
-                writer.WriteStringValue(IoTHubConnectionString);
-            }
-            if (Optional.IsDefined(EventHubConnectionString))
-            {
-                writer.WritePropertyName("eventHubConnectionString");
-                writer.WriteStringValue(EventHubConnectionString);
-            }
             writer.WriteEndObject();
         }
 
         internal static IotHubSettings DeserializeIotHubSettings(JsonElement element)
         {
             string resourceId = default;
-            Optional<string> ioTHubConnectionString = default;
-            Optional<string> eventHubConnectionString = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"))
@@ -42,18 +30,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     resourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ioTHubConnectionString"))
-                {
-                    ioTHubConnectionString = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("eventHubConnectionString"))
-                {
-                    eventHubConnectionString = property.Value.GetString();
-                    continue;
-                }
             }
-            return new IotHubSettings(resourceId, ioTHubConnectionString.Value, eventHubConnectionString.Value);
+            return new IotHubSettings(resourceId);
         }
     }
 }

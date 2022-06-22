@@ -5,7 +5,7 @@ This sample demonstrates how to analyze an utterance using an Orchestration proj
 To analyze an utterance, you need to first create a `ConversationAnalysisClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:ConversationAnalysisClient_Create
-Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com");
+Uri endpoint = new Uri("https://myaccount.cognitive.microsoft.com");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
@@ -50,32 +50,9 @@ JsonElement orchestrationPrediction = conversationalTaskResult.GetProperty("resu
 
 ## Asynchronous
 
+Using the same `data` definition above, you can make an asynchronous request by calling `AnalyzeConversationAsync`:
+
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionAsync
-string projectName = "DomainOrchestrator";
-string deploymentName = "production";
-
-var data = new
-{
-    analysisInput = new
-    {
-        conversationItem = new
-        {
-            text = "How are you?",
-            id = "1",
-            participantId = "1",
-        }
-    },
-    parameters = new
-    {
-        projectName,
-        deploymentName,
-
-        // Use Utf16CodeUnit for strings in .NET.
-        stringIndexType = "Utf16CodeUnit",
-    },
-    kind = "Conversation",
-};
-
 Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
 
 using JsonDocument result = await JsonDocument.ParseAsync(response.ContentStream);
@@ -136,19 +113,17 @@ if (targetIntentResult.GetProperty("targetProjectKind").GetString() == "Conversa
         Console.WriteLine($"Length: {entity.GetProperty("length").GetInt32()}");
         Console.WriteLine();
 
-        if (!entity.TryGetProperty("resolutions", out JsonElement resolutions))
+        if (entity.TryGetProperty("resolutions", out JsonElement resolutions))
         {
-            continue;
-        }
-
-        foreach (JsonElement resolution in resolutions.EnumerateArray())
-        {
-            if (resolution.GetProperty("resolutionKind").GetString() == "DateTimeResolution")
+            foreach (JsonElement resolution in resolutions.EnumerateArray())
             {
-                Console.WriteLine($"Datetime Sub Kind: {resolution.GetProperty("dateTimeSubKind").GetString()}");
-                Console.WriteLine($"Timex: {resolution.GetProperty("timex").GetString()}");
-                Console.WriteLine($"Value: {resolution.GetProperty("value").GetString()}");
-                Console.WriteLine();
+                if (resolution.GetProperty("resolutionKind").GetString() == "DateTimeResolution")
+                {
+                    Console.WriteLine($"Datetime Sub Kind: {resolution.GetProperty("dateTimeSubKind").GetString()}");
+                    Console.WriteLine($"Timex: {resolution.GetProperty("timex").GetString()}");
+                    Console.WriteLine($"Value: {resolution.GetProperty("value").GetString()}");
+                    Console.WriteLine();
+                }
             }
         }
     }

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> category = default;
             Optional<string> target = default;
             Optional<string> authType = default;
@@ -78,6 +78,11 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -124,7 +129,7 @@ namespace Azure.ResourceManager.MachineLearning
                     continue;
                 }
             }
-            return new WorkspaceConnectionData(id, name, type, systemData, category.Value, target.Value, authType.Value, value.Value, Optional.ToNullable(valueFormat));
+            return new WorkspaceConnectionData(id, name, type, systemData.Value, category.Value, target.Value, authType.Value, value.Value, Optional.ToNullable(valueFormat));
         }
     }
 }

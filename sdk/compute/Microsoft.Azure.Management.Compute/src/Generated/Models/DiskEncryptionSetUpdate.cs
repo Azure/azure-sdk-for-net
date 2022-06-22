@@ -41,12 +41,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="rotationToLatestKeyVersionEnabled">Set this flag to
         /// true to enable auto-updating of this disk encryption set to the
         /// latest key version.</param>
+        /// <param name="federatedClientId">Multi-tenant application client id
+        /// to access key vault in a different tenant. Setting the value to
+        /// 'None' will clear the property.</param>
         /// <param name="tags">Resource tags</param>
-        public DiskEncryptionSetUpdate(string encryptionType = default(string), KeyForDiskEncryptionSet activeKey = default(KeyForDiskEncryptionSet), bool? rotationToLatestKeyVersionEnabled = default(bool?), IDictionary<string, string> tags = default(IDictionary<string, string>), EncryptionSetIdentity identity = default(EncryptionSetIdentity))
+        public DiskEncryptionSetUpdate(string encryptionType = default(string), KeyForDiskEncryptionSet activeKey = default(KeyForDiskEncryptionSet), bool? rotationToLatestKeyVersionEnabled = default(bool?), string federatedClientId = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), EncryptionSetIdentity identity = default(EncryptionSetIdentity))
         {
             EncryptionType = encryptionType;
             ActiveKey = activeKey;
             RotationToLatestKeyVersionEnabled = rotationToLatestKeyVersionEnabled;
+            FederatedClientId = federatedClientId;
             Tags = tags;
             Identity = identity;
             CustomInit();
@@ -77,6 +81,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.rotationToLatestKeyVersionEnabled")]
         public bool? RotationToLatestKeyVersionEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets multi-tenant application client id to access key vault
+        /// in a different tenant. Setting the value to 'None' will clear the
+        /// property.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.federatedClientId")]
+        public string FederatedClientId { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags

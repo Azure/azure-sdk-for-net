@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Models;
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="startVmOnConnect"> The flag to turn on/off StartVMOnConnect feature. </param>
         /// <param name="migrationRequest"> The registration info of HostPool. </param>
         /// <param name="cloudPcResource"> Is cloud pc resource. </param>
-        internal HostPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, string kind, string etag, SystemAssignedServiceIdentity identity, ResourceModelWithAllowedPropertySetSku sku, ArmPlan plan, string objectId, string friendlyName, string description, HostPoolType hostPoolType, PersonalDesktopAssignmentType? personalDesktopAssignmentType, string customRdpProperty, int? maxSessionLimit, LoadBalancerType loadBalancerType, int? ring, bool? validationEnvironment, RegistrationInfo registrationInfo, string vmTemplate, IReadOnlyList<string> applicationGroupReferences, string ssoadfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, SsoSecretType? ssoSecretType, PreferredAppGroupType preferredAppGroupType, bool? startVmOnConnect, MigrationRequestProperties migrationRequest, bool? cloudPcResource) : base(id, name, resourceType, systemData, tags, location, managedBy, kind, etag, identity, sku, plan)
+        internal HostPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, string kind, ETag? etag, SystemAssignedServiceIdentity identity, ResourceModelWithAllowedPropertySetSku sku, ArmPlan plan, string objectId, string friendlyName, string description, HostPoolType hostPoolType, PersonalDesktopAssignmentType? personalDesktopAssignmentType, string customRdpProperty, int? maxSessionLimit, LoadBalancerType loadBalancerType, int? ring, bool? validationEnvironment, RegistrationInfo registrationInfo, string vmTemplate, IReadOnlyList<string> applicationGroupReferences, string ssoadfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, SsoSecretType? ssoSecretType, PreferredAppGroupType preferredAppGroupType, bool? startVmOnConnect, MigrationRequestProperties migrationRequest, bool? cloudPcResource) : base(id, name, resourceType, systemData, tags, location, managedBy, kind, etag, identity, sku, plan)
         {
             ObjectId = objectId;
             FriendlyName = friendlyName;

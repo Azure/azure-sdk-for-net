@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("changeNumber"))
@@ -73,11 +73,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
             }
-            return new ServiceTagsListResult(id, name, type, systemData, changeNumber.Value, cloud.Value, Optional.ToList(values), nextLink.Value);
+            return new ServiceTagsListResult(id, name, type, systemData.Value, changeNumber.Value, cloud.Value, Optional.ToList(values), nextLink.Value);
         }
     }
 }
