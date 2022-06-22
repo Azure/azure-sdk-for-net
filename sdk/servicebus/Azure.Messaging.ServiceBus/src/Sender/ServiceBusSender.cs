@@ -500,6 +500,7 @@ namespace Azure.Messaging.ServiceBus
             catch (Exception ex)
             {
                 Logger.CancelScheduledMessagesException(Identifier, ex.ToString());
+                scope.Failed(ex);
                 throw;
             }
 
