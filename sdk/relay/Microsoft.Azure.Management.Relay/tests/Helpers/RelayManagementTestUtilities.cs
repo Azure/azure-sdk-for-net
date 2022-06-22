@@ -36,6 +36,8 @@ namespace Relay.Tests.TestHelper
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
         internal const string HybridPrefix = "sdk-Relay-Hybrid-";
         internal const string WcfPrefix = "sdk-Relay-Wcf-";
+        internal const string PrivateEndpointPrefix = "sdk-PrivateEndpointConnection-";
+        internal const string PrivateLinkConnectionPrefix = "sdk-PrivateLink-";
 
         public static RelayManagementClient GetRelayManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {

@@ -170,8 +170,17 @@ namespace Relay.Tests.ScenarioTests
                 //Primary Key
                 var regenerateKeysPrimaryResponse = RelayManagementClient.HybridConnections.RegenerateKeys(resourceGroup, namespaceName, hybridConnectionsName, authorizationRuleName, KeyType.PrimaryKey);
                 Assert.NotNull(regenerateKeysPrimaryResponse);
-                Assert.NotEqual(regenerateKeysPrimaryResponse.PrimaryKey, listKeysResponse.PrimaryKey);
-                Assert.Equal(regenerateKeysPrimaryResponse.SecondaryKey, listKeysResponse.SecondaryKey);
+
+                if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+                {
+                    Assert.Equal("Sanitized", regenerateKeysPrimaryResponse.PrimaryKey);
+                    Assert.Equal("Sanitized", regenerateKeysPrimaryResponse.SecondaryKey);
+                }
+                else if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
+                    Assert.NotEqual(regenerateKeysPrimaryResponse.PrimaryKey, listKeysResponse.PrimaryKey);
+                    Assert.Equal(regenerateKeysPrimaryResponse.SecondaryKey, listKeysResponse.SecondaryKey);
+                }
 
 
                 regenerateKeysParameters.KeyType = KeyType.SecondaryKey;
@@ -179,8 +188,18 @@ namespace Relay.Tests.ScenarioTests
                 //Secondary Key
                 var regenerateKeysSecondaryResponse = RelayManagementClient.HybridConnections.RegenerateKeys(resourceGroup, namespaceName, hybridConnectionsName, authorizationRuleName, KeyType.SecondaryKey);
                 Assert.NotNull(regenerateKeysSecondaryResponse);
-                Assert.NotEqual(regenerateKeysSecondaryResponse.SecondaryKey, listKeysResponse.SecondaryKey);
-                Assert.Equal(regenerateKeysSecondaryResponse.PrimaryKey, regenerateKeysPrimaryResponse.PrimaryKey);
+
+                if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+                {
+                    Assert.Equal("Sanitized", regenerateKeysSecondaryResponse.PrimaryKey);
+                    Assert.Equal("Sanitized", regenerateKeysSecondaryResponse.SecondaryKey);
+                }
+                else if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
+                    Assert.NotEqual(regenerateKeysSecondaryResponse.SecondaryKey, regenerateKeysPrimaryResponse.SecondaryKey);
+                    Assert.Equal(regenerateKeysSecondaryResponse.PrimaryKey, regenerateKeysPrimaryResponse.PrimaryKey);
+                }
+
 
 
                 // Delete HybridConnections authorizationRule

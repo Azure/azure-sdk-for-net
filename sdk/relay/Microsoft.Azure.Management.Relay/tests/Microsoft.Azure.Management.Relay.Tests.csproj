@@ -25,4 +25,7 @@
   <ItemGroup>
     <Folder Include="SessionRecords\Relay.Tests.ScenarioTests.ScenarioTests\" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.Network" Version="22.0.0" />
+  </ItemGroup>
 </Project>
