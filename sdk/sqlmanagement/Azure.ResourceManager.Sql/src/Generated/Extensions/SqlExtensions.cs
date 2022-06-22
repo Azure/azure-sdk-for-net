@@ -343,11 +343,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public static async Task<Response<LocationCapabilities>> GetByLocationCapabilityAsync(this SubscriptionResource subscriptionResource, string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<LocationCapabilities>> GetCapabilitiesByLocationAsync(this SubscriptionResource subscriptionResource, string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            return await GetExtensionClient(subscriptionResource).GetByLocationCapabilityAsync(locationName, include, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).GetCapabilitiesByLocationAsync(locationName, include, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -361,11 +361,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public static Response<LocationCapabilities> GetByLocationCapability(this SubscriptionResource subscriptionResource, string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
+        public static Response<LocationCapabilities> GetCapabilitiesByLocation(this SubscriptionResource subscriptionResource, string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            return GetExtensionClient(subscriptionResource).GetByLocationCapability(locationName, include, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetCapabilitiesByLocation(locationName, include, cancellationToken);
         }
 
         /// <summary>

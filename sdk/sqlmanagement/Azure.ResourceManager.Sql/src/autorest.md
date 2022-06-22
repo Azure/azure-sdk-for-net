@@ -51,6 +51,7 @@ override-operation-name:
   MetricDefinitions_ListDatabase: GetMetricDefinitions
   Metrics_ListElasticPool: GetMetrics
   MetricDefinitions_ListElasticPool: GetMetricDefinitions
+  Capabilities_ListByLocation: GetCapabilitiesByLocation
 request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}
 request-path-to-resource-name:
