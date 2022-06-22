@@ -6,7 +6,6 @@
 using Azure.Core;
 
 [assembly: CodeGenSuppressType("ArmResourceData")]
-[assembly: CodeGenSuppressType("ErrorAdditionalInfo")]
 namespace Azure.ResourceManager.Models
 {
     /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
