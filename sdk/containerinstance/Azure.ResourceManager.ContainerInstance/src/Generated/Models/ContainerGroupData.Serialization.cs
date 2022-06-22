@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     continue;
                 }
             }
-            return new ContainerGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), identity, provisioningState.Value, containers, Optional.ToList(imageRegistryCredentials), Optional.ToNullable(restartPolicy), ipAddress.Value, osType, Optional.ToList(volumes), instanceView.Value, diagnostics.Value, Optional.ToList(subnetIds), dnsConfig.Value, Optional.ToNullable(sku), encryptionProperties.Value, Optional.ToList(initContainers));
+            return new ContainerGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, provisioningState.Value, containers, Optional.ToList(imageRegistryCredentials), Optional.ToNullable(restartPolicy), ipAddress.Value, osType, Optional.ToList(volumes), instanceView.Value, diagnostics.Value, Optional.ToList(subnetIds), dnsConfig.Value, Optional.ToNullable(sku), encryptionProperties.Value, Optional.ToList(initContainers), Optional.ToList(zones));
         }
     }
 }

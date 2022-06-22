@@ -7,13 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the AseV3NetworkingConfiguration data model. </summary>
-    public partial class AseV3NetworkingConfigurationData : ProxyOnlyResource
+    public partial class AseV3NetworkingConfigurationData : ResourceData
     {
         /// <summary> Initializes a new instance of AseV3NetworkingConfigurationData. </summary>
         public AseV3NetworkingConfigurationData()
@@ -29,19 +28,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="windowsOutboundIPAddresses"></param>
         /// <param name="linuxOutboundIPAddresses"></param>
         /// <param name="externalInboundIPAddresses"></param>
         /// <param name="internalInboundIPAddresses"></param>
         /// <param name="allowNewPrivateEndpointConnections"> Property to enable and disable new private endpoint connection creation on ASE. </param>
-        internal AseV3NetworkingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, IReadOnlyList<string> windowsOutboundIPAddresses, IReadOnlyList<string> linuxOutboundIPAddresses, IReadOnlyList<string> externalInboundIPAddresses, IReadOnlyList<string> internalInboundIPAddresses, bool? allowNewPrivateEndpointConnections) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal AseV3NetworkingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> windowsOutboundIPAddresses, IReadOnlyList<string> linuxOutboundIPAddresses, IReadOnlyList<string> externalInboundIPAddresses, IReadOnlyList<string> internalInboundIPAddresses, bool? allowNewPrivateEndpointConnections, string kind) : base(id, name, resourceType, systemData)
         {
             WindowsOutboundIPAddresses = windowsOutboundIPAddresses;
             LinuxOutboundIPAddresses = linuxOutboundIPAddresses;
             ExternalInboundIPAddresses = externalInboundIPAddresses;
             InternalInboundIPAddresses = internalInboundIPAddresses;
             AllowNewPrivateEndpointConnections = allowNewPrivateEndpointConnections;
+            Kind = kind;
         }
 
         /// <summary> Gets the windows outbound ip addresses. </summary>
@@ -54,5 +54,7 @@ namespace Azure.ResourceManager.AppService
         public IReadOnlyList<string> InternalInboundIPAddresses { get; }
         /// <summary> Property to enable and disable new private endpoint connection creation on ASE. </summary>
         public bool? AllowNewPrivateEndpointConnections { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

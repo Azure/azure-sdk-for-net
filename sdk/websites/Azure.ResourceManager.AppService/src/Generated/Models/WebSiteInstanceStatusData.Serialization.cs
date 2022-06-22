@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new WebSiteInstanceStatusData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(state), statusUrl.Value, detectorUrl.Value, consoleUrl.Value, healthCheckUrl.Value, Optional.ToDictionary(containers));
+            return new WebSiteInstanceStatusData(id, name, type, systemData.Value, Optional.ToNullable(state), statusUrl.Value, detectorUrl.Value, consoleUrl.Value, healthCheckUrl.Value, Optional.ToDictionary(containers), kind.Value);
         }
     }
 }

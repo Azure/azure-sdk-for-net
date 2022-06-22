@@ -96,13 +96,15 @@ namespace Azure.ResourceManager.KeyVault
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class KeyVaultPrivateEndpointConnectionData : Azure.ResourceManager.KeyVault.Models.KeyVaultResourceData
+    public partial class KeyVaultPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public KeyVaultPrivateEndpointConnectionData() { }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.ETag? Etag { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class KeyVaultPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
     {
@@ -139,10 +141,11 @@ namespace Azure.ResourceManager.KeyVault
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.KeyVault.ManagedHsmResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.ManagedHsmResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedHsmData : Azure.ResourceManager.KeyVault.Models.ManagedHsmTrackedResourceData
+    public partial class ManagedHsmData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ManagedHsmData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.KeyVault.Models.ManagedHsmSku Sku { get { throw null; } set { } }
     }
     public partial class ManagedHsmPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
@@ -159,13 +162,14 @@ namespace Azure.ResourceManager.KeyVault
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedHsmPrivateEndpointConnectionData : Azure.ResourceManager.KeyVault.Models.ManagedHsmTrackedResourceData
+    public partial class ManagedHsmPrivateEndpointConnectionData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ManagedHsmPrivateEndpointConnectionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ETag? Etag { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public Azure.ResourceManager.KeyVault.Models.ManagedHsmSku Sku { get { throw null; } set { } }
     }
     public partial class ManagedHsmPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
     {
@@ -445,12 +449,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
     }
-    public partial class KeyVaultResourceData : Azure.ResourceManager.Models.ResourceData
-    {
-        public KeyVaultResourceData() { }
-        public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
-    }
     public partial class KeyVaultSku
     {
         public KeyVaultSku(Azure.ResourceManager.KeyVault.Models.KeyVaultSkuFamily family, Azure.ResourceManager.KeyVault.Models.KeyVaultSkuName name) { }
@@ -504,12 +502,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
     }
-    public partial class ManagedHsmPrivateLinkResourceData : Azure.ResourceManager.KeyVault.Models.ManagedHsmTrackedResourceData
+    public partial class ManagedHsmPrivateLinkResourceData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ManagedHsmPrivateLinkResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
+        public Azure.ResourceManager.KeyVault.Models.ManagedHsmSku Sku { get { throw null; } set { } }
     }
     public partial class ManagedHsmPrivateLinkServiceConnectionState
     {
@@ -587,11 +586,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         StandardB1 = 0,
         CustomB32 = 1,
     }
-    public partial class ManagedHsmTrackedResourceData : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public ManagedHsmTrackedResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.KeyVault.Models.ManagedHsmSku Sku { get { throw null; } set { } }
-    }
     public partial class ManagedHsmVirtualNetworkRule
     {
         public ManagedHsmVirtualNetworkRule(Azure.Core.ResourceIdentifier subnetId) { }
@@ -647,12 +641,14 @@ namespace Azure.ResourceManager.KeyVault.Models
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
     }
-    public partial class PrivateLinkResourceData : Azure.ResourceManager.KeyVault.Models.KeyVaultResourceData
+    public partial class PrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData
     {
         public PrivateLinkResourceData() { }
         public string GroupId { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PublicNetworkAccess : System.IEquatable<Azure.ResourceManager.KeyVault.Models.PublicNetworkAccess>

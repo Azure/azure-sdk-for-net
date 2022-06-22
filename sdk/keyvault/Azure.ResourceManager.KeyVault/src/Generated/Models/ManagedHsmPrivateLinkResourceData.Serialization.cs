@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new ManagedHsmPrivateLinkResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            return new ManagedHsmPrivateLinkResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), sku.Value);
         }
     }
 }

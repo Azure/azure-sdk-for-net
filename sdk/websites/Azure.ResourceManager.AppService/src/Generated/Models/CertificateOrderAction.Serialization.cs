@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new CertificateOrderAction(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(actionType), Optional.ToNullable(createdAt));
+            return new CertificateOrderAction(id, name, type, systemData.Value, Optional.ToNullable(actionType), Optional.ToNullable(createdAt), kind.Value);
         }
     }
 }

@@ -44,49 +44,39 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>CreateProjectOptions</c>:
         /// <code>{
-        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; (required),
+        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. Represents the project kind.
         ///   settings: {
-        ///     confidenceThreshold: number (required)
-        ///   },
-        ///   projectName: string (required),
-        ///   multilingual: boolean,
-        ///   description: string,
-        ///   language: string (required)
+        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;.
+        ///   }, # Optional. The project settings.
+        ///   projectName: string, # Required. The new project name.
+        ///   multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
+        ///   description: string, # Optional. The project description.
+        ///   language: string, # Required. The project language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ProjectMetadata</c>:
         /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastModifiedDateTime: string (ISO 8601 Format),
-        ///   lastTrainedDateTime: string (ISO 8601 Format),
-        ///   lastDeployedDateTime: string (ISO 8601 Format),
-        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;,
+        ///   createdDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
+        ///   lastModifiedDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
+        ///   lastTrainedDateTime: string (ISO 8601 Format), # Optional. Represents the project last trained datetime.
+        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployed datetime.
+        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. Represents the project kind.
         ///   settings: {
-        ///     confidenceThreshold: number
-        ///   },
-        ///   projectName: string,
-        ///   multilingual: boolean,
-        ///   description: string,
-        ///   language: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;.
+        ///   }, # Optional. The project settings.
+        ///   projectName: string, # Required. The new project name.
+        ///   multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
+        ///   description: string, # Optional. The project description.
+        ///   language: string, # Required. The project language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
         /// }
         /// </code>
         /// 
@@ -117,49 +107,39 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>CreateProjectOptions</c>:
         /// <code>{
-        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; (required),
+        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. Represents the project kind.
         ///   settings: {
-        ///     confidenceThreshold: number (required)
-        ///   },
-        ///   projectName: string (required),
-        ///   multilingual: boolean,
-        ///   description: string,
-        ///   language: string (required)
+        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;.
+        ///   }, # Optional. The project settings.
+        ///   projectName: string, # Required. The new project name.
+        ///   multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
+        ///   description: string, # Optional. The project description.
+        ///   language: string, # Required. The project language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ProjectMetadata</c>:
         /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastModifiedDateTime: string (ISO 8601 Format),
-        ///   lastTrainedDateTime: string (ISO 8601 Format),
-        ///   lastDeployedDateTime: string (ISO 8601 Format),
-        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;,
+        ///   createdDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
+        ///   lastModifiedDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
+        ///   lastTrainedDateTime: string (ISO 8601 Format), # Optional. Represents the project last trained datetime.
+        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployed datetime.
+        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. Represents the project kind.
         ///   settings: {
-        ///     confidenceThreshold: number
-        ///   },
-        ///   projectName: string,
-        ///   multilingual: boolean,
-        ///   description: string,
-        ///   language: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;.
+        ///   }, # Optional. The project settings.
+        ///   projectName: string, # Required. The new project name.
+        ///   multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
+        ///   description: string, # Optional. The project description.
+        ///   language: string, # Required. The project language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
         /// }
         /// </code>
         /// 
@@ -189,37 +169,24 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ProjectMetadata</c>:
         /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastModifiedDateTime: string (ISO 8601 Format),
-        ///   lastTrainedDateTime: string (ISO 8601 Format),
-        ///   lastDeployedDateTime: string (ISO 8601 Format),
-        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;,
+        ///   createdDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
+        ///   lastModifiedDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
+        ///   lastTrainedDateTime: string (ISO 8601 Format), # Optional. Represents the project last trained datetime.
+        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployed datetime.
+        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. Represents the project kind.
         ///   settings: {
-        ///     confidenceThreshold: number
-        ///   },
-        ///   projectName: string,
-        ///   multilingual: boolean,
-        ///   description: string,
-        ///   language: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;.
+        ///   }, # Optional. The project settings.
+        ///   projectName: string, # Required. The new project name.
+        ///   multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
+        ///   description: string, # Optional. The project description.
+        ///   language: string, # Required. The project language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
         /// }
         /// </code>
         /// 
@@ -248,37 +215,24 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ProjectMetadata</c>:
         /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastModifiedDateTime: string (ISO 8601 Format),
-        ///   lastTrainedDateTime: string (ISO 8601 Format),
-        ///   lastDeployedDateTime: string (ISO 8601 Format),
-        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;,
+        ///   createdDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
+        ///   lastModifiedDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
+        ///   lastTrainedDateTime: string (ISO 8601 Format), # Optional. Represents the project last trained datetime.
+        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployed datetime.
+        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. Represents the project kind.
         ///   settings: {
-        ///     confidenceThreshold: number
-        ///   },
-        ///   projectName: string,
-        ///   multilingual: boolean,
-        ///   description: string,
-        ///   language: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;.
+        ///   }, # Optional. The project settings.
+        ///   projectName: string, # Required. The new project name.
+        ///   multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
+        ///   description: string, # Optional. The project description.
+        ///   language: string, # Required. The project language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
         /// }
         /// </code>
         /// 
@@ -308,31 +262,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ProjectDeployment</c>:
         /// <code>{
-        ///   deploymentName: string,
-        ///   modelId: string,
-        ///   lastTrainedDateTime: string (ISO 8601 Format),
-        ///   lastDeployedDateTime: string (ISO 8601 Format),
-        ///   deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate,
-        ///   modelTrainingConfigVersion: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   deploymentName: string, # Required. Represents deployment name.
+        ///   modelId: string, # Required. Represents deployment modelId.
+        ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
+        ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
+        ///   deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate, # Required. Represents deployment expiration date in the runtime.
+        ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
         /// }
         /// </code>
         /// 
@@ -363,31 +304,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ProjectDeployment</c>:
         /// <code>{
-        ///   deploymentName: string,
-        ///   modelId: string,
-        ///   lastTrainedDateTime: string (ISO 8601 Format),
-        ///   lastDeployedDateTime: string (ISO 8601 Format),
-        ///   deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate,
-        ///   modelTrainingConfigVersion: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   deploymentName: string, # Required. Represents deployment name.
+        ///   modelId: string, # Required. Represents deployment modelId.
+        ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
+        ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
+        ///   deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate, # Required. Represents deployment expiration date in the runtime.
+        ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
         /// }
         /// </code>
         /// 
@@ -419,51 +347,38 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeploymentJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. The errors encountered while executing the job.
         /// }
         /// </code>
         /// 
@@ -496,51 +411,38 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeploymentJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. The errors encountered while executing the job.
         /// }
         /// </code>
         /// 
@@ -572,51 +474,38 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeploymentJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. The errors encountered while executing the job.
         /// }
         /// </code>
         /// 
@@ -647,51 +536,38 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeploymentJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. The errors encountered while executing the job.
         /// }
         /// </code>
         /// 
@@ -722,52 +598,39 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ExportProjectJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ],
-        ///   resultUrl: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. The errors encountered while executing the job.
+        ///   resultUrl: string, # Optional. The URL to use in order to download the exported project.
         /// }
         /// </code>
         /// 
@@ -798,52 +661,39 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ExportProjectJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ],
-        ///   resultUrl: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. The errors encountered while executing the job.
+        ///   resultUrl: string, # Optional. The URL to use in order to download the exported project.
         /// }
         /// </code>
         /// 
@@ -874,51 +724,38 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ImportProjectJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. The errors encountered while executing the job.
         /// }
         /// </code>
         /// 
@@ -949,51 +786,38 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ImportProjectJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. The errors encountered while executing the job.
         /// }
         /// </code>
         /// 
@@ -1024,31 +848,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ProjectTrainedModel</c>:
         /// <code>{
-        ///   label: string,
-        ///   modelId: string,
-        ///   lastTrainedDateTime: string (ISO 8601 Format),
-        ///   lastTrainingDurationInSeconds: number,
-        ///   modelExpirationDate: ConversationalAnalysisAuthoringProjectTrainedModelExpirationDate,
-        ///   modelTrainingConfigVersion: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   label: string, # Required. The trained model label.
+        ///   modelId: string, # Required. The model ID.
+        ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. The last trained date time of the model.
+        ///   lastTrainingDurationInSeconds: number, # Required. The duration of the model&apos;s last training request in seconds.
+        ///   modelExpirationDate: ConversationalAnalysisAuthoringProjectTrainedModelExpirationDate, # Required. The model expiration date.
+        ///   modelTrainingConfigVersion: string, # Required. The model training config version.
         /// }
         /// </code>
         /// 
@@ -1079,31 +890,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ProjectTrainedModel</c>:
         /// <code>{
-        ///   label: string,
-        ///   modelId: string,
-        ///   lastTrainedDateTime: string (ISO 8601 Format),
-        ///   lastTrainingDurationInSeconds: number,
-        ///   modelExpirationDate: ConversationalAnalysisAuthoringProjectTrainedModelExpirationDate,
-        ///   modelTrainingConfigVersion: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   label: string, # Required. The trained model label.
+        ///   modelId: string, # Required. The model ID.
+        ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. The last trained date time of the model.
+        ///   lastTrainingDurationInSeconds: number, # Required. The duration of the model&apos;s last training request in seconds.
+        ///   modelExpirationDate: ConversationalAnalysisAuthoringProjectTrainedModelExpirationDate, # Required. The model expiration date.
+        ///   modelTrainingConfigVersion: string, # Required. The model training config version.
         /// }
         /// </code>
         /// 
@@ -1133,26 +931,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual async Task<Response> DeleteTrainedModelAsync(string projectName, string trainedModelLabel, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1178,26 +956,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Response DeleteTrainedModel(string projectName, string trainedModelLabel, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1224,50 +982,37 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>EvaluationSummary</c>:
         /// <code>{
         ///   entitiesEvaluation: {
-        ///     confusionMatrix: Dictionary&lt;string, Dictionary&lt;string, ConfusionMatrixCell&gt;&gt;,
-        ///     entities: Dictionary&lt;string, EntityEvaluationSummary&gt;,
-        ///     microF1: number,
-        ///     microPrecision: number,
-        ///     microRecall: number,
-        ///     macroF1: number,
-        ///     macroPrecision: number,
-        ///     macroRecall: number
-        ///   },
+        ///     confusionMatrix: Dictionary&lt;string, Dictionary&lt;string, ConfusionMatrixCell&gt;&gt;, # Required. Represents the confusion matrix between two entities (the two entities can be the same). The matrix is between the entity that was labelled and the entity that was predicted.
+        ///     entities: Dictionary&lt;string, EntityEvaluationSummary&gt;, # Required. Represents the entities evaluation summary.
+        ///     microF1: number, # Required. Represents the micro F1
+        ///     microPrecision: number, # Required. Represents the micro precision
+        ///     microRecall: number, # Required. Represents the micro recall
+        ///     macroF1: number, # Required. Represents the macro F1
+        ///     macroPrecision: number, # Required. Represents the macro precision
+        ///     macroRecall: number, # Required. Represents the macro recall
+        ///   }, # Required. Contains the data related to entities evaluation.
         ///   intentsEvaluation: {
-        ///     confusionMatrix: Dictionary&lt;string, Dictionary&lt;string, ConfusionMatrixCell&gt;&gt;,
-        ///     intents: Dictionary&lt;string, IntentEvaluationSummary&gt;,
-        ///     microF1: number,
-        ///     microPrecision: number,
-        ///     microRecall: number,
-        ///     macroF1: number,
-        ///     macroPrecision: number,
-        ///     macroRecall: number
-        ///   },
+        ///     confusionMatrix: Dictionary&lt;string, Dictionary&lt;string, ConfusionMatrixCell&gt;&gt;, # Required. Represents the confusion matrix between two intents (the two intents can be the same). The matrix is between the intent that was labelled and the intent that was predicted.
+        ///     intents: Dictionary&lt;string, IntentEvaluationSummary&gt;, # Required. Represents the intents evaluation summary.
+        ///     microF1: number, # Required. Represents the micro F1
+        ///     microPrecision: number, # Required. Represents the micro precision
+        ///     microRecall: number, # Required. Represents the micro recall
+        ///     macroF1: number, # Required. Represents the macro F1
+        ///     macroPrecision: number, # Required. Represents the macro precision
+        ///     macroRecall: number, # Required. Represents the macro recall
+        ///   }, # Required. Contains the data related to intents evaluation.
         ///   evaluationOptions: {
-        ///     kind: &quot;percentage&quot; | &quot;manual&quot;,
-        ///     trainingSplitPercentage: number,
-        ///     testingSplitPercentage: number
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///     kind: &quot;percentage&quot; | &quot;manual&quot;, # Optional. Represents the evaluation kind. By default, the evaluation kind is set to percentage.
+        ///     trainingSplitPercentage: number, # Optional. Represents the training dataset split percentage. Only needed in case the evaluation kind is percentage.
+        ///     testingSplitPercentage: number, # Optional. Represents the testing dataset split percentage. Only needed in case the evaluation kind is percentage.
+        ///   }, # Optional. The options that were used while running the evaluation.
         /// }
         /// </code>
         /// 
@@ -1298,50 +1043,37 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>EvaluationSummary</c>:
         /// <code>{
         ///   entitiesEvaluation: {
-        ///     confusionMatrix: Dictionary&lt;string, Dictionary&lt;string, ConfusionMatrixCell&gt;&gt;,
-        ///     entities: Dictionary&lt;string, EntityEvaluationSummary&gt;,
-        ///     microF1: number,
-        ///     microPrecision: number,
-        ///     microRecall: number,
-        ///     macroF1: number,
-        ///     macroPrecision: number,
-        ///     macroRecall: number
-        ///   },
+        ///     confusionMatrix: Dictionary&lt;string, Dictionary&lt;string, ConfusionMatrixCell&gt;&gt;, # Required. Represents the confusion matrix between two entities (the two entities can be the same). The matrix is between the entity that was labelled and the entity that was predicted.
+        ///     entities: Dictionary&lt;string, EntityEvaluationSummary&gt;, # Required. Represents the entities evaluation summary.
+        ///     microF1: number, # Required. Represents the micro F1
+        ///     microPrecision: number, # Required. Represents the micro precision
+        ///     microRecall: number, # Required. Represents the micro recall
+        ///     macroF1: number, # Required. Represents the macro F1
+        ///     macroPrecision: number, # Required. Represents the macro precision
+        ///     macroRecall: number, # Required. Represents the macro recall
+        ///   }, # Required. Contains the data related to entities evaluation.
         ///   intentsEvaluation: {
-        ///     confusionMatrix: Dictionary&lt;string, Dictionary&lt;string, ConfusionMatrixCell&gt;&gt;,
-        ///     intents: Dictionary&lt;string, IntentEvaluationSummary&gt;,
-        ///     microF1: number,
-        ///     microPrecision: number,
-        ///     microRecall: number,
-        ///     macroF1: number,
-        ///     macroPrecision: number,
-        ///     macroRecall: number
-        ///   },
+        ///     confusionMatrix: Dictionary&lt;string, Dictionary&lt;string, ConfusionMatrixCell&gt;&gt;, # Required. Represents the confusion matrix between two intents (the two intents can be the same). The matrix is between the intent that was labelled and the intent that was predicted.
+        ///     intents: Dictionary&lt;string, IntentEvaluationSummary&gt;, # Required. Represents the intents evaluation summary.
+        ///     microF1: number, # Required. Represents the micro F1
+        ///     microPrecision: number, # Required. Represents the micro precision
+        ///     microRecall: number, # Required. Represents the micro recall
+        ///     macroF1: number, # Required. Represents the macro F1
+        ///     macroPrecision: number, # Required. Represents the macro precision
+        ///     macroRecall: number, # Required. Represents the macro recall
+        ///   }, # Required. Contains the data related to intents evaluation.
         ///   evaluationOptions: {
-        ///     kind: &quot;percentage&quot; | &quot;manual&quot;,
-        ///     trainingSplitPercentage: number,
-        ///     testingSplitPercentage: number
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///     kind: &quot;percentage&quot; | &quot;manual&quot;, # Optional. Represents the evaluation kind. By default, the evaluation kind is set to percentage.
+        ///     trainingSplitPercentage: number, # Optional. Represents the training dataset split percentage. Only needed in case the evaluation kind is percentage.
+        ///     testingSplitPercentage: number, # Optional. Represents the testing dataset split percentage. Only needed in case the evaluation kind is percentage.
+        ///   }, # Optional. The options that were used while running the evaluation.
         /// }
         /// </code>
         /// 
@@ -1372,64 +1104,51 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>TrainingJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ],
+        ///   ], # Optional. The errors encountered while executing the job.
         ///   result: {
-        ///     modelLabel: string,
-        ///     trainingConfigVersion: string,
-        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;,
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
         ///     trainingStatus: {
-        ///       percentComplete: number,
-        ///       startDateTime: string (ISO 8601 Format),
-        ///       endDateTime: string (ISO 8601 Format),
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;
-        ///     },
-        ///     evaluationStatus: SubTrainingJobState,
-        ///     estimatedEndDateTime: string (ISO 8601 Format)
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 
@@ -1460,64 +1179,51 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>TrainingJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ],
+        ///   ], # Optional. The errors encountered while executing the job.
         ///   result: {
-        ///     modelLabel: string,
-        ///     trainingConfigVersion: string,
-        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;,
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
         ///     trainingStatus: {
-        ///       percentComplete: number,
-        ///       startDateTime: string (ISO 8601 Format),
-        ///       endDateTime: string (ISO 8601 Format),
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;
-        ///     },
-        ///     evaluationStatus: SubTrainingJobState,
-        ///     estimatedEndDateTime: string (ISO 8601 Format)
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 
@@ -1547,51 +1253,38 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ProjectDeletionJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. The errors encountered while executing the job.
         /// }
         /// </code>
         /// 
@@ -1620,51 +1313,38 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ProjectDeletionJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. The errors encountered while executing the job.
         /// }
         /// </code>
         /// 
@@ -1690,42 +1370,24 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Lists the existing projects. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ConversationalAnalysisAuthoringProjectsMetadataValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       lastModifiedDateTime: string (ISO 8601 Format),
-        ///       lastTrainedDateTime: string (ISO 8601 Format),
-        ///       lastDeployedDateTime: string (ISO 8601 Format),
-        ///       projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;,
-        ///       settings: {
-        ///         confidenceThreshold: number
-        ///       },
-        ///       projectName: string,
-        ///       multilingual: boolean,
-        ///       description: string,
-        ///       language: string
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   createdDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
+        ///   lastModifiedDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
+        ///   lastTrainedDateTime: string (ISO 8601 Format), # Optional. Represents the project last trained datetime.
+        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployed datetime.
+        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. Represents the project kind.
+        ///   settings: {
+        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;.
+        ///   }, # Optional. The project settings.
+        ///   projectName: string, # Required. The new project name.
+        ///   multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
+        ///   description: string, # Optional. The project description.
+        ///   language: string, # Required. The project language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
         /// }
         /// </code>
         /// 
@@ -1755,42 +1417,24 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Lists the existing projects. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ConversationalAnalysisAuthoringProjectsMetadataValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       lastModifiedDateTime: string (ISO 8601 Format),
-        ///       lastTrainedDateTime: string (ISO 8601 Format),
-        ///       lastDeployedDateTime: string (ISO 8601 Format),
-        ///       projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;,
-        ///       settings: {
-        ///         confidenceThreshold: number
-        ///       },
-        ///       projectName: string,
-        ///       multilingual: boolean,
-        ///       description: string,
-        ///       language: string
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   createdDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
+        ///   lastModifiedDateTime: string (ISO 8601 Format), # Required. Represents the project creation datetime.
+        ///   lastTrainedDateTime: string (ISO 8601 Format), # Optional. Represents the project last trained datetime.
+        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployed datetime.
+        ///   projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. Represents the project kind.
+        ///   settings: {
+        ///     confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;.
+        ///   }, # Optional. The project settings.
+        ///   projectName: string, # Required. The new project name.
+        ///   multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
+        ///   description: string, # Optional. The project description.
+        ///   language: string, # Required. The project language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
         /// }
         /// </code>
         /// 
@@ -1823,36 +1467,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ConversationalAnalysisAuthoringProjectDeploymentsValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       deploymentName: string,
-        ///       modelId: string,
-        ///       lastTrainedDateTime: string (ISO 8601 Format),
-        ///       lastDeployedDateTime: string (ISO 8601 Format),
-        ///       deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate,
-        ///       modelTrainingConfigVersion: string
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   deploymentName: string, # Required. Represents deployment name.
+        ///   modelId: string, # Required. Represents deployment modelId.
+        ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
+        ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
+        ///   deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate, # Required. Represents deployment expiration date in the runtime.
+        ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
         /// }
         /// </code>
         /// 
@@ -1887,36 +1513,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ConversationalAnalysisAuthoringProjectDeploymentsValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       deploymentName: string,
-        ///       modelId: string,
-        ///       lastTrainedDateTime: string (ISO 8601 Format),
-        ///       lastDeployedDateTime: string (ISO 8601 Format),
-        ///       deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate,
-        ///       modelTrainingConfigVersion: string
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   deploymentName: string, # Required. Represents deployment name.
+        ///   modelId: string, # Required. Represents deployment modelId.
+        ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
+        ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
+        ///   deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate, # Required. Represents deployment expiration date in the runtime.
+        ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
         /// }
         /// </code>
         /// 
@@ -1951,36 +1559,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ConversationalAnalysisAuthoringProjectTrainedModelsValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       label: string,
-        ///       modelId: string,
-        ///       lastTrainedDateTime: string (ISO 8601 Format),
-        ///       lastTrainingDurationInSeconds: number,
-        ///       modelExpirationDate: ConversationalAnalysisAuthoringProjectTrainedModelExpirationDate,
-        ///       modelTrainingConfigVersion: string
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   label: string, # Required. The trained model label.
+        ///   modelId: string, # Required. The model ID.
+        ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. The last trained date time of the model.
+        ///   lastTrainingDurationInSeconds: number, # Required. The duration of the model&apos;s last training request in seconds.
+        ///   modelExpirationDate: ConversationalAnalysisAuthoringProjectTrainedModelExpirationDate, # Required. The model expiration date.
+        ///   modelTrainingConfigVersion: string, # Required. The model training config version.
         /// }
         /// </code>
         /// 
@@ -2015,36 +1605,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ConversationalAnalysisAuthoringProjectTrainedModelsValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       label: string,
-        ///       modelId: string,
-        ///       lastTrainedDateTime: string (ISO 8601 Format),
-        ///       lastTrainingDurationInSeconds: number,
-        ///       modelExpirationDate: ConversationalAnalysisAuthoringProjectTrainedModelExpirationDate,
-        ///       modelTrainingConfigVersion: string
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   label: string, # Required. The trained model label.
+        ///   modelId: string, # Required. The model ID.
+        ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. The last trained date time of the model.
+        ///   lastTrainingDurationInSeconds: number, # Required. The duration of the model&apos;s last training request in seconds.
+        ///   modelExpirationDate: ConversationalAnalysisAuthoringProjectTrainedModelExpirationDate, # Required. The model expiration date.
+        ///   modelTrainingConfigVersion: string, # Required. The model training config version.
         /// }
         /// </code>
         /// 
@@ -2081,46 +1653,28 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="stringIndexType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ConversationalAnalysisAuthoringEvaluationResultsValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       text: string,
-        ///       language: string,
-        ///       entitiesResult: {
-        ///         expectedEntities: [
-        ///           {
-        ///             category: string,
-        ///             offset: number,
-        ///             length: number
-        ///           }
-        ///         ],
-        ///         predictedEntities: [UtteranceEntityEvaluationResult]
-        ///       },
-        ///       intentsResult: {
-        ///         expectedIntent: string,
-        ///         predictedIntent: string
+        ///   text: string, # Required. Represents the utterance text.
+        ///   language: string, # Required. Represents the utterance language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
+        ///   entitiesResult: {
+        ///     expectedEntities: [
+        ///       {
+        ///         category: string, # Required. Represents the entity category.
+        ///         offset: number, # Required. Represents the entity offset index relative to the original text.
+        ///         length: number, # Required. Represents the entity length.
         ///       }
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///     ], # Required. Represents the expected entity labels.
+        ///     predictedEntities: [UtteranceEntityEvaluationResult], # Required. Represents the predicted entity labels.
+        ///   }, # Required. Represents the entities results for the utterance.
+        ///   intentsResult: {
+        ///     expectedIntent: string, # Required. Represents the utterance&apos;s expected intent.
+        ///     predictedIntent: string, # Required. Represents the utterance&apos;s predicted intent.
+        ///   }, # Required. Represents the intents results for the utterance.
         /// }
         /// </code>
         /// 
@@ -2159,46 +1713,28 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="stringIndexType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ConversationalAnalysisAuthoringEvaluationResultsValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       text: string,
-        ///       language: string,
-        ///       entitiesResult: {
-        ///         expectedEntities: [
-        ///           {
-        ///             category: string,
-        ///             offset: number,
-        ///             length: number
-        ///           }
-        ///         ],
-        ///         predictedEntities: [UtteranceEntityEvaluationResult]
-        ///       },
-        ///       intentsResult: {
-        ///         expectedIntent: string,
-        ///         predictedIntent: string
+        ///   text: string, # Required. Represents the utterance text.
+        ///   language: string, # Required. Represents the utterance language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
+        ///   entitiesResult: {
+        ///     expectedEntities: [
+        ///       {
+        ///         category: string, # Required. Represents the entity category.
+        ///         offset: number, # Required. Represents the entity offset index relative to the original text.
+        ///         length: number, # Required. Represents the entity length.
         ///       }
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///     ], # Required. Represents the expected entity labels.
+        ///     predictedEntities: [UtteranceEntityEvaluationResult], # Required. Represents the predicted entity labels.
+        ///   }, # Required. Represents the entities results for the utterance.
+        ///   intentsResult: {
+        ///     expectedIntent: string, # Required. Represents the utterance&apos;s expected intent.
+        ///     predictedIntent: string, # Required. Represents the utterance&apos;s predicted intent.
+        ///   }, # Required. Represents the intents results for the utterance.
         /// }
         /// </code>
         /// 
@@ -2235,69 +1771,51 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ConversationalAnalysisAuthoringTrainingJobsValue</c>:
         /// <code>{
-        ///   value: [
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
+        ///   warnings: [
         ///     {
-        ///       jobId: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       lastUpdatedDateTime: string (ISO 8601 Format),
-        ///       expirationDateTime: string (ISO 8601 Format),
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
-        ///       warnings: [
-        ///         {
-        ///           code: string,
-        ///           message: string
-        ///         }
-        ///       ],
-        ///       errors: [
-        ///         {
-        ///           code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///           message: string,
-        ///           target: string,
-        ///           details: [Error],
-        ///           innererror: {
-        ///             code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///             message: string,
-        ///             details: Dictionary&lt;string, string&gt;,
-        ///             target: string,
-        ///             innererror: InnerErrorModel
-        ///           }
-        ///         }
-        ///       ],
-        ///       result: {
-        ///         modelLabel: string,
-        ///         trainingConfigVersion: string,
-        ///         trainingMode: &quot;advanced&quot; | &quot;standard&quot;,
-        ///         trainingStatus: {
-        ///           percentComplete: number,
-        ///           startDateTime: string (ISO 8601 Format),
-        ///           endDateTime: string (ISO 8601 Format),
-        ///           status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;
-        ///         },
-        ///         evaluationStatus: SubTrainingJobState,
-        ///         estimatedEndDateTime: string (ISO 8601 Format)
-        ///       }
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
+        ///   ], # Optional. The warnings that were encountered while executing the job.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   }
+        ///   ], # Optional. The errors encountered while executing the job.
+        ///   result: {
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
+        ///     trainingStatus: {
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 
@@ -2332,69 +1850,51 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ConversationalAnalysisAuthoringTrainingJobsValue</c>:
         /// <code>{
-        ///   value: [
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
+        ///   warnings: [
         ///     {
-        ///       jobId: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       lastUpdatedDateTime: string (ISO 8601 Format),
-        ///       expirationDateTime: string (ISO 8601 Format),
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
-        ///       warnings: [
-        ///         {
-        ///           code: string,
-        ///           message: string
-        ///         }
-        ///       ],
-        ///       errors: [
-        ///         {
-        ///           code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///           message: string,
-        ///           target: string,
-        ///           details: [Error],
-        ///           innererror: {
-        ///             code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///             message: string,
-        ///             details: Dictionary&lt;string, string&gt;,
-        ///             target: string,
-        ///             innererror: InnerErrorModel
-        ///           }
-        ///         }
-        ///       ],
-        ///       result: {
-        ///         modelLabel: string,
-        ///         trainingConfigVersion: string,
-        ///         trainingMode: &quot;advanced&quot; | &quot;standard&quot;,
-        ///         trainingStatus: {
-        ///           percentComplete: number,
-        ///           startDateTime: string (ISO 8601 Format),
-        ///           endDateTime: string (ISO 8601 Format),
-        ///           status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;
-        ///         },
-        ///         evaluationStatus: SubTrainingJobState,
-        ///         estimatedEndDateTime: string (ISO 8601 Format)
-        ///       }
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
+        ///   ], # Optional. The warnings that were encountered while executing the job.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   }
+        ///   ], # Optional. The errors encountered while executing the job.
+        ///   result: {
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
+        ///     trainingStatus: {
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 
@@ -2428,32 +1928,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ConversationalAnalysisAuthoringSupportedLanguagesValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       languageName: string,
-        ///       languageCode: string
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   languageName: string, # Required. The language name.
+        ///   languageCode: string, # Required. The language code. This is BCP-47 representation of a language. For example, &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
         /// }
         /// </code>
         /// 
@@ -2487,32 +1969,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ConversationalAnalysisAuthoringSupportedLanguagesValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       languageName: string,
-        ///       languageCode: string
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   languageName: string, # Required. The language name.
+        ///   languageCode: string, # Required. The language code. This is BCP-47 representation of a language. For example, &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
         /// }
         /// </code>
         /// 
@@ -2546,33 +2010,15 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="multilingual"> Whether to get the support prebuilt entities for multilingual or monolingual projects. If true, the language parameter is ignored. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ConversationalAnalysisAuthoringPrebuiltEntitiesValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       category: string,
-        ///       description: string,
-        ///       examples: string
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   category: string, # Required. The prebuilt entity category.
+        ///   description: string, # Required. The description.
+        ///   examples: string, # Required. English examples for the entity.
         /// }
         /// </code>
         /// 
@@ -2604,33 +2050,15 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="multilingual"> Whether to get the support prebuilt entities for multilingual or monolingual projects. If true, the language parameter is ignored. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ConversationalAnalysisAuthoringPrebuiltEntitiesValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       category: string,
-        ///       description: string,
-        ///       examples: string
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   category: string, # Required. The prebuilt entity category.
+        ///   description: string, # Required. The description.
+        ///   examples: string, # Required. English examples for the entity.
         /// }
         /// </code>
         /// 
@@ -2662,32 +2090,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ConversationalAnalysisAuthoringTrainingConfigVersionsValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       trainingConfigVersion: string,
-        ///       modelExpirationDate: ConversationalAnalysisAuthoringTrainingConfigVersionModelExpirationDate
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   trainingConfigVersion: string, # Required. Represents the version of the config.
+        ///   modelExpirationDate: ConversationalAnalysisAuthoringTrainingConfigVersionModelExpirationDate, # Required. Represents the training config version expiration date.
         /// }
         /// </code>
         /// 
@@ -2721,32 +2131,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ConversationalAnalysisAuthoringTrainingConfigVersionsValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       trainingConfigVersion: string,
-        ///       modelExpirationDate: ConversationalAnalysisAuthoringTrainingConfigVersionModelExpirationDate
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   trainingConfigVersion: string, # Required. Represents the version of the config.
+        ///   modelExpirationDate: ConversationalAnalysisAuthoringTrainingConfigVersionModelExpirationDate, # Required. Represents the training config version expiration date.
         /// }
         /// </code>
         /// 
@@ -2782,51 +2174,38 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ProjectDeletionJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. The errors encountered while executing the job.
         /// }
         /// </code>
         /// 
@@ -2856,51 +2235,38 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ProjectDeletionJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. The errors encountered while executing the job.
         /// }
         /// </code>
         /// 
@@ -2933,52 +2299,39 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="stringIndexType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ExportProjectJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ],
-        ///   resultUrl: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. The errors encountered while executing the job.
+        ///   resultUrl: string, # Optional. The URL to use in order to download the exported project.
         /// }
         /// </code>
         /// 
@@ -3012,52 +2365,39 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="stringIndexType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ExportProjectJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ],
-        ///   resultUrl: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. The errors encountered while executing the job.
+        ///   resultUrl: string, # Optional. The URL to use in order to download the exported project.
         /// }
         /// </code>
         /// 
@@ -3090,70 +2430,60 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ExportedProject</c>:
         /// <code>{
-        ///   projectFileVersion: string (required),
-        ///   stringIndexType: &quot;Utf16CodeUnit&quot; (required),
+        ///   projectFileVersion: string, # Required. The version of the exported file.
+        ///   stringIndexType: &quot;Utf16CodeUnit&quot;, # Required. Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets.
         ///   metadata: {
-        ///     projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; (required),
+        ///     projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. Represents the project kind.
         ///     settings: {
-        ///       confidenceThreshold: number (required)
-        ///     },
-        ///     projectName: string (required),
-        ///     multilingual: boolean,
-        ///     description: string,
-        ///     language: string (required)
-        ///   } (required),
+        ///       confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;.
+        ///     }, # Optional. The project settings.
+        ///     projectName: string, # Required. The new project name.
+        ///     multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
+        ///     description: string, # Optional. The project description.
+        ///     language: string, # Required. The project language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
+        ///   }, # Required. Represents the project metadata.
         ///   assets: {
-        ///     projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; (required)
-        ///   }
+        ///     projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. The type of project containing the assets.
+        ///   }, # Optional. Represents the project assets.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ImportProjectJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. The errors encountered while executing the job.
         /// }
         /// </code>
         /// 
@@ -3186,70 +2516,60 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ExportedProject</c>:
         /// <code>{
-        ///   projectFileVersion: string (required),
-        ///   stringIndexType: &quot;Utf16CodeUnit&quot; (required),
+        ///   projectFileVersion: string, # Required. The version of the exported file.
+        ///   stringIndexType: &quot;Utf16CodeUnit&quot;, # Required. Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets.
         ///   metadata: {
-        ///     projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; (required),
+        ///     projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. Represents the project kind.
         ///     settings: {
-        ///       confidenceThreshold: number (required)
-        ///     },
-        ///     projectName: string (required),
-        ///     multilingual: boolean,
-        ///     description: string,
-        ///     language: string (required)
-        ///   } (required),
+        ///       confidenceThreshold: number, # Required. The threshold of the intent with the highest confidence, at which the prediction will automatically be changed to &quot;None&quot;.
+        ///     }, # Optional. The project settings.
+        ///     projectName: string, # Required. The new project name.
+        ///     multilingual: boolean, # Optional. Whether the project would be used for multiple languages or not.
+        ///     description: string, # Optional. The project description.
+        ///     language: string, # Required. The project language. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc.
+        ///   }, # Required. Represents the project metadata.
         ///   assets: {
-        ///     projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot; (required)
-        ///   }
+        ///     projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. The type of project containing the assets.
+        ///   }, # Optional. Represents the project assets.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ImportProjectJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. The errors encountered while executing the job.
         /// }
         /// </code>
         /// 
@@ -3281,76 +2601,66 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>TrainingJobOptions</c>:
         /// <code>{
-        ///   modelLabel: string (required),
-        ///   trainingConfigVersion: string,
-        ///   trainingMode: &quot;advanced&quot; | &quot;standard&quot; (required),
+        ///   modelLabel: string, # Required. Represents the output model label.
+        ///   trainingConfigVersion: string, # Optional. Represents training config version. By default, &quot;latest&quot; value is used which uses the latest released training config version.
+        ///   trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Required. Represents the mode of the training operation.
         ///   evaluationOptions: {
-        ///     kind: &quot;percentage&quot; | &quot;manual&quot;,
-        ///     trainingSplitPercentage: number,
-        ///     testingSplitPercentage: number
-        ///   }
+        ///     kind: &quot;percentage&quot; | &quot;manual&quot;, # Optional. Represents the evaluation kind. By default, the evaluation kind is set to percentage.
+        ///     trainingSplitPercentage: number, # Optional. Represents the training dataset split percentage. Only needed in case the evaluation kind is percentage.
+        ///     testingSplitPercentage: number, # Optional. Represents the testing dataset split percentage. Only needed in case the evaluation kind is percentage.
+        ///   }, # Optional. Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>TrainingJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ],
+        ///   ], # Optional. The errors encountered while executing the job.
         ///   result: {
-        ///     modelLabel: string,
-        ///     trainingConfigVersion: string,
-        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;,
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
         ///     trainingStatus: {
-        ///       percentComplete: number,
-        ///       startDateTime: string (ISO 8601 Format),
-        ///       endDateTime: string (ISO 8601 Format),
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;
-        ///     },
-        ///     evaluationStatus: SubTrainingJobState,
-        ///     estimatedEndDateTime: string (ISO 8601 Format)
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 
@@ -3382,76 +2692,66 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>TrainingJobOptions</c>:
         /// <code>{
-        ///   modelLabel: string (required),
-        ///   trainingConfigVersion: string,
-        ///   trainingMode: &quot;advanced&quot; | &quot;standard&quot; (required),
+        ///   modelLabel: string, # Required. Represents the output model label.
+        ///   trainingConfigVersion: string, # Optional. Represents training config version. By default, &quot;latest&quot; value is used which uses the latest released training config version.
+        ///   trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Required. Represents the mode of the training operation.
         ///   evaluationOptions: {
-        ///     kind: &quot;percentage&quot; | &quot;manual&quot;,
-        ///     trainingSplitPercentage: number,
-        ///     testingSplitPercentage: number
-        ///   }
+        ///     kind: &quot;percentage&quot; | &quot;manual&quot;, # Optional. Represents the evaluation kind. By default, the evaluation kind is set to percentage.
+        ///     trainingSplitPercentage: number, # Optional. Represents the training dataset split percentage. Only needed in case the evaluation kind is percentage.
+        ///     testingSplitPercentage: number, # Optional. Represents the testing dataset split percentage. Only needed in case the evaluation kind is percentage.
+        ///   }, # Optional. Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>TrainingJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ],
+        ///   ], # Optional. The errors encountered while executing the job.
         ///   result: {
-        ///     modelLabel: string,
-        ///     trainingConfigVersion: string,
-        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;,
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
         ///     trainingStatus: {
-        ///       percentComplete: number,
-        ///       startDateTime: string (ISO 8601 Format),
-        ///       endDateTime: string (ISO 8601 Format),
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;
-        ///     },
-        ///     evaluationStatus: SubTrainingJobState,
-        ///     estimatedEndDateTime: string (ISO 8601 Format)
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 
@@ -3483,57 +2783,47 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SwapDeploymentsOptions</c>:
         /// <code>{
-        ///   firstDeploymentName: string (required),
-        ///   secondDeploymentName: string (required)
+        ///   firstDeploymentName: string, # Required. Represents the first deployment name.
+        ///   secondDeploymentName: string, # Required. Represents the second deployment name.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeploymentJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. The errors encountered while executing the job.
         /// }
         /// </code>
         /// 
@@ -3565,57 +2855,47 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SwapDeploymentsOptions</c>:
         /// <code>{
-        ///   firstDeploymentName: string (required),
-        ///   secondDeploymentName: string (required)
+        ///   firstDeploymentName: string, # Required. Represents the first deployment name.
+        ///   secondDeploymentName: string, # Required. Represents the second deployment name.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeploymentJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. The errors encountered while executing the job.
         /// }
         /// </code>
         /// 
@@ -3648,36 +2928,26 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>CreateDeploymentOptions</c>:
         /// <code>{
-        ///   trainedModelLabel: string (required)
+        ///   trainedModelLabel: string, # Required. Represents the trained model label.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ProjectDeployment</c>:
         /// <code>{
-        ///   deploymentName: string,
-        ///   modelId: string,
-        ///   lastTrainedDateTime: string (ISO 8601 Format),
-        ///   lastDeployedDateTime: string (ISO 8601 Format),
-        ///   deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate,
-        ///   modelTrainingConfigVersion: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   deploymentName: string, # Required. Represents deployment name.
+        ///   modelId: string, # Required. Represents deployment modelId.
+        ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
+        ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
+        ///   deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate, # Required. Represents deployment expiration date in the runtime.
+        ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
         /// }
         /// </code>
         /// 
@@ -3711,36 +2981,26 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>CreateDeploymentOptions</c>:
         /// <code>{
-        ///   trainedModelLabel: string (required)
+        ///   trainedModelLabel: string, # Required. Represents the trained model label.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ProjectDeployment</c>:
         /// <code>{
-        ///   deploymentName: string,
-        ///   modelId: string,
-        ///   lastTrainedDateTime: string (ISO 8601 Format),
-        ///   lastDeployedDateTime: string (ISO 8601 Format),
-        ///   deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate,
-        ///   modelTrainingConfigVersion: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   deploymentName: string, # Required. Represents deployment name.
+        ///   modelId: string, # Required. Represents deployment modelId.
+        ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
+        ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
+        ///   deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate, # Required. Represents deployment expiration date in the runtime.
+        ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
         /// }
         /// </code>
         /// 
@@ -3773,51 +3033,38 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeploymentJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. The errors encountered while executing the job.
         /// }
         /// </code>
         /// 
@@ -3849,51 +3096,38 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeploymentJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. The errors encountered while executing the job.
         /// }
         /// </code>
         /// 
@@ -3925,64 +3159,51 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>TrainingJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ],
+        ///   ], # Optional. The errors encountered while executing the job.
         ///   result: {
-        ///     modelLabel: string,
-        ///     trainingConfigVersion: string,
-        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;,
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
         ///     trainingStatus: {
-        ///       percentComplete: number,
-        ///       startDateTime: string (ISO 8601 Format),
-        ///       endDateTime: string (ISO 8601 Format),
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;
-        ///     },
-        ///     evaluationStatus: SubTrainingJobState,
-        ///     estimatedEndDateTime: string (ISO 8601 Format)
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 
@@ -4014,64 +3235,51 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>TrainingJobState</c>:
         /// <code>{
-        ///   jobId: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   jobId: string, # Required. The job ID.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional. The expiration date time of the job.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. The job status.
         ///   warnings: [
         ///     {
-        ///       code: string,
-        ///       message: string
+        ///       code: string, # Required. The warning code.
+        ///       message: string, # Required. The warning message.
         ///     }
-        ///   ],
+        ///   ], # Optional. The warnings that were encountered while executing the job.
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
-        ///   ],
+        ///   ], # Optional. The errors encountered while executing the job.
         ///   result: {
-        ///     modelLabel: string,
-        ///     trainingConfigVersion: string,
-        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;,
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
         ///     trainingStatus: {
-        ///       percentComplete: number,
-        ///       startDateTime: string (ISO 8601 Format),
-        ///       endDateTime: string (ISO 8601 Format),
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;
-        ///     },
-        ///     evaluationStatus: SubTrainingJobState,
-        ///     estimatedEndDateTime: string (ISO 8601 Format)
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 

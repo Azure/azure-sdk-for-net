@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new DiagnosticCategoryData(id, name, type, systemData.Value, kind.Value, description.Value);
+            return new DiagnosticCategoryData(id, name, type, systemData.Value, description.Value, kind.Value);
         }
     }
 }

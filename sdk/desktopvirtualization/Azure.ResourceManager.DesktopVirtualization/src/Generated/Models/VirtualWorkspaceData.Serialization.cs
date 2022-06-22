@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new VirtualWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan, objectId.Value, description.Value, friendlyName.Value, Optional.ToList(applicationGroupReferences), Optional.ToNullable(cloudPcResource));
+            return new VirtualWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, Optional.ToList(applicationGroupReferences), Optional.ToNullable(cloudPcResource), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerInstance
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ContainerInstance.ContainerGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.ContainerGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ContainerGroupData : Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPatch
+    public partial class ContainerGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ContainerGroupData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer> containers, Azure.ResourceManager.ContainerInstance.Models.OperatingSystemTypes osType) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer> Containers { get { throw null; } }
@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.ContainerInstance
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSku? Sku { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSubnetId> SubnetIds { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceVolume> Volumes { get { throw null; } }
+        public System.Collections.Generic.IList<string> Zones { get { throw null; } }
     }
     public partial class ContainerGroupResource : Azure.ResourceManager.ArmResource
     {

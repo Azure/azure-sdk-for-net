@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new RenewCertificateOrderContent(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(keySize), csr.Value, Optional.ToNullable(isPrivateKeyExternal));
+            return new RenewCertificateOrderContent(id, name, type, systemData.Value, Optional.ToNullable(keySize), csr.Value, Optional.ToNullable(isPrivateKeyExternal), kind.Value);
         }
     }
 }
