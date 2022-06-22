@@ -5,6 +5,8 @@ namespace Azure.AI.Language.Conversations
         protected ConversationAnalysisClient() { }
         public ConversationAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public ConversationAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.Conversations.ConversationAnalysisClientOptions options) { }
+        public ConversationAnalysisClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public ConversationAnalysisClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Language.Conversations.ConversationAnalysisClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response AnalyzeConversation(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -26,6 +28,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         protected ConversationAuthoringClient() { }
         public ConversationAuthoringClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public ConversationAuthoringClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.Conversations.ConversationAnalysisClientOptions options) { }
+        public ConversationAuthoringClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public ConversationAuthoringClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Language.Conversations.ConversationAnalysisClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Operation<System.BinaryData> CancelTrainingJob(Azure.WaitUntil waitUntil, string projectName, string jobId, Azure.RequestContext context = null) { throw null; }

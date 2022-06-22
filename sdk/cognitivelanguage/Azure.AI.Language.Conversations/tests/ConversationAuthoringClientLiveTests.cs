@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.Core.TestFramework;
@@ -45,6 +46,19 @@ namespace Azure.AI.Language.Conversations.Tests
         {
             // Make sure pageables still work after removing explicit parameters (Azure/azure-sdk-for-net#29331).
             AsyncPageable<BinaryData> response = Client.GetTrainedModelsAsync(TestEnvironment.ProjectName);
+            Assert.That(await response.ToEnumerableAsync(), Has.Count.AtLeast(1));
+        }
+
+        [RecordedTest]
+        public async Task SupportsAadAuthentication()
+        {
+            ConversationAuthoringClient client = CreateClient<ConversationAuthoringClient>(
+                TestEnvironment.Endpoint,
+                TestEnvironment.Credential,
+                InstrumentClientOptions(
+                    new ConversationAnalysisClientOptions(ServiceVersion)));
+
+            AsyncPageable<BinaryData> response = client.GetProjectsAsync();
             Assert.That(await response.ToEnumerableAsync(), Has.Count.AtLeast(1));
         }
     }

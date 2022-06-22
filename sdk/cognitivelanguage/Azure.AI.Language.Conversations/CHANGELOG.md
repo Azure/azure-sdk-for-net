@@ -5,6 +5,7 @@
 ### Features Added
 
 - Added `ConversationAuthoringClient` to manage authoring projects.
+- Added support for Azure Active Directory (AAD) authentication.
 
 ### Breaking Changes
 

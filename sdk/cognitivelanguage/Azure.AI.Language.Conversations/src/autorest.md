@@ -17,6 +17,9 @@ batch:
 data-plane: true
 model-namespace: false
 
+add-credential: true
+credential-scopes: https://cognitiveservices.azure.com/.default
+
 modelerfour:
   lenient-model-deduplication: true
 ```
