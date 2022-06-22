@@ -2314,18 +2314,16 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.RestorableDroppedDatabaseResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.RestorableDroppedDatabaseResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class RestorableDroppedDatabaseData : Azure.ResourceManager.Models.ResourceData
+    public partial class RestorableDroppedDatabaseData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public RestorableDroppedDatabaseData() { }
+        public RestorableDroppedDatabaseData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Sql.Models.BackupStorageRedundancy? BackupStorageRedundancy { get { throw null; } }
         public System.DateTimeOffset? CreationOn { get { throw null; } }
         public string DatabaseName { get { throw null; } }
         public System.DateTimeOffset? DeletionOn { get { throw null; } }
         public System.DateTimeOffset? EarliestRestoreOn { get { throw null; } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public long? MaxSizeBytes { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class RestorableDroppedDatabaseResource : Azure.ResourceManager.ArmResource
     {
