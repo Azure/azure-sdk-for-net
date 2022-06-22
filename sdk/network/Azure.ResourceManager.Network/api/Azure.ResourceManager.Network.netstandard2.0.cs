@@ -1097,9 +1097,9 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ExpressRoutePortResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRoutePortResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ExpressRoutePortData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ExpressRoutePortData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
-        public ExpressRoutePortData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ExpressRoutePortData() { }
         public string AllocationDate { get { throw null; } }
         public int? BandwidthInGbps { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> Circuits { get { throw null; } }
