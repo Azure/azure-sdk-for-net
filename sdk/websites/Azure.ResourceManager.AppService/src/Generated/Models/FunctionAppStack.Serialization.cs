@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new FunctionAppStack(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), displayText.Value, value.Value, Optional.ToList(majorVersions), Optional.ToNullable(preferredOs));
+            return new FunctionAppStack(id, name, type, systemData.Value, Optional.ToNullable(location), displayText.Value, value.Value, Optional.ToList(majorVersions), Optional.ToNullable(preferredOs), kind.Value);
         }
     }
 }

@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new WorkerPoolResourceData(id, name, type, systemData.Value, kind.Value, sku.Value, Optional.ToNullable(workerSizeId), Optional.ToNullable(computeMode), workerSize.Value, Optional.ToNullable(workerCount), Optional.ToList(instanceNames));
+            return new WorkerPoolResourceData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(workerSizeId), Optional.ToNullable(computeMode), workerSize.Value, Optional.ToNullable(workerCount), Optional.ToList(instanceNames), kind.Value);
         }
     }
 }

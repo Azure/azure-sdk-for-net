@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.MachineLearning
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsDefined(Location))
+            if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location.Value);
+                writer.WritePropertyName("sku");
+                writer.WriteObjectValue(Sku);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -41,11 +41,8 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku");
-                writer.WriteObjectValue(Sku);
-            }
+            writer.WritePropertyName("location");
+            writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
@@ -142,9 +139,9 @@ namespace Azure.ResourceManager.MachineLearning
         internal static MachineLearningWorkspaceData DeserializeMachineLearningWorkspaceData(JsonElement element)
         {
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
             Optional<MachineLearningSku> sku = default;
+            Optional<IDictionary<string, string>> tags = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -186,14 +183,14 @@ namespace Azure.ResourceManager.MachineLearning
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString(), serializeOptions);
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("sku"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    location = new AzureLocation(property.Value.GetString());
+                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -211,14 +208,9 @@ namespace Azure.ResourceManager.MachineLearning
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value);
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -464,7 +456,7 @@ namespace Azure.ResourceManager.MachineLearning
                     continue;
                 }
             }
-            return new MachineLearningWorkspaceData(id, name, type, systemData.Value, identity, Optional.ToNullable(location), Optional.ToDictionary(tags), sku.Value, workspaceId.Value, description.Value, friendlyName.Value, keyVault.Value, applicationInsights.Value, containerRegistry.Value, storageAccount.Value, discoveryUrl.Value, Optional.ToNullable(provisioningState), encryption.Value, Optional.ToNullable(hbiWorkspace), serviceProvisionedResourceGroup.Value, Optional.ToNullable(privateLinkCount), imageBuildCompute.Value, Optional.ToNullable(allowPublicAccessWhenBehindVnet), Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), notebookInfo.Value, serviceManagedResourcesSettings.Value, primaryUserAssignedIdentity.Value, Optional.ToNullable(tenantId), Optional.ToNullable(storageHnsEnabled), mlFlowTrackingUri.Value);
+            return new MachineLearningWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, workspaceId.Value, description.Value, friendlyName.Value, keyVault.Value, applicationInsights.Value, containerRegistry.Value, storageAccount.Value, discoveryUrl.Value, Optional.ToNullable(provisioningState), encryption.Value, Optional.ToNullable(hbiWorkspace), serviceProvisionedResourceGroup.Value, Optional.ToNullable(privateLinkCount), imageBuildCompute.Value, Optional.ToNullable(allowPublicAccessWhenBehindVnet), Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), notebookInfo.Value, serviceManagedResourcesSettings.Value, primaryUserAssignedIdentity.Value, Optional.ToNullable(tenantId), Optional.ToNullable(storageHnsEnabled), mlFlowTrackingUri.Value);
         }
     }
 }

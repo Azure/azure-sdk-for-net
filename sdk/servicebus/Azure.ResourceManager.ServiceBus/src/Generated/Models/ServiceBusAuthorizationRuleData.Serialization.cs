@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ServiceBus
                     continue;
                 }
             }
-            return new ServiceBusAuthorizationRuleData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToList(rights));
+            return new ServiceBusAuthorizationRuleData(id, name, type, systemData.Value, Optional.ToList(rights), Optional.ToNullable(location));
         }
     }
 }

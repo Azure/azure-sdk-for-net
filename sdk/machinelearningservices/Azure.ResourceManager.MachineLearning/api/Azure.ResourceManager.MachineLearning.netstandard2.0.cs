@@ -426,14 +426,12 @@ namespace Azure.ResourceManager.MachineLearning
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearning.MachineLearningComputeResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearning.MachineLearningComputeResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MachineLearningComputeData : Azure.ResourceManager.Models.ResourceData
+    public partial class MachineLearningComputeData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MachineLearningComputeData() { }
+        public MachineLearningComputeData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.Compute Properties { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningSku Sku { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class MachineLearningComputeResource : Azure.ResourceManager.ArmResource
     {
@@ -552,16 +550,14 @@ namespace Azure.ResourceManager.MachineLearning
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearning.MachineLearningPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearning.MachineLearningPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MachineLearningPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
+    public partial class MachineLearningPrivateEndpointConnectionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MachineLearningPrivateEndpointConnectionData() { }
+        public MachineLearningPrivateEndpointConnectionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.PrivateEndpoint PrivateEndpoint { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningSku Sku { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class MachineLearningPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
     {
@@ -598,9 +594,9 @@ namespace Azure.ResourceManager.MachineLearning
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearning.MachineLearningWorkspaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearning.MachineLearningWorkspaceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MachineLearningWorkspaceData : Azure.ResourceManager.Models.ResourceData
+    public partial class MachineLearningWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MachineLearningWorkspaceData() { }
+        public MachineLearningWorkspaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public bool? AllowPublicAccessWhenBehindVnet { get { throw null; } set { } }
         public string ApplicationInsights { get { throw null; } set { } }
         public string ContainerRegistry { get { throw null; } set { } }
@@ -613,7 +609,6 @@ namespace Azure.ResourceManager.MachineLearning
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string ImageBuildCompute { get { throw null; } set { } }
         public string KeyVault { get { throw null; } set { } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public System.Uri MlFlowTrackingUri { get { throw null; } }
         public Azure.ResourceManager.MachineLearning.Models.NotebookResourceInfo NotebookInfo { get { throw null; } }
         public string PrimaryUserAssignedIdentity { get { throw null; } set { } }
@@ -626,7 +621,6 @@ namespace Azure.ResourceManager.MachineLearning
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningSku Sku { get { throw null; } set { } }
         public string StorageAccount { get { throw null; } set { } }
         public bool? StorageHnsEnabled { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
         public string WorkspaceId { get { throw null; } }
     }
@@ -2853,16 +2847,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearning.Models.MachineLearningPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.MachineLearning.Models.MachineLearningPrivateEndpointServiceConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MachineLearningPrivateLinkResource : Azure.ResourceManager.Models.ResourceData
+    public partial class MachineLearningPrivateLinkResource : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MachineLearningPrivateLinkResource() { }
+        public MachineLearningPrivateLinkResource(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string GroupId { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningSku Sku { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class MachineLearningPrivateLinkServiceConnectionState
     {

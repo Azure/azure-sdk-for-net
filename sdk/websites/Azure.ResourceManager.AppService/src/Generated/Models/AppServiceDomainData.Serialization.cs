@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new AppServiceDomainData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind.Value, contactAdmin.Value, contactBilling.Value, contactRegistrant.Value, contactTech.Value, Optional.ToNullable(registrationStatus), Optional.ToNullable(provisioningState), Optional.ToList(nameServers), Optional.ToNullable(privacy), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), Optional.ToNullable(lastRenewedTime), Optional.ToNullable(autoRenew), Optional.ToNullable(readyForDnsRecordManagement), Optional.ToList(managedHostNames), consent.Value, Optional.ToList(domainNotRenewableReasons), Optional.ToNullable(dnsType), dnsZoneId.Value, Optional.ToNullable(targetDnsType), authCode.Value);
+            return new AppServiceDomainData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, contactAdmin.Value, contactBilling.Value, contactRegistrant.Value, contactTech.Value, Optional.ToNullable(registrationStatus), Optional.ToNullable(provisioningState), Optional.ToList(nameServers), Optional.ToNullable(privacy), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), Optional.ToNullable(lastRenewedTime), Optional.ToNullable(autoRenew), Optional.ToNullable(readyForDnsRecordManagement), Optional.ToList(managedHostNames), consent.Value, Optional.ToList(domainNotRenewableReasons), Optional.ToNullable(dnsType), dnsZoneId.Value, Optional.ToNullable(targetDnsType), authCode.Value, kind.Value);
         }
     }
 }

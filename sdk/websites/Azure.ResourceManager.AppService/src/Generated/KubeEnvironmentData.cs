@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the KubeEnvironment data model. </summary>
-    public partial class KubeEnvironmentData : AppServiceResource
+    public partial class KubeEnvironmentData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of KubeEnvironmentData. </summary>
         /// <param name="location"> The location. </param>
@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="extendedLocation"> Extended Location. </param>
         /// <param name="provisioningState"> Provisioning state of the Kubernetes Environment. </param>
         /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
@@ -46,7 +45,8 @@ namespace Azure.ResourceManager.AppService
         /// supported
         /// </param>
         /// <param name="aksResourceId"></param>
-        internal KubeEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ExtendedLocation extendedLocation, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? internalLoadBalancerEnabled, string defaultDomain, string staticIP, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, string aksResourceId) : base(id, name, resourceType, systemData, tags, location, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal KubeEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? internalLoadBalancerEnabled, string defaultDomain, string staticIP, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, string aksResourceId, string kind) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             ProvisioningState = provisioningState;
@@ -57,6 +57,7 @@ namespace Azure.ResourceManager.AppService
             ArcConfiguration = arcConfiguration;
             AppLogsConfiguration = appLogsConfiguration;
             AksResourceId = aksResourceId;
+            Kind = kind;
         }
 
         /// <summary> Extended Location. </summary>
@@ -85,5 +86,7 @@ namespace Azure.ResourceManager.AppService
         public AppLogsConfiguration AppLogsConfiguration { get; set; }
         /// <summary> Gets or sets the aks resource id. </summary>
         public string AksResourceId { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

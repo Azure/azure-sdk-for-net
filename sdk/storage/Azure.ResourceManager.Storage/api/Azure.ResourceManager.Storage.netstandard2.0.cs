@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Storage
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Storage.BlobContainerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.BlobContainerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class BlobContainerData : Azure.ResourceManager.Storage.Models.AzureEntityResource
+    public partial class BlobContainerData : Azure.ResourceManager.Models.ResourceData
     {
         public BlobContainerData() { }
         public string DefaultEncryptionScope { get { throw null; } set { } }
@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Storage
         public bool? DenyEncryptionScopeOverride { get { throw null; } set { } }
         public bool? EnableNfsV3AllSquash { get { throw null; } set { } }
         public bool? EnableNfsV3RootSquash { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public bool? HasImmutabilityPolicy { get { throw null; } }
         public bool? HasLegalHold { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.ImmutabilityPolicyProperties ImmutabilityPolicy { get { throw null; } }
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.Storage
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Storage.FileShareResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.FileShareResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class FileShareData : Azure.ResourceManager.Storage.Models.AzureEntityResource
+    public partial class FileShareData : Azure.ResourceManager.Models.ResourceData
     {
         public FileShareData() { }
         public Azure.ResourceManager.Storage.Models.ShareAccessTier? AccessTier { get { throw null; } set { } }
@@ -236,6 +237,7 @@ namespace Azure.ResourceManager.Storage
         public bool? Deleted { get { throw null; } }
         public System.DateTimeOffset? DeletedOn { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.EnabledProtocols? EnabledProtocols { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.LeaseDuration? LeaseDuration { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.LeaseState? LeaseState { get { throw null; } }
@@ -267,11 +269,12 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Response<Azure.ResourceManager.Storage.FileShareResource> Update(Azure.ResourceManager.Storage.FileShareData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.FileShareResource>> UpdateAsync(Azure.ResourceManager.Storage.FileShareData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ImmutabilityPolicyData : Azure.ResourceManager.Storage.Models.AzureEntityResource
+    public partial class ImmutabilityPolicyData : Azure.ResourceManager.Models.ResourceData
     {
         public ImmutabilityPolicyData() { }
         public bool? AllowProtectedAppendWrites { get { throw null; } set { } }
         public bool? AllowProtectedAppendWritesAll { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public int? ImmutabilityPeriodSinceCreationInDays { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.ImmutabilityPolicyState? State { get { throw null; } }
     }
@@ -804,11 +807,6 @@ namespace Azure.ResourceManager.Storage.Models
         public static implicit operator Azure.ResourceManager.Storage.Models.AllowedCopyScope (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.AllowedCopyScope left, Azure.ResourceManager.Storage.Models.AllowedCopyScope right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class AzureEntityResource : Azure.ResourceManager.Models.ResourceData
-    {
-        public AzureEntityResource() { }
-        public Azure.ETag? Etag { get { throw null; } }
     }
     public partial class AzureFilesIdentityBasedAuthentication
     {

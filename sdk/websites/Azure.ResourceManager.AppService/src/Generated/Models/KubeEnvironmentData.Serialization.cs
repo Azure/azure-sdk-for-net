@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new KubeEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind.Value, extendedLocation.Value, Optional.ToNullable(provisioningState), deploymentErrors.Value, Optional.ToNullable(internalLoadBalancerEnabled), defaultDomain.Value, staticIp.Value, arcConfiguration.Value, appLogsConfiguration.Value, aksResourceID.Value);
+            return new KubeEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, Optional.ToNullable(provisioningState), deploymentErrors.Value, Optional.ToNullable(internalLoadBalancerEnabled), defaultDomain.Value, staticIp.Value, arcConfiguration.Value, appLogsConfiguration.Value, aksResourceID.Value, kind.Value);
         }
     }
 }

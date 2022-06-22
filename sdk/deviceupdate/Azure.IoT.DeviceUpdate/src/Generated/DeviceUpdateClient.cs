@@ -76,54 +76,41 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Update</c>:
         /// <code>{
         ///   updateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
-        ///   },
-        ///   description: string,
-        ///   friendlyName: string,
-        ///   isDeployable: boolean,
-        ///   updateType: string,
-        ///   installedCriteria: string,
-        ///   compatibility: [Dictionary&lt;string, string&gt;],
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
+        ///   description: string, # Optional. Update description specified by creator.
+        ///   friendlyName: string, # Optional. Friendly update name specified by importer.
+        ///   isDeployable: boolean, # Optional. Whether the update can be deployed to a device on its own.
+        ///   updateType: string, # Optional. Update type. Deprecated in latest import manifest schema.
+        ///   installedCriteria: string, # Optional. String interpreted by Device Update client to determine if the update is installed on the device. Deprecated in latest import manifest schema.
+        ///   compatibility: [Dictionary&lt;string, string&gt;], # Required. List of update compatibility information.
         ///   instructions: {
         ///     steps: [
         ///       {
-        ///         type: &quot;Inline&quot; | &quot;Reference&quot;,
-        ///         description: string,
-        ///         handler: string,
-        ///         handlerProperties: AnyObject,
-        ///         files: [string],
-        ///         updateId: UpdateId
+        ///         type: &quot;Inline&quot; | &quot;Reference&quot;, # Optional. Step type.
+        ///         description: string, # Optional. Step description.
+        ///         handler: string, # Optional. Identity of handler that will execute this step. Required if step type is inline.
+        ///         handlerProperties: AnyObject, # Optional. Parameters to be passed to handler during execution.
+        ///         files: [string], # Optional. Collection of file names to be passed to handler during execution. Required if step type is inline.
+        ///         updateId: UpdateId, # Optional. Referenced child update identity.  Required if step type is reference.
         ///       }
-        ///     ]
-        ///   },
-        ///   referencedBy: [UpdateId],
-        ///   scanResult: string,
-        ///   manifestVersion: string,
-        ///   importedDateTime: string (ISO 8601 Format),
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   etag: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///     ], # Required. Collection of installation steps.
+        ///   }, # Optional. Update install instructions.
+        ///   referencedBy: [UpdateId], # Optional. List of update identities that reference this update.
+        ///   scanResult: string, # Optional. Update aggregate scan result (calculated from payload file scan results).
+        ///   manifestVersion: string, # Required. Schema version of manifest used to import the update.
+        ///   importedDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was imported.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was created.
+        ///   etag: string, # Optional. Update ETag.
         /// }
         /// </code>
         /// 
@@ -157,54 +144,41 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Update</c>:
         /// <code>{
         ///   updateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
-        ///   },
-        ///   description: string,
-        ///   friendlyName: string,
-        ///   isDeployable: boolean,
-        ///   updateType: string,
-        ///   installedCriteria: string,
-        ///   compatibility: [Dictionary&lt;string, string&gt;],
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
+        ///   description: string, # Optional. Update description specified by creator.
+        ///   friendlyName: string, # Optional. Friendly update name specified by importer.
+        ///   isDeployable: boolean, # Optional. Whether the update can be deployed to a device on its own.
+        ///   updateType: string, # Optional. Update type. Deprecated in latest import manifest schema.
+        ///   installedCriteria: string, # Optional. String interpreted by Device Update client to determine if the update is installed on the device. Deprecated in latest import manifest schema.
+        ///   compatibility: [Dictionary&lt;string, string&gt;], # Required. List of update compatibility information.
         ///   instructions: {
         ///     steps: [
         ///       {
-        ///         type: &quot;Inline&quot; | &quot;Reference&quot;,
-        ///         description: string,
-        ///         handler: string,
-        ///         handlerProperties: AnyObject,
-        ///         files: [string],
-        ///         updateId: UpdateId
+        ///         type: &quot;Inline&quot; | &quot;Reference&quot;, # Optional. Step type.
+        ///         description: string, # Optional. Step description.
+        ///         handler: string, # Optional. Identity of handler that will execute this step. Required if step type is inline.
+        ///         handlerProperties: AnyObject, # Optional. Parameters to be passed to handler during execution.
+        ///         files: [string], # Optional. Collection of file names to be passed to handler during execution. Required if step type is inline.
+        ///         updateId: UpdateId, # Optional. Referenced child update identity.  Required if step type is reference.
         ///       }
-        ///     ]
-        ///   },
-        ///   referencedBy: [UpdateId],
-        ///   scanResult: string,
-        ///   manifestVersion: string,
-        ///   importedDateTime: string (ISO 8601 Format),
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   etag: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///     ], # Required. Collection of installation steps.
+        ///   }, # Optional. Update install instructions.
+        ///   referencedBy: [UpdateId], # Optional. List of update identities that reference this update.
+        ///   scanResult: string, # Optional. Update aggregate scan result (calculated from payload file scan results).
+        ///   manifestVersion: string, # Required. Schema version of manifest used to import the update.
+        ///   importedDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was imported.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was created.
+        ///   etag: string, # Optional. Update ETag.
         /// }
         /// </code>
         /// 
@@ -239,33 +213,20 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>UpdateFile</c>:
         /// <code>{
-        ///   fileId: string,
-        ///   fileName: string,
-        ///   sizeInBytes: number,
-        ///   hashes: Dictionary&lt;string, string&gt;,
-        ///   mimeType: string,
-        ///   scanResult: string,
-        ///   scanDetails: string,
-        ///   etag: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   fileId: string, # Required. File identity, generated by server at import time.
+        ///   fileName: string, # Required. File name.
+        ///   sizeInBytes: number, # Required. File size in number of bytes.
+        ///   hashes: Dictionary&lt;string, string&gt;, # Required. Mapping of hashing algorithm to base64 encoded hash values.
+        ///   mimeType: string, # Optional. File MIME type.
+        ///   scanResult: string, # Optional. Anti-malware scan result.
+        ///   scanDetails: string, # Optional. Anti-malware scan details.
+        ///   etag: string, # Optional. File ETag.
         /// }
         /// </code>
         /// 
@@ -301,33 +262,20 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>UpdateFile</c>:
         /// <code>{
-        ///   fileId: string,
-        ///   fileName: string,
-        ///   sizeInBytes: number,
-        ///   hashes: Dictionary&lt;string, string&gt;,
-        ///   mimeType: string,
-        ///   scanResult: string,
-        ///   scanDetails: string,
-        ///   etag: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   fileId: string, # Required. File identity, generated by server at import time.
+        ///   fileName: string, # Required. File name.
+        ///   sizeInBytes: number, # Required. File size in number of bytes.
+        ///   hashes: Dictionary&lt;string, string&gt;, # Required. Mapping of hashing algorithm to base64 encoded hash values.
+        ///   mimeType: string, # Optional. File MIME type.
+        ///   scanResult: string, # Optional. Anti-malware scan result.
+        ///   scanDetails: string, # Optional. Anti-malware scan details.
+        ///   etag: string, # Optional. File ETag.
         /// }
         /// </code>
         /// 
@@ -360,50 +308,37 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>UpdateOperation</c>:
         /// <code>{
-        ///   operationId: string,
-        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
+        ///   operationId: string, # Required. Operation Id.
+        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Operation status.
         ///   updateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
-        ///   },
-        ///   resourceLocation: string,
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Optional. The identity of update being imported or deleted. For import, this property will only be populated after import manifest is processed successfully.
+        ///   resourceLocation: string, # Optional. Location of the imported update when operation is successful.
         ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
+        ///     code: string, # Required. Server defined error code.
+        ///     message: string, # Required. A human-readable representation of the error.
+        ///     target: string, # Optional. The target of the error.
+        ///     details: [Error], # Optional. An array of errors that led to the reported error.
         ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   },
-        ///   traceId: string,
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   etag: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///       code: string, # Required. A more specific error code than what was provided by the containing error.
+        ///       message: string, # Optional. A human-readable representation of the error.
+        ///       errorDetail: string, # Optional. The internal error or exception message.
+        ///       innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
+        ///     }, # Optional. An object containing more specific information than the current object about the error.
+        ///     occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
+        ///   }, # Optional. Operation error encountered, if any.
+        ///   traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
+        ///   etag: string, # Optional. Operation ETag.
         /// }
         /// </code>
         /// 
@@ -433,50 +368,37 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>UpdateOperation</c>:
         /// <code>{
-        ///   operationId: string,
-        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
+        ///   operationId: string, # Required. Operation Id.
+        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Operation status.
         ///   updateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
-        ///   },
-        ///   resourceLocation: string,
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Optional. The identity of update being imported or deleted. For import, this property will only be populated after import manifest is processed successfully.
+        ///   resourceLocation: string, # Optional. Location of the imported update when operation is successful.
         ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
+        ///     code: string, # Required. Server defined error code.
+        ///     message: string, # Required. A human-readable representation of the error.
+        ///     target: string, # Optional. The target of the error.
+        ///     details: [Error], # Optional. An array of errors that led to the reported error.
         ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   },
-        ///   traceId: string,
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   etag: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///       code: string, # Required. A more specific error code than what was provided by the containing error.
+        ///       message: string, # Optional. A human-readable representation of the error.
+        ///       errorDetail: string, # Optional. The internal error or exception message.
+        ///       innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
+        ///     }, # Optional. An object containing more specific information than the current object about the error.
+        ///     occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
+        ///   }, # Optional. Operation error encountered, if any.
+        ///   traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
+        ///   etag: string, # Optional. Operation ETag.
         /// }
         /// </code>
         /// 
@@ -504,59 +426,41 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="filter"> Filter updates by its properties. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>UpdateListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       updateId: {
-        ///         provider: string,
-        ///         name: string,
-        ///         version: string
-        ///       },
-        ///       description: string,
-        ///       friendlyName: string,
-        ///       isDeployable: boolean,
-        ///       updateType: string,
-        ///       installedCriteria: string,
-        ///       compatibility: [Dictionary&lt;string, string&gt;],
-        ///       instructions: {
-        ///         steps: [
-        ///           {
-        ///             type: &quot;Inline&quot; | &quot;Reference&quot;,
-        ///             description: string,
-        ///             handler: string,
-        ///             handlerProperties: AnyObject,
-        ///             files: [string],
-        ///             updateId: UpdateId
-        ///           }
-        ///         ]
-        ///       },
-        ///       referencedBy: [UpdateId],
-        ///       scanResult: string,
-        ///       manifestVersion: string,
-        ///       importedDateTime: string (ISO 8601 Format),
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       etag: string
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   updateId: {
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
+        ///   description: string, # Optional. Update description specified by creator.
+        ///   friendlyName: string, # Optional. Friendly update name specified by importer.
+        ///   isDeployable: boolean, # Optional. Whether the update can be deployed to a device on its own.
+        ///   updateType: string, # Optional. Update type. Deprecated in latest import manifest schema.
+        ///   installedCriteria: string, # Optional. String interpreted by Device Update client to determine if the update is installed on the device. Deprecated in latest import manifest schema.
+        ///   compatibility: [Dictionary&lt;string, string&gt;], # Required. List of update compatibility information.
+        ///   instructions: {
+        ///     steps: [
+        ///       {
+        ///         type: &quot;Inline&quot; | &quot;Reference&quot;, # Optional. Step type.
+        ///         description: string, # Optional. Step description.
+        ///         handler: string, # Optional. Identity of handler that will execute this step. Required if step type is inline.
+        ///         handlerProperties: AnyObject, # Optional. Parameters to be passed to handler during execution.
+        ///         files: [string], # Optional. Collection of file names to be passed to handler during execution. Required if step type is inline.
+        ///         updateId: UpdateId, # Optional. Referenced child update identity.  Required if step type is reference.
+        ///       }
+        ///     ], # Required. Collection of installation steps.
+        ///   }, # Optional. Update install instructions.
+        ///   referencedBy: [UpdateId], # Optional. List of update identities that reference this update.
+        ///   scanResult: string, # Optional. Update aggregate scan result (calculated from payload file scan results).
+        ///   manifestVersion: string, # Required. Schema version of manifest used to import the update.
+        ///   importedDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was imported.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was created.
+        ///   etag: string, # Optional. Update ETag.
         /// }
         /// </code>
         /// 
@@ -588,59 +492,41 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="filter"> Filter updates by its properties. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>UpdateListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       updateId: {
-        ///         provider: string,
-        ///         name: string,
-        ///         version: string
-        ///       },
-        ///       description: string,
-        ///       friendlyName: string,
-        ///       isDeployable: boolean,
-        ///       updateType: string,
-        ///       installedCriteria: string,
-        ///       compatibility: [Dictionary&lt;string, string&gt;],
-        ///       instructions: {
-        ///         steps: [
-        ///           {
-        ///             type: &quot;Inline&quot; | &quot;Reference&quot;,
-        ///             description: string,
-        ///             handler: string,
-        ///             handlerProperties: AnyObject,
-        ///             files: [string],
-        ///             updateId: UpdateId
-        ///           }
-        ///         ]
-        ///       },
-        ///       referencedBy: [UpdateId],
-        ///       scanResult: string,
-        ///       manifestVersion: string,
-        ///       importedDateTime: string (ISO 8601 Format),
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       etag: string
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   updateId: {
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
+        ///   description: string, # Optional. Update description specified by creator.
+        ///   friendlyName: string, # Optional. Friendly update name specified by importer.
+        ///   isDeployable: boolean, # Optional. Whether the update can be deployed to a device on its own.
+        ///   updateType: string, # Optional. Update type. Deprecated in latest import manifest schema.
+        ///   installedCriteria: string, # Optional. String interpreted by Device Update client to determine if the update is installed on the device. Deprecated in latest import manifest schema.
+        ///   compatibility: [Dictionary&lt;string, string&gt;], # Required. List of update compatibility information.
+        ///   instructions: {
+        ///     steps: [
+        ///       {
+        ///         type: &quot;Inline&quot; | &quot;Reference&quot;, # Optional. Step type.
+        ///         description: string, # Optional. Step description.
+        ///         handler: string, # Optional. Identity of handler that will execute this step. Required if step type is inline.
+        ///         handlerProperties: AnyObject, # Optional. Parameters to be passed to handler during execution.
+        ///         files: [string], # Optional. Collection of file names to be passed to handler during execution. Required if step type is inline.
+        ///         updateId: UpdateId, # Optional. Referenced child update identity.  Required if step type is reference.
+        ///       }
+        ///     ], # Required. Collection of installation steps.
+        ///   }, # Optional. Update install instructions.
+        ///   referencedBy: [UpdateId], # Optional. List of update identities that reference this update.
+        ///   scanResult: string, # Optional. Update aggregate scan result (calculated from payload file scan results).
+        ///   manifestVersion: string, # Required. Schema version of manifest used to import the update.
+        ///   importedDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was imported.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was created.
+        ///   etag: string, # Optional. Update ETag.
         /// }
         /// </code>
         /// 
@@ -669,32 +555,6 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Get a list of all update providers that have been imported to Device Update for IoT Hub. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [string],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual AsyncPageable<BinaryData> GetProvidersAsync(RequestContext context = null)
         {
             return GetProvidersImplementationAsync("DeviceUpdateClient.GetProviders", context);
@@ -719,32 +579,6 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Get a list of all update providers that have been imported to Device Update for IoT Hub. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [string],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Pageable<BinaryData> GetProviders(RequestContext context = null)
         {
             return GetProvidersImplementation("DeviceUpdateClient.GetProviders", context);
@@ -772,32 +606,6 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [string],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual AsyncPageable<BinaryData> GetNamesAsync(string provider, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
@@ -827,32 +635,6 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [string],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Pageable<BinaryData> GetNames(string provider, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
@@ -884,32 +666,6 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [string],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual AsyncPageable<BinaryData> GetVersionsAsync(string provider, string name, string filter = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
@@ -942,32 +698,6 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [string],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Pageable<BinaryData> GetVersions(string provider, string name, string filter = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
@@ -1000,32 +730,6 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [string],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual AsyncPageable<BinaryData> GetFilesAsync(string provider, string name, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
@@ -1059,32 +763,6 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [string],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Pageable<BinaryData> GetFiles(string provider, string name, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
@@ -1116,55 +794,37 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>UpdateOperationsListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       operationId: string,
-        ///       status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
-        ///       updateId: {
-        ///         provider: string,
-        ///         name: string,
-        ///         version: string
-        ///       },
-        ///       resourceLocation: string,
-        ///       error: {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [Error],
-        ///         innererror: {
-        ///           code: string,
-        ///           message: string,
-        ///           errorDetail: string,
-        ///           innerError: InnerError
-        ///         },
-        ///         occurredDateTime: string (ISO 8601 Format)
-        ///       },
-        ///       traceId: string,
-        ///       lastActionDateTime: string (ISO 8601 Format),
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       etag: string
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
+        ///   operationId: string, # Required. Operation Id.
+        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Operation status.
+        ///   updateId: {
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Optional. The identity of update being imported or deleted. For import, this property will only be populated after import manifest is processed successfully.
+        ///   resourceLocation: string, # Optional. Location of the imported update when operation is successful.
         ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
+        ///     code: string, # Required. Server defined error code.
+        ///     message: string, # Required. A human-readable representation of the error.
+        ///     target: string, # Optional. The target of the error.
+        ///     details: [Error], # Optional. An array of errors that led to the reported error.
         ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///       code: string, # Required. A more specific error code than what was provided by the containing error.
+        ///       message: string, # Optional. A human-readable representation of the error.
+        ///       errorDetail: string, # Optional. The internal error or exception message.
+        ///       innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
+        ///     }, # Optional. An object containing more specific information than the current object about the error.
+        ///     occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
+        ///   }, # Optional. Operation error encountered, if any.
+        ///   traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
+        ///   etag: string, # Optional. Operation ETag.
         /// }
         /// </code>
         /// 
@@ -1196,55 +856,37 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>UpdateOperationsListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       operationId: string,
-        ///       status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
-        ///       updateId: {
-        ///         provider: string,
-        ///         name: string,
-        ///         version: string
-        ///       },
-        ///       resourceLocation: string,
-        ///       error: {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [Error],
-        ///         innererror: {
-        ///           code: string,
-        ///           message: string,
-        ///           errorDetail: string,
-        ///           innerError: InnerError
-        ///         },
-        ///         occurredDateTime: string (ISO 8601 Format)
-        ///       },
-        ///       traceId: string,
-        ///       lastActionDateTime: string (ISO 8601 Format),
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       etag: string
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
+        ///   operationId: string, # Required. Operation Id.
+        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Operation status.
+        ///   updateId: {
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Optional. The identity of update being imported or deleted. For import, this property will only be populated after import manifest is processed successfully.
+        ///   resourceLocation: string, # Optional. Location of the imported update when operation is successful.
         ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
+        ///     code: string, # Required. Server defined error code.
+        ///     message: string, # Required. A human-readable representation of the error.
+        ///     target: string, # Optional. The target of the error.
+        ///     details: [Error], # Optional. An array of errors that led to the reported error.
         ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///       code: string, # Required. A more specific error code than what was provided by the containing error.
+        ///       message: string, # Optional. A human-readable representation of the error.
+        ///       errorDetail: string, # Optional. The internal error or exception message.
+        ///       innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
+        ///     }, # Optional. An object containing more specific information than the current object about the error.
+        ///     occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
+        ///   }, # Optional. Operation error encountered, if any.
+        ///   traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
+        ///   etag: string, # Optional. Operation ETag.
         /// }
         /// </code>
         /// 
@@ -1278,70 +920,60 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ImportUpdateInput</c>:
         /// <code>{
         ///   importManifest: {
-        ///     url: string (required),
-        ///     sizeInBytes: number (required),
-        ///     hashes: Dictionary&lt;string, string&gt; (required)
-        ///   } (required),
-        ///   friendlyName: string,
+        ///     url: string, # Required. Azure Blob location from which the import manifest can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.
+        ///     sizeInBytes: number, # Required. File size in number of bytes.
+        ///     hashes: Dictionary&lt;string, string&gt;, # Required. A JSON object containing the hash(es) of the file. At least SHA256 hash is required. This object can be thought of as a set of key-value pairs where the key is the hash algorithm, and the value is the hash of the file calculated using that algorithm.
+        ///   }, # Required. Import manifest metadata like source URL, file size/hashes, etc.
+        ///   friendlyName: string, # Optional. Friendly update name.
         ///   files: [
         ///     {
-        ///       filename: string (required),
-        ///       url: string (required)
+        ///       filename: string, # Required. Update file name as specified inside import manifest.
+        ///       url: string, # Required. Azure Blob location from which the update file can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.
         ///     }
-        ///   ]
+        ///   ], # Optional. One or more update file properties like filename and source URL.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Update</c>:
         /// <code>{
         ///   updateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
-        ///   },
-        ///   description: string,
-        ///   friendlyName: string,
-        ///   isDeployable: boolean,
-        ///   updateType: string,
-        ///   installedCriteria: string,
-        ///   compatibility: [Dictionary&lt;string, string&gt;],
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
+        ///   description: string, # Optional. Update description specified by creator.
+        ///   friendlyName: string, # Optional. Friendly update name specified by importer.
+        ///   isDeployable: boolean, # Optional. Whether the update can be deployed to a device on its own.
+        ///   updateType: string, # Optional. Update type. Deprecated in latest import manifest schema.
+        ///   installedCriteria: string, # Optional. String interpreted by Device Update client to determine if the update is installed on the device. Deprecated in latest import manifest schema.
+        ///   compatibility: [Dictionary&lt;string, string&gt;], # Required. List of update compatibility information.
         ///   instructions: {
         ///     steps: [
         ///       {
-        ///         type: &quot;Inline&quot; | &quot;Reference&quot;,
-        ///         description: string,
-        ///         handler: string,
-        ///         handlerProperties: AnyObject,
-        ///         files: [string],
-        ///         updateId: UpdateId
+        ///         type: &quot;Inline&quot; | &quot;Reference&quot;, # Optional. Step type.
+        ///         description: string, # Optional. Step description.
+        ///         handler: string, # Optional. Identity of handler that will execute this step. Required if step type is inline.
+        ///         handlerProperties: AnyObject, # Optional. Parameters to be passed to handler during execution.
+        ///         files: [string], # Optional. Collection of file names to be passed to handler during execution. Required if step type is inline.
+        ///         updateId: UpdateId, # Optional. Referenced child update identity.  Required if step type is reference.
         ///       }
-        ///     ]
-        ///   },
-        ///   referencedBy: [UpdateId],
-        ///   scanResult: string,
-        ///   manifestVersion: string,
-        ///   importedDateTime: string (ISO 8601 Format),
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   etag: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///     ], # Required. Collection of installation steps.
+        ///   }, # Optional. Update install instructions.
+        ///   referencedBy: [UpdateId], # Optional. List of update identities that reference this update.
+        ///   scanResult: string, # Optional. Update aggregate scan result (calculated from payload file scan results).
+        ///   manifestVersion: string, # Required. Schema version of manifest used to import the update.
+        ///   importedDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was imported.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was created.
+        ///   etag: string, # Optional. Update ETag.
         /// }
         /// </code>
         /// 
@@ -1372,70 +1004,60 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="content"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ImportUpdateInput</c>:
         /// <code>{
         ///   importManifest: {
-        ///     url: string (required),
-        ///     sizeInBytes: number (required),
-        ///     hashes: Dictionary&lt;string, string&gt; (required)
-        ///   } (required),
-        ///   friendlyName: string,
+        ///     url: string, # Required. Azure Blob location from which the import manifest can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.
+        ///     sizeInBytes: number, # Required. File size in number of bytes.
+        ///     hashes: Dictionary&lt;string, string&gt;, # Required. A JSON object containing the hash(es) of the file. At least SHA256 hash is required. This object can be thought of as a set of key-value pairs where the key is the hash algorithm, and the value is the hash of the file calculated using that algorithm.
+        ///   }, # Required. Import manifest metadata like source URL, file size/hashes, etc.
+        ///   friendlyName: string, # Optional. Friendly update name.
         ///   files: [
         ///     {
-        ///       filename: string (required),
-        ///       url: string (required)
+        ///       filename: string, # Required. Update file name as specified inside import manifest.
+        ///       url: string, # Required. Azure Blob location from which the update file can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.
         ///     }
-        ///   ]
+        ///   ], # Optional. One or more update file properties like filename and source URL.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Update</c>:
         /// <code>{
         ///   updateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
-        ///   },
-        ///   description: string,
-        ///   friendlyName: string,
-        ///   isDeployable: boolean,
-        ///   updateType: string,
-        ///   installedCriteria: string,
-        ///   compatibility: [Dictionary&lt;string, string&gt;],
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
+        ///   description: string, # Optional. Update description specified by creator.
+        ///   friendlyName: string, # Optional. Friendly update name specified by importer.
+        ///   isDeployable: boolean, # Optional. Whether the update can be deployed to a device on its own.
+        ///   updateType: string, # Optional. Update type. Deprecated in latest import manifest schema.
+        ///   installedCriteria: string, # Optional. String interpreted by Device Update client to determine if the update is installed on the device. Deprecated in latest import manifest schema.
+        ///   compatibility: [Dictionary&lt;string, string&gt;], # Required. List of update compatibility information.
         ///   instructions: {
         ///     steps: [
         ///       {
-        ///         type: &quot;Inline&quot; | &quot;Reference&quot;,
-        ///         description: string,
-        ///         handler: string,
-        ///         handlerProperties: AnyObject,
-        ///         files: [string],
-        ///         updateId: UpdateId
+        ///         type: &quot;Inline&quot; | &quot;Reference&quot;, # Optional. Step type.
+        ///         description: string, # Optional. Step description.
+        ///         handler: string, # Optional. Identity of handler that will execute this step. Required if step type is inline.
+        ///         handlerProperties: AnyObject, # Optional. Parameters to be passed to handler during execution.
+        ///         files: [string], # Optional. Collection of file names to be passed to handler during execution. Required if step type is inline.
+        ///         updateId: UpdateId, # Optional. Referenced child update identity.  Required if step type is reference.
         ///       }
-        ///     ]
-        ///   },
-        ///   referencedBy: [UpdateId],
-        ///   scanResult: string,
-        ///   manifestVersion: string,
-        ///   importedDateTime: string (ISO 8601 Format),
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   etag: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///     ], # Required. Collection of installation steps.
+        ///   }, # Optional. Update install instructions.
+        ///   referencedBy: [UpdateId], # Optional. List of update identities that reference this update.
+        ///   scanResult: string, # Optional. Update aggregate scan result (calculated from payload file scan results).
+        ///   manifestVersion: string, # Required. Schema version of manifest used to import the update.
+        ///   importedDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was imported.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was created.
+        ///   etag: string, # Optional. Update ETag.
         /// }
         /// </code>
         /// 
@@ -1467,26 +1089,6 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual async Task<Operation> DeleteUpdateAsync(WaitUntil waitUntil, string provider, string name, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
@@ -1515,26 +1117,6 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Operation DeleteUpdate(WaitUntil waitUntil, string provider, string name, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
