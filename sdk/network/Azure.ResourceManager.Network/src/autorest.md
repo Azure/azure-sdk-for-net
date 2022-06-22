@@ -104,6 +104,7 @@ directive:
       $.SubResource['x-ms-client-name'] = 'NetworkSubResource';
       $.SubResource.properties.id['x-ms-format'] = 'arm-id';
       $.ProvisioningState['x-ms-enum'].name = 'NetworkProvisioningState';
+      $.Access['x-ms-enum'].name = 'NetworkAccess';
   - from: network.json
     where: $.definitions
     transform: >
@@ -229,10 +230,22 @@ directive:
       $.VerificationIPFlowParameters.properties.targetNicResourceId['x-ms-format'] = 'arm-id';
       $.NextHopParameters.properties.targetNicResourceId['x-ms-format'] = 'arm-id';
       $.NextHopResult.properties.routeTableId['x-ms-format'] = 'arm-id';
+      $.Direction['x-ms-enum'].name = 'TrafficDirection';
+      $.ConnectivityIssue.properties.origin['x-ms-enum'].name = 'IssueOrigin';
+      $.ConnectivityIssue.properties.severity['x-ms-enum'].name = 'IssueSeverity';
+      $.ConnectivityParameters.properties.protocol['x-ms-enum'].name = 'NetworkWatcherProtocol';
+      $.PacketCaptureStorageLocation.properties.storageId['x-ms-format'] = 'arm-id';
+      $.TroubleshootingProperties.properties.storageId['x-ms-format'] = 'arm-id';
+      $.FlowLogProperties.properties.storageId['x-ms-format'] = 'arm-id';
+      $.FlowLogPropertiesFormat.properties.storageId['x-ms-format'] = 'arm-id';
   - from: usage.json
     where: $.definitions.Usage.properties.id
     transform: >
       $['x-ms-format'] = 'arm-id';
+  - from: virtualNetwork.json
+    where: $.definitions
+    transform: >
+        $.Delegation['x-ms-client-name'] = 'ServiceDelegation';
   - from: endpointService.json
     where: $.definitions
     transform: >

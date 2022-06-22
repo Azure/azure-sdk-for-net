@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class Delegation : IUtf8JsonSerializable
+    public partial class ServiceDelegation : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static Delegation DeserializeDelegation(JsonElement element)
+        internal static ServiceDelegation DeserializeServiceDelegation(JsonElement element)
         {
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new Delegation(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), serviceName.Value, Optional.ToList(actions), Optional.ToNullable(provisioningState));
+            return new ServiceDelegation(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), serviceName.Value, Optional.ToList(actions), Optional.ToNullable(provisioningState));
         }
     }
 }
