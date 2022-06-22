@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new DomainOwnershipIdentifierData(id, name, type, systemData.Value, kind.Value, ownershipId.Value);
+            return new DomainOwnershipIdentifierData(id, name, type, systemData.Value, ownershipId.Value, kind.Value);
         }
     }
 }

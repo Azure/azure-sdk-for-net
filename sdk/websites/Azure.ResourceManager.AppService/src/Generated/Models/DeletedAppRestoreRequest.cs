@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Details about restoring a deleted app. </summary>
-    public partial class DeletedAppRestoreRequest : ProxyOnlyResource
+    public partial class DeletedAppRestoreRequest : ResourceData
     {
         /// <summary> Initializes a new instance of DeletedAppRestoreRequest. </summary>
         public DeletedAppRestoreRequest()
@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="deletedSiteId">
         /// ARM resource ID of the deleted app. Example:
         /// /subscriptions/{subId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
@@ -34,12 +33,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// If unspecified, default value is the time that the app was deleted.
         /// </param>
         /// <param name="useDRSecondary"> If true, the snapshot is retrieved from DRSecondary endpoint. </param>
-        internal DeletedAppRestoreRequest(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string deletedSiteId, bool? recoverConfiguration, string snapshotTime, bool? useDRSecondary) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal DeletedAppRestoreRequest(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deletedSiteId, bool? recoverConfiguration, string snapshotTime, bool? useDRSecondary, string kind) : base(id, name, resourceType, systemData)
         {
             DeletedSiteId = deletedSiteId;
             RecoverConfiguration = recoverConfiguration;
             SnapshotTime = snapshotTime;
             UseDRSecondary = useDRSecondary;
+            Kind = kind;
         }
 
         /// <summary>
@@ -56,5 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string SnapshotTime { get; set; }
         /// <summary> If true, the snapshot is retrieved from DRSecondary endpoint. </summary>
         public bool? UseDRSecondary { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

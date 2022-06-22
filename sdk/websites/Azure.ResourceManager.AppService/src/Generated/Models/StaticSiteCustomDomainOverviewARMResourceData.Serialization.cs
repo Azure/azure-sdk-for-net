@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new StaticSiteCustomDomainOverviewARMResourceData(id, name, type, systemData.Value, kind.Value, domainName.Value, Optional.ToNullable(createdOn), Optional.ToNullable(status), validationToken.Value, errorMessage.Value);
+            return new StaticSiteCustomDomainOverviewARMResourceData(id, name, type, systemData.Value, domainName.Value, Optional.ToNullable(createdOn), Optional.ToNullable(status), validationToken.Value, errorMessage.Value, kind.Value);
         }
     }
 }

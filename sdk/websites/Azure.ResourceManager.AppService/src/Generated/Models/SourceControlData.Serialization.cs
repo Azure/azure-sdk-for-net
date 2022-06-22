@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new SourceControlData(id, name, type, systemData.Value, kind.Value, token.Value, tokenSecret.Value, refreshToken.Value, Optional.ToNullable(expirationTime));
+            return new SourceControlData(id, name, type, systemData.Value, token.Value, tokenSecret.Value, refreshToken.Value, Optional.ToNullable(expirationTime), kind.Value);
         }
     }
 }

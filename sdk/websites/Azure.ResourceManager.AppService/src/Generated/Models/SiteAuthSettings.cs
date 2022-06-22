@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Configuration settings for the Azure App Service Authentication / Authorization feature. </summary>
-    public partial class SiteAuthSettings : ProxyOnlyResource
+    public partial class SiteAuthSettings : ResourceData
     {
         /// <summary> Initializes a new instance of SiteAuthSettings. </summary>
         public SiteAuthSettings()
@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="enabled"> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="runtimeVersion">
         /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.
@@ -186,7 +185,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// The ConfigVersion of the Authentication / Authorization feature in use for the current app.
         /// The setting in this value can control the behavior of the control plane for Authentication / Authorization.
         /// </param>
-        internal SiteAuthSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, bool? enabled, string runtimeVersion, UnauthenticatedClientAction? unauthenticatedClientAction, bool? tokenStoreEnabled, IList<string> allowedExternalRedirectUrls, BuiltInAuthenticationProvider? defaultProvider, double? tokenRefreshExtensionHours, string clientId, string clientSecret, string clientSecretSettingName, string clientSecretCertificateThumbprint, string issuer, bool? validateIssuer, IList<string> allowedAudiences, IList<string> additionalLoginParams, string aadClaimsAuthorization, string googleClientId, string googleClientSecret, string googleClientSecretSettingName, IList<string> googleOAuthScopes, string facebookAppId, string facebookAppSecret, string facebookAppSecretSettingName, IList<string> facebookOAuthScopes, string gitHubClientId, string gitHubClientSecret, string gitHubClientSecretSettingName, IList<string> gitHubOAuthScopes, string twitterConsumerKey, string twitterConsumerSecret, string twitterConsumerSecretSettingName, string microsoftAccountClientId, string microsoftAccountClientSecret, string microsoftAccountClientSecretSettingName, IList<string> microsoftAccountOAuthScopes, string isAuthFromFile, string authFilePath, string configVersion) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal SiteAuthSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? enabled, string runtimeVersion, UnauthenticatedClientAction? unauthenticatedClientAction, bool? tokenStoreEnabled, IList<string> allowedExternalRedirectUrls, BuiltInAuthenticationProvider? defaultProvider, double? tokenRefreshExtensionHours, string clientId, string clientSecret, string clientSecretSettingName, string clientSecretCertificateThumbprint, string issuer, bool? validateIssuer, IList<string> allowedAudiences, IList<string> additionalLoginParams, string aadClaimsAuthorization, string googleClientId, string googleClientSecret, string googleClientSecretSettingName, IList<string> googleOAuthScopes, string facebookAppId, string facebookAppSecret, string facebookAppSecretSettingName, IList<string> facebookOAuthScopes, string gitHubClientId, string gitHubClientSecret, string gitHubClientSecretSettingName, IList<string> gitHubOAuthScopes, string twitterConsumerKey, string twitterConsumerSecret, string twitterConsumerSecretSettingName, string microsoftAccountClientId, string microsoftAccountClientSecret, string microsoftAccountClientSecretSettingName, IList<string> microsoftAccountOAuthScopes, string isAuthFromFile, string authFilePath, string configVersion, string kind) : base(id, name, resourceType, systemData)
         {
             Enabled = enabled;
             RuntimeVersion = runtimeVersion;
@@ -226,6 +226,7 @@ namespace Azure.ResourceManager.AppService.Models
             IsAuthFromFile = isAuthFromFile;
             AuthFilePath = authFilePath;
             ConfigVersion = configVersion;
+            Kind = kind;
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
@@ -420,5 +421,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// The setting in this value can control the behavior of the control plane for Authentication / Authorization.
         /// </summary>
         public string ConfigVersion { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

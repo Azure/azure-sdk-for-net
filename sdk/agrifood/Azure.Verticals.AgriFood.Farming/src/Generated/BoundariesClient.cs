@@ -68,37 +68,30 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CascadeDeleteJob</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   resourceId: string,
-        ///   resourceType: string,
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Required. Farmer ID.
+        ///   resourceId: string, # Required. The id of the resource.
+        ///   resourceType: string, # Required. The type of the resource.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -127,37 +120,30 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CascadeDeleteJob</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   resourceId: string,
-        ///   resourceType: string,
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Required. Farmer ID.
+        ///   resourceId: string, # Required. The id of the resource.
+        ///   resourceType: string, # Required. The type of the resource.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -187,39 +173,31 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Boundary</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   parentId: string,
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
         ///   geometry: {
-        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
-        ///   },
-        ///   isPrimary: boolean,
-        ///   acreage: number,
-        ///   parentType: string,
-        ///   id: string,
-        ///   eTag: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   acreage: number, # Optional. Boundary area in acres.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -250,39 +228,31 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Boundary</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   parentId: string,
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
         ///   geometry: {
-        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
-        ///   },
-        ///   isPrimary: boolean,
-        ///   acreage: number,
-        ///   parentType: string,
-        ///   id: string,
-        ///   eTag: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   acreage: number, # Optional. Boundary area in acres.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -314,59 +284,57 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>Boundary</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   parentId: string,
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
         ///   geometry: {
-        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot; (required)
-        ///   },
-        ///   isPrimary: boolean,
-        ///   acreage: number,
-        ///   parentType: string,
-        ///   id: string,
-        ///   eTag: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   acreage: number, # Optional. Boundary area in acres.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Boundary</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   parentId: string,
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
         ///   geometry: {
-        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
-        ///   },
-        ///   isPrimary: boolean,
-        ///   acreage: number,
-        ///   parentType: string,
-        ///   id: string,
-        ///   eTag: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   acreage: number, # Optional. Boundary area in acres.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -398,59 +366,57 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>Boundary</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   parentId: string,
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
         ///   geometry: {
-        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot; (required)
-        ///   },
-        ///   isPrimary: boolean,
-        ///   acreage: number,
-        ///   parentType: string,
-        ///   id: string,
-        ///   eTag: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   acreage: number, # Optional. Boundary area in acres.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Boundary</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   parentId: string,
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
         ///   geometry: {
-        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
-        ///   },
-        ///   isPrimary: boolean,
-        ///   acreage: number,
-        ///   parentType: string,
-        ///   id: string,
-        ///   eTag: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   acreage: number, # Optional. Boundary area in acres.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -480,24 +446,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual async Task<Response> DeleteAsync(string farmerId, string boundaryId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -523,24 +471,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Response Delete(string farmerId, string boundaryId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -569,26 +499,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="otherFarmerId"/> or <paramref name="otherBoundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>BoundaryOverlapResponse</c>:
         /// <code>{
-        ///   boundaryAcreage: number,
-        ///   otherBoundaryAcreage: number,
-        ///   intersectingAcreage: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   boundaryAcreage: number, # Optional. Acreage of Main boundary.
+        ///   otherBoundaryAcreage: number, # Optional. Acreage of other boundary.
+        ///   intersectingAcreage: number, # Optional. Acreage of intersecting boundary.
         /// }
         /// </code>
         /// 
@@ -623,26 +542,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="otherFarmerId"/> or <paramref name="otherBoundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="boundaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>BoundaryOverlapResponse</c>:
         /// <code>{
-        ///   boundaryAcreage: number,
-        ///   otherBoundaryAcreage: number,
-        ///   intersectingAcreage: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   boundaryAcreage: number, # Optional. Acreage of Main boundary.
+        ///   otherBoundaryAcreage: number, # Optional. Acreage of other boundary.
+        ///   intersectingAcreage: number, # Optional. Acreage of intersecting boundary.
         /// }
         /// </code>
         /// 
@@ -695,45 +603,31 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>BoundaryListResponseValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       farmerId: string,
-        ///       parentId: string,
-        ///       geometry: {
-        ///         type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
-        ///       },
-        ///       isPrimary: boolean,
-        ///       acreage: number,
-        ///       parentType: string,
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   acreage: number, # Optional. Boundary area in acres.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -789,45 +683,31 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>BoundaryListResponseValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       farmerId: string,
-        ///       parentId: string,
-        ///       geometry: {
-        ///         type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
-        ///       },
-        ///       isPrimary: boolean,
-        ///       acreage: number,
-        ///       parentType: string,
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   acreage: number, # Optional. Boundary area in acres.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -863,67 +743,58 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload and one item in the pageable response.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SearchBoundaryQuery</c>:
         /// <code>{
-        ///   ids: [string],
-        ///   names: [string],
-        ///   propertyFilters: [string],
-        ///   statuses: [string],
-        ///   minCreatedDateTime: string (ISO 8601 Format),
-        ///   maxCreatedDateTime: string (ISO 8601 Format),
-        ///   minLastModifiedDateTime: string (ISO 8601 Format),
-        ///   maxLastModifiedDateTime: string (ISO 8601 Format),
-        ///   $maxPageSize: number,
-        ///   $skipToken: string,
-        ///   isPrimary: boolean,
-        ///   parentType: string,
-        ///   parentIds: [string],
-        ///   minAcreage: number,
-        ///   maxAcreage: number,
+        ///   ids: [string], # Optional. Ids of the resource.
+        ///   names: [string], # Optional. Names of the resource.
+        ///   propertyFilters: [string], # Optional. Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        ///   statuses: [string], # Optional. Statuses of the resource.
+        ///   minCreatedDateTime: string (ISO 8601 Format), # Optional. Minimum creation date of resource (inclusive).
+        ///   maxCreatedDateTime: string (ISO 8601 Format), # Optional. Maximum creation date of resource (inclusive).
+        ///   minLastModifiedDateTime: string (ISO 8601 Format), # Optional. Minimum last modified date of resource (inclusive).
+        ///   maxLastModifiedDateTime: string (ISO 8601 Format), # Optional. Maximum last modified date of resource (inclusive).
+        ///   $maxPageSize: number, # Optional. Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        ///   $skipToken: string, # Optional. Skip token for getting next set of results.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   parentIds: [string], # Optional. Parent Ids of the resource.
+        ///   minAcreage: number, # Optional. Minimum acreage of the boundary (inclusive).
+        ///   maxAcreage: number, # Optional. Maximum acreage of the boundary (inclusive).
         ///   intersectsWithGeometry: {
-        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot; (required)
-        ///   }
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>BoundaryListResponseValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       farmerId: string,
-        ///       parentId: string,
-        ///       geometry: {
-        ///         type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
-        ///       },
-        ///       isPrimary: boolean,
-        ///       acreage: number,
-        ///       parentType: string,
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   acreage: number, # Optional. Boundary area in acres.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -959,67 +830,58 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload and one item in the pageable response.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SearchBoundaryQuery</c>:
         /// <code>{
-        ///   ids: [string],
-        ///   names: [string],
-        ///   propertyFilters: [string],
-        ///   statuses: [string],
-        ///   minCreatedDateTime: string (ISO 8601 Format),
-        ///   maxCreatedDateTime: string (ISO 8601 Format),
-        ///   minLastModifiedDateTime: string (ISO 8601 Format),
-        ///   maxLastModifiedDateTime: string (ISO 8601 Format),
-        ///   $maxPageSize: number,
-        ///   $skipToken: string,
-        ///   isPrimary: boolean,
-        ///   parentType: string,
-        ///   parentIds: [string],
-        ///   minAcreage: number,
-        ///   maxAcreage: number,
+        ///   ids: [string], # Optional. Ids of the resource.
+        ///   names: [string], # Optional. Names of the resource.
+        ///   propertyFilters: [string], # Optional. Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        ///   statuses: [string], # Optional. Statuses of the resource.
+        ///   minCreatedDateTime: string (ISO 8601 Format), # Optional. Minimum creation date of resource (inclusive).
+        ///   maxCreatedDateTime: string (ISO 8601 Format), # Optional. Maximum creation date of resource (inclusive).
+        ///   minLastModifiedDateTime: string (ISO 8601 Format), # Optional. Minimum last modified date of resource (inclusive).
+        ///   maxLastModifiedDateTime: string (ISO 8601 Format), # Optional. Maximum last modified date of resource (inclusive).
+        ///   $maxPageSize: number, # Optional. Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        ///   $skipToken: string, # Optional. Skip token for getting next set of results.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   parentIds: [string], # Optional. Parent Ids of the resource.
+        ///   minAcreage: number, # Optional. Minimum acreage of the boundary (inclusive).
+        ///   maxAcreage: number, # Optional. Maximum acreage of the boundary (inclusive).
         ///   intersectsWithGeometry: {
-        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot; (required)
-        ///   }
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>BoundaryListResponseValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       farmerId: string,
-        ///       parentId: string,
-        ///       geometry: {
-        ///         type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
-        ///       },
-        ///       isPrimary: boolean,
-        ///       acreage: number,
-        ///       parentType: string,
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   acreage: number, # Optional. Boundary area in acres.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -1072,45 +934,31 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>BoundaryListResponseValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       farmerId: string,
-        ///       parentId: string,
-        ///       geometry: {
-        ///         type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
-        ///       },
-        ///       isPrimary: boolean,
-        ///       acreage: number,
-        ///       parentType: string,
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   acreage: number, # Optional. Boundary area in acres.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -1161,45 +1009,31 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>BoundaryListResponseValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       farmerId: string,
-        ///       parentId: string,
-        ///       geometry: {
-        ///         type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
-        ///       },
-        ///       isPrimary: boolean,
-        ///       acreage: number,
-        ///       parentType: string,
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   acreage: number, # Optional. Boundary area in acres.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -1230,67 +1064,58 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload and one item in the pageable response.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SearchBoundaryQuery</c>:
         /// <code>{
-        ///   ids: [string],
-        ///   names: [string],
-        ///   propertyFilters: [string],
-        ///   statuses: [string],
-        ///   minCreatedDateTime: string (ISO 8601 Format),
-        ///   maxCreatedDateTime: string (ISO 8601 Format),
-        ///   minLastModifiedDateTime: string (ISO 8601 Format),
-        ///   maxLastModifiedDateTime: string (ISO 8601 Format),
-        ///   $maxPageSize: number,
-        ///   $skipToken: string,
-        ///   isPrimary: boolean,
-        ///   parentType: string,
-        ///   parentIds: [string],
-        ///   minAcreage: number,
-        ///   maxAcreage: number,
+        ///   ids: [string], # Optional. Ids of the resource.
+        ///   names: [string], # Optional. Names of the resource.
+        ///   propertyFilters: [string], # Optional. Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        ///   statuses: [string], # Optional. Statuses of the resource.
+        ///   minCreatedDateTime: string (ISO 8601 Format), # Optional. Minimum creation date of resource (inclusive).
+        ///   maxCreatedDateTime: string (ISO 8601 Format), # Optional. Maximum creation date of resource (inclusive).
+        ///   minLastModifiedDateTime: string (ISO 8601 Format), # Optional. Minimum last modified date of resource (inclusive).
+        ///   maxLastModifiedDateTime: string (ISO 8601 Format), # Optional. Maximum last modified date of resource (inclusive).
+        ///   $maxPageSize: number, # Optional. Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        ///   $skipToken: string, # Optional. Skip token for getting next set of results.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   parentIds: [string], # Optional. Parent Ids of the resource.
+        ///   minAcreage: number, # Optional. Minimum acreage of the boundary (inclusive).
+        ///   maxAcreage: number, # Optional. Maximum acreage of the boundary (inclusive).
         ///   intersectsWithGeometry: {
-        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot; (required)
-        ///   }
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>BoundaryListResponseValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       farmerId: string,
-        ///       parentId: string,
-        ///       geometry: {
-        ///         type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
-        ///       },
-        ///       isPrimary: boolean,
-        ///       acreage: number,
-        ///       parentType: string,
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   acreage: number, # Optional. Boundary area in acres.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -1321,67 +1146,58 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload and one item in the pageable response.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SearchBoundaryQuery</c>:
         /// <code>{
-        ///   ids: [string],
-        ///   names: [string],
-        ///   propertyFilters: [string],
-        ///   statuses: [string],
-        ///   minCreatedDateTime: string (ISO 8601 Format),
-        ///   maxCreatedDateTime: string (ISO 8601 Format),
-        ///   minLastModifiedDateTime: string (ISO 8601 Format),
-        ///   maxLastModifiedDateTime: string (ISO 8601 Format),
-        ///   $maxPageSize: number,
-        ///   $skipToken: string,
-        ///   isPrimary: boolean,
-        ///   parentType: string,
-        ///   parentIds: [string],
-        ///   minAcreage: number,
-        ///   maxAcreage: number,
+        ///   ids: [string], # Optional. Ids of the resource.
+        ///   names: [string], # Optional. Names of the resource.
+        ///   propertyFilters: [string], # Optional. Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        ///   statuses: [string], # Optional. Statuses of the resource.
+        ///   minCreatedDateTime: string (ISO 8601 Format), # Optional. Minimum creation date of resource (inclusive).
+        ///   maxCreatedDateTime: string (ISO 8601 Format), # Optional. Maximum creation date of resource (inclusive).
+        ///   minLastModifiedDateTime: string (ISO 8601 Format), # Optional. Minimum last modified date of resource (inclusive).
+        ///   maxLastModifiedDateTime: string (ISO 8601 Format), # Optional. Maximum last modified date of resource (inclusive).
+        ///   $maxPageSize: number, # Optional. Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        ///   $skipToken: string, # Optional. Skip token for getting next set of results.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   parentIds: [string], # Optional. Parent Ids of the resource.
+        ///   minAcreage: number, # Optional. Minimum acreage of the boundary (inclusive).
+        ///   maxAcreage: number, # Optional. Maximum acreage of the boundary (inclusive).
         ///   intersectsWithGeometry: {
-        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot; (required)
-        ///   }
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>BoundaryListResponseValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       farmerId: string,
-        ///       parentId: string,
-        ///       geometry: {
-        ///         type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;
-        ///       },
-        ///       isPrimary: boolean,
-        ///       acreage: number,
-        ///       parentType: string,
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Optional. Farmer ID.
+        ///   parentId: string, # Optional. ID of the parent(field or seasonalField) it belongs to.
+        ///   geometry: {
+        ///     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+        ///   }, # Optional. GeoJSON abstract class.
+        ///   isPrimary: boolean, # Optional. Is the boundary primary.
+        ///   acreage: number, # Optional. Boundary area in acres.
+        ///   parentType: string, # Optional. Type of the parent it belongs to.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -1417,37 +1233,30 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CascadeDeleteJob</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   resourceId: string,
-        ///   resourceType: string,
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Required. Farmer ID.
+        ///   resourceId: string, # Required. The id of the resource.
+        ///   resourceType: string, # Required. The type of the resource.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -1481,37 +1290,30 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CascadeDeleteJob</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   resourceId: string,
-        ///   resourceType: string,
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Required. Farmer ID.
+        ///   resourceId: string, # Required. The id of the resource.
+        ///   resourceType: string, # Required. The type of the resource.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 

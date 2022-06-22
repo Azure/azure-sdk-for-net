@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the RemotePrivateEndpointConnectionARMResource data model. </summary>
-    public partial class RemotePrivateEndpointConnectionARMResourceData : ProxyOnlyResource
+    public partial class RemotePrivateEndpointConnectionARMResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionARMResourceData. </summary>
         public RemotePrivateEndpointConnectionARMResourceData()
@@ -27,17 +27,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="provisioningState"></param>
         /// <param name="privateEndpoint"> PrivateEndpoint of a remote private endpoint connection. </param>
         /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
         /// <param name="ipAddresses"> Private IPAddresses mapped to the remote private endpoint. </param>
-        internal RemotePrivateEndpointConnectionARMResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string provisioningState, SubResource privateEndpoint, PrivateLinkConnectionState privateLinkServiceConnectionState, IList<string> ipAddresses) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal RemotePrivateEndpointConnectionARMResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, SubResource privateEndpoint, PrivateLinkConnectionState privateLinkServiceConnectionState, IList<string> ipAddresses, string kind) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             IPAddresses = ipAddresses;
+            Kind = kind;
         }
 
         /// <summary> Gets the provisioning state. </summary>
@@ -54,5 +55,7 @@ namespace Azure.ResourceManager.AppService
         public PrivateLinkConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> Private IPAddresses mapped to the remote private endpoint. </summary>
         public IList<string> IPAddresses { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

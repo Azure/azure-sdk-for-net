@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Geographical region. </summary>
-    public partial class GeoRegion : ProxyOnlyResource
+    public partial class GeoRegion : ResourceData
     {
         /// <summary> Initializes a new instance of GeoRegion. </summary>
         public GeoRegion()
@@ -23,15 +23,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="description"> Region description. </param>
         /// <param name="displayName"> Display name for region. </param>
         /// <param name="orgDomain"> Display name for region. </param>
-        internal GeoRegion(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string description, string displayName, string orgDomain) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal GeoRegion(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string displayName, string orgDomain, string kind) : base(id, name, resourceType, systemData)
         {
             Description = description;
             DisplayName = displayName;
             OrgDomain = orgDomain;
+            Kind = kind;
         }
 
         /// <summary> Region description. </summary>
@@ -40,5 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string DisplayName { get; }
         /// <summary> Display name for region. </summary>
         public string OrgDomain { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

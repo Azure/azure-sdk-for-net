@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StaticSiteUserInvitationRequestResource(id, name, type, systemData.Value, kind.Value, domain.Value, provider.Value, userDetails.Value, roles.Value, Optional.ToNullable(numHoursToExpiration));
+            return new StaticSiteUserInvitationRequestResource(id, name, type, systemData.Value, domain.Value, provider.Value, userDetails.Value, roles.Value, Optional.ToNullable(numHoursToExpiration), kind.Value);
         }
     }
 }

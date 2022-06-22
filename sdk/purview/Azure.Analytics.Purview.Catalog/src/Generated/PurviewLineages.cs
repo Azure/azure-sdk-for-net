@@ -59,37 +59,34 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="direction"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasLineageInfo</c>:
         /// <code>{
-        ///   baseEntityGuid: string,
-        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;,
-        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
-        ///   lineageDepth: number,
-        ///   lineageWidth: number,
-        ///   includeParent: boolean,
-        ///   childrenCount: number,
-        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;,
+        ///   baseEntityGuid: string, # Optional. The GUID of the base entity.
+        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
+        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
+        ///   lineageDepth: number, # Optional. The depth of lineage.
+        ///   lineageWidth: number, # Optional. The width of lineage.
+        ///   includeParent: boolean, # Optional. True to return the parent of the base entity.
+        ///   childrenCount: number, # Optional. The number of children node.
+        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
         ///   parentRelations: [
         ///     {
-        ///       childEntityId: string,
-        ///       relationshipId: string,
-        ///       parentEntityId: string
+        ///       childEntityId: string, # Optional. The GUID of child entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       parentEntityId: string, # Optional. The GUID of parent entity.
         ///     }
-        ///   ],
+        ///   ], # Optional. An array of parentRelations relations.
         ///   relations: [
         ///     {
-        ///       fromEntityId: string,
-        ///       relationshipId: string,
-        ///       toEntityId: string
+        ///       fromEntityId: string, # Optional. The GUID of from-entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       toEntityId: string, # Optional. The GUID of to-entity.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of lineage relations.
         /// }
         /// </code>
         /// 
@@ -124,37 +121,34 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="direction"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasLineageInfo</c>:
         /// <code>{
-        ///   baseEntityGuid: string,
-        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;,
-        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
-        ///   lineageDepth: number,
-        ///   lineageWidth: number,
-        ///   includeParent: boolean,
-        ///   childrenCount: number,
-        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;,
+        ///   baseEntityGuid: string, # Optional. The GUID of the base entity.
+        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
+        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
+        ///   lineageDepth: number, # Optional. The depth of lineage.
+        ///   lineageWidth: number, # Optional. The width of lineage.
+        ///   includeParent: boolean, # Optional. True to return the parent of the base entity.
+        ///   childrenCount: number, # Optional. The number of children node.
+        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
         ///   parentRelations: [
         ///     {
-        ///       childEntityId: string,
-        ///       relationshipId: string,
-        ///       parentEntityId: string
+        ///       childEntityId: string, # Optional. The GUID of child entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       parentEntityId: string, # Optional. The GUID of parent entity.
         ///     }
-        ///   ],
+        ///   ], # Optional. An array of parentRelations relations.
         ///   relations: [
         ///     {
-        ///       fromEntityId: string,
-        ///       relationshipId: string,
-        ///       toEntityId: string
+        ///       fromEntityId: string, # Optional. The GUID of from-entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       toEntityId: string, # Optional. The GUID of to-entity.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of lineage relations.
         /// }
         /// </code>
         /// 
@@ -188,37 +182,34 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="direction"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasLineageInfo</c>:
         /// <code>{
-        ///   baseEntityGuid: string,
-        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;,
-        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
-        ///   lineageDepth: number,
-        ///   lineageWidth: number,
-        ///   includeParent: boolean,
-        ///   childrenCount: number,
-        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;,
+        ///   baseEntityGuid: string, # Optional. The GUID of the base entity.
+        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
+        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
+        ///   lineageDepth: number, # Optional. The depth of lineage.
+        ///   lineageWidth: number, # Optional. The width of lineage.
+        ///   includeParent: boolean, # Optional. True to return the parent of the base entity.
+        ///   childrenCount: number, # Optional. The number of children node.
+        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
         ///   parentRelations: [
         ///     {
-        ///       childEntityId: string,
-        ///       relationshipId: string,
-        ///       parentEntityId: string
+        ///       childEntityId: string, # Optional. The GUID of child entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       parentEntityId: string, # Optional. The GUID of parent entity.
         ///     }
-        ///   ],
+        ///   ], # Optional. An array of parentRelations relations.
         ///   relations: [
         ///     {
-        ///       fromEntityId: string,
-        ///       relationshipId: string,
-        ///       toEntityId: string
+        ///       fromEntityId: string, # Optional. The GUID of from-entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       toEntityId: string, # Optional. The GUID of to-entity.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of lineage relations.
         /// }
         /// </code>
         /// 
@@ -252,37 +243,34 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="direction"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasLineageInfo</c>:
         /// <code>{
-        ///   baseEntityGuid: string,
-        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;,
-        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
-        ///   lineageDepth: number,
-        ///   lineageWidth: number,
-        ///   includeParent: boolean,
-        ///   childrenCount: number,
-        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;,
+        ///   baseEntityGuid: string, # Optional. The GUID of the base entity.
+        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
+        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
+        ///   lineageDepth: number, # Optional. The depth of lineage.
+        ///   lineageWidth: number, # Optional. The width of lineage.
+        ///   includeParent: boolean, # Optional. True to return the parent of the base entity.
+        ///   childrenCount: number, # Optional. The number of children node.
+        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
         ///   parentRelations: [
         ///     {
-        ///       childEntityId: string,
-        ///       relationshipId: string,
-        ///       parentEntityId: string
+        ///       childEntityId: string, # Optional. The GUID of child entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       parentEntityId: string, # Optional. The GUID of parent entity.
         ///     }
-        ///   ],
+        ///   ], # Optional. An array of parentRelations relations.
         ///   relations: [
         ///     {
-        ///       fromEntityId: string,
-        ///       relationshipId: string,
-        ///       toEntityId: string
+        ///       fromEntityId: string, # Optional. The GUID of from-entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       toEntityId: string, # Optional. The GUID of to-entity.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of lineage relations.
         /// }
         /// </code>
         /// 
@@ -325,30 +313,34 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="direction"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasLineageInfo</c>:
         /// <code>{
-        ///   baseEntityGuid: string,
-        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;,
-        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
-        ///   lineageDepth: number,
-        ///   lineageWidth: number,
-        ///   includeParent: boolean,
-        ///   childrenCount: number,
-        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;,
+        ///   baseEntityGuid: string, # Optional. The GUID of the base entity.
+        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
+        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
+        ///   lineageDepth: number, # Optional. The depth of lineage.
+        ///   lineageWidth: number, # Optional. The width of lineage.
+        ///   includeParent: boolean, # Optional. True to return the parent of the base entity.
+        ///   childrenCount: number, # Optional. The number of children node.
+        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
         ///   parentRelations: [
         ///     {
-        ///       childEntityId: string,
-        ///       relationshipId: string,
-        ///       parentEntityId: string
+        ///       childEntityId: string, # Optional. The GUID of child entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       parentEntityId: string, # Optional. The GUID of parent entity.
         ///     }
-        ///   ],
+        ///   ], # Optional. An array of parentRelations relations.
         ///   relations: [
         ///     {
-        ///       fromEntityId: string,
-        ///       relationshipId: string,
-        ///       toEntityId: string
+        ///       fromEntityId: string, # Optional. The GUID of from-entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       toEntityId: string, # Optional. The GUID of to-entity.
         ///     }
-        ///   ]
+        ///   ], # Optional. An array of lineage relations.
         /// }
         /// </code>
         /// 
@@ -391,30 +383,34 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="direction"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasLineageInfo</c>:
         /// <code>{
-        ///   baseEntityGuid: string,
-        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;,
-        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
-        ///   lineageDepth: number,
-        ///   lineageWidth: number,
-        ///   includeParent: boolean,
-        ///   childrenCount: number,
-        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;,
+        ///   baseEntityGuid: string, # Optional. The GUID of the base entity.
+        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
+        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
+        ///   lineageDepth: number, # Optional. The depth of lineage.
+        ///   lineageWidth: number, # Optional. The width of lineage.
+        ///   includeParent: boolean, # Optional. True to return the parent of the base entity.
+        ///   childrenCount: number, # Optional. The number of children node.
+        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
         ///   parentRelations: [
         ///     {
-        ///       childEntityId: string,
-        ///       relationshipId: string,
-        ///       parentEntityId: string
+        ///       childEntityId: string, # Optional. The GUID of child entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       parentEntityId: string, # Optional. The GUID of parent entity.
         ///     }
-        ///   ],
+        ///   ], # Optional. An array of parentRelations relations.
         ///   relations: [
         ///     {
-        ///       fromEntityId: string,
-        ///       relationshipId: string,
-        ///       toEntityId: string
+        ///       fromEntityId: string, # Optional. The GUID of from-entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       toEntityId: string, # Optional. The GUID of to-entity.
         ///     }
-        ///   ]
+        ///   ], # Optional. An array of lineage relations.
         /// }
         /// </code>
         /// 
