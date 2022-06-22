@@ -36,8 +36,6 @@ namespace Azure.ResourceManager.EventHubs
 
         private readonly ClientDiagnostics _eventHubNamespaceNamespacesClientDiagnostics;
         private readonly NamespacesRestOperations _eventHubNamespaceNamespacesRestClient;
-        private readonly ClientDiagnostics _eventHubNamespaceClientDiagnostics;
-        private readonly EventHubNamespacesRestOperations _eventHubNamespaceRestClient;
         private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
         private readonly ClientDiagnostics _disasterRecoveryConfigsClientDiagnostics;
@@ -66,9 +64,6 @@ namespace Azure.ResourceManager.EventHubs
             _eventHubNamespaceNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string eventHubNamespaceNamespacesApiVersion);
             _eventHubNamespaceNamespacesRestClient = new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubNamespaceNamespacesApiVersion);
-            _eventHubNamespaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string eventHubNamespaceApiVersion);
-            _eventHubNamespaceRestClient = new EventHubNamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubNamespaceApiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _disasterRecoveryConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -343,18 +338,18 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary>
         /// Deletes an existing namespace. This operation also removes all associated resources under the namespace.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}
-        /// Operation Id: EventHubNamespaces_Delete
+        /// Operation Id: Namespaces_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _eventHubNamespaceClientDiagnostics.CreateScope("EventHubNamespaceResource.Delete");
+            using var scope = _eventHubNamespaceNamespacesClientDiagnostics.CreateScope("EventHubNamespaceResource.Delete");
             scope.Start();
             try
             {
-                var response = await _eventHubNamespaceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubsArmOperation(_eventHubNamespaceClientDiagnostics, Pipeline, _eventHubNamespaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _eventHubNamespaceNamespacesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new EventHubsArmOperation(_eventHubNamespaceNamespacesClientDiagnostics, Pipeline, _eventHubNamespaceNamespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -369,18 +364,18 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary>
         /// Deletes an existing namespace. This operation also removes all associated resources under the namespace.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}
-        /// Operation Id: EventHubNamespaces_Delete
+        /// Operation Id: Namespaces_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _eventHubNamespaceClientDiagnostics.CreateScope("EventHubNamespaceResource.Delete");
+            using var scope = _eventHubNamespaceNamespacesClientDiagnostics.CreateScope("EventHubNamespaceResource.Delete");
             scope.Start();
             try
             {
-                var response = _eventHubNamespaceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new EventHubsArmOperation(_eventHubNamespaceClientDiagnostics, Pipeline, _eventHubNamespaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _eventHubNamespaceNamespacesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new EventHubsArmOperation(_eventHubNamespaceNamespacesClientDiagnostics, Pipeline, _eventHubNamespaceNamespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -395,7 +390,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary>
         /// Creates or updates a namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}
-        /// Operation Id: EventHubNamespaces_Update
+        /// Operation Id: Namespaces_Update
         /// </summary>
         /// <param name="data"> Parameters for updating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -404,11 +399,11 @@ namespace Azure.ResourceManager.EventHubs
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _eventHubNamespaceClientDiagnostics.CreateScope("EventHubNamespaceResource.Update");
+            using var scope = _eventHubNamespaceNamespacesClientDiagnostics.CreateScope("EventHubNamespaceResource.Update");
             scope.Start();
             try
             {
-                var response = await _eventHubNamespaceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _eventHubNamespaceNamespacesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new EventHubNamespaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -421,7 +416,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary>
         /// Creates or updates a namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}
-        /// Operation Id: EventHubNamespaces_Update
+        /// Operation Id: Namespaces_Update
         /// </summary>
         /// <param name="data"> Parameters for updating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -430,11 +425,11 @@ namespace Azure.ResourceManager.EventHubs
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _eventHubNamespaceClientDiagnostics.CreateScope("EventHubNamespaceResource.Update");
+            using var scope = _eventHubNamespaceNamespacesClientDiagnostics.CreateScope("EventHubNamespaceResource.Update");
             scope.Start();
             try
             {
-                var response = _eventHubNamespaceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var response = _eventHubNamespaceNamespacesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
                 return Response.FromValue(new EventHubNamespaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

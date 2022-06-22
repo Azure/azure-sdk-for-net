@@ -37,8 +37,6 @@ namespace Azure.ResourceManager.EventHubs
 
         private readonly ClientDiagnostics _eventHubClusterClustersClientDiagnostics;
         private readonly ClustersRestOperations _eventHubClusterClustersRestClient;
-        private readonly ClientDiagnostics _eventHubClusterClientDiagnostics;
-        private readonly EventHubClustersRestOperations _eventHubClusterRestClient;
         private readonly ClientDiagnostics _configurationClientDiagnostics;
         private readonly ConfigurationRestOperations _configurationRestClient;
         private readonly EventHubClusterData _data;
@@ -65,9 +63,6 @@ namespace Azure.ResourceManager.EventHubs
             _eventHubClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string eventHubClusterClustersApiVersion);
             _eventHubClusterClustersRestClient = new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubClusterClustersApiVersion);
-            _eventHubClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string eventHubClusterApiVersion);
-            _eventHubClusterRestClient = new EventHubClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubClusterApiVersion);
             _configurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _configurationRestClient = new ConfigurationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
@@ -150,18 +145,18 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary>
         /// Deletes an existing Event Hubs Cluster. This operation is idempotent.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}
-        /// Operation Id: EventHubClusters_Delete
+        /// Operation Id: Clusters_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _eventHubClusterClientDiagnostics.CreateScope("EventHubClusterResource.Delete");
+            using var scope = _eventHubClusterClustersClientDiagnostics.CreateScope("EventHubClusterResource.Delete");
             scope.Start();
             try
             {
-                var response = await _eventHubClusterRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubsArmOperation(_eventHubClusterClientDiagnostics, Pipeline, _eventHubClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _eventHubClusterClustersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new EventHubsArmOperation(_eventHubClusterClustersClientDiagnostics, Pipeline, _eventHubClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -176,18 +171,18 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary>
         /// Deletes an existing Event Hubs Cluster. This operation is idempotent.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}
-        /// Operation Id: EventHubClusters_Delete
+        /// Operation Id: Clusters_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _eventHubClusterClientDiagnostics.CreateScope("EventHubClusterResource.Delete");
+            using var scope = _eventHubClusterClustersClientDiagnostics.CreateScope("EventHubClusterResource.Delete");
             scope.Start();
             try
             {
-                var response = _eventHubClusterRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new EventHubsArmOperation(_eventHubClusterClientDiagnostics, Pipeline, _eventHubClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _eventHubClusterClustersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new EventHubsArmOperation(_eventHubClusterClustersClientDiagnostics, Pipeline, _eventHubClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -202,7 +197,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary>
         /// Modifies mutable properties on the Event Hubs Cluster. This operation is idempotent.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}
-        /// Operation Id: EventHubClusters_Update
+        /// Operation Id: Clusters_Update
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The properties of the Event Hubs Cluster which should be updated. </param>
@@ -212,12 +207,12 @@ namespace Azure.ResourceManager.EventHubs
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _eventHubClusterClientDiagnostics.CreateScope("EventHubClusterResource.Update");
+            using var scope = _eventHubClusterClustersClientDiagnostics.CreateScope("EventHubClusterResource.Update");
             scope.Start();
             try
             {
-                var response = await _eventHubClusterRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubsArmOperation<EventHubClusterResource>(new EventHubClusterOperationSource(Client), _eventHubClusterClientDiagnostics, Pipeline, _eventHubClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _eventHubClusterClustersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new EventHubsArmOperation<EventHubClusterResource>(new EventHubClusterOperationSource(Client), _eventHubClusterClustersClientDiagnostics, Pipeline, _eventHubClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -232,7 +227,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary>
         /// Modifies mutable properties on the Event Hubs Cluster. This operation is idempotent.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}
-        /// Operation Id: EventHubClusters_Update
+        /// Operation Id: Clusters_Update
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The properties of the Event Hubs Cluster which should be updated. </param>
@@ -242,12 +237,12 @@ namespace Azure.ResourceManager.EventHubs
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _eventHubClusterClientDiagnostics.CreateScope("EventHubClusterResource.Update");
+            using var scope = _eventHubClusterClustersClientDiagnostics.CreateScope("EventHubClusterResource.Update");
             scope.Start();
             try
             {
-                var response = _eventHubClusterRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new EventHubsArmOperation<EventHubClusterResource>(new EventHubClusterOperationSource(Client), _eventHubClusterClientDiagnostics, Pipeline, _eventHubClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _eventHubClusterClustersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var operation = new EventHubsArmOperation<EventHubClusterResource>(new EventHubClusterOperationSource(Client), _eventHubClusterClustersClientDiagnostics, Pipeline, _eventHubClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

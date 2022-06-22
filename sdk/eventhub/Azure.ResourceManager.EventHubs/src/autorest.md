@@ -43,37 +43,6 @@ rename-rules:
   URI: Uri
 
 directive:
-    - from: namespaces-preview.json
-      where: $.definitions.Encryption
-      transform: $['x-ms-client-flatten'] = false
-    - from: namespaces-preview.json
-      where: $.definitions.Identity
-      transform: $['x-ms-client-flatten'] = false
-    - from: namespaces-preview.json
-      where: $.definitions.userAssignedIdentityProperties
-      transform: $['x-ms-client-flatten'] = false
-# change the type name of Identity so that it can be replaced by ResourceIdentity
-    - from: swagger-document
-      where: $.definitions.Identity.properties.type["x-ms-enum"]["name"]
-      transform: return "ResourceIdentityType"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}'].put.operationId
-      transform: return "EventHubClusters_CreateOrUpdate"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}'].patch.operationId
-      transform: return "EventHubClusters_Update"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}'].delete.operationId
-      transform: return "EventHubClusters_Delete"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}'].put.operationId
-      transform: return "EventHubNamespaces_CreateOrUpdate"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}'].patch.operationId
-      transform: return "EventHubNamespaces_Update"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}'].delete.operationId
-      transform: return "EventHubNamespaces_Delete"
     - from: AuthorizationRules.json
       where: $.definitions
       transform: >
@@ -120,6 +89,9 @@ directive:
         $.ConnectionState.properties.status['x-ms-enum'].name = 'EventHubPrivateLinkConnectionStatus';
         $.Encryption['x-ms-client-name'] = 'EventHubEncryption';
         $.KeyVaultProperties['x-ms-client-name'] = 'EventHubKeyVaultProperties';
+        $.Encryption['x-ms-client-flatten'] = false;
+        $.Identity['x-ms-client-flatten'] = false;
+        $.userAssignedIdentityProperties['x-ms-client-flatten'] = false;
     - from: CheckNameAvailability.json
       where: $.definitions
       transform: >
