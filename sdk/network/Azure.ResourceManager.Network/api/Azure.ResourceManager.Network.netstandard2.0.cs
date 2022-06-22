@@ -6053,7 +6053,7 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ResourceManager.Network.Models.ConnectivityDestination Destination { get { throw null; } }
         public Azure.ResourceManager.Network.Models.HttpConfiguration HttpProtocolConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPVersion? PreferredIPVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.NetworkProtocol? Protocol { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.NetworkWatcherProtocol? Protocol { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ConnectivitySource Source { get { throw null; } }
     }
     public partial class ConnectivityDestination
@@ -7918,26 +7918,6 @@ namespace Azure.ResourceManager.Network.Models
         public string Status { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NetworkProtocol : System.IEquatable<Azure.ResourceManager.Network.Models.NetworkProtocol>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public NetworkProtocol(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.NetworkProtocol Http { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.NetworkProtocol Https { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.NetworkProtocol Icmp { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.NetworkProtocol Tcp { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Network.Models.NetworkProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkProtocol left, Azure.ResourceManager.Network.Models.NetworkProtocol right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Network.Models.NetworkProtocol (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Network.Models.NetworkProtocol left, Azure.ResourceManager.Network.Models.NetworkProtocol right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetworkProvisioningState : System.IEquatable<Azure.ResourceManager.Network.Models.NetworkProvisioningState>
     {
         private readonly object _dummy;
@@ -8027,6 +8007,26 @@ namespace Azure.ResourceManager.Network.Models
         public NetworkVirtualApplianceSkuInstances() { }
         public int? InstanceCount { get { throw null; } }
         public string ScaleUnit { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetworkWatcherProtocol : System.IEquatable<Azure.ResourceManager.Network.Models.NetworkWatcherProtocol>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetworkWatcherProtocol(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.NetworkWatcherProtocol Http { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.NetworkWatcherProtocol Https { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.NetworkWatcherProtocol Icmp { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.NetworkWatcherProtocol Tcp { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.NetworkWatcherProtocol other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkWatcherProtocol left, Azure.ResourceManager.Network.Models.NetworkWatcherProtocol right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.NetworkWatcherProtocol (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.NetworkWatcherProtocol left, Azure.ResourceManager.Network.Models.NetworkWatcherProtocol right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class NetworkWritableResourceData
     {

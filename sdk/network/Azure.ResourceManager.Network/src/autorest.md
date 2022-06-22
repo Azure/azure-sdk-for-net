@@ -233,7 +233,7 @@ directive:
       $.Direction['x-ms-enum'].name = 'TrafficDirection';
       $.ConnectivityIssue.properties.origin['x-ms-enum'].name = 'IssueOrigin';
       $.ConnectivityIssue.properties.severity['x-ms-enum'].name = 'IssueSeverity';
-      $.ConnectivityParameters.properties.protocol['x-ms-enum'].name = 'NetworkProtocol';
+      $.ConnectivityParameters.properties.protocol['x-ms-enum'].name = 'NetworkWatcherProtocol';
       $.PacketCaptureStorageLocation.properties.storageId['x-ms-format'] = 'arm-id';
       $.TroubleshootingProperties.properties.storageId['x-ms-format'] = 'arm-id';
       $.FlowLogProperties.properties.storageId['x-ms-format'] = 'arm-id';
