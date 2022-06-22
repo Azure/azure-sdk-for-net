@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new MSDeployStatusData(id, name, type, systemData.Value, kind.Value, deployer.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(complete));
+            return new MSDeployStatusData(id, name, type, systemData.Value, deployer.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(complete), kind.Value);
         }
     }
 }

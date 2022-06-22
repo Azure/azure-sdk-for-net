@@ -1,8 +1,9 @@
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class AuthorizationRuleData : Azure.ResourceManager.EventHubs.Models.ProxyResource
+    public partial class AuthorizationRuleData : Azure.ResourceManager.Models.ResourceData
     {
         public AuthorizationRuleData() { }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.AccessRights> Rights { get { throw null; } }
     }
     public partial class ConsumerGroupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventHubs.ConsumerGroupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.ConsumerGroupResource>, System.Collections.IEnumerable
@@ -20,10 +21,11 @@ namespace Azure.ResourceManager.EventHubs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventHubs.ConsumerGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.ConsumerGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ConsumerGroupData : Azure.ResourceManager.EventHubs.Models.ProxyResource
+    public partial class ConsumerGroupData : Azure.ResourceManager.Models.ResourceData
     {
         public ConsumerGroupData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         public string UserMetadata { get { throw null; } set { } }
     }
@@ -81,10 +83,11 @@ namespace Azure.ResourceManager.EventHubs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventHubs.DisasterRecoveryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.DisasterRecoveryResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DisasterRecoveryData : Azure.ResourceManager.EventHubs.Models.ProxyResource
+    public partial class DisasterRecoveryData : Azure.ResourceManager.Models.ResourceData
     {
         public DisasterRecoveryData() { }
         public string AlternateName { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string PartnerNamespace { get { throw null; } set { } }
         public long? PendingReplicationOperationsCount { get { throw null; } }
         public Azure.ResourceManager.EventHubs.Models.DisasterRecoveryProvisioningState? ProvisioningState { get { throw null; } }
@@ -209,11 +212,12 @@ namespace Azure.ResourceManager.EventHubs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventHubs.EventHubResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.EventHubResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventHubData : Azure.ResourceManager.EventHubs.Models.ProxyResource
+    public partial class EventHubData : Azure.ResourceManager.Models.ResourceData
     {
         public EventHubData() { }
         public Azure.ResourceManager.EventHubs.Models.CaptureDescription CaptureDescription { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public long? MessageRetentionInDays { get { throw null; } set { } }
         public long? PartitionCount { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> PartitionIds { get { throw null; } }
@@ -359,10 +363,11 @@ namespace Azure.ResourceManager.EventHubs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventHubs.EventHubsPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.EventHubsPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventHubsPrivateEndpointConnectionData : Azure.ResourceManager.EventHubs.Models.ProxyResource
+    public partial class EventHubsPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public EventHubsPrivateEndpointConnectionData() { }
         public Azure.ResourceManager.EventHubs.Models.ConnectionState ConnectionState { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.EventHubs.Models.EndPointProvisioningState? ProvisioningState { get { throw null; } set { } }
     }
@@ -413,11 +418,12 @@ namespace Azure.ResourceManager.EventHubs
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventHubs.NamespaceAuthorizationRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventHubs.AuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventHubs.NamespaceAuthorizationRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventHubs.AuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class NetworkRuleSetData : Azure.ResourceManager.EventHubs.Models.ProxyResource
+    public partial class NetworkRuleSetData : Azure.ResourceManager.Models.ResourceData
     {
         public NetworkRuleSetData() { }
         public Azure.ResourceManager.EventHubs.Models.DefaultAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.NetworkRuleSetIPRules> IPRules { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.EventHubs.Models.PublicNetworkAccessFlag? PublicNetworkAccess { get { throw null; } set { } }
         public bool? TrustedServiceAccessEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.NetworkRuleSetVirtualNetworkRules> VirtualNetworkRules { get { throw null; } }
@@ -449,12 +455,13 @@ namespace Azure.ResourceManager.EventHubs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventHubs.SchemaGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.SchemaGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SchemaGroupData : Azure.ResourceManager.EventHubs.Models.ProxyResource
+    public partial class SchemaGroupData : Azure.ResourceManager.Models.ResourceData
     {
         public SchemaGroupData() { }
         public System.DateTimeOffset? CreatedAtUtc { get { throw null; } }
         public System.Guid? ETag { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> GroupProperties { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.EventHubs.Models.SchemaCompatibility? SchemaCompatibility { get { throw null; } set { } }
         public Azure.ResourceManager.EventHubs.Models.SchemaType? SchemaType { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedAtUtc { get { throw null; } }
@@ -774,11 +781,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static implicit operator Azure.ResourceManager.EventHubs.Models.PrivateLinkConnectionStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.PrivateLinkConnectionStatus left, Azure.ResourceManager.EventHubs.Models.PrivateLinkConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ProxyResource : Azure.ResourceManager.Models.ResourceData
-    {
-        public ProxyResource() { }
-        public Azure.Core.AzureLocation? Location { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PublicNetworkAccessFlag : System.IEquatable<Azure.ResourceManager.EventHubs.Models.PublicNetworkAccessFlag>

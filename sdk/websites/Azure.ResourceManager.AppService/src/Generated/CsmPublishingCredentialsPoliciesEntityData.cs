@@ -6,13 +6,12 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the CsmPublishingCredentialsPoliciesEntity data model. </summary>
-    public partial class CsmPublishingCredentialsPoliciesEntityData : ProxyOnlyResource
+    public partial class CsmPublishingCredentialsPoliciesEntityData : ResourceData
     {
         /// <summary> Initializes a new instance of CsmPublishingCredentialsPoliciesEntityData. </summary>
         public CsmPublishingCredentialsPoliciesEntityData()
@@ -24,14 +23,17 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="allow"> &lt;code&gt;true&lt;/code&gt; to allow access to a publishing method; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        internal CsmPublishingCredentialsPoliciesEntityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, bool? allow) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal CsmPublishingCredentialsPoliciesEntityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? allow, string kind) : base(id, name, resourceType, systemData)
         {
             Allow = allow;
+            Kind = kind;
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to allow access to a publishing method; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? Allow { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

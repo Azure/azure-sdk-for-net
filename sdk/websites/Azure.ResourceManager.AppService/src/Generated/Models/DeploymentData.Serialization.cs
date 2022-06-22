@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new DeploymentData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(status), message.Value, author.Value, deployer.Value, authorEmail.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(active), details.Value);
+            return new DeploymentData(id, name, type, systemData.Value, Optional.ToNullable(status), message.Value, author.Value, deployer.Value, authorEmail.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(active), details.Value, kind.Value);
         }
     }
 }

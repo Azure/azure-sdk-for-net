@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> App Service billing entity that contains information about meter which the Azure billing system utilizes to charge users for services. </summary>
-    public partial class BillingMeter : ProxyOnlyResource
+    public partial class BillingMeter : ResourceData
     {
         /// <summary> Initializes a new instance of BillingMeter. </summary>
         public BillingMeter()
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="meterId"> Meter GUID onboarded in Commerce. </param>
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
         /// <param name="shortName"> Short Name from App Service Azure pricing Page. </param>
         /// <param name="friendlyName"> Friendly name of the meter. </param>
         /// <param name="osType"> App Service OS type meter used for. </param>
         /// <param name="multiplier"> Meter Multiplier. </param>
-        internal BillingMeter(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string meterId, string billingLocation, string shortName, string friendlyName, string osType, double? multiplier) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal BillingMeter(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string meterId, string billingLocation, string shortName, string friendlyName, string osType, double? multiplier, string kind) : base(id, name, resourceType, systemData)
         {
             MeterId = meterId;
             BillingLocation = billingLocation;
@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
             FriendlyName = friendlyName;
             OSType = osType;
             Multiplier = multiplier;
+            Kind = kind;
         }
 
         /// <summary> Meter GUID onboarded in Commerce. </summary>
@@ -52,5 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string OSType { get; set; }
         /// <summary> Meter Multiplier. </summary>
         public double? Multiplier { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

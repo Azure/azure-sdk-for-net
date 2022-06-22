@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Static sites user roles invitation resource. </summary>
-    public partial class StaticSiteUserInvitationRequestResource : ProxyOnlyResource
+    public partial class StaticSiteUserInvitationRequestResource : ResourceData
     {
         /// <summary> Initializes a new instance of StaticSiteUserInvitationRequestResource. </summary>
         public StaticSiteUserInvitationRequestResource()
@@ -23,19 +23,20 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="domain"> The domain name for the static site custom domain. </param>
         /// <param name="provider"> The identity provider for the static site user. </param>
         /// <param name="userDetails"> The user id for the static site user. </param>
         /// <param name="roles"> The roles for the static site user, in free-form string format. </param>
         /// <param name="numHoursToExpiration"> The number of hours the sas token stays valid. </param>
-        internal StaticSiteUserInvitationRequestResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string domain, string provider, string userDetails, string roles, int? numHoursToExpiration) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal StaticSiteUserInvitationRequestResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string domain, string provider, string userDetails, string roles, int? numHoursToExpiration, string kind) : base(id, name, resourceType, systemData)
         {
             Domain = domain;
             Provider = provider;
             UserDetails = userDetails;
             Roles = roles;
             NumHoursToExpiration = numHoursToExpiration;
+            Kind = kind;
         }
 
         /// <summary> The domain name for the static site custom domain. </summary>
@@ -48,5 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string Roles { get; set; }
         /// <summary> The number of hours the sas token stays valid. </summary>
         public int? NumHoursToExpiration { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

@@ -8,7 +8,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the ArmApplicationDefinition data model. </summary>
+    // the base class here is mandatory for fixing the base class, otherwise the generator will change it
     [CodeGenSuppress("DeploymentMode")]
     public partial class ArmApplicationDefinitionData : ArmApplicationResourceData
     {

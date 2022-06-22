@@ -48,115 +48,102 @@ namespace Azure.Analytics.Purview.Administration
         /// <summary> Get a resource set config service model. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ResourceSetRuleConfig</c>:
         /// <code>{
         ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format),
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///   },
-        ///   name: string,
+        ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///   }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///   name: string, # Optional. The name of the rule
         ///   pathPatternConfig: {
         ///     acceptedPatterns: [
         ///       {
-        ///         createdBy: string,
-        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         path: string
+        ///         createdBy: string, # Optional.
+        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         path: string, # Required.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     complexReplacers: [
         ///       {
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         typeName: string
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Optional.
+        ///         typeName: string, # Optional.
         ///       }
-        ///     ],
-        ///     createdBy: string,
-        ///     enableDefaultPatterns: boolean,
-        ///     lastUpdatedTimestamp: number,
-        ///     modifiedBy: string,
+        ///     ], # Optional.
+        ///     createdBy: string, # Required.
+        ///     enableDefaultPatterns: boolean, # Required.
+        ///     lastUpdatedTimestamp: number, # Optional.
+        ///     modifiedBy: string, # Optional.
         ///     normalizationRules: [
         ///       {
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         dynamicReplacement: boolean,
-        ///         entityTypes: [string],
-        ///         lastUpdatedTimestamp: number,
-        ///         name: string,
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         dynamicReplacement: boolean, # Optional.
+        ///         entityTypes: [string], # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         name: string, # Optional.
         ///         regex: {
-        ///           maxDigits: number,
-        ///           maxLetters: number,
-        ///           minDashes: number,
-        ///           minDigits: number,
-        ///           minDigitsOrLetters: number,
-        ///           minDots: number,
-        ///           minHex: number,
-        ///           minLetters: number,
-        ///           minUnderscores: number,
-        ///           options: number,
-        ///           regexStr: string
-        ///         },
-        ///         replaceWith: string,
-        ///         version: number
+        ///           maxDigits: number, # Optional.
+        ///           maxLetters: number, # Optional.
+        ///           minDashes: number, # Optional.
+        ///           minDigits: number, # Optional.
+        ///           minDigitsOrLetters: number, # Optional.
+        ///           minDots: number, # Optional.
+        ///           minHex: number, # Optional.
+        ///           minLetters: number, # Optional.
+        ///           minUnderscores: number, # Optional.
+        ///           options: number, # Optional.
+        ///           regexStr: string, # Optional.
+        ///         }, # Optional.
+        ///         replaceWith: string, # Optional.
+        ///         version: number, # Optional.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     regexReplacers: [
         ///       {
-        ///         condition: string,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         doNotReplaceRegex: FastRegex,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         regex: FastRegex,
-        ///         replaceWith: string
+        ///         condition: string, # Optional.
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Required.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         doNotReplaceRegex: FastRegex, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         regex: FastRegex, # Optional.
+        ///         replaceWith: string, # Optional.
         ///       }
-        ///     ],
-        ///     rejectedPatterns: [Filter],
+        ///     ], # Optional.
+        ///     rejectedPatterns: [Filter], # Optional.
         ///     scopedRules: [
         ///       {
-        ///         bindingUrl: string,
+        ///         bindingUrl: string, # Required.
         ///         rules: [
         ///           {
-        ///             displayName: string,
-        ///             isResourceSet: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
-        ///             qualifiedName: string
+        ///             displayName: string, # Optional.
+        ///             isResourceSet: boolean, # Optional.
+        ///             lastUpdatedTimestamp: number, # Optional.
+        ///             name: string, # Optional.
+        ///             qualifiedName: string, # Required.
         ///           }
-        ///         ],
-        ///         storeType: string
+        ///         ], # Optional.
+        ///         storeType: string, # Required.
         ///       }
-        ///     ],
-        ///     version: number
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///     ], # Optional.
+        ///     version: number, # Optional.
+        ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
         /// 
@@ -180,115 +167,102 @@ namespace Azure.Analytics.Purview.Administration
         /// <summary> Get a resource set config service model. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ResourceSetRuleConfig</c>:
         /// <code>{
         ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format),
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///   },
-        ///   name: string,
+        ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///   }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///   name: string, # Optional. The name of the rule
         ///   pathPatternConfig: {
         ///     acceptedPatterns: [
         ///       {
-        ///         createdBy: string,
-        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         path: string
+        ///         createdBy: string, # Optional.
+        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         path: string, # Required.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     complexReplacers: [
         ///       {
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         typeName: string
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Optional.
+        ///         typeName: string, # Optional.
         ///       }
-        ///     ],
-        ///     createdBy: string,
-        ///     enableDefaultPatterns: boolean,
-        ///     lastUpdatedTimestamp: number,
-        ///     modifiedBy: string,
+        ///     ], # Optional.
+        ///     createdBy: string, # Required.
+        ///     enableDefaultPatterns: boolean, # Required.
+        ///     lastUpdatedTimestamp: number, # Optional.
+        ///     modifiedBy: string, # Optional.
         ///     normalizationRules: [
         ///       {
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         dynamicReplacement: boolean,
-        ///         entityTypes: [string],
-        ///         lastUpdatedTimestamp: number,
-        ///         name: string,
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         dynamicReplacement: boolean, # Optional.
+        ///         entityTypes: [string], # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         name: string, # Optional.
         ///         regex: {
-        ///           maxDigits: number,
-        ///           maxLetters: number,
-        ///           minDashes: number,
-        ///           minDigits: number,
-        ///           minDigitsOrLetters: number,
-        ///           minDots: number,
-        ///           minHex: number,
-        ///           minLetters: number,
-        ///           minUnderscores: number,
-        ///           options: number,
-        ///           regexStr: string
-        ///         },
-        ///         replaceWith: string,
-        ///         version: number
+        ///           maxDigits: number, # Optional.
+        ///           maxLetters: number, # Optional.
+        ///           minDashes: number, # Optional.
+        ///           minDigits: number, # Optional.
+        ///           minDigitsOrLetters: number, # Optional.
+        ///           minDots: number, # Optional.
+        ///           minHex: number, # Optional.
+        ///           minLetters: number, # Optional.
+        ///           minUnderscores: number, # Optional.
+        ///           options: number, # Optional.
+        ///           regexStr: string, # Optional.
+        ///         }, # Optional.
+        ///         replaceWith: string, # Optional.
+        ///         version: number, # Optional.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     regexReplacers: [
         ///       {
-        ///         condition: string,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         doNotReplaceRegex: FastRegex,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         regex: FastRegex,
-        ///         replaceWith: string
+        ///         condition: string, # Optional.
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Required.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         doNotReplaceRegex: FastRegex, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         regex: FastRegex, # Optional.
+        ///         replaceWith: string, # Optional.
         ///       }
-        ///     ],
-        ///     rejectedPatterns: [Filter],
+        ///     ], # Optional.
+        ///     rejectedPatterns: [Filter], # Optional.
         ///     scopedRules: [
         ///       {
-        ///         bindingUrl: string,
+        ///         bindingUrl: string, # Required.
         ///         rules: [
         ///           {
-        ///             displayName: string,
-        ///             isResourceSet: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
-        ///             qualifiedName: string
+        ///             displayName: string, # Optional.
+        ///             isResourceSet: boolean, # Optional.
+        ///             lastUpdatedTimestamp: number, # Optional.
+        ///             name: string, # Optional.
+        ///             qualifiedName: string, # Required.
         ///           }
-        ///         ],
-        ///         storeType: string
+        ///         ], # Optional.
+        ///         storeType: string, # Required.
         ///       }
-        ///     ],
-        ///     version: number
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///     ], # Optional.
+        ///     version: number, # Optional.
+        ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
         /// 
@@ -314,209 +288,199 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ResourceSetRuleConfig</c>:
         /// <code>{
         ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format),
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///   },
-        ///   name: string,
+        ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///   }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///   name: string, # Optional. The name of the rule
         ///   pathPatternConfig: {
         ///     acceptedPatterns: [
         ///       {
-        ///         createdBy: string,
-        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string (required),
-        ///         path: string (required)
+        ///         createdBy: string, # Optional.
+        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         path: string, # Required.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     complexReplacers: [
         ///       {
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         typeName: string
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Optional.
+        ///         typeName: string, # Optional.
         ///       }
-        ///     ],
-        ///     createdBy: string (required),
-        ///     enableDefaultPatterns: boolean (required),
-        ///     lastUpdatedTimestamp: number,
-        ///     modifiedBy: string,
+        ///     ], # Optional.
+        ///     createdBy: string, # Required.
+        ///     enableDefaultPatterns: boolean, # Required.
+        ///     lastUpdatedTimestamp: number, # Optional.
+        ///     modifiedBy: string, # Optional.
         ///     normalizationRules: [
         ///       {
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         dynamicReplacement: boolean,
-        ///         entityTypes: [string],
-        ///         lastUpdatedTimestamp: number,
-        ///         name: string,
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         dynamicReplacement: boolean, # Optional.
+        ///         entityTypes: [string], # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         name: string, # Optional.
         ///         regex: {
-        ///           maxDigits: number,
-        ///           maxLetters: number,
-        ///           minDashes: number,
-        ///           minDigits: number,
-        ///           minDigitsOrLetters: number,
-        ///           minDots: number,
-        ///           minHex: number,
-        ///           minLetters: number,
-        ///           minUnderscores: number,
-        ///           options: number,
-        ///           regexStr: string
-        ///         },
-        ///         replaceWith: string,
-        ///         version: number
+        ///           maxDigits: number, # Optional.
+        ///           maxLetters: number, # Optional.
+        ///           minDashes: number, # Optional.
+        ///           minDigits: number, # Optional.
+        ///           minDigitsOrLetters: number, # Optional.
+        ///           minDots: number, # Optional.
+        ///           minHex: number, # Optional.
+        ///           minLetters: number, # Optional.
+        ///           minUnderscores: number, # Optional.
+        ///           options: number, # Optional.
+        ///           regexStr: string, # Optional.
+        ///         }, # Optional.
+        ///         replaceWith: string, # Optional.
+        ///         version: number, # Optional.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     regexReplacers: [
         ///       {
-        ///         condition: string,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean (required),
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         doNotReplaceRegex: FastRegex,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string (required),
-        ///         regex: FastRegex,
-        ///         replaceWith: string
+        ///         condition: string, # Optional.
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Required.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         doNotReplaceRegex: FastRegex, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         regex: FastRegex, # Optional.
+        ///         replaceWith: string, # Optional.
         ///       }
-        ///     ],
-        ///     rejectedPatterns: [Filter],
+        ///     ], # Optional.
+        ///     rejectedPatterns: [Filter], # Optional.
         ///     scopedRules: [
         ///       {
-        ///         bindingUrl: string (required),
+        ///         bindingUrl: string, # Required.
         ///         rules: [
         ///           {
-        ///             displayName: string,
-        ///             isResourceSet: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
-        ///             qualifiedName: string (required)
+        ///             displayName: string, # Optional.
+        ///             isResourceSet: boolean, # Optional.
+        ///             lastUpdatedTimestamp: number, # Optional.
+        ///             name: string, # Optional.
+        ///             qualifiedName: string, # Required.
         ///           }
-        ///         ],
-        ///         storeType: string (required)
+        ///         ], # Optional.
+        ///         storeType: string, # Required.
         ///       }
-        ///     ],
-        ///     version: number
-        ///   }
+        ///     ], # Optional.
+        ///     version: number, # Optional.
+        ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ResourceSetRuleConfig</c>:
         /// <code>{
         ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format),
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///   },
-        ///   name: string,
+        ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///   }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///   name: string, # Optional. The name of the rule
         ///   pathPatternConfig: {
         ///     acceptedPatterns: [
         ///       {
-        ///         createdBy: string,
-        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         path: string
+        ///         createdBy: string, # Optional.
+        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         path: string, # Required.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     complexReplacers: [
         ///       {
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         typeName: string
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Optional.
+        ///         typeName: string, # Optional.
         ///       }
-        ///     ],
-        ///     createdBy: string,
-        ///     enableDefaultPatterns: boolean,
-        ///     lastUpdatedTimestamp: number,
-        ///     modifiedBy: string,
+        ///     ], # Optional.
+        ///     createdBy: string, # Required.
+        ///     enableDefaultPatterns: boolean, # Required.
+        ///     lastUpdatedTimestamp: number, # Optional.
+        ///     modifiedBy: string, # Optional.
         ///     normalizationRules: [
         ///       {
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         dynamicReplacement: boolean,
-        ///         entityTypes: [string],
-        ///         lastUpdatedTimestamp: number,
-        ///         name: string,
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         dynamicReplacement: boolean, # Optional.
+        ///         entityTypes: [string], # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         name: string, # Optional.
         ///         regex: {
-        ///           maxDigits: number,
-        ///           maxLetters: number,
-        ///           minDashes: number,
-        ///           minDigits: number,
-        ///           minDigitsOrLetters: number,
-        ///           minDots: number,
-        ///           minHex: number,
-        ///           minLetters: number,
-        ///           minUnderscores: number,
-        ///           options: number,
-        ///           regexStr: string
-        ///         },
-        ///         replaceWith: string,
-        ///         version: number
+        ///           maxDigits: number, # Optional.
+        ///           maxLetters: number, # Optional.
+        ///           minDashes: number, # Optional.
+        ///           minDigits: number, # Optional.
+        ///           minDigitsOrLetters: number, # Optional.
+        ///           minDots: number, # Optional.
+        ///           minHex: number, # Optional.
+        ///           minLetters: number, # Optional.
+        ///           minUnderscores: number, # Optional.
+        ///           options: number, # Optional.
+        ///           regexStr: string, # Optional.
+        ///         }, # Optional.
+        ///         replaceWith: string, # Optional.
+        ///         version: number, # Optional.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     regexReplacers: [
         ///       {
-        ///         condition: string,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         doNotReplaceRegex: FastRegex,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         regex: FastRegex,
-        ///         replaceWith: string
+        ///         condition: string, # Optional.
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Required.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         doNotReplaceRegex: FastRegex, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         regex: FastRegex, # Optional.
+        ///         replaceWith: string, # Optional.
         ///       }
-        ///     ],
-        ///     rejectedPatterns: [Filter],
+        ///     ], # Optional.
+        ///     rejectedPatterns: [Filter], # Optional.
         ///     scopedRules: [
         ///       {
-        ///         bindingUrl: string,
+        ///         bindingUrl: string, # Required.
         ///         rules: [
         ///           {
-        ///             displayName: string,
-        ///             isResourceSet: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
-        ///             qualifiedName: string
+        ///             displayName: string, # Optional.
+        ///             isResourceSet: boolean, # Optional.
+        ///             lastUpdatedTimestamp: number, # Optional.
+        ///             name: string, # Optional.
+        ///             qualifiedName: string, # Required.
         ///           }
-        ///         ],
-        ///         storeType: string
+        ///         ], # Optional.
+        ///         storeType: string, # Required.
         ///       }
-        ///     ],
-        ///     version: number
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///     ], # Optional.
+        ///     version: number, # Optional.
+        ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
         /// 
@@ -544,209 +508,199 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ResourceSetRuleConfig</c>:
         /// <code>{
         ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format),
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///   },
-        ///   name: string,
+        ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///   }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///   name: string, # Optional. The name of the rule
         ///   pathPatternConfig: {
         ///     acceptedPatterns: [
         ///       {
-        ///         createdBy: string,
-        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string (required),
-        ///         path: string (required)
+        ///         createdBy: string, # Optional.
+        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         path: string, # Required.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     complexReplacers: [
         ///       {
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         typeName: string
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Optional.
+        ///         typeName: string, # Optional.
         ///       }
-        ///     ],
-        ///     createdBy: string (required),
-        ///     enableDefaultPatterns: boolean (required),
-        ///     lastUpdatedTimestamp: number,
-        ///     modifiedBy: string,
+        ///     ], # Optional.
+        ///     createdBy: string, # Required.
+        ///     enableDefaultPatterns: boolean, # Required.
+        ///     lastUpdatedTimestamp: number, # Optional.
+        ///     modifiedBy: string, # Optional.
         ///     normalizationRules: [
         ///       {
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         dynamicReplacement: boolean,
-        ///         entityTypes: [string],
-        ///         lastUpdatedTimestamp: number,
-        ///         name: string,
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         dynamicReplacement: boolean, # Optional.
+        ///         entityTypes: [string], # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         name: string, # Optional.
         ///         regex: {
-        ///           maxDigits: number,
-        ///           maxLetters: number,
-        ///           minDashes: number,
-        ///           minDigits: number,
-        ///           minDigitsOrLetters: number,
-        ///           minDots: number,
-        ///           minHex: number,
-        ///           minLetters: number,
-        ///           minUnderscores: number,
-        ///           options: number,
-        ///           regexStr: string
-        ///         },
-        ///         replaceWith: string,
-        ///         version: number
+        ///           maxDigits: number, # Optional.
+        ///           maxLetters: number, # Optional.
+        ///           minDashes: number, # Optional.
+        ///           minDigits: number, # Optional.
+        ///           minDigitsOrLetters: number, # Optional.
+        ///           minDots: number, # Optional.
+        ///           minHex: number, # Optional.
+        ///           minLetters: number, # Optional.
+        ///           minUnderscores: number, # Optional.
+        ///           options: number, # Optional.
+        ///           regexStr: string, # Optional.
+        ///         }, # Optional.
+        ///         replaceWith: string, # Optional.
+        ///         version: number, # Optional.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     regexReplacers: [
         ///       {
-        ///         condition: string,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean (required),
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         doNotReplaceRegex: FastRegex,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string (required),
-        ///         regex: FastRegex,
-        ///         replaceWith: string
+        ///         condition: string, # Optional.
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Required.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         doNotReplaceRegex: FastRegex, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         regex: FastRegex, # Optional.
+        ///         replaceWith: string, # Optional.
         ///       }
-        ///     ],
-        ///     rejectedPatterns: [Filter],
+        ///     ], # Optional.
+        ///     rejectedPatterns: [Filter], # Optional.
         ///     scopedRules: [
         ///       {
-        ///         bindingUrl: string (required),
+        ///         bindingUrl: string, # Required.
         ///         rules: [
         ///           {
-        ///             displayName: string,
-        ///             isResourceSet: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
-        ///             qualifiedName: string (required)
+        ///             displayName: string, # Optional.
+        ///             isResourceSet: boolean, # Optional.
+        ///             lastUpdatedTimestamp: number, # Optional.
+        ///             name: string, # Optional.
+        ///             qualifiedName: string, # Required.
         ///           }
-        ///         ],
-        ///         storeType: string (required)
+        ///         ], # Optional.
+        ///         storeType: string, # Required.
         ///       }
-        ///     ],
-        ///     version: number
-        ///   }
+        ///     ], # Optional.
+        ///     version: number, # Optional.
+        ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ResourceSetRuleConfig</c>:
         /// <code>{
         ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format),
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///   },
-        ///   name: string,
+        ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///   }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///   name: string, # Optional. The name of the rule
         ///   pathPatternConfig: {
         ///     acceptedPatterns: [
         ///       {
-        ///         createdBy: string,
-        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         path: string
+        ///         createdBy: string, # Optional.
+        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         path: string, # Required.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     complexReplacers: [
         ///       {
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         typeName: string
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Optional.
+        ///         typeName: string, # Optional.
         ///       }
-        ///     ],
-        ///     createdBy: string,
-        ///     enableDefaultPatterns: boolean,
-        ///     lastUpdatedTimestamp: number,
-        ///     modifiedBy: string,
+        ///     ], # Optional.
+        ///     createdBy: string, # Required.
+        ///     enableDefaultPatterns: boolean, # Required.
+        ///     lastUpdatedTimestamp: number, # Optional.
+        ///     modifiedBy: string, # Optional.
         ///     normalizationRules: [
         ///       {
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         dynamicReplacement: boolean,
-        ///         entityTypes: [string],
-        ///         lastUpdatedTimestamp: number,
-        ///         name: string,
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         dynamicReplacement: boolean, # Optional.
+        ///         entityTypes: [string], # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         name: string, # Optional.
         ///         regex: {
-        ///           maxDigits: number,
-        ///           maxLetters: number,
-        ///           minDashes: number,
-        ///           minDigits: number,
-        ///           minDigitsOrLetters: number,
-        ///           minDots: number,
-        ///           minHex: number,
-        ///           minLetters: number,
-        ///           minUnderscores: number,
-        ///           options: number,
-        ///           regexStr: string
-        ///         },
-        ///         replaceWith: string,
-        ///         version: number
+        ///           maxDigits: number, # Optional.
+        ///           maxLetters: number, # Optional.
+        ///           minDashes: number, # Optional.
+        ///           minDigits: number, # Optional.
+        ///           minDigitsOrLetters: number, # Optional.
+        ///           minDots: number, # Optional.
+        ///           minHex: number, # Optional.
+        ///           minLetters: number, # Optional.
+        ///           minUnderscores: number, # Optional.
+        ///           options: number, # Optional.
+        ///           regexStr: string, # Optional.
+        ///         }, # Optional.
+        ///         replaceWith: string, # Optional.
+        ///         version: number, # Optional.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     regexReplacers: [
         ///       {
-        ///         condition: string,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         doNotReplaceRegex: FastRegex,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         regex: FastRegex,
-        ///         replaceWith: string
+        ///         condition: string, # Optional.
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Required.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         doNotReplaceRegex: FastRegex, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         regex: FastRegex, # Optional.
+        ///         replaceWith: string, # Optional.
         ///       }
-        ///     ],
-        ///     rejectedPatterns: [Filter],
+        ///     ], # Optional.
+        ///     rejectedPatterns: [Filter], # Optional.
         ///     scopedRules: [
         ///       {
-        ///         bindingUrl: string,
+        ///         bindingUrl: string, # Required.
         ///         rules: [
         ///           {
-        ///             displayName: string,
-        ///             isResourceSet: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
-        ///             qualifiedName: string
+        ///             displayName: string, # Optional.
+        ///             isResourceSet: boolean, # Optional.
+        ///             lastUpdatedTimestamp: number, # Optional.
+        ///             name: string, # Optional.
+        ///             qualifiedName: string, # Required.
         ///           }
-        ///         ],
-        ///         storeType: string
+        ///         ], # Optional.
+        ///         storeType: string, # Required.
         ///       }
-        ///     ],
-        ///     version: number
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///     ], # Optional.
+        ///     version: number, # Optional.
+        ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
         /// 
@@ -771,26 +725,6 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Deletes a ResourceSetRuleConfig resource. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual async Task<Response> DeleteResourceSetRuleAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.DeleteResourceSetRule");
@@ -809,26 +743,6 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Deletes a ResourceSetRuleConfig resource. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Response DeleteResourceSetRule(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.DeleteResourceSetRule");

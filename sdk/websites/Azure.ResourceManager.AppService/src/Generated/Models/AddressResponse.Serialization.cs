@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AddressResponse(id, name, type, systemData.Value, kind.Value, serviceIpAddress.Value, internalIpAddress.Value, Optional.ToList(outboundIpAddresses), Optional.ToList(vipMappings));
+            return new AddressResponse(id, name, type, systemData.Value, serviceIpAddress.Value, internalIpAddress.Value, Optional.ToList(outboundIpAddresses), Optional.ToList(vipMappings), kind.Value);
         }
     }
 }
