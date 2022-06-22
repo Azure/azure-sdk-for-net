@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.ConstrainedExecution;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -1065,6 +1066,45 @@ namespace Azure.Core.Tests
                             });
                     }
                 }
+            }
+        }
+
+        [Test]
+        public async Task ClientCertificateIsHonored([Values(true, false)] bool setClientCertificate)
+        {
+            // This test assumes ServicePointManager.ServerCertificateValidationCallback will be unset.
+            ServicePointManager.ServerCertificateValidationCallback = null;
+            var clientCert = new X509Certificate2(Convert.FromBase64String(Pfx));
+
+            using (TestServer testServer = new TestServer(
+                async context =>
+                {
+                    var cert = context.Connection.ClientCertificate;
+                    if (setClientCertificate)
+                    {
+                        Assert.NotNull(cert);
+                    }
+                    else
+                    {
+                        Assert.Null(cert);
+                    }
+                    byte[] buffer = Encoding.UTF8.GetBytes("Hello");
+                    await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+                },
+                true))
+            {
+                var options = new HttpPipelineTransportOptions();
+
+                options.ServerCertificateCustomValidationCallback = args => true;
+                if (setClientCertificate)
+                {
+                    options.ClientCertificates.Add(clientCert);
+                }
+                var transport = GetTransport(true, options);
+                Request request = transport.CreateRequest();
+                request.Uri.Reset(testServer.Address);
+
+                await ExecuteRequest(request, transport);
             }
         }
 

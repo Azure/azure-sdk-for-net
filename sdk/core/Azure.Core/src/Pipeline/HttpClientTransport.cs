@@ -558,18 +558,25 @@ namespace Azure.Core.Pipeline
                 return httpHandler;
             }
 
+#pragma warning disable CA1416 // 'X509Certificate2' is unsupported on 'browser'
             // ServerCertificateCustomValidationCallback
             if (options.ServerCertificateCustomValidationCallback != null)
             {
                 httpHandler.SslOptions.RemoteCertificateValidationCallback = (_, certificate, x509Chain, sslPolicyErrors) =>
-#pragma warning disable CA1416 // 'X509Certificate2' is unsupported on 'browser'
                     options.ServerCertificateCustomValidationCallback(
                         new ServerCertificateCustomValidationArgs(
                             certificate is { } ? new X509Certificate2(certificate) : null,
                             x509Chain,
                             sslPolicyErrors));
-#pragma warning restore CA1416 // 'X509Certificate2' is unsupported on 'browser'
             }
+            // Set ClientCertificates
+             foreach (var cert in options.ClientCertificates)
+            {
+               httpHandler.SslOptions ??= new System.Net.Security.SslClientAuthenticationOptions();
+               httpHandler.SslOptions.ClientCertificates ??= new X509CertificateCollection();
+               httpHandler.SslOptions.ClientCertificates!.Add(cert);
+            }
+#pragma warning restore CA1416 // 'X509Certificate2' is unsupported on 'browser'
             return httpHandler;
         }
 #endif
@@ -584,12 +591,16 @@ namespace Azure.Core.Pipeline
             // ServerCertificateCustomValidationCallback
             if (options.ServerCertificateCustomValidationCallback != null)
             {
-                httpHandler.ServerCertificateCustomValidationCallback =
-                    (_, certificate2, x509Chain, sslPolicyErrors) =>
-                    {
-                        return options.ServerCertificateCustomValidationCallback(
-                            new ServerCertificateCustomValidationArgs(certificate2, x509Chain, sslPolicyErrors));
-                    };
+                httpHandler.ServerCertificateCustomValidationCallback = (_, certificate2, x509Chain, sslPolicyErrors) =>
+                {
+                    return options.ServerCertificateCustomValidationCallback(
+                        new ServerCertificateCustomValidationArgs(certificate2, x509Chain, sslPolicyErrors));
+                };
+            }
+            // Set ClientCertificates
+            foreach (var cert in options.ClientCertificates)
+            {
+               httpHandler.ClientCertificates.Add(cert);
             }
             return httpHandler;
         }
