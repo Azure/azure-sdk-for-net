@@ -8,21 +8,25 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> A function for the query compilation. </summary>
-    public partial class QueryFunction : ResourceData
+    public partial class QueryFunction
     {
         /// <summary> Initializes a new instance of QueryFunction. </summary>
+        /// <param name="name"> The name of the function. </param>
         /// <param name="queryFunctionType"> The type of the function. </param>
         /// <param name="bindingType"> The type of the function binding. </param>
         /// <param name="inputs"> The inputs for the function. </param>
         /// <param name="output"> An output for the function. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queryFunctionType"/>, <paramref name="bindingType"/>, <paramref name="inputs"/> or <paramref name="output"/> is null. </exception>
-        public QueryFunction(string queryFunctionType, string bindingType, IEnumerable<FunctionInput> inputs, FunctionOutput output)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="queryFunctionType"/>, <paramref name="bindingType"/>, <paramref name="inputs"/> or <paramref name="output"/> is null. </exception>
+        public QueryFunction(string name, string queryFunctionType, string bindingType, IEnumerable<FunctionInput> inputs, FunctionOutput output)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
             if (queryFunctionType == null)
             {
                 throw new ArgumentNullException(nameof(queryFunctionType));
@@ -40,12 +44,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 throw new ArgumentNullException(nameof(output));
             }
 
+            Name = name;
             QueryFunctionType = queryFunctionType;
             BindingType = bindingType;
             Inputs = inputs.ToList();
             Output = output;
         }
 
+        /// <summary> The name of the function. </summary>
+        public string Name { get; }
         /// <summary> The type of the function. </summary>
         public string QueryFunctionType { get; }
         /// <summary> The type of the function binding. </summary>

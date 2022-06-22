@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -73,11 +73,16 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
             }
-            return new StreamAnalyticsPrivateEndpointData(id, name, type, systemData, properties.Value, Optional.ToNullable(etag));
+            return new StreamAnalyticsPrivateEndpointData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(etag));
         }
     }
 }
