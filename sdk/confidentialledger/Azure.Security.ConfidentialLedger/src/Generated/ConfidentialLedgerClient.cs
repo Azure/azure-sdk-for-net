@@ -241,23 +241,13 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary> Collection ids are user-created collections of ledger entries. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>LedgerEntry</c>:
-        /// <code>{
-        ///   contents: string, # Required. Contents of the ledger entry.
-        ///   subLedgerId: string, # Optional. Identifier for sub-ledgers.
-        ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
-        /// }
-        /// </code>
+        /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>LedgerWriteResult</c>:
+        /// Schema for <c>CollectionArray</c>:
         /// <code>{
-        ///   subLedgerId: string, # Required. Identifier for sub-ledgers.
+        ///   collectionId: string, # Required.
         /// }
         /// </code>
         /// 
@@ -281,23 +271,13 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary> Collection ids are user-created collections of ledger entries. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>LedgerEntry</c>:
-        /// <code>{
-        ///   contents: string, # Required. Contents of the ledger entry.
-        ///   subLedgerId: string, # Optional. Identifier for sub-ledgers.
-        ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
-        /// }
-        /// </code>
+        /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>LedgerWriteResult</c>:
+        /// Schema for <c>CollectionArray</c>:
         /// <code>{
-        ///   subLedgerId: string, # Required. Identifier for sub-ledgers.
+        ///   collectionId: string, # Required.
         /// }
         /// </code>
         /// 
@@ -324,28 +304,27 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>LedgerEntry</c>:
         /// <code>{
-        ///   contents: string (required),
+        ///   contents: string, # Required. Contents of the ledger entry.
         ///   collectionId: {
-        ///     collectionId: string (required)
-        ///   },
-        ///   transactionId: string
+        ///     collectionId: string, # Required.
+        ///   }, # Optional. Identifier for collections.
+        ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>LedgerWriteResult</c>:
         /// <code>{
         ///   collectionId: {
-        ///     collectionId: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string
-        ///   }
+        ///     collectionId: string, # Required.
+        ///   }, # Required. Identifier for collections.
         /// }
         /// </code>
         /// 
@@ -374,28 +353,27 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>LedgerEntry</c>:
         /// <code>{
-        ///   contents: string (required),
+        ///   contents: string, # Required. Contents of the ledger entry.
         ///   collectionId: {
-        ///     collectionId: string (required)
-        ///   },
-        ///   transactionId: string
+        ///     collectionId: string, # Required.
+        ///   }, # Optional. Identifier for collections.
+        ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>LedgerWriteResult</c>:
         /// <code>{
         ///   collectionId: {
-        ///     collectionId: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string
-        ///   }
+        ///     collectionId: string, # Required.
+        ///   }, # Required. Identifier for collections.
         /// }
         /// </code>
         /// 
@@ -434,7 +412,9 @@ namespace Azure.Security.ConfidentialLedger
         ///   state: &quot;Loading&quot; | &quot;Ready&quot;, # Required. State of a ledger query.
         ///   entry: {
         ///     contents: string, # Required. Contents of the ledger entry.
-        ///     subLedgerId: string, # Optional. Identifier for sub-ledgers.
+        ///     collectionId: {
+        ///       collectionId: string, # Required.
+        ///     }, # Optional. Identifier for collections.
         ///     transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         ///   }, # Optional. The ledger entry found as a result of the query. This is only available if the query is in Ready state.
         /// }
@@ -475,7 +455,9 @@ namespace Azure.Security.ConfidentialLedger
         ///   state: &quot;Loading&quot; | &quot;Ready&quot;, # Required. State of a ledger query.
         ///   entry: {
         ///     contents: string, # Required. Contents of the ledger entry.
-        ///     subLedgerId: string, # Optional. Identifier for sub-ledgers.
+        ///     collectionId: {
+        ///       collectionId: string, # Required.
+        ///     }, # Optional. Identifier for collections.
         ///     transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         ///   }, # Optional. The ledger entry found as a result of the query. This is only available if the query is in Ready state.
         /// }
@@ -513,17 +495,24 @@ namespace Azure.Security.ConfidentialLedger
         /// Schema for <c>TransactionReceipt</c>:
         /// <code>{
         ///   receipt: {
-        ///     leaf: string, # Required. Merkle tree leaf for this transaction.
-        ///     nodeId: string, # Required. Id of the node returning the receipt.
+        ///     cert: string, # Optional.
+        ///     leaf: string, # Optional.
+        ///     leafComponents: {
+        ///       claimsDigest: string, # Optional.
+        ///       commitEvidence: string, # Optional.
+        ///       writeSetDigest: string, # Optional.
+        ///     }, # Optional.
+        ///     nodeId: string, # Required.
         ///     proof: [
         ///       {
         ///         left: string, # Optional.
         ///         right: string, # Optional.
         ///       }
-        ///     ], # Required. Merkle proof.
-        ///     root: string, # Required. Root of the Merkle tree at the time the transaction was recorded.
-        ///     signature: string, # Required. Signature by the node, with its certificate, over the Merkle root.
-        ///   }, # Optional. A receipt certifying the transaction at the specified id.
+        ///     ], # Required.
+        ///     root: string, # Optional.
+        ///     serviceEndorsements: [string], # Optional.
+        ///     signature: string, # Required.
+        ///   }, # Optional.
         ///   state: &quot;Loading&quot; | &quot;Ready&quot;, # Required. State of a ledger query.
         ///   transactionId: string, # Required. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
@@ -561,17 +550,24 @@ namespace Azure.Security.ConfidentialLedger
         /// Schema for <c>TransactionReceipt</c>:
         /// <code>{
         ///   receipt: {
-        ///     leaf: string, # Required. Merkle tree leaf for this transaction.
-        ///     nodeId: string, # Required. Id of the node returning the receipt.
+        ///     cert: string, # Optional.
+        ///     leaf: string, # Optional.
+        ///     leafComponents: {
+        ///       claimsDigest: string, # Optional.
+        ///       commitEvidence: string, # Optional.
+        ///       writeSetDigest: string, # Optional.
+        ///     }, # Optional.
+        ///     nodeId: string, # Required.
         ///     proof: [
         ///       {
         ///         left: string, # Optional.
         ///         right: string, # Optional.
         ///       }
-        ///     ], # Required. Merkle proof.
-        ///     root: string, # Required. Root of the Merkle tree at the time the transaction was recorded.
-        ///     signature: string, # Required. Signature by the node, with its certificate, over the Merkle root.
-        ///   }, # Optional. A receipt certifying the transaction at the specified id.
+        ///     ], # Required.
+        ///     root: string, # Optional.
+        ///     serviceEndorsements: [string], # Optional.
+        ///     signature: string, # Required.
+        ///   }, # Optional.
         ///   state: &quot;Loading&quot; | &quot;Ready&quot;, # Required. State of a ledger query.
         ///   transactionId: string, # Required. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
@@ -679,7 +675,9 @@ namespace Azure.Security.ConfidentialLedger
         /// Schema for <c>LedgerEntry</c>:
         /// <code>{
         ///   contents: string, # Required. Contents of the ledger entry.
-        ///   subLedgerId: string, # Optional. Identifier for sub-ledgers.
+        ///   collectionId: {
+        ///     collectionId: string, # Required.
+        ///   }, # Optional. Identifier for collections.
         ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>
@@ -712,7 +710,9 @@ namespace Azure.Security.ConfidentialLedger
         /// Schema for <c>LedgerEntry</c>:
         /// <code>{
         ///   contents: string, # Required. Contents of the ledger entry.
-        ///   subLedgerId: string, # Optional. Identifier for sub-ledgers.
+        ///   collectionId: {
+        ///     collectionId: string, # Required.
+        ///   }, # Optional. Identifier for collections.
         ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>
@@ -738,7 +738,6 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response> DeleteUserAsync(string userId, RequestContext context = null)
         {
             Argument.AssertNotNull(userId, nameof(userId));
@@ -761,7 +760,6 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response DeleteUser(string userId, RequestContext context = null)
         {
             Argument.AssertNotNull(userId, nameof(userId));
@@ -955,7 +953,9 @@ namespace Azure.Security.ConfidentialLedger
         /// Schema for <c>LedgerEntries</c>:
         /// <code>{
         ///   contents: string, # Required. Contents of the ledger entry.
-        ///   subLedgerId: string, # Optional. Identifier for sub-ledgers.
+        ///   collectionId: {
+        ///     collectionId: string, # Required.
+        ///   }, # Optional. Identifier for collections.
         ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>
@@ -996,7 +996,9 @@ namespace Azure.Security.ConfidentialLedger
         /// Schema for <c>LedgerEntries</c>:
         /// <code>{
         ///   contents: string, # Required. Contents of the ledger entry.
-        ///   subLedgerId: string, # Optional. Identifier for sub-ledgers.
+        ///   collectionId: {
+        ///     collectionId: string, # Required.
+        ///   }, # Optional. Identifier for collections.
         ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>

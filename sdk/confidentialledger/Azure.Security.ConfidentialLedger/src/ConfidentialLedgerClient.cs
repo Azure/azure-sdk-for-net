@@ -64,13 +64,17 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <summary> Posts a new entry to the ledger. A collection id may optionally be specified. </summary>
          /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        ///
+        /// Request Body:
+        ///
+        /// Schema for <c>LedgerEntry</c>:
         /// <code>{
-        ///   contents: string (required),
+        ///   contents: string, # Required. Contents of the ledger entry.
         ///   collectionId: {
-        ///     collectionId: string (required)
-        ///   },
-        ///   transactionId: string
+        ///     collectionId: string, # Required.
+        ///   }, # Optional. Identifier for collections.
+        ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>
         /// </remarks>
@@ -100,13 +104,17 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <summary> Posts a new entry to the ledger. A collection id may optionally be specified. </summary>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        ///
+        /// Request Body:
+        ///
+        /// Schema for <c>LedgerEntry</c>:
         /// <code>{
-        ///   contents: string (required),
+        ///   contents: string, # Required. Contents of the ledger entry.
         ///   collectionId: {
-        ///     collectionId: string (required)
-        ///   },
-        ///   transactionId: string
+        ///     collectionId: string, # Required.
+        ///   }, # Optional. Identifier for collections.
+        ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>
         /// </remarks>
