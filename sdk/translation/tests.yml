@@ -6,3 +6,4 @@ extends:
     ServiceDirectory: translation
     SupportedClouds: 'Public'
     TimeoutInMinutes: 90
+    Location: 'westus3'
