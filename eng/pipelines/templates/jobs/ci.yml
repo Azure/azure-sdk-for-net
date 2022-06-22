@@ -46,6 +46,7 @@ jobs:
     variables:
       Codeql.Enabled: true
       Codeql.BuildIdentifier: ${{ parameters.ServiceDirectory }}
+      Codeql.SkipTaskAutoInjection: false
 
     steps:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml

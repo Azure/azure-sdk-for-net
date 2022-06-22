@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal SqlDatabasePropertiesResource(string id, string colls, string users, string rid, float? ts, string etag) : base(id)
+        internal SqlDatabasePropertiesResource(string id, string colls, string users, string rid, float? ts, ETag? etag) : base(id)
         {
             if (id == null)
             {
@@ -54,6 +55,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
         public float? Ts { get; }
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
     }
 }

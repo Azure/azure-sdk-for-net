@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     {
         public DeviceUpdateAccountPatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class DeviceUpdateInstancePatch
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public string Id { get { throw null; } set { } }
         public string ImmutableResourceId { get { throw null; } set { } }
         public string ImmutableSubscriptionId { get { throw null; } set { } }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public string VnetTrafficTag { get { throw null; } set { } }
     }
     public partial class PrivateLinkServiceConnection
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public string Id { get { throw null; } set { } }
         public string ImmutableResourceId { get { throw null; } set { } }
         public string ImmutableSubscriptionId { get { throw null; } set { } }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DeviceUpdate.Models.PrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DeviceUpdate.Models.PrivateLinkServiceConnection> PrivateLinkServiceConnections { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DeviceUpdate.Models.PrivateLinkServiceProxy> PrivateLinkServiceProxies { get { throw null; } }

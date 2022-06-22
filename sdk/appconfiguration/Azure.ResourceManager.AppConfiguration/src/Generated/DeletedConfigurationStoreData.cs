@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="scheduledPurgeOn"> The scheduled purged date. </param>
         /// <param name="tags"> Tags of the original configuration store. </param>
         /// <param name="purgeProtectionEnabled"> Purge protection status of the original configuration store. </param>
-        internal DeletedConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string configurationStoreId, string location, DateTimeOffset? deletionOn, DateTimeOffset? scheduledPurgeOn, IReadOnlyDictionary<string, string> tags, bool? purgeProtectionEnabled) : base(id, name, resourceType, systemData)
+        internal DeletedConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string configurationStoreId, AzureLocation? location, DateTimeOffset? deletionOn, DateTimeOffset? scheduledPurgeOn, IReadOnlyDictionary<string, string> tags, bool? purgeProtectionEnabled) : base(id, name, resourceType, systemData)
         {
             ConfigurationStoreId = configurationStoreId;
             Location = location;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> The resource id of the original configuration store. </summary>
         public string ConfigurationStoreId { get; }
         /// <summary> The location of the original configuration store. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> The deleted date. </summary>
         public DateTimeOffset? DeletionOn { get; }
         /// <summary> The scheduled purged date. </summary>

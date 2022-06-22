@@ -7,13 +7,12 @@
 
 using System;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the RelayServiceConnectionEntity data model. </summary>
-    public partial class RelayServiceConnectionEntityData : ProxyOnlyResource
+    public partial class RelayServiceConnectionEntityData : ResourceData
     {
         /// <summary> Initializes a new instance of RelayServiceConnectionEntityData. </summary>
         public RelayServiceConnectionEntityData()
@@ -25,14 +24,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="entityName"></param>
         /// <param name="entityConnectionString"></param>
         /// <param name="resourceConnectionString"></param>
         /// <param name="hostname"></param>
         /// <param name="port"></param>
         /// <param name="biztalkUri"></param>
-        internal RelayServiceConnectionEntityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string entityName, string entityConnectionString, string resourceConnectionString, string hostname, int? port, Uri biztalkUri) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal RelayServiceConnectionEntityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string entityName, string entityConnectionString, string resourceConnectionString, string hostname, int? port, Uri biztalkUri, string kind) : base(id, name, resourceType, systemData)
         {
             EntityName = entityName;
             EntityConnectionString = entityConnectionString;
@@ -40,6 +39,7 @@ namespace Azure.ResourceManager.AppService
             Hostname = hostname;
             Port = port;
             BiztalkUri = biztalkUri;
+            Kind = kind;
         }
 
         /// <summary> Gets or sets the entity name. </summary>
@@ -54,5 +54,7 @@ namespace Azure.ResourceManager.AppService
         public int? Port { get; set; }
         /// <summary> Gets or sets the biztalk uri. </summary>
         public Uri BiztalkUri { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

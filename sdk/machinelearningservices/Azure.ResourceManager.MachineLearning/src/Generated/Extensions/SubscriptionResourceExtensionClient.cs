@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningUsage> GetUsagesAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MachineLearningUsage> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<MachineLearningUsage>> FirstPageFunc(int? pageSizeHint)
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningUsage> GetUsages(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<MachineLearningUsage> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<MachineLearningUsage> FirstPageFunc(int? pageSizeHint)
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineSize> GetVirtualMachineSizesAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineSize> GetVirtualMachineSizesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualMachineSize>> FirstPageFunc(int? pageSizeHint)
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineSize> GetVirtualMachineSizes(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineSize> GetVirtualMachineSizes(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<VirtualMachineSize> FirstPageFunc(int? pageSizeHint)
             {
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="content"> Quota update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="UpdateWorkspaceQuotas" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UpdateWorkspaceQuotas> UpdateQuotasAsync(string location, QuotaUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<UpdateWorkspaceQuotas> UpdateQuotasAsync(AzureLocation location, QuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
             async Task<Page<UpdateWorkspaceQuotas>> FirstPageFunc(int? pageSizeHint)
             {
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="content"> Quota update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="UpdateWorkspaceQuotas" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UpdateWorkspaceQuotas> UpdateQuotas(string location, QuotaUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual Pageable<UpdateWorkspaceQuotas> UpdateQuotas(AzureLocation location, QuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
             Page<UpdateWorkspaceQuotas> FirstPageFunc(int? pageSizeHint)
             {
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceQuota" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceQuota> GetQuotasAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceQuota> GetQuotasAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<ResourceQuota>> FirstPageFunc(int? pageSizeHint)
             {
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceQuota" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceQuota> GetQuotas(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceQuota> GetQuotas(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<ResourceQuota> FirstPageFunc(int? pageSizeHint)
             {

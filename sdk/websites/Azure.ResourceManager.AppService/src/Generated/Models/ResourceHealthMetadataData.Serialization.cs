@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> category = default;
             Optional<bool> signalAvailability = default;
             foreach (var property in element.EnumerateObject())
@@ -70,6 +70,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -101,7 +106,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new ResourceHealthMetadataData(id, name, type, systemData, kind.Value, category.Value, Optional.ToNullable(signalAvailability));
+            return new ResourceHealthMetadataData(id, name, type, systemData.Value, category.Value, Optional.ToNullable(signalAvailability), kind.Value);
         }
     }
 }

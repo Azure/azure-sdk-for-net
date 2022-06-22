@@ -23,11 +23,6 @@ namespace Azure.ResourceManager.ConfidentialLedger
                 writer.WritePropertyName("properties");
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location.Value);
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -39,18 +34,20 @@ namespace Azure.ResourceManager.ConfidentialLedger
                 }
                 writer.WriteEndObject();
             }
+            writer.WritePropertyName("location");
+            writer.WriteStringValue(Location);
             writer.WriteEndObject();
         }
 
         internal static ConfidentialLedgerData DeserializeConfidentialLedgerData(JsonElement element)
         {
             Optional<LedgerProperties> properties = default;
-            Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -61,16 +58,6 @@ namespace Azure.ResourceManager.ConfidentialLedger
                         continue;
                     }
                     properties = LedgerProperties.DeserializeLedgerProperties(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -86,6 +73,11 @@ namespace Azure.ResourceManager.ConfidentialLedger
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"))
+                {
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -105,11 +97,16 @@ namespace Azure.ResourceManager.ConfidentialLedger
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
             }
-            return new ConfidentialLedgerData(id, name, type, systemData, properties.Value, Optional.ToNullable(location), Optional.ToDictionary(tags));
+            return new ConfidentialLedgerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value);
         }
     }
 }

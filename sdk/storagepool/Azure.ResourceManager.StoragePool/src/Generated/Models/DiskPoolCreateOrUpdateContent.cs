@@ -20,16 +20,12 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <param name="sku"> Determines the SKU of the Disk Pool. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="subnetId"> Azure Resource ID of a Subnet for the Disk Pool. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/>, <paramref name="location"/> or <paramref name="subnetId"/> is null. </exception>
-        public DiskPoolCreateOrUpdateContent(StoragePoolSku sku, string location, string subnetId)
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="subnetId"/> is null. </exception>
+        public DiskPoolCreateOrUpdateContent(StoragePoolSku sku, AzureLocation location, string subnetId)
         {
             if (sku == null)
             {
                 throw new ArgumentNullException(nameof(sku));
-            }
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
             }
             if (subnetId == null)
             {
@@ -51,7 +47,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; }
+        public AzureLocation Location { get; }
         /// <summary> Azure resource id. Indicates if this resource is managed by another Azure resource. </summary>
         public string ManagedBy { get; set; }
         /// <summary> List of Azure resource ids that manage this resource. </summary>

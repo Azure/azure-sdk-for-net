@@ -7,12 +7,11 @@
 
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing the MigrationConfigProperties data model. </summary>
-    public partial class MigrationConfigPropertiesData : ProxyResource
+    public partial class MigrationConfigPropertiesData : ResourceData
     {
         /// <summary> Initializes a new instance of MigrationConfigPropertiesData. </summary>
         public MigrationConfigPropertiesData()
@@ -24,19 +23,20 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> Provisioning state of Migration Configuration. </param>
         /// <param name="pendingReplicationOperationsCount"> Number of entities pending to be replicated. </param>
         /// <param name="targetNamespace"> Existing premium Namespace ARM Id name which has no entities, will be used for migration. </param>
         /// <param name="postMigrationName"> Name to access Standard Namespace after migration. </param>
         /// <param name="migrationState"> State in which Standard to Premium Migration is, possible values : Unknown, Reverting, Completing, Initiating, Syncing, Active. </param>
-        internal MigrationConfigPropertiesData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, string provisioningState, long? pendingReplicationOperationsCount, string targetNamespace, string postMigrationName, string migrationState) : base(id, name, resourceType, systemData, location)
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        internal MigrationConfigPropertiesData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, long? pendingReplicationOperationsCount, string targetNamespace, string postMigrationName, string migrationState, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PendingReplicationOperationsCount = pendingReplicationOperationsCount;
             TargetNamespace = targetNamespace;
             PostMigrationName = postMigrationName;
             MigrationState = migrationState;
+            Location = location;
         }
 
         /// <summary> Provisioning state of Migration Configuration. </summary>
@@ -49,5 +49,7 @@ namespace Azure.ResourceManager.ServiceBus
         public string PostMigrationName { get; set; }
         /// <summary> State in which Standard to Premium Migration is, possible values : Unknown, Reverting, Completing, Initiating, Syncing, Active. </summary>
         public string MigrationState { get; }
+        /// <summary> The geo-location where the resource lives. </summary>
+        public AzureLocation? Location { get; }
     }
 }
