@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static EHNamespaceListResult DeserializeEHNamespaceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<EventHubNamespaceData>> value = default;
+            Optional<IReadOnlyList<EventHubsNamespaceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EventHubNamespaceData> array = new List<EventHubNamespaceData>();
+                    List<EventHubsNamespaceData> array = new List<EventHubsNamespaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventHubNamespaceData.DeserializeEventHubNamespaceData(item));
+                        array.Add(EventHubsNamespaceData.DeserializeEventHubsNamespaceData(item));
                     }
                     value = array;
                     continue;

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         internal static EventHubsNetworkRuleSetIPRules DeserializeEventHubsNetworkRuleSetIPRules(JsonElement element)
         {
             Optional<string> ipMask = default;
-            Optional<EventHubNetworkRuleIPAction> action = default;
+            Optional<EventHubsNetworkRuleIPAction> action = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipMask"))
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    action = new EventHubNetworkRuleIPAction(property.Value.GetString());
+                    action = new EventHubsNetworkRuleIPAction(property.Value.GetString());
                     continue;
                 }
             }

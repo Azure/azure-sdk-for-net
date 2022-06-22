@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static NetworkRuleSetListResult DeserializeNetworkRuleSetListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<EventHubNetworkRuleSetData>> value = default;
+            Optional<IReadOnlyList<EventHubsNetworkRuleSetData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EventHubNetworkRuleSetData> array = new List<EventHubNetworkRuleSetData>();
+                    List<EventHubsNetworkRuleSetData> array = new List<EventHubsNetworkRuleSetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventHubNetworkRuleSetData.DeserializeEventHubNetworkRuleSetData(item));
+                        array.Add(EventHubsNetworkRuleSetData.DeserializeEventHubsNetworkRuleSetData(item));
                     }
                     value = array;
                     continue;

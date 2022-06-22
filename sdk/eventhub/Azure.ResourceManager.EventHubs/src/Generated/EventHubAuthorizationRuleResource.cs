@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventHubs
 
         private readonly ClientDiagnostics _eventHubAuthorizationRuleEventHubsClientDiagnostics;
         private readonly EventHubsRestOperations _eventHubAuthorizationRuleEventHubsRestClient;
-        private readonly EventHubAuthorizationRuleData _data;
+        private readonly EventHubsAuthorizationRuleData _data;
 
         /// <summary> Initializes a new instance of the <see cref="EventHubAuthorizationRuleResource"/> class for mocking. </summary>
         protected EventHubAuthorizationRuleResource()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Initializes a new instance of the <see cref = "EventHubAuthorizationRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal EventHubAuthorizationRuleResource(ArmClient client, EventHubAuthorizationRuleData data) : this(client, data.Id)
+        internal EventHubAuthorizationRuleResource(ArmClient client, EventHubsAuthorizationRuleData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual EventHubAuthorizationRuleData Data
+        public virtual EventHubsAuthorizationRuleData Data
         {
             get
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="data"> The shared access AuthorizationRule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<EventHubAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, EventHubAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EventHubAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, EventHubsAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="data"> The shared access AuthorizationRule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<EventHubAuthorizationRuleResource> Update(WaitUntil waitUntil, EventHubAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EventHubAuthorizationRuleResource> Update(WaitUntil waitUntil, EventHubsAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: EventHubs_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EventHubAccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubsAccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _eventHubAuthorizationRuleEventHubsClientDiagnostics.CreateScope("EventHubAuthorizationRuleResource.GetKeys");
             scope.Start();
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: EventHubs_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EventHubAccessKeys> GetKeys(CancellationToken cancellationToken = default)
+        public virtual Response<EventHubsAccessKeys> GetKeys(CancellationToken cancellationToken = default)
         {
             using var scope = _eventHubAuthorizationRuleEventHubsClientDiagnostics.CreateScope("EventHubAuthorizationRuleResource.GetKeys");
             scope.Start();
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="content"> Parameters supplied to regenerate the AuthorizationRule Keys (PrimaryKey/SecondaryKey). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<EventHubAccessKeys>> RegenerateKeysAsync(EventHubsRegenerateAccessKeyContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubsAccessKeys>> RegenerateKeysAsync(EventHubsRegenerateAccessKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="content"> Parameters supplied to regenerate the AuthorizationRule Keys (PrimaryKey/SecondaryKey). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<EventHubAccessKeys> RegenerateKeys(EventHubsRegenerateAccessKeyContent content, CancellationToken cancellationToken = default)
+        public virtual Response<EventHubsAccessKeys> RegenerateKeys(EventHubsRegenerateAccessKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

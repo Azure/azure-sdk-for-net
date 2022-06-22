@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventHubs
     /// A Class representing an EventHubsSchemaGroup along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventHubsSchemaGroupResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetEventHubsSchemaGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventHubNamespaceResource" /> using the GetEventHubsSchemaGroup method.
+    /// Otherwise you can get one from its parent resource <see cref="EventHubsNamespaceResource" /> using the GetEventHubsSchemaGroup method.
     /// </summary>
     public partial class EventHubsSchemaGroupResource : ArmResource
     {

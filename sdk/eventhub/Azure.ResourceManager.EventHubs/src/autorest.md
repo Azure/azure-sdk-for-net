@@ -12,14 +12,14 @@ clear-output-folder: true
 skip-csproj: true
 
 request-path-to-resource-name:
-    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}: EventHubDisasterRecovery
-    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}: EventHubDisasterRecoveryAuthorizationRule
+    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}: EventHubsDisasterRecovery
+    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}: EventHubsDisasterRecoveryAuthorizationRule
     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/authorizationRules/{authorizationRuleName}: EventHubAuthorizationRule
-    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}: EventHubNamespaceAuthorizationRule
-    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/consumergroups/{consumerGroupName}: EventHubConsumerGroup
+    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}: EventHubsNamespaceAuthorizationRule
+    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/consumergroups/{consumerGroupName}: EventHubsConsumerGroup
 override-operation-name:
-    Namespaces_CheckNameAvailability: CheckEventHubNamespaceNameAvailability
-    DisasterRecoveryConfigs_CheckNameAvailability: CheckEventHubDisasterRecoveryNameAvailability
+    Namespaces_CheckNameAvailability: CheckEventHubsNamespaceNameAvailability
+    DisasterRecoveryConfigs_CheckNameAvailability: CheckEventHubsDisasterRecoveryNameAvailability
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -46,31 +46,31 @@ directive:
     - from: AuthorizationRules.json
       where: $.definitions
       transform: >
-        $.AuthorizationRule['x-ms-client-name'] = 'EventHubAuthorizationRule';
-        $.AuthorizationRule.properties.properties.properties.rights.items['x-ms-enum'].name = 'EventHubAccessRight';
-        $.AccessKeys['x-ms-client-name'] = 'EventHubAccessKeys';
+        $.AuthorizationRule['x-ms-client-name'] = 'EventHubsAuthorizationRule';
+        $.AuthorizationRule.properties.properties.properties.rights.items['x-ms-enum'].name = 'EventHubsAccessRight';
+        $.AccessKeys['x-ms-client-name'] = 'EventHubsAccessKeys';
         $.RegenerateAccessKeyParameters['x-ms-client-name'] = 'EventHubsRegenerateAccessKeyContent';
         $.RegenerateAccessKeyParameters.properties.keyType['x-ms-enum'].name = 'EventHubsAccessKeyType';
     - from: consumergroups.json
       where: $.definitions
       transform: >
-        $.ConsumerGroup['x-ms-client-name'] = 'EventHubConsumerGroup';
+        $.ConsumerGroup['x-ms-client-name'] = 'EventHubsConsumerGroup';
     - from: disasterRecoveryConfigs.json
       where: $.definitions
       transform: >
-        $.ArmDisasterRecovery['x-ms-client-name'] = 'EventHubDisasterRecovery';
-        $.ArmDisasterRecovery.properties.properties.properties.provisioningState['x-ms-enum'].name = 'EventHubDisasterRecoveryProvisioningState';
-        $.ArmDisasterRecovery.properties.properties.properties.role['x-ms-enum'].name = 'EventHubDisasterRecoveryRole';
-        $.CheckNameAvailabilityParameter['x-ms-client-name'] = 'EventHubNameAvailabilityContent';
-        $.CheckNameAvailabilityResult['x-ms-client-name'] = 'EventHubNameAvailabilityResult';
+        $.ArmDisasterRecovery['x-ms-client-name'] = 'EventHubsDisasterRecovery';
+        $.ArmDisasterRecovery.properties.properties.properties.provisioningState['x-ms-enum'].name = 'EventHubsDisasterRecoveryProvisioningState';
+        $.ArmDisasterRecovery.properties.properties.properties.role['x-ms-enum'].name = 'EventHubsDisasterRecoveryRole';
+        $.CheckNameAvailabilityParameter['x-ms-client-name'] = 'EventHubsNameAvailabilityContent';
+        $.CheckNameAvailabilityResult['x-ms-client-name'] = 'EventHubsNameAvailabilityResult';
     - from: Clusters-preview.json
       where: $.definitions
       transform: >
-        $.Cluster['x-ms-client-name'] = 'EventHubCluster';
+        $.Cluster['x-ms-client-name'] = 'EventHubsCluster';
         $.Cluster.properties.properties.properties.createdAt['format'] = 'date-time';
         $.Cluster.properties.properties.properties.updatedAt['format'] = 'date-time';
-        $.ClusterSku['x-ms-client-name'] = 'EventHubClusterSku';
-        $.ClusterSku.properties.name['x-ms-enum'].name = 'EventHubClusterSkuName';
+        $.ClusterSku['x-ms-client-name'] = 'EventHubsClusterSku';
+        $.ClusterSku.properties.name['x-ms-enum'].name = 'EventHubsClusterSkuName';
     - from: eventhubs.json
       where: $.definitions
       transform: >
@@ -81,31 +81,31 @@ directive:
     - from: namespaces-preview.json
       where: $.definitions
       transform: >
-        $.EHNamespace['x-ms-client-name'] = 'EventHubNamespace';
+        $.EHNamespace['x-ms-client-name'] = 'EventHubsNamespace';
         $.EHNamespace.properties.properties.properties.clusterArmId['x-ms-format'] = 'arm-id';
-        $.PrivateLinkResource['x-ms-client-name'] = 'EventHubPrivateLinkResourceData';
-        $.PrivateEndpointConnectionProperties.properties.provisioningState['x-ms-enum'].name = 'EventHubPrivateEndpointConnectionProvisioningState';
-        $.ConnectionState['x-ms-client-name'] = 'EventHubPrivateLinkServiceConnectionState';
-        $.ConnectionState.properties.status['x-ms-enum'].name = 'EventHubPrivateLinkConnectionStatus';
-        $.Encryption['x-ms-client-name'] = 'EventHubEncryption';
-        $.KeyVaultProperties['x-ms-client-name'] = 'EventHubKeyVaultProperties';
+        $.PrivateLinkResource['x-ms-client-name'] = 'EventHubsPrivateLinkResourceData';
+        $.PrivateEndpointConnectionProperties.properties.provisioningState['x-ms-enum'].name = 'EventHubsPrivateEndpointConnectionProvisioningState';
+        $.ConnectionState['x-ms-client-name'] = 'EventHubsPrivateLinkServiceConnectionState';
+        $.ConnectionState.properties.status['x-ms-enum'].name = 'EventHubsPrivateLinkConnectionStatus';
+        $.Encryption['x-ms-client-name'] = 'EventHubsEncryption';
+        $.KeyVaultProperties['x-ms-client-name'] = 'EventHubsKeyVaultProperties';
         $.Encryption['x-ms-client-flatten'] = false;
         $.Identity['x-ms-client-flatten'] = false;
         $.userAssignedIdentityProperties['x-ms-client-flatten'] = false;
     - from: CheckNameAvailability.json
       where: $.definitions
       transform: >
-        $.CheckNameAvailabilityParameter['x-ms-client-name'] = 'EventHubNameAvailabilityContent';
-        $.CheckNameAvailabilityResult['x-ms-client-name'] = 'EventHubNameAvailabilityResult';
-        $.UnavailableReason['x-ms-client-name'] = 'EventHubNameUnavailableReason';
+        $.CheckNameAvailabilityParameter['x-ms-client-name'] = 'EventHubsNameAvailabilityContent';
+        $.CheckNameAvailabilityResult['x-ms-client-name'] = 'EventHubsNameAvailabilityResult';
+        $.UnavailableReason['x-ms-client-name'] = 'EventHubsNameUnavailableReason';
     - from: networkrulessets-preview.json
       where: $.definitions
       transform: >
-        $.NetworkRuleSet['x-ms-client-name'] = 'EventHubNetworkRuleSet';
-        $.NetworkRuleSet.properties.properties.properties.defaultAction['x-ms-enum'].name = 'EventHubNetworkRuleSetDefaultAction';
-        $.NetworkRuleSet.properties.properties.properties.publicNetworkAccess['x-ms-enum'].name = 'EventHubPublicNetworkAccessFlag';
+        $.NetworkRuleSet['x-ms-client-name'] = 'EventHubsNetworkRuleSet';
+        $.NetworkRuleSet.properties.properties.properties.defaultAction['x-ms-enum'].name = 'EventHubsNetworkRuleSetDefaultAction';
+        $.NetworkRuleSet.properties.properties.properties.publicNetworkAccess['x-ms-enum'].name = 'EventHubsPublicNetworkAccessFlag';
         $.NWRuleSetIpRules['x-ms-client-name'] = 'EventHubsNetworkRuleSetIPRules';
-        $.NWRuleSetIpRules.properties.action['x-ms-enum'].name = 'EventHubNetworkRuleIPAction';
+        $.NWRuleSetIpRules.properties.action['x-ms-enum'].name = 'EventHubsNetworkRuleIPAction';
         $.NWRuleSetVirtualNetworkRules['x-ms-client-name'] = 'EventHubsNetworkRuleSetVirtualNetworkRules';
     - from: SchemaRegistry.json
       where: $.definitions
