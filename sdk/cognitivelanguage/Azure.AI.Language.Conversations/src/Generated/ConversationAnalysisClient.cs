@@ -68,7 +68,7 @@ namespace Azure.AI.Language.Conversations
         /// 
         /// Request Body:
         /// 
-        /// <details><summary>CustomConversationalTask</summary>Schema for <c>CustomConversationalTask</c>:
+        /// <details><summary>ConversationalTask</summary>Schema for <c>ConversationalTask</c>:
         /// <code>{
         ///   kind: Conversation, # Required. Enumeration of supported Conversation tasks.
         ///   analysisInput: {
@@ -77,7 +77,6 @@ namespace Azure.AI.Language.Conversations
         ///       participantId: string, # Required. The participant ID of a conversation item.
         ///       language: string, # Optional. The override language of a conversation item in BCP 47 language representation.
         ///       modality: &quot;transcript&quot; | &quot;text&quot;, # Optional. Enumeration of supported conversational modalities.
-        ///       role: &quot;agent&quot; | &quot;customer&quot; | &quot;generic&quot;, # Optional. The role of the participant.
         ///     }, # Required. The abstract base for a user input formatted conversation (e.g., Text, Transcript).
         ///   }, # Required. The input ConversationItem and its optional parameters
         ///   parameters: {
@@ -85,17 +84,17 @@ namespace Azure.AI.Language.Conversations
         ///     deploymentName: string, # Required. The name of the deployment to use.
         ///     verbose: boolean, # Optional. If true, the service will return more detailed information in the response.
         ///     isLoggingEnabled: boolean, # Optional. If true, the service will keep the query for further review.
-        ///     stringIndexType: &quot;TextElements_v8&quot; | &quot;UnicodeCodePoint&quot; | &quot;Utf16CodeUnit&quot;, # Optional. Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets.
+        ///     stringIndexType: &quot;TextElements_v8&quot; | &quot;UnicodeCodePoint&quot; | &quot;Utf16CodeUnit&quot;, # Optional. Specifies the method used to interpret string offsets. Set this to &quot;Utf16CodeUnit&quot; for .NET strings, which are encoded as UTF-16.
         ///     directTarget: string, # Optional. The name of a target project to forward the request to.
         ///     targetProjectParameters: Dictionary&lt;string, AnalysisParameters&gt;, # Optional. A dictionary representing the parameters for each target project.
-        ///   }, # Required. Input parameters necessary for a CustomConversation task.
+        ///   }, # Required. Input parameters necessary for a Conversation task.
         /// }
         /// </code>
         /// </details>
         /// 
         /// Response Body:
         /// 
-        /// <details><summary>CustomConversationalTaskResult</summary>Schema for <c>CustomConversationalTaskResult</c>:
+        /// <details><summary>ConversationalTaskResult</summary>Schema for <c>ConversationalTaskResult</c>:
         /// <code>{
         ///   kind: ConversationResult, # Required. Enumeration of supported conversational task results
         ///   result: {
@@ -138,7 +137,7 @@ namespace Azure.AI.Language.Conversations
         /// 
         /// Request Body:
         /// 
-        /// <details><summary>CustomConversationalTask</summary>Schema for <c>CustomConversationalTask</c>:
+        /// <details><summary>ConversationalTask</summary>Schema for <c>ConversationalTask</c>:
         /// <code>{
         ///   kind: Conversation, # Required. Enumeration of supported Conversation tasks.
         ///   analysisInput: {
@@ -147,7 +146,6 @@ namespace Azure.AI.Language.Conversations
         ///       participantId: string, # Required. The participant ID of a conversation item.
         ///       language: string, # Optional. The override language of a conversation item in BCP 47 language representation.
         ///       modality: &quot;transcript&quot; | &quot;text&quot;, # Optional. Enumeration of supported conversational modalities.
-        ///       role: &quot;agent&quot; | &quot;customer&quot; | &quot;generic&quot;, # Optional. The role of the participant.
         ///     }, # Required. The abstract base for a user input formatted conversation (e.g., Text, Transcript).
         ///   }, # Required. The input ConversationItem and its optional parameters
         ///   parameters: {
@@ -155,17 +153,17 @@ namespace Azure.AI.Language.Conversations
         ///     deploymentName: string, # Required. The name of the deployment to use.
         ///     verbose: boolean, # Optional. If true, the service will return more detailed information in the response.
         ///     isLoggingEnabled: boolean, # Optional. If true, the service will keep the query for further review.
-        ///     stringIndexType: &quot;TextElements_v8&quot; | &quot;UnicodeCodePoint&quot; | &quot;Utf16CodeUnit&quot;, # Optional. Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets.
+        ///     stringIndexType: &quot;TextElements_v8&quot; | &quot;UnicodeCodePoint&quot; | &quot;Utf16CodeUnit&quot;, # Optional. Specifies the method used to interpret string offsets. Set this to &quot;Utf16CodeUnit&quot; for .NET strings, which are encoded as UTF-16.
         ///     directTarget: string, # Optional. The name of a target project to forward the request to.
         ///     targetProjectParameters: Dictionary&lt;string, AnalysisParameters&gt;, # Optional. A dictionary representing the parameters for each target project.
-        ///   }, # Required. Input parameters necessary for a CustomConversation task.
+        ///   }, # Required. Input parameters necessary for a Conversation task.
         /// }
         /// </code>
         /// </details>
         /// 
         /// Response Body:
         /// 
-        /// <details><summary>CustomConversationalTaskResult</summary>Schema for <c>CustomConversationalTaskResult</c>:
+        /// <details><summary>ConversationalTaskResult</summary>Schema for <c>ConversationalTaskResult</c>:
         /// <code>{
         ///   kind: ConversationResult, # Required. Enumeration of supported conversational task results
         ///   result: {
