@@ -95,11 +95,29 @@ namespace Azure.ResourceManager
         /// Checks to see if the TagResource API is deployed in the current environment.
         /// </summary>
         /// <returns></returns>
-        public virtual bool IsTagResourcePresent()
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual bool IsTagResourcePresent(CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015 // Unexpected client method return type.
         {
             if (_isTagResourcePresent == null)
             {
-                var tagRp = GetDefaultSubscription().GetResourceProvider(TagResource.ResourceType.Namespace);
+                var tagRp = GetDefaultSubscription(cancellationToken).GetResourceProvider(TagResource.ResourceType.Namespace, cancellationToken: cancellationToken);
+                _isTagResourcePresent = tagRp.Value.Data.ResourceTypes.Any(rp => rp.ResourceType == TagResource.ResourceType.Type);
+            }
+            return _isTagResourcePresent.Value;
+        }
+
+        /// <summary>
+        /// Checks to see if the TagResource API is deployed in the current environment.
+        /// </summary>
+        /// <returns></returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<bool> IsTagResourcePresentAsync(CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015 // Unexpected client method return type.
+        {
+            if (_isTagResourcePresent == null)
+            {
+                var tagRp = await GetDefaultSubscription(cancellationToken).GetResourceProviderAsync(TagResource.ResourceType.Namespace, cancellationToken: cancellationToken).ConfigureAwait(false);
                 _isTagResourcePresent = tagRp.Value.Data.ResourceTypes.Any(rp => rp.ResourceType == TagResource.ResourceType.Type);
             }
             return _isTagResourcePresent.Value;
