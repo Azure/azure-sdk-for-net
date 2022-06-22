@@ -52,26 +52,63 @@ rename-rules:
   URI: Uri
 
 directive:
-  - remove-model: "AzureEntityResource"
-  - remove-model: "ProxyResource"
-  - remove-model: "ResourceModelWithAllowedPropertySet"
-  - remove-model: "Identity"
-  - remove-model: "Operation"
-  - remove-model: "OperationListResult"
-  - remove-model: "locationData"
-  - remove-model: "CheckNameAvailabilityRequest"
-  - remove-model: "CheckNameAvailabilityResponse"
-  - remove-model: "ErrorResponse"
   - from: types.json
-    where: $.definitions['Resource']
+    where: $.definitions.Resource
     transform: >
-      $["x-ms-mgmt-referenceType"] = true
+      $["x-ms-mgmt-referenceType"] = true;
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
   - from: types.json
-    where: $.definitions['TrackedResource']
+    where: $.definitions.TrackedResource
     transform: >
-      $["x-ms-mgmt-referenceType"] = true
+      $["x-ms-mgmt-referenceType"] = true;
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
   - from: types.json
-    where: $.definitions.*
+    where: $.definitions.Plan
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
+  - from: types.json
+    where: $.definitions.Sku
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
+  - from: types.json
+    where: $.definitions.systemData
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
+# Workaround for the issue that SystemData lost readonly attribute: https://github.com/Azure/autorest/issues/4269
+  - from: types.json
+    where: $.definitions.systemData.properties.*
+    transform: >
+      $["readOnly"] = true;
+  - from: types.json
+    where: $.definitions.encryptionProperties
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
+  - from: types.json
+    where: $.definitions.KeyVaultProperties
     transform: >
       $["x-ms-mgmt-propertyReferenceType"] = true;
       $["x-namespace"] = "Azure.ResourceManager.Models";
@@ -88,23 +125,25 @@ directive:
     transform: >
       $["x-ms-mgmt-propertyReferenceType"] = false;
       $["x-ms-mgmt-typeReferenceType"] = true;
+      $["x-csharp-formats"] = "json";
       $["x-csharp-usage"] = "model,output";
-# Workaround for the issue that SystemData lost readonly attribute: https://github.com/Azure/autorest/issues/4269
-  - from: types.json
-    where: $.definitions.systemData.properties.*
-    transform: >
-      $["readOnly"] = true
   - from: managedidentity.json
-    where: $.definitions.*
+    where: $.definitions.SystemAssignedServiceIdentity
     transform: >
       $["x-ms-mgmt-propertyReferenceType"] = true;
       $["x-namespace"] = "Azure.ResourceManager.Models";
       $["x-accessibility"] = "public";
       $["x-csharp-formats"] = "json";
       $["x-csharp-usage"] = "model,input,output";
+      $.properties.type["x-ms-client-name"] = "SystemAssignedServiceIdentityType";
   - from: managedidentity.json
-    where: $.definitions.SystemAssignedServiceIdentity.properties.type
-    transform: $["x-ms-client-name"] = "SystemAssignedServiceIdentityType"
+    where: $.definitions.UserAssignedIdentity
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
 ```
 
 ### Tag: package-resources-2022-04
