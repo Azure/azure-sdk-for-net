@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDB
                     continue;
                 }
             }
-            return new ClusterResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, properties.Value);
+            return new ClusterResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, identity);
         }
     }
 }

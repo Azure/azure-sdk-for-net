@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new VnetValidationFailureDetails(id, name, type, systemData.Value, kind.Value, message.Value, Optional.ToNullable(failed), Optional.ToList(failedTests), Optional.ToList(warnings));
+            return new VnetValidationFailureDetails(id, name, type, systemData.Value, message.Value, Optional.ToNullable(failed), Optional.ToList(failedTests), Optional.ToList(warnings), kind.Value);
         }
     }
 }

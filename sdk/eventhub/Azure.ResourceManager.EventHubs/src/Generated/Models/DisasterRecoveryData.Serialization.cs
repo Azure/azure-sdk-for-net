@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new DisasterRecoveryData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role), Optional.ToNullable(pendingReplicationOperationsCount));
+            return new DisasterRecoveryData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role), Optional.ToNullable(pendingReplicationOperationsCount), Optional.ToNullable(location));
         }
     }
 }

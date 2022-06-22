@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new GeoRegion(id, name, type, systemData.Value, kind.Value, description.Value, displayName.Value, orgDomain.Value);
+            return new GeoRegion(id, name, type, systemData.Value, description.Value, displayName.Value, orgDomain.Value, kind.Value);
         }
     }
 }

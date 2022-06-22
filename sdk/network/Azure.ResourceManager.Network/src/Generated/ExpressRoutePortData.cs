@@ -16,23 +16,21 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ExpressRoutePort data model. </summary>
-    public partial class ExpressRoutePortData : TrackedResourceData
+    public partial class ExpressRoutePortData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of ExpressRoutePortData. </summary>
-        /// <param name="location"> The location. </param>
-        public ExpressRoutePortData(AzureLocation location) : base(location)
+        public ExpressRoutePortData()
         {
             Links = new ChangeTrackingList<ExpressRouteLinkData>();
             Circuits = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of ExpressRoutePortData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="identity"> The identity of ExpressRoutePort, if configured. </param>
         /// <param name="peeringLocation"> The name of the peering location that the ExpressRoutePort is mapped to physically. </param>
@@ -46,7 +44,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="circuits"> Reference the ExpressRoute circuit(s) that are provisioned on this ExpressRoutePort resource. </param>
         /// <param name="provisioningState"> The provisioning state of the express route port resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the express route port resource. </param>
-        internal ExpressRoutePortData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, string peeringLocation, int? bandwidthInGbps, float? provisionedBandwidthInGbps, string mtu, ExpressRoutePortsEncapsulation? encapsulation, string etherType, string allocationDate, IList<ExpressRouteLinkData> links, IReadOnlyList<WritableSubResource> circuits, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, systemData, tags, location)
+        internal ExpressRoutePortData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ManagedServiceIdentity identity, string peeringLocation, int? bandwidthInGbps, float? provisionedBandwidthInGbps, string mtu, ExpressRoutePortsEncapsulation? encapsulation, string etherType, string allocationDate, IList<ExpressRouteLinkData> links, IReadOnlyList<WritableSubResource> circuits, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             Identity = identity;

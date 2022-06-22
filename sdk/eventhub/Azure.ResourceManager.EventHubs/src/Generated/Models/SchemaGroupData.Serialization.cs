@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new SchemaGroupData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(updatedAtUtc), Optional.ToNullable(createdAtUtc), Optional.ToNullable(eTag), Optional.ToDictionary(groupProperties), Optional.ToNullable(schemaCompatibility), Optional.ToNullable(schemaType));
+            return new SchemaGroupData(id, name, type, systemData.Value, Optional.ToNullable(updatedAtUtc), Optional.ToNullable(createdAtUtc), Optional.ToNullable(eTag), Optional.ToDictionary(groupProperties), Optional.ToNullable(schemaCompatibility), Optional.ToNullable(schemaType), Optional.ToNullable(location));
         }
     }
 }
