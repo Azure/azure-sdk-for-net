@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static AssignedUser DeserializeAssignedUser(JsonElement element)
         {
             string objectId = default;
-            string tenantId = default;
+            Guid tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("objectId"))
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("tenantId"))
                 {
-                    tenantId = property.Value.GetString();
+                    tenantId = property.Value.GetGuid();
                     continue;
                 }
             }

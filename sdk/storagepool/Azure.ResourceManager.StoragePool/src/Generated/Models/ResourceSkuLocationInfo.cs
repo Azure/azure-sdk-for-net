@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <param name="location"> Location of the SKU. </param>
         /// <param name="zones"> List of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Details of capabilities available to a SKU in specific zones. </param>
-        internal ResourceSkuLocationInfo(string location, IReadOnlyList<string> zones, IReadOnlyList<ResourceSkuZoneDetails> zoneDetails)
+        internal ResourceSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<ResourceSkuZoneDetails> zoneDetails)
         {
             Location = location;
             Zones = zones;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         }
 
         /// <summary> Location of the SKU. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> List of availability zones where the SKU is supported. </summary>
         public IReadOnlyList<string> Zones { get; }
         /// <summary> Details of capabilities available to a SKU in specific zones. </summary>

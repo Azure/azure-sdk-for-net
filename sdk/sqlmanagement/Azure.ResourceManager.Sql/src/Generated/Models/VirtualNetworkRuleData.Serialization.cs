@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> virtualNetworkSubnetId = default;
             Optional<bool> ignoreMissingVnetServiceEndpoint = default;
             Optional<VirtualNetworkRuleState> state = default;
@@ -61,6 +61,11 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -102,7 +107,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new VirtualNetworkRuleData(id, name, type, systemData, virtualNetworkSubnetId.Value, Optional.ToNullable(ignoreMissingVnetServiceEndpoint), Optional.ToNullable(state));
+            return new VirtualNetworkRuleData(id, name, type, systemData.Value, virtualNetworkSubnetId.Value, Optional.ToNullable(ignoreMissingVnetServiceEndpoint), Optional.ToNullable(state));
         }
     }
 }

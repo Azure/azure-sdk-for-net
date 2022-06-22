@@ -810,7 +810,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public partial class ResourceModelWithAllowedPropertySet : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ResourceModelWithAllowedPropertySet(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public string ManagedBy { get { throw null; } set { } }

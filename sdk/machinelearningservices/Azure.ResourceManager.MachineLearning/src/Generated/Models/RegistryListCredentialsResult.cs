@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="location"></param>
         /// <param name="username"></param>
         /// <param name="passwords"></param>
-        internal RegistryListCredentialsResult(string location, string username, IReadOnlyList<PasswordDetail> passwords)
+        internal RegistryListCredentialsResult(AzureLocation? location, string username, IReadOnlyList<PasswordDetail> passwords)
         {
             Location = location;
             Username = username;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets the location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> Gets the username. </summary>
         public string Username { get; }
         /// <summary> Gets the passwords. </summary>

@@ -12,7 +12,15 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/c767823fdfd9d5e96bad
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
- 
+modelerfour:
+  flatten-payloads: false
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu
@@ -46,8 +54,6 @@ directive:
       $.MonitoredResource['x-ms-client-name'] = 'MonitoredResourceDetails';
       $.MonitoredResource.properties.sendingMetrics['x-ms-client-name'] = 'sendingMetricsStatus';
       $.MonitoredResource.properties.sendingLogs['x-ms-client-name'] = 'sendingLogsStatus';
-      $.LinkableEnvironmentRequest.properties.tenantId['format'] = 'uuid';
-      $.IdentityProperties.properties.tenantId['format'] = 'uuid';
       $.DynatraceSingleSignOnProperties.properties.enterpriseAppId['format'] = 'uuid';
       $.LinkableEnvironmentRequest.properties.region['x-ms-format'] = 'azure-location';
 ```

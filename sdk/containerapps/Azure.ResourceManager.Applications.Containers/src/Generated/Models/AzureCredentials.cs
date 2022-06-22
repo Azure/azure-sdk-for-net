@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Applications.Containers.Models
 {
     /// <summary> Container App credentials. </summary>
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// <param name="clientSecret"> Client Secret. </param>
         /// <param name="tenantId"> Tenant Id. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
-        internal AzureCredentials(string clientId, string clientSecret, string tenantId, string subscriptionId)
+        internal AzureCredentials(string clientId, string clientSecret, Guid? tenantId, string subscriptionId)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// <summary> Client Secret. </summary>
         public string ClientSecret { get; set; }
         /// <summary> Tenant Id. </summary>
-        public string TenantId { get; set; }
+        public Guid? TenantId { get; set; }
         /// <summary> Subscription Id. </summary>
         public string SubscriptionId { get; set; }
     }

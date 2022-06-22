@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Dynatrace
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<LogRules> logRules = default;
             Optional<MetricRules> metricRules = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -61,6 +61,11 @@ namespace Azure.ResourceManager.Dynatrace
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -107,7 +112,7 @@ namespace Azure.ResourceManager.Dynatrace
                     continue;
                 }
             }
-            return new TagRuleData(id, name, type, systemData, logRules.Value, metricRules.Value, Optional.ToNullable(provisioningState));
+            return new TagRuleData(id, name, type, systemData.Value, logRules.Value, metricRules.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

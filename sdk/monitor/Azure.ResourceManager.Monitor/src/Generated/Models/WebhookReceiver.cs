@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="objectId"> Indicates the webhook app object Id for aad auth. </param>
         /// <param name="identifierUri"> Indicates the identifier uri for aad auth. </param>
         /// <param name="tenantId"> Indicates the tenant id for aad auth. </param>
-        internal WebhookReceiver(string name, Uri serviceUri, bool? useCommonAlertSchema, bool? useAadAuth, string objectId, Uri identifierUri, string tenantId)
+        internal WebhookReceiver(string name, Uri serviceUri, bool? useCommonAlertSchema, bool? useAadAuth, string objectId, Uri identifierUri, Guid? tenantId)
         {
             Name = name;
             ServiceUri = serviceUri;
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Indicates the identifier uri for aad auth. </summary>
         public Uri IdentifierUri { get; set; }
         /// <summary> Indicates the tenant id for aad auth. </summary>
-        public string TenantId { get; set; }
+        public Guid? TenantId { get; set; }
     }
 }

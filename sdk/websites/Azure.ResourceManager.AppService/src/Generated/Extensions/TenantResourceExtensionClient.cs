@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(string location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<FunctionAppStack>> FirstPageFunc(int? pageSizeHint)
             {
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(string location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Page<FunctionAppStack> FirstPageFunc(int? pageSizeHint)
             {
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebAppStack> GetWebAppStacksForLocationProvidersAsync(string location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WebAppStack> GetWebAppStacksForLocationProvidersAsync(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<WebAppStack>> FirstPageFunc(int? pageSizeHint)
             {
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebAppStack> GetWebAppStacksForLocationProviders(string location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<WebAppStack> GetWebAppStacksForLocationProviders(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Page<WebAppStack> FirstPageFunc(int? pageSizeHint)
             {

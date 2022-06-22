@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -72,11 +72,16 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
             }
-            return new TemplateSpecPatch(id, name, type, systemData, Optional.ToDictionary(tags));
+            return new TemplateSpecPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags));
         }
     }
 }

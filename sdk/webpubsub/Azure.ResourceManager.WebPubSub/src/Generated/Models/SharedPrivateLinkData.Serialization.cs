@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.WebPubSub
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> groupId = default;
             Optional<string> privateLinkResourceId = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -68,6 +68,11 @@ namespace Azure.ResourceManager.WebPubSub
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -119,7 +124,7 @@ namespace Azure.ResourceManager.WebPubSub
                     continue;
                 }
             }
-            return new SharedPrivateLinkData(id, name, type, systemData, groupId.Value, privateLinkResourceId.Value, Optional.ToNullable(provisioningState), requestMessage.Value, Optional.ToNullable(status));
+            return new SharedPrivateLinkData(id, name, type, systemData.Value, groupId.Value, privateLinkResourceId.Value, Optional.ToNullable(provisioningState), requestMessage.Value, Optional.ToNullable(status));
         }
     }
 }

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<PrivateEndpointConnectionProxyProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -82,6 +82,11 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -108,7 +113,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                     continue;
                 }
             }
-            return new PrivateEndpointConnectionProxyData(id, name, type, systemData, Optional.ToNullable(provisioningState), eTag.Value, remotePrivateEndpoint.Value, status.Value);
+            return new PrivateEndpointConnectionProxyData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), eTag.Value, remotePrivateEndpoint.Value, status.Value);
         }
     }
 }
