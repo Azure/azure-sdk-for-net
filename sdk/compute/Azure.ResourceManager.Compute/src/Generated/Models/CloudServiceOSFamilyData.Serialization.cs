@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> name0 = default;
             Optional<string> label = default;
             Optional<IReadOnlyList<OSVersionPropertiesBase>> versions = default;
@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -95,7 +100,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new CloudServiceOSFamilyData(id, name, type, systemData, Optional.ToNullable(location), name0.Value, label.Value, Optional.ToList(versions));
+            return new CloudServiceOSFamilyData(id, name, type, systemData.Value, Optional.ToNullable(location), name0.Value, label.Value, Optional.ToList(versions));
         }
     }
 }

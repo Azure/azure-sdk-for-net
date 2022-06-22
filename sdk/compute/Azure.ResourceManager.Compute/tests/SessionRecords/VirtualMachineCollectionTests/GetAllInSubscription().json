@@ -9624,7 +9624,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "181",
+        "Content-Length": "170",
         "Content-Type": "application/json",
         "traceparent": "00-3bd3c158aec645ebd08ce71e8b565c29-e74089954a3e4a4a-00",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.22621)",
@@ -9647,7 +9647,6 @@
             }
           ]
         },
-        "tags": {},
         "location": "eastus"
       },
       "StatusCode": 201,
@@ -9856,7 +9855,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "281",
+        "Content-Length": "270",
         "Content-Type": "application/json",
         "traceparent": "00-b4d914e8e4ac82833b5b9d27bfde12fb-b46070ff7d6a65b3-00",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.22621)",
@@ -9876,7 +9875,6 @@
             }
           ]
         },
-        "tags": {},
         "location": "eastus"
       },
       "StatusCode": 201,
@@ -10065,7 +10063,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "181",
+        "Content-Length": "170",
         "Content-Type": "application/json",
         "traceparent": "00-7bb1073b5f9d7f63d43aeab924bd2342-d5b3fc6625662cca-00",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.22621)",
@@ -10088,7 +10086,6 @@
             }
           ]
         },
-        "tags": {},
         "location": "eastus"
       },
       "StatusCode": 201,
@@ -10297,7 +10294,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "281",
+        "Content-Length": "270",
         "Content-Type": "application/json",
         "traceparent": "00-f92cf690323a2ae61e56a359d6a345aa-59f0bfeb3b7b39a1-00",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.22621)",
@@ -10317,7 +10314,6 @@
             }
           ]
         },
-        "tags": {},
         "location": "eastus"
       },
       "StatusCode": 201,

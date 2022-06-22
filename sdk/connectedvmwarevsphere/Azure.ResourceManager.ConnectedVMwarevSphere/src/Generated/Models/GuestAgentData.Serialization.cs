@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> uuid = default;
             Optional<GuestCredential> credentials = default;
             Optional<HttpProxyConfiguration> httpProxyConfig = default;
@@ -72,6 +72,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -153,7 +158,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     continue;
                 }
             }
-            return new GuestAgentData(id, name, type, systemData, uuid.Value, credentials.Value, httpProxyConfig.Value, Optional.ToNullable(provisioningAction), status.Value, customResourceName.Value, Optional.ToList(statuses), provisioningState.Value);
+            return new GuestAgentData(id, name, type, systemData.Value, uuid.Value, credentials.Value, httpProxyConfig.Value, Optional.ToNullable(provisioningAction), status.Value, customResourceName.Value, Optional.ToList(statuses), provisioningState.Value);
         }
     }
 }

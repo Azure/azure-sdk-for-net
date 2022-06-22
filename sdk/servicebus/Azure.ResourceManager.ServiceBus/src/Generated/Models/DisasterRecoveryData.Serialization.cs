@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.ServiceBus
 
         internal static DisasterRecoveryData DeserializeDisasterRecoveryData(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<DisasterRecoveryProvisioningState> provisioningState = default;
             Optional<long> pendingReplicationOperationsCount = default;
             Optional<string> partnerNamespace = default;
@@ -49,7 +49,12 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -69,6 +74,11 @@ namespace Azure.ResourceManager.ServiceBus
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -125,7 +135,7 @@ namespace Azure.ResourceManager.ServiceBus
                     continue;
                 }
             }
-            return new DisasterRecoveryData(id, name, type, systemData, location.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(pendingReplicationOperationsCount), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role));
+            return new DisasterRecoveryData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), Optional.ToNullable(pendingReplicationOperationsCount), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role));
         }
     }
 }

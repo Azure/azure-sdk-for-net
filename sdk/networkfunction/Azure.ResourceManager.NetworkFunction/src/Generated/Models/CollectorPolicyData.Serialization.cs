@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NetworkFunction
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<IngestionPolicyPropertiesFormat> ingestionPolicy = default;
             Optional<IList<EmissionPoliciesPropertiesFormat>> emissionPolicies = default;
             Optional<CollectorProvisioningState> provisioningState = default;
@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.NetworkFunction
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -130,7 +135,7 @@ namespace Azure.ResourceManager.NetworkFunction
                     continue;
                 }
             }
-            return new CollectorPolicyData(id, name, type, systemData, Optional.ToNullable(etag), ingestionPolicy.Value, Optional.ToList(emissionPolicies), Optional.ToNullable(provisioningState));
+            return new CollectorPolicyData(id, name, type, systemData.Value, Optional.ToNullable(etag), ingestionPolicy.Value, Optional.ToList(emissionPolicies), Optional.ToNullable(provisioningState));
         }
     }
 }

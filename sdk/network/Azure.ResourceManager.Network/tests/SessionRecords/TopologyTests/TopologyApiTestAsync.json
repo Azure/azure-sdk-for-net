@@ -18,7 +18,6 @@
       },
       "RequestBody": {
         "location": "westus2",
-        "tags": {}
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -4382,7 +4381,6 @@
       },
       "RequestBody": {
         "location": "westus2",
-        "tags": {}
       },
       "StatusCode": 201,
       "ResponseHeaders": {

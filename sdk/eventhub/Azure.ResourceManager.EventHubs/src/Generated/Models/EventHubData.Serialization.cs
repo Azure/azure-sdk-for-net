@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EventHubs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<IReadOnlyList<string>> partitionIds = default;
             Optional<DateTimeOffset> createdAt = default;
             Optional<DateTimeOffset> updatedAt = default;
@@ -88,6 +88,11 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -179,7 +184,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventHubData(id, name, type, systemData, Optional.ToNullable(location), Optional.ToList(partitionIds), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(messageRetentionInDays), Optional.ToNullable(partitionCount), Optional.ToNullable(status), captureDescription.Value);
+            return new EventHubData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToList(partitionIds), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(messageRetentionInDays), Optional.ToNullable(partitionCount), Optional.ToNullable(status), captureDescription.Value);
         }
     }
 }

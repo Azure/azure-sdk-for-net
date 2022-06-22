@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<PrivateEndpoint> privateEndpoint = default;
             Optional<MachineLearningPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<MachineLearningPrivateEndpointConnectionProvisioningState> provisioningState = default;
@@ -139,6 +139,11 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -185,7 +190,7 @@ namespace Azure.ResourceManager.MachineLearning
                     continue;
                 }
             }
-            return new MachineLearningPrivateEndpointConnectionData(id, name, type, systemData, identity, Optional.ToNullable(location), Optional.ToDictionary(tags), sku.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new MachineLearningPrivateEndpointConnectionData(id, name, type, systemData.Value, identity, Optional.ToNullable(location), Optional.ToDictionary(tags), sku.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

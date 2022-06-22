@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.EventHubs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<WritableSubResource> privateEndpoint = default;
             Optional<ConnectionState> privateLinkServiceConnectionState = default;
             Optional<EndPointProvisioningState> provisioningState = default;
@@ -78,6 +78,11 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -124,7 +129,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventHubsPrivateEndpointConnectionData(id, name, type, systemData, Optional.ToNullable(location), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new EventHubsPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(location), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }
