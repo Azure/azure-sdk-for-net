@@ -7,9 +7,3 @@ possible. The principles that guide our efforts can be found in the
 
 ## Features Added
 - Initial release. Please see the README for information on using the new library.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes

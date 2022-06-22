@@ -17,6 +17,10 @@ namespace Azure.Monitor.Ingestion.Tests
 
         public string WorkspaceId => GetRecordedVariable("WorkspaceId");
 
+        public string StreamName => GetRecordedVariable("StreamName");
+
+        public string TableName => GetRecordedVariable("TableName");
+
         public ClientSecretCredential ClientSecretCredential => new ClientSecretCredential(TenantId, ClientId, ClientSecret);
     }
 }

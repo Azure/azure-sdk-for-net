@@ -2,8 +2,9 @@
 
 This section should give out brief introduction of the client library.
 
-* First sentence: **Describe the service** briefly. You can usually use the first line of the service's docs landing page for this (Example: [Cosmos DB docs landing page](https://docs.microsoft.com/azure/cosmos-db/)).
-* Next, add a **bulleted list** of the **most common tasks** supported by the package or library, prefaced with "Use the client library for [Product Name] to:". Then, provide code snippets for these tasks in the [Examples](#examples) section later in the document. Keep the task list short but include those tasks most developers need to perform with your package.
+The Azure Monitor Ingestion client library is used to send custom logs to [Azure Monitor](https://docs.microsoft.com/en-us/azure/azure-monitor/overview).
+
+This library allows you to send data from virtually any source to supported built-in tables or to custom tables that you create in Log Analytics workspace. You can even extend the schema of built-in tables with custom columns.
 
   **Resources:**
 * [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/src)
@@ -33,13 +34,45 @@ dotnet add package Azure.Monitor.Ingestion --prerelease
 
 ### Authenticate the client
 
-An authenticated client is required to ingest data. To authenticate, create an instance of a [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) class. Pass it to the constructor of your client class.
+An authenticated client is required to ingest data. To authenticate, create an instance of a [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) class (see [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md) for `DefaultAzureCredential` and other `TokenCredential` implementations). Pass it to the constructor of your client class.
+
+To authenticate, the following example uses `DefaultAzureCredential` from the [Azure.Identity](https://www.nuget.org/packages/Azure.Identity) package:
+
+```C# Snippet:CreateLogsIngestionClient
+Uri dataCollectionEndpoint = new Uri("...");
+TokenCredential credential = new DefaultAzureCredential();
+var client = new LogsIngestionClient(dataCollectionEndpoint, credential);
+```
 
 ## Key concepts
 
-The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
+### Data Collection Endpoint
 
-Include the *Thread safety* and *Additional concepts* sections below at the end of your *Key concepts* section. You may remove or add links depending on what your library makes use of:
+Data Collection Endpoints (DCEs) allow you to uniquely configure ingestion settings for Azure Monitor. [This 
+article][data_collection_endpoint] provides an overview of data collection endpoints including their contents and 
+structure and how you can create and work with them.
+
+### Data Collection Rule
+
+Data collection rules (DCR) define data collected by Azure Monitor and specify how and where that data should be sent or
+stored. The REST API call must specify a DCR to use. A single DCE can support multiple DCRs, so you can specify a
+different DCR for different sources and target tables.
+
+The DCR must understand the structure of the input data and the structure of the target table. If the two don't match,
+it can use a transformation to convert the source data to match the target table. You may also use the transform to
+filter source data and perform any other calculations or conversions.
+
+For more details, refer to [Data collection rules in Azure Monitor](https://docs.microsoft.com/azure/azure-monitor/essentials/data-collection-rule-overview).
+
+### Log Analytics Workspace Tables
+
+Custom logs can send data to any custom table that you create and to certain built-in tables in your Log Analytics 
+workspace. The target table must exist before you can send data to it. The following built-in tables are currently supported:
+
+- [CommonSecurityLog](https://docs.microsoft.com/azure/azure-monitor/reference/tables/commonsecuritylog)
+- [SecurityEvents](https://docs.microsoft.com/azure/azure-monitor/reference/tables/securityevent)
+- [Syslog](https://docs.microsoft.com/azure/azure-monitor/reference/tables/syslog)
+- [WindowsEvents](https://docs.microsoft.com/azure/azure-monitor/reference/tables/windowsevent)
 
 ### Thread safety
 
@@ -58,18 +91,21 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
+- [Upload custom logs](#upload-custom-logs)
+- [Verify logs](#verify-logs)
+
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.Ingestion/samples).
 
-### <scenario> Upload and Verify Entries Added
+### Upload custom logs
 
-You can create a client and call the client's `<operation>` method.
+You can create a client and call the client's `Upload` method.
 
-```C# Snippet:Azure_Monitor_Ingestion_Scenario
+```C# Snippet:UploadCustomLogs
 Uri dataCollectionEndpoint = new Uri("...");
 TokenCredential credential = new DefaultAzureCredential();
-string workspaceId = "...";
+string dcrImmutableId = "...";
+string streamName = "...";
 LogsIngestionClient client = new(dataCollectionEndpoint, credential);
-LogsQueryClient logsQueryClient = new(credential);
 
 DateTimeOffset currentTime = DateTimeOffset.UtcNow;
 
@@ -105,12 +141,24 @@ BinaryData data = BinaryData.FromObjectAsJson(
     });
 
 // Make the request
-Response response = client.Upload(TestEnvironment.DCRImmutableId, "Custom-MyTableRawData", RequestContent.Create(data)); //takes StreamName not tablename
+Response response = client.Upload(dcrImmutableId, streamName, RequestContent.Create(data));
+```
 
+### Verify logs
+
+You can verify that your data has been uploaded correctly by using the [Azure.Monitor.Query](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/README.md#install-the-package) library. Please run the [Upload custom logs](#upload-custom-logs) sample first before verifying the logs. 
+
+```C# Snippet:VerifyLogs
+string workspaceId = "...";
+TokenCredential credential = new DefaultAzureCredential();
+string tableName = "...";
+
+LogsQueryClient logsQueryClient = new(credential);
 LogsBatchQuery batch = new LogsBatchQuery();
+string query = tableName + " | count;";
 string countQueryId = batch.AddWorkspaceQuery(
     workspaceId,
-    "MyTable_CL | count;",
+    query,
     new QueryTimeRange(TimeSpan.FromDays(1)));
 
 Response<LogsBatchQueryResultCollection> responseLogsQuery = logsQueryClient.QueryBatch(batch);
@@ -120,21 +168,28 @@ Console.WriteLine("Table entry count: " + responseLogsQuery.Value.GetResult<int>
 
 ## Troubleshooting
 
-Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
+### Enabling Logging
 
-Provide information to help developers avoid throttling or other service-enforced errors they might encounter. For example, provide guidance and examples for using retry or connection policies in the API.
-
-If the package or a related package supports it, include tips for logging or enabling instrumentation to help them debug their code.
+Azure SDKs for .Net offer a consistent logging story to help aid in troubleshooting application errors and expedite
+their resolution. The logs produced will capture the flow of an application before reaching the terminal state to help
+locate the root issue. View the [logging][logging] wiki for guidance about enabling logging.
 
 ## Next steps
-
-* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
-* If appropriate, point users to other packages that might be useful.
-* If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
+More samples can be found [here][samples].
 
 ## Contributing
 
-This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
+This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License
+Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution.
+For details, visit [https://cla.microsoft.com](https://cla.microsoft.com).
+
+When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the
+PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this
+once across all repos using our CLA.
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
+For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact
+[opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 <!-- LINKS -->
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization

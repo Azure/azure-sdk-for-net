@@ -4,14 +4,14 @@ To use these samples, you'll first need to set up resources. See [getting starte
 
 ## <scenario> asynchronously
 
-You can create a client and call the client's `<operation>` method
+You can create a client and call the client's `UploadAsync` method
 
-```C# Snippet:Azure_Monitor_Ingestion_ScenarioAsync
+```C# Snippet:UploadCustomLogsAsync
 Uri dataCollectionEndpoint = new Uri("...");
 TokenCredential credential = new DefaultAzureCredential();
-string workspaceId = "...";
+string dcrImmutableId = "...";
+string streamName = "...";
 LogsIngestionClient client = new(dataCollectionEndpoint, credential);
-LogsQueryClient logsQueryClient = new(credential);
 
 DateTimeOffset currentTime = DateTimeOffset.UtcNow;
 
@@ -47,17 +47,7 @@ BinaryData data = BinaryData.FromObjectAsJson(
     });
 
 // Make the request
-Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, "Custom-MyTableRawData", RequestContent.Create(data)).ConfigureAwait(false); //takes StreamName not tablename
-
-LogsBatchQuery batch = new LogsBatchQuery();
-string countQueryId = batch.AddWorkspaceQuery(
-    workspaceId,
-    "MyTable_CL | count;",
-    new QueryTimeRange(TimeSpan.FromDays(1)));
-
-Response<LogsBatchQueryResultCollection> responseLogsQuery = await logsQueryClient.QueryBatchAsync(batch).ConfigureAwait(false);
-
-Console.WriteLine("Table entry count: " + responseLogsQuery.Value.GetResult<int>(countQueryId).Single());
+Response response = await client.UploadAsync(dcrImmutableId, streamName, RequestContent.Create(data)).ConfigureAwait(false);
 ```
 
 To see the full example source files, see:

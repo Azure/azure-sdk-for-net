@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query;
@@ -12,19 +13,19 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
 {
     public partial class IngestionSamples: SamplesBase<IngestionClientTestEnvironment>
     {
-        public void LogDataAndQuery()
+        public async Task LogDataAsync()
         {
-            #region Snippet:Azure_Monitor_Ingestion_Scenario
+            #region Snippet:UploadCustomLogsAsync
             Uri dataCollectionEndpoint = new Uri("...");
             TokenCredential credential = new DefaultAzureCredential();
-            string workspaceId = "...";
+            string dcrImmutableId = "...";
+            string streamName = "...";
 #if SNIPPET
 #else
             dataCollectionEndpoint = new Uri(TestEnvironment.DCREndpoint);
             credential = TestEnvironment.ClientSecretCredential;
 #endif
             LogsIngestionClient client = new(dataCollectionEndpoint, credential);
-            LogsQueryClient logsQueryClient = new(credential);
 
             DateTimeOffset currentTime = DateTimeOffset.UtcNow;
 
@@ -60,15 +61,30 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
                 });
 
             // Make the request
-            Response response = client.Upload(TestEnvironment.DCRImmutableId, "Custom-MyTableRawData", RequestContent.Create(data)); //takes StreamName not tablename
+            Response response = await client.UploadAsync(dcrImmutableId, streamName, RequestContent.Create(data)).ConfigureAwait(false);
+            #endregion
+        }
 
+        public async Task QueryDataAsync()
+        {
+            #region Snippet:VerifyLogsAsync
+            string workspaceId = "...";
+            TokenCredential credential = new DefaultAzureCredential();
+            string tableName = "...";
+#if SNIPPET
+#else
+            credential = TestEnvironment.ClientSecretCredential;
+#endif
+
+            LogsQueryClient logsQueryClient = new(credential);
             LogsBatchQuery batch = new LogsBatchQuery();
+            string query = tableName + " | count;";
             string countQueryId = batch.AddWorkspaceQuery(
                 workspaceId,
-                "MyTable_CL | count;",
+                query,
                 new QueryTimeRange(TimeSpan.FromDays(1)));
 
-            Response<LogsBatchQueryResultCollection> responseLogsQuery = logsQueryClient.QueryBatch(batch);
+            Response<LogsBatchQueryResultCollection> responseLogsQuery = await logsQueryClient.QueryBatchAsync(batch).ConfigureAwait(false);
 
             Console.WriteLine("Table entry count: " + responseLogsQuery.Value.GetResult<int>(countQueryId).Single());
             #endregion
