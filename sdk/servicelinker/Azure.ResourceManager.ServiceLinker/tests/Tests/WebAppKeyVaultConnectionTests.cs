@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ServiceLinker.Tests.Tests
                     Id = vault.Id,
                 },
                 AuthInfo = new SystemAssignedIdentityAuthInfo(),
-                ClientType = ClientType.Dotnet,
+                ClientType = ApplicationClientType.Dotnet,
             };
             await linkers.CreateOrUpdateAsync(WaitUntil.Completed, linkerName, linkerData);
 

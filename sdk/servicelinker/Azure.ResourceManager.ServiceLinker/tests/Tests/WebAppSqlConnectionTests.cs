@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ServiceLinker.Tests.Tests
                         Value = sqlPassword,
                     },
                 },
-                ClientType = ClientType.Dotnet,
+                ClientType = ApplicationClientType.Dotnet,
             };
             await linkers.CreateOrUpdateAsync(WaitUntil.Completed, linkerName, linkerData);
 

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ServiceLinker.Tests.Tests
                     Id = webPubSub.Id,
                 },
                 AuthInfo = new SecretAuthInfo(),
-                ClientType = ClientType.Dotnet,
+                ClientType = ApplicationClientType.Dotnet,
             };
             await linkers.CreateOrUpdateAsync(WaitUntil.Completed, linkerName, linkerData);
 
