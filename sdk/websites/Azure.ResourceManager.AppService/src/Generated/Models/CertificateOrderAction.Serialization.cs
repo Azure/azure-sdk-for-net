@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<CertificateOrderActionType> actionType = default;
             Optional<DateTimeOffset> createdAt = default;
             foreach (var property in element.EnumerateObject())
@@ -61,6 +61,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -97,7 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new CertificateOrderAction(id, name, type, systemData, kind.Value, Optional.ToNullable(actionType), Optional.ToNullable(createdAt));
+            return new CertificateOrderAction(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(actionType), Optional.ToNullable(createdAt));
         }
     }
 }

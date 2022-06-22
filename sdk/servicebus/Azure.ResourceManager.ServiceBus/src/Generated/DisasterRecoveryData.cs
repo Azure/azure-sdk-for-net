@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="partnerNamespace"> ARM Id of the Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </param>
         /// <param name="alternateName"> Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </param>
         /// <param name="role"> role of namespace in GEO DR - possible values &apos;Primary&apos; or &apos;PrimaryNotReplicating&apos; or &apos;Secondary&apos;. </param>
-        internal DisasterRecoveryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, DisasterRecoveryProvisioningState? provisioningState, long? pendingReplicationOperationsCount, string partnerNamespace, string alternateName, RoleDisasterRecovery? role) : base(id, name, resourceType, systemData, location)
+        internal DisasterRecoveryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DisasterRecoveryProvisioningState? provisioningState, long? pendingReplicationOperationsCount, string partnerNamespace, string alternateName, RoleDisasterRecovery? role) : base(id, name, resourceType, systemData, location)
         {
             ProvisioningState = provisioningState;
             PendingReplicationOperationsCount = pendingReplicationOperationsCount;

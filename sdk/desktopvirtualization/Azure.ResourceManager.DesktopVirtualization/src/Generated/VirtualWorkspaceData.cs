@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Models;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="friendlyName"> Friendly name of Workspace. </param>
         /// <param name="applicationGroupReferences"> List of applicationGroup resource Ids. </param>
         /// <param name="cloudPcResource"> Is cloud pc resource. </param>
-        internal VirtualWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, string kind, string etag, SystemAssignedServiceIdentity identity, ResourceModelWithAllowedPropertySetSku sku, ArmPlan plan, string objectId, string description, string friendlyName, IList<string> applicationGroupReferences, bool? cloudPcResource) : base(id, name, resourceType, systemData, tags, location, managedBy, kind, etag, identity, sku, plan)
+        internal VirtualWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, string kind, ETag? etag, SystemAssignedServiceIdentity identity, ResourceModelWithAllowedPropertySetSku sku, ArmPlan plan, string objectId, string description, string friendlyName, IList<string> applicationGroupReferences, bool? cloudPcResource) : base(id, name, resourceType, systemData, tags, location, managedBy, kind, etag, identity, sku, plan)
         {
             ObjectId = objectId;
             Description = description;

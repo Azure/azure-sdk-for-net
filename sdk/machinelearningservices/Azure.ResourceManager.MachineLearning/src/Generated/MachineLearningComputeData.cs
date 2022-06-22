@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Please note <see cref="Compute"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AksCompute"/>, <see cref="AmlCompute"/>, <see cref="ComputeInstance"/>, <see cref="DataFactoryCompute"/>, <see cref="DataLakeAnalyticsCompute"/>, <see cref="DatabricksCompute"/>, <see cref="HDInsightCompute"/>, <see cref="KubernetesCompute"/>, <see cref="SynapseSparkCompute"/> and <see cref="VirtualMachineCompute"/>.
         /// </param>
-        internal MachineLearningComputeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, MachineLearningSku sku, Compute properties) : base(id, name, resourceType, systemData)
+        internal MachineLearningComputeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, AzureLocation? location, IDictionary<string, string> tags, MachineLearningSku sku, Compute properties) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             Location = location;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> The identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Specifies the location of the resource. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
         /// <summary> Contains resource tags defined as key/value pairs. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The sku of the workspace. </summary>

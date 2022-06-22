@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     public partial class AvailableCluster
     {
         internal AvailableCluster() { }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
     }
     public partial class CaptureDescription
     {
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     public partial class ProxyResource : Azure.ResourceManager.Models.ResourceData
     {
         public ProxyResource() { }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PublicNetworkAccessFlag : System.IEquatable<Azure.ResourceManager.EventHubs.Models.PublicNetworkAccessFlag>

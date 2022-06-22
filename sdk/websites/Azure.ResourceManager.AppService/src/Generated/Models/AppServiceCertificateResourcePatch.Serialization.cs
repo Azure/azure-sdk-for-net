@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> keyVaultId = default;
             Optional<string> keyVaultSecretName = default;
             Optional<KeyVaultSecretStatus> provisioningState = default;
@@ -71,6 +71,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -107,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceCertificateResourcePatch(id, name, type, systemData, kind.Value, keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(provisioningState));
+            return new AppServiceCertificateResourcePatch(id, name, type, systemData.Value, kind.Value, keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

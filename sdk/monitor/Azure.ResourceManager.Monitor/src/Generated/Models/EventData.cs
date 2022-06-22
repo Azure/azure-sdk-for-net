@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="submissionTimestamp"> the timestamp of when the event became available for querying via this API. It is in ISO 8601 format. This value should not be confused eventTimestamp. As there might be a delay between the occurrence time of the event, and the time that the event is submitted to the Azure logging infrastructure. </param>
         /// <param name="subscriptionId"> the Azure subscription Id usually a GUID. </param>
         /// <param name="tenantId"> the Azure tenant Id. </param>
-        internal EventData(SenderAuthorization authorization, IReadOnlyDictionary<string, string> claims, string caller, string description, string id, string eventDataId, string correlationId, LocalizableString eventName, LocalizableString category, HttpRequestInfo httpRequest, EventLevel? level, string resourceGroupName, LocalizableString resourceProviderName, string resourceId, LocalizableString resourceType, string operationId, LocalizableString operationName, IReadOnlyDictionary<string, string> properties, LocalizableString status, LocalizableString subStatus, DateTimeOffset? eventTimestamp, DateTimeOffset? submissionTimestamp, string subscriptionId, string tenantId)
+        internal EventData(SenderAuthorization authorization, IReadOnlyDictionary<string, string> claims, string caller, string description, string id, string eventDataId, string correlationId, LocalizableString eventName, LocalizableString category, HttpRequestInfo httpRequest, EventLevel? level, string resourceGroupName, LocalizableString resourceProviderName, string resourceId, LocalizableString resourceType, string operationId, LocalizableString operationName, IReadOnlyDictionary<string, string> properties, LocalizableString status, LocalizableString subStatus, DateTimeOffset? eventTimestamp, DateTimeOffset? submissionTimestamp, string subscriptionId, Guid? tenantId)
         {
             Authorization = authorization;
             Claims = claims;
@@ -121,6 +121,6 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> the Azure subscription Id usually a GUID. </summary>
         public string SubscriptionId { get; }
         /// <summary> the Azure tenant Id. </summary>
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
     }
 }

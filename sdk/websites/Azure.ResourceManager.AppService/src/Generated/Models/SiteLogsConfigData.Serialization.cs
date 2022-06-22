@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<ApplicationLogsConfig> applicationLogs = default;
             Optional<HttpLogsConfig> httpLogs = default;
             Optional<EnabledConfig> failedRequestsTracing = default;
@@ -83,6 +83,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -139,7 +144,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new SiteLogsConfigData(id, name, type, systemData, kind.Value, applicationLogs.Value, httpLogs.Value, failedRequestsTracing.Value, detailedErrorMessages.Value);
+            return new SiteLogsConfigData(id, name, type, systemData.Value, kind.Value, applicationLogs.Value, httpLogs.Value, failedRequestsTracing.Value, detailedErrorMessages.Value);
         }
     }
 }

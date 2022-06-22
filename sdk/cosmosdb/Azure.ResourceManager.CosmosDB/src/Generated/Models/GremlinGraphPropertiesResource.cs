@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal GremlinGraphPropertiesResource(string id, IndexingPolicy indexingPolicy, ContainerPartitionKey partitionKey, int? defaultTtl, UniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, string rid, float? ts, string etag) : base(id, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy)
+        internal GremlinGraphPropertiesResource(string id, IndexingPolicy indexingPolicy, ContainerPartitionKey partitionKey, int? defaultTtl, UniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, string rid, float? ts, ETag? etag) : base(id, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy)
         {
             Rid = rid;
             Ts = ts;
@@ -45,6 +46,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
         public float? Ts { get; }
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
     }
 }

@@ -12,9 +12,19 @@ library-name: Compute
 namespace: Azure.ResourceManager.Compute
 require: https://github.com/Azure/azure-rest-api-specs/blob/2d6cb29af754f48a08f94cb6113bb1f01a4e0eb9/specification/compute/resource-manager/readme.md
 tag: package-2022-03-02
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
-output-folder: ./Generated
+modelerfour:
+  flatten-payloads: false
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  'locations': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu
@@ -86,22 +96,13 @@ directive:
   - from: swagger-document
     where: $.definitions.DiskSecurityType["x-ms-enum"].values[3]
     transform: $["name"] = "ConfidentialVmDiskEncryptedWithCustomerKey"
-  - from: swagger-document
-    where: $.paths..parameters[?(@.name === 'location')]
-    transform: $['x-ms-format'] = 'azure-location';
-  - from: swagger-document
-    where: $..parameters[?(@.name === 'location')]
-    transform: $['x-ms-format'] = 'azure-location'
   - from: skus.json
     where: $.definitions
     transform: >
       $.ResourceSku["x-ms-client-name"] = "ComputeResourceSku";
-      $.ResourceSku.properties.locations.items["x-ms-format"] = "azure-location";
       $.ResourceSkuCapacity["x-ms-client-name"] = "ComputeResourceSkuCapacity";
       $.ResourceSkuLocationInfo["x-ms-client-name"] = "ComputeResourceSkuLocationInfo";
-      $.ResourceSkuLocationInfo.properties.location["x-ms-format"] = "azure-location";
       $.ResourceSkuRestrictionInfo["x-ms-format"] = "ComputeResourceSkuRestrictionInfo";
-      $.ResourceSkuRestrictionInfo.properties.locations.items["x-ms-format"] = "azure-location";
   - from: common.json
     where: $.definitions
     transform: >
@@ -122,7 +123,6 @@ directive:
     transform: >
       $.VirtualMachineImageProperties.properties.dataDiskImages.description = "The list of data disk images information.";
       $.VirtualMachineImageResource["x-ms-client-name"] = "VirtualMachineImageBase";
-      $.VirtualMachineImageResource.properties.location["x-ms-format"] = "azure-location";
   - from: virtualMachineScaleSet.json
     where: $.definitions
     transform: >
@@ -131,7 +131,6 @@ directive:
       $.VirtualMachineScaleSetExtensionUpdate.properties.type["x-ms-format"] = "resource-type";
       $.VirtualMachineScaleSetVMExtension.properties.type["x-ms-format"] = "resource-type";
       $.VirtualMachineScaleSetVMExtensionUpdate.properties.type["x-ms-format"] = "resource-type";
-      $.UpgradeOperationHistoricalStatusInfo.properties.location["x-ms-format"] = "azure-location";
       $.RollingUpgradeStatusInfo["x-ms-client-name"] = "VirtualMachineScaleSetRollingUpgrade";
       $.VirtualMachineScaleSetSku.properties.resourceType["x-ms-format"] = "resource-type";
       $.VirtualMachineScaleSetVMInstanceView.properties.assignedHost["x-ms-format"] = "arm-id";
@@ -140,8 +139,6 @@ directive:
     transform: >
       $.RestorePointCollectionSourceProperties["x-ms-client-name"] = "RestorePointCollectionSource";
       $.RestorePointCollectionSourceProperties.properties.id["x-ms-format"] = "arm-id";
-      $.RestorePointCollectionSourceProperties.properties.location["x-ms-format"] = "azure-location";
-      $.RestorePointSourceMetadata.properties.location["x-ms-format"] = "azure-location";
   - from: restorePoint.json
     where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}"].get.parameters
     transform: >
@@ -211,21 +208,17 @@ directive:
     transform: >
       $.CloudService.properties.properties["x-ms-client-flatten"] = true;
       $.OSFamily["x-ms-client-name"] = "CloudServiceOSFamily";
-      $.OSFamily.properties.location["x-ms-format"] = "azure-location";
       $.OSFamily.properties.properties["x-ms-client-flatten"] = true;
       $.OSVersion["x-ms-client-name"] = "CloudServiceOSVersion";
       $.OSVersion.properties.properties["x-ms-client-flatten"] = true;
-      $.OSVersion.properties.location["x-ms-format"] = "azure-location";
       $.UpdateDomain["x-ms-client-name"] = "UpdateDomainIdentifier";
       $.UpdateDomain.properties.id["x-ms-format"] = "arm-id";
       $.Extension["x-ms-client-name"] = "CloudServiceExtension";
       $.Extension.properties.properties["x-ms-client-flatten"] = true;
       $.SubResource["x-ms-client-name"] = "ComputeWriteableSubResourceData";
       $.SubResource.properties.id["x-ms-format"] = "arm-id";
-      $.CloudServiceRole.properties.location["x-ms-format"] = "azure-location";
       $.CloudServiceRole.properties.properties["x-ms-client-flatten"] = true;
       $.RoleInstance["x-ms-client-name"] = "CloudServiceRoleInstance";
-      $.RoleInstance.properties.location["x-ms-format"] = "azure-location";
       $.RoleInstance.properties.properties["x-ms-client-flatten"] = true;
       $.LoadBalancerConfiguration.properties.id["x-ms-format"] = "arm-id";
       $.LoadBalancerConfiguration.properties.properties["x-ms-client-flatten"] = true;
@@ -248,14 +241,12 @@ directive:
     where: $.definitions
     transform: >
       $.PirResource["x-ms-client-name"] = "PirResourceData";
-      $.PirResource.properties.location["x-ms-format"] = "azure-location";
       $.PirSharedGalleryResource["x-ms-client-name"] = "PirSharedGalleryResourceData";
   - from: communityGallery.json
     where: $.definitions
     transform: >
       $.PirCommunityGalleryResource["x-ms-client-name"] = "PirCommunityGalleryResourceData";
       $.PirCommunityGalleryResource.properties.type["x-ms-client-name"] = "ResourceType";
-      $.PirCommunityGalleryResource.properties.location["x-ms-format"] = "azure-location";
       $.PirCommunityGalleryResource.properties.type["x-ms-format"] = "resource-type";
   - from: cloudService.json
     where: $.definitions.LoadBalancerConfigurationProperties

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="alternateName"> Alternate name specified when alias and namespace names are same. </param>
         /// <param name="role"> role of namespace in GEO DR - possible values &apos;Primary&apos; or &apos;PrimaryNotReplicating&apos; or &apos;Secondary&apos;. </param>
         /// <param name="pendingReplicationOperationsCount"> Number of entities pending to be replicated. </param>
-        internal DisasterRecoveryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, DisasterRecoveryProvisioningState? provisioningState, string partnerNamespace, string alternateName, RoleDisasterRecovery? role, long? pendingReplicationOperationsCount) : base(id, name, resourceType, systemData, location)
+        internal DisasterRecoveryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DisasterRecoveryProvisioningState? provisioningState, string partnerNamespace, string alternateName, RoleDisasterRecovery? role, long? pendingReplicationOperationsCount) : base(id, name, resourceType, systemData, location)
         {
             ProvisioningState = provisioningState;
             PartnerNamespace = partnerNamespace;

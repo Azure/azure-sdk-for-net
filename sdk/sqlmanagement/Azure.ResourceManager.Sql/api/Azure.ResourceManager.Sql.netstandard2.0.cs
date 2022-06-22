@@ -8,7 +8,7 @@ namespace Azure.ResourceManager.Sql
         public Azure.ResourceManager.Sql.Models.AutoExecuteStatusInheritedFrom? AutoExecuteStatusInheritedFrom { get { throw null; } }
         public string Kind { get { throw null; } }
         public System.DateTimeOffset? LastChecked { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string RecommendationsStatus { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.RecommendedActionData> RecommendedActions { get { throw null; } }
     }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Sql
         public Azure.ResourceManager.Sql.Models.DataMaskingState? DataMaskingState { get { throw null; } set { } }
         public string ExemptPrincipals { get { throw null; } set { } }
         public string Kind { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string MaskingLevel { get { throw null; } }
     }
     public partial class DataMaskingPolicyResource : Azure.ResourceManager.ArmResource
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Sql
         public EncryptionProtectorData() { }
         public bool? AutoRotationEnabled { get { throw null; } set { } }
         public string Kind { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string ServerKeyName { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ServerKeyType? ServerKeyType { get { throw null; } set { } }
         public string Subregion { get { throw null; } }
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Sql
     {
         public FailoverGroupData() { }
         public System.Collections.Generic.IList<string> Databases { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Sql.Models.PartnerInfo> PartnerServers { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.ReadOnlyEndpointFailoverPolicy? ReadOnlyEndpointFailoverPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.FailoverGroupReadWriteEndpoint ReadWriteEndpoint { get { throw null; } set { } }
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.Sql
     {
         public GeoBackupPolicyData(Azure.ResourceManager.Sql.Models.GeoBackupPolicyState state) { }
         public string Kind { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.GeoBackupPolicyState State { get { throw null; } set { } }
         public string StorageType { get { throw null; } }
     }
@@ -2120,7 +2120,7 @@ namespace Azure.ResourceManager.Sql
         public string Kind { get { throw null; } }
         public System.DateTimeOffset? LastRefresh { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> LinkedObjects { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.RecommendedActionImpactRecord> ObservedImpact { get { throw null; } }
         public string RecommendationReason { get { throw null; } }
         public System.TimeSpan? RevertActionDuration { get { throw null; } }
@@ -2322,7 +2322,7 @@ namespace Azure.ResourceManager.Sql
         public string DatabaseName { get { throw null; } }
         public System.DateTimeOffset? DeletionOn { get { throw null; } }
         public System.DateTimeOffset? EarliestRestoreOn { get { throw null; } }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public long? MaxSizeBytes { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -2400,7 +2400,7 @@ namespace Azure.ResourceManager.Sql
     {
         public RestorePointData() { }
         public System.DateTimeOffset? EarliestRestoreOn { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.DateTimeOffset? RestorePointCreationOn { get { throw null; } }
         public string RestorePointLabel { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.RestorePointType? RestorePointType { get { throw null; } }
@@ -2608,7 +2608,7 @@ namespace Azure.ResourceManager.Sql
     {
         public ServerCommunicationLinkData() { }
         public string Kind { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string PartnerServer { get { throw null; } set { } }
         public string State { get { throw null; } }
     }
@@ -2646,7 +2646,7 @@ namespace Azure.ResourceManager.Sql
         public ServerConnectionPolicyData() { }
         public Azure.ResourceManager.Sql.Models.ServerConnectionType? ConnectionType { get { throw null; } set { } }
         public string Kind { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
     }
     public partial class ServerConnectionPolicyResource : Azure.ResourceManager.ArmResource
     {
@@ -3108,7 +3108,7 @@ namespace Azure.ResourceManager.Sql
         public bool? AutoRotationEnabled { get { throw null; } }
         public System.DateTimeOffset? CreationOn { get { throw null; } }
         public string Kind { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.ServerKeyType? ServerKeyType { get { throw null; } set { } }
         public string Subregion { get { throw null; } }
         public string Thumbprint { get { throw null; } }
@@ -4941,7 +4941,7 @@ namespace Azure.ResourceManager.Sql.Models
         public string ColumnName { get { throw null; } set { } }
         public string IdPropertiesId { get { throw null; } }
         public string Kind { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.DataMaskingFunction? MaskingFunction { get { throw null; } set { } }
         public string NumberFrom { get { throw null; } set { } }
         public string NumberTo { get { throw null; } set { } }
@@ -5033,7 +5033,7 @@ namespace Azure.ResourceManager.Sql.Models
         public int? ErrorCode { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
         public int? ErrorSeverity { get { throw null; } }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public string Operation { get { throw null; } }
         public System.Guid? OperationId { get { throw null; } }
         public int? PercentComplete { get { throw null; } }
@@ -5060,7 +5060,7 @@ namespace Azure.ResourceManager.Sql.Models
         public int? ErrorCode { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
         public int? ErrorSeverity { get { throw null; } }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public string Operation { get { throw null; } }
         public System.Guid? OperationId { get { throw null; } }
         public int? PercentComplete { get { throw null; } }
@@ -6206,13 +6206,13 @@ namespace Azure.ResourceManager.Sql.Models
     {
         public PartnerInfo(string id) { }
         public string Id { get { throw null; } set { } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.FailoverGroupReplicationRole? ReplicationRole { get { throw null; } }
     }
     public partial class PartnerRegionInfo
     {
         public PartnerRegionInfo() { }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.InstanceFailoverGroupReplicationRole? ReplicationRole { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -7025,7 +7025,7 @@ namespace Azure.ResourceManager.Sql.Models
         public string ClientId { get { throw null; } }
         public string PrincipalId { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.ServicePrincipalType? PrincipalType { get { throw null; } set { } }
-        public string TenantId { get { throw null; } }
+        public System.Guid? TenantId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServicePrincipalType : System.IEquatable<Azure.ResourceManager.Sql.Models.ServicePrincipalType>

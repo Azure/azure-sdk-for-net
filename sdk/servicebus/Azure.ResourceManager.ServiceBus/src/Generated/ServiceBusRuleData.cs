@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="filterType"> Filter type that is evaluated against a BrokeredMessage. </param>
         /// <param name="sqlFilter"> Properties of sqlFilter. </param>
         /// <param name="correlationFilter"> Properties of correlationFilter. </param>
-        internal ServiceBusRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, FilterAction action, FilterType? filterType, SqlFilter sqlFilter, CorrelationFilter correlationFilter) : base(id, name, resourceType, systemData, location)
+        internal ServiceBusRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, FilterAction action, FilterType? filterType, SqlFilter sqlFilter, CorrelationFilter correlationFilter) : base(id, name, resourceType, systemData, location)
         {
             Action = action;
             FilterType = filterType;

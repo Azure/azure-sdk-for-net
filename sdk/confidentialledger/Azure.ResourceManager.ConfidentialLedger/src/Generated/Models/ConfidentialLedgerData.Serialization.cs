@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -105,11 +105,16 @@ namespace Azure.ResourceManager.ConfidentialLedger
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
             }
-            return new ConfidentialLedgerData(id, name, type, systemData, properties.Value, Optional.ToNullable(location), Optional.ToDictionary(tags));
+            return new ConfidentialLedgerData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location), Optional.ToDictionary(tags));
         }
     }
 }

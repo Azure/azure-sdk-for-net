@@ -50,6 +50,13 @@ override-operation-name:
 operation-groups-to-omit:
    Providers;ProviderResourceTypes;Resources;ResourceGroups;Tags;Subscriptions;Tenants
 
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -143,12 +150,10 @@ directive:
     where: $.definitions
     transform: >
       $.ManagedServiceIdentity['x-ms-client-name'] = 'ArmDeploymentScriptManagedIdentity';
-      $.ManagedServiceIdentity.properties.tenantId['format'] = 'uuid';
       $.AzureResourceBase['x-ms-client-name'] = 'ArmDeploymentScriptResourceBase';
       $.DeploymentScriptPropertiesBase['x-ms-client-name'] = 'ArmDeploymentScriptPropertiesBase';
       $.DeploymentScriptsError['x-ms-client-name'] = 'ArmDeploymentScriptsError';
       $.DeploymentScript['x-ms-client-name'] = 'ArmDeploymentScript';
-      $.DeploymentScript.properties.location['x-ms-format'] = 'azure-location';
       $.DeploymentScriptListResult['x-ms-client-name'] = 'ArmDeploymentScriptListResult';
       $.DeploymentScriptPropertiesBase.properties.cleanupPreference['x-ms-enum'].name = 'scriptCleanupOptions';
       $.EnvironmentVariable['x-ms-client-name'] = 'ScriptEnvironmentVariable';
@@ -160,7 +165,6 @@ directive:
       $.Identity['x-ms-client-name'] = 'ArmApplicationManagedIdentity';
       $.Identity.properties.type['x-ms-enum']['name'] = 'ArmApplicationManagedIdentityType';
       $.Identity.properties.principalId['format'] = 'uuid';
-      $.Identity.properties.tenantId['format'] = 'uuid';
       $.JitRequestProperties.properties.publisherTenantId['format'] = 'uuid';
       $.ApplicationProperties.properties.publisherTenantId['format'] = 'uuid';
       $.GenericResource['x-ms-client-name'] = 'ArmApplicationResourceData';
@@ -215,7 +219,6 @@ directive:
       $.ProvisioningState['x-ms-enum'].name = 'ResourcesProvisioningState';
       $.ProvisioningState['x-ms-client-name'] = 'ResourcesProvisioningState';
       $.userAssignedResourceIdentity.properties.principalId.format = 'uuid';
-      $.userAssignedResourceIdentity.properties.tenantId.format = 'uuid';
       $.userAssignedResourceIdentity['x-ms-client-name'] = 'ArmApplicationUserAssignedIdentity';
       $.ApplicationProperties.properties.applicationDefinitionId['x-ms-format'] = 'arm-id';
       $.ApplicationProperties.properties.managedResourceGroupId['x-ms-format'] = 'arm-id';
@@ -227,9 +230,7 @@ directive:
       $.DeploymentProperties.properties.mode['x-ms-enum'].name = 'ArmDeploymentMode';
       $.DeploymentPropertiesExtended.properties.mode['x-ms-enum'].name = 'ArmDeploymentMode';
       $.DeploymentExtended['x-ms-client-name'] = 'ArmDeployment';
-      $.DeploymentExtended.properties.location['x-ms-format'] = 'azure-location';
       $.Deployment['x-ms-client-name'] = 'ArmDeploymentContent';
-      $.Deployment.properties.location['x-ms-format'] = 'azure-location';
       $.DeploymentExportResult['x-ms-client-name'] = 'ArmDeploymentExportResult';
       $.DeploymentExtendedFilter['x-ms-client-name'] = 'ArmDeploymentExtendedFilter';
       $.DeploymentListResult['x-ms-client-name'] = 'ArmDeploymentListResult';
@@ -239,7 +240,6 @@ directive:
       $.DeploymentOperationsListResult['x-ms-client-name'] = 'ArmDeploymentOperationsListResult';
       $.DeploymentValidateResult['x-ms-client-name'] = 'ArmDeploymentValidateResult';
       $.DeploymentWhatIf['x-ms-client-name'] = 'ArmDeploymentWhatIfContent';
-      $.DeploymentWhatIf.properties.location['x-ms-format'] = 'azure-location';
       $.DeploymentWhatIfSettings['x-ms-client-name'] = 'ArmDeploymentWhatIfSettings';
       $.DeploymentWhatIfProperties['x-ms-client-name'] = 'ArmDeploymentWhatIfProperties';
       $.DeploymentProperties['x-ms-client-name'] = 'ArmDeploymentProperties';
@@ -303,11 +303,6 @@ directive:
     where: $.definitions.Alias.properties.type['x-ms-enum']
     transform:
       $['name'] = 'ResourceTypeAliasType';
-  - from: templateSpecs.json
-    where: $.definitions
-    transform: >
-      $.TemplateSpec.properties.location['x-ms-format'] = 'azure-location';
-      $.TemplateSpecVersion.properties.location['x-ms-format'] = 'azure-location';
   - from: resources.json
     where: $.definitions.DeploymentProperties.properties.expressionEvaluationOptions
     transform: >

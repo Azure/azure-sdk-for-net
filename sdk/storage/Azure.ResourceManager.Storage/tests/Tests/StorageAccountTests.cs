@@ -1559,13 +1559,27 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 NetworkRuleSet = new NetworkRuleSet(DefaultAction.Deny)
                 {
-                    Bypass = @"Logging, Metrics"
+                    Bypass = @"Logging, Metrics",
+                    IPRules =
+                    {
+                        new IPRule("23.45.67.91") { Action = "Allow" },
+                        new IPRule("23.45.67.92")
+                    },
+                    ResourceAccessRules =
+                    {
+                        new ResourceAccessRule()
+                        {
+                            TenantId = Guid.Parse("72f988bf-86f1-41af-91ab-2d7cd011db47"),
+                            ResourceId = "/subscriptions/subID/resourceGroups/RGName/providers/Microsoft.Storage/storageAccounts/testaccount1"
+                        },
+                        new ResourceAccessRule()
+                        {
+                            TenantId = Guid.Parse("72f988bf-86f1-41af-91ab-2d7cd011db47"),
+                            ResourceId = "/subscriptions/subID/resourceGroups/RGName/providers/Microsoft.Storage/storageAccounts/testaccount2"
+                        },
+                    }
                 }
             };
-            updateParameters.NetworkRuleSet.IPRules.Add(new IPRule("23.45.67.91") { Action = "Allow" });
-            updateParameters.NetworkRuleSet.IPRules.Add(new IPRule("23.45.67.92"));
-            updateParameters.NetworkRuleSet.ResourceAccessRules.Add(new ResourceAccessRule("72f988bf-86f1-41af-91ab-2d7cd011db47", "/subscriptions/subID/resourceGroups/RGName/providers/Microsoft.Storage/storageAccounts/testaccount1"));
-            updateParameters.NetworkRuleSet.ResourceAccessRules.Add(new ResourceAccessRule("72f988bf-86f1-41af-91ab-2d7cd011db47", "/subscriptions/subID/resourceGroups/RGName/providers/Microsoft.Storage/storageAccounts/testaccount2"));
             account = await account.UpdateAsync(updateParameters);
 
             //validate
@@ -1582,9 +1596,9 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual("Allow", account.Data.NetworkRuleSet.IPRules[1].Action);
             Assert.NotNull(account.Data.NetworkRuleSet.ResourceAccessRules);
             Assert.IsNotEmpty(account.Data.NetworkRuleSet.ResourceAccessRules);
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", account.Data.NetworkRuleSet.ResourceAccessRules[0].TenantId);
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", account.Data.NetworkRuleSet.ResourceAccessRules[0].TenantId.ToString());
             Assert.AreEqual("/subscriptions/subID/resourceGroups/RGName/providers/Microsoft.Storage/storageAccounts/testaccount1", account.Data.NetworkRuleSet.ResourceAccessRules[0].ResourceId);
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", account.Data.NetworkRuleSet.ResourceAccessRules[1].TenantId);
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", account.Data.NetworkRuleSet.ResourceAccessRules[1].TenantId.ToString());
             Assert.AreEqual("/subscriptions/subID/resourceGroups/RGName/providers/Microsoft.Storage/storageAccounts/testaccount2", account.Data.NetworkRuleSet.ResourceAccessRules[1].ResourceId);
 
             //delete vnet

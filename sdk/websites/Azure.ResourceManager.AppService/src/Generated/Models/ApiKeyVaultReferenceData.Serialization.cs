@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> reference = default;
             Optional<ResolveStatus> status = default;
             Optional<string> vaultName = default;
@@ -113,6 +113,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -184,7 +189,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new ApiKeyVaultReferenceData(id, name, type, systemData, kind.Value, reference.Value, Optional.ToNullable(status), vaultName.Value, secretName.Value, secretVersion.Value, identityType, details.Value, source.Value, activeVersion.Value);
+            return new ApiKeyVaultReferenceData(id, name, type, systemData.Value, kind.Value, reference.Value, Optional.ToNullable(status), vaultName.Value, secretName.Value, secretVersion.Value, identityType, details.Value, source.Value, activeVersion.Value);
         }
     }
 }

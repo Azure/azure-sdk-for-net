@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> virtualNetworkName = default;
             Optional<VnetInfo> virtualNetworkConnection = default;
             Optional<IReadOnlyList<RelayServiceConnectionEntityData>> hybridConnections = default;
@@ -64,6 +64,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -125,7 +130,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new NetworkFeaturesData(id, name, type, systemData, kind.Value, virtualNetworkName.Value, virtualNetworkConnection.Value, Optional.ToList(hybridConnections), Optional.ToList(hybridConnectionsV2));
+            return new NetworkFeaturesData(id, name, type, systemData.Value, kind.Value, virtualNetworkName.Value, virtualNetworkConnection.Value, Optional.ToList(hybridConnections), Optional.ToList(hybridConnectionsV2));
         }
     }
 }

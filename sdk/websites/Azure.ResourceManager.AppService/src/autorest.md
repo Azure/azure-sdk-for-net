@@ -12,9 +12,11 @@ library-name: AppService
 namespace: Azure.ResourceManager.AppService
 require: https://github.com/Azure/azure-rest-api-specs/blob/35f8a4df47aedc1ce185c854595cba6b83fa6c71/specification/web/resource-manager/readme.md
 tag: package-2021-02
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
+  flatten-payloads: false
   lenient-model-deduplication: true
   naming:
     override:
@@ -35,8 +37,6 @@ modelerfour:
       Status: OperationStatus
       DetectorResponse: AppServiceDetector
       DetectorDefinitionResource: DetectorDefinition
-    
-output-folder: ./Generated
 
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
@@ -104,6 +104,13 @@ override-operation-name:
 
 no-property-type-replacement:
 - ApiManagementConfig
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu

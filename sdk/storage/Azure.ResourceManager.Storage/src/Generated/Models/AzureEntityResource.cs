@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,12 +25,12 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> Resource Etag. </param>
-        internal AzureEntityResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag) : base(id, name, resourceType, systemData)
+        internal AzureEntityResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Etag = etag;
         }
 
         /// <summary> Resource Etag. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
     }
 }

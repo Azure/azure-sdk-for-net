@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Models;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="metadata"> Metadata attached to the forwarding rule. </param>
         /// <param name="forwardingRuleState"> The state of forwarding rule. </param>
         /// <param name="provisioningState"> The current provisioning state of the forwarding rule. This is a read-only property and any attempt to set this value will be ignored. </param>
-        internal ForwardingRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, string domainName, IList<TargetDnsServer> targetDnsServers, IDictionary<string, string> metadata, ForwardingRuleState? forwardingRuleState, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal ForwardingRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string domainName, IList<TargetDnsServer> targetDnsServers, IDictionary<string, string> metadata, ForwardingRuleState? forwardingRuleState, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Etag = etag;
             DomainName = domainName;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> ETag of the forwarding rule. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> The domain name for the forwarding rule. </summary>
         public string DomainName { get; set; }
         /// <summary> DNS servers to forward the DNS query to. </summary>

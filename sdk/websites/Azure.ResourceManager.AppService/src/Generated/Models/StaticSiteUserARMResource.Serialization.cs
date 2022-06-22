@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> provider = default;
             Optional<string> userId = default;
             Optional<string> displayName = default;
@@ -67,6 +67,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -103,7 +108,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StaticSiteUserARMResource(id, name, type, systemData, kind.Value, provider.Value, userId.Value, displayName.Value, roles.Value);
+            return new StaticSiteUserARMResource(id, name, type, systemData.Value, kind.Value, provider.Value, userId.Value, displayName.Value, roles.Value);
         }
     }
 }

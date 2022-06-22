@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Reservations
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -89,11 +89,16 @@ namespace Azure.ResourceManager.Reservations
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
             }
-            return new ReservationResponseData(id, name, type, systemData, Optional.ToNullable(location), Optional.ToNullable(etag), sku.Value, properties.Value, kind.Value);
+            return new ReservationResponseData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(etag), sku.Value, properties.Value, kind.Value);
         }
     }
 }
