@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
-            Optional<Access> access = default;
+            Optional<AccessType> access = default;
             Optional<RouteFilterRuleType> routeFilterRuleType = default;
             Optional<IList<string>> communities = default;
             Optional<NetworkProvisioningState> provisioningState = default;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            access = new Access(property0.Value.GetString());
+                            access = new AccessType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("routeFilterRuleType"))

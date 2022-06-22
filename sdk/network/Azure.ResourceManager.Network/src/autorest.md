@@ -64,7 +64,6 @@ override-operation-name:
   VirtualNetworkGateways_VpnDeviceConfigurationScript: VpnDeviceConfigurationScript
 
 directive:
-#   networkWatcher.json:
   - rename-model:
       from: ConnectionMonitor
       to: ConnectionMonitorInput
@@ -82,12 +81,13 @@ directive:
   - remove-operation: "GetBastionShareableLink"
   - remove-operation: "GetActiveSessions"
   - remove-operation: "DisconnectActiveSessions"
-  - from: networkWatcher.json
-    where: $.definitions.ProtocolConfiguration.properties.HTTPConfiguration
-    transform: $['x-ms-client-name'] = 'HttpProtocolConfiguration' 
   - remove-operation: "ApplicationGateways_ListAvailableSslOptions"
   - remove-operation: "ApplicationGateways_ListAvailableSslPredefinedPolicies"
   - remove-operation: "ApplicationGateways_GetSslPredefinedPolicy"
+  - from: virtualNetwork.json
+    where: $.definitions
+    transform: >
+      $.Delegation['x-ms-client-name'] = 'ServiceDelegation';
   - from: virtualNetworkGateway.json
     where: $.definitions
     transform: >
@@ -107,6 +107,7 @@ directive:
   - from: network.json
     where: $.definitions
     transform: >
+      $.Access['x-ms-enum']['name'] = 'AccessType'; 
       $.NetworkResource = {
         "properties": {
             "id": {
@@ -211,6 +212,9 @@ directive:
     transform: >
       $['x-ms-format'] = 'arm-id';
   - from: networkWatcher.json
+    where: $.definitions..storageId
+    transform: $['x-ms-format'] = 'arm-id'
+  - from: networkWatcher.json
     where: $.definitions
     transform: >
       $.FlowLogPropertiesFormat.properties.targetResourceGuid['format'] = 'uuid';
@@ -229,6 +233,11 @@ directive:
       $.VerificationIPFlowParameters.properties.targetNicResourceId['x-ms-format'] = 'arm-id';
       $.NextHopParameters.properties.targetNicResourceId['x-ms-format'] = 'arm-id';
       $.NextHopResult.properties.routeTableId['x-ms-format'] = 'arm-id';
+      $.ProtocolConfiguration.properties.HTTPConfiguration['x-ms-client-name'] = 'HttpProtocolConfiguration';
+      $.ConnectivityIssue.properties.severity['x-ms-enum']['name'] = 'IssueSeverity';
+      $.ConnectivityIssue.properties.origin['x-ms-enum']['name'] = 'IssueOrigin';
+      $.ConnectivityParameters.properties.protocol['x-ms-enum']['name'] = 'NetworkWatcherProtocol';
+      $.Direction['x-ms-enum']['name'] = 'TrafficDirection';
   - from: usage.json
     where: $.definitions.Usage.properties.id
     transform: >
