@@ -11,7 +11,7 @@ Uri dataCollectionEndpoint = new Uri("...");
 TokenCredential credential = new DefaultAzureCredential();
 string workspaceId = "...";
 LogsIngestionClient client = new(dataCollectionEndpoint, credential);
-LogsQueryClient logsQueryClient = new LogsQueryClient(credential);
+LogsQueryClient logsQueryClient = new(credential);
 
 DateTimeOffset currentTime = DateTimeOffset.UtcNow;
 

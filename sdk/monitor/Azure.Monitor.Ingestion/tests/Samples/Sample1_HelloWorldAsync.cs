@@ -27,7 +27,7 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
             credential = TestEnvironment.ClientSecretCredential;
 #endif
             LogsIngestionClient client = new(dataCollectionEndpoint, credential);
-            LogsQueryClient logsQueryClient = new LogsQueryClient(credential);
+            LogsQueryClient logsQueryClient = new(credential);
 
             DateTimeOffset currentTime = DateTimeOffset.UtcNow;
 

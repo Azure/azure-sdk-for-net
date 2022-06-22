@@ -65,12 +65,12 @@ namespace Azure.Monitor.Ingestion.Tests
                 });
 
             // Make the request
-            Response response = client.Upload(TestEnvironment.DCRImmutableId, "Custom-MyTableRawData", RequestContent.Create(data)); //takes StreamName not tablename
+            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, "Custom-MyTableRawData", RequestContent.Create(data)).ConfigureAwait(false); //takes StreamName not tablename
 
             // Check the response
             Assert.AreEqual(204, response.Status);
 
-            LogsQueryClient logsQueryClient = new LogsQueryClient(TestEnvironment.ClientSecretCredential);
+            LogsQueryClient logsQueryClient = new(TestEnvironment.ClientSecretCredential);
             var batch = new LogsBatchQuery();
 
             string countQueryId = batch.AddWorkspaceQuery(
@@ -78,7 +78,7 @@ namespace Azure.Monitor.Ingestion.Tests
                 "MyTable_CL | count;",
                 new QueryTimeRange(TimeSpan.FromDays(1)));
 
-            Response<LogsBatchQueryResultCollection> responseLogsQuery = await logsQueryClient.QueryBatchAsync(batch);
+            Response<LogsBatchQueryResultCollection> responseLogsQuery = await logsQueryClient.QueryBatchAsync(batch).ConfigureAwait(false);
 
             // Check the Azure.Monitor.Query Respose
             Assert.AreEqual(200, responseLogsQuery.GetRawResponse().Status);
@@ -95,19 +95,19 @@ namespace Azure.Monitor.Ingestion.Tests
 
             BinaryData data = BinaryData.FromStream(stream);
             // Make the request
-            Response response = client.Upload(TestEnvironment.DCRImmutableId, "Custom-MyTableRawData", RequestContent.Create(data));
+            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, "Custom-MyTableRawData", RequestContent.Create(data)).ConfigureAwait(false);
 
             // Check the response
             Assert.AreEqual(204, response.Status);
 
-            LogsQueryClient logsQueryClient = new LogsQueryClient(TestEnvironment.ClientSecretCredential);
+            LogsQueryClient logsQueryClient = new(TestEnvironment.ClientSecretCredential);
             var batch = new LogsBatchQuery();
             string countQueryId = batch.AddWorkspaceQuery(
                 TestEnvironment.WorkspaceId,
                 "MyTable_CL | count;",
                 new QueryTimeRange(TimeSpan.FromDays(1)));
 
-            Response<LogsBatchQueryResultCollection> responseLogsQuery = await logsQueryClient.QueryBatchAsync(batch);
+            Response<LogsBatchQueryResultCollection> responseLogsQuery = await logsQueryClient.QueryBatchAsync(batch).ConfigureAwait(false);
 
             // Check the Azure.Monitor.Query Respose
             Assert.AreEqual(200, responseLogsQuery.GetRawResponse().Status);
@@ -121,7 +121,7 @@ namespace Azure.Monitor.Ingestion.Tests
         {
             LogsIngestionClient client = CreateClient();
 
-            var exception = Assert.Throws<RequestFailedException>(() => client.Upload(TestEnvironment.DCRImmutableId, "Custom-MyTableRawData", RequestContent.Create(Stream.Null)));
+            var exception = Assert.Throws<RequestFailedException>(async () => await client.UploadAsync(TestEnvironment.DCRImmutableId, "Custom-MyTableRawData", RequestContent.Create(Stream.Null)).ConfigureAwait(false));
 
             Assert.AreEqual(null, exception.ErrorCode);
             Assert.AreEqual(500, exception.Status);
@@ -138,7 +138,7 @@ namespace Azure.Monitor.Ingestion.Tests
             const int Mb = 1024 * 1024;
             string greaterThan1Mb = new string('*', Mb + 5); //1,048,576 is 1 Mb
 
-            var exception = Assert.Throws<RequestFailedException>(() => client.Upload(TestEnvironment.DCRImmutableId, "Custom-MyTableRawData", RequestContent.Create(greaterThan1Mb)));
+            var exception = Assert.Throws<RequestFailedException>(async () => await client.UploadAsync(TestEnvironment.DCRImmutableId, "Custom-MyTableRawData", RequestContent.Create(greaterThan1Mb)).ConfigureAwait(false));
 
             Assert.AreEqual("ContentLengthLimitExceeded", exception.ErrorCode);
             Assert.AreEqual(413, exception.Status);
@@ -153,7 +153,7 @@ namespace Azure.Monitor.Ingestion.Tests
 
             var data = BinaryData.FromString("").ToStream();
 
-            var exception = Assert.Throws<RequestFailedException>(() => client.Upload(TestEnvironment.DCRImmutableId, "Custom-MyTableRawData", RequestContent.Create(data)));
+            var exception = Assert.Throws<RequestFailedException>(async () => await client.UploadAsync(TestEnvironment.DCRImmutableId, "Custom-MyTableRawData", RequestContent.Create(data)).ConfigureAwait(false));
 
             Assert.AreEqual(null, exception.ErrorCode);
             Assert.AreEqual(500, exception.Status);
@@ -167,7 +167,7 @@ namespace Azure.Monitor.Ingestion.Tests
             LogsIngestionClient client = CreateClient();
 
             Stream stream = null;
-            var exception = Assert.Throws<RequestFailedException>(() => client.Upload(TestEnvironment.DCRImmutableId, "Custom-MyTableRawData", RequestContent.Create(stream)));
+            var exception = Assert.Throws<RequestFailedException>(async () => await client.UploadAsync(TestEnvironment.DCRImmutableId, "Custom-MyTableRawData", RequestContent.Create(stream)).ConfigureAwait(false));
 
             Assert.AreEqual("BadArgumentError", exception.ErrorCode);
             StringAssert.StartsWith("Batch query with id '0' failed.", exception.Message);

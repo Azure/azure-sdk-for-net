@@ -60,7 +60,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.Ingestion/samples).
 
-### <scenario>
+### <scenario> Upload and Verify Entries Added
 
 You can create a client and call the client's `<operation>` method.
 
@@ -69,7 +69,7 @@ Uri dataCollectionEndpoint = new Uri("...");
 TokenCredential credential = new DefaultAzureCredential();
 string workspaceId = "...";
 LogsIngestionClient client = new(dataCollectionEndpoint, credential);
-LogsQueryClient logsQueryClient = new LogsQueryClient(credential);
+LogsQueryClient logsQueryClient = new(credential);
 
 DateTimeOffset currentTime = DateTimeOffset.UtcNow;
 
