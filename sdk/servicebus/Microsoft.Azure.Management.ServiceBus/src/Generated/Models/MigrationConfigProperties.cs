@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     /// Single item in List or Get Migration Config operation
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class MigrationConfigProperties : Resource
+    public partial class MigrationConfigProperties : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the MigrationConfigProperties class.
@@ -36,9 +36,14 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// name which has no entities, will be used for migration</param>
         /// <param name="postMigrationName">Name to access Standard Namespace
         /// after migration</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.EventHub/Namespaces" or
+        /// "Microsoft.EventHub/Namespaces/EventHubs"</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
         /// <param name="provisioningState">Provisioning state of Migration
         /// Configuration </param>
         /// <param name="pendingReplicationOperationsCount">Number of entities
@@ -48,8 +53,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Initiating, Syncing, Active</param>
         /// <param name="systemData">The system meta data relating to this
         /// resource.</param>
-        public MigrationConfigProperties(string targetNamespace, string postMigrationName, string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string), long? pendingReplicationOperationsCount = default(long?), string migrationState = default(string), SystemData systemData = default(SystemData))
-            : base(id, name, type)
+        public MigrationConfigProperties(string targetNamespace, string postMigrationName, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string provisioningState = default(string), long? pendingReplicationOperationsCount = default(long?), string migrationState = default(string), SystemData systemData = default(SystemData))
+            : base(id, name, type, location)
         {
             ProvisioningState = provisioningState;
             PendingReplicationOperationsCount = pendingReplicationOperationsCount;

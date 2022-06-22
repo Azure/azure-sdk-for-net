@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Static Site User ARM resource. </summary>
-    public partial class StaticSiteUserARMResource : ProxyOnlyResource
+    public partial class StaticSiteUserARMResource : ResourceData
     {
         /// <summary> Initializes a new instance of StaticSiteUserARMResource. </summary>
         public StaticSiteUserARMResource()
@@ -23,17 +23,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="provider"> The identity provider for the static site user. </param>
         /// <param name="userId"> The user id for the static site user. </param>
         /// <param name="displayName"> The display name for the static site user. </param>
         /// <param name="roles"> The roles for the static site user, in free-form string format. </param>
-        internal StaticSiteUserARMResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string provider, string userId, string displayName, string roles) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal StaticSiteUserARMResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provider, string userId, string displayName, string roles, string kind) : base(id, name, resourceType, systemData)
         {
             Provider = provider;
             UserId = userId;
             DisplayName = displayName;
             Roles = roles;
+            Kind = kind;
         }
 
         /// <summary> The identity provider for the static site user. </summary>
@@ -44,5 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string DisplayName { get; }
         /// <summary> The roles for the static site user, in free-form string format. </summary>
         public string Roles { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

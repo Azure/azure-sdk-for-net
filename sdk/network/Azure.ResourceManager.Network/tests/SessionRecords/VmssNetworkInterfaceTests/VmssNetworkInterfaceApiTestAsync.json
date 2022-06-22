@@ -3379,7 +3379,6 @@
       },
       "RequestBody": {
         "location": "East US",
-        "tags": {}
       },
       "StatusCode": 201,
       "ResponseHeaders": {

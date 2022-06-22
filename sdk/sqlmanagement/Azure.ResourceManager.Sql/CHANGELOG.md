@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Base type of `RestorableDroppedDatabaseData` changed to `Azure.ResourceManager.Models.TrackedResourceData`.
+
 ### Bugs Fixed
 
 ### Other Changes

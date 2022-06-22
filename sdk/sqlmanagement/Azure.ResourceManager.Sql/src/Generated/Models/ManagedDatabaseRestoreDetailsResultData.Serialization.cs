@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> status = default;
             Optional<string> currentRestoringFileName = default;
             Optional<string> lastRestoredFileName = default;
@@ -59,6 +59,11 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -155,7 +160,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ManagedDatabaseRestoreDetailsResultData(id, name, type, systemData, status.Value, currentRestoringFileName.Value, lastRestoredFileName.Value, Optional.ToNullable(lastRestoredFileTime), Optional.ToNullable(percentCompleted), Optional.ToList(unrestorableFiles), Optional.ToNullable(numberOfFilesDetected), lastUploadedFileName.Value, Optional.ToNullable(lastUploadedFileTime), blockReason.Value);
+            return new ManagedDatabaseRestoreDetailsResultData(id, name, type, systemData.Value, status.Value, currentRestoringFileName.Value, lastRestoredFileName.Value, Optional.ToNullable(lastRestoredFileTime), Optional.ToNullable(percentCompleted), Optional.ToList(unrestorableFiles), Optional.ToNullable(numberOfFilesDetected), lastUploadedFileName.Value, Optional.ToNullable(lastUploadedFileTime), blockReason.Value);
         }
     }
 }

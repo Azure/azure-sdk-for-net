@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> AzureStorageInfo dictionary resource. </summary>
-    public partial class AzureStoragePropertyDictionaryResource : ProxyOnlyResource
+    public partial class AzureStoragePropertyDictionaryResource : ResourceData
     {
         /// <summary> Initializes a new instance of AzureStoragePropertyDictionaryResource. </summary>
         public AzureStoragePropertyDictionaryResource()
@@ -25,14 +25,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="properties"> Azure storage accounts. </param>
-        internal AzureStoragePropertyDictionaryResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, IDictionary<string, AzureStorageInfoValue> properties) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal AzureStoragePropertyDictionaryResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, AzureStorageInfoValue> properties, string kind) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            Kind = kind;
         }
 
         /// <summary> Azure storage accounts. </summary>
         public IDictionary<string, AzureStorageInfoValue> Properties { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

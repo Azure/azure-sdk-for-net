@@ -111,7 +111,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public const int StackFrame_Assembly_MaxLength = 1024;
         public const int StackFrame_FileName_MaxLength = 1024;
 
-        // TODO: Apply these rules
-        public const int TelemetryEnvelope_Seq_MaxLength = 64;
+        public const int TelemetryEnvelope_Seq_MaxLength = 64; // TODO: TelemetryItem.Sequence is currently not in use (2022-06-20).
+        public const int TelemetryEnvelope_Name_MaxLength = 1024;
+        public const int TelemetryEnvelope_Time_MaxLength = 64;
+        public const int TelemetryEnvelope_InstrumentationKey_MaxLength = 40;
     }
 }

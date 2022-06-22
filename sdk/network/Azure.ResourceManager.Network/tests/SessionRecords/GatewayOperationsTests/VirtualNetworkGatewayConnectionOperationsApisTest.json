@@ -6786,7 +6786,6 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "tags": {},
         "location": "West US"
       },
       "StatusCode": 201,

@@ -28,13 +28,15 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="targetNamespace"> Existing premium Namespace ARM Id name which has no entities, will be used for migration. </param>
         /// <param name="postMigrationName"> Name to access Standard Namespace after migration. </param>
         /// <param name="migrationState"> State in which Standard to Premium Migration is, possible values : Unknown, Reverting, Completing, Initiating, Syncing, Active. </param>
-        internal MigrationConfigPropertiesData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, long? pendingReplicationOperationsCount, string targetNamespace, string postMigrationName, string migrationState) : base(id, name, resourceType, systemData)
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        internal MigrationConfigPropertiesData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, long? pendingReplicationOperationsCount, string targetNamespace, string postMigrationName, string migrationState, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PendingReplicationOperationsCount = pendingReplicationOperationsCount;
             TargetNamespace = targetNamespace;
             PostMigrationName = postMigrationName;
             MigrationState = migrationState;
+            Location = location;
         }
 
         /// <summary> Provisioning state of Migration Configuration. </summary>
@@ -47,5 +49,7 @@ namespace Azure.ResourceManager.ServiceBus
         public string PostMigrationName { get; set; }
         /// <summary> State in which Standard to Premium Migration is, possible values : Unknown, Reverting, Completing, Initiating, Syncing, Active. </summary>
         public string MigrationState { get; }
+        /// <summary> The geo-location where the resource lives. </summary>
+        public AzureLocation? Location { get; }
     }
 }

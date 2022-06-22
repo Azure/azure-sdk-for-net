@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the SiteLogsConfig data model. </summary>
-    public partial class SiteLogsConfigData : ProxyOnlyResource
+    public partial class SiteLogsConfigData : ResourceData
     {
         /// <summary> Initializes a new instance of SiteLogsConfigData. </summary>
         public SiteLogsConfigData()
@@ -24,17 +24,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="applicationLogs"> Application logs configuration. </param>
         /// <param name="httpLogs"> HTTP logs configuration. </param>
         /// <param name="failedRequestsTracing"> Failed requests tracing configuration. </param>
         /// <param name="detailedErrorMessages"> Detailed error messages configuration. </param>
-        internal SiteLogsConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ApplicationLogsConfig applicationLogs, HttpLogsConfig httpLogs, EnabledConfig failedRequestsTracing, EnabledConfig detailedErrorMessages) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal SiteLogsConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApplicationLogsConfig applicationLogs, HttpLogsConfig httpLogs, EnabledConfig failedRequestsTracing, EnabledConfig detailedErrorMessages, string kind) : base(id, name, resourceType, systemData)
         {
             ApplicationLogs = applicationLogs;
             HttpLogs = httpLogs;
             FailedRequestsTracing = failedRequestsTracing;
             DetailedErrorMessages = detailedErrorMessages;
+            Kind = kind;
         }
 
         /// <summary> Application logs configuration. </summary>
@@ -68,5 +69,8 @@ namespace Azure.ResourceManager.AppService
                 DetailedErrorMessages.Enabled = value;
             }
         }
+
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

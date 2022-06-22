@@ -69,7 +69,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 var topicName = TestUtilities.GenerateName(ServiceBusManagementHelper.TopicPrefix);
 
                 var createTopicResponse = this.ServiceBusManagementClient.Topics.CreateOrUpdate(resourceGroup, namespaceName, topicName,
-                new SBTopic());
+                    new SBTopic());
                 Assert.NotNull(createTopicResponse);
                 Assert.Equal(createTopicResponse.Name, topicName);
 
@@ -95,10 +95,29 @@ namespace ServiceBus.Tests.ScenarioTests
                 var ruleName_CorrelationFilter = TestUtilities.GenerateName(ServiceBusManagementHelper.RulesPrefix);
                 var createRulesResponse_CorrelationFilter = ServiceBusManagementClient.Rules.CreateOrUpdate(resourceGroup, namespaceName, topicName, subscriptionName, ruleName_CorrelationFilter, new Rule() {
                     FilterType = FilterType.CorrelationFilter,
-                    CorrelationFilter = new CorrelationFilter { Properties = new Dictionary<string, string> { { "topichint","topicname"} }  }
+                    CorrelationFilter = new CorrelationFilter { 
+                        Properties = new Dictionary<string, string> { { "topichint","topicname"} },
+                        MessageId = "messageid",
+                        CorrelationId = "correlationid",
+                        ContentType = "contenttype",
+                        Label = "label",
+                        ReplyTo = "replyto",
+                        SessionId = "sessionid",
+                        ReplyToSessionId = "replytosessionid",
+                        To = "to"
+                    }
                 });
+
                 Assert.NotNull(createRulesResponse_CorrelationFilter);
                 Assert.Equal(createRulesResponse_CorrelationFilter.Name, ruleName_CorrelationFilter);
+                Assert.Equal(FilterType.CorrelationFilter, createRulesResponse_CorrelationFilter.FilterType);
+                Assert.Equal("messageid", createRulesResponse_CorrelationFilter.CorrelationFilter.MessageId);
+                Assert.Equal("correlationid", createRulesResponse_CorrelationFilter.CorrelationFilter.CorrelationId);
+                Assert.Equal("contenttype", createRulesResponse_CorrelationFilter.CorrelationFilter.ContentType);
+                Assert.Equal("label", createRulesResponse_CorrelationFilter.CorrelationFilter.Label);
+                Assert.Equal("replyto", createRulesResponse_CorrelationFilter.CorrelationFilter.ReplyTo);
+                Assert.Equal("sessionid", createRulesResponse_CorrelationFilter.CorrelationFilter.SessionId);
+                Assert.Equal("replytosessionid", createRulesResponse_CorrelationFilter.CorrelationFilter.ReplyToSessionId);
 
                 // Get Created Rules
                 var ruleGetResponse = ServiceBusManagementClient.Rules.Get(resourceGroup, namespaceName, topicName, subscriptionName, ruleName);
@@ -120,13 +139,21 @@ namespace ServiceBus.Tests.ScenarioTests
                         RequiresPreprocessing = true,
                         SqlExpression = "SET " + strSqlExp,
                     },
-                    SqlFilter = new SqlFilter() { SqlExpression = strSqlExp },
-                    FilterType = FilterType.SqlFilter,
-                    CorrelationFilter =  new CorrelationFilter()                     
+                    SqlFilter = new SqlFilter() { SqlExpression = strSqlExp, RequiresPreprocessing = true },
+                    FilterType = FilterType.SqlFilter               
                 };
 
                 var updateRulesResponse = ServiceBusManagementClient.Rules.CreateOrUpdate(resourceGroup, namespaceName, topicName, subscriptionName, ruleName, updateRulesParameter);
                 Assert.NotNull(updateRulesResponse);
+                Assert.Equal(FilterType.SqlFilter, updateRulesResponse.FilterType);
+                Assert.Equal("SET " + strSqlExp, updateRulesResponse.Action.SqlExpression);
+
+                //RequiresPreprocessing cannot be set from the service side
+                //Assert.True(updateRulesResponse.Action.RequiresPreprocessing);
+
+                Assert.Equal(strSqlExp, updateRulesResponse.SqlFilter.SqlExpression);
+
+                //Assert.True(updateRulesResponse.SqlFilter.RequiresPreprocessing);
 
                 // Get the updated rule to check the Updated values. 
                 var getRulesResponse = ServiceBusManagementClient.Rules.Get(resourceGroup, namespaceName, topicName, subscriptionName, ruleName);

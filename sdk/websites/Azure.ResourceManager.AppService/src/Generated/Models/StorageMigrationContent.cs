@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Options for app content migration. </summary>
-    public partial class StorageMigrationContent : ProxyOnlyResource
+    public partial class StorageMigrationContent : ResourceData
     {
         /// <summary> Initializes a new instance of StorageMigrationContent. </summary>
         public StorageMigrationContent()
@@ -23,17 +23,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="azurefilesConnectionString"> AzureFiles connection string. </param>
         /// <param name="azurefilesShare"> AzureFiles share. </param>
         /// <param name="switchSiteAfterMigration"> &lt;code&gt;true&lt;/code&gt;if the app should be switched over; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="blockWriteAccessToSite"> &lt;code&gt;true&lt;/code&gt; if the app should be read only during copy operation; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        internal StorageMigrationContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string azurefilesConnectionString, string azurefilesShare, bool? switchSiteAfterMigration, bool? blockWriteAccessToSite) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal StorageMigrationContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string azurefilesConnectionString, string azurefilesShare, bool? switchSiteAfterMigration, bool? blockWriteAccessToSite, string kind) : base(id, name, resourceType, systemData)
         {
             AzurefilesConnectionString = azurefilesConnectionString;
             AzurefilesShare = azurefilesShare;
             SwitchSiteAfterMigration = switchSiteAfterMigration;
             BlockWriteAccessToSite = blockWriteAccessToSite;
+            Kind = kind;
         }
 
         /// <summary> AzureFiles connection string. </summary>
@@ -44,5 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? SwitchSiteAfterMigration { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the app should be read only during copy operation; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? BlockWriteAccessToSite { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }
