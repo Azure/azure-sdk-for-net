@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Resources
             TryGetApiVersion(ResourceType, out string resourceGroupResourcesApiVersion);
             _resourceGroupResourcesRestClient = new ResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGroupResourcesApiVersion);
 #if DEBUG
-            ValidateResourceId(Id);
+			ValidateResourceId(Id);
 #endif
         }
 
