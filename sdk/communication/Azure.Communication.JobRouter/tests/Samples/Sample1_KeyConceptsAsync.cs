@@ -90,8 +90,10 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // fetching the offer id
             var jobOffer = result.Value.Offers.FirstOrDefault(x => x.JobId == job.Value.Id);
 
+            var offerId = jobOffer!.Id; // `OfferId` can be retrieved directly from consuming event from Event grid
+
             // accepting the offer sent to `worker-1`
-            var acceptJobOfferResult = await routerClient.AcceptJobOfferAsync(worker.Value.Id, jobOffer!.Id);
+            var acceptJobOfferResult = await routerClient.AcceptJobOfferAsync(worker.Value.Id, offerId);
 
             Console.WriteLine($"Offer: {jobOffer.Id} sent to worker: {worker.Value.Id} has been accepted");
             Console.WriteLine($"Job has been assigned to worker: {worker.Value.Id} with assignment: {acceptJobOfferResult.Value.AssignmentId}");

@@ -87,6 +87,52 @@ var worker = routerClient.CreateWorker(
 
 Once the worker has been registered, Router will send an offer to the worker if the worker satisfies requirements for a job. See [Offer flow](https://docs.microsoft.com/azure/communication-services/concepts/router/concepts#offer)
 
+We should get a [RouterWorkerOfferIssued][offer_issued_event_schema] from our [EventGrid subscription][subscribe_events].
+
+There are several different Azure services that act as a [event handler][event_grid_event_handlers].
+For this scenario, we are going to assume Webhooks for event delivery. [Learn more about Webhook event delivery][webhook_event_grid_event_delivery]
+
+Once events are delivered to the event handler, we can deserialize the JSON payload into a list of events.
+
+```C#
+// Parse the JSON payload into a list of events
+EventGridEvent[] egEvents = EventGridEvent.ParseMany(BinaryData.FromStream(httpContent));
+```
+
+```C#
+string offerId = null;
+foreach (EventGridEvent egEvent in egEvents)
+{
+    // If the event is a system event, TryGetSystemEventData will return the deserialized system event
+    if (egEvent.TryGetSystemEventData(out object systemEvent))
+    {
+        switch (systemEvent)
+        {
+            case SubscriptionValidationEventData subscriptionValidated:
+                Console.WriteLine(subscriptionValidated.ValidationCode);
+                break;
+            ...
+            ...
+            case AcsRouterWorkerOfferIssuedEventData issuedOffer:
+                Console.WriteLine($"Received offer with id: {issuedOffer.OfferId}");
+                offerId = issuedOffer.OfferId;
+                break;
+             ...
+             ...
+             ...
+            // Handle any other system event type
+            default:
+                Console.WriteLine(egEvent.EventType);
+                // we can get the raw Json for the event using Data
+                Console.WriteLine(egEvent.Data.ToString());
+                break;
+        }
+    }
+}
+```
+
+However, we could also wait a few seconds and then query the worker directly against the JobRouter API to see if an offer was issued to it.
+
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_QueryWorker
 var result = routerClient.GetWorker(worker.Value.Id);
 foreach (var offer in result.Value.Offers)
@@ -103,8 +149,10 @@ Once a worker receives an offer, it can take two possible actions: accept or dec
 // fetching the offer id
 var jobOffer = result.Value.Offers.FirstOrDefault(x => x.JobId == job.Value.Id);
 
+var offerId = jobOffer!.Id; // `OfferId` can be retrieved directly from consuming event from Event grid
+
 // accepting the offer sent to `worker-1`
-var acceptJobOfferResult = routerClient.AcceptJobOffer(worker.Value.Id, jobOffer!.Id);
+var acceptJobOfferResult = routerClient.AcceptJobOffer(worker.Value.Id, offerId);
 
 Console.WriteLine($"Offer: {jobOffer.Id} sent to worker: {worker.Value.Id} has been accepted");
 Console.WriteLine($"Job has been assigned to worker: {worker.Value.Id} with assignment: {acceptJobOfferResult.Value.AssignmentId}");
@@ -162,3 +210,9 @@ await Task.Delay(TimeSpan.FromSeconds(2));
 updatedJob = routerClient.GetJob(job.Value.Id);
 Console.WriteLine($"Updated job status: {updatedJob.Value.JobStatus == JobStatus.Closed}");
 ```
+<!-- LINKS -->
+[subscribe_events]: https://docs.microsoft.com/azure/communication-services/how-tos/router-sdk/subscribe-events
+[offer_issued_event_schema]: https://docs.microsoft.com/azure/communication-services/how-tos/router-sdk/subscribe-events#microsoftcommunicationrouterworkerofferissued
+[deserialize_event_grid_event_data]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventgrid/Azure.Messaging.EventGrid#receiving-and-deserializing-events
+[event_grid_event_handlers]: https://docs.microsoft.com/azure/event-grid/event-handlers
+[webhook_event_grid_event_delivery]: https://docs.microsoft.com/azure/event-grid/webhook-event-delivery
