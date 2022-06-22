@@ -54,8 +54,11 @@ namespace Azure.Analytics.Purview.Administration
         /// <summary> Get a collection. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Collection</c>:
         /// <code>{
         ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
         ///   description: string, # Optional. Gets or sets the description.
@@ -96,8 +99,11 @@ namespace Azure.Analytics.Purview.Administration
         /// <summary> Get a collection. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Collection</c>:
         /// <code>{
         ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
         ///   description: string, # Optional. Gets or sets the description.
@@ -141,7 +147,10 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>Collection</c>:
         /// <code>{
         ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
         ///   description: string, # Optional. Gets or sets the description.
@@ -161,7 +170,10 @@ namespace Azure.Analytics.Purview.Administration
         ///   }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Collection</c>:
         /// <code>{
         ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
         ///   description: string, # Optional. Gets or sets the description.
@@ -207,7 +219,10 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>Collection</c>:
         /// <code>{
         ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
         ///   description: string, # Optional. Gets or sets the description.
@@ -227,7 +242,10 @@ namespace Azure.Analytics.Purview.Administration
         ///   }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Collection</c>:
         /// <code>{
         ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
         ///   description: string, # Optional. Gets or sets the description.
@@ -306,8 +324,11 @@ namespace Azure.Analytics.Purview.Administration
         /// <summary> Gets the parent name and parent friendly name chains that represent the collection path. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CollectionPathResponse</c>:
         /// <code>{
         ///   parentFriendlyNameChain: [string], # Optional. The friendly names of ancestors starting from the default (root) collection and ending with the immediate parent.
         ///   parentNameChain: [string], # Optional. The names of ancestors starting from the default (root) collection and ending with the immediate parent.
@@ -334,8 +355,11 @@ namespace Azure.Analytics.Purview.Administration
         /// <summary> Gets the parent name and parent friendly name chains that represent the collection path. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CollectionPathResponse</c>:
         /// <code>{
         ///   parentFriendlyNameChain: [string], # Optional. The friendly names of ancestors starting from the default (root) collection and ending with the immediate parent.
         ///   parentNameChain: [string], # Optional. The names of ancestors starting from the default (root) collection and ending with the immediate parent.
@@ -363,17 +387,14 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CollectionNameResponseListValue</c>:
         /// <code>{
-        ///   count: number, # Optional. Total item count.
-        ///   nextLink: string, # Optional. The Url of next result page.
-        ///   value: [
-        ///     {
-        ///       friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
-        ///       name: string, # Optional. Gets the name.
-        ///     }
-        ///   ], # Required. Collection of items of type results.
+        ///   friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
+        ///   name: string, # Optional. Gets the name.
         /// }
         /// </code>
         /// 
@@ -404,17 +425,14 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CollectionNameResponseListValue</c>:
         /// <code>{
-        ///   count: number, # Optional. Total item count.
-        ///   nextLink: string, # Optional. The Url of next result page.
-        ///   value: [
-        ///     {
-        ///       friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
-        ///       name: string, # Optional. Gets the name.
-        ///     }
-        ///   ], # Required. Collection of items of type results.
+        ///   friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
+        ///   name: string, # Optional. Gets the name.
         /// }
         /// </code>
         /// 

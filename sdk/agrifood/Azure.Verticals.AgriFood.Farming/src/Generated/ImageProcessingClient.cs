@@ -65,8 +65,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ImageProcessingRasterizeJob</c>:
         /// <code>{
         ///   farmerId: string, # Required. Farmer ID.
         ///   shapefileAttachmentId: string, # Required. Shapefile attachment ID.
@@ -114,8 +117,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ImageProcessingRasterizeJob</c>:
         /// <code>{
         ///   farmerId: string, # Required. Farmer ID.
         ///   shapefileAttachmentId: string, # Required. Shapefile attachment ID.
@@ -166,7 +172,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ImageProcessingRasterizeJob</c>:
         /// <code>{
         ///   farmerId: string, # Required. Farmer ID.
         ///   shapefileAttachmentId: string, # Required. Shapefile attachment ID.
@@ -188,7 +197,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ImageProcessingRasterizeJob</c>:
         /// <code>{
         ///   farmerId: string, # Required. Farmer ID.
         ///   shapefileAttachmentId: string, # Required. Shapefile attachment ID.
@@ -239,7 +251,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ImageProcessingRasterizeJob</c>:
         /// <code>{
         ///   farmerId: string, # Required. Farmer ID.
         ///   shapefileAttachmentId: string, # Required. Shapefile attachment ID.
@@ -261,7 +276,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ImageProcessingRasterizeJob</c>:
         /// <code>{
         ///   farmerId: string, # Required. Farmer ID.
         ///   shapefileAttachmentId: string, # Required. Shapefile attachment ID.

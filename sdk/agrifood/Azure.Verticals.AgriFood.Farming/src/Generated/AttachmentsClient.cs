@@ -69,8 +69,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Attachment</c>:
         /// <code>{
         ///   farmerId: string, # Optional. Farmer id for this attachment.
         ///   resourceId: string, # Optional. Associated Resource id for this attachment.
@@ -114,8 +117,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Attachment</c>:
         /// <code>{
         ///   farmerId: string, # Optional. Farmer id for this attachment.
         ///   resourceId: string, # Optional. Associated Resource id for this attachment.
@@ -160,8 +166,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Attachment</c>:
         /// <code>{
         ///   farmerId: string, # Optional. Farmer id for this attachment.
         ///   resourceId: string, # Optional. Associated Resource id for this attachment.
@@ -206,8 +215,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Attachment</c>:
         /// <code>{
         ///   farmerId: string, # Optional. Farmer id for this attachment.
         ///   resourceId: string, # Optional. Associated Resource id for this attachment.
@@ -368,27 +380,24 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AttachmentListResponseValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       farmerId: string, # Optional. Farmer id for this attachment.
-        ///       resourceId: string, # Optional. Associated Resource id for this attachment.
-        ///       resourceType: string, # Optional. Associated Resource type for this attachment
+        ///   farmerId: string, # Optional. Farmer id for this attachment.
+        ///   resourceId: string, # Optional. Associated Resource id for this attachment.
+        ///   resourceType: string, # Optional. Associated Resource type for this attachment
         /// i.e. Farmer, Farm, Field, SeasonalField, Boundary, FarmOperationApplicationData, HarvestData, TillageData, PlantingData.
-        ///       originalFileName: string, # Optional. Original File Name for this attachment.
-        ///       id: string, # Optional. Unique id.
-        ///       status: string, # Optional. Status of the resource.
-        ///       createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
-        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
-        ///       name: string, # Optional. Name to identify resource.
-        ///       description: string, # Optional. Textual description of resource.
-        ///       eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///     }
-        ///   ], # Optional. List of requested objects.
-        ///   $skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.
-        ///   nextLink: string, # Optional. Continuation link (absolute URI) to the next page of results in the list.
+        ///   originalFileName: string, # Optional. Original File Name for this attachment.
+        ///   id: string, # Optional. Unique id.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of resource.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         /// }
         /// </code>
         /// 
@@ -441,27 +450,24 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AttachmentListResponseValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       farmerId: string, # Optional. Farmer id for this attachment.
-        ///       resourceId: string, # Optional. Associated Resource id for this attachment.
-        ///       resourceType: string, # Optional. Associated Resource type for this attachment
+        ///   farmerId: string, # Optional. Farmer id for this attachment.
+        ///   resourceId: string, # Optional. Associated Resource id for this attachment.
+        ///   resourceType: string, # Optional. Associated Resource type for this attachment
         /// i.e. Farmer, Farm, Field, SeasonalField, Boundary, FarmOperationApplicationData, HarvestData, TillageData, PlantingData.
-        ///       originalFileName: string, # Optional. Original File Name for this attachment.
-        ///       id: string, # Optional. Unique id.
-        ///       status: string, # Optional. Status of the resource.
-        ///       createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
-        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
-        ///       name: string, # Optional. Name to identify resource.
-        ///       description: string, # Optional. Textual description of resource.
-        ///       eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///     }
-        ///   ], # Optional. List of requested objects.
-        ///   $skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.
-        ///   nextLink: string, # Optional. Continuation link (absolute URI) to the next page of results in the list.
+        ///   originalFileName: string, # Optional. Original File Name for this attachment.
+        ///   id: string, # Optional. Unique id.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of resource.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         /// }
         /// </code>
         /// 

@@ -74,7 +74,11 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AzureSubscriptionDataSource Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>AzureSubscriptionDataSource</summary>Schema for <c>AzureSubscriptionDataSource</c>:
         /// <code>{
         ///   kind: AzureSubscription, # Required.
         ///   scans: [
@@ -140,7 +144,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupDataSource</summary>Schema for <c>AzureResourceGroupDataSource</c>:
         /// <code>{
         ///   kind: AzureResourceGroup, # Required.
         ///   scans: [
@@ -207,7 +212,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceDataSource</summary>Schema for <c>AzureSynapseWorkspaceDataSource</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspace, # Required.
         ///   scans: [
@@ -278,7 +284,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseDataSource</summary>Schema for <c>AzureSynapseDataSource</c>:
         /// <code>{
         ///   kind: AzureSynapse, # Required.
         ///   scans: [
@@ -349,7 +356,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1DataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1DataSource</summary>Schema for <c>AdlsGen1DataSource</c>:
         /// <code>{
         ///   kind: AdlsGen1, # Required.
         ///   scans: [
@@ -419,7 +427,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2DataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2DataSource</summary>Schema for <c>AdlsGen2DataSource</c>:
         /// <code>{
         ///   kind: AdlsGen2, # Required.
         ///   scans: [
@@ -489,7 +498,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonAccountDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AmazonAccountDataSource</summary>Schema for <c>AmazonAccountDataSource</c>:
         /// <code>{
         ///   kind: AmazonAccount, # Required.
         ///   scans: [
@@ -556,7 +566,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3DataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3DataSource</summary>Schema for <c>AmazonS3DataSource</c>:
         /// <code>{
         ///   kind: AmazonS3, # Required.
         ///   scans: [
@@ -623,7 +634,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonSqlDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AmazonSqlDataSource</summary>Schema for <c>AmazonSqlDataSource</c>:
         /// <code>{
         ///   kind: AmazonSql, # Required.
         ///   scans: [
@@ -689,7 +701,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureCosmosDbDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureCosmosDbDataSource</summary>Schema for <c>AzureCosmosDbDataSource</c>:
         /// <code>{
         ///   kind: AzureCosmosDb, # Required.
         ///   scans: [
@@ -759,7 +772,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerDataSource</summary>Schema for <c>AzureDataExplorerDataSource</c>:
         /// <code>{
         ///   kind: AzureDataExplorer, # Required.
         ///   scans: [
@@ -829,7 +843,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureFileServiceDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureFileServiceDataSource</summary>Schema for <c>AzureFileServiceDataSource</c>:
         /// <code>{
         ///   kind: AzureFileService, # Required.
         ///   scans: [
@@ -899,7 +914,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseDataSource</summary>Schema for <c>AzureSqlDatabaseDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDatabase, # Required.
         ///   scans: [
@@ -969,7 +985,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonPostgreSqlDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlDataSource</summary>Schema for <c>AmazonPostgreSqlDataSource</c>:
         /// <code>{
         ///   kind: AmazonPostgreSql, # Required.
         ///   scans: [
@@ -1036,7 +1053,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzurePostgreSqlDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AzurePostgreSqlDataSource</summary>Schema for <c>AzurePostgreSqlDataSource</c>:
         /// <code>{
         ///   kind: AzurePostgreSql, # Required.
         ///   scans: [
@@ -1107,7 +1125,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SqlServerDatabaseDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>SqlServerDatabaseDataSource</summary>Schema for <c>SqlServerDatabaseDataSource</c>:
         /// <code>{
         ///   kind: SqlServerDatabase, # Required.
         ///   scans: [
@@ -1177,7 +1196,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceDataSource</summary>Schema for <c>AzureSqlDatabaseManagedInstanceDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstance, # Required.
         ///   scans: [
@@ -1247,7 +1267,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseDataSource</summary>Schema for <c>AzureSqlDataWarehouseDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouse, # Required.
         ///   scans: [
@@ -1317,7 +1338,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureMySqlDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureMySqlDataSource</summary>Schema for <c>AzureMySqlDataSource</c>:
         /// <code>{
         ///   kind: AzureMySql, # Required.
         ///   scans: [
@@ -1388,7 +1410,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageDataSource</summary>Schema for <c>AzureStorageDataSource</c>:
         /// <code>{
         ///   kind: AzureStorage, # Required.
         ///   scans: [
@@ -1458,7 +1481,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>TeradataDataSource</summary>Schema for <c>TeradataDataSource</c>:
         /// <code>{
         ///   kind: Teradata, # Required.
         ///   scans: [
@@ -1524,7 +1548,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>OracleDataSource</summary>Schema for <c>OracleDataSource</c>:
         /// <code>{
         ///   kind: Oracle, # Required.
         ///   scans: [
@@ -1592,7 +1617,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaDataSource</summary>Schema for <c>SapS4HanaDataSource</c>:
         /// <code>{
         ///   kind: SapS4Hana, # Required.
         ///   scans: [
@@ -1659,7 +1685,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>SapEccDataSource</summary>Schema for <c>SapEccDataSource</c>:
         /// <code>{
         ///   kind: SapEcc, # Required.
         ///   scans: [
@@ -1726,7 +1753,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIDataSource</summary>Schema for <c>PowerBIDataSource</c>:
         /// <code>{
         ///   kind: PowerBI, # Required.
         ///   scans: [
@@ -1792,7 +1820,13 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSubscriptionDataSource Response Body</c>:
+        /// </details>
+        /// </details>
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>AzureSubscriptionDataSource</summary>Schema for <c>AzureSubscriptionDataSource</c>:
         /// <code>{
         ///   kind: AzureSubscription, # Required.
         ///   scans: [
@@ -1858,7 +1892,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupDataSource</summary>Schema for <c>AzureResourceGroupDataSource</c>:
         /// <code>{
         ///   kind: AzureResourceGroup, # Required.
         ///   scans: [
@@ -1925,7 +1960,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceDataSource</summary>Schema for <c>AzureSynapseWorkspaceDataSource</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspace, # Required.
         ///   scans: [
@@ -1996,7 +2032,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseDataSource</summary>Schema for <c>AzureSynapseDataSource</c>:
         /// <code>{
         ///   kind: AzureSynapse, # Required.
         ///   scans: [
@@ -2067,7 +2104,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1DataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1DataSource</summary>Schema for <c>AdlsGen1DataSource</c>:
         /// <code>{
         ///   kind: AdlsGen1, # Required.
         ///   scans: [
@@ -2137,7 +2175,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2DataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2DataSource</summary>Schema for <c>AdlsGen2DataSource</c>:
         /// <code>{
         ///   kind: AdlsGen2, # Required.
         ///   scans: [
@@ -2207,7 +2246,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonAccountDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonAccountDataSource</summary>Schema for <c>AmazonAccountDataSource</c>:
         /// <code>{
         ///   kind: AmazonAccount, # Required.
         ///   scans: [
@@ -2274,7 +2314,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3DataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3DataSource</summary>Schema for <c>AmazonS3DataSource</c>:
         /// <code>{
         ///   kind: AmazonS3, # Required.
         ///   scans: [
@@ -2341,7 +2382,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonSqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonSqlDataSource</summary>Schema for <c>AmazonSqlDataSource</c>:
         /// <code>{
         ///   kind: AmazonSql, # Required.
         ///   scans: [
@@ -2407,7 +2449,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureCosmosDbDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureCosmosDbDataSource</summary>Schema for <c>AzureCosmosDbDataSource</c>:
         /// <code>{
         ///   kind: AzureCosmosDb, # Required.
         ///   scans: [
@@ -2477,7 +2520,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerDataSource</summary>Schema for <c>AzureDataExplorerDataSource</c>:
         /// <code>{
         ///   kind: AzureDataExplorer, # Required.
         ///   scans: [
@@ -2547,7 +2591,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureFileServiceDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureFileServiceDataSource</summary>Schema for <c>AzureFileServiceDataSource</c>:
         /// <code>{
         ///   kind: AzureFileService, # Required.
         ///   scans: [
@@ -2617,7 +2662,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseDataSource</summary>Schema for <c>AzureSqlDatabaseDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDatabase, # Required.
         ///   scans: [
@@ -2687,7 +2733,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonPostgreSqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlDataSource</summary>Schema for <c>AmazonPostgreSqlDataSource</c>:
         /// <code>{
         ///   kind: AmazonPostgreSql, # Required.
         ///   scans: [
@@ -2754,7 +2801,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzurePostgreSqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzurePostgreSqlDataSource</summary>Schema for <c>AzurePostgreSqlDataSource</c>:
         /// <code>{
         ///   kind: AzurePostgreSql, # Required.
         ///   scans: [
@@ -2825,7 +2873,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SqlServerDatabaseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>SqlServerDatabaseDataSource</summary>Schema for <c>SqlServerDatabaseDataSource</c>:
         /// <code>{
         ///   kind: SqlServerDatabase, # Required.
         ///   scans: [
@@ -2895,7 +2944,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceDataSource</summary>Schema for <c>AzureSqlDatabaseManagedInstanceDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstance, # Required.
         ///   scans: [
@@ -2965,7 +3015,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseDataSource</summary>Schema for <c>AzureSqlDataWarehouseDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouse, # Required.
         ///   scans: [
@@ -3035,7 +3086,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureMySqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureMySqlDataSource</summary>Schema for <c>AzureMySqlDataSource</c>:
         /// <code>{
         ///   kind: AzureMySql, # Required.
         ///   scans: [
@@ -3106,7 +3158,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageDataSource</summary>Schema for <c>AzureStorageDataSource</c>:
         /// <code>{
         ///   kind: AzureStorage, # Required.
         ///   scans: [
@@ -3176,7 +3229,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataDataSource</summary>Schema for <c>TeradataDataSource</c>:
         /// <code>{
         ///   kind: Teradata, # Required.
         ///   scans: [
@@ -3242,7 +3296,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>OracleDataSource</summary>Schema for <c>OracleDataSource</c>:
         /// <code>{
         ///   kind: Oracle, # Required.
         ///   scans: [
@@ -3310,7 +3365,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaDataSource</summary>Schema for <c>SapS4HanaDataSource</c>:
         /// <code>{
         ///   kind: SapS4Hana, # Required.
         ///   scans: [
@@ -3377,7 +3433,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>SapEccDataSource</summary>Schema for <c>SapEccDataSource</c>:
         /// <code>{
         ///   kind: SapEcc, # Required.
         ///   scans: [
@@ -3444,7 +3501,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIDataSource</summary>Schema for <c>PowerBIDataSource</c>:
         /// <code>{
         ///   kind: PowerBI, # Required.
         ///   scans: [
@@ -3510,6 +3568,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestContext context = null)
@@ -3533,7 +3593,11 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AzureSubscriptionDataSource Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>AzureSubscriptionDataSource</summary>Schema for <c>AzureSubscriptionDataSource</c>:
         /// <code>{
         ///   kind: AzureSubscription, # Required.
         ///   scans: [
@@ -3599,7 +3663,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupDataSource</summary>Schema for <c>AzureResourceGroupDataSource</c>:
         /// <code>{
         ///   kind: AzureResourceGroup, # Required.
         ///   scans: [
@@ -3666,7 +3731,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceDataSource</summary>Schema for <c>AzureSynapseWorkspaceDataSource</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspace, # Required.
         ///   scans: [
@@ -3737,7 +3803,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseDataSource</summary>Schema for <c>AzureSynapseDataSource</c>:
         /// <code>{
         ///   kind: AzureSynapse, # Required.
         ///   scans: [
@@ -3808,7 +3875,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1DataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1DataSource</summary>Schema for <c>AdlsGen1DataSource</c>:
         /// <code>{
         ///   kind: AdlsGen1, # Required.
         ///   scans: [
@@ -3878,7 +3946,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2DataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2DataSource</summary>Schema for <c>AdlsGen2DataSource</c>:
         /// <code>{
         ///   kind: AdlsGen2, # Required.
         ///   scans: [
@@ -3948,7 +4017,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonAccountDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AmazonAccountDataSource</summary>Schema for <c>AmazonAccountDataSource</c>:
         /// <code>{
         ///   kind: AmazonAccount, # Required.
         ///   scans: [
@@ -4015,7 +4085,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3DataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3DataSource</summary>Schema for <c>AmazonS3DataSource</c>:
         /// <code>{
         ///   kind: AmazonS3, # Required.
         ///   scans: [
@@ -4082,7 +4153,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonSqlDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AmazonSqlDataSource</summary>Schema for <c>AmazonSqlDataSource</c>:
         /// <code>{
         ///   kind: AmazonSql, # Required.
         ///   scans: [
@@ -4148,7 +4220,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureCosmosDbDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureCosmosDbDataSource</summary>Schema for <c>AzureCosmosDbDataSource</c>:
         /// <code>{
         ///   kind: AzureCosmosDb, # Required.
         ///   scans: [
@@ -4218,7 +4291,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerDataSource</summary>Schema for <c>AzureDataExplorerDataSource</c>:
         /// <code>{
         ///   kind: AzureDataExplorer, # Required.
         ///   scans: [
@@ -4288,7 +4362,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureFileServiceDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureFileServiceDataSource</summary>Schema for <c>AzureFileServiceDataSource</c>:
         /// <code>{
         ///   kind: AzureFileService, # Required.
         ///   scans: [
@@ -4358,7 +4433,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseDataSource</summary>Schema for <c>AzureSqlDatabaseDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDatabase, # Required.
         ///   scans: [
@@ -4428,7 +4504,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonPostgreSqlDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlDataSource</summary>Schema for <c>AmazonPostgreSqlDataSource</c>:
         /// <code>{
         ///   kind: AmazonPostgreSql, # Required.
         ///   scans: [
@@ -4495,7 +4572,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzurePostgreSqlDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AzurePostgreSqlDataSource</summary>Schema for <c>AzurePostgreSqlDataSource</c>:
         /// <code>{
         ///   kind: AzurePostgreSql, # Required.
         ///   scans: [
@@ -4566,7 +4644,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SqlServerDatabaseDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>SqlServerDatabaseDataSource</summary>Schema for <c>SqlServerDatabaseDataSource</c>:
         /// <code>{
         ///   kind: SqlServerDatabase, # Required.
         ///   scans: [
@@ -4636,7 +4715,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceDataSource</summary>Schema for <c>AzureSqlDatabaseManagedInstanceDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstance, # Required.
         ///   scans: [
@@ -4706,7 +4786,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseDataSource</summary>Schema for <c>AzureSqlDataWarehouseDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouse, # Required.
         ///   scans: [
@@ -4776,7 +4857,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureMySqlDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureMySqlDataSource</summary>Schema for <c>AzureMySqlDataSource</c>:
         /// <code>{
         ///   kind: AzureMySql, # Required.
         ///   scans: [
@@ -4847,7 +4929,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageDataSource</summary>Schema for <c>AzureStorageDataSource</c>:
         /// <code>{
         ///   kind: AzureStorage, # Required.
         ///   scans: [
@@ -4917,7 +5000,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>TeradataDataSource</summary>Schema for <c>TeradataDataSource</c>:
         /// <code>{
         ///   kind: Teradata, # Required.
         ///   scans: [
@@ -4983,7 +5067,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>OracleDataSource</summary>Schema for <c>OracleDataSource</c>:
         /// <code>{
         ///   kind: Oracle, # Required.
         ///   scans: [
@@ -5051,7 +5136,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaDataSource</summary>Schema for <c>SapS4HanaDataSource</c>:
         /// <code>{
         ///   kind: SapS4Hana, # Required.
         ///   scans: [
@@ -5118,7 +5204,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>SapEccDataSource</summary>Schema for <c>SapEccDataSource</c>:
         /// <code>{
         ///   kind: SapEcc, # Required.
         ///   scans: [
@@ -5185,7 +5272,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIDataSource Request Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIDataSource</summary>Schema for <c>PowerBIDataSource</c>:
         /// <code>{
         ///   kind: PowerBI, # Required.
         ///   scans: [
@@ -5251,7 +5339,13 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSubscriptionDataSource Response Body</c>:
+        /// </details>
+        /// </details>
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>AzureSubscriptionDataSource</summary>Schema for <c>AzureSubscriptionDataSource</c>:
         /// <code>{
         ///   kind: AzureSubscription, # Required.
         ///   scans: [
@@ -5317,7 +5411,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupDataSource</summary>Schema for <c>AzureResourceGroupDataSource</c>:
         /// <code>{
         ///   kind: AzureResourceGroup, # Required.
         ///   scans: [
@@ -5384,7 +5479,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceDataSource</summary>Schema for <c>AzureSynapseWorkspaceDataSource</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspace, # Required.
         ///   scans: [
@@ -5455,7 +5551,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseDataSource</summary>Schema for <c>AzureSynapseDataSource</c>:
         /// <code>{
         ///   kind: AzureSynapse, # Required.
         ///   scans: [
@@ -5526,7 +5623,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1DataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1DataSource</summary>Schema for <c>AdlsGen1DataSource</c>:
         /// <code>{
         ///   kind: AdlsGen1, # Required.
         ///   scans: [
@@ -5596,7 +5694,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2DataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2DataSource</summary>Schema for <c>AdlsGen2DataSource</c>:
         /// <code>{
         ///   kind: AdlsGen2, # Required.
         ///   scans: [
@@ -5666,7 +5765,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonAccountDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonAccountDataSource</summary>Schema for <c>AmazonAccountDataSource</c>:
         /// <code>{
         ///   kind: AmazonAccount, # Required.
         ///   scans: [
@@ -5733,7 +5833,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3DataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3DataSource</summary>Schema for <c>AmazonS3DataSource</c>:
         /// <code>{
         ///   kind: AmazonS3, # Required.
         ///   scans: [
@@ -5800,7 +5901,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonSqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonSqlDataSource</summary>Schema for <c>AmazonSqlDataSource</c>:
         /// <code>{
         ///   kind: AmazonSql, # Required.
         ///   scans: [
@@ -5866,7 +5968,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureCosmosDbDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureCosmosDbDataSource</summary>Schema for <c>AzureCosmosDbDataSource</c>:
         /// <code>{
         ///   kind: AzureCosmosDb, # Required.
         ///   scans: [
@@ -5936,7 +6039,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerDataSource</summary>Schema for <c>AzureDataExplorerDataSource</c>:
         /// <code>{
         ///   kind: AzureDataExplorer, # Required.
         ///   scans: [
@@ -6006,7 +6110,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureFileServiceDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureFileServiceDataSource</summary>Schema for <c>AzureFileServiceDataSource</c>:
         /// <code>{
         ///   kind: AzureFileService, # Required.
         ///   scans: [
@@ -6076,7 +6181,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseDataSource</summary>Schema for <c>AzureSqlDatabaseDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDatabase, # Required.
         ///   scans: [
@@ -6146,7 +6252,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonPostgreSqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlDataSource</summary>Schema for <c>AmazonPostgreSqlDataSource</c>:
         /// <code>{
         ///   kind: AmazonPostgreSql, # Required.
         ///   scans: [
@@ -6213,7 +6320,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzurePostgreSqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzurePostgreSqlDataSource</summary>Schema for <c>AzurePostgreSqlDataSource</c>:
         /// <code>{
         ///   kind: AzurePostgreSql, # Required.
         ///   scans: [
@@ -6284,7 +6392,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SqlServerDatabaseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>SqlServerDatabaseDataSource</summary>Schema for <c>SqlServerDatabaseDataSource</c>:
         /// <code>{
         ///   kind: SqlServerDatabase, # Required.
         ///   scans: [
@@ -6354,7 +6463,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceDataSource</summary>Schema for <c>AzureSqlDatabaseManagedInstanceDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstance, # Required.
         ///   scans: [
@@ -6424,7 +6534,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseDataSource</summary>Schema for <c>AzureSqlDataWarehouseDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouse, # Required.
         ///   scans: [
@@ -6494,7 +6605,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureMySqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureMySqlDataSource</summary>Schema for <c>AzureMySqlDataSource</c>:
         /// <code>{
         ///   kind: AzureMySql, # Required.
         ///   scans: [
@@ -6565,7 +6677,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageDataSource</summary>Schema for <c>AzureStorageDataSource</c>:
         /// <code>{
         ///   kind: AzureStorage, # Required.
         ///   scans: [
@@ -6635,7 +6748,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataDataSource</summary>Schema for <c>TeradataDataSource</c>:
         /// <code>{
         ///   kind: Teradata, # Required.
         ///   scans: [
@@ -6701,7 +6815,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>OracleDataSource</summary>Schema for <c>OracleDataSource</c>:
         /// <code>{
         ///   kind: Oracle, # Required.
         ///   scans: [
@@ -6769,7 +6884,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaDataSource</summary>Schema for <c>SapS4HanaDataSource</c>:
         /// <code>{
         ///   kind: SapS4Hana, # Required.
         ///   scans: [
@@ -6836,7 +6952,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>SapEccDataSource</summary>Schema for <c>SapEccDataSource</c>:
         /// <code>{
         ///   kind: SapEcc, # Required.
         ///   scans: [
@@ -6903,7 +7020,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIDataSource</summary>Schema for <c>PowerBIDataSource</c>:
         /// <code>{
         ///   kind: PowerBI, # Required.
         ///   scans: [
@@ -6969,6 +7087,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response CreateOrUpdate(RequestContent content, RequestContext context = null)
@@ -6990,8 +7110,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Get a data source. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AzureSubscriptionDataSource Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>AzureSubscriptionDataSource</summary>Schema for <c>AzureSubscriptionDataSource</c>:
         /// <code>{
         ///   kind: AzureSubscription, # Required.
         ///   scans: [
@@ -7057,7 +7181,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupDataSource</summary>Schema for <c>AzureResourceGroupDataSource</c>:
         /// <code>{
         ///   kind: AzureResourceGroup, # Required.
         ///   scans: [
@@ -7124,7 +7249,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceDataSource</summary>Schema for <c>AzureSynapseWorkspaceDataSource</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspace, # Required.
         ///   scans: [
@@ -7195,7 +7321,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseDataSource</summary>Schema for <c>AzureSynapseDataSource</c>:
         /// <code>{
         ///   kind: AzureSynapse, # Required.
         ///   scans: [
@@ -7266,7 +7393,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1DataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1DataSource</summary>Schema for <c>AdlsGen1DataSource</c>:
         /// <code>{
         ///   kind: AdlsGen1, # Required.
         ///   scans: [
@@ -7336,7 +7464,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2DataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2DataSource</summary>Schema for <c>AdlsGen2DataSource</c>:
         /// <code>{
         ///   kind: AdlsGen2, # Required.
         ///   scans: [
@@ -7406,7 +7535,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonAccountDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonAccountDataSource</summary>Schema for <c>AmazonAccountDataSource</c>:
         /// <code>{
         ///   kind: AmazonAccount, # Required.
         ///   scans: [
@@ -7473,7 +7603,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3DataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3DataSource</summary>Schema for <c>AmazonS3DataSource</c>:
         /// <code>{
         ///   kind: AmazonS3, # Required.
         ///   scans: [
@@ -7540,7 +7671,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonSqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonSqlDataSource</summary>Schema for <c>AmazonSqlDataSource</c>:
         /// <code>{
         ///   kind: AmazonSql, # Required.
         ///   scans: [
@@ -7606,7 +7738,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureCosmosDbDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureCosmosDbDataSource</summary>Schema for <c>AzureCosmosDbDataSource</c>:
         /// <code>{
         ///   kind: AzureCosmosDb, # Required.
         ///   scans: [
@@ -7676,7 +7809,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerDataSource</summary>Schema for <c>AzureDataExplorerDataSource</c>:
         /// <code>{
         ///   kind: AzureDataExplorer, # Required.
         ///   scans: [
@@ -7746,7 +7880,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureFileServiceDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureFileServiceDataSource</summary>Schema for <c>AzureFileServiceDataSource</c>:
         /// <code>{
         ///   kind: AzureFileService, # Required.
         ///   scans: [
@@ -7816,7 +7951,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseDataSource</summary>Schema for <c>AzureSqlDatabaseDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDatabase, # Required.
         ///   scans: [
@@ -7886,7 +8022,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonPostgreSqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlDataSource</summary>Schema for <c>AmazonPostgreSqlDataSource</c>:
         /// <code>{
         ///   kind: AmazonPostgreSql, # Required.
         ///   scans: [
@@ -7953,7 +8090,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzurePostgreSqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzurePostgreSqlDataSource</summary>Schema for <c>AzurePostgreSqlDataSource</c>:
         /// <code>{
         ///   kind: AzurePostgreSql, # Required.
         ///   scans: [
@@ -8024,7 +8162,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SqlServerDatabaseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>SqlServerDatabaseDataSource</summary>Schema for <c>SqlServerDatabaseDataSource</c>:
         /// <code>{
         ///   kind: SqlServerDatabase, # Required.
         ///   scans: [
@@ -8094,7 +8233,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceDataSource</summary>Schema for <c>AzureSqlDatabaseManagedInstanceDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstance, # Required.
         ///   scans: [
@@ -8164,7 +8304,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseDataSource</summary>Schema for <c>AzureSqlDataWarehouseDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouse, # Required.
         ///   scans: [
@@ -8234,7 +8375,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureMySqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureMySqlDataSource</summary>Schema for <c>AzureMySqlDataSource</c>:
         /// <code>{
         ///   kind: AzureMySql, # Required.
         ///   scans: [
@@ -8305,7 +8447,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageDataSource</summary>Schema for <c>AzureStorageDataSource</c>:
         /// <code>{
         ///   kind: AzureStorage, # Required.
         ///   scans: [
@@ -8375,7 +8518,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataDataSource</summary>Schema for <c>TeradataDataSource</c>:
         /// <code>{
         ///   kind: Teradata, # Required.
         ///   scans: [
@@ -8441,7 +8585,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>OracleDataSource</summary>Schema for <c>OracleDataSource</c>:
         /// <code>{
         ///   kind: Oracle, # Required.
         ///   scans: [
@@ -8509,7 +8654,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaDataSource</summary>Schema for <c>SapS4HanaDataSource</c>:
         /// <code>{
         ///   kind: SapS4Hana, # Required.
         ///   scans: [
@@ -8576,7 +8722,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>SapEccDataSource</summary>Schema for <c>SapEccDataSource</c>:
         /// <code>{
         ///   kind: SapEcc, # Required.
         ///   scans: [
@@ -8643,7 +8790,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIDataSource</summary>Schema for <c>PowerBIDataSource</c>:
         /// <code>{
         ///   kind: PowerBI, # Required.
         ///   scans: [
@@ -8709,6 +8857,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> GetPropertiesAsync(RequestContext context = null)
@@ -8730,8 +8880,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Get a data source. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AzureSubscriptionDataSource Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>AzureSubscriptionDataSource</summary>Schema for <c>AzureSubscriptionDataSource</c>:
         /// <code>{
         ///   kind: AzureSubscription, # Required.
         ///   scans: [
@@ -8797,7 +8951,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupDataSource</summary>Schema for <c>AzureResourceGroupDataSource</c>:
         /// <code>{
         ///   kind: AzureResourceGroup, # Required.
         ///   scans: [
@@ -8864,7 +9019,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceDataSource</summary>Schema for <c>AzureSynapseWorkspaceDataSource</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspace, # Required.
         ///   scans: [
@@ -8935,7 +9091,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseDataSource</summary>Schema for <c>AzureSynapseDataSource</c>:
         /// <code>{
         ///   kind: AzureSynapse, # Required.
         ///   scans: [
@@ -9006,7 +9163,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1DataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1DataSource</summary>Schema for <c>AdlsGen1DataSource</c>:
         /// <code>{
         ///   kind: AdlsGen1, # Required.
         ///   scans: [
@@ -9076,7 +9234,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2DataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2DataSource</summary>Schema for <c>AdlsGen2DataSource</c>:
         /// <code>{
         ///   kind: AdlsGen2, # Required.
         ///   scans: [
@@ -9146,7 +9305,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonAccountDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonAccountDataSource</summary>Schema for <c>AmazonAccountDataSource</c>:
         /// <code>{
         ///   kind: AmazonAccount, # Required.
         ///   scans: [
@@ -9213,7 +9373,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3DataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3DataSource</summary>Schema for <c>AmazonS3DataSource</c>:
         /// <code>{
         ///   kind: AmazonS3, # Required.
         ///   scans: [
@@ -9280,7 +9441,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonSqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonSqlDataSource</summary>Schema for <c>AmazonSqlDataSource</c>:
         /// <code>{
         ///   kind: AmazonSql, # Required.
         ///   scans: [
@@ -9346,7 +9508,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureCosmosDbDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureCosmosDbDataSource</summary>Schema for <c>AzureCosmosDbDataSource</c>:
         /// <code>{
         ///   kind: AzureCosmosDb, # Required.
         ///   scans: [
@@ -9416,7 +9579,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerDataSource</summary>Schema for <c>AzureDataExplorerDataSource</c>:
         /// <code>{
         ///   kind: AzureDataExplorer, # Required.
         ///   scans: [
@@ -9486,7 +9650,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureFileServiceDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureFileServiceDataSource</summary>Schema for <c>AzureFileServiceDataSource</c>:
         /// <code>{
         ///   kind: AzureFileService, # Required.
         ///   scans: [
@@ -9556,7 +9721,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseDataSource</summary>Schema for <c>AzureSqlDatabaseDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDatabase, # Required.
         ///   scans: [
@@ -9626,7 +9792,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonPostgreSqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlDataSource</summary>Schema for <c>AmazonPostgreSqlDataSource</c>:
         /// <code>{
         ///   kind: AmazonPostgreSql, # Required.
         ///   scans: [
@@ -9693,7 +9860,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzurePostgreSqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzurePostgreSqlDataSource</summary>Schema for <c>AzurePostgreSqlDataSource</c>:
         /// <code>{
         ///   kind: AzurePostgreSql, # Required.
         ///   scans: [
@@ -9764,7 +9932,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SqlServerDatabaseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>SqlServerDatabaseDataSource</summary>Schema for <c>SqlServerDatabaseDataSource</c>:
         /// <code>{
         ///   kind: SqlServerDatabase, # Required.
         ///   scans: [
@@ -9834,7 +10003,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceDataSource</summary>Schema for <c>AzureSqlDatabaseManagedInstanceDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstance, # Required.
         ///   scans: [
@@ -9904,7 +10074,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseDataSource</summary>Schema for <c>AzureSqlDataWarehouseDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouse, # Required.
         ///   scans: [
@@ -9974,7 +10145,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureMySqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureMySqlDataSource</summary>Schema for <c>AzureMySqlDataSource</c>:
         /// <code>{
         ///   kind: AzureMySql, # Required.
         ///   scans: [
@@ -10045,7 +10217,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageDataSource</summary>Schema for <c>AzureStorageDataSource</c>:
         /// <code>{
         ///   kind: AzureStorage, # Required.
         ///   scans: [
@@ -10115,7 +10288,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataDataSource</summary>Schema for <c>TeradataDataSource</c>:
         /// <code>{
         ///   kind: Teradata, # Required.
         ///   scans: [
@@ -10181,7 +10355,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>OracleDataSource</summary>Schema for <c>OracleDataSource</c>:
         /// <code>{
         ///   kind: Oracle, # Required.
         ///   scans: [
@@ -10249,7 +10424,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaDataSource</summary>Schema for <c>SapS4HanaDataSource</c>:
         /// <code>{
         ///   kind: SapS4Hana, # Required.
         ///   scans: [
@@ -10316,7 +10492,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>SapEccDataSource</summary>Schema for <c>SapEccDataSource</c>:
         /// <code>{
         ///   kind: SapEcc, # Required.
         ///   scans: [
@@ -10383,7 +10560,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIDataSource</summary>Schema for <c>PowerBIDataSource</c>:
         /// <code>{
         ///   kind: PowerBI, # Required.
         ///   scans: [
@@ -10449,6 +10627,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response GetProperties(RequestContext context = null)
@@ -10470,8 +10650,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Deletes a data source. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AzureSubscriptionDataSource Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>AzureSubscriptionDataSource</summary>Schema for <c>AzureSubscriptionDataSource</c>:
         /// <code>{
         ///   kind: AzureSubscription, # Required.
         ///   scans: [
@@ -10537,7 +10721,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupDataSource</summary>Schema for <c>AzureResourceGroupDataSource</c>:
         /// <code>{
         ///   kind: AzureResourceGroup, # Required.
         ///   scans: [
@@ -10604,7 +10789,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceDataSource</summary>Schema for <c>AzureSynapseWorkspaceDataSource</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspace, # Required.
         ///   scans: [
@@ -10675,7 +10861,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseDataSource</summary>Schema for <c>AzureSynapseDataSource</c>:
         /// <code>{
         ///   kind: AzureSynapse, # Required.
         ///   scans: [
@@ -10746,7 +10933,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1DataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1DataSource</summary>Schema for <c>AdlsGen1DataSource</c>:
         /// <code>{
         ///   kind: AdlsGen1, # Required.
         ///   scans: [
@@ -10816,7 +11004,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2DataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2DataSource</summary>Schema for <c>AdlsGen2DataSource</c>:
         /// <code>{
         ///   kind: AdlsGen2, # Required.
         ///   scans: [
@@ -10886,7 +11075,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonAccountDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonAccountDataSource</summary>Schema for <c>AmazonAccountDataSource</c>:
         /// <code>{
         ///   kind: AmazonAccount, # Required.
         ///   scans: [
@@ -10953,7 +11143,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3DataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3DataSource</summary>Schema for <c>AmazonS3DataSource</c>:
         /// <code>{
         ///   kind: AmazonS3, # Required.
         ///   scans: [
@@ -11020,7 +11211,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonSqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonSqlDataSource</summary>Schema for <c>AmazonSqlDataSource</c>:
         /// <code>{
         ///   kind: AmazonSql, # Required.
         ///   scans: [
@@ -11086,7 +11278,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureCosmosDbDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureCosmosDbDataSource</summary>Schema for <c>AzureCosmosDbDataSource</c>:
         /// <code>{
         ///   kind: AzureCosmosDb, # Required.
         ///   scans: [
@@ -11156,7 +11349,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerDataSource</summary>Schema for <c>AzureDataExplorerDataSource</c>:
         /// <code>{
         ///   kind: AzureDataExplorer, # Required.
         ///   scans: [
@@ -11226,7 +11420,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureFileServiceDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureFileServiceDataSource</summary>Schema for <c>AzureFileServiceDataSource</c>:
         /// <code>{
         ///   kind: AzureFileService, # Required.
         ///   scans: [
@@ -11296,7 +11491,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseDataSource</summary>Schema for <c>AzureSqlDatabaseDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDatabase, # Required.
         ///   scans: [
@@ -11366,7 +11562,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonPostgreSqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlDataSource</summary>Schema for <c>AmazonPostgreSqlDataSource</c>:
         /// <code>{
         ///   kind: AmazonPostgreSql, # Required.
         ///   scans: [
@@ -11433,7 +11630,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzurePostgreSqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzurePostgreSqlDataSource</summary>Schema for <c>AzurePostgreSqlDataSource</c>:
         /// <code>{
         ///   kind: AzurePostgreSql, # Required.
         ///   scans: [
@@ -11504,7 +11702,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SqlServerDatabaseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>SqlServerDatabaseDataSource</summary>Schema for <c>SqlServerDatabaseDataSource</c>:
         /// <code>{
         ///   kind: SqlServerDatabase, # Required.
         ///   scans: [
@@ -11574,7 +11773,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceDataSource</summary>Schema for <c>AzureSqlDatabaseManagedInstanceDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstance, # Required.
         ///   scans: [
@@ -11644,7 +11844,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseDataSource</summary>Schema for <c>AzureSqlDataWarehouseDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouse, # Required.
         ///   scans: [
@@ -11714,7 +11915,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureMySqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureMySqlDataSource</summary>Schema for <c>AzureMySqlDataSource</c>:
         /// <code>{
         ///   kind: AzureMySql, # Required.
         ///   scans: [
@@ -11785,7 +11987,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageDataSource</summary>Schema for <c>AzureStorageDataSource</c>:
         /// <code>{
         ///   kind: AzureStorage, # Required.
         ///   scans: [
@@ -11855,7 +12058,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataDataSource</summary>Schema for <c>TeradataDataSource</c>:
         /// <code>{
         ///   kind: Teradata, # Required.
         ///   scans: [
@@ -11921,7 +12125,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>OracleDataSource</summary>Schema for <c>OracleDataSource</c>:
         /// <code>{
         ///   kind: Oracle, # Required.
         ///   scans: [
@@ -11989,7 +12194,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaDataSource</summary>Schema for <c>SapS4HanaDataSource</c>:
         /// <code>{
         ///   kind: SapS4Hana, # Required.
         ///   scans: [
@@ -12056,7 +12262,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>SapEccDataSource</summary>Schema for <c>SapEccDataSource</c>:
         /// <code>{
         ///   kind: SapEcc, # Required.
         ///   scans: [
@@ -12123,7 +12330,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIDataSource</summary>Schema for <c>PowerBIDataSource</c>:
         /// <code>{
         ///   kind: PowerBI, # Required.
         ///   scans: [
@@ -12189,6 +12397,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(RequestContext context = null)
@@ -12210,8 +12420,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Deletes a data source. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AzureSubscriptionDataSource Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>AzureSubscriptionDataSource</summary>Schema for <c>AzureSubscriptionDataSource</c>:
         /// <code>{
         ///   kind: AzureSubscription, # Required.
         ///   scans: [
@@ -12277,7 +12491,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupDataSource</summary>Schema for <c>AzureResourceGroupDataSource</c>:
         /// <code>{
         ///   kind: AzureResourceGroup, # Required.
         ///   scans: [
@@ -12344,7 +12559,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceDataSource</summary>Schema for <c>AzureSynapseWorkspaceDataSource</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspace, # Required.
         ///   scans: [
@@ -12415,7 +12631,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseDataSource</summary>Schema for <c>AzureSynapseDataSource</c>:
         /// <code>{
         ///   kind: AzureSynapse, # Required.
         ///   scans: [
@@ -12486,7 +12703,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1DataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1DataSource</summary>Schema for <c>AdlsGen1DataSource</c>:
         /// <code>{
         ///   kind: AdlsGen1, # Required.
         ///   scans: [
@@ -12556,7 +12774,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2DataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2DataSource</summary>Schema for <c>AdlsGen2DataSource</c>:
         /// <code>{
         ///   kind: AdlsGen2, # Required.
         ///   scans: [
@@ -12626,7 +12845,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonAccountDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonAccountDataSource</summary>Schema for <c>AmazonAccountDataSource</c>:
         /// <code>{
         ///   kind: AmazonAccount, # Required.
         ///   scans: [
@@ -12693,7 +12913,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3DataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3DataSource</summary>Schema for <c>AmazonS3DataSource</c>:
         /// <code>{
         ///   kind: AmazonS3, # Required.
         ///   scans: [
@@ -12760,7 +12981,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonSqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonSqlDataSource</summary>Schema for <c>AmazonSqlDataSource</c>:
         /// <code>{
         ///   kind: AmazonSql, # Required.
         ///   scans: [
@@ -12826,7 +13048,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureCosmosDbDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureCosmosDbDataSource</summary>Schema for <c>AzureCosmosDbDataSource</c>:
         /// <code>{
         ///   kind: AzureCosmosDb, # Required.
         ///   scans: [
@@ -12896,7 +13119,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerDataSource</summary>Schema for <c>AzureDataExplorerDataSource</c>:
         /// <code>{
         ///   kind: AzureDataExplorer, # Required.
         ///   scans: [
@@ -12966,7 +13190,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureFileServiceDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureFileServiceDataSource</summary>Schema for <c>AzureFileServiceDataSource</c>:
         /// <code>{
         ///   kind: AzureFileService, # Required.
         ///   scans: [
@@ -13036,7 +13261,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseDataSource</summary>Schema for <c>AzureSqlDatabaseDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDatabase, # Required.
         ///   scans: [
@@ -13106,7 +13332,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonPostgreSqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlDataSource</summary>Schema for <c>AmazonPostgreSqlDataSource</c>:
         /// <code>{
         ///   kind: AmazonPostgreSql, # Required.
         ///   scans: [
@@ -13173,7 +13400,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzurePostgreSqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzurePostgreSqlDataSource</summary>Schema for <c>AzurePostgreSqlDataSource</c>:
         /// <code>{
         ///   kind: AzurePostgreSql, # Required.
         ///   scans: [
@@ -13244,7 +13472,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SqlServerDatabaseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>SqlServerDatabaseDataSource</summary>Schema for <c>SqlServerDatabaseDataSource</c>:
         /// <code>{
         ///   kind: SqlServerDatabase, # Required.
         ///   scans: [
@@ -13314,7 +13543,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceDataSource</summary>Schema for <c>AzureSqlDatabaseManagedInstanceDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstance, # Required.
         ///   scans: [
@@ -13384,7 +13614,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseDataSource</summary>Schema for <c>AzureSqlDataWarehouseDataSource</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouse, # Required.
         ///   scans: [
@@ -13454,7 +13685,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureMySqlDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureMySqlDataSource</summary>Schema for <c>AzureMySqlDataSource</c>:
         /// <code>{
         ///   kind: AzureMySql, # Required.
         ///   scans: [
@@ -13525,7 +13757,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageDataSource</summary>Schema for <c>AzureStorageDataSource</c>:
         /// <code>{
         ///   kind: AzureStorage, # Required.
         ///   scans: [
@@ -13595,7 +13828,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataDataSource</summary>Schema for <c>TeradataDataSource</c>:
         /// <code>{
         ///   kind: Teradata, # Required.
         ///   scans: [
@@ -13661,7 +13895,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>OracleDataSource</summary>Schema for <c>OracleDataSource</c>:
         /// <code>{
         ///   kind: Oracle, # Required.
         ///   scans: [
@@ -13729,7 +13964,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaDataSource</summary>Schema for <c>SapS4HanaDataSource</c>:
         /// <code>{
         ///   kind: SapS4Hana, # Required.
         ///   scans: [
@@ -13796,7 +14032,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>SapEccDataSource</summary>Schema for <c>SapEccDataSource</c>:
         /// <code>{
         ///   kind: SapEcc, # Required.
         ///   scans: [
@@ -13863,7 +14100,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIDataSource Response Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIDataSource</summary>Schema for <c>PowerBIDataSource</c>:
         /// <code>{
         ///   kind: PowerBI, # Required.
         ///   scans: [
@@ -13929,6 +14167,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response Delete(RequestContext context = null)
@@ -13950,60 +14190,57 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> List scans in data source. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ScanListValue</c>:
         /// <code>{
-        ///   value: [
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;, # Required.
+        ///   scanResults: [
         ///     {
+        ///       parentId: string, # Optional.
         ///       id: string, # Optional.
-        ///       name: string, # Optional.
-        ///       kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;, # Required.
-        ///       scanResults: [
-        ///         {
-        ///           parentId: string, # Optional.
-        ///           id: string, # Optional.
-        ///           resourceId: string, # Optional.
-        ///           status: string, # Optional.
-        ///           assetsDiscovered: number, # Optional.
-        ///           assetsClassified: number, # Optional.
-        ///           diagnostics: {
-        ///             notifications: [
-        ///               {
-        ///                 message: string, # Optional.
-        ///                 code: number, # Optional.
-        ///               }
-        ///             ], # Optional.
-        ///             exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
-        ///           }, # Optional.
-        ///           startTime: string (ISO 8601 Format), # Optional.
-        ///           queuedTime: string (ISO 8601 Format), # Optional.
-        ///           pipelineStartTime: string (ISO 8601 Format), # Optional.
-        ///           endTime: string (ISO 8601 Format), # Optional.
-        ///           scanRulesetVersion: number, # Optional.
-        ///           scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///           scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
-        ///           errorMessage: string, # Optional.
-        ///           error: {
+        ///       resourceId: string, # Optional.
+        ///       status: string, # Optional.
+        ///       assetsDiscovered: number, # Optional.
+        ///       assetsClassified: number, # Optional.
+        ///       diagnostics: {
+        ///         notifications: [
+        ///           {
+        ///             message: string, # Optional.
+        ///             code: number, # Optional.
+        ///           }
+        ///         ], # Optional.
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
+        ///       }, # Optional.
+        ///       startTime: string (ISO 8601 Format), # Optional.
+        ///       queuedTime: string (ISO 8601 Format), # Optional.
+        ///       pipelineStartTime: string (ISO 8601 Format), # Optional.
+        ///       endTime: string (ISO 8601 Format), # Optional.
+        ///       scanRulesetVersion: number, # Optional.
+        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
+        ///       errorMessage: string, # Optional.
+        ///       error: {
+        ///         code: string, # Optional.
+        ///         message: string, # Optional.
+        ///         target: string, # Optional.
+        ///         details: [
+        ///           {
         ///             code: string, # Optional.
         ///             message: string, # Optional.
         ///             target: string, # Optional.
-        ///             details: [
-        ///               {
-        ///                 code: string, # Optional.
-        ///                 message: string, # Optional.
-        ///                 target: string, # Optional.
-        ///                 details: [ErrorModel], # Optional.
-        ///               }
-        ///             ], # Optional.
-        ///           }, # Optional.
-        ///           runType: string, # Optional.
-        ///           dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
-        ///         }
-        ///       ], # Optional.
+        ///             details: [ErrorModel], # Optional.
+        ///           }
+        ///         ], # Optional.
+        ///       }, # Optional.
+        ///       runType: string, # Optional.
+        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
         ///     }
         ///   ], # Optional.
-        ///   nextLink: string, # Optional.
-        ///   count: number, # Optional.
         /// }
         /// </code>
         /// 
@@ -14033,60 +14270,57 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> List scans in data source. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ScanListValue</c>:
         /// <code>{
-        ///   value: [
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;, # Required.
+        ///   scanResults: [
         ///     {
+        ///       parentId: string, # Optional.
         ///       id: string, # Optional.
-        ///       name: string, # Optional.
-        ///       kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;, # Required.
-        ///       scanResults: [
-        ///         {
-        ///           parentId: string, # Optional.
-        ///           id: string, # Optional.
-        ///           resourceId: string, # Optional.
-        ///           status: string, # Optional.
-        ///           assetsDiscovered: number, # Optional.
-        ///           assetsClassified: number, # Optional.
-        ///           diagnostics: {
-        ///             notifications: [
-        ///               {
-        ///                 message: string, # Optional.
-        ///                 code: number, # Optional.
-        ///               }
-        ///             ], # Optional.
-        ///             exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
-        ///           }, # Optional.
-        ///           startTime: string (ISO 8601 Format), # Optional.
-        ///           queuedTime: string (ISO 8601 Format), # Optional.
-        ///           pipelineStartTime: string (ISO 8601 Format), # Optional.
-        ///           endTime: string (ISO 8601 Format), # Optional.
-        ///           scanRulesetVersion: number, # Optional.
-        ///           scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///           scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
-        ///           errorMessage: string, # Optional.
-        ///           error: {
+        ///       resourceId: string, # Optional.
+        ///       status: string, # Optional.
+        ///       assetsDiscovered: number, # Optional.
+        ///       assetsClassified: number, # Optional.
+        ///       diagnostics: {
+        ///         notifications: [
+        ///           {
+        ///             message: string, # Optional.
+        ///             code: number, # Optional.
+        ///           }
+        ///         ], # Optional.
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
+        ///       }, # Optional.
+        ///       startTime: string (ISO 8601 Format), # Optional.
+        ///       queuedTime: string (ISO 8601 Format), # Optional.
+        ///       pipelineStartTime: string (ISO 8601 Format), # Optional.
+        ///       endTime: string (ISO 8601 Format), # Optional.
+        ///       scanRulesetVersion: number, # Optional.
+        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
+        ///       errorMessage: string, # Optional.
+        ///       error: {
+        ///         code: string, # Optional.
+        ///         message: string, # Optional.
+        ///         target: string, # Optional.
+        ///         details: [
+        ///           {
         ///             code: string, # Optional.
         ///             message: string, # Optional.
         ///             target: string, # Optional.
-        ///             details: [
-        ///               {
-        ///                 code: string, # Optional.
-        ///                 message: string, # Optional.
-        ///                 target: string, # Optional.
-        ///                 details: [ErrorModel], # Optional.
-        ///               }
-        ///             ], # Optional.
-        ///           }, # Optional.
-        ///           runType: string, # Optional.
-        ///           dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
-        ///         }
-        ///       ], # Optional.
+        ///             details: [ErrorModel], # Optional.
+        ///           }
+        ///         ], # Optional.
+        ///       }, # Optional.
+        ///       runType: string, # Optional.
+        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
         ///     }
         ///   ], # Optional.
-        ///   nextLink: string, # Optional.
-        ///   count: number, # Optional.
         /// }
         /// </code>
         /// 

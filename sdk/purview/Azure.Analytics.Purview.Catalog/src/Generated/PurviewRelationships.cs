@@ -51,7 +51,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
         ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
         ///   typeName: string, # Optional. The name of the type.
@@ -74,7 +77,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   version: number, # Optional. The version of the relationship.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
         ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
         ///   typeName: string, # Optional. The name of the type.
@@ -123,7 +129,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
         ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
         ///   typeName: string, # Optional. The name of the type.
@@ -146,7 +155,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   version: number, # Optional. The version of the relationship.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
         ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
         ///   typeName: string, # Optional. The name of the type.
@@ -195,7 +207,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
         ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
         ///   typeName: string, # Optional. The name of the type.
@@ -218,7 +233,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   version: number, # Optional. The version of the relationship.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
         ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
         ///   typeName: string, # Optional. The name of the type.
@@ -267,7 +285,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
         ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
         ///   typeName: string, # Optional. The name of the type.
@@ -290,7 +311,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   version: number, # Optional. The version of the relationship.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
         ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
         ///   typeName: string, # Optional. The name of the type.
@@ -340,8 +364,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasRelationshipWithExtInfo</c>:
         /// <code>{
         ///   referredEntities: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The referred entity header.
         ///   relationship: {
@@ -394,8 +421,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasRelationshipWithExtInfo</c>:
         /// <code>{
         ///   referredEntities: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The referred entity header.
         ///   relationship: {

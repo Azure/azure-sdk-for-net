@@ -56,8 +56,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasGlossary</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -134,8 +137,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasGlossary</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -211,7 +217,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AtlasGlossaryExtInfo Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
         ///   categories: [
         ///     {
@@ -265,7 +274,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
-        /// Schema for <c>AtlasGlossaryExtInfo Response Body</c>:
+        /// </details>
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
         ///   categories: [
         ///     {
@@ -319,6 +332,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> CreateGlossaryAsync(RequestContent content, RequestContext context = null)
@@ -345,7 +359,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AtlasGlossaryExtInfo Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
         ///   categories: [
         ///     {
@@ -399,7 +416,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
-        /// Schema for <c>AtlasGlossaryExtInfo Response Body</c>:
+        /// </details>
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
         ///   categories: [
         ///     {
@@ -453,6 +474,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response CreateGlossary(RequestContent content, RequestContext context = null)
@@ -479,7 +501,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -535,7 +560,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of related term headers.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -617,7 +645,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -673,7 +704,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of related term headers.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -755,7 +789,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -811,7 +848,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of related term headers.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -893,7 +933,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -949,7 +992,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of related term headers.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -1031,8 +1077,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -1114,8 +1163,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -1199,7 +1251,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -1255,7 +1310,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of related term headers.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -1340,7 +1398,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -1396,7 +1457,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of related term headers.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -1526,8 +1590,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -1611,8 +1678,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -1698,8 +1768,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DictionaryOfpathsCic80AAtlasV2GlossaryCategoryCategoryguidRelatedGetResponses200ContentApplicationJsonSchemaAdditionalproperties</c>:
         /// <code>{
         ///   categoryGuid: string, # Optional. The GUID of the category.
         ///   description: string, # Optional. The description of the category header.
@@ -1737,8 +1810,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DictionaryOfpathsCic80AAtlasV2GlossaryCategoryCategoryguidRelatedGetResponses200ContentApplicationJsonSchemaAdditionalproperties</c>:
         /// <code>{
         ///   categoryGuid: string, # Optional. The GUID of the category.
         ///   description: string, # Optional. The description of the category header.
@@ -1776,8 +1852,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasRelatedTermHeader</c>:
         /// <code>{
         ///   description: string, # Optional. The description of the related term.
         ///   displayText: string, # Optional. The display text.
@@ -1818,8 +1897,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasRelatedTermHeader</c>:
         /// <code>{
         ///   description: string, # Optional. The description of the related term.
         ///   displayText: string, # Optional. The display text.
@@ -1858,7 +1940,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -1960,7 +2045,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -2089,7 +2177,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -2191,7 +2282,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -2321,8 +2415,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -2452,8 +2549,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -2584,7 +2684,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -2686,7 +2789,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -2818,7 +2924,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -2920,7 +3029,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -3097,8 +3209,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -3229,8 +3344,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -3360,7 +3478,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -3462,7 +3583,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -3591,7 +3715,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -3693,7 +3820,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -3824,8 +3954,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
         /// <code>{
         ///   guid: string, # Optional. The GUID of the object.
         ///   typeName: string, # Optional. The name of the type.
@@ -3871,8 +4004,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
         /// <code>{
         ///   guid: string, # Optional. The GUID of the object.
         ///   typeName: string, # Optional. The name of the type.
@@ -3916,8 +4052,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
         /// <code>{
         ///   guid: string, # Optional. The GUID of the object.
         ///   typeName: string, # Optional. The name of the type.
@@ -3962,8 +4101,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
         /// <code>{
         ///   guid: string, # Optional. The GUID of the object.
         ///   typeName: string, # Optional. The name of the type.
@@ -4008,8 +4150,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
         /// <code>{
         ///   guid: string, # Optional. The GUID of the object.
         ///   typeName: string, # Optional. The name of the type.
@@ -4054,8 +4199,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
         /// <code>{
         ///   guid: string, # Optional. The GUID of the object.
         ///   typeName: string, # Optional. The name of the type.
@@ -4100,8 +4248,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
         /// <code>{
         ///   guid: string, # Optional. The GUID of the object.
         ///   typeName: string, # Optional. The name of the type.
@@ -4146,8 +4297,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
         /// <code>{
         ///   guid: string, # Optional. The GUID of the object.
         ///   typeName: string, # Optional. The name of the type.
@@ -4194,8 +4348,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DictionaryOfpathsV84KwqAtlasV2GlossaryTermsTermguidRelatedGetResponses200ContentApplicationJsonSchemaAdditionalproperties</c>:
         /// <code>{
         ///   description: string, # Optional. The description of the related term.
         ///   displayText: string, # Optional. The display text.
@@ -4236,8 +4393,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DictionaryOfpathsV84KwqAtlasV2GlossaryTermsTermguidRelatedGetResponses200ContentApplicationJsonSchemaAdditionalproperties</c>:
         /// <code>{
         ///   description: string, # Optional. The description of the related term.
         ///   displayText: string, # Optional. The display text.
@@ -4275,8 +4435,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AtlasGlossaryExtInfo Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
         ///   categories: [
         ///     {
@@ -4330,6 +4493,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> GetGlossaryAsync(string glossaryGuid, RequestContext context = null)
@@ -4356,8 +4520,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AtlasGlossaryExtInfo Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
         ///   categories: [
         ///     {
@@ -4411,6 +4578,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response GetGlossary(string glossaryGuid, RequestContext context = null)
@@ -4439,7 +4607,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AtlasGlossaryExtInfo Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
         ///   categories: [
         ///     {
@@ -4493,7 +4664,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
-        /// Schema for <c>AtlasGlossaryExtInfo Response Body</c>:
+        /// </details>
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
         ///   categories: [
         ///     {
@@ -4547,6 +4722,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> UpdateGlossaryAsync(string glossaryGuid, RequestContent content, RequestContext context = null)
@@ -4576,7 +4752,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AtlasGlossaryExtInfo Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
         ///   categories: [
         ///     {
@@ -4630,7 +4809,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
-        /// Schema for <c>AtlasGlossaryExtInfo Response Body</c>:
+        /// </details>
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
         ///   categories: [
         ///     {
@@ -4684,6 +4867,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response UpdateGlossary(string glossaryGuid, RequestContent content, RequestContext context = null)
@@ -4760,8 +4944,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -4846,8 +5033,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -4932,8 +5122,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasRelatedCategoryHeader</c>:
         /// <code>{
         ///   categoryGuid: string, # Optional. The GUID of the category.
         ///   description: string, # Optional. The description of the category header.
@@ -4971,8 +5164,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasRelatedCategoryHeader</c>:
         /// <code>{
         ///   categoryGuid: string, # Optional. The GUID of the category.
         ///   description: string, # Optional. The description of the category header.
@@ -5008,8 +5204,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
         ///   categories: [
         ///     {
@@ -5090,8 +5289,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
         ///   categories: [
         ///     {
@@ -5173,8 +5375,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AtlasGlossaryExtInfo Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
         ///   categories: [
         ///     {
@@ -5228,6 +5433,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> PartialUpdateGlossaryAsync(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
@@ -5257,8 +5463,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AtlasGlossaryExtInfo Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
         ///   categories: [
         ///     {
@@ -5312,6 +5521,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response PartialUpdateGlossary(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
@@ -5343,8 +5553,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -5476,8 +5689,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -5608,8 +5824,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasRelatedTermHeader</c>:
         /// <code>{
         ///   description: string, # Optional. The description of the related term.
         ///   displayText: string, # Optional. The display text.
@@ -5650,8 +5869,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasRelatedTermHeader</c>:
         /// <code>{
         ///   description: string, # Optional. The description of the related term.
         ///   displayText: string, # Optional. The display text.
@@ -5689,8 +5911,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="operationGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ImportCSVOperation</c>:
         /// <code>{
         ///   id: string, # Optional. guid string
         ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;, # Optional. Enum of the status of import csv operation.
@@ -5732,8 +5957,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="operationGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ImportCSVOperation</c>:
         /// <code>{
         ///   id: string, # Optional. guid string
         ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;, # Optional. Enum of the status of import csv operation.
@@ -5830,8 +6058,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -5962,8 +6193,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -6094,8 +6328,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ImportCSVOperation</c>:
         /// <code>{
         ///   id: string, # Optional. guid string
         ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;, # Optional. Enum of the status of import csv operation.
@@ -6141,8 +6378,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ImportCSVOperation</c>:
         /// <code>{
         ///   id: string, # Optional. guid string
         ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;, # Optional. Enum of the status of import csv operation.
@@ -6188,8 +6428,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ImportCSVOperation</c>:
         /// <code>{
         ///   id: string, # Optional. guid string
         ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;, # Optional. Enum of the status of import csv operation.
@@ -6235,8 +6478,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ImportCSVOperation</c>:
         /// <code>{
         ///   id: string, # Optional. guid string
         ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;, # Optional. Enum of the status of import csv operation.

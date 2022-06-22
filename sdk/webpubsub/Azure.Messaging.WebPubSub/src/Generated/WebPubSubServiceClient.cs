@@ -39,8 +39,11 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ClientTokenResponse</c>:
         /// <code>{
         ///   token: string, # Optional. The token value for the WebSocket client to connect to the service
         /// }
@@ -69,8 +72,11 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ClientTokenResponse</c>:
         /// <code>{
         ///   token: string, # Optional. The token value for the WebSocket client to connect to the service
         /// }

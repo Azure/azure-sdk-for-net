@@ -72,8 +72,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Get a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>SystemClassificationRule Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
         /// <code>{
         ///   kind: System, # Required.
         ///   id: string, # Optional.
@@ -88,7 +92,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>CustomClassificationRule Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
         /// <code>{
         ///   kind: Custom, # Required.
         ///   id: string, # Optional.
@@ -111,6 +116,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> GetPropertiesAsync(RequestContext context = null)
@@ -132,8 +139,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Get a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>SystemClassificationRule Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
         /// <code>{
         ///   kind: System, # Required.
         ///   id: string, # Optional.
@@ -148,7 +159,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>CustomClassificationRule Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
         /// <code>{
         ///   kind: Custom, # Required.
         ///   id: string, # Optional.
@@ -171,6 +183,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response GetProperties(RequestContext context = null)
@@ -194,7 +208,11 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>SystemClassificationRule Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
         /// <code>{
         ///   kind: System, # Required.
         ///   id: string, # Optional.
@@ -209,7 +227,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>CustomClassificationRule Request Body</c>:
+        /// </details>
+        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
         /// <code>{
         ///   kind: Custom, # Required.
         ///   id: string, # Optional.
@@ -232,7 +251,13 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SystemClassificationRule Response Body</c>:
+        /// </details>
+        /// </details>
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
         /// <code>{
         ///   kind: System, # Required.
         ///   id: string, # Optional.
@@ -247,7 +272,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>CustomClassificationRule Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
         /// <code>{
         ///   kind: Custom, # Required.
         ///   id: string, # Optional.
@@ -270,6 +296,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestContext context = null)
@@ -293,7 +321,11 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>SystemClassificationRule Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
         /// <code>{
         ///   kind: System, # Required.
         ///   id: string, # Optional.
@@ -308,7 +340,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>CustomClassificationRule Request Body</c>:
+        /// </details>
+        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
         /// <code>{
         ///   kind: Custom, # Required.
         ///   id: string, # Optional.
@@ -331,7 +364,13 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SystemClassificationRule Response Body</c>:
+        /// </details>
+        /// </details>
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
         /// <code>{
         ///   kind: System, # Required.
         ///   id: string, # Optional.
@@ -346,7 +385,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>CustomClassificationRule Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
         /// <code>{
         ///   kind: Custom, # Required.
         ///   id: string, # Optional.
@@ -369,6 +409,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response CreateOrUpdate(RequestContent content, RequestContext context = null)
@@ -390,8 +432,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Deletes a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>SystemClassificationRule Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
         /// <code>{
         ///   kind: System, # Required.
         ///   id: string, # Optional.
@@ -406,7 +452,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>CustomClassificationRule Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
         /// <code>{
         ///   kind: Custom, # Required.
         ///   id: string, # Optional.
@@ -429,6 +476,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(RequestContext context = null)
@@ -450,8 +499,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Deletes a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>SystemClassificationRule Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
         /// <code>{
         ///   kind: System, # Required.
         ///   id: string, # Optional.
@@ -466,7 +519,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>CustomClassificationRule Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
         /// <code>{
         ///   kind: Custom, # Required.
         ///   id: string, # Optional.
@@ -489,6 +543,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response Delete(RequestContext context = null)
@@ -513,8 +569,11 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>OperationResponse</c>:
         /// <code>{
         ///   scanResultId: OperationResponseScanResultId, # Optional.
         ///   startTime: string (ISO 8601 Format), # Optional.
@@ -561,8 +620,11 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>OperationResponse</c>:
         /// <code>{
         ///   scanResultId: OperationResponseScanResultId, # Optional.
         ///   startTime: string (ISO 8601 Format), # Optional.
@@ -606,18 +668,15 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Lists the rule versions of a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ClassificationRuleListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       id: string, # Optional.
-        ///       name: string, # Optional.
-        ///       kind: &quot;System&quot; | &quot;Custom&quot;, # Required.
-        ///     }
-        ///   ], # Optional.
-        ///   nextLink: string, # Optional.
-        ///   count: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   kind: &quot;System&quot; | &quot;Custom&quot;, # Required.
         /// }
         /// </code>
         /// 
@@ -647,18 +706,15 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Lists the rule versions of a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ClassificationRuleListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       id: string, # Optional.
-        ///       name: string, # Optional.
-        ///       kind: &quot;System&quot; | &quot;Custom&quot;, # Required.
-        ///     }
-        ///   ], # Optional.
-        ///   nextLink: string, # Optional.
-        ///   count: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   kind: &quot;System&quot; | &quot;Custom&quot;, # Required.
         /// }
         /// </code>
         /// 

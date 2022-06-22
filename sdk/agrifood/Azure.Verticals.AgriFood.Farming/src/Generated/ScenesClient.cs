@@ -68,8 +68,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SatelliteDataIngestionJob</c>:
         /// <code>{
         ///   farmerId: string, # Required. Farmer ID.
         ///   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
@@ -125,8 +128,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SatelliteDataIngestionJob</c>:
         /// <code>{
         ///   farmerId: string, # Required. Farmer ID.
         ///   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
@@ -240,34 +246,31 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SceneListResponseValue</c>:
         /// <code>{
-        ///   value: [
+        ///   sceneDateTime: string (ISO 8601 Format), # Optional. Date-time of the scene, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   provider: string, # Optional. Data provider of the scene.
+        ///   source: string, # Optional. Data source of the scene.
+        ///   imageFiles: [
         ///     {
-        ///       sceneDateTime: string (ISO 8601 Format), # Optional. Date-time of the scene, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///       provider: string, # Optional. Data provider of the scene.
-        ///       source: string, # Optional. Data source of the scene.
-        ///       imageFiles: [
-        ///         {
-        ///           fileLink: string, # Optional. Link of the image file.
-        ///           name: string, # Required. Name of the image file.
-        ///           imageFormat: &quot;TIF&quot;, # Optional. Supported image formats for scene resource.
-        ///           resolution: number, # Optional. Resolution of image file in meters.
-        ///         }
-        ///       ], # Optional. Collection of image files.
+        ///       fileLink: string, # Optional. Link of the image file.
+        ///       name: string, # Required. Name of the image file.
         ///       imageFormat: &quot;TIF&quot;, # Optional. Supported image formats for scene resource.
-        ///       cloudCoverPercentage: number, # Optional. Cloud cover percentage of the scene.
-        ///       darkPixelPercentage: number, # Optional. Dark pixel percentage of the scene.
-        ///       ndviMedianValue: number, # Optional. Median of NDVI of the scene.
-        ///       boundaryId: string, # Optional. Boundary ID which belongs to the scene.
-        ///       farmerId: string, # Optional. Farmer ID which belongs to the scene.
-        ///       id: string, # Optional. Unique scene resource ID.
-        ///       eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///       resolution: number, # Optional. Resolution of image file in meters.
         ///     }
-        ///   ], # Optional. List of requested objects.
-        ///   $skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.
-        ///   nextLink: string, # Optional. Continuation link (absolute URI) to the next page of results in the list.
+        ///   ], # Optional. Collection of image files.
+        ///   imageFormat: &quot;TIF&quot;, # Optional. Supported image formats for scene resource.
+        ///   cloudCoverPercentage: number, # Optional. Cloud cover percentage of the scene.
+        ///   darkPixelPercentage: number, # Optional. Dark pixel percentage of the scene.
+        ///   ndviMedianValue: number, # Optional. Median of NDVI of the scene.
+        ///   boundaryId: string, # Optional. Boundary ID which belongs to the scene.
+        ///   farmerId: string, # Optional. Farmer ID which belongs to the scene.
+        ///   id: string, # Optional. Unique scene resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         /// }
         /// </code>
         /// 
@@ -318,34 +321,31 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SceneListResponseValue</c>:
         /// <code>{
-        ///   value: [
+        ///   sceneDateTime: string (ISO 8601 Format), # Optional. Date-time of the scene, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   provider: string, # Optional. Data provider of the scene.
+        ///   source: string, # Optional. Data source of the scene.
+        ///   imageFiles: [
         ///     {
-        ///       sceneDateTime: string (ISO 8601 Format), # Optional. Date-time of the scene, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///       provider: string, # Optional. Data provider of the scene.
-        ///       source: string, # Optional. Data source of the scene.
-        ///       imageFiles: [
-        ///         {
-        ///           fileLink: string, # Optional. Link of the image file.
-        ///           name: string, # Required. Name of the image file.
-        ///           imageFormat: &quot;TIF&quot;, # Optional. Supported image formats for scene resource.
-        ///           resolution: number, # Optional. Resolution of image file in meters.
-        ///         }
-        ///       ], # Optional. Collection of image files.
+        ///       fileLink: string, # Optional. Link of the image file.
+        ///       name: string, # Required. Name of the image file.
         ///       imageFormat: &quot;TIF&quot;, # Optional. Supported image formats for scene resource.
-        ///       cloudCoverPercentage: number, # Optional. Cloud cover percentage of the scene.
-        ///       darkPixelPercentage: number, # Optional. Dark pixel percentage of the scene.
-        ///       ndviMedianValue: number, # Optional. Median of NDVI of the scene.
-        ///       boundaryId: string, # Optional. Boundary ID which belongs to the scene.
-        ///       farmerId: string, # Optional. Farmer ID which belongs to the scene.
-        ///       id: string, # Optional. Unique scene resource ID.
-        ///       eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///       resolution: number, # Optional. Resolution of image file in meters.
         ///     }
-        ///   ], # Optional. List of requested objects.
-        ///   $skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.
-        ///   nextLink: string, # Optional. Continuation link (absolute URI) to the next page of results in the list.
+        ///   ], # Optional. Collection of image files.
+        ///   imageFormat: &quot;TIF&quot;, # Optional. Supported image formats for scene resource.
+        ///   cloudCoverPercentage: number, # Optional. Cloud cover percentage of the scene.
+        ///   darkPixelPercentage: number, # Optional. Dark pixel percentage of the scene.
+        ///   ndviMedianValue: number, # Optional. Median of NDVI of the scene.
+        ///   boundaryId: string, # Optional. Boundary ID which belongs to the scene.
+        ///   farmerId: string, # Optional. Farmer ID which belongs to the scene.
+        ///   id: string, # Optional. Unique scene resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         /// }
         /// </code>
         /// 
@@ -385,7 +385,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SatelliteDataIngestionJob</c>:
         /// <code>{
         ///   farmerId: string, # Required. Farmer ID.
         ///   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
@@ -415,7 +418,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SatelliteDataIngestionJob</c>:
         /// <code>{
         ///   farmerId: string, # Required. Farmer ID.
         ///   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
@@ -474,7 +480,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SatelliteDataIngestionJob</c>:
         /// <code>{
         ///   farmerId: string, # Required. Farmer ID.
         ///   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
@@ -504,7 +513,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SatelliteDataIngestionJob</c>:
         /// <code>{
         ///   farmerId: string, # Required. Farmer ID.
         ///   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.

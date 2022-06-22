@@ -65,7 +65,10 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>CustomConversationalTask Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// <details><summary>CustomConversationalTask</summary>Schema for <c>CustomConversationalTask</c>:
         /// <code>{
         ///   kind: Conversation, # Required. Enumeration of supported Conversation tasks.
         ///   analysisInput: {
@@ -88,7 +91,11 @@ namespace Azure.AI.Language.Conversations
         ///   }, # Required. Input parameters necessary for a CustomConversation task.
         /// }
         /// </code>
-        /// Schema for <c>CustomConversationalTaskResult Response Body</c>:
+        /// </details>
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>CustomConversationalTaskResult</summary>Schema for <c>CustomConversationalTaskResult</c>:
         /// <code>{
         ///   kind: ConversationResult, # Required. Enumeration of supported conversational task results
         ///   result: {
@@ -101,6 +108,7 @@ namespace Azure.AI.Language.Conversations
         ///   }, # Required. Represents a conversation analysis response.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> AnalyzeConversationAsync(RequestContent content, RequestContext context = null)
@@ -127,7 +135,10 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>CustomConversationalTask Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// <details><summary>CustomConversationalTask</summary>Schema for <c>CustomConversationalTask</c>:
         /// <code>{
         ///   kind: Conversation, # Required. Enumeration of supported Conversation tasks.
         ///   analysisInput: {
@@ -150,7 +161,11 @@ namespace Azure.AI.Language.Conversations
         ///   }, # Required. Input parameters necessary for a CustomConversation task.
         /// }
         /// </code>
-        /// Schema for <c>CustomConversationalTaskResult Response Body</c>:
+        /// </details>
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>CustomConversationalTaskResult</summary>Schema for <c>CustomConversationalTaskResult</c>:
         /// <code>{
         ///   kind: ConversationResult, # Required. Enumeration of supported conversational task results
         ///   result: {
@@ -163,6 +178,7 @@ namespace Azure.AI.Language.Conversations
         ///   }, # Required. Represents a conversation analysis response.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response AnalyzeConversation(RequestContent content, RequestContext context = null)

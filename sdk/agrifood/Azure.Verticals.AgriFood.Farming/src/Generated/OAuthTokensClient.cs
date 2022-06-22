@@ -66,8 +66,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>OAuthConnectRequest</c>:
         /// <code>{
         ///   farmerId: string, # Required. ID of the farmer.
         ///   oAuthProviderId: string, # Required. ID of the OAuthProvider.
@@ -97,8 +100,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>OAuthConnectRequest</c>:
         /// <code>{
         ///   farmerId: string, # Required. ID of the farmer.
         ///   oAuthProviderId: string, # Required. ID of the OAuthProvider.
@@ -130,8 +136,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CascadeDeleteJob</c>:
         /// <code>{
         ///   farmerId: string, # Required. Farmer ID.
         ///   resourceId: string, # Required. The id of the resource.
@@ -179,8 +188,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CascadeDeleteJob</c>:
         /// <code>{
         ///   farmerId: string, # Required. Farmer ID.
         ///   resourceId: string, # Required. The id of the resource.
@@ -237,21 +249,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>OAuthTokenListResponseValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       farmerId: string, # Required. Farmer ID for this OAuth config.
-        ///       authProviderId: string, # Required. ID of the OAuth provider resource containing app information.
-        ///       isValid: boolean, # Optional. An optional flag indicating whether the token is a valid or expired (Default value: true).
-        ///       eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///       createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///     }
-        ///   ], # Optional. List of requested objects.
-        ///   $skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.
-        ///   nextLink: string, # Optional. Continuation link (absolute URI) to the next page of results in the list.
+        ///   farmerId: string, # Required. Farmer ID for this OAuth config.
+        ///   authProviderId: string, # Required. ID of the OAuth provider resource containing app information.
+        ///   isValid: boolean, # Optional. An optional flag indicating whether the token is a valid or expired (Default value: true).
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
         /// }
         /// </code>
         /// 
@@ -293,21 +302,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>OAuthTokenListResponseValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       farmerId: string, # Required. Farmer ID for this OAuth config.
-        ///       authProviderId: string, # Required. ID of the OAuth provider resource containing app information.
-        ///       isValid: boolean, # Optional. An optional flag indicating whether the token is a valid or expired (Default value: true).
-        ///       eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///       createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///     }
-        ///   ], # Optional. List of requested objects.
-        ///   $skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.
-        ///   nextLink: string, # Optional. Continuation link (absolute URI) to the next page of results in the list.
+        ///   farmerId: string, # Required. Farmer ID for this OAuth config.
+        ///   authProviderId: string, # Required. ID of the OAuth provider resource containing app information.
+        ///   isValid: boolean, # Optional. An optional flag indicating whether the token is a valid or expired (Default value: true).
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
         /// }
         /// </code>
         /// 
@@ -343,8 +349,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/> or <paramref name="oauthProviderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CascadeDeleteJob</c>:
         /// <code>{
         ///   farmerId: string, # Required. Farmer ID.
         ///   resourceId: string, # Required. The id of the resource.
@@ -397,8 +406,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/> or <paramref name="oauthProviderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CascadeDeleteJob</c>:
         /// <code>{
         ///   farmerId: string, # Required. Farmer ID.
         ///   resourceId: string, # Required. The id of the resource.

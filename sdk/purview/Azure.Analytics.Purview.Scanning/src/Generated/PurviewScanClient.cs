@@ -77,8 +77,11 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Get a filter. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Filter</c>:
         /// <code>{
         ///   id: string, # Optional.
         ///   name: string, # Optional.
@@ -109,8 +112,11 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Get a filter. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Filter</c>:
         /// <code>{
         ///   id: string, # Optional.
         ///   name: string, # Optional.
@@ -143,7 +149,10 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>Filter</c>:
         /// <code>{
         ///   id: string, # Optional.
         ///   name: string, # Optional.
@@ -153,7 +162,10 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Filter</c>:
         /// <code>{
         ///   id: string, # Optional.
         ///   name: string, # Optional.
@@ -186,7 +198,10 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>Filter</c>:
         /// <code>{
         ///   id: string, # Optional.
         ///   name: string, # Optional.
@@ -196,7 +211,10 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Filter</c>:
         /// <code>{
         ///   id: string, # Optional.
         ///   name: string, # Optional.
@@ -230,7 +248,11 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AzureSubscriptionCredentialScan Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>AzureSubscriptionCredentialScan</summary>Schema for <c>AzureSubscriptionCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSubscriptionCredential, # Required.
         ///   scanResults: [
@@ -338,7 +360,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSubscriptionMsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
         /// <code>{
         ///   kind: AzureSubscriptionMsi, # Required.
         ///   scanResults: [
@@ -446,7 +469,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
         /// <code>{
         ///   kind: AzureResourceGroupCredential, # Required.
         ///   scanResults: [
@@ -554,7 +578,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupMsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
         /// <code>{
         ///   kind: AzureResourceGroupMsi, # Required.
         ///   scanResults: [
@@ -662,7 +687,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspaceCredential, # Required.
         ///   scanResults: [
@@ -770,7 +796,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceMsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspaceMsi, # Required.
         ///   scanResults: [
@@ -878,7 +905,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSynapseCredential, # Required.
         ///   scanResults: [
@@ -986,7 +1014,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseMsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSynapseMsi, # Required.
         ///   scanResults: [
@@ -1094,7 +1123,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1CredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
         /// <code>{
         ///   kind: AdlsGen1Credential, # Required.
         ///   scanResults: [
@@ -1162,7 +1192,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1MsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
         /// <code>{
         ///   kind: AdlsGen1Msi, # Required.
         ///   scanResults: [
@@ -1226,7 +1257,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2CredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
         /// <code>{
         ///   kind: AdlsGen2Credential, # Required.
         ///   scanResults: [
@@ -1294,7 +1326,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2MsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
         /// <code>{
         ///   kind: AdlsGen2Msi, # Required.
         ///   scanResults: [
@@ -1358,7 +1391,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonAccountCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AmazonAccountCredentialScan</summary>Schema for <c>AmazonAccountCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonAccountCredential, # Required.
         ///   scanResults: [
@@ -1466,7 +1500,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3CredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3CredentialScan</summary>Schema for <c>AmazonS3CredentialScan</c>:
         /// <code>{
         ///   kind: AmazonS3Credential, # Required.
         ///   scanResults: [
@@ -1535,7 +1570,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3RoleARNScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
         /// <code>{
         ///   kind: AmazonS3RoleARN, # Required.
         ///   scanResults: [
@@ -1600,7 +1636,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonSqlCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonSqlCredential, # Required.
         ///   scanResults: [
@@ -1670,7 +1707,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureCosmosDbCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
         /// <code>{
         ///   kind: AzureCosmosDbCredential, # Required.
         ///   scanResults: [
@@ -1739,7 +1777,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
         /// <code>{
         ///   kind: AzureDataExplorerCredential, # Required.
         ///   scanResults: [
@@ -1808,7 +1847,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerMsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
         /// <code>{
         ///   kind: AzureDataExplorerMsi, # Required.
         ///   scanResults: [
@@ -1873,7 +1913,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureFileServiceCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureFileServiceCredential, # Required.
         ///   scanResults: [
@@ -1942,7 +1983,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseCredential, # Required.
         ///   scanResults: [
@@ -2012,7 +2054,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseMsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseMsi, # Required.
         ///   scanResults: [
@@ -2078,7 +2121,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonPostgreSqlCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonPostgreSqlCredential, # Required.
         ///   scanResults: [
@@ -2149,7 +2193,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzurePostgreSqlCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AzurePostgreSqlCredential, # Required.
         ///   scanResults: [
@@ -2221,7 +2266,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SqlServerDatabaseCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
         /// <code>{
         ///   kind: SqlServerDatabaseCredential, # Required.
         ///   scanResults: [
@@ -2291,7 +2337,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceCredential, # Required.
         ///   scanResults: [
@@ -2361,7 +2408,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceMsi, # Required.
         ///   scanResults: [
@@ -2427,7 +2475,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouseCredential, # Required.
         ///   scanResults: [
@@ -2497,7 +2546,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseMsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouseMsi, # Required.
         ///   scanResults: [
@@ -2563,7 +2613,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureMySqlCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
         /// <code>{
         ///   kind: AzureMySqlCredential, # Required.
         ///   scanResults: [
@@ -2634,7 +2685,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
         /// <code>{
         ///   kind: AzureStorageCredential, # Required.
         ///   scanResults: [
@@ -2702,7 +2754,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageMsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
         /// <code>{
         ///   kind: AzureStorageMsi, # Required.
         ///   scanResults: [
@@ -2766,7 +2819,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
         /// <code>{
         ///   kind: TeradataTeradataCredential, # Required.
         ///   scanResults: [
@@ -2838,7 +2892,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataUserPassScan Request Body</c>:
+        /// </details>
+        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
         /// <code>{
         ///   kind: TeradataUserPass, # Required.
         ///   scanResults: [
@@ -2904,7 +2959,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataTeradataUserPassScan Request Body</c>:
+        /// </details>
+        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
         /// <code>{
         ///   kind: TeradataTeradataUserPass, # Required.
         ///   scanResults: [
@@ -2974,7 +3030,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
         /// <code>{
         ///   kind: OracleOracleCredential, # Required.
         ///   scanResults: [
@@ -3046,7 +3103,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleUserPassScan Request Body</c>:
+        /// </details>
+        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
         /// <code>{
         ///   kind: OracleOracleUserPass, # Required.
         ///   scanResults: [
@@ -3116,7 +3174,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaSapS4HanaCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
         /// <code>{
         ///   kind: SapS4HanaSapS4HanaCredential, # Required.
         ///   scanResults: [
@@ -3188,7 +3247,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaSapS4HanaUserPassScan Request Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
         /// <code>{
         ///   kind: SapS4HanaSapS4HanaUserPass, # Required.
         ///   scanResults: [
@@ -3258,7 +3318,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
         /// <code>{
         ///   kind: SapEccSapEccCredential, # Required.
         ///   scanResults: [
@@ -3330,7 +3391,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccUserPassScan Request Body</c>:
+        /// </details>
+        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
         /// <code>{
         ///   kind: SapEccSapEccUserPass, # Required.
         ///   scanResults: [
@@ -3400,7 +3462,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIDelegatedScan Request Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
         /// <code>{
         ///   kind: PowerBIDelegated, # Required.
         ///   scanResults: [
@@ -3470,7 +3533,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIMsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
         /// <code>{
         ///   kind: PowerBIMsi, # Required.
         ///   scanResults: [
@@ -3535,7 +3599,13 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSubscriptionCredentialScan Response Body</c>:
+        /// </details>
+        /// </details>
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>AzureSubscriptionCredentialScan</summary>Schema for <c>AzureSubscriptionCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSubscriptionCredential, # Required.
         ///   scanResults: [
@@ -3643,7 +3713,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSubscriptionMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
         /// <code>{
         ///   kind: AzureSubscriptionMsi, # Required.
         ///   scanResults: [
@@ -3751,7 +3822,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
         /// <code>{
         ///   kind: AzureResourceGroupCredential, # Required.
         ///   scanResults: [
@@ -3859,7 +3931,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
         /// <code>{
         ///   kind: AzureResourceGroupMsi, # Required.
         ///   scanResults: [
@@ -3967,7 +4040,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspaceCredential, # Required.
         ///   scanResults: [
@@ -4075,7 +4149,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspaceMsi, # Required.
         ///   scanResults: [
@@ -4183,7 +4258,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSynapseCredential, # Required.
         ///   scanResults: [
@@ -4291,7 +4367,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSynapseMsi, # Required.
         ///   scanResults: [
@@ -4399,7 +4476,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1CredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
         /// <code>{
         ///   kind: AdlsGen1Credential, # Required.
         ///   scanResults: [
@@ -4467,7 +4545,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1MsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
         /// <code>{
         ///   kind: AdlsGen1Msi, # Required.
         ///   scanResults: [
@@ -4531,7 +4610,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2CredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
         /// <code>{
         ///   kind: AdlsGen2Credential, # Required.
         ///   scanResults: [
@@ -4599,7 +4679,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2MsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
         /// <code>{
         ///   kind: AdlsGen2Msi, # Required.
         ///   scanResults: [
@@ -4663,7 +4744,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonAccountCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonAccountCredentialScan</summary>Schema for <c>AmazonAccountCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonAccountCredential, # Required.
         ///   scanResults: [
@@ -4771,7 +4853,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3CredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3CredentialScan</summary>Schema for <c>AmazonS3CredentialScan</c>:
         /// <code>{
         ///   kind: AmazonS3Credential, # Required.
         ///   scanResults: [
@@ -4840,7 +4923,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3RoleARNScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
         /// <code>{
         ///   kind: AmazonS3RoleARN, # Required.
         ///   scanResults: [
@@ -4905,7 +4989,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonSqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonSqlCredential, # Required.
         ///   scanResults: [
@@ -4975,7 +5060,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureCosmosDbCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
         /// <code>{
         ///   kind: AzureCosmosDbCredential, # Required.
         ///   scanResults: [
@@ -5044,7 +5130,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
         /// <code>{
         ///   kind: AzureDataExplorerCredential, # Required.
         ///   scanResults: [
@@ -5113,7 +5200,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
         /// <code>{
         ///   kind: AzureDataExplorerMsi, # Required.
         ///   scanResults: [
@@ -5178,7 +5266,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureFileServiceCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureFileServiceCredential, # Required.
         ///   scanResults: [
@@ -5247,7 +5336,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseCredential, # Required.
         ///   scanResults: [
@@ -5317,7 +5407,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseMsi, # Required.
         ///   scanResults: [
@@ -5383,7 +5474,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonPostgreSqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonPostgreSqlCredential, # Required.
         ///   scanResults: [
@@ -5454,7 +5546,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzurePostgreSqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AzurePostgreSqlCredential, # Required.
         ///   scanResults: [
@@ -5526,7 +5619,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SqlServerDatabaseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
         /// <code>{
         ///   kind: SqlServerDatabaseCredential, # Required.
         ///   scanResults: [
@@ -5596,7 +5690,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceCredential, # Required.
         ///   scanResults: [
@@ -5666,7 +5761,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceMsi, # Required.
         ///   scanResults: [
@@ -5732,7 +5828,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouseCredential, # Required.
         ///   scanResults: [
@@ -5802,7 +5899,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouseMsi, # Required.
         ///   scanResults: [
@@ -5868,7 +5966,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureMySqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
         /// <code>{
         ///   kind: AzureMySqlCredential, # Required.
         ///   scanResults: [
@@ -5939,7 +6038,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
         /// <code>{
         ///   kind: AzureStorageCredential, # Required.
         ///   scanResults: [
@@ -6007,7 +6107,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
         /// <code>{
         ///   kind: AzureStorageMsi, # Required.
         ///   scanResults: [
@@ -6071,7 +6172,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
         /// <code>{
         ///   kind: TeradataTeradataCredential, # Required.
         ///   scanResults: [
@@ -6143,7 +6245,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
         /// <code>{
         ///   kind: TeradataUserPass, # Required.
         ///   scanResults: [
@@ -6209,7 +6312,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataTeradataUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
         /// <code>{
         ///   kind: TeradataTeradataUserPass, # Required.
         ///   scanResults: [
@@ -6279,7 +6383,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
         /// <code>{
         ///   kind: OracleOracleCredential, # Required.
         ///   scanResults: [
@@ -6351,7 +6456,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
         /// <code>{
         ///   kind: OracleOracleUserPass, # Required.
         ///   scanResults: [
@@ -6421,7 +6527,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaSapS4HanaCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
         /// <code>{
         ///   kind: SapS4HanaSapS4HanaCredential, # Required.
         ///   scanResults: [
@@ -6493,7 +6600,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaSapS4HanaUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
         /// <code>{
         ///   kind: SapS4HanaSapS4HanaUserPass, # Required.
         ///   scanResults: [
@@ -6563,7 +6671,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
         /// <code>{
         ///   kind: SapEccSapEccCredential, # Required.
         ///   scanResults: [
@@ -6635,7 +6744,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
         /// <code>{
         ///   kind: SapEccSapEccUserPass, # Required.
         ///   scanResults: [
@@ -6705,7 +6815,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIDelegatedScan Response Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
         /// <code>{
         ///   kind: PowerBIDelegated, # Required.
         ///   scanResults: [
@@ -6775,7 +6886,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
         /// <code>{
         ///   kind: PowerBIMsi, # Required.
         ///   scanResults: [
@@ -6840,6 +6952,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestContext context = null)
@@ -6866,7 +6980,11 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AzureSubscriptionCredentialScan Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>AzureSubscriptionCredentialScan</summary>Schema for <c>AzureSubscriptionCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSubscriptionCredential, # Required.
         ///   scanResults: [
@@ -6974,7 +7092,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSubscriptionMsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
         /// <code>{
         ///   kind: AzureSubscriptionMsi, # Required.
         ///   scanResults: [
@@ -7082,7 +7201,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
         /// <code>{
         ///   kind: AzureResourceGroupCredential, # Required.
         ///   scanResults: [
@@ -7190,7 +7310,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupMsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
         /// <code>{
         ///   kind: AzureResourceGroupMsi, # Required.
         ///   scanResults: [
@@ -7298,7 +7419,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspaceCredential, # Required.
         ///   scanResults: [
@@ -7406,7 +7528,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceMsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspaceMsi, # Required.
         ///   scanResults: [
@@ -7514,7 +7637,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSynapseCredential, # Required.
         ///   scanResults: [
@@ -7622,7 +7746,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseMsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSynapseMsi, # Required.
         ///   scanResults: [
@@ -7730,7 +7855,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1CredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
         /// <code>{
         ///   kind: AdlsGen1Credential, # Required.
         ///   scanResults: [
@@ -7798,7 +7924,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1MsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
         /// <code>{
         ///   kind: AdlsGen1Msi, # Required.
         ///   scanResults: [
@@ -7862,7 +7989,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2CredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
         /// <code>{
         ///   kind: AdlsGen2Credential, # Required.
         ///   scanResults: [
@@ -7930,7 +8058,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2MsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
         /// <code>{
         ///   kind: AdlsGen2Msi, # Required.
         ///   scanResults: [
@@ -7994,7 +8123,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonAccountCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AmazonAccountCredentialScan</summary>Schema for <c>AmazonAccountCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonAccountCredential, # Required.
         ///   scanResults: [
@@ -8102,7 +8232,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3CredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3CredentialScan</summary>Schema for <c>AmazonS3CredentialScan</c>:
         /// <code>{
         ///   kind: AmazonS3Credential, # Required.
         ///   scanResults: [
@@ -8171,7 +8302,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3RoleARNScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
         /// <code>{
         ///   kind: AmazonS3RoleARN, # Required.
         ///   scanResults: [
@@ -8236,7 +8368,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonSqlCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonSqlCredential, # Required.
         ///   scanResults: [
@@ -8306,7 +8439,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureCosmosDbCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
         /// <code>{
         ///   kind: AzureCosmosDbCredential, # Required.
         ///   scanResults: [
@@ -8375,7 +8509,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
         /// <code>{
         ///   kind: AzureDataExplorerCredential, # Required.
         ///   scanResults: [
@@ -8444,7 +8579,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerMsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
         /// <code>{
         ///   kind: AzureDataExplorerMsi, # Required.
         ///   scanResults: [
@@ -8509,7 +8645,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureFileServiceCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureFileServiceCredential, # Required.
         ///   scanResults: [
@@ -8578,7 +8715,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseCredential, # Required.
         ///   scanResults: [
@@ -8648,7 +8786,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseMsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseMsi, # Required.
         ///   scanResults: [
@@ -8714,7 +8853,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonPostgreSqlCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonPostgreSqlCredential, # Required.
         ///   scanResults: [
@@ -8785,7 +8925,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzurePostgreSqlCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AzurePostgreSqlCredential, # Required.
         ///   scanResults: [
@@ -8857,7 +8998,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SqlServerDatabaseCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
         /// <code>{
         ///   kind: SqlServerDatabaseCredential, # Required.
         ///   scanResults: [
@@ -8927,7 +9069,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceCredential, # Required.
         ///   scanResults: [
@@ -8997,7 +9140,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceMsi, # Required.
         ///   scanResults: [
@@ -9063,7 +9207,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouseCredential, # Required.
         ///   scanResults: [
@@ -9133,7 +9278,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseMsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouseMsi, # Required.
         ///   scanResults: [
@@ -9199,7 +9345,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureMySqlCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
         /// <code>{
         ///   kind: AzureMySqlCredential, # Required.
         ///   scanResults: [
@@ -9270,7 +9417,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
         /// <code>{
         ///   kind: AzureStorageCredential, # Required.
         ///   scanResults: [
@@ -9338,7 +9486,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageMsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
         /// <code>{
         ///   kind: AzureStorageMsi, # Required.
         ///   scanResults: [
@@ -9402,7 +9551,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
         /// <code>{
         ///   kind: TeradataTeradataCredential, # Required.
         ///   scanResults: [
@@ -9474,7 +9624,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataUserPassScan Request Body</c>:
+        /// </details>
+        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
         /// <code>{
         ///   kind: TeradataUserPass, # Required.
         ///   scanResults: [
@@ -9540,7 +9691,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataTeradataUserPassScan Request Body</c>:
+        /// </details>
+        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
         /// <code>{
         ///   kind: TeradataTeradataUserPass, # Required.
         ///   scanResults: [
@@ -9610,7 +9762,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
         /// <code>{
         ///   kind: OracleOracleCredential, # Required.
         ///   scanResults: [
@@ -9682,7 +9835,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleUserPassScan Request Body</c>:
+        /// </details>
+        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
         /// <code>{
         ///   kind: OracleOracleUserPass, # Required.
         ///   scanResults: [
@@ -9752,7 +9906,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaSapS4HanaCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
         /// <code>{
         ///   kind: SapS4HanaSapS4HanaCredential, # Required.
         ///   scanResults: [
@@ -9824,7 +9979,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaSapS4HanaUserPassScan Request Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
         /// <code>{
         ///   kind: SapS4HanaSapS4HanaUserPass, # Required.
         ///   scanResults: [
@@ -9894,7 +10050,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccCredentialScan Request Body</c>:
+        /// </details>
+        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
         /// <code>{
         ///   kind: SapEccSapEccCredential, # Required.
         ///   scanResults: [
@@ -9966,7 +10123,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccUserPassScan Request Body</c>:
+        /// </details>
+        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
         /// <code>{
         ///   kind: SapEccSapEccUserPass, # Required.
         ///   scanResults: [
@@ -10036,7 +10194,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIDelegatedScan Request Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
         /// <code>{
         ///   kind: PowerBIDelegated, # Required.
         ///   scanResults: [
@@ -10106,7 +10265,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIMsiScan Request Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
         /// <code>{
         ///   kind: PowerBIMsi, # Required.
         ///   scanResults: [
@@ -10171,7 +10331,13 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSubscriptionCredentialScan Response Body</c>:
+        /// </details>
+        /// </details>
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>AzureSubscriptionCredentialScan</summary>Schema for <c>AzureSubscriptionCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSubscriptionCredential, # Required.
         ///   scanResults: [
@@ -10279,7 +10445,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSubscriptionMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
         /// <code>{
         ///   kind: AzureSubscriptionMsi, # Required.
         ///   scanResults: [
@@ -10387,7 +10554,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
         /// <code>{
         ///   kind: AzureResourceGroupCredential, # Required.
         ///   scanResults: [
@@ -10495,7 +10663,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
         /// <code>{
         ///   kind: AzureResourceGroupMsi, # Required.
         ///   scanResults: [
@@ -10603,7 +10772,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspaceCredential, # Required.
         ///   scanResults: [
@@ -10711,7 +10881,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspaceMsi, # Required.
         ///   scanResults: [
@@ -10819,7 +10990,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSynapseCredential, # Required.
         ///   scanResults: [
@@ -10927,7 +11099,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSynapseMsi, # Required.
         ///   scanResults: [
@@ -11035,7 +11208,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1CredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
         /// <code>{
         ///   kind: AdlsGen1Credential, # Required.
         ///   scanResults: [
@@ -11103,7 +11277,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1MsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
         /// <code>{
         ///   kind: AdlsGen1Msi, # Required.
         ///   scanResults: [
@@ -11167,7 +11342,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2CredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
         /// <code>{
         ///   kind: AdlsGen2Credential, # Required.
         ///   scanResults: [
@@ -11235,7 +11411,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2MsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
         /// <code>{
         ///   kind: AdlsGen2Msi, # Required.
         ///   scanResults: [
@@ -11299,7 +11476,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonAccountCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonAccountCredentialScan</summary>Schema for <c>AmazonAccountCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonAccountCredential, # Required.
         ///   scanResults: [
@@ -11407,7 +11585,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3CredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3CredentialScan</summary>Schema for <c>AmazonS3CredentialScan</c>:
         /// <code>{
         ///   kind: AmazonS3Credential, # Required.
         ///   scanResults: [
@@ -11476,7 +11655,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3RoleARNScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
         /// <code>{
         ///   kind: AmazonS3RoleARN, # Required.
         ///   scanResults: [
@@ -11541,7 +11721,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonSqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonSqlCredential, # Required.
         ///   scanResults: [
@@ -11611,7 +11792,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureCosmosDbCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
         /// <code>{
         ///   kind: AzureCosmosDbCredential, # Required.
         ///   scanResults: [
@@ -11680,7 +11862,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
         /// <code>{
         ///   kind: AzureDataExplorerCredential, # Required.
         ///   scanResults: [
@@ -11749,7 +11932,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
         /// <code>{
         ///   kind: AzureDataExplorerMsi, # Required.
         ///   scanResults: [
@@ -11814,7 +11998,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureFileServiceCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureFileServiceCredential, # Required.
         ///   scanResults: [
@@ -11883,7 +12068,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseCredential, # Required.
         ///   scanResults: [
@@ -11953,7 +12139,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseMsi, # Required.
         ///   scanResults: [
@@ -12019,7 +12206,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonPostgreSqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonPostgreSqlCredential, # Required.
         ///   scanResults: [
@@ -12090,7 +12278,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzurePostgreSqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AzurePostgreSqlCredential, # Required.
         ///   scanResults: [
@@ -12162,7 +12351,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SqlServerDatabaseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
         /// <code>{
         ///   kind: SqlServerDatabaseCredential, # Required.
         ///   scanResults: [
@@ -12232,7 +12422,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceCredential, # Required.
         ///   scanResults: [
@@ -12302,7 +12493,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceMsi, # Required.
         ///   scanResults: [
@@ -12368,7 +12560,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouseCredential, # Required.
         ///   scanResults: [
@@ -12438,7 +12631,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouseMsi, # Required.
         ///   scanResults: [
@@ -12504,7 +12698,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureMySqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
         /// <code>{
         ///   kind: AzureMySqlCredential, # Required.
         ///   scanResults: [
@@ -12575,7 +12770,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
         /// <code>{
         ///   kind: AzureStorageCredential, # Required.
         ///   scanResults: [
@@ -12643,7 +12839,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
         /// <code>{
         ///   kind: AzureStorageMsi, # Required.
         ///   scanResults: [
@@ -12707,7 +12904,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
         /// <code>{
         ///   kind: TeradataTeradataCredential, # Required.
         ///   scanResults: [
@@ -12779,7 +12977,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
         /// <code>{
         ///   kind: TeradataUserPass, # Required.
         ///   scanResults: [
@@ -12845,7 +13044,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataTeradataUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
         /// <code>{
         ///   kind: TeradataTeradataUserPass, # Required.
         ///   scanResults: [
@@ -12915,7 +13115,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
         /// <code>{
         ///   kind: OracleOracleCredential, # Required.
         ///   scanResults: [
@@ -12987,7 +13188,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
         /// <code>{
         ///   kind: OracleOracleUserPass, # Required.
         ///   scanResults: [
@@ -13057,7 +13259,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaSapS4HanaCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
         /// <code>{
         ///   kind: SapS4HanaSapS4HanaCredential, # Required.
         ///   scanResults: [
@@ -13129,7 +13332,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaSapS4HanaUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
         /// <code>{
         ///   kind: SapS4HanaSapS4HanaUserPass, # Required.
         ///   scanResults: [
@@ -13199,7 +13403,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
         /// <code>{
         ///   kind: SapEccSapEccCredential, # Required.
         ///   scanResults: [
@@ -13271,7 +13476,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
         /// <code>{
         ///   kind: SapEccSapEccUserPass, # Required.
         ///   scanResults: [
@@ -13341,7 +13547,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIDelegatedScan Response Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
         /// <code>{
         ///   kind: PowerBIDelegated, # Required.
         ///   scanResults: [
@@ -13411,7 +13618,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
         /// <code>{
         ///   kind: PowerBIMsi, # Required.
         ///   scanResults: [
@@ -13476,6 +13684,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response CreateOrUpdate(RequestContent content, RequestContext context = null)
@@ -13499,8 +13709,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Gets a scan information. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AzureSubscriptionCredentialScan Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>AzureSubscriptionCredentialScan</summary>Schema for <c>AzureSubscriptionCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSubscriptionCredential, # Required.
         ///   scanResults: [
@@ -13608,7 +13822,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSubscriptionMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
         /// <code>{
         ///   kind: AzureSubscriptionMsi, # Required.
         ///   scanResults: [
@@ -13716,7 +13931,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
         /// <code>{
         ///   kind: AzureResourceGroupCredential, # Required.
         ///   scanResults: [
@@ -13824,7 +14040,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
         /// <code>{
         ///   kind: AzureResourceGroupMsi, # Required.
         ///   scanResults: [
@@ -13932,7 +14149,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspaceCredential, # Required.
         ///   scanResults: [
@@ -14040,7 +14258,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspaceMsi, # Required.
         ///   scanResults: [
@@ -14148,7 +14367,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSynapseCredential, # Required.
         ///   scanResults: [
@@ -14256,7 +14476,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSynapseMsi, # Required.
         ///   scanResults: [
@@ -14364,7 +14585,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1CredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
         /// <code>{
         ///   kind: AdlsGen1Credential, # Required.
         ///   scanResults: [
@@ -14432,7 +14654,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1MsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
         /// <code>{
         ///   kind: AdlsGen1Msi, # Required.
         ///   scanResults: [
@@ -14496,7 +14719,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2CredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
         /// <code>{
         ///   kind: AdlsGen2Credential, # Required.
         ///   scanResults: [
@@ -14564,7 +14788,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2MsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
         /// <code>{
         ///   kind: AdlsGen2Msi, # Required.
         ///   scanResults: [
@@ -14628,7 +14853,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonAccountCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonAccountCredentialScan</summary>Schema for <c>AmazonAccountCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonAccountCredential, # Required.
         ///   scanResults: [
@@ -14736,7 +14962,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3CredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3CredentialScan</summary>Schema for <c>AmazonS3CredentialScan</c>:
         /// <code>{
         ///   kind: AmazonS3Credential, # Required.
         ///   scanResults: [
@@ -14805,7 +15032,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3RoleARNScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
         /// <code>{
         ///   kind: AmazonS3RoleARN, # Required.
         ///   scanResults: [
@@ -14870,7 +15098,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonSqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonSqlCredential, # Required.
         ///   scanResults: [
@@ -14940,7 +15169,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureCosmosDbCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
         /// <code>{
         ///   kind: AzureCosmosDbCredential, # Required.
         ///   scanResults: [
@@ -15009,7 +15239,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
         /// <code>{
         ///   kind: AzureDataExplorerCredential, # Required.
         ///   scanResults: [
@@ -15078,7 +15309,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
         /// <code>{
         ///   kind: AzureDataExplorerMsi, # Required.
         ///   scanResults: [
@@ -15143,7 +15375,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureFileServiceCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureFileServiceCredential, # Required.
         ///   scanResults: [
@@ -15212,7 +15445,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseCredential, # Required.
         ///   scanResults: [
@@ -15282,7 +15516,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseMsi, # Required.
         ///   scanResults: [
@@ -15348,7 +15583,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonPostgreSqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonPostgreSqlCredential, # Required.
         ///   scanResults: [
@@ -15419,7 +15655,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzurePostgreSqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AzurePostgreSqlCredential, # Required.
         ///   scanResults: [
@@ -15491,7 +15728,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SqlServerDatabaseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
         /// <code>{
         ///   kind: SqlServerDatabaseCredential, # Required.
         ///   scanResults: [
@@ -15561,7 +15799,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceCredential, # Required.
         ///   scanResults: [
@@ -15631,7 +15870,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceMsi, # Required.
         ///   scanResults: [
@@ -15697,7 +15937,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouseCredential, # Required.
         ///   scanResults: [
@@ -15767,7 +16008,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouseMsi, # Required.
         ///   scanResults: [
@@ -15833,7 +16075,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureMySqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
         /// <code>{
         ///   kind: AzureMySqlCredential, # Required.
         ///   scanResults: [
@@ -15904,7 +16147,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
         /// <code>{
         ///   kind: AzureStorageCredential, # Required.
         ///   scanResults: [
@@ -15972,7 +16216,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
         /// <code>{
         ///   kind: AzureStorageMsi, # Required.
         ///   scanResults: [
@@ -16036,7 +16281,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
         /// <code>{
         ///   kind: TeradataTeradataCredential, # Required.
         ///   scanResults: [
@@ -16108,7 +16354,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
         /// <code>{
         ///   kind: TeradataUserPass, # Required.
         ///   scanResults: [
@@ -16174,7 +16421,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataTeradataUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
         /// <code>{
         ///   kind: TeradataTeradataUserPass, # Required.
         ///   scanResults: [
@@ -16244,7 +16492,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
         /// <code>{
         ///   kind: OracleOracleCredential, # Required.
         ///   scanResults: [
@@ -16316,7 +16565,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
         /// <code>{
         ///   kind: OracleOracleUserPass, # Required.
         ///   scanResults: [
@@ -16386,7 +16636,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaSapS4HanaCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
         /// <code>{
         ///   kind: SapS4HanaSapS4HanaCredential, # Required.
         ///   scanResults: [
@@ -16458,7 +16709,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaSapS4HanaUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
         /// <code>{
         ///   kind: SapS4HanaSapS4HanaUserPass, # Required.
         ///   scanResults: [
@@ -16528,7 +16780,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
         /// <code>{
         ///   kind: SapEccSapEccCredential, # Required.
         ///   scanResults: [
@@ -16600,7 +16853,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
         /// <code>{
         ///   kind: SapEccSapEccUserPass, # Required.
         ///   scanResults: [
@@ -16670,7 +16924,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIDelegatedScan Response Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
         /// <code>{
         ///   kind: PowerBIDelegated, # Required.
         ///   scanResults: [
@@ -16740,7 +16995,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
         /// <code>{
         ///   kind: PowerBIMsi, # Required.
         ///   scanResults: [
@@ -16805,6 +17061,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> GetPropertiesAsync(RequestContext context = null)
@@ -16826,8 +17084,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Gets a scan information. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AzureSubscriptionCredentialScan Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>AzureSubscriptionCredentialScan</summary>Schema for <c>AzureSubscriptionCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSubscriptionCredential, # Required.
         ///   scanResults: [
@@ -16935,7 +17197,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSubscriptionMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
         /// <code>{
         ///   kind: AzureSubscriptionMsi, # Required.
         ///   scanResults: [
@@ -17043,7 +17306,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
         /// <code>{
         ///   kind: AzureResourceGroupCredential, # Required.
         ///   scanResults: [
@@ -17151,7 +17415,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
         /// <code>{
         ///   kind: AzureResourceGroupMsi, # Required.
         ///   scanResults: [
@@ -17259,7 +17524,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspaceCredential, # Required.
         ///   scanResults: [
@@ -17367,7 +17633,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspaceMsi, # Required.
         ///   scanResults: [
@@ -17475,7 +17742,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSynapseCredential, # Required.
         ///   scanResults: [
@@ -17583,7 +17851,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSynapseMsi, # Required.
         ///   scanResults: [
@@ -17691,7 +17960,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1CredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
         /// <code>{
         ///   kind: AdlsGen1Credential, # Required.
         ///   scanResults: [
@@ -17759,7 +18029,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1MsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
         /// <code>{
         ///   kind: AdlsGen1Msi, # Required.
         ///   scanResults: [
@@ -17823,7 +18094,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2CredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
         /// <code>{
         ///   kind: AdlsGen2Credential, # Required.
         ///   scanResults: [
@@ -17891,7 +18163,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2MsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
         /// <code>{
         ///   kind: AdlsGen2Msi, # Required.
         ///   scanResults: [
@@ -17955,7 +18228,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonAccountCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonAccountCredentialScan</summary>Schema for <c>AmazonAccountCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonAccountCredential, # Required.
         ///   scanResults: [
@@ -18063,7 +18337,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3CredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3CredentialScan</summary>Schema for <c>AmazonS3CredentialScan</c>:
         /// <code>{
         ///   kind: AmazonS3Credential, # Required.
         ///   scanResults: [
@@ -18132,7 +18407,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3RoleARNScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
         /// <code>{
         ///   kind: AmazonS3RoleARN, # Required.
         ///   scanResults: [
@@ -18197,7 +18473,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonSqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonSqlCredential, # Required.
         ///   scanResults: [
@@ -18267,7 +18544,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureCosmosDbCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
         /// <code>{
         ///   kind: AzureCosmosDbCredential, # Required.
         ///   scanResults: [
@@ -18336,7 +18614,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
         /// <code>{
         ///   kind: AzureDataExplorerCredential, # Required.
         ///   scanResults: [
@@ -18405,7 +18684,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
         /// <code>{
         ///   kind: AzureDataExplorerMsi, # Required.
         ///   scanResults: [
@@ -18470,7 +18750,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureFileServiceCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureFileServiceCredential, # Required.
         ///   scanResults: [
@@ -18539,7 +18820,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseCredential, # Required.
         ///   scanResults: [
@@ -18609,7 +18891,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseMsi, # Required.
         ///   scanResults: [
@@ -18675,7 +18958,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonPostgreSqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonPostgreSqlCredential, # Required.
         ///   scanResults: [
@@ -18746,7 +19030,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzurePostgreSqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AzurePostgreSqlCredential, # Required.
         ///   scanResults: [
@@ -18818,7 +19103,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SqlServerDatabaseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
         /// <code>{
         ///   kind: SqlServerDatabaseCredential, # Required.
         ///   scanResults: [
@@ -18888,7 +19174,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceCredential, # Required.
         ///   scanResults: [
@@ -18958,7 +19245,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceMsi, # Required.
         ///   scanResults: [
@@ -19024,7 +19312,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouseCredential, # Required.
         ///   scanResults: [
@@ -19094,7 +19383,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouseMsi, # Required.
         ///   scanResults: [
@@ -19160,7 +19450,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureMySqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
         /// <code>{
         ///   kind: AzureMySqlCredential, # Required.
         ///   scanResults: [
@@ -19231,7 +19522,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
         /// <code>{
         ///   kind: AzureStorageCredential, # Required.
         ///   scanResults: [
@@ -19299,7 +19591,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
         /// <code>{
         ///   kind: AzureStorageMsi, # Required.
         ///   scanResults: [
@@ -19363,7 +19656,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
         /// <code>{
         ///   kind: TeradataTeradataCredential, # Required.
         ///   scanResults: [
@@ -19435,7 +19729,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
         /// <code>{
         ///   kind: TeradataUserPass, # Required.
         ///   scanResults: [
@@ -19501,7 +19796,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataTeradataUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
         /// <code>{
         ///   kind: TeradataTeradataUserPass, # Required.
         ///   scanResults: [
@@ -19571,7 +19867,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
         /// <code>{
         ///   kind: OracleOracleCredential, # Required.
         ///   scanResults: [
@@ -19643,7 +19940,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
         /// <code>{
         ///   kind: OracleOracleUserPass, # Required.
         ///   scanResults: [
@@ -19713,7 +20011,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaSapS4HanaCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
         /// <code>{
         ///   kind: SapS4HanaSapS4HanaCredential, # Required.
         ///   scanResults: [
@@ -19785,7 +20084,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaSapS4HanaUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
         /// <code>{
         ///   kind: SapS4HanaSapS4HanaUserPass, # Required.
         ///   scanResults: [
@@ -19855,7 +20155,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
         /// <code>{
         ///   kind: SapEccSapEccCredential, # Required.
         ///   scanResults: [
@@ -19927,7 +20228,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
         /// <code>{
         ///   kind: SapEccSapEccUserPass, # Required.
         ///   scanResults: [
@@ -19997,7 +20299,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIDelegatedScan Response Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
         /// <code>{
         ///   kind: PowerBIDelegated, # Required.
         ///   scanResults: [
@@ -20067,7 +20370,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
         /// <code>{
         ///   kind: PowerBIMsi, # Required.
         ///   scanResults: [
@@ -20132,6 +20436,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response GetProperties(RequestContext context = null)
@@ -20153,8 +20459,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Deletes the scan associated with the data source. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AzureSubscriptionCredentialScan Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>AzureSubscriptionCredentialScan</summary>Schema for <c>AzureSubscriptionCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSubscriptionCredential, # Required.
         ///   scanResults: [
@@ -20262,7 +20572,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSubscriptionMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
         /// <code>{
         ///   kind: AzureSubscriptionMsi, # Required.
         ///   scanResults: [
@@ -20370,7 +20681,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
         /// <code>{
         ///   kind: AzureResourceGroupCredential, # Required.
         ///   scanResults: [
@@ -20478,7 +20790,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
         /// <code>{
         ///   kind: AzureResourceGroupMsi, # Required.
         ///   scanResults: [
@@ -20586,7 +20899,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspaceCredential, # Required.
         ///   scanResults: [
@@ -20694,7 +21008,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspaceMsi, # Required.
         ///   scanResults: [
@@ -20802,7 +21117,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSynapseCredential, # Required.
         ///   scanResults: [
@@ -20910,7 +21226,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSynapseMsi, # Required.
         ///   scanResults: [
@@ -21018,7 +21335,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1CredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
         /// <code>{
         ///   kind: AdlsGen1Credential, # Required.
         ///   scanResults: [
@@ -21086,7 +21404,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1MsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
         /// <code>{
         ///   kind: AdlsGen1Msi, # Required.
         ///   scanResults: [
@@ -21150,7 +21469,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2CredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
         /// <code>{
         ///   kind: AdlsGen2Credential, # Required.
         ///   scanResults: [
@@ -21218,7 +21538,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2MsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
         /// <code>{
         ///   kind: AdlsGen2Msi, # Required.
         ///   scanResults: [
@@ -21282,7 +21603,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonAccountCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonAccountCredentialScan</summary>Schema for <c>AmazonAccountCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonAccountCredential, # Required.
         ///   scanResults: [
@@ -21390,7 +21712,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3CredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3CredentialScan</summary>Schema for <c>AmazonS3CredentialScan</c>:
         /// <code>{
         ///   kind: AmazonS3Credential, # Required.
         ///   scanResults: [
@@ -21459,7 +21782,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3RoleARNScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
         /// <code>{
         ///   kind: AmazonS3RoleARN, # Required.
         ///   scanResults: [
@@ -21524,7 +21848,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonSqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonSqlCredential, # Required.
         ///   scanResults: [
@@ -21594,7 +21919,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureCosmosDbCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
         /// <code>{
         ///   kind: AzureCosmosDbCredential, # Required.
         ///   scanResults: [
@@ -21663,7 +21989,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
         /// <code>{
         ///   kind: AzureDataExplorerCredential, # Required.
         ///   scanResults: [
@@ -21732,7 +22059,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
         /// <code>{
         ///   kind: AzureDataExplorerMsi, # Required.
         ///   scanResults: [
@@ -21797,7 +22125,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureFileServiceCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureFileServiceCredential, # Required.
         ///   scanResults: [
@@ -21866,7 +22195,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseCredential, # Required.
         ///   scanResults: [
@@ -21936,7 +22266,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseMsi, # Required.
         ///   scanResults: [
@@ -22002,7 +22333,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonPostgreSqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonPostgreSqlCredential, # Required.
         ///   scanResults: [
@@ -22073,7 +22405,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzurePostgreSqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AzurePostgreSqlCredential, # Required.
         ///   scanResults: [
@@ -22145,7 +22478,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SqlServerDatabaseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
         /// <code>{
         ///   kind: SqlServerDatabaseCredential, # Required.
         ///   scanResults: [
@@ -22215,7 +22549,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceCredential, # Required.
         ///   scanResults: [
@@ -22285,7 +22620,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceMsi, # Required.
         ///   scanResults: [
@@ -22351,7 +22687,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouseCredential, # Required.
         ///   scanResults: [
@@ -22421,7 +22758,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouseMsi, # Required.
         ///   scanResults: [
@@ -22487,7 +22825,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureMySqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
         /// <code>{
         ///   kind: AzureMySqlCredential, # Required.
         ///   scanResults: [
@@ -22558,7 +22897,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
         /// <code>{
         ///   kind: AzureStorageCredential, # Required.
         ///   scanResults: [
@@ -22626,7 +22966,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
         /// <code>{
         ///   kind: AzureStorageMsi, # Required.
         ///   scanResults: [
@@ -22690,7 +23031,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
         /// <code>{
         ///   kind: TeradataTeradataCredential, # Required.
         ///   scanResults: [
@@ -22762,7 +23104,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
         /// <code>{
         ///   kind: TeradataUserPass, # Required.
         ///   scanResults: [
@@ -22828,7 +23171,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataTeradataUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
         /// <code>{
         ///   kind: TeradataTeradataUserPass, # Required.
         ///   scanResults: [
@@ -22898,7 +23242,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
         /// <code>{
         ///   kind: OracleOracleCredential, # Required.
         ///   scanResults: [
@@ -22970,7 +23315,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
         /// <code>{
         ///   kind: OracleOracleUserPass, # Required.
         ///   scanResults: [
@@ -23040,7 +23386,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaSapS4HanaCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
         /// <code>{
         ///   kind: SapS4HanaSapS4HanaCredential, # Required.
         ///   scanResults: [
@@ -23112,7 +23459,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaSapS4HanaUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
         /// <code>{
         ///   kind: SapS4HanaSapS4HanaUserPass, # Required.
         ///   scanResults: [
@@ -23182,7 +23530,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
         /// <code>{
         ///   kind: SapEccSapEccCredential, # Required.
         ///   scanResults: [
@@ -23254,7 +23603,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
         /// <code>{
         ///   kind: SapEccSapEccUserPass, # Required.
         ///   scanResults: [
@@ -23324,7 +23674,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIDelegatedScan Response Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
         /// <code>{
         ///   kind: PowerBIDelegated, # Required.
         ///   scanResults: [
@@ -23394,7 +23745,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
         /// <code>{
         ///   kind: PowerBIMsi, # Required.
         ///   scanResults: [
@@ -23459,6 +23811,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(RequestContext context = null)
@@ -23480,8 +23834,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Deletes the scan associated with the data source. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AzureSubscriptionCredentialScan Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>AzureSubscriptionCredentialScan</summary>Schema for <c>AzureSubscriptionCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSubscriptionCredential, # Required.
         ///   scanResults: [
@@ -23589,7 +23947,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSubscriptionMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
         /// <code>{
         ///   kind: AzureSubscriptionMsi, # Required.
         ///   scanResults: [
@@ -23697,7 +24056,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
         /// <code>{
         ///   kind: AzureResourceGroupCredential, # Required.
         ///   scanResults: [
@@ -23805,7 +24165,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureResourceGroupMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
         /// <code>{
         ///   kind: AzureResourceGroupMsi, # Required.
         ///   scanResults: [
@@ -23913,7 +24274,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspaceCredential, # Required.
         ///   scanResults: [
@@ -24021,7 +24383,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseWorkspaceMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
         /// <code>{
         ///   kind: AzureSynapseWorkspaceMsi, # Required.
         ///   scanResults: [
@@ -24129,7 +24492,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSynapseCredential, # Required.
         ///   scanResults: [
@@ -24237,7 +24601,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSynapseMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSynapseMsi, # Required.
         ///   scanResults: [
@@ -24345,7 +24710,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1CredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
         /// <code>{
         ///   kind: AdlsGen1Credential, # Required.
         ///   scanResults: [
@@ -24413,7 +24779,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen1MsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
         /// <code>{
         ///   kind: AdlsGen1Msi, # Required.
         ///   scanResults: [
@@ -24477,7 +24844,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2CredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
         /// <code>{
         ///   kind: AdlsGen2Credential, # Required.
         ///   scanResults: [
@@ -24545,7 +24913,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AdlsGen2MsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
         /// <code>{
         ///   kind: AdlsGen2Msi, # Required.
         ///   scanResults: [
@@ -24609,7 +24978,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonAccountCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonAccountCredentialScan</summary>Schema for <c>AmazonAccountCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonAccountCredential, # Required.
         ///   scanResults: [
@@ -24717,7 +25087,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3CredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3CredentialScan</summary>Schema for <c>AmazonS3CredentialScan</c>:
         /// <code>{
         ///   kind: AmazonS3Credential, # Required.
         ///   scanResults: [
@@ -24786,7 +25157,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonS3RoleARNScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
         /// <code>{
         ///   kind: AmazonS3RoleARN, # Required.
         ///   scanResults: [
@@ -24851,7 +25223,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonSqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonSqlCredential, # Required.
         ///   scanResults: [
@@ -24921,7 +25294,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureCosmosDbCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
         /// <code>{
         ///   kind: AzureCosmosDbCredential, # Required.
         ///   scanResults: [
@@ -24990,7 +25364,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
         /// <code>{
         ///   kind: AzureDataExplorerCredential, # Required.
         ///   scanResults: [
@@ -25059,7 +25434,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureDataExplorerMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
         /// <code>{
         ///   kind: AzureDataExplorerMsi, # Required.
         ///   scanResults: [
@@ -25124,7 +25500,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureFileServiceCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureFileServiceCredential, # Required.
         ///   scanResults: [
@@ -25193,7 +25570,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseCredential, # Required.
         ///   scanResults: [
@@ -25263,7 +25641,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseMsi, # Required.
         ///   scanResults: [
@@ -25329,7 +25708,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AmazonPostgreSqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AmazonPostgreSqlCredential, # Required.
         ///   scanResults: [
@@ -25400,7 +25780,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzurePostgreSqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
         /// <code>{
         ///   kind: AzurePostgreSqlCredential, # Required.
         ///   scanResults: [
@@ -25472,7 +25853,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SqlServerDatabaseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
         /// <code>{
         ///   kind: SqlServerDatabaseCredential, # Required.
         ///   scanResults: [
@@ -25542,7 +25924,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceCredential, # Required.
         ///   scanResults: [
@@ -25612,7 +25995,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceMsi, # Required.
         ///   scanResults: [
@@ -25678,7 +26062,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouseCredential, # Required.
         ///   scanResults: [
@@ -25748,7 +26133,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureSqlDataWarehouseMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
         /// <code>{
         ///   kind: AzureSqlDataWarehouseMsi, # Required.
         ///   scanResults: [
@@ -25814,7 +26200,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureMySqlCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
         /// <code>{
         ///   kind: AzureMySqlCredential, # Required.
         ///   scanResults: [
@@ -25885,7 +26272,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
         /// <code>{
         ///   kind: AzureStorageCredential, # Required.
         ///   scanResults: [
@@ -25953,7 +26341,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>AzureStorageMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
         /// <code>{
         ///   kind: AzureStorageMsi, # Required.
         ///   scanResults: [
@@ -26017,7 +26406,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
         /// <code>{
         ///   kind: TeradataTeradataCredential, # Required.
         ///   scanResults: [
@@ -26089,7 +26479,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
         /// <code>{
         ///   kind: TeradataUserPass, # Required.
         ///   scanResults: [
@@ -26155,7 +26546,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>TeradataTeradataUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
         /// <code>{
         ///   kind: TeradataTeradataUserPass, # Required.
         ///   scanResults: [
@@ -26225,7 +26617,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
         /// <code>{
         ///   kind: OracleOracleCredential, # Required.
         ///   scanResults: [
@@ -26297,7 +26690,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>OracleUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
         /// <code>{
         ///   kind: OracleOracleUserPass, # Required.
         ///   scanResults: [
@@ -26367,7 +26761,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaSapS4HanaCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
         /// <code>{
         ///   kind: SapS4HanaSapS4HanaCredential, # Required.
         ///   scanResults: [
@@ -26439,7 +26834,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapS4HanaSapS4HanaUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
         /// <code>{
         ///   kind: SapS4HanaSapS4HanaUserPass, # Required.
         ///   scanResults: [
@@ -26509,7 +26905,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccCredentialScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
         /// <code>{
         ///   kind: SapEccSapEccCredential, # Required.
         ///   scanResults: [
@@ -26581,7 +26978,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>SapEccUserPassScan Response Body</c>:
+        /// </details>
+        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
         /// <code>{
         ///   kind: SapEccSapEccUserPass, # Required.
         ///   scanResults: [
@@ -26651,7 +27049,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIDelegatedScan Response Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
         /// <code>{
         ///   kind: PowerBIDelegated, # Required.
         ///   scanResults: [
@@ -26721,7 +27120,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>PowerBIMsiScan Response Body</c>:
+        /// </details>
+        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
         /// <code>{
         ///   kind: PowerBIMsi, # Required.
         ///   scanResults: [
@@ -26786,6 +27186,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response Delete(RequestContext context = null)
@@ -26811,8 +27213,11 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>OperationResponse</c>:
         /// <code>{
         ///   scanResultId: OperationResponseScanResultId, # Optional.
         ///   startTime: string (ISO 8601 Format), # Optional.
@@ -26860,8 +27265,11 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>OperationResponse</c>:
         /// <code>{
         ///   scanResultId: OperationResponseScanResultId, # Optional.
         ///   startTime: string (ISO 8601 Format), # Optional.
@@ -26908,8 +27316,11 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>OperationResponse</c>:
         /// <code>{
         ///   scanResultId: OperationResponseScanResultId, # Optional.
         ///   startTime: string (ISO 8601 Format), # Optional.
@@ -26956,8 +27367,11 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>OperationResponse</c>:
         /// <code>{
         ///   scanResultId: OperationResponseScanResultId, # Optional.
         ///   startTime: string (ISO 8601 Format), # Optional.
@@ -27001,8 +27415,11 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Gets trigger information. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Trigger</c>:
         /// <code>{
         ///   id: string, # Optional.
         ///   name: string, # Optional.
@@ -27058,8 +27475,11 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Gets trigger information. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Trigger</c>:
         /// <code>{
         ///   id: string, # Optional.
         ///   name: string, # Optional.
@@ -27118,7 +27538,10 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>Trigger</c>:
         /// <code>{
         ///   id: string, # Optional.
         ///   name: string, # Optional.
@@ -27153,7 +27576,10 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Trigger</c>:
         /// <code>{
         ///   id: string, # Optional.
         ///   name: string, # Optional.
@@ -27214,7 +27640,10 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>Trigger</c>:
         /// <code>{
         ///   id: string, # Optional.
         ///   name: string, # Optional.
@@ -27249,7 +27678,10 @@ namespace Azure.Analytics.Purview.Scanning
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Trigger</c>:
         /// <code>{
         ///   id: string, # Optional.
         ///   name: string, # Optional.
@@ -27307,8 +27739,11 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Deletes the trigger associated with the scan. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Trigger</c>:
         /// <code>{
         ///   id: string, # Optional.
         ///   name: string, # Optional.
@@ -27364,8 +27799,11 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Deletes the trigger associated with the scan. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Trigger</c>:
         /// <code>{
         ///   id: string, # Optional.
         ///   name: string, # Optional.
@@ -27421,53 +27859,50 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Lists the scan history of a scan. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ScanHistoryListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       parentId: string, # Optional.
-        ///       id: string, # Optional.
-        ///       resourceId: string, # Optional.
-        ///       status: string, # Optional.
-        ///       assetsDiscovered: number, # Optional.
-        ///       assetsClassified: number, # Optional.
-        ///       diagnostics: {
-        ///         notifications: [
-        ///           {
-        ///             message: string, # Optional.
-        ///             code: number, # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
-        ///       }, # Optional.
-        ///       startTime: string (ISO 8601 Format), # Optional.
-        ///       queuedTime: string (ISO 8601 Format), # Optional.
-        ///       pipelineStartTime: string (ISO 8601 Format), # Optional.
-        ///       endTime: string (ISO 8601 Format), # Optional.
-        ///       scanRulesetVersion: number, # Optional.
-        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
-        ///       errorMessage: string, # Optional.
-        ///       error: {
+        ///   parentId: string, # Optional.
+        ///   id: string, # Optional.
+        ///   resourceId: string, # Optional.
+        ///   status: string, # Optional.
+        ///   assetsDiscovered: number, # Optional.
+        ///   assetsClassified: number, # Optional.
+        ///   diagnostics: {
+        ///     notifications: [
+        ///       {
+        ///         message: string, # Optional.
+        ///         code: number, # Optional.
+        ///       }
+        ///     ], # Optional.
+        ///     exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
+        ///   }, # Optional.
+        ///   startTime: string (ISO 8601 Format), # Optional.
+        ///   queuedTime: string (ISO 8601 Format), # Optional.
+        ///   pipelineStartTime: string (ISO 8601 Format), # Optional.
+        ///   endTime: string (ISO 8601 Format), # Optional.
+        ///   scanRulesetVersion: number, # Optional.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
+        ///   errorMessage: string, # Optional.
+        ///   error: {
+        ///     code: string, # Optional.
+        ///     message: string, # Optional.
+        ///     target: string, # Optional.
+        ///     details: [
+        ///       {
         ///         code: string, # Optional.
         ///         message: string, # Optional.
         ///         target: string, # Optional.
-        ///         details: [
-        ///           {
-        ///             code: string, # Optional.
-        ///             message: string, # Optional.
-        ///             target: string, # Optional.
-        ///             details: [ErrorModel], # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///       }, # Optional.
-        ///       runType: string, # Optional.
-        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
-        ///     }
-        ///   ], # Optional.
-        ///   nextLink: string, # Optional.
-        ///   count: number, # Optional.
+        ///         details: [ErrorModel], # Optional.
+        ///       }
+        ///     ], # Optional.
+        ///   }, # Optional.
+        ///   runType: string, # Optional.
+        ///   dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
         /// }
         /// </code>
         /// 
@@ -27497,53 +27932,50 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Lists the scan history of a scan. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ScanHistoryListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       parentId: string, # Optional.
-        ///       id: string, # Optional.
-        ///       resourceId: string, # Optional.
-        ///       status: string, # Optional.
-        ///       assetsDiscovered: number, # Optional.
-        ///       assetsClassified: number, # Optional.
-        ///       diagnostics: {
-        ///         notifications: [
-        ///           {
-        ///             message: string, # Optional.
-        ///             code: number, # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
-        ///       }, # Optional.
-        ///       startTime: string (ISO 8601 Format), # Optional.
-        ///       queuedTime: string (ISO 8601 Format), # Optional.
-        ///       pipelineStartTime: string (ISO 8601 Format), # Optional.
-        ///       endTime: string (ISO 8601 Format), # Optional.
-        ///       scanRulesetVersion: number, # Optional.
-        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
-        ///       errorMessage: string, # Optional.
-        ///       error: {
+        ///   parentId: string, # Optional.
+        ///   id: string, # Optional.
+        ///   resourceId: string, # Optional.
+        ///   status: string, # Optional.
+        ///   assetsDiscovered: number, # Optional.
+        ///   assetsClassified: number, # Optional.
+        ///   diagnostics: {
+        ///     notifications: [
+        ///       {
+        ///         message: string, # Optional.
+        ///         code: number, # Optional.
+        ///       }
+        ///     ], # Optional.
+        ///     exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
+        ///   }, # Optional.
+        ///   startTime: string (ISO 8601 Format), # Optional.
+        ///   queuedTime: string (ISO 8601 Format), # Optional.
+        ///   pipelineStartTime: string (ISO 8601 Format), # Optional.
+        ///   endTime: string (ISO 8601 Format), # Optional.
+        ///   scanRulesetVersion: number, # Optional.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
+        ///   errorMessage: string, # Optional.
+        ///   error: {
+        ///     code: string, # Optional.
+        ///     message: string, # Optional.
+        ///     target: string, # Optional.
+        ///     details: [
+        ///       {
         ///         code: string, # Optional.
         ///         message: string, # Optional.
         ///         target: string, # Optional.
-        ///         details: [
-        ///           {
-        ///             code: string, # Optional.
-        ///             message: string, # Optional.
-        ///             target: string, # Optional.
-        ///             details: [ErrorModel], # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///       }, # Optional.
-        ///       runType: string, # Optional.
-        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
-        ///     }
-        ///   ], # Optional.
-        ///   nextLink: string, # Optional.
-        ///   count: number, # Optional.
+        ///         details: [ErrorModel], # Optional.
+        ///       }
+        ///     ], # Optional.
+        ///   }, # Optional.
+        ///   runType: string, # Optional.
+        ///   dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
         /// }
         /// </code>
         /// 

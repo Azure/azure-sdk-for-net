@@ -69,8 +69,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ProjectMetadata</c>:
         /// <code>{
         ///   projectName: string, # Optional. Name of the project.
         ///   description: string, # Optional. Description of the project.
@@ -110,8 +113,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ProjectMetadata</c>:
         /// <code>{
         ///   projectName: string, # Optional. Name of the project.
         ///   description: string, # Optional. Description of the project.
@@ -153,7 +159,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>CreateProjectOptions</c>:
         /// <code>{
         ///   description: string, # Optional. Description of the project.
         ///   language: string, # Required. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
@@ -163,7 +172,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///   }, # Optional. Configurable settings of the Project.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ProjectMetadata</c>:
         /// <code>{
         ///   projectName: string, # Optional. Name of the project.
         ///   description: string, # Optional. Description of the project.
@@ -206,7 +218,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>CreateProjectOptions</c>:
         /// <code>{
         ///   description: string, # Optional. Description of the project.
         ///   language: string, # Required. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
@@ -216,7 +231,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///   }, # Optional. Configurable settings of the Project.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ProjectMetadata</c>:
         /// <code>{
         ///   projectName: string, # Optional. Name of the project.
         ///   description: string, # Optional. Description of the project.
@@ -257,8 +275,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>ExportJobState Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
         ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
@@ -283,6 +304,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///   ], # Optional.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> GetDeleteStatusAsync(string jobId, RequestContext context = null)
@@ -309,8 +331,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>ExportJobState Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
         ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
@@ -335,6 +360,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///   ], # Optional.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response GetDeleteStatus(string jobId, RequestContext context = null)
@@ -362,8 +388,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ExportJobState</c>:
         /// <code>{
         ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
@@ -416,8 +445,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ExportJobState</c>:
         /// <code>{
         ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
@@ -470,8 +502,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>ExportJobState Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
         ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
@@ -496,6 +531,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///   ], # Optional.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> GetImportStatusAsync(string projectName, string jobId, RequestContext context = null)
@@ -524,8 +560,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>ExportJobState Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
         ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
@@ -550,6 +589,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///   ], # Optional.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response GetImportStatus(string projectName, string jobId, RequestContext context = null)
@@ -579,8 +619,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>ExportJobState Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
         ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
@@ -605,6 +648,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///   ], # Optional.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> GetDeployStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context = null)
@@ -635,8 +679,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>ExportJobState Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
         ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
@@ -661,6 +708,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///   ], # Optional.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response GetDeployStatus(string projectName, string deploymentName, string jobId, RequestContext context = null)
@@ -690,8 +738,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SynonymAssets</c>:
         /// <code>{
         ///   value: [
         ///     {
@@ -729,8 +780,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SynonymAssets</c>:
         /// <code>{
         ///   value: [
         ///     {
@@ -768,8 +822,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>ExportJobState Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
         ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
@@ -794,6 +851,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///   ], # Optional.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> GetUpdateSourcesStatusAsync(string projectName, string jobId, RequestContext context = null)
@@ -822,8 +880,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>ExportJobState Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
         ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
@@ -848,6 +909,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///   ], # Optional.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response GetUpdateSourcesStatus(string projectName, string jobId, RequestContext context = null)
@@ -876,8 +938,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>ExportJobState Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
         ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
@@ -902,6 +967,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///   ], # Optional.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> GetUpdateQnasStatusAsync(string projectName, string jobId, RequestContext context = null)
@@ -930,8 +996,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>ExportJobState Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
         ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
@@ -956,6 +1025,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///   ], # Optional.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response GetUpdateQnasStatus(string projectName, string jobId, RequestContext context = null)
@@ -984,8 +1054,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ActiveLearningFeedback</c>:
         /// <code>{
         ///   records: [
         ///     {
@@ -1024,8 +1097,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ActiveLearningFeedback</c>:
         /// <code>{
         ///   records: [
         ///     {
@@ -1063,24 +1139,22 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ProjectsMetadataValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       projectName: string, # Optional. Name of the project.
-        ///       description: string, # Optional. Description of the project.
-        ///       language: string, # Optional. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
-        ///       multilingualResource: boolean, # Optional. Resource enabled for multiple languages across projects or not.
-        ///       settings: {
-        ///         defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
-        ///       }, # Optional. Configurable settings of the Project.
-        ///       createdDateTime: string (ISO 8601 Format), # Optional. Project creation date-time.
-        ///       lastModifiedDateTime: string (ISO 8601 Format), # Optional. Represents the project last modified date-time.
-        ///       lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-        ///     }
-        ///   ], # Optional.
-        ///   nextLink: string, # Optional.
+        ///   projectName: string, # Optional. Name of the project.
+        ///   description: string, # Optional. Description of the project.
+        ///   language: string, # Optional. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
+        ///   multilingualResource: boolean, # Optional. Resource enabled for multiple languages across projects or not.
+        ///   settings: {
+        ///     defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
+        ///   }, # Optional. Configurable settings of the Project.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Project creation date-time.
+        ///   lastModifiedDateTime: string (ISO 8601 Format), # Optional. Represents the project last modified date-time.
+        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
         /// }
         /// </code>
         /// 
@@ -1113,24 +1187,22 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ProjectsMetadataValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       projectName: string, # Optional. Name of the project.
-        ///       description: string, # Optional. Description of the project.
-        ///       language: string, # Optional. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
-        ///       multilingualResource: boolean, # Optional. Resource enabled for multiple languages across projects or not.
-        ///       settings: {
-        ///         defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
-        ///       }, # Optional. Configurable settings of the Project.
-        ///       createdDateTime: string (ISO 8601 Format), # Optional. Project creation date-time.
-        ///       lastModifiedDateTime: string (ISO 8601 Format), # Optional. Represents the project last modified date-time.
-        ///       lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-        ///     }
-        ///   ], # Optional.
-        ///   nextLink: string, # Optional.
+        ///   projectName: string, # Optional. Name of the project.
+        ///   description: string, # Optional. Description of the project.
+        ///   language: string, # Optional. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
+        ///   multilingualResource: boolean, # Optional. Resource enabled for multiple languages across projects or not.
+        ///   settings: {
+        ///     defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
+        ///   }, # Optional. Configurable settings of the Project.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Project creation date-time.
+        ///   lastModifiedDateTime: string (ISO 8601 Format), # Optional. Represents the project last modified date-time.
+        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
         /// }
         /// </code>
         /// 
@@ -1166,16 +1238,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ProjectDeploymentsList</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       deploymentName: string, # Optional. Name of the deployment.
-        ///       lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-        ///     }
-        ///   ], # Optional. List of deployments of a project.
-        ///   nextLink: string, # Optional.
+        ///   deploymentName: string, # Optional. Name of the deployment.
+        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
         /// }
         /// </code>
         /// 
@@ -1213,16 +1283,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ProjectDeploymentsList</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       deploymentName: string, # Optional. Name of the deployment.
-        ///       lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-        ///     }
-        ///   ], # Optional. List of deployments of a project.
-        ///   nextLink: string, # Optional.
+        ///   deploymentName: string, # Optional. Name of the deployment.
+        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
         /// }
         /// </code>
         /// 
@@ -1260,15 +1328,13 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SynonymAsset</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       alterations: [string], # Required. Collection of word alterations.
-        ///     }
-        ///   ], # Optional. Collection of synonyms.
-        ///   nextLink: string, # Optional.
+        ///   alterations: [string], # Required. Collection of word alterations.
         /// }
         /// </code>
         /// 
@@ -1306,15 +1372,13 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SynonymAsset</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       alterations: [string], # Required. Collection of word alterations.
-        ///     }
-        ///   ], # Optional. Collection of synonyms.
-        ///   nextLink: string, # Optional.
+        ///   alterations: [string], # Required. Collection of word alterations.
         /// }
         /// </code>
         /// 
@@ -1352,20 +1416,18 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>QnaSourcesMetadata</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       displayName: string, # Optional. Friendly name of the Source.
-        ///       source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
-        ///       sourceUri: string, # Required. URI location for the file or url.
-        ///       sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
-        ///       contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
-        ///       lastUpdatedDateTime: string (ISO 8601 Format), # Optional. Date-time when the QnA was last updated.
-        ///     }
-        ///   ], # Optional. Custom sources from which QnAs were extracted or explicitly added to the project.
-        ///   nextLink: string, # Optional.
+        ///   displayName: string, # Optional. Friendly name of the Source.
+        ///   source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
+        ///   sourceUri: string, # Required. URI location for the file or url.
+        ///   sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
+        ///   contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Optional. Date-time when the QnA was last updated.
         /// }
         /// </code>
         /// 
@@ -1403,20 +1465,18 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>QnaSourcesMetadata</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       displayName: string, # Optional. Friendly name of the Source.
-        ///       source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
-        ///       sourceUri: string, # Required. URI location for the file or url.
-        ///       sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
-        ///       contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
-        ///       lastUpdatedDateTime: string (ISO 8601 Format), # Optional. Date-time when the QnA was last updated.
-        ///     }
-        ///   ], # Optional. Custom sources from which QnAs were extracted or explicitly added to the project.
-        ///   nextLink: string, # Optional.
+        ///   displayName: string, # Optional. Friendly name of the Source.
+        ///   source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
+        ///   sourceUri: string, # Required. URI location for the file or url.
+        ///   sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
+        ///   contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Optional. Date-time when the QnA was last updated.
         /// }
         /// </code>
         /// 
@@ -1455,51 +1515,49 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>QnaAsset</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       id: number, # Optional. Unique ID for the QnA.
-        ///       answer: string, # Optional. Answer text.
-        ///       source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-        ///       questions: [string], # Optional. List of questions associated with the answer.
-        ///       metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-        ///       dialog: {
-        ///         isContextOnly: boolean, # Optional. To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.
-        ///         prompts: [
-        ///           {
-        ///             displayOrder: number, # Optional. Index of the prompt. It is used for ordering of the prompts.
-        ///             qnaId: number, # Optional. ID of the QnA corresponding to the prompt.
-        ///             qna: {
-        ///               id: number, # Optional. Unique ID for the QnA.
-        ///               answer: string, # Optional. Answer text.
-        ///               source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-        ///               questions: [string], # Optional. List of questions associated with the answer.
-        ///               metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-        ///               dialog: QnaDialog, # Optional. Context of a QnA.
-        ///               activeLearningSuggestions: [
+        ///   id: number, # Optional. Unique ID for the QnA.
+        ///   answer: string, # Optional. Answer text.
+        ///   source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
+        ///   questions: [string], # Optional. List of questions associated with the answer.
+        ///   metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
+        ///   dialog: {
+        ///     isContextOnly: boolean, # Optional. To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.
+        ///     prompts: [
+        ///       {
+        ///         displayOrder: number, # Optional. Index of the prompt. It is used for ordering of the prompts.
+        ///         qnaId: number, # Optional. ID of the QnA corresponding to the prompt.
+        ///         qna: {
+        ///           id: number, # Optional. Unique ID for the QnA.
+        ///           answer: string, # Optional. Answer text.
+        ///           source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
+        ///           questions: [string], # Optional. List of questions associated with the answer.
+        ///           metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
+        ///           dialog: QnaDialog, # Optional. Context of a QnA.
+        ///           activeLearningSuggestions: [
+        ///             {
+        ///               clusterHead: string, # Optional. Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.
+        ///               suggestedQuestions: [
         ///                 {
-        ///                   clusterHead: string, # Optional. Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.
-        ///                   suggestedQuestions: [
-        ///                     {
-        ///                       question: string, # Optional. Question suggested by the Active Learning feature.
-        ///                       userSuggestedCount: number, # Optional. The number of times the question was suggested explicitly by the user.
-        ///                       autoSuggestedCount: number, # Optional. The number of times the question was suggested automatically by the Active Learning algorithm.
-        ///                     }
-        ///                   ], # Optional. List of all suggested questions for the QnA.
+        ///                   question: string, # Optional. Question suggested by the Active Learning feature.
+        ///                   userSuggestedCount: number, # Optional. The number of times the question was suggested explicitly by the user.
+        ///                   autoSuggestedCount: number, # Optional. The number of times the question was suggested automatically by the Active Learning algorithm.
         ///                 }
-        ///               ], # Optional. List of Active Learning suggestions for the QnA.
-        ///             }, # Optional. QnA record. Either QnAId or QnA record needs to be present in a Prompt.
-        ///             displayText: string, # Optional. Text displayed to represent a follow up question prompt.
-        ///           }
-        ///         ], # Optional. List of prompts associated with the answer.
-        ///       }, # Optional. Context of a QnA.
-        ///       activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. List of Active Learning suggestions for the QnA.
-        ///       lastUpdatedDateTime: string (ISO 8601 Format), # Optional. Date-time when the QnA was last updated.
-        ///     }
-        ///   ], # Optional. List of QnA records.
-        ///   nextLink: string, # Optional.
+        ///               ], # Optional. List of all suggested questions for the QnA.
+        ///             }
+        ///           ], # Optional. List of Active Learning suggestions for the QnA.
+        ///         }, # Optional. QnA record. Either QnAId or QnA record needs to be present in a Prompt.
+        ///         displayText: string, # Optional. Text displayed to represent a follow up question prompt.
+        ///       }
+        ///     ], # Optional. List of prompts associated with the answer.
+        ///   }, # Optional. Context of a QnA.
+        ///   activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. List of Active Learning suggestions for the QnA.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Optional. Date-time when the QnA was last updated.
         /// }
         /// </code>
         /// 
@@ -1538,51 +1596,49 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>QnaAsset</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       id: number, # Optional. Unique ID for the QnA.
-        ///       answer: string, # Optional. Answer text.
-        ///       source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-        ///       questions: [string], # Optional. List of questions associated with the answer.
-        ///       metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-        ///       dialog: {
-        ///         isContextOnly: boolean, # Optional. To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.
-        ///         prompts: [
-        ///           {
-        ///             displayOrder: number, # Optional. Index of the prompt. It is used for ordering of the prompts.
-        ///             qnaId: number, # Optional. ID of the QnA corresponding to the prompt.
-        ///             qna: {
-        ///               id: number, # Optional. Unique ID for the QnA.
-        ///               answer: string, # Optional. Answer text.
-        ///               source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-        ///               questions: [string], # Optional. List of questions associated with the answer.
-        ///               metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-        ///               dialog: QnaDialog, # Optional. Context of a QnA.
-        ///               activeLearningSuggestions: [
+        ///   id: number, # Optional. Unique ID for the QnA.
+        ///   answer: string, # Optional. Answer text.
+        ///   source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
+        ///   questions: [string], # Optional. List of questions associated with the answer.
+        ///   metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
+        ///   dialog: {
+        ///     isContextOnly: boolean, # Optional. To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.
+        ///     prompts: [
+        ///       {
+        ///         displayOrder: number, # Optional. Index of the prompt. It is used for ordering of the prompts.
+        ///         qnaId: number, # Optional. ID of the QnA corresponding to the prompt.
+        ///         qna: {
+        ///           id: number, # Optional. Unique ID for the QnA.
+        ///           answer: string, # Optional. Answer text.
+        ///           source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
+        ///           questions: [string], # Optional. List of questions associated with the answer.
+        ///           metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
+        ///           dialog: QnaDialog, # Optional. Context of a QnA.
+        ///           activeLearningSuggestions: [
+        ///             {
+        ///               clusterHead: string, # Optional. Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.
+        ///               suggestedQuestions: [
         ///                 {
-        ///                   clusterHead: string, # Optional. Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.
-        ///                   suggestedQuestions: [
-        ///                     {
-        ///                       question: string, # Optional. Question suggested by the Active Learning feature.
-        ///                       userSuggestedCount: number, # Optional. The number of times the question was suggested explicitly by the user.
-        ///                       autoSuggestedCount: number, # Optional. The number of times the question was suggested automatically by the Active Learning algorithm.
-        ///                     }
-        ///                   ], # Optional. List of all suggested questions for the QnA.
+        ///                   question: string, # Optional. Question suggested by the Active Learning feature.
+        ///                   userSuggestedCount: number, # Optional. The number of times the question was suggested explicitly by the user.
+        ///                   autoSuggestedCount: number, # Optional. The number of times the question was suggested automatically by the Active Learning algorithm.
         ///                 }
-        ///               ], # Optional. List of Active Learning suggestions for the QnA.
-        ///             }, # Optional. QnA record. Either QnAId or QnA record needs to be present in a Prompt.
-        ///             displayText: string, # Optional. Text displayed to represent a follow up question prompt.
-        ///           }
-        ///         ], # Optional. List of prompts associated with the answer.
-        ///       }, # Optional. Context of a QnA.
-        ///       activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. List of Active Learning suggestions for the QnA.
-        ///       lastUpdatedDateTime: string (ISO 8601 Format), # Optional. Date-time when the QnA was last updated.
-        ///     }
-        ///   ], # Optional. List of QnA records.
-        ///   nextLink: string, # Optional.
+        ///               ], # Optional. List of all suggested questions for the QnA.
+        ///             }
+        ///           ], # Optional. List of Active Learning suggestions for the QnA.
+        ///         }, # Optional. QnA record. Either QnAId or QnA record needs to be present in a Prompt.
+        ///         displayText: string, # Optional. Text displayed to represent a follow up question prompt.
+        ///       }
+        ///     ], # Optional. List of prompts associated with the answer.
+        ///   }, # Optional. Context of a QnA.
+        ///   activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. List of Active Learning suggestions for the QnA.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Optional. Date-time when the QnA was last updated.
         /// }
         /// </code>
         /// 
@@ -1668,8 +1724,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ExportJobState</c>:
         /// <code>{
         ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
@@ -1723,8 +1782,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ExportJobState</c>:
         /// <code>{
         ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
@@ -1779,8 +1841,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ImportJobOptions</c>:
         /// <code>{
         ///   metadata: {
         ///     description: string, # Optional. Description of the project.
@@ -1872,8 +1937,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ImportJobOptions</c>:
         /// <code>{
         ///   metadata: {
         ///     description: string, # Optional. Description of the project.
@@ -2015,8 +2083,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>UpdateSourcesOptions</c>:
         /// <code>{
         ///   op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot;, # Required. Update operation type for assets.
         ///   value: {
@@ -2058,8 +2129,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>UpdateSourcesOptions</c>:
         /// <code>{
         ///   op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot;, # Required. Update operation type for assets.
         ///   value: {
@@ -2101,8 +2175,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>UpdateQnaOptions</c>:
         /// <code>{
         ///   op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot;, # Required. Update operation type for assets.
         ///   value: {
@@ -2166,8 +2243,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>UpdateQnaOptions</c>:
         /// <code>{
         ///   op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot;, # Required. Update operation type for assets.
         ///   value: {

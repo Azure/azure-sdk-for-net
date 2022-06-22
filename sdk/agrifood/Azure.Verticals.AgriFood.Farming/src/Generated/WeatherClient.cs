@@ -68,8 +68,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>WeatherDataIngestionJob</c>:
         /// <code>{
         ///   boundaryId: string, # Required. The id of the boundary object for which weather data is being fetched.
         ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
@@ -121,8 +124,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>WeatherDataIngestionJob</c>:
         /// <code>{
         ///   boundaryId: string, # Required. The id of the boundary object for which weather data is being fetched.
         ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
@@ -174,8 +180,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>WeatherDataDeleteJob</c>:
         /// <code>{
         ///   extensionId: string, # Required. ID of the extension to be used for the providerInput. eg. DTN.ClearAg.
         ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
@@ -227,8 +236,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>WeatherDataDeleteJob</c>:
         /// <code>{
         ///   extensionId: string, # Required. ID of the extension to be used for the providerInput. eg. DTN.ClearAg.
         ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
@@ -290,53 +302,50 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="extensionId"/>, <paramref name="weatherDataType"/> or <paramref name="granularity"/> is null. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>WeatherDataListResponseValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       farmerId: string, # Required. Farmer ID.
-        ///       boundaryId: string, # Required. Boundary ID.
-        ///       extensionId: string, # Required. ID of the weather extension.
-        ///       location: {
-        ///         latitude: number, # Required. Latitude of the location.
-        ///         longitude: number, # Required. Longitude of the location.
-        ///       }, # Required. Location model class.
-        ///       dateTime: string (ISO 8601 Format), # Required. Date-time of the weather data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///       unitSystemCode: string, # Optional. Unit System like US/SI etc.
-        ///       extensionVersion: string, # Required. Version of the weather data extension.
-        ///       weatherDataType: string, # Required. Type of weather data (forecast/historical).
-        ///       granularity: string, # Required. Granularity of weather data (daily/hourly).
-        ///       cloudCover: {
-        ///         unit: string, # Optional. Data unit.
-        ///         value: number, # Optional. Data value.
-        ///       }, # Optional. Schema for storing measurement reading and unit.
-        ///       dewPoint: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       growingDegreeDay: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       precipitation: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       pressure: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       relativeHumidity: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       soilMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       soilTemperature: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       temperature: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       visibility: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       wetBulbTemperature: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       windChill: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       windDirection: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       windGust: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       windSpeed: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       id: string, # Optional. Weather data ID.
-        ///       eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///       createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///       properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   farmerId: string, # Required. Farmer ID.
+        ///   boundaryId: string, # Required. Boundary ID.
+        ///   extensionId: string, # Required. ID of the weather extension.
+        ///   location: {
+        ///     latitude: number, # Required. Latitude of the location.
+        ///     longitude: number, # Required. Longitude of the location.
+        ///   }, # Required. Location model class.
+        ///   dateTime: string (ISO 8601 Format), # Required. Date-time of the weather data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   unitSystemCode: string, # Optional. Unit System like US/SI etc.
+        ///   extensionVersion: string, # Required. Version of the weather data extension.
+        ///   weatherDataType: string, # Required. Type of weather data (forecast/historical).
+        ///   granularity: string, # Required. Granularity of weather data (daily/hourly).
+        ///   cloudCover: {
+        ///     unit: string, # Optional. Data unit.
+        ///     value: number, # Optional. Data value.
+        ///   }, # Optional. Schema for storing measurement reading and unit.
+        ///   dewPoint: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   growingDegreeDay: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   precipitation: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   pressure: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   relativeHumidity: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   soilMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   soilTemperature: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   temperature: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   visibility: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   wetBulbTemperature: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   windChill: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   windDirection: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   windGust: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   windSpeed: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   id: string, # Optional. Weather data ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
         /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        ///     }
-        ///   ], # Optional. List of requested objects.
-        ///   $skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.
-        ///   nextLink: string, # Optional. Continuation link (absolute URI) to the next page of results in the list.
         /// }
         /// </code>
         /// 
@@ -385,53 +394,50 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="extensionId"/>, <paramref name="weatherDataType"/> or <paramref name="granularity"/> is null. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>WeatherDataListResponseValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       farmerId: string, # Required. Farmer ID.
-        ///       boundaryId: string, # Required. Boundary ID.
-        ///       extensionId: string, # Required. ID of the weather extension.
-        ///       location: {
-        ///         latitude: number, # Required. Latitude of the location.
-        ///         longitude: number, # Required. Longitude of the location.
-        ///       }, # Required. Location model class.
-        ///       dateTime: string (ISO 8601 Format), # Required. Date-time of the weather data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///       unitSystemCode: string, # Optional. Unit System like US/SI etc.
-        ///       extensionVersion: string, # Required. Version of the weather data extension.
-        ///       weatherDataType: string, # Required. Type of weather data (forecast/historical).
-        ///       granularity: string, # Required. Granularity of weather data (daily/hourly).
-        ///       cloudCover: {
-        ///         unit: string, # Optional. Data unit.
-        ///         value: number, # Optional. Data value.
-        ///       }, # Optional. Schema for storing measurement reading and unit.
-        ///       dewPoint: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       growingDegreeDay: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       precipitation: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       pressure: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       relativeHumidity: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       soilMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       soilTemperature: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       temperature: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       visibility: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       wetBulbTemperature: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       windChill: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       windDirection: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       windGust: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       windSpeed: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///       id: string, # Optional. Weather data ID.
-        ///       eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///       createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///       properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        ///   farmerId: string, # Required. Farmer ID.
+        ///   boundaryId: string, # Required. Boundary ID.
+        ///   extensionId: string, # Required. ID of the weather extension.
+        ///   location: {
+        ///     latitude: number, # Required. Latitude of the location.
+        ///     longitude: number, # Required. Longitude of the location.
+        ///   }, # Required. Location model class.
+        ///   dateTime: string (ISO 8601 Format), # Required. Date-time of the weather data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   unitSystemCode: string, # Optional. Unit System like US/SI etc.
+        ///   extensionVersion: string, # Required. Version of the weather data extension.
+        ///   weatherDataType: string, # Required. Type of weather data (forecast/historical).
+        ///   granularity: string, # Required. Granularity of weather data (daily/hourly).
+        ///   cloudCover: {
+        ///     unit: string, # Optional. Data unit.
+        ///     value: number, # Optional. Data value.
+        ///   }, # Optional. Schema for storing measurement reading and unit.
+        ///   dewPoint: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   growingDegreeDay: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   precipitation: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   pressure: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   relativeHumidity: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   soilMoisture: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   soilTemperature: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   temperature: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   visibility: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   wetBulbTemperature: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   windChill: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   windDirection: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   windGust: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   windSpeed: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   id: string, # Optional. Weather data ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
         /// and must not have a value greater than 150 characters.
         /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        ///     }
-        ///   ], # Optional. List of requested objects.
-        ///   $skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.
-        ///   nextLink: string, # Optional. Continuation link (absolute URI) to the next page of results in the list.
         /// }
         /// </code>
         /// 
@@ -473,7 +479,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>WeatherDataIngestionJob</c>:
         /// <code>{
         ///   boundaryId: string, # Required. The id of the boundary object for which weather data is being fetched.
         ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
@@ -499,7 +508,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>WeatherDataIngestionJob</c>:
         /// <code>{
         ///   boundaryId: string, # Required. The id of the boundary object for which weather data is being fetched.
         ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
@@ -554,7 +566,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>WeatherDataIngestionJob</c>:
         /// <code>{
         ///   boundaryId: string, # Required. The id of the boundary object for which weather data is being fetched.
         ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
@@ -580,7 +595,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>WeatherDataIngestionJob</c>:
         /// <code>{
         ///   boundaryId: string, # Required. The id of the boundary object for which weather data is being fetched.
         ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
@@ -635,7 +653,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>WeatherDataDeleteJob</c>:
         /// <code>{
         ///   extensionId: string, # Required. ID of the extension to be used for the providerInput. eg. DTN.ClearAg.
         ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
@@ -661,7 +682,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>WeatherDataDeleteJob</c>:
         /// <code>{
         ///   extensionId: string, # Required. ID of the extension to be used for the providerInput. eg. DTN.ClearAg.
         ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
@@ -716,7 +740,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>WeatherDataDeleteJob</c>:
         /// <code>{
         ///   extensionId: string, # Required. ID of the extension to be used for the providerInput. eg. DTN.ClearAg.
         ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.
@@ -742,7 +769,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>WeatherDataDeleteJob</c>:
         /// <code>{
         ///   extensionId: string, # Required. ID of the extension to be used for the providerInput. eg. DTN.ClearAg.
         ///   farmerId: string, # Required. The id of the farmer object for which weather data is being fetched.

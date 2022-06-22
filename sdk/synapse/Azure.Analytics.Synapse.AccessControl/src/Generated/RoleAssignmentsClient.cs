@@ -66,7 +66,10 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>CheckPrincipalAccessRequest</c>:
         /// <code>{
         ///   subject: {
         ///     principalId: SubjectInfoPrincipalId, # Required. Principal Id
@@ -81,7 +84,10 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///   scope: string, # Required. Scope at which the check access is done.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CheckPrincipalAccessResponse</c>:
         /// <code>{
         ///   accessDecisions: [
         ///     {
@@ -125,7 +131,10 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>CheckPrincipalAccessRequest</c>:
         /// <code>{
         ///   subject: {
         ///     principalId: SubjectInfoPrincipalId, # Required. Principal Id
@@ -140,7 +149,10 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///   scope: string, # Required. Scope at which the check access is done.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CheckPrincipalAccessResponse</c>:
         /// <code>{
         ///   accessDecisions: [
         ///     {
@@ -184,8 +196,11 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="continuationToken"> Continuation token. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>RoleAssignmentDetailsList</c>:
         /// <code>{
         ///   count: number, # Optional. Number of role assignments
         ///   value: [
@@ -224,8 +239,11 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="continuationToken"> Continuation token. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>RoleAssignmentDetailsList</c>:
         /// <code>{
         ///   count: number, # Optional. Number of role assignments
         ///   value: [
@@ -266,7 +284,10 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>RoleAssignmentRequest</c>:
         /// <code>{
         ///   roleId: RoleAssignmentRequestRoleId, # Required. Role ID of the Synapse Built-In Role
         ///   principalId: RoleAssignmentRequestPrincipalId, # Required. Object ID of the AAD principal or security-group
@@ -274,7 +295,10 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///   principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>RoleAssignmentDetails</c>:
         /// <code>{
         ///   id: string, # Optional. Role Assignment ID
         ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. Role ID of the Synapse Built-In Role
@@ -313,7 +337,10 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>RoleAssignmentRequest</c>:
         /// <code>{
         ///   roleId: RoleAssignmentRequestRoleId, # Required. Role ID of the Synapse Built-In Role
         ///   principalId: RoleAssignmentRequestPrincipalId, # Required. Object ID of the AAD principal or security-group
@@ -321,7 +348,10 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///   principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>RoleAssignmentDetails</c>:
         /// <code>{
         ///   id: string, # Optional. Role Assignment ID
         ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. Role ID of the Synapse Built-In Role
@@ -357,8 +387,11 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>RoleAssignmentDetails</c>:
         /// <code>{
         ///   id: string, # Optional. Role Assignment ID
         ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. Role ID of the Synapse Built-In Role
@@ -393,8 +426,11 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>RoleAssignmentDetails</c>:
         /// <code>{
         ///   id: string, # Optional. Role Assignment ID
         ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. Role ID of the Synapse Built-In Role

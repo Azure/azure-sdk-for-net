@@ -54,8 +54,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasBusinessMetadataDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -153,8 +156,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasBusinessMetadataDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -252,8 +258,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasBusinessMetadataDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -351,8 +360,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasBusinessMetadataDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -450,8 +462,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasClassificationDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -561,8 +576,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasClassificationDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -672,8 +690,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasClassificationDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -783,8 +804,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasClassificationDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -894,8 +918,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasEntityDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -1014,8 +1041,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasEntityDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -1134,8 +1164,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasEntityDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -1254,8 +1287,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasEntityDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -1374,8 +1410,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasEnumDef</c>:
         /// <code>{
         ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///   createTime: number, # Optional. The created time of the record.
@@ -1459,8 +1498,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasEnumDef</c>:
         /// <code>{
         ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///   createTime: number, # Optional. The created time of the record.
@@ -1544,8 +1586,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasEnumDef</c>:
         /// <code>{
         ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///   createTime: number, # Optional. The created time of the record.
@@ -1629,8 +1674,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasEnumDef</c>:
         /// <code>{
         ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///   createTime: number, # Optional. The created time of the record.
@@ -1714,8 +1762,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasRelationshipDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -1834,8 +1885,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasRelationshipDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -1954,8 +2008,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasRelationshipDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -2074,8 +2131,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasRelationshipDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -2194,8 +2254,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AtlasBusinessMetadataDef Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>AtlasBusinessMetadataDef</summary>Schema for <c>AtlasBusinessMetadataDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -2267,7 +2331,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
-        /// Schema for <c>AtlasClassificationDef Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 4 more JSON objects</summary><details><summary>AtlasClassificationDef</summary>Schema for <c>AtlasClassificationDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -2351,7 +2416,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///   superTypes: [string], # Optional. An array of super types.
         /// }
         /// </code>
-        /// Schema for <c>AtlasEntityDef Response Body</c>:
+        /// </details>
+        /// <details><summary>AtlasEntityDef</summary>Schema for <c>AtlasEntityDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -2444,7 +2510,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of relationship attributes.
         /// }
         /// </code>
-        /// Schema for <c>AtlasRelationshipDef Response Body</c>:
+        /// </details>
+        /// <details><summary>AtlasRelationshipDef</summary>Schema for <c>AtlasRelationshipDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -2537,7 +2604,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///   relationshipLabel: string, # Optional. The label of the relationship.
         /// }
         /// </code>
-        /// Schema for <c>TermTemplateDef Response Body</c>:
+        /// </details>
+        /// <details><summary>TermTemplateDef</summary>Schema for <c>TermTemplateDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -2609,6 +2677,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> GetStructDefByGuidAsync(string guid, RequestContext context = null)
@@ -2635,8 +2705,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AtlasBusinessMetadataDef Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>AtlasBusinessMetadataDef</summary>Schema for <c>AtlasBusinessMetadataDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -2708,7 +2782,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
-        /// Schema for <c>AtlasClassificationDef Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 4 more JSON objects</summary><details><summary>AtlasClassificationDef</summary>Schema for <c>AtlasClassificationDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -2792,7 +2867,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///   superTypes: [string], # Optional. An array of super types.
         /// }
         /// </code>
-        /// Schema for <c>AtlasEntityDef Response Body</c>:
+        /// </details>
+        /// <details><summary>AtlasEntityDef</summary>Schema for <c>AtlasEntityDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -2885,7 +2961,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of relationship attributes.
         /// }
         /// </code>
-        /// Schema for <c>AtlasRelationshipDef Response Body</c>:
+        /// </details>
+        /// <details><summary>AtlasRelationshipDef</summary>Schema for <c>AtlasRelationshipDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -2978,7 +3055,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///   relationshipLabel: string, # Optional. The label of the relationship.
         /// }
         /// </code>
-        /// Schema for <c>TermTemplateDef Response Body</c>:
+        /// </details>
+        /// <details><summary>TermTemplateDef</summary>Schema for <c>TermTemplateDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -3050,6 +3128,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response GetStructDefByGuid(string guid, RequestContext context = null)
@@ -3076,8 +3156,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AtlasBusinessMetadataDef Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>AtlasBusinessMetadataDef</summary>Schema for <c>AtlasBusinessMetadataDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -3149,7 +3233,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
-        /// Schema for <c>AtlasClassificationDef Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 4 more JSON objects</summary><details><summary>AtlasClassificationDef</summary>Schema for <c>AtlasClassificationDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -3233,7 +3318,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///   superTypes: [string], # Optional. An array of super types.
         /// }
         /// </code>
-        /// Schema for <c>AtlasEntityDef Response Body</c>:
+        /// </details>
+        /// <details><summary>AtlasEntityDef</summary>Schema for <c>AtlasEntityDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -3326,7 +3412,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of relationship attributes.
         /// }
         /// </code>
-        /// Schema for <c>AtlasRelationshipDef Response Body</c>:
+        /// </details>
+        /// <details><summary>AtlasRelationshipDef</summary>Schema for <c>AtlasRelationshipDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -3419,7 +3506,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///   relationshipLabel: string, # Optional. The label of the relationship.
         /// }
         /// </code>
-        /// Schema for <c>TermTemplateDef Response Body</c>:
+        /// </details>
+        /// <details><summary>TermTemplateDef</summary>Schema for <c>TermTemplateDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -3491,6 +3579,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> GetStructDefByNameAsync(string name, RequestContext context = null)
@@ -3517,8 +3607,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>AtlasBusinessMetadataDef Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>AtlasBusinessMetadataDef</summary>Schema for <c>AtlasBusinessMetadataDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -3590,7 +3684,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
-        /// Schema for <c>AtlasClassificationDef Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 4 more JSON objects</summary><details><summary>AtlasClassificationDef</summary>Schema for <c>AtlasClassificationDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -3674,7 +3769,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///   superTypes: [string], # Optional. An array of super types.
         /// }
         /// </code>
-        /// Schema for <c>AtlasEntityDef Response Body</c>:
+        /// </details>
+        /// <details><summary>AtlasEntityDef</summary>Schema for <c>AtlasEntityDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -3767,7 +3863,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of relationship attributes.
         /// }
         /// </code>
-        /// Schema for <c>AtlasRelationshipDef Response Body</c>:
+        /// </details>
+        /// <details><summary>AtlasRelationshipDef</summary>Schema for <c>AtlasRelationshipDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -3860,7 +3957,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///   relationshipLabel: string, # Optional. The label of the relationship.
         /// }
         /// </code>
-        /// Schema for <c>TermTemplateDef Response Body</c>:
+        /// </details>
+        /// <details><summary>TermTemplateDef</summary>Schema for <c>TermTemplateDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -3932,6 +4030,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response GetStructDefByName(string name, RequestContext context = null)
@@ -3958,8 +4058,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasTypeDef</c>:
         /// <code>{
         ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///   createTime: number, # Optional. The created time of the record.
@@ -4117,8 +4220,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasTypeDef</c>:
         /// <code>{
         ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///   createTime: number, # Optional. The created time of the record.
@@ -4276,8 +4382,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasTypeDef</c>:
         /// <code>{
         ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///   createTime: number, # Optional. The created time of the record.
@@ -4435,8 +4544,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasTypeDef</c>:
         /// <code>{
         ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///   createTime: number, # Optional. The created time of the record.
@@ -4642,8 +4754,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasTypesDef</c>:
         /// <code>{
         ///   businessMetadataDefs: [
         ///     {
@@ -4920,8 +5035,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasTypesDef</c>:
         /// <code>{
         ///   businessMetadataDefs: [
         ///     {
@@ -5199,7 +5317,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasTypesDef</c>:
         /// <code>{
         ///   businessMetadataDefs: [
         ///     {
@@ -5450,7 +5571,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of term template definitions.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasTypesDef</c>:
         /// <code>{
         ///   businessMetadataDefs: [
         ///     {
@@ -5730,7 +5854,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasTypesDef</c>:
         /// <code>{
         ///   businessMetadataDefs: [
         ///     {
@@ -5981,7 +6108,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of term template definitions.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasTypesDef</c>:
         /// <code>{
         ///   businessMetadataDefs: [
         ///     {
@@ -6258,7 +6388,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasTypesDef</c>:
         /// <code>{
         ///   businessMetadataDefs: [
         ///     {
@@ -6509,7 +6642,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of term template definitions.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasTypesDef</c>:
         /// <code>{
         ///   businessMetadataDefs: [
         ///     {
@@ -6786,7 +6922,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasTypesDef</c>:
         /// <code>{
         ///   businessMetadataDefs: [
         ///     {
@@ -7037,7 +7176,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of term template definitions.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasTypesDef</c>:
         /// <code>{
         ///   businessMetadataDefs: [
         ///     {
@@ -7313,8 +7455,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasTypesDef</c>:
         /// <code>{
         ///   businessMetadataDefs: [
         ///     {
@@ -7590,8 +7735,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasTypesDef</c>:
         /// <code>{
         ///   businessMetadataDefs: [
         ///     {
@@ -7870,8 +8018,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasTypeDefHeader</c>:
         /// <code>{
         ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///   guid: string, # Optional. The GUID of the type definition.
@@ -7904,8 +8055,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasTypeDefHeader</c>:
         /// <code>{
         ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///   guid: string, # Optional. The GUID of the type definition.
@@ -7936,8 +8090,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>TermTemplateDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -8035,8 +8192,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>TermTemplateDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -8134,8 +8294,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>TermTemplateDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
@@ -8233,8 +8396,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>TermTemplateDef</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {

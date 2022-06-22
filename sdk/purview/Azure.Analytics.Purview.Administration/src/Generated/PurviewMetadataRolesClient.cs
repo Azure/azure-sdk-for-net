@@ -36,31 +36,6 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Lists roles for Purview Account. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   values: [
-        ///     {
-        ///       id: string, # Optional. The Id of role
-        ///       name: string, # Optional. The name of role
-        ///       type: string, # Optional. The type of role
-        ///       properties: {
-        ///         provisioningState: string, # Optional. The provisioningState of role
-        ///         roleType: string, # Optional. The type of role
-        ///         friendlyName: string, # Optional. The friendly name of role
-        ///         description: string, # Optional. The description of role
-        ///         cnfCondition: [AttributeMatcher[]], # Optional. The cnf Condition for a rule
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-        ///         version: number, # Optional. The version of role
-        ///       }, # Optional.
-        ///     }
-        ///   ], # Required.
-        ///   nextLink: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual AsyncPageable<BinaryData> GetMetadataRolesAsync(RequestContext context = null)
         {
             return GetMetadataRolesImplementationAsync("PurviewMetadataRolesClient.GetMetadataRoles", context);
@@ -85,31 +60,6 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Lists roles for Purview Account. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   values: [
-        ///     {
-        ///       id: string, # Optional. The Id of role
-        ///       name: string, # Optional. The name of role
-        ///       type: string, # Optional. The type of role
-        ///       properties: {
-        ///         provisioningState: string, # Optional. The provisioningState of role
-        ///         roleType: string, # Optional. The type of role
-        ///         friendlyName: string, # Optional. The friendly name of role
-        ///         description: string, # Optional. The description of role
-        ///         cnfCondition: [AttributeMatcher[]], # Optional. The cnf Condition for a rule
-        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
-        ///         version: number, # Optional. The version of role
-        ///       }, # Optional.
-        ///     }
-        ///   ], # Required.
-        ///   nextLink: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Pageable<BinaryData> GetMetadataRoles(RequestContext context = null)
         {
             return GetMetadataRolesImplementation("PurviewMetadataRolesClient.GetMetadataRoles", context);

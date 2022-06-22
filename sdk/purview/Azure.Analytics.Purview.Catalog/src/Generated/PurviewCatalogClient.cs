@@ -66,7 +66,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SearchRequest</c>:
         /// <code>{
         ///   keywords: string, # Optional. The keywords applied to all searchable fields.
         ///   offset: number, # Optional. The offset. The default value is 0. The maximum value is 100000.
@@ -85,7 +88,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SearchResult</c>:
         /// <code>{
         ///   @search.count: number, # Optional. The total number of search results (not the number of documents in a single page).
         ///   @search.facets: {
@@ -131,7 +137,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SearchRequest</c>:
         /// <code>{
         ///   keywords: string, # Optional. The keywords applied to all searchable fields.
         ///   offset: number, # Optional. The offset. The default value is 0. The maximum value is 100000.
@@ -150,7 +159,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SearchResult</c>:
         /// <code>{
         ///   @search.count: number, # Optional. The total number of search results (not the number of documents in a single page).
         ///   @search.facets: {
@@ -196,14 +208,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SuggestRequest</c>:
         /// <code>{
         ///   keywords: string, # Optional. The keywords applied to all fields that support suggest operation. It must be at least 1 character, and no more than 100 characters. In the index schema we defined a default suggester which lists all the supported fields and specifies a search mode.
         ///   limit: number, # Optional. The number of suggestions we hope to return. The default value is 5. The value must be a number between 1 and 100.
         ///   filter: AnyObject, # Optional. The filter for the search.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SuggestResult</c>:
         /// <code>{
         ///   value: [SuggestResultValue], # Optional.
         /// }
@@ -234,14 +252,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SuggestRequest</c>:
         /// <code>{
         ///   keywords: string, # Optional. The keywords applied to all fields that support suggest operation. It must be at least 1 character, and no more than 100 characters. In the index schema we defined a default suggester which lists all the supported fields and specifies a search mode.
         ///   limit: number, # Optional. The number of suggestions we hope to return. The default value is 5. The value must be a number between 1 and 100.
         ///   filter: AnyObject, # Optional. The filter for the search.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SuggestResult</c>:
         /// <code>{
         ///   value: [SuggestResultValue], # Optional.
         /// }
@@ -272,7 +296,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>BrowseRequest</c>:
         /// <code>{
         ///   entityType: string, # Optional. The entity type to browse as the root level entry point.
         ///   path: string, # Optional. The path to browse the next level child entities.
@@ -280,7 +307,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   offset: number, # Optional. The offset. The default value is 0. The maximum value is 100000.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>BrowseResult</c>:
         /// <code>{
         ///   @search.count: number, # Optional. The total number of browse results.
         ///   value: [BrowseResultValue], # Optional.
@@ -312,7 +342,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>BrowseRequest</c>:
         /// <code>{
         ///   entityType: string, # Optional. The entity type to browse as the root level entry point.
         ///   path: string, # Optional. The path to browse the next level child entities.
@@ -320,7 +353,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   offset: number, # Optional. The offset. The default value is 0. The maximum value is 100000.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>BrowseResult</c>:
         /// <code>{
         ///   @search.count: number, # Optional. The total number of browse results.
         ///   value: [BrowseResultValue], # Optional.
@@ -352,14 +388,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AutoCompleteRequest</c>:
         /// <code>{
         ///   keywords: string, # Optional. The keywords applied to all fields that support autocomplete operation. It must be at least 1 character, and no more than 100 characters.
         ///   limit: number, # Optional. The number of autocomplete results we hope to return. The default value is 50. The value must be a number between 1 and 100.
         ///   filter: AnyObject, # Optional. The filter for the autocomplete request.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AutoCompleteResult</c>:
         /// <code>{
         ///   value: [AutoCompleteResultValue], # Optional.
         /// }
@@ -390,14 +432,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AutoCompleteRequest</c>:
         /// <code>{
         ///   keywords: string, # Optional. The keywords applied to all fields that support autocomplete operation. It must be at least 1 character, and no more than 100 characters.
         ///   limit: number, # Optional. The number of autocomplete results we hope to return. The default value is 50. The value must be a number between 1 and 100.
         ///   filter: AnyObject, # Optional. The filter for the autocomplete request.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AutoCompleteResult</c>:
         /// <code>{
         ///   value: [AutoCompleteResultValue], # Optional.
         /// }

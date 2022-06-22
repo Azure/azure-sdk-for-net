@@ -48,8 +48,11 @@ namespace Azure.Analytics.Purview.Administration
         /// <summary> Get a resource set config service model. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ResourceSetRuleConfig</c>:
         /// <code>{
         ///   advancedResourceSet: {
         ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
@@ -164,8 +167,11 @@ namespace Azure.Analytics.Purview.Administration
         /// <summary> Get a resource set config service model. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ResourceSetRuleConfig</c>:
         /// <code>{
         ///   advancedResourceSet: {
         ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
@@ -283,7 +289,10 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ResourceSetRuleConfig</c>:
         /// <code>{
         ///   advancedResourceSet: {
         ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
@@ -377,7 +386,10 @@ namespace Azure.Analytics.Purview.Administration
         ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ResourceSetRuleConfig</c>:
         /// <code>{
         ///   advancedResourceSet: {
         ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
@@ -497,7 +509,10 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ResourceSetRuleConfig</c>:
         /// <code>{
         ///   advancedResourceSet: {
         ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
@@ -591,7 +606,10 @@ namespace Azure.Analytics.Purview.Administration
         ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ResourceSetRuleConfig</c>:
         /// <code>{
         ///   advancedResourceSet: {
         ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.

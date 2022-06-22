@@ -65,8 +65,11 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> Get an account. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Account</c>:
         /// <code>{
         ///   id: string, # Optional. Gets or sets the identifier.
         ///   identity: {
@@ -155,8 +158,11 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> Get an account. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Account</c>:
         /// <code>{
         ///   id: string, # Optional. Gets or sets the identifier.
         ///   identity: {
@@ -248,12 +254,18 @@ namespace Azure.Analytics.Purview.Account
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>DataPlaneAccountUpdateParameters</c>:
         /// <code>{
         ///   friendlyName: string, # Optional. The friendly name for the azure resource.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Account</c>:
         /// <code>{
         ///   id: string, # Optional. Gets or sets the identifier.
         ///   identity: {
@@ -347,12 +359,18 @@ namespace Azure.Analytics.Purview.Account
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>DataPlaneAccountUpdateParameters</c>:
         /// <code>{
         ///   friendlyName: string, # Optional. The friendly name for the azure resource.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Account</c>:
         /// <code>{
         ///   id: string, # Optional. Gets or sets the identifier.
         ///   identity: {
@@ -443,8 +461,11 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> List the authorization keys associated with this account. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AccessKeys</c>:
         /// <code>{
         ///   atlasKafkaPrimaryEndpoint: string, # Optional. Gets or sets the primary connection string.
         ///   atlasKafkaSecondaryEndpoint: string, # Optional. Gets or sets the secondary connection string.
@@ -471,8 +492,11 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> List the authorization keys associated with this account. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AccessKeys</c>:
         /// <code>{
         ///   atlasKafkaPrimaryEndpoint: string, # Optional. Gets or sets the primary connection string.
         ///   atlasKafkaSecondaryEndpoint: string, # Optional. Gets or sets the secondary connection string.
@@ -502,12 +526,18 @@ namespace Azure.Analytics.Purview.Account
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AccessKeyOptions</c>:
         /// <code>{
         ///   keyType: &quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;, # Optional. The access key type.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AccessKeys</c>:
         /// <code>{
         ///   atlasKafkaPrimaryEndpoint: string, # Optional. Gets or sets the primary connection string.
         ///   atlasKafkaSecondaryEndpoint: string, # Optional. Gets or sets the secondary connection string.
@@ -539,12 +569,18 @@ namespace Azure.Analytics.Purview.Account
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Request Body</c>:
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AccessKeyOptions</c>:
         /// <code>{
         ///   keyType: &quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;, # Optional. The access key type.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AccessKeys</c>:
         /// <code>{
         ///   atlasKafkaPrimaryEndpoint: string, # Optional. Gets or sets the primary connection string.
         ///   atlasKafkaSecondaryEndpoint: string, # Optional. Gets or sets the secondary connection string.
@@ -574,31 +610,28 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CollectionListValue</c>:
         /// <code>{
-        ///   count: number, # Optional. Total item count.
-        ///   nextLink: string, # Optional. The Url of next result page.
-        ///   value: [
-        ///     {
-        ///       collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
-        ///       description: string, # Optional. Gets or sets the description.
-        ///       friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
-        ///       name: string, # Optional. Gets the name.
-        ///       parentCollection: {
-        ///         referenceName: string, # Optional. Gets or sets the reference name.
-        ///         type: string, # Optional. Gets the reference type property.
-        ///       }, # Optional. Gets or sets the parent collection reference.
-        ///       systemData: {
-        ///         createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
-        ///         createdBy: string, # Optional. The identity that created the resource.
-        ///         createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
-        ///         lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
-        ///         lastModifiedBy: string, # Optional. The identity that last modified the resource.
-        ///         lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
-        ///       }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
-        ///     }
-        ///   ], # Required. Collection of items of type results.
+        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
+        ///   description: string, # Optional. Gets or sets the description.
+        ///   friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
+        ///   name: string, # Optional. Gets the name.
+        ///   parentCollection: {
+        ///     referenceName: string, # Optional. Gets or sets the reference name.
+        ///     type: string, # Optional. Gets the reference type property.
+        ///   }, # Optional. Gets or sets the parent collection reference.
+        ///   systemData: {
+        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
+        ///     createdBy: string, # Optional. The identity that created the resource.
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
+        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
+        ///   }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
         /// }
         /// </code>
         /// 
@@ -629,31 +662,28 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CollectionListValue</c>:
         /// <code>{
-        ///   count: number, # Optional. Total item count.
-        ///   nextLink: string, # Optional. The Url of next result page.
-        ///   value: [
-        ///     {
-        ///       collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
-        ///       description: string, # Optional. Gets or sets the description.
-        ///       friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
-        ///       name: string, # Optional. Gets the name.
-        ///       parentCollection: {
-        ///         referenceName: string, # Optional. Gets or sets the reference name.
-        ///         type: string, # Optional. Gets the reference type property.
-        ///       }, # Optional. Gets or sets the parent collection reference.
-        ///       systemData: {
-        ///         createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
-        ///         createdBy: string, # Optional. The identity that created the resource.
-        ///         createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
-        ///         lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
-        ///         lastModifiedBy: string, # Optional. The identity that last modified the resource.
-        ///         lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
-        ///       }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
-        ///     }
-        ///   ], # Required. Collection of items of type results.
+        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
+        ///   description: string, # Optional. Gets or sets the description.
+        ///   friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
+        ///   name: string, # Optional. Gets the name.
+        ///   parentCollection: {
+        ///     referenceName: string, # Optional. Gets or sets the reference name.
+        ///     type: string, # Optional. Gets the reference type property.
+        ///   }, # Optional. Gets or sets the parent collection reference.
+        ///   systemData: {
+        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
+        ///     createdBy: string, # Optional. The identity that created the resource.
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
+        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
+        ///   }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
         /// }
         /// </code>
         /// 
@@ -684,105 +714,102 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ResourceSetRuleConfigListValue</c>:
         /// <code>{
-        ///   count: number, # Optional. Total item count.
-        ///   nextLink: string, # Optional. The Url of next result page.
-        ///   value: [
-        ///     {
-        ///       advancedResourceSet: {
-        ///         modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
-        ///         resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
-        ///       }, # Optional. Gets or sets the advanced resource set property of the account.
-        ///       name: string, # Optional. The name of the rule
-        ///       pathPatternConfig: {
-        ///         acceptedPatterns: [
-        ///           {
-        ///             createdBy: string, # Optional.
-        ///             filterType: &quot;Pattern&quot; | &quot;Regex&quot;, # Optional.
-        ///             lastUpdatedTimestamp: number, # Optional.
-        ///             modifiedBy: string, # Optional.
-        ///             name: string, # Required.
-        ///             path: string, # Required.
-        ///           }
-        ///         ], # Optional.
-        ///         complexReplacers: [
-        ///           {
-        ///             createdBy: string, # Optional.
-        ///             description: string, # Optional.
-        ///             disabled: boolean, # Optional.
-        ///             disableRecursiveReplacerApplication: boolean, # Optional.
-        ///             lastUpdatedTimestamp: number, # Optional.
-        ///             modifiedBy: string, # Optional.
-        ///             name: string, # Optional.
-        ///             typeName: string, # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///         createdBy: string, # Required.
-        ///         enableDefaultPatterns: boolean, # Required.
+        ///   advancedResourceSet: {
+        ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///   }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///   name: string, # Optional. The name of the rule
+        ///   pathPatternConfig: {
+        ///     acceptedPatterns: [
+        ///       {
+        ///         createdBy: string, # Optional.
+        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;, # Optional.
         ///         lastUpdatedTimestamp: number, # Optional.
         ///         modifiedBy: string, # Optional.
-        ///         normalizationRules: [
+        ///         name: string, # Required.
+        ///         path: string, # Required.
+        ///       }
+        ///     ], # Optional.
+        ///     complexReplacers: [
+        ///       {
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Optional.
+        ///         typeName: string, # Optional.
+        ///       }
+        ///     ], # Optional.
+        ///     createdBy: string, # Required.
+        ///     enableDefaultPatterns: boolean, # Required.
+        ///     lastUpdatedTimestamp: number, # Optional.
+        ///     modifiedBy: string, # Optional.
+        ///     normalizationRules: [
+        ///       {
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         dynamicReplacement: boolean, # Optional.
+        ///         entityTypes: [string], # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         name: string, # Optional.
+        ///         regex: {
+        ///           maxDigits: number, # Optional.
+        ///           maxLetters: number, # Optional.
+        ///           minDashes: number, # Optional.
+        ///           minDigits: number, # Optional.
+        ///           minDigitsOrLetters: number, # Optional.
+        ///           minDots: number, # Optional.
+        ///           minHex: number, # Optional.
+        ///           minLetters: number, # Optional.
+        ///           minUnderscores: number, # Optional.
+        ///           options: number, # Optional.
+        ///           regexStr: string, # Optional.
+        ///         }, # Optional.
+        ///         replaceWith: string, # Optional.
+        ///         version: number, # Optional.
+        ///       }
+        ///     ], # Optional.
+        ///     regexReplacers: [
+        ///       {
+        ///         condition: string, # Optional.
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Required.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         doNotReplaceRegex: FastRegex, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         regex: FastRegex, # Optional.
+        ///         replaceWith: string, # Optional.
+        ///       }
+        ///     ], # Optional.
+        ///     rejectedPatterns: [Filter], # Optional.
+        ///     scopedRules: [
+        ///       {
+        ///         bindingUrl: string, # Required.
+        ///         rules: [
         ///           {
-        ///             description: string, # Optional.
-        ///             disabled: boolean, # Optional.
-        ///             dynamicReplacement: boolean, # Optional.
-        ///             entityTypes: [string], # Optional.
+        ///             displayName: string, # Optional.
+        ///             isResourceSet: boolean, # Optional.
         ///             lastUpdatedTimestamp: number, # Optional.
         ///             name: string, # Optional.
-        ///             regex: {
-        ///               maxDigits: number, # Optional.
-        ///               maxLetters: number, # Optional.
-        ///               minDashes: number, # Optional.
-        ///               minDigits: number, # Optional.
-        ///               minDigitsOrLetters: number, # Optional.
-        ///               minDots: number, # Optional.
-        ///               minHex: number, # Optional.
-        ///               minLetters: number, # Optional.
-        ///               minUnderscores: number, # Optional.
-        ///               options: number, # Optional.
-        ///               regexStr: string, # Optional.
-        ///             }, # Optional.
-        ///             replaceWith: string, # Optional.
-        ///             version: number, # Optional.
+        ///             qualifiedName: string, # Required.
         ///           }
         ///         ], # Optional.
-        ///         regexReplacers: [
-        ///           {
-        ///             condition: string, # Optional.
-        ///             createdBy: string, # Optional.
-        ///             description: string, # Optional.
-        ///             disabled: boolean, # Required.
-        ///             disableRecursiveReplacerApplication: boolean, # Optional.
-        ///             doNotReplaceRegex: FastRegex, # Optional.
-        ///             lastUpdatedTimestamp: number, # Optional.
-        ///             modifiedBy: string, # Optional.
-        ///             name: string, # Required.
-        ///             regex: FastRegex, # Optional.
-        ///             replaceWith: string, # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///         rejectedPatterns: [Filter], # Optional.
-        ///         scopedRules: [
-        ///           {
-        ///             bindingUrl: string, # Required.
-        ///             rules: [
-        ///               {
-        ///                 displayName: string, # Optional.
-        ///                 isResourceSet: boolean, # Optional.
-        ///                 lastUpdatedTimestamp: number, # Optional.
-        ///                 name: string, # Optional.
-        ///                 qualifiedName: string, # Required.
-        ///               }
-        ///             ], # Optional.
-        ///             storeType: string, # Required.
-        ///           }
-        ///         ], # Optional.
-        ///         version: number, # Optional.
-        ///       }, # Optional. The configuration rules for path pattern extraction.
-        ///     }
-        ///   ], # Required. Collection of items of type results.
+        ///         storeType: string, # Required.
+        ///       }
+        ///     ], # Optional.
+        ///     version: number, # Optional.
+        ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
         /// 
@@ -813,105 +840,102 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ResourceSetRuleConfigListValue</c>:
         /// <code>{
-        ///   count: number, # Optional. Total item count.
-        ///   nextLink: string, # Optional. The Url of next result page.
-        ///   value: [
-        ///     {
-        ///       advancedResourceSet: {
-        ///         modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
-        ///         resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
-        ///       }, # Optional. Gets or sets the advanced resource set property of the account.
-        ///       name: string, # Optional. The name of the rule
-        ///       pathPatternConfig: {
-        ///         acceptedPatterns: [
-        ///           {
-        ///             createdBy: string, # Optional.
-        ///             filterType: &quot;Pattern&quot; | &quot;Regex&quot;, # Optional.
-        ///             lastUpdatedTimestamp: number, # Optional.
-        ///             modifiedBy: string, # Optional.
-        ///             name: string, # Required.
-        ///             path: string, # Required.
-        ///           }
-        ///         ], # Optional.
-        ///         complexReplacers: [
-        ///           {
-        ///             createdBy: string, # Optional.
-        ///             description: string, # Optional.
-        ///             disabled: boolean, # Optional.
-        ///             disableRecursiveReplacerApplication: boolean, # Optional.
-        ///             lastUpdatedTimestamp: number, # Optional.
-        ///             modifiedBy: string, # Optional.
-        ///             name: string, # Optional.
-        ///             typeName: string, # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///         createdBy: string, # Required.
-        ///         enableDefaultPatterns: boolean, # Required.
+        ///   advancedResourceSet: {
+        ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///   }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///   name: string, # Optional. The name of the rule
+        ///   pathPatternConfig: {
+        ///     acceptedPatterns: [
+        ///       {
+        ///         createdBy: string, # Optional.
+        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;, # Optional.
         ///         lastUpdatedTimestamp: number, # Optional.
         ///         modifiedBy: string, # Optional.
-        ///         normalizationRules: [
+        ///         name: string, # Required.
+        ///         path: string, # Required.
+        ///       }
+        ///     ], # Optional.
+        ///     complexReplacers: [
+        ///       {
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Optional.
+        ///         typeName: string, # Optional.
+        ///       }
+        ///     ], # Optional.
+        ///     createdBy: string, # Required.
+        ///     enableDefaultPatterns: boolean, # Required.
+        ///     lastUpdatedTimestamp: number, # Optional.
+        ///     modifiedBy: string, # Optional.
+        ///     normalizationRules: [
+        ///       {
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         dynamicReplacement: boolean, # Optional.
+        ///         entityTypes: [string], # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         name: string, # Optional.
+        ///         regex: {
+        ///           maxDigits: number, # Optional.
+        ///           maxLetters: number, # Optional.
+        ///           minDashes: number, # Optional.
+        ///           minDigits: number, # Optional.
+        ///           minDigitsOrLetters: number, # Optional.
+        ///           minDots: number, # Optional.
+        ///           minHex: number, # Optional.
+        ///           minLetters: number, # Optional.
+        ///           minUnderscores: number, # Optional.
+        ///           options: number, # Optional.
+        ///           regexStr: string, # Optional.
+        ///         }, # Optional.
+        ///         replaceWith: string, # Optional.
+        ///         version: number, # Optional.
+        ///       }
+        ///     ], # Optional.
+        ///     regexReplacers: [
+        ///       {
+        ///         condition: string, # Optional.
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Required.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         doNotReplaceRegex: FastRegex, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         regex: FastRegex, # Optional.
+        ///         replaceWith: string, # Optional.
+        ///       }
+        ///     ], # Optional.
+        ///     rejectedPatterns: [Filter], # Optional.
+        ///     scopedRules: [
+        ///       {
+        ///         bindingUrl: string, # Required.
+        ///         rules: [
         ///           {
-        ///             description: string, # Optional.
-        ///             disabled: boolean, # Optional.
-        ///             dynamicReplacement: boolean, # Optional.
-        ///             entityTypes: [string], # Optional.
+        ///             displayName: string, # Optional.
+        ///             isResourceSet: boolean, # Optional.
         ///             lastUpdatedTimestamp: number, # Optional.
         ///             name: string, # Optional.
-        ///             regex: {
-        ///               maxDigits: number, # Optional.
-        ///               maxLetters: number, # Optional.
-        ///               minDashes: number, # Optional.
-        ///               minDigits: number, # Optional.
-        ///               minDigitsOrLetters: number, # Optional.
-        ///               minDots: number, # Optional.
-        ///               minHex: number, # Optional.
-        ///               minLetters: number, # Optional.
-        ///               minUnderscores: number, # Optional.
-        ///               options: number, # Optional.
-        ///               regexStr: string, # Optional.
-        ///             }, # Optional.
-        ///             replaceWith: string, # Optional.
-        ///             version: number, # Optional.
+        ///             qualifiedName: string, # Required.
         ///           }
         ///         ], # Optional.
-        ///         regexReplacers: [
-        ///           {
-        ///             condition: string, # Optional.
-        ///             createdBy: string, # Optional.
-        ///             description: string, # Optional.
-        ///             disabled: boolean, # Required.
-        ///             disableRecursiveReplacerApplication: boolean, # Optional.
-        ///             doNotReplaceRegex: FastRegex, # Optional.
-        ///             lastUpdatedTimestamp: number, # Optional.
-        ///             modifiedBy: string, # Optional.
-        ///             name: string, # Required.
-        ///             regex: FastRegex, # Optional.
-        ///             replaceWith: string, # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///         rejectedPatterns: [Filter], # Optional.
-        ///         scopedRules: [
-        ///           {
-        ///             bindingUrl: string, # Required.
-        ///             rules: [
-        ///               {
-        ///                 displayName: string, # Optional.
-        ///                 isResourceSet: boolean, # Optional.
-        ///                 lastUpdatedTimestamp: number, # Optional.
-        ///                 name: string, # Optional.
-        ///                 qualifiedName: string, # Required.
-        ///               }
-        ///             ], # Optional.
-        ///             storeType: string, # Required.
-        ///           }
-        ///         ], # Optional.
-        ///         version: number, # Optional.
-        ///       }, # Optional. The configuration rules for path pattern extraction.
-        ///     }
-        ///   ], # Required. Collection of items of type results.
+        ///         storeType: string, # Required.
+        ///       }
+        ///     ], # Optional.
+        ///     version: number, # Optional.
+        ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
         /// 
