@@ -175,7 +175,7 @@ their resolution. The logs produced will capture the flow of an application befo
 locate the root issue. View the [logging][logging] wiki for guidance about enabling logging.
 
 ## Next steps
-More samples can be found [here][samples].
+To learn more about Azure Monitor, see the [Azure Monitor service documentation][azure_monitor_overview].
 
 ## Contributing
 
@@ -194,5 +194,6 @@ For more information see the [Code of Conduct FAQ](https://opensource.microsoft.
 <!-- LINKS -->
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
+[azure_monitor_overview]: https://docs.microsoft.com/azure/azure-monitor/overview
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/monitor/Azure.Monitor.Ingestion/README.png)
