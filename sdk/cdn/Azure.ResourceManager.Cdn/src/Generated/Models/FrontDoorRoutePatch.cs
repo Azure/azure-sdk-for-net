@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of FrontDoorRoutePatch. </summary>
         public FrontDoorRoutePatch()
         {
-            CustomDomains = new ChangeTrackingList<ActivatedResourceReference>();
+            CustomDomains = new ChangeTrackingList<FrontDoorActivatedResourceInfo>();
             RuleSets = new ChangeTrackingList<WritableSubResource>();
             SupportedProtocols = new ChangeTrackingList<FrontDoorEndpointProtocol>();
             PatternsToMatch = new ChangeTrackingList<string>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The name of the endpoint which holds the route. </summary>
         public string EndpointName { get; }
         /// <summary> Domains referenced by this endpoint. </summary>
-        public IList<ActivatedResourceReference> CustomDomains { get; }
+        public IList<FrontDoorActivatedResourceInfo> CustomDomains { get; }
         /// <summary> A reference to the origin group. </summary>
         internal WritableSubResource OriginGroup { get; set; }
         /// <summary> Gets or sets Id. </summary>

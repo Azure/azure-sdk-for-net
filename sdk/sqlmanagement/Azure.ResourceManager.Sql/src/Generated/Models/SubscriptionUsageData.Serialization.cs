@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> displayName = default;
             Optional<double> currentValue = default;
             Optional<double> limit = default;
@@ -51,6 +51,11 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -97,7 +102,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SubscriptionUsageData(id, name, type, systemData, displayName.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), unit.Value);
+            return new SubscriptionUsageData(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), unit.Value);
         }
     }
 }

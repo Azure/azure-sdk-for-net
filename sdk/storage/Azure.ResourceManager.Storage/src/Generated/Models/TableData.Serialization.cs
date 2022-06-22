@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> tableName = default;
             Optional<IList<TableSignedIdentifier>> signedIdentifiers = default;
             foreach (var property in element.EnumerateObject())
@@ -61,6 +61,11 @@ namespace Azure.ResourceManager.Storage
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -97,7 +102,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new TableData(id, name, type, systemData, tableName.Value, Optional.ToList(signedIdentifiers));
+            return new TableData(id, name, type, systemData.Value, tableName.Value, Optional.ToList(signedIdentifiers));
         }
     }
 }

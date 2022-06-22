@@ -48,7 +48,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "38",
+        "Content-Length": "27",
         "Content-Type": "application/json",
         "traceparent": "00-58e71d8c30ca3e49abaf23af81ca2099-348234d451904345-00",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.24; Microsoft Windows 10.0.19044)",
@@ -56,7 +56,6 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "tags": {},
         "location": "canadacentral"
       },
       "StatusCode": 201,

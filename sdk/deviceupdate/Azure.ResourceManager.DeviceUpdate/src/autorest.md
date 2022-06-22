@@ -7,12 +7,22 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 namespace: Azure.ResourceManager.DeviceUpdate
 require: https://github.com/Azure/azure-rest-api-specs/blob/32143b0f5f230ee2601e3c5d1990188666a5058d/specification/deviceupdate/resource-manager/readme.md
-tag: package-2020-03-01-preview
+tag: package-2022-04-01-preview
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
-output-folder: Generated/
+modelerfour:
+  flatten-payloads: false
+
 override-operation-name:
   CheckNameAvailability: CheckDeviceUpdateNameAvailability
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu
@@ -64,4 +74,10 @@ directive:
           "type": "string"
         }
       }
+  - from: deviceupdate.json
+    where: $.definitions
+    transform: >
+      $.Location['x-ms-client-name'] = 'DeviceUpdateAccountLocationDetail';
+      $.Location.properties.role['x-ms-enum'].name = 'DeviceUpdateAccountLocationRole';
+      $.Account.properties.properties.properties.sku['x-ms-enum'].name = 'Sku';
 ```

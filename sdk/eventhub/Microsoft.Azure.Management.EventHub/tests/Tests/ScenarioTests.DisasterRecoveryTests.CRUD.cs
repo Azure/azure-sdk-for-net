@@ -139,6 +139,7 @@ namespace EventHub.Tests.ScenarioTests
                         Assert.True(disasterRecoveryGetResponse.PendingReplicationOperationsCount >= 0);
                     else
                         Assert.False(disasterRecoveryGetResponse.PendingReplicationOperationsCount.HasValue);
+                    
                     Assert.Equal(RoleDisasterRecovery.Primary, disasterRecoveryGetResponse.Role);
 
                     //// Get the created DisasterRecovery config - Secondary

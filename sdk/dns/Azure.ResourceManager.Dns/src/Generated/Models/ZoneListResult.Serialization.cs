@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Dns;
 
 namespace Azure.ResourceManager.Dns.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Dns.Models
     {
         internal static ZoneListResult DeserializeZoneListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<Zone>> value = default;
+            Optional<IReadOnlyList<DnsZoneData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Dns.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Zone> array = new List<Zone>();
+                    List<DnsZoneData> array = new List<DnsZoneData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Zone.DeserializeZone(item));
+                        array.Add(DnsZoneData.DeserializeDnsZoneData(item));
                     }
                     value = array;
                     continue;

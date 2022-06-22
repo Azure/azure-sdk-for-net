@@ -5,13 +5,15 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Resource properties. </summary>
-    public partial class DataCollectionRuleAssociationProperties : ResourceData
+    public partial class DataCollectionRuleAssociationProperties : DataCollectionRuleAssociationData
     {
         /// <summary> Initializes a new instance of DataCollectionRuleAssociationProperties. </summary>
         public DataCollectionRuleAssociationProperties()
@@ -25,15 +27,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Resource properties. </param>
         /// <param name="etag"> Resource entity tag (ETag). </param>
-        internal DataCollectionRuleAssociationProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataCollectionRuleAssociationProperties properties, string etag) : base(id, name, resourceType, systemData)
+        internal DataCollectionRuleAssociationProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataCollectionRuleAssociationProperties properties, ETag? etag) : base(id, name, resourceType, systemData, properties, etag)
         {
-            Properties = properties;
-            Etag = etag;
         }
-
-        /// <summary> Resource properties. </summary>
-        public DataCollectionRuleAssociationProperties Properties { get; set; }
-        /// <summary> Resource entity tag (ETag). </summary>
-        public string Etag { get; }
     }
 }

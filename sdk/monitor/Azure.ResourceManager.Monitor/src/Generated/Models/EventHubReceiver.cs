@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
         /// <param name="tenantId"> The tenant Id for the subscription containing this event hub. </param>
         /// <param name="subscriptionId"> The Id for the subscription containing this event hub. </param>
-        internal EventHubReceiver(string name, string eventHubNameSpace, string eventHubName, bool? useCommonAlertSchema, string tenantId, string subscriptionId)
+        internal EventHubReceiver(string name, string eventHubNameSpace, string eventHubName, bool? useCommonAlertSchema, Guid? tenantId, string subscriptionId)
         {
             Name = name;
             EventHubNameSpace = eventHubNameSpace;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Indicates whether to use common alert schema. </summary>
         public bool? UseCommonAlertSchema { get; set; }
         /// <summary> The tenant Id for the subscription containing this event hub. </summary>
-        public string TenantId { get; set; }
+        public Guid? TenantId { get; set; }
         /// <summary> The Id for the subscription containing this event hub. </summary>
         public string SubscriptionId { get; set; }
     }
