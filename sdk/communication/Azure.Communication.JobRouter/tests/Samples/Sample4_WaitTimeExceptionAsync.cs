@@ -18,7 +18,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         public async Task WaitTimeTriggerException_SampleScenario()
         {
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Exception_WaitTimeTrigger
-            // In this scenario, we going to address how to escalate jobs when it had waited in queue for a threshold period of time
+            // In this scenario, we are going to address how to escalate jobs when it had waited in queue for a threshold period of time
             //
             // We are going to use the exception policy associated with a queue to perform this task.
             // We are going to create an exception policy with a WaitTimeExceptionTrigger, and a ManuallyReclassifyAction to enqueue the job
