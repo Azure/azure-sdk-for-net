@@ -2602,6 +2602,48 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance publishing task
+        ///   detected an empty buffer and is entering an idle state to await an event being enqueued.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the buffered producer is associated with.</param>
+        /// <param name="operationId">An artificial identifier for the idle operation.</param>
+        ///
+        [Event(126, Level = EventLevel.Verbose, Message = "Publishing for the buffered producer instance with identifier '{0}' to Event Hub: {1} has detected an empty buffer and is waiting for an event to be enqueued.  Operation Id: '{2}'")]
+        public virtual void BufferedProducerIdleStart(string identifier,
+                                                      string eventHubName,
+                                                      string operationId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(126, identifier ?? string.Empty, eventHubName ?? string.Empty, operationId ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance publishing task
+        ///   has detected an event being enqueued and has exiting an idle state.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the buffered producer is associated with.</param>
+        /// <param name="operationId">An artificial identifier for the idle operation.</param>
+        /// <param name="durationSeconds">The total duration that the idle await took place, in seconds.</param>
+        ///
+        [Event(127, Level = EventLevel.Verbose, Message = "Publishing for the buffered producer instance with identifier '{0}' for Event Hub: {1} has exited the idle state; one or more events was enqueued.  Operation Id: '{2},' Duration: '{3:0.00}' seconds.")]
+        public virtual void BufferedProducerIdleComplete(string identifier,
+                                                                 string eventHubName,
+                                                                 string operationId,
+                                                                 double durationSeconds)
+        {
+            if (IsEnabled())
+            {
+                BufferedProducerIdleCompleteCore(127, identifier ?? string.Empty, eventHubName ?? string.Empty, operationId ?? string.Empty, durationSeconds);
+            }
+        }
+
+        /// <summary>
         ///   Indicates that the publishing of events has completed, writing into a stack allocated
         ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
         /// </summary>
@@ -3030,6 +3072,48 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 eventPayload[5].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
 
                 WriteEventCore(eventId, 6, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance publishing task
+        ///   has completed an idle await for an event to be enqueued, writing into a stack allocated
+        ///   <see cref="EventSource.EventData"/>  struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the buffered producer is associated with.</param>
+        /// <param name="operationId">An artificial identifier for the await operation.</param>
+        /// <param name="durationSeconds">The total duration that the cycle took to complete, in seconds.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void BufferedProducerIdleCompleteCore(int eventId,
+                                                             string identifier,
+                                                             string eventHubName,
+                                                             string operationId,
+                                                             double durationSeconds)
+        {
+            fixed (char* identifierPtr = identifier)
+            fixed (char* eventHubNamePtr = eventHubName)
+            fixed (char* operationIdPtr = operationId)
+            {
+                var eventPayload = stackalloc EventData[4];
+
+                eventPayload[0].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[1].Size = (eventHubName.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)eventHubNamePtr;
+
+                eventPayload[3].Size = (operationId.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)operationIdPtr;
+
+                eventPayload[4].Size = Unsafe.SizeOf<double>();
+                eventPayload[4].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
+
+                WriteEventCore(eventId, 4, eventPayload);
             }
         }
 

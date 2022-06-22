@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="rights"> The rights associated with the rule. </param>
-        internal AuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, IList<AccessRights> rights) : base(id, name, resourceType, systemData, location)
+        internal AuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IList<AccessRights> rights) : base(id, name, resourceType, systemData, location)
         {
             Rights = rights;
         }

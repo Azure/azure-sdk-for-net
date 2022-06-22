@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> objectId = default;
             Optional<string> userPrincipalName = default;
             Optional<ApplicationType> applicationType = default;
@@ -80,6 +80,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -141,7 +146,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new UserSessionData(id, name, type, systemData, objectId.Value, userPrincipalName.Value, Optional.ToNullable(applicationType), Optional.ToNullable(sessionState), activeDirectoryUserName.Value, Optional.ToNullable(createTime));
+            return new UserSessionData(id, name, type, systemData.Value, objectId.Value, userPrincipalName.Value, Optional.ToNullable(applicationType), Optional.ToNullable(sessionState), activeDirectoryUserName.Value, Optional.ToNullable(createTime));
         }
     }
 }

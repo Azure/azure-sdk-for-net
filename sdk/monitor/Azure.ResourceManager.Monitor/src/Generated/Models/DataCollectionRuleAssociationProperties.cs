@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor;
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Resource properties. </param>
         /// <param name="etag"> Resource entity tag (ETag). </param>
-        internal DataCollectionRuleAssociationProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataCollectionRuleAssociationProperties properties, string etag) : base(id, name, resourceType, systemData, properties, etag)
+        internal DataCollectionRuleAssociationProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataCollectionRuleAssociationProperties properties, ETag? etag) : base(id, name, resourceType, systemData, properties, etag)
         {
         }
     }

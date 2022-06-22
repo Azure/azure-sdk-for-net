@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<IDictionary<string, string>> metadata = default;
             Optional<int> approximateMessageCount = default;
             foreach (var property in element.EnumerateObject())
@@ -61,6 +61,11 @@ namespace Azure.ResourceManager.Storage
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -102,7 +107,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new StorageQueueData(id, name, type, systemData, Optional.ToDictionary(metadata), Optional.ToNullable(approximateMessageCount));
+            return new StorageQueueData(id, name, type, systemData.Value, Optional.ToDictionary(metadata), Optional.ToNullable(approximateMessageCount));
         }
     }
 }

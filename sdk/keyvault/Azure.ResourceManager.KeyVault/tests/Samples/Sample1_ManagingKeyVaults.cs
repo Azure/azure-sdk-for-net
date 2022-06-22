@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
                 Certificates = { new CertificatePermission("all") },
                 Storage = { new StoragePermission("all") },
             };
-            AccessPolicyEntry AccessPolicy = new AccessPolicyEntry(tenantIdGuid, objectId, permissions);
+            VaultAccessPolicy AccessPolicy = new VaultAccessPolicy(tenantIdGuid, objectId, permissions);
 
             VaultProperties VaultProperties = new VaultProperties(tenantIdGuid, new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
             VaultProperties.EnabledForDeployment = true;
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
             VaultProperties.EnabledForTemplateDeployment = true;
             VaultProperties.EnableSoftDelete = true;
             VaultProperties.VaultUri = new Uri("http://vaulturi.com");
-            VaultProperties.NetworkAcls = new NetworkRuleSet()
+            VaultProperties.NetworkRuleSet = new VaultNetworkRuleSet()
             {
                 Bypass = "AzureServices",
                 DefaultAction = "Allow",
                 IPRules =
                 {
-                    new IPRule("1.2.3.4/32"),
-                    new IPRule("1.0.0.0/25")
+                    new VaultIPRule("1.2.3.4/32"),
+                    new VaultIPRule("1.0.0.0/25")
                 }
             };
             VaultProperties.AccessPolicies.Add(AccessPolicy);

@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 await ManagedHsmCollection.GetAsync(MHSMName);
             });
 
-            parameters.Properties.CreateMode = CreateMode.Recover;
+            parameters.Properties.CreateMode = ManagedHsmCreateMode.Recover;
 
             // Recover in recover mode
             ArmOperation<ManagedHsmResource> recoveredVault2 = await ManagedHsmCollection.CreateOrUpdateAsync(WaitUntil.Completed, MHSMName, parameters).ConfigureAwait(false);

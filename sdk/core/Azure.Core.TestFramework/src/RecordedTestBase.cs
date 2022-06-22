@@ -177,6 +177,11 @@ namespace Azure.Core.TestFramework
         {
         };
 
+        /// <summary>
+        /// Creats a new instance of <see cref="RecordedTestBase"/>.
+        /// </summary>
+        /// <param name="isAsync">True if this instance is testing the async API variants false otherwise.</param>
+        /// <param name="mode">Indicates which <see cref="RecordedTestMode" /> this instance should run under.</param>
         protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
         {
             Mode = mode ?? TestEnvironment.GlobalTestMode;
@@ -207,7 +212,12 @@ namespace Azure.Core.TestFramework
 
             string name = new string(testAdapter.Name.Select(c => s_invalidChars.Contains(c) ? '%' : c).ToArray());
 
-            string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
+            string versionQualifier = testAdapter.Properties.Get(ClientTestFixtureAttribute.VersionQualifierProperty) as string;
+
+            string async = IsAsync ? "Async" : string.Empty;
+            string version = versionQualifier is null ? string.Empty : $"[{versionQualifier}]";
+
+            string fileName = $"{name}{version}{async}.json";
 
             return Path.Combine(
                 GetSessionFileDirectory(),

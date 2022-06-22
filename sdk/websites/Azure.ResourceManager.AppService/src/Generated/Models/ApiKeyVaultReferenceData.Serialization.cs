@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source");
-                writer.WriteStringValue(Source.Value.ToString());
+                writer.WriteStringValue(Source);
             }
             if (Optional.IsDefined(ActiveVersion))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> reference = default;
             Optional<ResolveStatus> status = default;
             Optional<string> vaultName = default;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
             Optional<string> secretVersion = default;
             Optional<ManagedServiceIdentity> identityType = default;
             Optional<string> details = default;
-            Optional<ConfigReferenceSource> source = default;
+            Optional<string> source = default;
             Optional<string> activeVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -113,6 +113,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -172,12 +177,7 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("source"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            source = new ConfigReferenceSource(property0.Value.GetString());
+                            source = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("activeVersion"))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new ApiKeyVaultReferenceData(id, name, type, systemData, kind.Value, reference.Value, Optional.ToNullable(status), vaultName.Value, secretName.Value, secretVersion.Value, identityType, details.Value, Optional.ToNullable(source), activeVersion.Value);
+            return new ApiKeyVaultReferenceData(id, name, type, systemData.Value, kind.Value, reference.Value, Optional.ToNullable(status), vaultName.Value, secretName.Value, secretVersion.Value, identityType, details.Value, source.Value, activeVersion.Value);
         }
     }
 }

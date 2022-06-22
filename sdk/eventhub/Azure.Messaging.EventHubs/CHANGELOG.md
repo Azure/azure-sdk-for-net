@@ -14,9 +14,11 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Bugs Fixed
 
+- Fixed an issue with the `EventHubBufferedProducerClient` where it was not properly identifying when buffers were empty and should enter an idle state; this caused the background task that manages publishing to spin and consume an unreasonable amount of resources.  
+
 ### Other Changes
 
-- Samples now each havee a table of contents to help discover and navigate to the topics discussed for a scenario. _(A community contribution, courtesy of [chadvidovcich](https://github.com/chadvidovcich))_
+- Samples now each have a table of contents to help discover and navigate to the topics discussed for a scenario. _(A community contribution, courtesy of [chadvidovcich](https://github.com/chadvidovcich))_
 
 ## 5.7.0 (2022-05-10)
 

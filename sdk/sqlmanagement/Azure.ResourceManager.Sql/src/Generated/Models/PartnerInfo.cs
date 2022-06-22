@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="id"> Resource identifier of the partner server. </param>
         /// <param name="location"> Geo location of the partner server. </param>
         /// <param name="replicationRole"> Replication role of the partner server. </param>
-        internal PartnerInfo(string id, string location, FailoverGroupReplicationRole? replicationRole)
+        internal PartnerInfo(string id, AzureLocation? location, FailoverGroupReplicationRole? replicationRole)
         {
             Id = id;
             Location = location;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Resource identifier of the partner server. </summary>
         public string Id { get; set; }
         /// <summary> Geo location of the partner server. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> Replication role of the partner server. </summary>
         public FailoverGroupReplicationRole? ReplicationRole { get; }
     }

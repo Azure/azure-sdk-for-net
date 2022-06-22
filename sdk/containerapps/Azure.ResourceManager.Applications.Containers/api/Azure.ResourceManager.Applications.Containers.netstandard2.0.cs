@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         public string ClientId { get { throw null; } set { } }
         public string ClientSecret { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
-        public string TenantId { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } set { } }
     }
     public partial class AzureFileProperties
     {

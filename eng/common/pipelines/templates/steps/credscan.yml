@@ -28,6 +28,8 @@ steps:
       Write-Host "##vso[task.setvariable variable=SKIP_CREDSCAN]true"
     }
   displayName: CredScan setup
+  condition: succeededOrFailed()
+
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
   displayName: CredScan running
   condition: and(succeededOrFailed(), ne(variables['SKIP_CREDSCAN'], true))

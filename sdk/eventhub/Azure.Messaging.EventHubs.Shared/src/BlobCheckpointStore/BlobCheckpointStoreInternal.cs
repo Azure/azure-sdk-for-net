@@ -441,10 +441,10 @@ namespace Azure.Messaging.EventHubs.Primitives
                 offset = result;
                 startingPosition = EventPosition.FromOffset(result, false);
             }
-            else if (metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
+            if (metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
             {
                 sequenceNumber = result;
-                startingPosition = EventPosition.FromSequenceNumber(result, false);
+                startingPosition ??= EventPosition.FromSequenceNumber(result, false);
             }
 
             // If either the offset or the sequence number was not populated,

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             Optional<string> rid = default;
             Optional<float> ts = default;
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             string id = default;
             Optional<string> body = default;
             foreach (var property in element.EnumerateObject())
@@ -51,7 +52,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("_etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -65,7 +71,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new SqlUserDefinedFunctionPropertiesResource(id, body.Value, rid.Value, Optional.ToNullable(ts), etag.Value);
+            return new SqlUserDefinedFunctionPropertiesResource(id, body.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
         }
     }
 }

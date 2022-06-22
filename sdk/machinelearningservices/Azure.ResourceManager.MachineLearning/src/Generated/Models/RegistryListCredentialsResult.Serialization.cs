@@ -15,14 +15,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static RegistryListCredentialsResult DeserializeRegistryListCredentialsResult(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<string> username = default;
             Optional<IReadOnlyList<PasswordDetail>> passwords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("username"))
@@ -46,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new RegistryListCredentialsResult(location.Value, username.Value, Optional.ToList(passwords));
+            return new RegistryListCredentialsResult(Optional.ToNullable(location), username.Value, Optional.ToList(passwords));
         }
     }
 }

@@ -10,11 +10,18 @@ library-name: Grafana
 namespace: Azure.ResourceManager.Grafana
 require: https://github.com/Azure/azure-rest-api-specs/blob/a1a224b54f05debfa94fd19477ed820c64f0f9fc/specification/dashboard/resource-manager/readme.md
 tag: package-2021-09-01-preview
-output-folder: Generated/
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+format-by-name-rules:
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
