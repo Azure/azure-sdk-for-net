@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new SnapshotRestoreRequest(id, name, type, systemData.Value, kind.Value, snapshotTime.Value, recoverySource.Value, Optional.ToNullable(overwrite), Optional.ToNullable(recoverConfiguration), Optional.ToNullable(ignoreConflictingHostNames), Optional.ToNullable(useDRSecondary));
+            return new SnapshotRestoreRequest(id, name, type, systemData.Value, snapshotTime.Value, recoverySource.Value, Optional.ToNullable(overwrite), Optional.ToNullable(recoverConfiguration), Optional.ToNullable(ignoreConflictingHostNames), Optional.ToNullable(useDRSecondary), kind.Value);
         }
     }
 }

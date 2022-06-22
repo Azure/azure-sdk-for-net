@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         internal static Identity DeserializeIdentity(JsonElement element)
         {
             Optional<string> principalId = default;
-            Optional<string> tenantId = default;
+            Optional<Guid> tenantId = default;
             Optional<ResourceIdentityType> type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -37,7 +38,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (property.NameEquals("tenantId"))
                 {
-                    tenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -51,7 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     continue;
                 }
             }
-            return new Identity(principalId.Value, tenantId.Value, Optional.ToNullable(type));
+            return new Identity(principalId.Value, Optional.ToNullable(tenantId), Optional.ToNullable(type));
         }
     }
 }

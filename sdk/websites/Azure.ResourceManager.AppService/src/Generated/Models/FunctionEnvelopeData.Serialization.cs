@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new FunctionEnvelopeData(id, name, type, systemData.Value, kind.Value, functionAppId.Value, scriptRootPathHref.Value, scriptHref.Value, configHref.Value, testDataHref.Value, secretsFileHref.Value, href.Value, config.Value, Optional.ToDictionary(files), testData.Value, invokeUrlTemplate.Value, language.Value, Optional.ToNullable(isDisabled));
+            return new FunctionEnvelopeData(id, name, type, systemData.Value, functionAppId.Value, scriptRootPathHref.Value, scriptHref.Value, configHref.Value, testDataHref.Value, secretsFileHref.Value, href.Value, config.Value, Optional.ToDictionary(files), testData.Value, invokeUrlTemplate.Value, language.Value, Optional.ToNullable(isDisabled), kind.Value);
         }
     }
 }

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source");
-                writer.WriteStringValue(Source);
+                writer.WriteStringValue(Source.Value.ToString());
             }
             if (Optional.IsDefined(ActiveVersion))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
             Optional<string> secretVersion = default;
             Optional<ManagedServiceIdentity> identityType = default;
             Optional<string> details = default;
-            Optional<string> source = default;
+            Optional<ConfigReferenceSource> source = default;
             Optional<string> activeVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -177,7 +177,12 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("source"))
                         {
-                            source = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            source = new ConfigReferenceSource(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("activeVersion"))
@@ -189,7 +194,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new ApiKeyVaultReferenceData(id, name, type, systemData.Value, kind.Value, reference.Value, Optional.ToNullable(status), vaultName.Value, secretName.Value, secretVersion.Value, identityType, details.Value, source.Value, activeVersion.Value);
+            return new ApiKeyVaultReferenceData(id, name, type, systemData.Value, reference.Value, Optional.ToNullable(status), vaultName.Value, secretName.Value, secretVersion.Value, identityType, details.Value, Optional.ToNullable(source), activeVersion.Value, kind.Value);
         }
     }
 }

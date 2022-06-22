@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Identity for the resource. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="principalId"> The principal ID of resource identity. </param>
         /// <param name="tenantId"> The tenant ID of resource. </param>
         /// <param name="resourceIdentityType"> The identity type. </param>
-        internal Identity(string principalId, string tenantId, ResourceIdentityType? resourceIdentityType)
+        internal Identity(string principalId, Guid? tenantId, ResourceIdentityType? resourceIdentityType)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> The principal ID of resource identity. </summary>
         public string PrincipalId { get; }
         /// <summary> The tenant ID of resource. </summary>
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
         /// <summary> The identity type. </summary>
         public ResourceIdentityType? ResourceIdentityType { get; set; }
     }

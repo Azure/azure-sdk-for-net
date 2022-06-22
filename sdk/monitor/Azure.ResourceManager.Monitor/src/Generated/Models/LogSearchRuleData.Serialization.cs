@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new LogSearchRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind.Value, Optional.ToNullable(etag), createdWithApiVersion.Value, Optional.ToNullable(isLegacyLogAnalyticsRule), description.Value, displayName.Value, Optional.ToNullable(autoMitigate), Optional.ToNullable(enabled), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), source, schedule.Value, action);
+            return new LogSearchRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, createdWithApiVersion.Value, Optional.ToNullable(isLegacyLogAnalyticsRule), description.Value, displayName.Value, Optional.ToNullable(autoMitigate), Optional.ToNullable(enabled), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), source, schedule.Value, action, kind.Value, Optional.ToNullable(etag));
         }
     }
 }

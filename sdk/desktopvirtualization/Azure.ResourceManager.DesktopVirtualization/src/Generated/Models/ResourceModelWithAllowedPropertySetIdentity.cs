@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> The ResourceModelWithAllowedPropertySetIdentity. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="principalId"> The principal ID of resource identity. </param>
         /// <param name="tenantId"> The tenant ID of resource. </param>
         /// <param name="resourceIdentityType"> The identity type. </param>
-        internal ResourceModelWithAllowedPropertySetIdentity(string principalId, string tenantId, ResourceIdentityType? resourceIdentityType) : base(principalId, tenantId, resourceIdentityType)
+        internal ResourceModelWithAllowedPropertySetIdentity(string principalId, Guid? tenantId, ResourceIdentityType? resourceIdentityType) : base(principalId, tenantId, resourceIdentityType)
         {
         }
     }

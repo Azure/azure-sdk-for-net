@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new ApplicationStackResource(id, name, type, systemData.Value, kind.Value, name0.Value, display.Value, dependency.Value, Optional.ToList(majorVersions), Optional.ToList(frameworks), Optional.ToList(isDeprecated));
+            return new ApplicationStackResource(id, name, type, systemData.Value, name0.Value, display.Value, dependency.Value, Optional.ToList(majorVersions), Optional.ToList(frameworks), Optional.ToList(isDeprecated), kind.Value);
         }
     }
 }

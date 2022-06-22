@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Reservations
             Optional<int> etag = default;
             Optional<ReservationsSkuName> sku = default;
             Optional<ReservationsProperties> properties = default;
-            Optional<string> kind = default;
+            Optional<ReservationsKind> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -69,7 +69,12 @@ namespace Azure.ResourceManager.Reservations
                 }
                 if (property.NameEquals("kind"))
                 {
-                    kind = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    kind = new ReservationsKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -98,7 +103,7 @@ namespace Azure.ResourceManager.Reservations
                     continue;
                 }
             }
-            return new ReservationResponseData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(etag), sku.Value, properties.Value, kind.Value);
+            return new ReservationResponseData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(etag), sku.Value, properties.Value, Optional.ToNullable(kind));
         }
     }
 }
