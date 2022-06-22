@@ -5,33 +5,35 @@ This section should give out brief introduction of the client library.
 * First sentence: **Describe the service** briefly. You can usually use the first line of the service's docs landing page for this (Example: [Cosmos DB docs landing page](https://docs.microsoft.com/azure/cosmos-db/)).
 * Next, add a **bulleted list** of the **most common tasks** supported by the package or library, prefaced with "Use the client library for [Product Name] to:". Then, provide code snippets for these tasks in the [Examples](#examples) section later in the document. Keep the task list short but include those tasks most developers need to perform with your package.
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Monitor.Ingestion) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
+  **Resources:**
+* [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/src)
+* [Package (NuGet)](https://www.nuget.org/packages/Azure.Monitor.Ingestion)
+* [API reference documentation](https://docs.microsoft.com/dotnet/api/overview/azure/monitor/ingestion?view=azure-dotnet)
+* [Service documentation](https://docs.microsoft.com/azure/azure-monitor/overview)
+* [Change log](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/CHANGELOG.md)
 
 ## Getting started
 
 This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
 
+### Prerequisites
+
+- An [Azure subscription](https://azure.microsoft.com/free/dotnet/)
+- A [Data Collection Endpoint](https://docs.microsoft.com/azure/azure-monitor/essentials/data-collection-endpoint-overview)
+- A [Data Collection Rule](https://docs.microsoft.com/azure/azure-monitor/essentials/data-collection-rule-overview)
+- A [Log Analytics workspace](https://docs.microsoft.com/azure/azure-monitor/logs/log-analytics-workspace-overview)
+
 ### Install the package
 
-First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `dotnet add package package-name`, but should enable a developer to successfully install the package from NuGet, npm, or even cloning a GitHub repository.
-
-Install the client library for .NET with [NuGet](https://www.nuget.org/):
+Install the Azure Monitor Ingestion client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.Monitor.Ingestion --prerelease
 ```
 
-### Prerequisites
-
-Include a section after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
-
-> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
-
 ### Authenticate the client
 
-If your library requires authentication for use, such as for Azure services, include instructions and example code needed for initializing and authenticating.
-
-For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
+An authenticated client is required to ingest data. To authenticate, create an instance of a [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) class. Pass it to the constructor of your client class.
 
 ## Key concepts
 
