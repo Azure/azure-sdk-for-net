@@ -14,12 +14,14 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the TemplateSpecVersion data model. </summary>
-    public partial class TemplateSpecVersionData : TrackedResourceData
+    public partial class TemplateSpecVersionData : ResourceData
     {
         /// <summary> Initializes a new instance of TemplateSpecVersionData. </summary>
-        /// <param name="location"> The location. </param>
-        public TemplateSpecVersionData(AzureLocation location) : base(location)
+        /// <param name="location"> The location of the Template Spec Version. It must match the location of the parent Template Spec. </param>
+        public TemplateSpecVersionData(AzureLocation location)
         {
+            Location = location;
+            Tags = new ChangeTrackingDictionary<string, string>();
             LinkedTemplates = new ChangeTrackingList<LinkedTemplateArtifact>();
         }
 
@@ -28,15 +30,17 @@ namespace Azure.ResourceManager.Resources
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The location of the Template Spec Version. It must match the location of the parent Template Spec. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="description"> Template Spec version description. </param>
         /// <param name="linkedTemplates"> An array of linked template artifacts. </param>
         /// <param name="metadata"> The version metadata. Metadata is an open-ended object and is typically a collection of key-value pairs. </param>
         /// <param name="mainTemplate"> The main Azure Resource Manager template content. </param>
         /// <param name="uiFormDefinition"> The Azure Resource Manager template UI definition content. </param>
-        internal TemplateSpecVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, IList<LinkedTemplateArtifact> linkedTemplates, BinaryData metadata, BinaryData mainTemplate, BinaryData uiFormDefinition) : base(id, name, resourceType, systemData, tags, location)
+        internal TemplateSpecVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, IDictionary<string, string> tags, string description, IList<LinkedTemplateArtifact> linkedTemplates, BinaryData metadata, BinaryData mainTemplate, BinaryData uiFormDefinition) : base(id, name, resourceType, systemData)
         {
+            Location = location;
+            Tags = tags;
             Description = description;
             LinkedTemplates = linkedTemplates;
             Metadata = metadata;
@@ -44,6 +48,10 @@ namespace Azure.ResourceManager.Resources
             UiFormDefinition = uiFormDefinition;
         }
 
+        /// <summary> The location of the Template Spec Version. It must match the location of the parent Template Spec. </summary>
+        public AzureLocation Location { get; set; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
         /// <summary> Template Spec version description. </summary>
         public string Description { get; set; }
         /// <summary> An array of linked template artifacts. </summary>

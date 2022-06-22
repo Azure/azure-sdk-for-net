@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class AzureCliScript : ArmDeploymentScriptData
     {
         /// <summary> Initializes a new instance of AzureCliScript. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
         /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </param>
         /// <param name="azCliVersion"> Azure CLI module version to be used. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azCliVersion"/> is null. </exception>
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="identity"> Optional property. Managed identity to be used for this deployment script. Currently, only user-assigned MSI is supported. </param>
+        /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="kind"> Type of the script. </param>
         /// <param name="containerSettings"> Container settings. </param>
         /// <param name="storageAccountSettings"> Storage Account settings. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </param>
         /// <param name="timeout"> Maximum allowed script execution time specified in ISO 8601 format. Default value is P1D. </param>
         /// <param name="azCliVersion"> Azure CLI module version to be used. </param>
-        internal AzureCliScript(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ArmDeploymentScriptManagedIdentity identity, ScriptType kind, ContainerConfiguration containerSettings, ScriptStorageConfiguration storageAccountSettings, ScriptCleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, BinaryData outputs, Uri primaryScriptUri, IList<Uri> supportingScriptUris, string scriptContent, string arguments, IList<ScriptEnvironmentVariable> environmentVariables, string forceUpdateTag, TimeSpan retentionInterval, TimeSpan? timeout, string azCliVersion) : base(id, name, resourceType, systemData, tags, location, identity, kind)
+        internal AzureCliScript(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArmDeploymentScriptManagedIdentity identity, AzureLocation location, IDictionary<string, string> tags, ScriptType kind, ContainerConfiguration containerSettings, ScriptStorageConfiguration storageAccountSettings, ScriptCleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, BinaryData outputs, Uri primaryScriptUri, IList<Uri> supportingScriptUris, string scriptContent, string arguments, IList<ScriptEnvironmentVariable> environmentVariables, string forceUpdateTag, TimeSpan retentionInterval, TimeSpan? timeout, string azCliVersion) : base(id, name, resourceType, systemData, identity, location, tags, kind)
         {
             ContainerSettings = containerSettings;
             StorageAccountSettings = storageAccountSettings;
