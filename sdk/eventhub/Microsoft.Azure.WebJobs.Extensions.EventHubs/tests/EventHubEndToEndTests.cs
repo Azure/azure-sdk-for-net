@@ -628,7 +628,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 string input,
                 [EventHub(TestHubName, Connection = TestHubName)] EventHubProducerClient client)
             {
-                EventData evt = new EventData(Encoding.UTF8.GetBytes(input));
+                var evt = new EventData(Encoding.UTF8.GetBytes(input));
+                var tasks = new List<Task>();
 
                 // Send event without PK
                 await client.SendAsync(new[] { evt });
@@ -637,8 +638,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 for (int i = 0; i < PartitionCount; i++)
                 {
                     evt = new EventData(Encoding.UTF8.GetBytes(input));
-                    await client.SendAsync(Enumerable.Repeat(evt, EventsPerPartition), new SendEventOptions() { PartitionKey = "test_pk" + i });
+                    tasks.Add(client.SendAsync(Enumerable.Repeat(evt, EventsPerPartition), new SendEventOptions() { PartitionKey = "test_pk" + i }));
                 }
+
+                await Task.WhenAll(tasks);
             }
 
             public static void ProcessMultiplePartitionEvents([EventHubTrigger(TestHubName, Connection = TestHubName)] EventData[] events)
