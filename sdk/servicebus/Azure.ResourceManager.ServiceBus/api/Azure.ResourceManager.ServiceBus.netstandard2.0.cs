@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
     public partial class ProxyResource : Azure.ResourceManager.Models.ResourceData
     {
         public ProxyResource() { }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PublicNetworkAccessFlag : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.PublicNetworkAccessFlag>

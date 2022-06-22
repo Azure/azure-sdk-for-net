@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Sql
         internal static AdvisorData DeserializeAdvisorData(JsonElement element)
         {
             Optional<string> kind = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<AdvisorStatus> advisorStatus = default;
             Optional<AutoExecuteStatus> autoExecuteStatus = default;
             Optional<AutoExecuteStatusInheritedFrom> autoExecuteStatusInheritedFrom = default;
@@ -53,7 +53,12 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -73,6 +78,11 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -149,7 +159,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new AdvisorData(id, name, type, systemData, kind.Value, location.Value, Optional.ToNullable(advisorStatus), Optional.ToNullable(autoExecuteStatus), Optional.ToNullable(autoExecuteStatusInheritedFrom), recommendationsStatus.Value, Optional.ToNullable(lastChecked), Optional.ToList(recommendedActions));
+            return new AdvisorData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), Optional.ToNullable(advisorStatus), Optional.ToNullable(autoExecuteStatus), Optional.ToNullable(autoExecuteStatusInheritedFrom), recommendationsStatus.Value, Optional.ToNullable(lastChecked), Optional.ToList(recommendedActions));
         }
     }
 }

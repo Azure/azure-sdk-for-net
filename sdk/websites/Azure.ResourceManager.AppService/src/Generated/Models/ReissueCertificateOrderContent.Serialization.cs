@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<int> keySize = default;
             Optional<int> delayExistingRevokeInHours = default;
             Optional<string> csr = default;
@@ -82,6 +82,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -133,7 +138,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new ReissueCertificateOrderContent(id, name, type, systemData, kind.Value, Optional.ToNullable(keySize), Optional.ToNullable(delayExistingRevokeInHours), csr.Value, Optional.ToNullable(isPrivateKeyExternal));
+            return new ReissueCertificateOrderContent(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(keySize), Optional.ToNullable(delayExistingRevokeInHours), csr.Value, Optional.ToNullable(isPrivateKeyExternal));
         }
     }
 }

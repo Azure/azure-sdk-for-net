@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal ProxyResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location) : base(id, name, resourceType, systemData)
+        internal ProxyResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Location = location;
         }
 
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
     }
 }

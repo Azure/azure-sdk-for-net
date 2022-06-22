@@ -995,7 +995,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        internal HttpMessage CreateGetOrderByNameRequest(string subscriptionId, string resourceGroupName, string location, string orderName)
+        internal HttpMessage CreateGetOrderByNameRequest(string subscriptionId, string resourceGroupName, AzureLocation location, string orderName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1023,13 +1023,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="orderName"> The name of the order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="location"/> or <paramref name="orderName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="location"/> or <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OrderResourceData>> GetOrderByNameAsync(string subscriptionId, string resourceGroupName, string location, string orderName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<OrderResourceData>> GetOrderByNameAsync(string subscriptionId, string resourceGroupName, AzureLocation location, string orderName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(orderName, nameof(orderName));
 
             using var message = CreateGetOrderByNameRequest(subscriptionId, resourceGroupName, location, orderName);
@@ -1056,13 +1055,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="orderName"> The name of the order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="location"/> or <paramref name="orderName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="location"/> or <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OrderResourceData> GetOrderByName(string subscriptionId, string resourceGroupName, string location, string orderName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<OrderResourceData> GetOrderByName(string subscriptionId, string resourceGroupName, AzureLocation location, string orderName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(orderName, nameof(orderName));
 
             using var message = CreateGetOrderByNameRequest(subscriptionId, resourceGroupName, location, orderName);

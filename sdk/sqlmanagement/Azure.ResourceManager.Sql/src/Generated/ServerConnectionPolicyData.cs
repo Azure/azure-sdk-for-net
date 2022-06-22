@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Metadata used for the Azure portal experience. </param>
         /// <param name="connectionType"> The server connection type. </param>
-        internal ServerConnectionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, string kind, ServerConnectionType? connectionType) : base(id, name, resourceType, systemData)
+        internal ServerConnectionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, ServerConnectionType? connectionType) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Kind = kind;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Resource location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> Metadata used for the Azure portal experience. </summary>
         public string Kind { get; }
         /// <summary> The server connection type. </summary>

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Authorization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> roleName = default;
             Optional<string> description = default;
             Optional<string> type0 = default;
@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.Authorization
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -150,7 +155,7 @@ namespace Azure.ResourceManager.Authorization
                     continue;
                 }
             }
-            return new RoleDefinitionData(id, name, type, systemData, roleName.Value, description.Value, type0.Value, Optional.ToList(permissions), Optional.ToList(assignableScopes));
+            return new RoleDefinitionData(id, name, type, systemData.Value, roleName.Value, description.Value, type0.Value, Optional.ToList(permissions), Optional.ToList(assignableScopes));
         }
     }
 }
