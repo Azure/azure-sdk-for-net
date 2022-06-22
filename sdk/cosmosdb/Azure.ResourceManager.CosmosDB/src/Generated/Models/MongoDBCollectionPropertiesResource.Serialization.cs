@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             Optional<string> rid = default;
             Optional<float> ts = default;
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             string id = default;
             Optional<IDictionary<string, string>> shardKey = default;
             Optional<IList<MongoIndex>> indexes = default;
@@ -75,7 +76,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("_etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -124,7 +130,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new MongoDBCollectionPropertiesResource(id, Optional.ToDictionary(shardKey), Optional.ToList(indexes), Optional.ToNullable(analyticalStorageTtl), rid.Value, Optional.ToNullable(ts), etag.Value);
+            return new MongoDBCollectionPropertiesResource(id, Optional.ToDictionary(shardKey), Optional.ToList(indexes), Optional.ToNullable(analyticalStorageTtl), rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="value"> Function App stack name. </param>
         /// <param name="majorVersions"> List of major versions available. </param>
         /// <param name="preferredOS"> Function App stack preferred OS. </param>
-        internal FunctionAppStack(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string location, string displayText, string value, IReadOnlyList<FunctionAppMajorVersion> majorVersions, StackPreferredOS? preferredOS) : base(id, name, resourceType, systemData, kind)
+        internal FunctionAppStack(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string displayText, string value, IReadOnlyList<FunctionAppMajorVersion> majorVersions, StackPreferredOS? preferredOS) : base(id, name, resourceType, systemData, kind)
         {
             Location = location;
             DisplayText = displayText;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Function App stack location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> Function App stack (display only). </summary>
         public string DisplayText { get; }
         /// <summary> Function App stack name. </summary>

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class EventHubsAuthorizationRuleData : IUtf8JsonSerializable
+    public partial class AuthorizationRuleData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,19 +34,24 @@ namespace Azure.ResourceManager.EventHubs
             writer.WriteEndObject();
         }
 
-        internal static EventHubsAuthorizationRuleData DeserializeEventHubsAuthorizationRuleData(JsonElement element)
+        internal static AuthorizationRuleData DeserializeAuthorizationRuleData(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<IList<EventHubsAccessRight>> rights = default;
+            Optional<SystemData> systemData = default;
+            Optional<IList<AccessRights>> rights = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -66,6 +71,11 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -85,10 +95,10 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<EventHubsAccessRight> array = new List<EventHubsAccessRight>();
+                            List<AccessRights> array = new List<AccessRights>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new EventHubsAccessRight(item.GetString()));
+                                array.Add(new AccessRights(item.GetString()));
                             }
                             rights = array;
                             continue;
@@ -97,7 +107,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventHubsAuthorizationRuleData(id, name, type, systemData, location.Value, Optional.ToList(rights));
+            return new AuthorizationRuleData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToList(rights));
         }
     }
 }

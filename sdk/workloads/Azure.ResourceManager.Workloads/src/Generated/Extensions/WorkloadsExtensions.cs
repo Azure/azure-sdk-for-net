@@ -63,12 +63,8 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Sizing Recommendation Request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static async Task<Response<SapSizingRecommendationResult>> SapSizingRecommendationsAsync(this SubscriptionResource subscriptionResource, string location, SapSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<SapSizingRecommendationResult>> SapSizingRecommendationsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return await GetExtensionClient(subscriptionResource).SapSizingRecommendationsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
@@ -81,12 +77,8 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Sizing Recommendation Request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Response<SapSizingRecommendationResult> SapSizingRecommendations(this SubscriptionResource subscriptionResource, string location, SapSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
+        public static Response<SapSizingRecommendationResult> SapSizingRecommendations(this SubscriptionResource subscriptionResource, AzureLocation location, SapSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetExtensionClient(subscriptionResource).SapSizingRecommendations(location, content, cancellationToken);
         }
 
@@ -99,12 +91,8 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Supported SKU Request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static async Task<Response<SapSupportedResourceSkusResult>> SapSupportedSkuAsync(this SubscriptionResource subscriptionResource, string location, SapSupportedSkusContent content = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<SapSupportedResourceSkusResult>> SapSupportedSkuAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapSupportedSkusContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return await GetExtensionClient(subscriptionResource).SapSupportedSkuAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
@@ -117,12 +105,8 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Supported SKU Request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Response<SapSupportedResourceSkusResult> SapSupportedSku(this SubscriptionResource subscriptionResource, string location, SapSupportedSkusContent content = null, CancellationToken cancellationToken = default)
+        public static Response<SapSupportedResourceSkusResult> SapSupportedSku(this SubscriptionResource subscriptionResource, AzureLocation location, SapSupportedSkusContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetExtensionClient(subscriptionResource).SapSupportedSku(location, content, cancellationToken);
         }
 
@@ -135,12 +119,8 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Disk Configurations Request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static async Task<Response<SapDiskConfigurationsResult>> SapDiskConfigurationsAsync(this SubscriptionResource subscriptionResource, string location, SapDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<SapDiskConfigurationsResult>> SapDiskConfigurationsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return await GetExtensionClient(subscriptionResource).SapDiskConfigurationsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
@@ -153,12 +133,8 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Disk Configurations Request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Response<SapDiskConfigurationsResult> SapDiskConfigurations(this SubscriptionResource subscriptionResource, string location, SapDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
+        public static Response<SapDiskConfigurationsResult> SapDiskConfigurations(this SubscriptionResource subscriptionResource, AzureLocation location, SapDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetExtensionClient(subscriptionResource).SapDiskConfigurations(location, content, cancellationToken);
         }
 
@@ -171,12 +147,8 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Availability Zone Details Request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static async Task<Response<SapAvailabilityZoneDetailsResult>> SapAvailabilityZoneDetailsAsync(this SubscriptionResource subscriptionResource, string location, SapAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<SapAvailabilityZoneDetailsResult>> SapAvailabilityZoneDetailsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return await GetExtensionClient(subscriptionResource).SapAvailabilityZoneDetailsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
@@ -189,12 +161,8 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Availability Zone Details Request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Response<SapAvailabilityZoneDetailsResult> SapAvailabilityZoneDetails(this SubscriptionResource subscriptionResource, string location, SapAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
+        public static Response<SapAvailabilityZoneDetailsResult> SapAvailabilityZoneDetails(this SubscriptionResource subscriptionResource, AzureLocation location, SapAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetExtensionClient(subscriptionResource).SapAvailabilityZoneDetails(location, content, cancellationToken);
         }
 

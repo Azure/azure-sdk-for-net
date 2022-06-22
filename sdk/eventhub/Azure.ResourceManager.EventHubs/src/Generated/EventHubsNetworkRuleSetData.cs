@@ -12,17 +12,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing the EventHubsNetworkRuleSet data model. </summary>
-    public partial class EventHubsNetworkRuleSetData : ProxyResource
+    /// <summary> A class representing the NetworkRuleSet data model. </summary>
+    public partial class NetworkRuleSetData : ProxyResource
     {
-        /// <summary> Initializes a new instance of EventHubsNetworkRuleSetData. </summary>
-        public EventHubsNetworkRuleSetData()
+        /// <summary> Initializes a new instance of NetworkRuleSetData. </summary>
+        public NetworkRuleSetData()
         {
-            VirtualNetworkRules = new ChangeTrackingList<EventHubsNetworkRuleSetVirtualNetworkRules>();
-            IPRules = new ChangeTrackingList<EventHubsNetworkRuleSetIPRules>();
+            VirtualNetworkRules = new ChangeTrackingList<NetworkRuleSetVirtualNetworkRules>();
+            IPRules = new ChangeTrackingList<NetworkRuleSetIPRules>();
         }
 
-        /// <summary> Initializes a new instance of EventHubsNetworkRuleSetData. </summary>
+        /// <summary> Initializes a new instance of NetworkRuleSetData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="virtualNetworkRules"> List VirtualNetwork Rules. </param>
         /// <param name="ipRules"> List of IpRules. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
-        internal EventHubsNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, bool? trustedServiceAccessEnabled, EventHubsNetworkRuleSetDefaultAction? defaultAction, IList<EventHubsNetworkRuleSetVirtualNetworkRules> virtualNetworkRules, IList<EventHubsNetworkRuleSetIPRules> ipRules, EventHubsPublicNetworkAccessFlag? publicNetworkAccess) : base(id, name, resourceType, systemData, location)
+        internal NetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, bool? trustedServiceAccessEnabled, DefaultAction? defaultAction, IList<NetworkRuleSetVirtualNetworkRules> virtualNetworkRules, IList<NetworkRuleSetIPRules> ipRules, PublicNetworkAccessFlag? publicNetworkAccess) : base(id, name, resourceType, systemData, location)
         {
             TrustedServiceAccessEnabled = trustedServiceAccessEnabled;
             DefaultAction = defaultAction;
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Value that indicates whether Trusted Service Access is Enabled or not. </summary>
         public bool? TrustedServiceAccessEnabled { get; set; }
         /// <summary> Default Action for Network Rule Set. </summary>
-        public EventHubsNetworkRuleSetDefaultAction? DefaultAction { get; set; }
+        public DefaultAction? DefaultAction { get; set; }
         /// <summary> List VirtualNetwork Rules. </summary>
-        public IList<EventHubsNetworkRuleSetVirtualNetworkRules> VirtualNetworkRules { get; }
+        public IList<NetworkRuleSetVirtualNetworkRules> VirtualNetworkRules { get; }
         /// <summary> List of IpRules. </summary>
-        public IList<EventHubsNetworkRuleSetIPRules> IPRules { get; }
+        public IList<NetworkRuleSetIPRules> IPRules { get; }
         /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
-        public EventHubsPublicNetworkAccessFlag? PublicNetworkAccess { get; set; }
+        public PublicNetworkAccessFlag? PublicNetworkAccess { get; set; }
     }
 }

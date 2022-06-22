@@ -9,11 +9,18 @@ csharp: true
 library-name: AppPlatform
 namespace: Azure.ResourceManager.AppPlatform
 require: https://github.com/Azure/azure-rest-api-specs/blob/688cfd36391115f70ea9276a8e526caea6a5c8ad/specification/appplatform/resource-manager/readme.md
-output-folder: $(this-folder)/Generated
 tag: package-preview-2022-03
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
-flatten-payloads: false
+modelerfour:
+  flatten-payloads: false
+
+format-by-name-rules:
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu

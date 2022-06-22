@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class EventHubsClusterData : IUtf8JsonSerializable
+    public partial class EventHubClusterData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -24,14 +23,17 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -40,17 +42,17 @@ namespace Azure.ResourceManager.EventHubs
             writer.WriteEndObject();
         }
 
-        internal static EventHubsClusterData DeserializeEventHubsClusterData(JsonElement element)
+        internal static EventHubClusterData DeserializeEventHubClusterData(JsonElement element)
         {
-            Optional<EventHubsClusterSku> sku = default;
-            IDictionary<string, string> tags = default;
+            Optional<ClusterSku> sku = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> createdAt = default;
+            Optional<string> updatedAt = default;
             Optional<string> metricId = default;
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
@@ -62,11 +64,16 @@ namespace Azure.ResourceManager.EventHubs
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = EventHubsClusterSku.DeserializeEventHubsClusterSku(property.Value);
+                    sku = ClusterSku.DeserializeClusterSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -97,6 +104,11 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -111,22 +123,12 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         if (property0.NameEquals("createdAt"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            createdAt = property0.Value.GetDateTimeOffset("O");
+                            createdAt = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("updatedAt"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            updatedAt = property0.Value.GetDateTimeOffset("O");
+                            updatedAt = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("metricId"))
@@ -143,7 +145,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventHubsClusterData(id, name, type, systemData, tags, location, sku.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), metricId.Value, status.Value);
+            return new EventHubClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, createdAt.Value, updatedAt.Value, metricId.Value, status.Value);
         }
     }
 }

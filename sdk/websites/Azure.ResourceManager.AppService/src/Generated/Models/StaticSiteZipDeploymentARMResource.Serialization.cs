@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<Uri> appZipUrl = default;
             Optional<Uri> apiZipUrl = default;
             Optional<string> deploymentTitle = default;
@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -140,7 +145,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StaticSiteZipDeploymentARMResource(id, name, type, systemData, kind.Value, appZipUrl.Value, apiZipUrl.Value, deploymentTitle.Value, provider.Value, functionLanguage.Value);
+            return new StaticSiteZipDeploymentARMResource(id, name, type, systemData.Value, kind.Value, appZipUrl.Value, apiZipUrl.Value, deploymentTitle.Value, provider.Value, functionLanguage.Value);
         }
     }
 }

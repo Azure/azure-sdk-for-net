@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="objectIdentifier"> Returns the Object ID of the user who added the tag. </param>
         /// <param name="tenantId"> Returns the Tenant ID that issued the token for the user who added the tag. </param>
         /// <param name="upn"> Returns the User Principal Name of the user who added the tag. </param>
-        internal TagProperty(string tag, DateTimeOffset? timestamp, string objectIdentifier, string tenantId, string upn)
+        internal TagProperty(string tag, DateTimeOffset? timestamp, string objectIdentifier, Guid? tenantId, string upn)
         {
             Tag = tag;
             Timestamp = timestamp;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Returns the Object ID of the user who added the tag. </summary>
         public string ObjectIdentifier { get; }
         /// <summary> Returns the Tenant ID that issued the token for the user who added the tag. </summary>
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
         /// <summary> Returns the User Principal Name of the user who added the tag. </summary>
         public string Upn { get; }
     }

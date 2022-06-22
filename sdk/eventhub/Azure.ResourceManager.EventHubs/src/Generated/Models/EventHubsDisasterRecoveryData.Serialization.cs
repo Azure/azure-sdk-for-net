@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class EventHubsDisasterRecoveryData : IUtf8JsonSerializable
+    public partial class DisasterRecoveryData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,23 +33,28 @@ namespace Azure.ResourceManager.EventHubs
             writer.WriteEndObject();
         }
 
-        internal static EventHubsDisasterRecoveryData DeserializeEventHubsDisasterRecoveryData(JsonElement element)
+        internal static DisasterRecoveryData DeserializeDisasterRecoveryData(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<EventHubsDisasterRecoveryProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<DisasterRecoveryProvisioningState> provisioningState = default;
             Optional<string> partnerNamespace = default;
             Optional<string> alternateName = default;
-            Optional<EventHubsDisasterRecoveryRole> role = default;
+            Optional<RoleDisasterRecovery> role = default;
             Optional<long> pendingReplicationOperationsCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -69,6 +74,11 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -88,7 +98,7 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToEventHubsDisasterRecoveryProvisioningState();
+                            provisioningState = property0.Value.GetString().ToDisasterRecoveryProvisioningState();
                             continue;
                         }
                         if (property0.NameEquals("partnerNamespace"))
@@ -108,7 +118,7 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            role = property0.Value.GetString().ToEventHubsDisasterRecoveryRole();
+                            role = property0.Value.GetString().ToRoleDisasterRecovery();
                             continue;
                         }
                         if (property0.NameEquals("pendingReplicationOperationsCount"))
@@ -125,7 +135,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventHubsDisasterRecoveryData(id, name, type, systemData, location.Value, Optional.ToNullable(provisioningState), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role), Optional.ToNullable(pendingReplicationOperationsCount));
+            return new DisasterRecoveryData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role), Optional.ToNullable(pendingReplicationOperationsCount));
         }
     }
 }

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId");
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             writer.WriteEndObject();
         }
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<bool> useAadAuth = default;
             Optional<string> objectId = default;
             Optional<Uri> identifierUri = default;
-            Optional<string> tenantId = default;
+            Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -106,11 +106,16 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("tenantId"))
                 {
-                    tenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
                     continue;
                 }
             }
-            return new WebhookReceiver(name, serviceUri, Optional.ToNullable(useCommonAlertSchema), Optional.ToNullable(useAadAuth), objectId.Value, identifierUri.Value, tenantId.Value);
+            return new WebhookReceiver(name, serviceUri, Optional.ToNullable(useCommonAlertSchema), Optional.ToNullable(useAadAuth), objectId.Value, identifierUri.Value, Optional.ToNullable(tenantId));
         }
     }
 }

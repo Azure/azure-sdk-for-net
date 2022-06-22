@@ -12,28 +12,28 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing the EventHubsAuthorizationRule data model. </summary>
-    public partial class EventHubsAuthorizationRuleData : ProxyResource
+    /// <summary> A class representing the AuthorizationRule data model. </summary>
+    public partial class AuthorizationRuleData : ProxyResource
     {
-        /// <summary> Initializes a new instance of EventHubsAuthorizationRuleData. </summary>
-        public EventHubsAuthorizationRuleData()
+        /// <summary> Initializes a new instance of AuthorizationRuleData. </summary>
+        public AuthorizationRuleData()
         {
-            Rights = new ChangeTrackingList<EventHubsAccessRight>();
+            Rights = new ChangeTrackingList<AccessRights>();
         }
 
-        /// <summary> Initializes a new instance of EventHubsAuthorizationRuleData. </summary>
+        /// <summary> Initializes a new instance of AuthorizationRuleData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="rights"> The rights associated with the rule. </param>
-        internal EventHubsAuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, IList<EventHubsAccessRight> rights) : base(id, name, resourceType, systemData, location)
+        internal AuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IList<AccessRights> rights) : base(id, name, resourceType, systemData, location)
         {
             Rights = rights;
         }
 
         /// <summary> The rights associated with the rule. </summary>
-        public IList<EventHubsAccessRight> Rights { get; }
+        public IList<AccessRights> Rights { get; }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class EventHubsNamespaceData : IUtf8JsonSerializable
+    public partial class EventHubNamespaceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,14 +29,17 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("identity");
                 JsonSerializer.Serialize(writer, Identity);
             }
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -95,28 +98,28 @@ namespace Azure.ResourceManager.EventHubs
             writer.WriteEndObject();
         }
 
-        internal static EventHubsNamespaceData DeserializeEventHubsNamespaceData(JsonElement element)
+        internal static EventHubNamespaceData DeserializeEventHubNamespaceData(JsonElement element)
         {
             Optional<EventHubsSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
             Optional<string> status = default;
             Optional<DateTimeOffset> createdAt = default;
             Optional<DateTimeOffset> updatedAt = default;
             Optional<string> serviceBusEndpoint = default;
-            Optional<ResourceIdentifier> clusterArmId = default;
+            Optional<string> clusterArmId = default;
             Optional<string> metricId = default;
             Optional<bool> isAutoInflateEnabled = default;
             Optional<int> maximumThroughputUnits = default;
             Optional<bool> kafkaEnabled = default;
             Optional<bool> zoneRedundant = default;
-            Optional<EventHubsEncryption> encryption = default;
+            Optional<EventHubEncryption> encryption = default;
             Optional<IList<EventHubsPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<bool> disableLocalAuth = default;
             Optional<string> alternateName = default;
@@ -144,6 +147,11 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -174,6 +182,11 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -223,12 +236,7 @@ namespace Azure.ResourceManager.EventHubs
                         }
                         if (property0.NameEquals("clusterArmId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            clusterArmId = new ResourceIdentifier(property0.Value.GetString());
+                            clusterArmId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("metricId"))
@@ -283,7 +291,7 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = EventHubsEncryption.DeserializeEventHubsEncryption(property0.Value);
+                            encryption = EventHubEncryption.DeserializeEventHubEncryption(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"))
@@ -320,7 +328,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventHubsNamespaceData(id, name, type, systemData, tags, location, sku.Value, identity, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, clusterArmId.Value, metricId.Value, Optional.ToNullable(isAutoInflateEnabled), Optional.ToNullable(maximumThroughputUnits), Optional.ToNullable(kafkaEnabled), Optional.ToNullable(zoneRedundant), encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth), alternateName.Value);
+            return new EventHubNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, clusterArmId.Value, metricId.Value, Optional.ToNullable(isAutoInflateEnabled), Optional.ToNullable(maximumThroughputUnits), Optional.ToNullable(kafkaEnabled), Optional.ToNullable(zoneRedundant), encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth), alternateName.Value);
         }
     }
 }

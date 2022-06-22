@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> version = default;
             Optional<DateTimeOffset> deletionTime = default;
             Optional<string> originalId = default;
@@ -52,6 +52,11 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -93,7 +98,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new DeletedServerData(id, name, type, systemData, version.Value, Optional.ToNullable(deletionTime), originalId.Value, fullyQualifiedDomainName.Value);
+            return new DeletedServerData(id, name, type, systemData.Value, version.Value, Optional.ToNullable(deletionTime), originalId.Value, fullyQualifiedDomainName.Value);
         }
     }
 }

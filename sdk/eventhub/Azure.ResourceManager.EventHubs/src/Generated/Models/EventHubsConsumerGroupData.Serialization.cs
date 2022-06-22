@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class EventHubsConsumerGroupData : IUtf8JsonSerializable
+    public partial class ConsumerGroupData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.EventHubs
             writer.WriteEndObject();
         }
 
-        internal static EventHubsConsumerGroupData DeserializeEventHubsConsumerGroupData(JsonElement element)
+        internal static ConsumerGroupData DeserializeConsumerGroupData(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> createdAt = default;
             Optional<DateTimeOffset> updatedAt = default;
             Optional<string> userMetadata = default;
@@ -42,7 +42,12 @@ namespace Azure.ResourceManager.EventHubs
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -62,6 +67,11 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -103,7 +113,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventHubsConsumerGroupData(id, name, type, systemData, location.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), userMetadata.Value);
+            return new ConsumerGroupData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), userMetadata.Value);
         }
     }
 }

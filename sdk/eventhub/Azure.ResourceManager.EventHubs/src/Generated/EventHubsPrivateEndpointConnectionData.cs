@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="privateEndpoint"> The Private Endpoint resource for this Connection. </param>
         /// <param name="connectionState"> Details about the state of the connection. </param>
         /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
-        internal EventHubsPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, WritableSubResource privateEndpoint, EventHubsPrivateLinkServiceConnectionState connectionState, EventHubsPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location)
+        internal EventHubsPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, WritableSubResource privateEndpoint, ConnectionState connectionState, EndPointProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Details about the state of the connection. </summary>
-        public EventHubsPrivateLinkServiceConnectionState ConnectionState { get; set; }
+        public ConnectionState ConnectionState { get; set; }
         /// <summary> Provisioning state of the Private Endpoint Connection. </summary>
-        public EventHubsPrivateEndpointConnectionProvisioningState? ProvisioningState { get; set; }
+        public EndPointProvisioningState? ProvisioningState { get; set; }
     }
 }
