@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Version>1.1.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.1.0</ApiCompatVersion>
+    <ApiCompatVersion>1.1.1-alpha.20220622.1</ApiCompatVersion>
     <PackageId>Azure.ResourceManager</PackageId>
     <Description>
       Azure management SDK for Azure resources.
