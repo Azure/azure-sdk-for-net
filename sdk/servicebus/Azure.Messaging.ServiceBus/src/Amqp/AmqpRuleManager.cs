@@ -243,7 +243,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         /// <param name="timeout">The per-try timeout specified in the RetryOptions.</param>
         /// <param name="skip">The number of rules to skip when retrieving the next set of rules.</param>
-        /// /// <param name="top">The number of rules to retrieve per service request.</param>
+        /// <param name="top">The number of rules to retrieve per service request.</param>
         /// <returns>Returns a list of rules description</returns>
         private async Task<List<RuleProperties>> GetRulesInternalAsync(TimeSpan timeout, int skip, int top)
         {
