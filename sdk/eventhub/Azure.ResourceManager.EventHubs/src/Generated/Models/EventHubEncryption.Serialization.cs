@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubEncryption DeserializeEventHubEncryption(JsonElement element)
         {
-            Optional<IList<KeyVaultProperties>> keyVaultProperties = default;
+            Optional<IList<EventHubKeyVaultProperties>> keyVaultProperties = default;
             Optional<string> keySource = default;
             Optional<bool> requireInfrastructureEncryption = default;
             foreach (var property in element.EnumerateObject())
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KeyVaultProperties> array = new List<KeyVaultProperties>();
+                    List<EventHubKeyVaultProperties> array = new List<EventHubKeyVaultProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.KeyVaultProperties.DeserializeKeyVaultProperties(item));
+                        array.Add(EventHubKeyVaultProperties.DeserializeEventHubKeyVaultProperties(item));
                     }
                     keyVaultProperties = array;
                     continue;

@@ -102,33 +102,18 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a NetworkRuleSetResource along with the instance operations that can be performed on it in the EventHubNamespace. </summary>
-        /// <returns> Returns a <see cref="NetworkRuleSetResource" /> object. </returns>
-        public virtual NetworkRuleSetResource GetNetworkRuleSet()
+        /// <summary> Gets an object representing a EventHubNetworkRuleSetResource along with the instance operations that can be performed on it in the EventHubNamespace. </summary>
+        /// <returns> Returns a <see cref="EventHubNetworkRuleSetResource" /> object. </returns>
+        public virtual EventHubNetworkRuleSetResource GetEventHubNetworkRuleSet()
         {
-            return new NetworkRuleSetResource(Client, new ResourceIdentifier(Id.ToString() + "/networkRuleSets/default"));
+            return new EventHubNetworkRuleSetResource(Client, new ResourceIdentifier(Id.ToString() + "/networkRuleSets/default"));
         }
 
-        /// <summary> Gets a collection of NamespaceAuthorizationRuleResources in the EventHubNamespace. </summary>
-        /// <returns> An object representing collection of NamespaceAuthorizationRuleResources and their operations over a NamespaceAuthorizationRuleResource. </returns>
-        public virtual NamespaceAuthorizationRuleCollection GetNamespaceAuthorizationRules()
+        /// <summary> Gets a collection of EventHubNamespaceAuthorizationRuleResources in the EventHubNamespace. </summary>
+        /// <returns> An object representing collection of EventHubNamespaceAuthorizationRuleResources and their operations over a EventHubNamespaceAuthorizationRuleResource. </returns>
+        public virtual EventHubNamespaceAuthorizationRuleCollection GetEventHubNamespaceAuthorizationRules()
         {
-            return GetCachedClient(Client => new NamespaceAuthorizationRuleCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets an AuthorizationRule for a Namespace by rule name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}
-        /// Operation Id: Namespaces_GetAuthorizationRule
-        /// </summary>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NamespaceAuthorizationRuleResource>> GetNamespaceAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
-        {
-            return await GetNamespaceAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new EventHubNamespaceAuthorizationRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -141,9 +126,24 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NamespaceAuthorizationRuleResource> GetNamespaceAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubNamespaceAuthorizationRuleResource>> GetEventHubNamespaceAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            return GetNamespaceAuthorizationRules().Get(authorizationRuleName, cancellationToken);
+            return await GetEventHubNamespaceAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an AuthorizationRule for a Namespace by rule name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}
+        /// Operation Id: Namespaces_GetAuthorizationRule
+        /// </summary>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EventHubNamespaceAuthorizationRuleResource> GetEventHubNamespaceAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
+        {
+            return GetEventHubNamespaceAuthorizationRules().Get(authorizationRuleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of EventHubsPrivateEndpointConnectionResources in the EventHubNamespace. </summary>
@@ -220,11 +220,11 @@ namespace Azure.ResourceManager.EventHubs
             return GetEventHubs().Get(eventHubName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DisasterRecoveryResources in the EventHubNamespace. </summary>
-        /// <returns> An object representing collection of DisasterRecoveryResources and their operations over a DisasterRecoveryResource. </returns>
-        public virtual DisasterRecoveryCollection GetDisasterRecoveries()
+        /// <summary> Gets a collection of EventHubDisasterRecoveryResources in the EventHubNamespace. </summary>
+        /// <returns> An object representing collection of EventHubDisasterRecoveryResources and their operations over a EventHubDisasterRecoveryResource. </returns>
+        public virtual EventHubDisasterRecoveryCollection GetEventHubDisasterRecoveries()
         {
-            return GetCachedClient(Client => new DisasterRecoveryCollection(Client, Id));
+            return GetCachedClient(Client => new EventHubDisasterRecoveryCollection(Client, Id));
         }
 
         /// <summary>
@@ -237,9 +237,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DisasterRecoveryResource>> GetDisasterRecoveryAsync(string @alias, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubDisasterRecoveryResource>> GetEventHubDisasterRecoveryAsync(string @alias, CancellationToken cancellationToken = default)
         {
-            return await GetDisasterRecoveries().GetAsync(alias, cancellationToken).ConfigureAwait(false);
+            return await GetEventHubDisasterRecoveries().GetAsync(alias, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -252,30 +252,16 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DisasterRecoveryResource> GetDisasterRecovery(string @alias, CancellationToken cancellationToken = default)
+        public virtual Response<EventHubDisasterRecoveryResource> GetEventHubDisasterRecovery(string @alias, CancellationToken cancellationToken = default)
         {
-            return GetDisasterRecoveries().Get(alias, cancellationToken);
+            return GetEventHubDisasterRecoveries().Get(alias, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SchemaGroupResources in the EventHubNamespace. </summary>
-        /// <returns> An object representing collection of SchemaGroupResources and their operations over a SchemaGroupResource. </returns>
-        public virtual SchemaGroupCollection GetSchemaGroups()
+        /// <summary> Gets a collection of EventHubsSchemaGroupResources in the EventHubNamespace. </summary>
+        /// <returns> An object representing collection of EventHubsSchemaGroupResources and their operations over a EventHubsSchemaGroupResource. </returns>
+        public virtual EventHubsSchemaGroupCollection GetEventHubsSchemaGroups()
         {
-            return GetCachedClient(Client => new SchemaGroupCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/schemagroups/{schemaGroupName}
-        /// Operation Id: SchemaRegistry_Get
-        /// </summary>
-        /// <param name="schemaGroupName"> The Schema Group name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaGroupName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SchemaGroupResource>> GetSchemaGroupAsync(string schemaGroupName, CancellationToken cancellationToken = default)
-        {
-            return await GetSchemaGroups().GetAsync(schemaGroupName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new EventHubsSchemaGroupCollection(Client, Id));
         }
 
         /// <summary>
@@ -287,9 +273,23 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentException"> <paramref name="schemaGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SchemaGroupResource> GetSchemaGroup(string schemaGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubsSchemaGroupResource>> GetEventHubsSchemaGroupAsync(string schemaGroupName, CancellationToken cancellationToken = default)
         {
-            return GetSchemaGroups().Get(schemaGroupName, cancellationToken);
+            return await GetEventHubsSchemaGroups().GetAsync(schemaGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/schemagroups/{schemaGroupName}
+        /// Operation Id: SchemaRegistry_Get
+        /// </summary>
+        /// <param name="schemaGroupName"> The Schema Group name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="schemaGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="schemaGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EventHubsSchemaGroupResource> GetEventHubsSchemaGroup(string schemaGroupName, CancellationToken cancellationToken = default)
+        {
+            return GetEventHubsSchemaGroups().Get(schemaGroupName, cancellationToken);
         }
 
         /// <summary>
@@ -450,10 +450,10 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: PrivateLinkResources_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventHubsPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventHubsPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EventHubPrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventHubPrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<EventHubsPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<EventHubPrivateLinkResourceData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("EventHubNamespaceResource.GetPrivateLinkResources");
                 scope.Start();
@@ -477,10 +477,10 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: PrivateLinkResources_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventHubsPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventHubsPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventHubPrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventHubPrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            Page<EventHubsPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
+            Page<EventHubPrivateLinkResourceData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("EventHubNamespaceResource.GetPrivateLinkResources");
                 scope.Start();
@@ -503,18 +503,18 @@ namespace Azure.ResourceManager.EventHubs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/checkNameAvailability
         /// Operation Id: DisasterRecoveryConfigs_CheckNameAvailability
         /// </summary>
-        /// <param name="options"> Parameters to check availability of the given Alias name. </param>
+        /// <param name="content"> Parameters to check availability of the given Alias name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckDisasterRecoveryNameAvailabilityAsync(CheckNameAvailabilityOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<EventHubNameAvailabilityResult>> CheckEventHubDisasterRecoveryNameAvailabilityAsync(EventHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _disasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubNamespaceResource.CheckDisasterRecoveryNameAvailability");
+            using var scope = _disasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubNamespaceResource.CheckEventHubDisasterRecoveryNameAvailability");
             scope.Start();
             try
             {
-                var response = await _disasterRecoveryConfigsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var response = await _disasterRecoveryConfigsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -529,18 +529,18 @@ namespace Azure.ResourceManager.EventHubs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/checkNameAvailability
         /// Operation Id: DisasterRecoveryConfigs_CheckNameAvailability
         /// </summary>
-        /// <param name="options"> Parameters to check availability of the given Alias name. </param>
+        /// <param name="content"> Parameters to check availability of the given Alias name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResult> CheckDisasterRecoveryNameAvailability(CheckNameAvailabilityOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<EventHubNameAvailabilityResult> CheckEventHubDisasterRecoveryNameAvailability(EventHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _disasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubNamespaceResource.CheckDisasterRecoveryNameAvailability");
+            using var scope = _disasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubNamespaceResource.CheckEventHubDisasterRecoveryNameAvailability");
             scope.Start();
             try
             {
-                var response = _disasterRecoveryConfigsRestClient.CheckNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var response = _disasterRecoveryConfigsRestClient.CheckNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EventHubNamespaceIdListResult>> ListNamespacesAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<EHNamespaceIdListResult>> ListNamespacesAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -366,9 +366,9 @@ namespace Azure.ResourceManager.EventHubs
             {
                 case 200:
                     {
-                        EventHubNamespaceIdListResult value = default;
+                        EHNamespaceIdListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EventHubNamespaceIdListResult.DeserializeEventHubNamespaceIdListResult(document.RootElement);
+                        value = EHNamespaceIdListResult.DeserializeEHNamespaceIdListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EventHubNamespaceIdListResult> ListNamespaces(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public Response<EHNamespaceIdListResult> ListNamespaces(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -395,9 +395,9 @@ namespace Azure.ResourceManager.EventHubs
             {
                 case 200:
                     {
-                        EventHubNamespaceIdListResult value = default;
+                        EHNamespaceIdListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EventHubNamespaceIdListResult.DeserializeEventHubNamespaceIdListResult(document.RootElement);
+                        value = EHNamespaceIdListResult.DeserializeEHNamespaceIdListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

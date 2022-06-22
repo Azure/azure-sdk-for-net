@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static PrivateLinkResourcesListResult DeserializePrivateLinkResourcesListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<EventHubsPrivateLinkResource>> value = default;
+            Optional<IReadOnlyList<EventHubPrivateLinkResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EventHubsPrivateLinkResource> array = new List<EventHubsPrivateLinkResource>();
+                    List<EventHubPrivateLinkResourceData> array = new List<EventHubPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventHubsPrivateLinkResource.DeserializeEventHubsPrivateLinkResource(item));
+                        array.Add(EventHubPrivateLinkResourceData.DeserializeEventHubPrivateLinkResourceData(item));
                     }
                     value = array;
                     continue;

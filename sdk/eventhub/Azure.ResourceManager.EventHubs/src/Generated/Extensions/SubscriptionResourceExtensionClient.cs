@@ -279,15 +279,15 @@ namespace Azure.ResourceManager.EventHubs
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/checkNameAvailability
         /// Operation Id: Namespaces_CheckNameAvailability
         /// </summary>
-        /// <param name="options"> Parameters to check availability of the given Namespace name. </param>
+        /// <param name="content"> Parameters to check availability of the given Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckEventHubNameAvailabilityAsync(CheckNameAvailabilityOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubNameAvailabilityResult>> CheckEventHubNamespaceNameAvailabilityAsync(EventHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckEventHubNameAvailability");
+            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckEventHubNamespaceNameAvailability");
             scope.Start();
             try
             {
-                var response = await NamespacesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, options, cancellationToken).ConfigureAwait(false);
+                var response = await NamespacesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -302,15 +302,15 @@ namespace Azure.ResourceManager.EventHubs
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/checkNameAvailability
         /// Operation Id: Namespaces_CheckNameAvailability
         /// </summary>
-        /// <param name="options"> Parameters to check availability of the given Namespace name. </param>
+        /// <param name="content"> Parameters to check availability of the given Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResult> CheckEventHubNameAvailability(CheckNameAvailabilityOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<EventHubNameAvailabilityResult> CheckEventHubNamespaceNameAvailability(EventHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckEventHubNameAvailability");
+            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckEventHubNamespaceNameAvailability");
             scope.Start();
             try
             {
-                var response = NamespacesRestClient.CheckNameAvailability(Id.SubscriptionId, options, cancellationToken);
+                var response = NamespacesRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

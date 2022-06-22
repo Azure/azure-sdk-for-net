@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -41,15 +42,15 @@ namespace Azure.ResourceManager.EventHubs
 
         internal static EventHubClusterData DeserializeEventHubClusterData(JsonElement element)
         {
-            Optional<ClusterSku> sku = default;
+            Optional<EventHubClusterSku> sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<string> createdAt = default;
-            Optional<string> updatedAt = default;
+            Optional<DateTimeOffset> createdAt = default;
+            Optional<DateTimeOffset> updatedAt = default;
             Optional<string> metricId = default;
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.EventHubs
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = ClusterSku.DeserializeClusterSku(property.Value);
+                    sku = EventHubClusterSku.DeserializeEventHubClusterSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -110,12 +111,22 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         if (property0.NameEquals("createdAt"))
                         {
-                            createdAt = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            createdAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("updatedAt"))
                         {
-                            updatedAt = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            updatedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("metricId"))
@@ -132,7 +143,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventHubClusterData(id, name, type, systemData, tags, location, sku.Value, createdAt.Value, updatedAt.Value, metricId.Value, status.Value);
+            return new EventHubClusterData(id, name, type, systemData, tags, location, sku.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), metricId.Value, status.Value);
         }
     }
 }

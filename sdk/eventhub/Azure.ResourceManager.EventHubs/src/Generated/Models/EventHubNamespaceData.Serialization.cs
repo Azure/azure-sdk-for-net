@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EventHubs
             Optional<DateTimeOffset> createdAt = default;
             Optional<DateTimeOffset> updatedAt = default;
             Optional<string> serviceBusEndpoint = default;
-            Optional<string> clusterArmId = default;
+            Optional<ResourceIdentifier> clusterArmId = default;
             Optional<string> metricId = default;
             Optional<bool> isAutoInflateEnabled = default;
             Optional<int> maximumThroughputUnits = default;
@@ -223,7 +223,12 @@ namespace Azure.ResourceManager.EventHubs
                         }
                         if (property0.NameEquals("clusterArmId"))
                         {
-                            clusterArmId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            clusterArmId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("metricId"))

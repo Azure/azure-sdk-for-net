@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventHubs.Models;
@@ -29,25 +30,25 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> Properties of the cluster SKU. </param>
-        /// <param name="createdAt"> The UTC time when the Event Hubs Cluster was created. </param>
-        /// <param name="updatedAt"> The UTC time when the Event Hubs Cluster was last updated. </param>
+        /// <param name="createdOn"> The UTC time when the Event Hubs Cluster was created. </param>
+        /// <param name="updatedOn"> The UTC time when the Event Hubs Cluster was last updated. </param>
         /// <param name="metricId"> The metric ID of the cluster resource. Provided by the service and not modifiable by the user. </param>
         /// <param name="status"> Status of the Cluster resource. </param>
-        internal EventHubClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterSku sku, string createdAt, string updatedAt, string metricId, string status) : base(id, name, resourceType, systemData, tags, location)
+        internal EventHubClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubClusterSku sku, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string metricId, string status) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
-            CreatedAt = createdAt;
-            UpdatedAt = updatedAt;
+            CreatedOn = createdOn;
+            UpdatedOn = updatedOn;
             MetricId = metricId;
             Status = status;
         }
 
         /// <summary> Properties of the cluster SKU. </summary>
-        public ClusterSku Sku { get; set; }
+        public EventHubClusterSku Sku { get; set; }
         /// <summary> The UTC time when the Event Hubs Cluster was created. </summary>
-        public string CreatedAt { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The UTC time when the Event Hubs Cluster was last updated. </summary>
-        public string UpdatedAt { get; }
+        public DateTimeOffset? UpdatedOn { get; }
         /// <summary> The metric ID of the cluster resource. Provided by the service and not modifiable by the user. </summary>
         public string MetricId { get; }
         /// <summary> Status of the Cluster resource. </summary>
