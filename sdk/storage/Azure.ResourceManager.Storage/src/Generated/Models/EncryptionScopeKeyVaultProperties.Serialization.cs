@@ -19,26 +19,21 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(KeyUri))
             {
                 writer.WritePropertyName("keyUri");
-                writer.WriteStringValue(KeyUri.AbsoluteUri);
+                writer.WriteStringValue(KeyUri);
             }
             writer.WriteEndObject();
         }
 
         internal static EncryptionScopeKeyVaultProperties DeserializeEncryptionScopeKeyVaultProperties(JsonElement element)
         {
-            Optional<Uri> keyUri = default;
+            Optional<string> keyUri = default;
             Optional<string> currentVersionedKeyIdentifier = default;
             Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        keyUri = null;
-                        continue;
-                    }
-                    keyUri = new Uri(property.Value.GetString());
+                    keyUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("currentVersionedKeyIdentifier"))

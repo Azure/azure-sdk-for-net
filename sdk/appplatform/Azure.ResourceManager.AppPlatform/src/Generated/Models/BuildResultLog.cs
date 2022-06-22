@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Build result log resource properties payload. </summary>
@@ -19,12 +17,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         /// <summary> Initializes a new instance of BuildResultLog. </summary>
         /// <param name="blobUri"> The public download URL of this build result log. </param>
-        internal BuildResultLog(Uri blobUri)
+        internal BuildResultLog(string blobUri)
         {
             BlobUri = blobUri;
         }
 
         /// <summary> The public download URL of this build result log. </summary>
-        public Uri BlobUri { get; }
+        public string BlobUri { get; }
     }
 }

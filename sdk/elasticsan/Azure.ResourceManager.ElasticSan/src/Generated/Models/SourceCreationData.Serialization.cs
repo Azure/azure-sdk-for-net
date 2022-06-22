@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,7 +20,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             if (Optional.IsDefined(SourceUri))
             {
                 writer.WritePropertyName("sourceUri");
-                writer.WriteStringValue(SourceUri.AbsoluteUri);
+                writer.WriteStringValue(SourceUri);
             }
             writer.WriteEndObject();
         }
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         internal static SourceCreationData DeserializeSourceCreationData(JsonElement element)
         {
             ElasticSanVolumeCreateOption createSource = default;
-            Optional<Uri> sourceUri = default;
+            Optional<string> sourceUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createSource"))
@@ -39,12 +38,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
                 if (property.NameEquals("sourceUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        sourceUri = null;
-                        continue;
-                    }
-                    sourceUri = new Uri(property.Value.GetString());
+                    sourceUri = property.Value.GetString();
                     continue;
                 }
             }

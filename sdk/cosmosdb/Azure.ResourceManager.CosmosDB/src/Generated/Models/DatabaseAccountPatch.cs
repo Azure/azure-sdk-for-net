@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Disable write operations on metadata resources (databases, containers, throughput) via account keys. </summary>
         public bool? DisableKeyBasedMetadataWriteAccess { get; set; }
         /// <summary> The URI of the key vault. </summary>
-        public Uri KeyVaultKeyUri { get; set; }
+        public string KeyVaultKeyUri { get; set; }
         /// <summary> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be &quot;FirstPartyIdentity&quot;, &quot;SystemAssignedIdentity&quot; and more. </summary>
         public string DefaultIdentity { get; set; }
         /// <summary> Whether requests from Public Network are allowed. </summary>

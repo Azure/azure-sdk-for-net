@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -26,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Uri != null)
                 {
                     writer.WritePropertyName("uri");
-                    writer.WriteStringValue(Uri.AbsoluteUri);
+                    writer.WriteStringValue(Uri);
                 }
                 else
                 {
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static MLTableJobOutput DeserializeMLTableJobOutput(JsonElement element)
         {
             Optional<OutputDeliveryMode> mode = default;
-            Optional<Uri> uri = default;
+            Optional<string> uri = default;
             Optional<string> description = default;
             JobOutputType jobOutputType = default;
             foreach (var property in element.EnumerateObject())
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         uri = null;
                         continue;
                     }
-                    uri = new Uri(property.Value.GetString());
+                    uri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"))

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ContainerRegistryBaseUri))
             {
                 writer.WritePropertyName("containerRegistryBaseUrl");
-                writer.WriteStringValue(ContainerRegistryBaseUri.AbsoluteUri);
+                writer.WriteStringValue(ContainerRegistryBaseUri);
             }
             if (Optional.IsDefined(ContainerRegistryUsername))
             {

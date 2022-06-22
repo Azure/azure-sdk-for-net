@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,17 +14,12 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VpnProfileResponse DeserializeVpnProfileResponse(JsonElement element)
         {
-            Optional<Uri> profileUrl = default;
+            Optional<string> profileUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profileUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        profileUrl = null;
-                        continue;
-                    }
-                    profileUrl = new Uri(property.Value.GetString());
+                    profileUrl = property.Value.GetString();
                     continue;
                 }
             }

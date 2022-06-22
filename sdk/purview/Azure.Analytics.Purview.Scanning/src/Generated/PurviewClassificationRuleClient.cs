@@ -72,32 +72,54 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Get a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
         /// <code>{
-        ///   id: string,
-        ///   name: string,
-        ///   kind: &quot;System&quot; | &quot;Custom&quot;
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// </details>
+        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
         /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     minimumPercentageMatch: number, # Optional.
+        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
+        ///     dataPatterns: [
         ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorModel]
+        ///         kind: &quot;Regex&quot;, # Required.
         ///       }
-        ///     ]
-        ///   }
+        ///     ], # Optional.
+        ///     columnPatterns: [ClassificationRulePattern], # Optional.
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> GetPropertiesAsync(RequestContext context = null)
@@ -119,32 +141,54 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Get a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
         /// <code>{
-        ///   id: string,
-        ///   name: string,
-        ///   kind: &quot;System&quot; | &quot;Custom&quot;
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// </details>
+        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
         /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     minimumPercentageMatch: number, # Optional.
+        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
+        ///     dataPatterns: [
         ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorModel]
+        ///         kind: &quot;Regex&quot;, # Required.
         ///       }
-        ///     ]
-        ///   }
+        ///     ], # Optional.
+        ///     columnPatterns: [ClassificationRulePattern], # Optional.
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response GetProperties(RequestContext context = null)
@@ -167,39 +211,99 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
         /// <code>{
-        ///   id: string,
-        ///   name: string,
-        ///   kind: &quot;System&quot; | &quot;Custom&quot; (required)
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
         /// <code>{
-        ///   id: string,
-        ///   name: string,
-        ///   kind: &quot;System&quot; | &quot;Custom&quot;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     minimumPercentageMatch: number, # Optional.
+        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
+        ///     dataPatterns: [
         ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorModel]
+        ///         kind: &quot;Regex&quot;, # Required.
         ///       }
-        ///     ]
-        ///   }
+        ///     ], # Optional.
+        ///     columnPatterns: [ClassificationRulePattern], # Optional.
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
+        /// <code>{
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
+        /// <code>{
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     minimumPercentageMatch: number, # Optional.
+        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
+        ///     dataPatterns: [
+        ///       {
+        ///         kind: &quot;Regex&quot;, # Required.
+        ///       }
+        ///     ], # Optional.
+        ///     columnPatterns: [ClassificationRulePattern], # Optional.
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestContext context = null)
@@ -222,39 +326,99 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
         /// <code>{
-        ///   id: string,
-        ///   name: string,
-        ///   kind: &quot;System&quot; | &quot;Custom&quot; (required)
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// </details>
+        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
         /// <code>{
-        ///   id: string,
-        ///   name: string,
-        ///   kind: &quot;System&quot; | &quot;Custom&quot;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     minimumPercentageMatch: number, # Optional.
+        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
+        ///     dataPatterns: [
         ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorModel]
+        ///         kind: &quot;Regex&quot;, # Required.
         ///       }
-        ///     ]
-        ///   }
+        ///     ], # Optional.
+        ///     columnPatterns: [ClassificationRulePattern], # Optional.
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
+        /// <code>{
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
+        /// <code>{
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     minimumPercentageMatch: number, # Optional.
+        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
+        ///     dataPatterns: [
+        ///       {
+        ///         kind: &quot;Regex&quot;, # Required.
+        ///       }
+        ///     ], # Optional.
+        ///     columnPatterns: [ClassificationRulePattern], # Optional.
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response CreateOrUpdate(RequestContent content, RequestContext context = null)
@@ -276,32 +440,54 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Deletes a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
         /// <code>{
-        ///   id: string,
-        ///   name: string,
-        ///   kind: &quot;System&quot; | &quot;Custom&quot;
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// </details>
+        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
         /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     minimumPercentageMatch: number, # Optional.
+        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
+        ///     dataPatterns: [
         ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorModel]
+        ///         kind: &quot;Regex&quot;, # Required.
         ///       }
-        ///     ]
-        ///   }
+        ///     ], # Optional.
+        ///     columnPatterns: [ClassificationRulePattern], # Optional.
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(RequestContext context = null)
@@ -323,32 +509,54 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Deletes a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+        /// <details><summary>SystemClassificationRule</summary>Schema for <c>SystemClassificationRule</c>:
         /// <code>{
-        ///   id: string,
-        ///   name: string,
-        ///   kind: &quot;System&quot; | &quot;Custom&quot;
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// </details>
+        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <c>CustomClassificationRule</c>:
         /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     minimumPercentageMatch: number, # Optional.
+        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
+        ///     dataPatterns: [
         ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorModel]
+        ///         kind: &quot;Regex&quot;, # Required.
         ///       }
-        ///     ]
-        ///   }
+        ///     ], # Optional.
+        ///     columnPatterns: [ClassificationRulePattern], # Optional.
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
+        /// </details>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response Delete(RequestContext context = null)
@@ -373,44 +581,31 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>OperationResponse</c>:
         /// <code>{
-        ///   scanResultId: OperationResponseScanResultId,
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   status: &quot;Accepted&quot; | &quot;InProgress&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;,
+        ///   scanResultId: OperationResponseScanResultId, # Optional.
+        ///   startTime: string (ISO 8601 Format), # Optional.
+        ///   endTime: string (ISO 8601 Format), # Optional.
+        ///   status: &quot;Accepted&quot; | &quot;InProgress&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Optional.
         ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
+        ///     code: string, # Optional.
+        ///     message: string, # Optional.
+        ///     target: string, # Optional.
         ///     details: [
         ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorInfo]
+        ///         code: string, # Optional.
+        ///         message: string, # Optional.
+        ///         target: string, # Optional.
+        ///         details: [ErrorInfo], # Optional.
         ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorModel]
-        ///       }
-        ///     ]
-        ///   }
+        ///     ], # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 
@@ -439,44 +634,31 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>OperationResponse</c>:
         /// <code>{
-        ///   scanResultId: OperationResponseScanResultId,
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   status: &quot;Accepted&quot; | &quot;InProgress&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;,
+        ///   scanResultId: OperationResponseScanResultId, # Optional.
+        ///   startTime: string (ISO 8601 Format), # Optional.
+        ///   endTime: string (ISO 8601 Format), # Optional.
+        ///   status: &quot;Accepted&quot; | &quot;InProgress&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Optional.
         ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
+        ///     code: string, # Optional.
+        ///     message: string, # Optional.
+        ///     target: string, # Optional.
         ///     details: [
         ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorInfo]
+        ///         code: string, # Optional.
+        ///         message: string, # Optional.
+        ///         target: string, # Optional.
+        ///         details: [ErrorInfo], # Optional.
         ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorModel]
-        ///       }
-        ///     ]
-        ///   }
+        ///     ], # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 
@@ -502,36 +684,17 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Lists the rule versions of a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="AsyncPageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The <![CDATA[AsyncPageable<BinaryData>]]> from the service containing a list of <![CDATA[BinaryData]]> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ClassificationRuleListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       id: string,
-        ///       name: string,
-        ///       kind: &quot;System&quot; | &quot;Custom&quot;
-        ///     }
-        ///   ],
-        ///   nextLink: string,
-        ///   count: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorModel]
-        ///       }
-        ///     ]
-        ///   }
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   kind: &quot;System&quot; | &quot;Custom&quot;, # Required.
         /// }
         /// </code>
         /// 
@@ -561,36 +724,17 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Lists the rule versions of a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Pageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The <![CDATA[Pageable<BinaryData>]]> from the service containing a list of <![CDATA[BinaryData]]> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ClassificationRuleListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       id: string,
-        ///       name: string,
-        ///       kind: &quot;System&quot; | &quot;Custom&quot;
-        ///     }
-        ///   ],
-        ///   nextLink: string,
-        ///   count: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorModel]
-        ///       }
-        ///     ]
-        ///   }
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   kind: &quot;System&quot; | &quot;Custom&quot;, # Required.
         /// }
         /// </code>
         /// 

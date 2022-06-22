@@ -335,19 +335,12 @@
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerIdentityServiceClient_GetLedgerIdentity_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LedgerIdentityInformation</code>:</p>
 <pre><code>{
-  ledgerId: string,
-  ledgerTlsCertificate: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+  ledgerId: string, # Optional. Id for the ledger.
+  ledgerTlsCertificate: string, # Required. PEM-encoded certificate used for TLS by the Confidential Ledger.
 }
 </code></pre>
 </div>
@@ -434,19 +427,12 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetLedgerIdenti
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerIdentityServiceClient_GetLedgerIdentityAsync_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LedgerIdentityInformation</code>:</p>
 <pre><code>{
-  ledgerId: string,
-  ledgerTlsCertificate: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+  ledgerId: string, # Optional. Id for the ledger.
+  ledgerTlsCertificate: string, # Required. PEM-encoded certificate used for TLS by the Confidential Ledger.
 }
 </code></pre>
 </div>

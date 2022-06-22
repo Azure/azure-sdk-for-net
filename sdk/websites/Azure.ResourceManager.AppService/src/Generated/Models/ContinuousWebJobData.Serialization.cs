@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(LogUri))
             {
                 writer.WritePropertyName("log_url");
-                writer.WriteStringValue(LogUri.AbsoluteUri);
+                writer.WriteStringValue(LogUri);
             }
             if (Optional.IsDefined(RunCommand))
             {
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url");
-                writer.WriteStringValue(Uri.AbsoluteUri);
+                writer.WriteStringValue(Uri);
             }
             if (Optional.IsDefined(ExtraInfoUri))
             {
                 writer.WritePropertyName("extra_info_url");
-                writer.WriteStringValue(ExtraInfoUri.AbsoluteUri);
+                writer.WriteStringValue(ExtraInfoUri);
             }
             if (Optional.IsDefined(WebJobType))
             {
@@ -96,13 +96,13 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<ContinuousWebJobStatus> status = default;
             Optional<string> detailedStatus = default;
-            Optional<Uri> logUrl = default;
+            Optional<string> logUrl = default;
             Optional<string> runCommand = default;
-            Optional<Uri> url = default;
-            Optional<Uri> extraInfoUrl = default;
+            Optional<string> url = default;
+            Optional<string> extraInfoUrl = default;
             Optional<WebJobType> webJobType = default;
             Optional<string> error = default;
             Optional<bool> usingSdk = default;
@@ -131,6 +131,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -160,12 +165,7 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("log_url"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                logUrl = null;
-                                continue;
-                            }
-                            logUrl = new Uri(property0.Value.GetString());
+                            logUrl = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("run_command"))
@@ -175,22 +175,12 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("url"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                url = null;
-                                continue;
-                            }
-                            url = new Uri(property0.Value.GetString());
+                            url = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("extra_info_url"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                extraInfoUrl = null;
-                                continue;
-                            }
-                            extraInfoUrl = new Uri(property0.Value.GetString());
+                            extraInfoUrl = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("web_job_type"))
@@ -237,7 +227,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new ContinuousWebJobData(id, name, type, systemData, kind.Value, Optional.ToNullable(status), detailedStatus.Value, logUrl.Value, runCommand.Value, url.Value, extraInfoUrl.Value, Optional.ToNullable(webJobType), error.Value, Optional.ToNullable(usingSdk), Optional.ToDictionary(settings));
+            return new ContinuousWebJobData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(status), detailedStatus.Value, logUrl.Value, runCommand.Value, url.Value, extraInfoUrl.Value, Optional.ToNullable(webJobType), error.Value, Optional.ToNullable(usingSdk), Optional.ToDictionary(settings));
         }
     }
 }

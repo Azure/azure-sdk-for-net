@@ -68,47 +68,40 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SatelliteDataIngestionJob</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   boundaryId: string,
-        ///   startDateTime: string (ISO 8601 Format),
-        ///   endDateTime: string (ISO 8601 Format),
-        ///   provider: &quot;Microsoft&quot;,
-        ///   source: &quot;Sentinel_2_L2A&quot;,
+        ///   farmerId: string, # Required. Farmer ID.
+        ///   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
+        ///   startDateTime: string (ISO 8601 Format), # Required. Start Date.
+        ///   endDateTime: string (ISO 8601 Format), # Required. End Date.
+        ///   provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data.
+        ///   source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data.
         ///   data: {
-        ///     imageNames: [string],
-        ///     imageFormats: [string],
-        ///     imageResolutions: [number]
-        ///   },
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///     imageNames: [string], # Optional. List of ImageNames.
+        ///     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
+        ///     imageResolutions: [number], # Optional. List of ImageResolutions in meters. Available values: 10, 20, 60.
+        ///   }, # Optional. Data Model for SatelliteIngestionJobRequest.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -137,47 +130,40 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SatelliteDataIngestionJob</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   boundaryId: string,
-        ///   startDateTime: string (ISO 8601 Format),
-        ///   endDateTime: string (ISO 8601 Format),
-        ///   provider: &quot;Microsoft&quot;,
-        ///   source: &quot;Sentinel_2_L2A&quot;,
+        ///   farmerId: string, # Required. Farmer ID.
+        ///   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
+        ///   startDateTime: string (ISO 8601 Format), # Required. Start Date.
+        ///   endDateTime: string (ISO 8601 Format), # Required. End Date.
+        ///   provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data.
+        ///   source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data.
         ///   data: {
-        ///     imageNames: [string],
-        ///     imageFormats: [string],
-        ///     imageResolutions: [number]
-        ///   },
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///     imageNames: [string], # Optional. List of ImageNames.
+        ///     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
+        ///     imageResolutions: [number], # Optional. List of ImageResolutions in meters. Available values: 10, 20, 60.
+        ///   }, # Optional. Data Model for SatelliteIngestionJobRequest.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -205,25 +191,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Task{Response}"> The response returned from the service. </returns>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DownloadAsync(string filePath, RequestContext context = null)
         {
             Argument.AssertNotNull(filePath, nameof(filePath));
@@ -247,25 +215,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. </returns>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <returns> The response returned from the service. </returns>
         public virtual Response Download(string filePath, RequestContext context = null)
         {
             Argument.AssertNotNull(filePath, nameof(filePath));
@@ -304,50 +254,33 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="AsyncPageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The <![CDATA[AsyncPageable<BinaryData>]]> from the service containing a list of <![CDATA[BinaryData]]> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SceneListResponseValue</c>:
         /// <code>{
-        ///   value: [
+        ///   sceneDateTime: string (ISO 8601 Format), # Optional. Date-time of the scene, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   provider: string, # Optional. Data provider of the scene.
+        ///   source: string, # Optional. Data source of the scene.
+        ///   imageFiles: [
         ///     {
-        ///       sceneDateTime: string (ISO 8601 Format),
-        ///       provider: string,
-        ///       source: string,
-        ///       imageFiles: [
-        ///         {
-        ///           fileLink: string,
-        ///           name: string,
-        ///           imageFormat: &quot;TIF&quot;,
-        ///           resolution: number
-        ///         }
-        ///       ],
-        ///       imageFormat: &quot;TIF&quot;,
-        ///       cloudCoverPercentage: number,
-        ///       darkPixelPercentage: number,
-        ///       ndviMedianValue: number,
-        ///       boundaryId: string,
-        ///       farmerId: string,
-        ///       id: string,
-        ///       eTag: string
+        ///       fileLink: string, # Optional. Link of the image file.
+        ///       name: string, # Required. Name of the image file.
+        ///       imageFormat: &quot;TIF&quot;, # Optional. Supported image formats for scene resource.
+        ///       resolution: number, # Optional. Resolution of image file in meters.
         ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   ], # Optional. Collection of image files.
+        ///   imageFormat: &quot;TIF&quot;, # Optional. Supported image formats for scene resource.
+        ///   cloudCoverPercentage: number, # Optional. Cloud cover percentage of the scene.
+        ///   darkPixelPercentage: number, # Optional. Dark pixel percentage of the scene.
+        ///   ndviMedianValue: number, # Optional. Median of NDVI of the scene.
+        ///   boundaryId: string, # Optional. Boundary ID which belongs to the scene.
+        ///   farmerId: string, # Optional. Farmer ID which belongs to the scene.
+        ///   id: string, # Optional. Unique scene resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         /// }
         /// </code>
         /// 
@@ -398,50 +331,33 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Pageable{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The <![CDATA[Pageable<BinaryData>]]> from the service containing a list of <![CDATA[BinaryData]]> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SceneListResponseValue</c>:
         /// <code>{
-        ///   value: [
+        ///   sceneDateTime: string (ISO 8601 Format), # Optional. Date-time of the scene, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   provider: string, # Optional. Data provider of the scene.
+        ///   source: string, # Optional. Data source of the scene.
+        ///   imageFiles: [
         ///     {
-        ///       sceneDateTime: string (ISO 8601 Format),
-        ///       provider: string,
-        ///       source: string,
-        ///       imageFiles: [
-        ///         {
-        ///           fileLink: string,
-        ///           name: string,
-        ///           imageFormat: &quot;TIF&quot;,
-        ///           resolution: number
-        ///         }
-        ///       ],
-        ///       imageFormat: &quot;TIF&quot;,
-        ///       cloudCoverPercentage: number,
-        ///       darkPixelPercentage: number,
-        ///       ndviMedianValue: number,
-        ///       boundaryId: string,
-        ///       farmerId: string,
-        ///       id: string,
-        ///       eTag: string
+        ///       fileLink: string, # Optional. Link of the image file.
+        ///       name: string, # Required. Name of the image file.
+        ///       imageFormat: &quot;TIF&quot;, # Optional. Supported image formats for scene resource.
+        ///       resolution: number, # Optional. Resolution of image file in meters.
         ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   ], # Optional. Collection of image files.
+        ///   imageFormat: &quot;TIF&quot;, # Optional. Supported image formats for scene resource.
+        ///   cloudCoverPercentage: number, # Optional. Cloud cover percentage of the scene.
+        ///   darkPixelPercentage: number, # Optional. Dark pixel percentage of the scene.
+        ///   ndviMedianValue: number, # Optional. Median of NDVI of the scene.
+        ///   boundaryId: string, # Optional. Boundary ID which belongs to the scene.
+        ///   farmerId: string, # Optional. Farmer ID which belongs to the scene.
+        ///   id: string, # Optional. Unique scene resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         /// }
         /// </code>
         /// 
@@ -480,73 +396,73 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Task{Operation}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The <![CDATA[Operation<BinaryData>]]> from the service that will contain a <![CDATA[BinaryData]]> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SatelliteDataIngestionJob</c>:
         /// <code>{
-        ///   farmerId: string (required),
-        ///   boundaryId: string (required),
-        ///   startDateTime: string (ISO 8601 Format) (required),
-        ///   endDateTime: string (ISO 8601 Format) (required),
-        ///   provider: &quot;Microsoft&quot;,
-        ///   source: &quot;Sentinel_2_L2A&quot;,
+        ///   farmerId: string, # Required. Farmer ID.
+        ///   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
+        ///   startDateTime: string (ISO 8601 Format), # Required. Start Date.
+        ///   endDateTime: string (ISO 8601 Format), # Required. End Date.
+        ///   provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data.
+        ///   source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data.
         ///   data: {
-        ///     imageNames: [string],
-        ///     imageFormats: [string],
-        ///     imageResolutions: [number]
-        ///   },
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        ///     imageNames: [string], # Optional. List of ImageNames.
+        ///     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
+        ///     imageResolutions: [number], # Optional. List of ImageResolutions in meters. Available values: 10, 20, 60.
+        ///   }, # Optional. Data Model for SatelliteIngestionJobRequest.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SatelliteDataIngestionJob</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   boundaryId: string,
-        ///   startDateTime: string (ISO 8601 Format),
-        ///   endDateTime: string (ISO 8601 Format),
-        ///   provider: &quot;Microsoft&quot;,
-        ///   source: &quot;Sentinel_2_L2A&quot;,
+        ///   farmerId: string, # Required. Farmer ID.
+        ///   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
+        ///   startDateTime: string (ISO 8601 Format), # Required. Start Date.
+        ///   endDateTime: string (ISO 8601 Format), # Required. End Date.
+        ///   provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data.
+        ///   source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data.
         ///   data: {
-        ///     imageNames: [string],
-        ///     imageFormats: [string],
-        ///     imageResolutions: [number]
-        ///   },
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///     imageNames: [string], # Optional. List of ImageNames.
+        ///     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
+        ///     imageResolutions: [number], # Optional. List of ImageResolutions in meters. Available values: 10, 20, 60.
+        ///   }, # Optional. Data Model for SatelliteIngestionJobRequest.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -577,73 +493,73 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Operation{BinaryData}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The <![CDATA[Operation<BinaryData>]]> from the service that will contain a <![CDATA[BinaryData]]> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SatelliteDataIngestionJob</c>:
         /// <code>{
-        ///   farmerId: string (required),
-        ///   boundaryId: string (required),
-        ///   startDateTime: string (ISO 8601 Format) (required),
-        ///   endDateTime: string (ISO 8601 Format) (required),
-        ///   provider: &quot;Microsoft&quot;,
-        ///   source: &quot;Sentinel_2_L2A&quot;,
+        ///   farmerId: string, # Required. Farmer ID.
+        ///   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
+        ///   startDateTime: string (ISO 8601 Format), # Required. Start Date.
+        ///   endDateTime: string (ISO 8601 Format), # Required. End Date.
+        ///   provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data.
+        ///   source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data.
         ///   data: {
-        ///     imageNames: [string],
-        ///     imageFormats: [string],
-        ///     imageResolutions: [number]
-        ///   },
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        ///     imageNames: [string], # Optional. List of ImageNames.
+        ///     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
+        ///     imageResolutions: [number], # Optional. List of ImageResolutions in meters. Available values: 10, 20, 60.
+        ///   }, # Optional. Data Model for SatelliteIngestionJobRequest.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SatelliteDataIngestionJob</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   boundaryId: string,
-        ///   startDateTime: string (ISO 8601 Format),
-        ///   endDateTime: string (ISO 8601 Format),
-        ///   provider: &quot;Microsoft&quot;,
-        ///   source: &quot;Sentinel_2_L2A&quot;,
+        ///   farmerId: string, # Required. Farmer ID.
+        ///   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
+        ///   startDateTime: string (ISO 8601 Format), # Required. Start Date.
+        ///   endDateTime: string (ISO 8601 Format), # Required. End Date.
+        ///   provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data.
+        ///   source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data.
         ///   data: {
-        ///     imageNames: [string],
-        ///     imageFormats: [string],
-        ///     imageResolutions: [number]
-        ///   },
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///     imageNames: [string], # Optional. List of ImageNames.
+        ///     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
+        ///     imageResolutions: [number], # Optional. List of ImageResolutions in meters. Available values: 10, 20, 60.
+        ///   }, # Optional. Data Model for SatelliteIngestionJobRequest.
+        ///   id: string, # Optional. Unique job id.
+        ///   status: string, # Optional. Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+        ///   durationInSeconds: number, # Optional. Duration of the job in seconds.
+        ///   message: string, # Optional. Status message to capture more details of the job.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 

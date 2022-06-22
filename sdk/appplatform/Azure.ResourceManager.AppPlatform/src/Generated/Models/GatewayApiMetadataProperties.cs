@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> API metadata property for Spring Cloud Gateway. </summary>
@@ -23,7 +21,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="documentation"> Location of additional documentation for the APIs available on the Gateway instance. </param>
         /// <param name="version"> Version of APIs available on this Gateway instance (default: `unspecified`). </param>
         /// <param name="serverUri"> Base URL that API consumers will use to access APIs on the Gateway instance. </param>
-        internal GatewayApiMetadataProperties(string title, string description, string documentation, string version, Uri serverUri)
+        internal GatewayApiMetadataProperties(string title, string description, string documentation, string version, string serverUri)
         {
             Title = title;
             Description = description;
@@ -41,6 +39,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Version of APIs available on this Gateway instance (default: `unspecified`). </summary>
         public string Version { get; set; }
         /// <summary> Base URL that API consumers will use to access APIs on the Gateway instance. </summary>
-        public Uri ServerUri { get; set; }
+        public string ServerUri { get; set; }
     }
 }

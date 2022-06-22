@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources
             Optional<IReadOnlyList<string>> domains = default;
             Optional<string> defaultDomain = default;
             Optional<string> tenantType = default;
-            Optional<Uri> tenantBrandingLogoUrl = default;
+            Optional<string> tenantBrandingLogoUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -96,12 +96,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 if (property.NameEquals("tenantBrandingLogoUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        tenantBrandingLogoUrl = null;
-                        continue;
-                    }
-                    tenantBrandingLogoUrl = new Uri(property.Value.GetString());
+                    tenantBrandingLogoUrl = property.Value.GetString();
                     continue;
                 }
             }

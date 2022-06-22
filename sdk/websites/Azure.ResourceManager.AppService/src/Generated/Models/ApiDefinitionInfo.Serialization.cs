@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,24 +18,19 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url");
-                writer.WriteStringValue(Uri.AbsoluteUri);
+                writer.WriteStringValue(Uri);
             }
             writer.WriteEndObject();
         }
 
         internal static ApiDefinitionInfo DeserializeApiDefinitionInfo(JsonElement element)
         {
-            Optional<Uri> url = default;
+            Optional<string> url = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        url = null;
-                        continue;
-                    }
-                    url = new Uri(property.Value.GetString());
+                    url = property.Value.GetString();
                     continue;
                 }
             }

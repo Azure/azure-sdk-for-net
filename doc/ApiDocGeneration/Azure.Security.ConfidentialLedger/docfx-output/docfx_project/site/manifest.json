@@ -24,7 +24,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Azure.Security.ConfidentialLedger/Azure.Security.ConfidentialLedger.ConfidentialLedgerClient.html",
-          "hash": "mvwGaG6RaXEf1KUXcQ2eiA=="
+          "hash": "8R4ivjIawWHrFQk/zpLiKg=="
         }
       },
       "is_incremental": false,
@@ -72,7 +72,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Azure.Security.ConfidentialLedger/Azure.Security.ConfidentialLedger.ConfidentialLedgerIdentityServiceClient.html",
-          "hash": "FqF7vq7AHa15hu9sYOlfEQ=="
+          "hash": "FJBYWX5hfi+fkNgSW4BYUA=="
         }
       },
       "is_incremental": false,

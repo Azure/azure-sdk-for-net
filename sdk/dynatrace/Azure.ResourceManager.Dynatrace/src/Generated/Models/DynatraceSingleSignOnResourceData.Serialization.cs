@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Dynatrace
             if (Optional.IsDefined(SingleSignOnUri))
             {
                 writer.WritePropertyName("singleSignOnUrl");
-                writer.WriteStringValue(SingleSignOnUri.AbsoluteUri);
+                writer.WriteStringValue(SingleSignOnUri);
             }
             if (Optional.IsCollectionDefined(AadDomains))
             {
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.Dynatrace
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<SingleSignOnStates> singleSignOnState = default;
             Optional<Guid> enterpriseAppId = default;
-            Optional<Uri> singleSignOnUrl = default;
+            Optional<string> singleSignOnUrl = default;
             Optional<IList<string>> aadDomains = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -80,6 +80,11 @@ namespace Azure.ResourceManager.Dynatrace
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -114,12 +119,7 @@ namespace Azure.ResourceManager.Dynatrace
                         }
                         if (property0.NameEquals("singleSignOnUrl"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                singleSignOnUrl = null;
-                                continue;
-                            }
-                            singleSignOnUrl = new Uri(property0.Value.GetString());
+                            singleSignOnUrl = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("aadDomains"))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Dynatrace
                     continue;
                 }
             }
-            return new DynatraceSingleSignOnResourceData(id, name, type, systemData, Optional.ToNullable(singleSignOnState), Optional.ToNullable(enterpriseAppId), singleSignOnUrl.Value, Optional.ToList(aadDomains), Optional.ToNullable(provisioningState));
+            return new DynatraceSingleSignOnResourceData(id, name, type, systemData.Value, Optional.ToNullable(singleSignOnState), Optional.ToNullable(enterpriseAppId), singleSignOnUrl.Value, Optional.ToList(aadDomains), Optional.ToNullable(provisioningState));
         }
     }
 }

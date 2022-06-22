@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static VirtualWanSecurityProvider DeserializeVirtualWanSecurityProvider(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<Uri> url = default;
+            Optional<string> url = default;
             Optional<VirtualWanSecurityProviderType> type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,12 +26,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("url"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        url = null;
-                        continue;
-                    }
-                    url = new Uri(property.Value.GetString());
+                    url = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))

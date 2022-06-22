@@ -375,51 +375,37 @@
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_CollectLogs_System_String_Azure_Core_RequestContent_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Request Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the request and response payloads.</p>
+<p>Request Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LogCollectionOperation</code>:</p>
 <pre><code>{
-  operationId: string,
+  operationId: string, # Optional. The diagnostics operation id.
   deviceList: [
     {
-      deviceId: string (required),
-      moduleId: string
+      deviceId: string, # Required. Device Id
+      moduleId: string, # Optional. Module Id
     }
-  ] (required),
-  description: string,
-  createdDateTime: string,
-  lastActionDateTime: string,
-  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed"
+  ], # Required. Array of Device Update agent ids
+  description: string, # Optional. Description of the diagnostics operation.
+  createdDateTime: string, # Optional. The timestamp when the operation was created.
+  lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
+  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed", # Optional. Operation status.
 }
 </code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LogCollectionOperation</code>:</p>
 <pre><code>{
-  operationId: string,
+  operationId: string, # Optional. The diagnostics operation id.
   deviceList: [
     {
-      deviceId: string,
-      moduleId: string
+      deviceId: string, # Required. Device Id
+      moduleId: string, # Optional. Module Id
     }
-  ],
-  description: string,
-  createdDateTime: string,
-  lastActionDateTime: string,
-  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed"
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  ], # Required. Array of Device Update agent ids
+  description: string, # Optional. Description of the diagnostics operation.
+  createdDateTime: string, # Optional. The timestamp when the operation was created.
+  lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
+  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed", # Optional. Operation status.
 }
 </code></pre>
 </div>
@@ -514,51 +500,37 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CollectLogsAsyn
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_CollectLogsAsync_System_String_Azure_Core_RequestContent_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Request Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the request and response payloads.</p>
+<p>Request Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LogCollectionOperation</code>:</p>
 <pre><code>{
-  operationId: string,
+  operationId: string, # Optional. The diagnostics operation id.
   deviceList: [
     {
-      deviceId: string (required),
-      moduleId: string
+      deviceId: string, # Required. Device Id
+      moduleId: string, # Optional. Module Id
     }
-  ] (required),
-  description: string,
-  createdDateTime: string,
-  lastActionDateTime: string,
-  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed"
+  ], # Required. Array of Device Update agent ids
+  description: string, # Optional. Description of the diagnostics operation.
+  createdDateTime: string, # Optional. The timestamp when the operation was created.
+  lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
+  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed", # Optional. Operation status.
 }
 </code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LogCollectionOperation</code>:</p>
 <pre><code>{
-  operationId: string,
+  operationId: string, # Optional. The diagnostics operation id.
   deviceList: [
     {
-      deviceId: string,
-      moduleId: string
+      deviceId: string, # Required. Device Id
+      moduleId: string, # Optional. Module Id
     }
-  ],
-  description: string,
-  createdDateTime: string,
-  lastActionDateTime: string,
-  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed"
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  ], # Required. Array of Device Update agent ids
+  description: string, # Optional. Description of the diagnostics operation.
+  createdDateTime: string, # Optional. The timestamp when the operation was created.
+  lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
+  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed", # Optional. Operation status.
 }
 </code></pre>
 </div>
@@ -660,49 +632,35 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CollectLogsAsyn
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_CreateOrUpdateDeployment_System_String_System_String_Azure_Core_RequestContent_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Request Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the request and response payloads.</p>
+<p>Request Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Deployment</code>:</p>
 <pre><code>{
-  deploymentId: string (required),
-  startDateTime: string (ISO 8601 Format) (required),
+  deploymentId: string, # Required. The deployment identifier.
+  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
   updateId: {
-    provider: string (required),
-    name: string (required),
-    version: string (required)
-  } (required),
-  groupId: string (required),
-  isCanceled: boolean,
-  isRetried: boolean
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Required. Update identity.
+  groupId: string, # Required. The group identity
+  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
 }
 </code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Deployment</code>:</p>
 <pre><code>{
-  deploymentId: string,
-  startDateTime: string (ISO 8601 Format),
+  deploymentId: string, # Required. The deployment identifier.
+  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
   updateId: {
-    provider: string,
-    name: string,
-    version: string
-  },
-  groupId: string,
-  isCanceled: boolean,
-  isRetried: boolean
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Required. Update identity.
+  groupId: string, # Required. The group identity
+  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
 }
 </code></pre>
 </div>
@@ -805,49 +763,35 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CreateOrUpdateD
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_CreateOrUpdateDeploymentAsync_System_String_System_String_Azure_Core_RequestContent_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Request Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the request and response payloads.</p>
+<p>Request Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Deployment</code>:</p>
 <pre><code>{
-  deploymentId: string (required),
-  startDateTime: string (ISO 8601 Format) (required),
+  deploymentId: string, # Required. The deployment identifier.
+  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
   updateId: {
-    provider: string (required),
-    name: string (required),
-    version: string (required)
-  } (required),
-  groupId: string (required),
-  isCanceled: boolean,
-  isRetried: boolean
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Required. Update identity.
+  groupId: string, # Required. The group identity
+  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
 }
 </code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Deployment</code>:</p>
 <pre><code>{
-  deploymentId: string,
-  startDateTime: string (ISO 8601 Format),
+  deploymentId: string, # Required. The deployment identifier.
+  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
   updateId: {
-    provider: string,
-    name: string,
-    version: string
-  },
-  groupId: string,
-  isCanceled: boolean,
-  isRetried: boolean
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Required. Update identity.
+  groupId: string, # Required. The group identity
+  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
 }
 </code></pre>
 </div>
@@ -941,43 +885,29 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CreateOrUpdateD
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_CreateOrUpdateGroup_System_String_Azure_Core_RequestContent_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Request Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the request and response payloads.</p>
+<p>Request Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Group</code>:</p>
 <pre><code>{
-  groupId: string (required),
-  groupType: "DeviceClassIdAndIoTHubTag" | "InvalidDeviceClassIdAndIoTHubTag" | "DefaultDeviceClassId" (required),
-  tags: [string] (required),
-  createdDateTime: string (required),
-  deviceCount: number,
-  deploymentId: string,
-  deviceClassId: string
+  groupId: string, # Required. Group identity.
+  groupType: "DeviceClassIdAndIoTHubTag" | "InvalidDeviceClassIdAndIoTHubTag" | "DefaultDeviceClassId", # Required. Group type.
+  tags: [string], # Required. IoT Hub tags.
+  createdDateTime: string, # Required. Date and time when the update was created.
+  deviceCount: number, # Optional. The number of devices in the group.
+  deploymentId: string, # Optional. The deployment Id for the group.
+  deviceClassId: string, # Optional. The device class Id for the group.
 }
 </code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Group</code>:</p>
 <pre><code>{
-  groupId: string,
-  groupType: "DeviceClassIdAndIoTHubTag" | "InvalidDeviceClassIdAndIoTHubTag" | "DefaultDeviceClassId",
-  tags: [string],
-  createdDateTime: string,
-  deviceCount: number,
-  deploymentId: string,
-  deviceClassId: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  groupId: string, # Required. Group identity.
+  groupType: "DeviceClassIdAndIoTHubTag" | "InvalidDeviceClassIdAndIoTHubTag" | "DefaultDeviceClassId", # Required. Group type.
+  tags: [string], # Required. IoT Hub tags.
+  createdDateTime: string, # Required. Date and time when the update was created.
+  deviceCount: number, # Optional. The number of devices in the group.
+  deploymentId: string, # Optional. The deployment Id for the group.
+  deviceClassId: string, # Optional. The device class Id for the group.
 }
 </code></pre>
 </div>
@@ -1072,43 +1002,29 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CreateOrUpdateG
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_CreateOrUpdateGroupAsync_System_String_Azure_Core_RequestContent_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Request Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the request and response payloads.</p>
+<p>Request Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Group</code>:</p>
 <pre><code>{
-  groupId: string (required),
-  groupType: "DeviceClassIdAndIoTHubTag" | "InvalidDeviceClassIdAndIoTHubTag" | "DefaultDeviceClassId" (required),
-  tags: [string] (required),
-  createdDateTime: string (required),
-  deviceCount: number,
-  deploymentId: string,
-  deviceClassId: string
+  groupId: string, # Required. Group identity.
+  groupType: "DeviceClassIdAndIoTHubTag" | "InvalidDeviceClassIdAndIoTHubTag" | "DefaultDeviceClassId", # Required. Group type.
+  tags: [string], # Required. IoT Hub tags.
+  createdDateTime: string, # Required. Date and time when the update was created.
+  deviceCount: number, # Optional. The number of devices in the group.
+  deploymentId: string, # Optional. The deployment Id for the group.
+  deviceClassId: string, # Optional. The device class Id for the group.
 }
 </code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Group</code>:</p>
 <pre><code>{
-  groupId: string,
-  groupType: "DeviceClassIdAndIoTHubTag" | "InvalidDeviceClassIdAndIoTHubTag" | "DefaultDeviceClassId",
-  tags: [string],
-  createdDateTime: string,
-  deviceCount: number,
-  deploymentId: string,
-  deviceClassId: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  groupId: string, # Required. Group identity.
+  groupType: "DeviceClassIdAndIoTHubTag" | "InvalidDeviceClassIdAndIoTHubTag" | "DefaultDeviceClassId", # Required. Group type.
+  tags: [string], # Required. IoT Hub tags.
+  createdDateTime: string, # Required. Date and time when the update was created.
+  deviceCount: number, # Optional. The number of devices in the group.
+  deploymentId: string, # Optional. The deployment Id for the group.
+  deviceClassId: string, # Optional. The device class Id for the group.
 }
 </code></pre>
 </div>
@@ -1201,25 +1117,6 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CreateOrUpdateG
   
   
   
-  <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_DeleteDeployment_System_String_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
-}
-</code></pre>
-</div>
   
   
   <h5 class="exceptions">Exceptions</h5>
@@ -1310,25 +1207,6 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; DeleteDeploymen
   
   
   
-  <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_DeleteDeploymentAsync_System_String_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
-}
-</code></pre>
-</div>
   
   
   <h5 class="exceptions">Exceptions</h5>
@@ -1410,25 +1288,6 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; DeleteDeploymen
   
   
   
-  <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_DeleteGroup_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
-}
-</code></pre>
-</div>
   
   
   <h5 class="exceptions">Exceptions</h5>
@@ -1511,25 +1370,6 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; DeleteGroupAsyn
   
   
   
-  <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_DeleteGroupAsync_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
-}
-</code></pre>
-</div>
   
   
   <h5 class="exceptions">Exceptions</h5>
@@ -1607,7 +1447,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; DeleteGroupAsyn
     <tr>
       <td>
         <span class="xref">Azure.Pageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+        <p><p>The Pageable&lt;BinaryData&gt; from the service containing a list of BinaryData objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -1620,36 +1460,16 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; DeleteGroupAsyn
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetBestUpdatesForGroups_System_String_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">UpdatableDevicesListValue</code>:</p>
 <pre><code>{
-  value: [
-    {
-      updateId: {
-        provider: string,
-        name: string,
-        version: string
-      },
-      deviceCount: number
-    }
-  ],
-  nextLink: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  updateId: {
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Required. Update identity.
+  deviceCount: number, # Required. Total number of devices for which the update is applicable.
 }
 </code></pre>
 </div>
@@ -1730,7 +1550,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; DeleteGroupAsyn
     <tr>
       <td>
         <span class="xref">Azure.AsyncPageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+        <p><p>The AsyncPageable&lt;BinaryData&gt; from the service containing a list of BinaryData objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -1743,36 +1563,16 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; DeleteGroupAsyn
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetBestUpdatesForGroupsAsync_System_String_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">UpdatableDevicesListValue</code>:</p>
 <pre><code>{
-  value: [
-    {
-      updateId: {
-        provider: string,
-        name: string,
-        version: string
-      },
-      deviceCount: number
-    }
-  ],
-  nextLink: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  updateId: {
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Required. Update identity.
+  deviceCount: number, # Required. Total number of devices for which the update is applicable.
 }
 </code></pre>
 </div>
@@ -1866,35 +1666,20 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; DeleteGroupAsyn
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetDeployment_System_String_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Deployment</code>:</p>
 <pre><code>{
-  deploymentId: string,
-  startDateTime: string (ISO 8601 Format),
+  deploymentId: string, # Required. The deployment identifier.
+  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
   updateId: {
-    provider: string,
-    name: string,
-    version: string
-  },
-  groupId: string,
-  isCanceled: boolean,
-  isRetried: boolean
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Required. Update identity.
+  groupId: string, # Required. The group identity
+  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
 }
 </code></pre>
 </div>
@@ -1989,35 +1774,20 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeploymentAs
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetDeploymentAsync_System_String_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Deployment</code>:</p>
 <pre><code>{
-  deploymentId: string,
-  startDateTime: string (ISO 8601 Format),
+  deploymentId: string, # Required. The deployment identifier.
+  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
   updateId: {
-    provider: string,
-    name: string,
-    version: string
-  },
-  groupId: string,
-  isCanceled: boolean,
-  isRetried: boolean
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Required. Update identity.
+  groupId: string, # Required. The group identity
+  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
 }
 </code></pre>
 </div>
@@ -2106,7 +1876,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeploymentAs
     <tr>
       <td>
         <span class="xref">Azure.Pageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+        <p><p>The Pageable&lt;BinaryData&gt; from the service containing a list of BinaryData objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -2119,35 +1889,15 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeploymentAs
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetDeploymentDevices_System_String_System_String_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">DeploymentDeviceStatesListValue</code>:</p>
 <pre><code>{
-  value: [
-    {
-      deviceId: string,
-      moduleId: string,
-      retryCount: number,
-      movedOnToNewDeployment: boolean,
-      deviceState: "Succeeded" | "InProgress" | "Failed" | "Canceled" | "Incompatible"
-    }
-  ],
-  nextLink: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  deviceId: string, # Required. Device identity.
+  moduleId: string, # Optional. Device module identity.
+  retryCount: number, # Required. The number of times this deployment has been retried on this device.
+  movedOnToNewDeployment: boolean, # Required. Boolean flag indicating whether this device is in a newer deployment and can no longer retry this deployment.
+  deviceState: "Succeeded" | "InProgress" | "Failed" | "Canceled" | "Incompatible", # Required. Deployment device state.
 }
 </code></pre>
 </div>
@@ -2236,7 +1986,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeploymentAs
     <tr>
       <td>
         <span class="xref">Azure.AsyncPageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+        <p><p>The AsyncPageable&lt;BinaryData&gt; from the service containing a list of BinaryData objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -2249,35 +1999,15 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeploymentAs
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetDeploymentDevicesAsync_System_String_System_String_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">DeploymentDeviceStatesListValue</code>:</p>
 <pre><code>{
-  value: [
-    {
-      deviceId: string,
-      moduleId: string,
-      retryCount: number,
-      movedOnToNewDeployment: boolean,
-      deviceState: "Succeeded" | "InProgress" | "Failed" | "Canceled" | "Incompatible"
-    }
-  ],
-  nextLink: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  deviceId: string, # Required. Device identity.
+  moduleId: string, # Optional. Device module identity.
+  retryCount: number, # Required. The number of times this deployment has been retried on this device.
+  movedOnToNewDeployment: boolean, # Required. Boolean flag indicating whether this device is in a newer deployment and can no longer retry this deployment.
+  deviceState: "Succeeded" | "InProgress" | "Failed" | "Canceled" | "Incompatible", # Required. Deployment device state.
 }
 </code></pre>
 </div>
@@ -2358,7 +2088,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeploymentAs
     <tr>
       <td>
         <span class="xref">Azure.Pageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+        <p><p>The Pageable&lt;BinaryData&gt; from the service containing a list of BinaryData objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -2371,40 +2101,20 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeploymentAs
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetDeploymentsForGroups_System_String_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">DeploymentsListValue</code>:</p>
 <pre><code>{
-  value: [
-    {
-      deploymentId: string,
-      startDateTime: string (ISO 8601 Format),
-      updateId: {
-        provider: string,
-        name: string,
-        version: string
-      },
-      groupId: string,
-      isCanceled: boolean,
-      isRetried: boolean
-    }
-  ],
-  nextLink: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  deploymentId: string, # Required. The deployment identifier.
+  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
+  updateId: {
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Required. Update identity.
+  groupId: string, # Required. The group identity
+  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
 }
 </code></pre>
 </div>
@@ -2485,7 +2195,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeploymentAs
     <tr>
       <td>
         <span class="xref">Azure.AsyncPageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+        <p><p>The AsyncPageable&lt;BinaryData&gt; from the service containing a list of BinaryData objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -2498,40 +2208,20 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeploymentAs
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetDeploymentsForGroupsAsync_System_String_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">DeploymentsListValue</code>:</p>
 <pre><code>{
-  value: [
-    {
-      deploymentId: string,
-      startDateTime: string (ISO 8601 Format),
-      updateId: {
-        provider: string,
-        name: string,
-        version: string
-      },
-      groupId: string,
-      isCanceled: boolean,
-      isRetried: boolean
-    }
-  ],
-  nextLink: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  deploymentId: string, # Required. The deployment identifier.
+  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
+  updateId: {
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Required. Update identity.
+  groupId: string, # Required. The group identity
+  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
 }
 </code></pre>
 </div>
@@ -2625,31 +2315,16 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeploymentAs
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetDeploymentStatus_System_String_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">DeploymentStatus</code>:</p>
 <pre><code>{
-  deploymentState: "Active" | "Inactive" | "Canceled",
-  totalDevices: number,
-  devicesInProgressCount: number,
-  devicesCompletedFailedCount: number,
-  devicesCompletedSucceededCount: number,
-  devicesCanceledCount: number
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  deploymentState: "Active" | "Inactive" | "Canceled", # Required. The state of the deployment.
+  totalDevices: number, # Optional. The total number of devices in the deployment.
+  devicesInProgressCount: number, # Optional. The number of devices that are currently in deployment.
+  devicesCompletedFailedCount: number, # Optional. The number of devices that have completed deployment with a failure.
+  devicesCompletedSucceededCount: number, # Optional. The number of devices which have successfully completed deployment.
+  devicesCanceledCount: number, # Optional. The number of devices which have had their deployment canceled.
 }
 </code></pre>
 </div>
@@ -2744,31 +2419,16 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeploymentSt
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetDeploymentStatusAsync_System_String_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">DeploymentStatus</code>:</p>
 <pre><code>{
-  deploymentState: "Active" | "Inactive" | "Canceled",
-  totalDevices: number,
-  devicesInProgressCount: number,
-  devicesCompletedFailedCount: number,
-  devicesCompletedSucceededCount: number,
-  devicesCanceledCount: number
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  deploymentState: "Active" | "Inactive" | "Canceled", # Required. The state of the deployment.
+  totalDevices: number, # Optional. The total number of devices in the deployment.
+  devicesInProgressCount: number, # Optional. The number of devices that are currently in deployment.
+  devicesCompletedFailedCount: number, # Optional. The number of devices that have completed deployment with a failure.
+  devicesCompletedSucceededCount: number, # Optional. The number of devices which have successfully completed deployment.
+  devicesCanceledCount: number, # Optional. The number of devices which have had their deployment canceled.
 }
 </code></pre>
 </div>
@@ -2854,54 +2514,39 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeploymentSt
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetDevice_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Device</code>:</p>
 <pre><code>{
-  deviceId: string,
-  moduleId: string,
-  deviceClassId: string,
-  manufacturer: string,
-  model: string,
-  groupId: string,
+  deviceId: string, # Required. Device identity.
+  moduleId: string, # Optional. Device module identity.
+  deviceClassId: string, # Required. Device class identity.
+  manufacturer: string, # Required. Device manufacturer.
+  model: string, # Required. Device model.
+  groupId: string, # Optional. Device group identity.
   lastAttemptedUpdateId: {
-    provider: string,
-    name: string,
-    version: string
-  },
-  deploymentStatus: "Succeeded" | "InProgress" | "Failed" | "Canceled" | "Incompatible",
-  installedUpdateId: UpdateId,
-  onLatestUpdate: boolean,
-  lastDeploymentId: string,
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Optional. Update identity.
+  deploymentStatus: "Succeeded" | "InProgress" | "Failed" | "Canceled" | "Incompatible", # Optional. State of the device in its last deployment.
+  installedUpdateId: UpdateId, # Optional. Update identity.
+  onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update is installed on the device
+  lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
   lastInstallResult: {
-    resultCode: number,
-    extendedResultCode: number,
-    resultDetails: string,
+    resultCode: number, # Required. Install result code.
+    extendedResultCode: number, # Required. Install extended result code
+    resultDetails: string, # Optional. A string containing further details about the install result
     stepResults: [
       {
-        updateId: UpdateId,
-        description: string,
-        resultCode: number,
-        extendedResultCode: number,
-        resultDetails: string
+        updateId: UpdateId, # Optional. It is update id for update steps; otherwise it is null.
+        description: string, # Optional. Step description. It might be null for update steps.
+        resultCode: number, # Required. Install result code.
+        extendedResultCode: number, # Required. Install extended result code
+        resultDetails: string, # Optional. A string containing further details about the install result
       }
-    ]
-  }
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+    ], # Optional. Array of step results
+  }, # Optional. Last install result.
 }
 </code></pre>
 </div>
@@ -2988,54 +2633,39 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeviceAsync 
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetDeviceAsync_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Device</code>:</p>
 <pre><code>{
-  deviceId: string,
-  moduleId: string,
-  deviceClassId: string,
-  manufacturer: string,
-  model: string,
-  groupId: string,
+  deviceId: string, # Required. Device identity.
+  moduleId: string, # Optional. Device module identity.
+  deviceClassId: string, # Required. Device class identity.
+  manufacturer: string, # Required. Device manufacturer.
+  model: string, # Required. Device model.
+  groupId: string, # Optional. Device group identity.
   lastAttemptedUpdateId: {
-    provider: string,
-    name: string,
-    version: string
-  },
-  deploymentStatus: "Succeeded" | "InProgress" | "Failed" | "Canceled" | "Incompatible",
-  installedUpdateId: UpdateId,
-  onLatestUpdate: boolean,
-  lastDeploymentId: string,
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Optional. Update identity.
+  deploymentStatus: "Succeeded" | "InProgress" | "Failed" | "Canceled" | "Incompatible", # Optional. State of the device in its last deployment.
+  installedUpdateId: UpdateId, # Optional. Update identity.
+  onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update is installed on the device
+  lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
   lastInstallResult: {
-    resultCode: number,
-    extendedResultCode: number,
-    resultDetails: string,
+    resultCode: number, # Required. Install result code.
+    extendedResultCode: number, # Required. Install extended result code
+    resultDetails: string, # Optional. A string containing further details about the install result
     stepResults: [
       {
-        updateId: UpdateId,
-        description: string,
-        resultCode: number,
-        extendedResultCode: number,
-        resultDetails: string
+        updateId: UpdateId, # Optional. It is update id for update steps; otherwise it is null.
+        description: string, # Optional. Step description. It might be null for update steps.
+        resultCode: number, # Required. Install result code.
+        extendedResultCode: number, # Required. Install extended result code
+        resultDetails: string, # Optional. A string containing further details about the install result
       }
-    ]
-  }
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+    ], # Optional. Array of step results
+  }, # Optional. Last install result.
 }
 </code></pre>
 </div>
@@ -3121,32 +2751,17 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeviceAsync 
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetDeviceClass_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">DeviceClass</code>:</p>
 <pre><code>{
-  deviceClassId: string,
-  compatProperties: Dictionary&lt;string, string&gt;,
+  deviceClassId: string, # Required. The device class identifier.
+  compatProperties: Dictionary&lt;string, string&gt;, # Required. The compat properties of the device class. This object can be thought of as a set of key-value pairs where the key is the name of the compatibility property and the value is the value of the compatibility property. There will always be at least 1 compat property
   bestCompatibleUpdateId: {
-    provider: string,
-    name: string,
-    version: string
-  }
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Required. Update identity.
 }
 </code></pre>
 </div>
@@ -3233,32 +2848,17 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeviceClassA
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetDeviceClassAsync_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">DeviceClass</code>:</p>
 <pre><code>{
-  deviceClassId: string,
-  compatProperties: Dictionary&lt;string, string&gt;,
+  deviceClassId: string, # Required. The device class identifier.
+  compatProperties: Dictionary&lt;string, string&gt;, # Required. The compat properties of the device class. This object can be thought of as a set of key-value pairs where the key is the name of the compatibility property and the value is the value of the compatibility property. There will always be at least 1 compat property
   bestCompatibleUpdateId: {
-    provider: string,
-    name: string,
-    version: string
-  }
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Required. Update identity.
 }
 </code></pre>
 </div>
@@ -3323,7 +2923,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeviceClassA
     <tr>
       <td>
         <span class="xref">Azure.Pageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+        <p><p>The Pageable&lt;BinaryData&gt; from the service containing a list of BinaryData objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -3336,37 +2936,17 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeviceClassA
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetDeviceClasses_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">DeviceClassesListValue</code>:</p>
 <pre><code>{
-  value: [
-    {
-      deviceClassId: string,
-      compatProperties: Dictionary&lt;string, string&gt;,
-      bestCompatibleUpdateId: {
-        provider: string,
-        name: string,
-        version: string
-      }
-    }
-  ],
-  nextLink: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  deviceClassId: string, # Required. The device class identifier.
+  compatProperties: Dictionary&lt;string, string&gt;, # Required. The compat properties of the device class. This object can be thought of as a set of key-value pairs where the key is the name of the compatibility property and the value is the value of the compatibility property. There will always be at least 1 compat property
+  bestCompatibleUpdateId: {
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Required. Update identity.
 }
 </code></pre>
 </div>
@@ -3417,7 +2997,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeviceClassA
     <tr>
       <td>
         <span class="xref">Azure.AsyncPageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+        <p><p>The AsyncPageable&lt;BinaryData&gt; from the service containing a list of BinaryData objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -3430,37 +3010,17 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeviceClassA
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetDeviceClassesAsync_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">DeviceClassesListValue</code>:</p>
 <pre><code>{
-  value: [
-    {
-      deviceClassId: string,
-      compatProperties: Dictionary&lt;string, string&gt;,
-      bestCompatibleUpdateId: {
-        provider: string,
-        name: string,
-        version: string
-      }
-    }
-  ],
-  nextLink: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  deviceClassId: string, # Required. The device class identifier.
+  compatProperties: Dictionary&lt;string, string&gt;, # Required. The compat properties of the device class. This object can be thought of as a set of key-value pairs where the key is the name of the compatibility property and the value is the value of the compatibility property. There will always be at least 1 compat property
+  bestCompatibleUpdateId: {
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Required. Update identity.
 }
 </code></pre>
 </div>
@@ -3540,54 +3100,39 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeviceClassA
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetDeviceModule_System_String_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Device</code>:</p>
 <pre><code>{
-  deviceId: string,
-  moduleId: string,
-  deviceClassId: string,
-  manufacturer: string,
-  model: string,
-  groupId: string,
+  deviceId: string, # Required. Device identity.
+  moduleId: string, # Optional. Device module identity.
+  deviceClassId: string, # Required. Device class identity.
+  manufacturer: string, # Required. Device manufacturer.
+  model: string, # Required. Device model.
+  groupId: string, # Optional. Device group identity.
   lastAttemptedUpdateId: {
-    provider: string,
-    name: string,
-    version: string
-  },
-  deploymentStatus: "Succeeded" | "InProgress" | "Failed" | "Canceled" | "Incompatible",
-  installedUpdateId: UpdateId,
-  onLatestUpdate: boolean,
-  lastDeploymentId: string,
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Optional. Update identity.
+  deploymentStatus: "Succeeded" | "InProgress" | "Failed" | "Canceled" | "Incompatible", # Optional. State of the device in its last deployment.
+  installedUpdateId: UpdateId, # Optional. Update identity.
+  onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update is installed on the device
+  lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
   lastInstallResult: {
-    resultCode: number,
-    extendedResultCode: number,
-    resultDetails: string,
+    resultCode: number, # Required. Install result code.
+    extendedResultCode: number, # Required. Install extended result code
+    resultDetails: string, # Optional. A string containing further details about the install result
     stepResults: [
       {
-        updateId: UpdateId,
-        description: string,
-        resultCode: number,
-        extendedResultCode: number,
-        resultDetails: string
+        updateId: UpdateId, # Optional. It is update id for update steps; otherwise it is null.
+        description: string, # Optional. Step description. It might be null for update steps.
+        resultCode: number, # Required. Install result code.
+        extendedResultCode: number, # Required. Install extended result code
+        resultDetails: string, # Optional. A string containing further details about the install result
       }
-    ]
-  }
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+    ], # Optional. Array of step results
+  }, # Optional. Last install result.
 }
 </code></pre>
 </div>
@@ -3682,54 +3227,39 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeviceModule
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetDeviceModuleAsync_System_String_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Device</code>:</p>
 <pre><code>{
-  deviceId: string,
-  moduleId: string,
-  deviceClassId: string,
-  manufacturer: string,
-  model: string,
-  groupId: string,
+  deviceId: string, # Required. Device identity.
+  moduleId: string, # Optional. Device module identity.
+  deviceClassId: string, # Required. Device class identity.
+  manufacturer: string, # Required. Device manufacturer.
+  model: string, # Required. Device model.
+  groupId: string, # Optional. Device group identity.
   lastAttemptedUpdateId: {
-    provider: string,
-    name: string,
-    version: string
-  },
-  deploymentStatus: "Succeeded" | "InProgress" | "Failed" | "Canceled" | "Incompatible",
-  installedUpdateId: UpdateId,
-  onLatestUpdate: boolean,
-  lastDeploymentId: string,
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Optional. Update identity.
+  deploymentStatus: "Succeeded" | "InProgress" | "Failed" | "Canceled" | "Incompatible", # Optional. State of the device in its last deployment.
+  installedUpdateId: UpdateId, # Optional. Update identity.
+  onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update is installed on the device
+  lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
   lastInstallResult: {
-    resultCode: number,
-    extendedResultCode: number,
-    resultDetails: string,
+    resultCode: number, # Required. Install result code.
+    extendedResultCode: number, # Required. Install extended result code
+    resultDetails: string, # Optional. A string containing further details about the install result
     stepResults: [
       {
-        updateId: UpdateId,
-        description: string,
-        resultCode: number,
-        extendedResultCode: number,
-        resultDetails: string
+        updateId: UpdateId, # Optional. It is update id for update steps; otherwise it is null.
+        description: string, # Optional. Step description. It might be null for update steps.
+        resultCode: number, # Required. Install result code.
+        extendedResultCode: number, # Required. Install extended result code
+        resultDetails: string, # Optional. A string containing further details about the install result
       }
-    ]
-  }
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+    ], # Optional. Array of step results
+  }, # Optional. Last install result.
 }
 </code></pre>
 </div>
@@ -3802,7 +3332,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeviceModule
     <tr>
       <td>
         <span class="xref">Azure.Pageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+        <p><p>The Pageable&lt;BinaryData&gt; from the service containing a list of BinaryData objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -3815,59 +3345,39 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeviceModule
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetDevices_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">DevicesListValue</code>:</p>
 <pre><code>{
-  value: [
-    {
-      deviceId: string,
-      moduleId: string,
-      deviceClassId: string,
-      manufacturer: string,
-      model: string,
-      groupId: string,
-      lastAttemptedUpdateId: {
-        provider: string,
-        name: string,
-        version: string
-      },
-      deploymentStatus: "Succeeded" | "InProgress" | "Failed" | "Canceled" | "Incompatible",
-      installedUpdateId: UpdateId,
-      onLatestUpdate: boolean,
-      lastDeploymentId: string,
-      lastInstallResult: {
-        resultCode: number,
-        extendedResultCode: number,
-        resultDetails: string,
-        stepResults: [
-          {
-            updateId: UpdateId,
-            description: string,
-            resultCode: number,
-            extendedResultCode: number,
-            resultDetails: string
-          }
-        ]
+  deviceId: string, # Required. Device identity.
+  moduleId: string, # Optional. Device module identity.
+  deviceClassId: string, # Required. Device class identity.
+  manufacturer: string, # Required. Device manufacturer.
+  model: string, # Required. Device model.
+  groupId: string, # Optional. Device group identity.
+  lastAttemptedUpdateId: {
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Optional. Update identity.
+  deploymentStatus: "Succeeded" | "InProgress" | "Failed" | "Canceled" | "Incompatible", # Optional. State of the device in its last deployment.
+  installedUpdateId: UpdateId, # Optional. Update identity.
+  onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update is installed on the device
+  lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
+  lastInstallResult: {
+    resultCode: number, # Required. Install result code.
+    extendedResultCode: number, # Required. Install extended result code
+    resultDetails: string, # Optional. A string containing further details about the install result
+    stepResults: [
+      {
+        updateId: UpdateId, # Optional. It is update id for update steps; otherwise it is null.
+        description: string, # Optional. Step description. It might be null for update steps.
+        resultCode: number, # Required. Install result code.
+        extendedResultCode: number, # Required. Install extended result code
+        resultDetails: string, # Optional. A string containing further details about the install result
       }
-    }
-  ],
-  nextLink: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+    ], # Optional. Array of step results
+  }, # Optional. Last install result.
 }
 </code></pre>
 </div>
@@ -3926,7 +3436,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeviceModule
     <tr>
       <td>
         <span class="xref">Azure.AsyncPageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+        <p><p>The AsyncPageable&lt;BinaryData&gt; from the service containing a list of BinaryData objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -3939,59 +3449,39 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeviceModule
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetDevicesAsync_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">DevicesListValue</code>:</p>
 <pre><code>{
-  value: [
-    {
-      deviceId: string,
-      moduleId: string,
-      deviceClassId: string,
-      manufacturer: string,
-      model: string,
-      groupId: string,
-      lastAttemptedUpdateId: {
-        provider: string,
-        name: string,
-        version: string
-      },
-      deploymentStatus: "Succeeded" | "InProgress" | "Failed" | "Canceled" | "Incompatible",
-      installedUpdateId: UpdateId,
-      onLatestUpdate: boolean,
-      lastDeploymentId: string,
-      lastInstallResult: {
-        resultCode: number,
-        extendedResultCode: number,
-        resultDetails: string,
-        stepResults: [
-          {
-            updateId: UpdateId,
-            description: string,
-            resultCode: number,
-            extendedResultCode: number,
-            resultDetails: string
-          }
-        ]
+  deviceId: string, # Required. Device identity.
+  moduleId: string, # Optional. Device module identity.
+  deviceClassId: string, # Required. Device class identity.
+  manufacturer: string, # Required. Device manufacturer.
+  model: string, # Required. Device model.
+  groupId: string, # Optional. Device group identity.
+  lastAttemptedUpdateId: {
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Optional. Update identity.
+  deploymentStatus: "Succeeded" | "InProgress" | "Failed" | "Canceled" | "Incompatible", # Optional. State of the device in its last deployment.
+  installedUpdateId: UpdateId, # Optional. Update identity.
+  onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update is installed on the device
+  lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
+  lastInstallResult: {
+    resultCode: number, # Required. Install result code.
+    extendedResultCode: number, # Required. Install extended result code
+    resultDetails: string, # Optional. A string containing further details about the install result
+    stepResults: [
+      {
+        updateId: UpdateId, # Optional. It is update id for update steps; otherwise it is null.
+        description: string, # Optional. Step description. It might be null for update steps.
+        resultCode: number, # Required. Install result code.
+        extendedResultCode: number, # Required. Install extended result code
+        resultDetails: string, # Optional. A string containing further details about the install result
       }
-    }
-  ],
-  nextLink: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+    ], # Optional. Array of step results
+  }, # Optional. Last install result.
 }
 </code></pre>
 </div>
@@ -4063,27 +3553,12 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeviceModule
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetDeviceTag_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">DeviceTag</code>:</p>
 <pre><code>{
-  tagName: string,
-  deviceCount: number
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  tagName: string, # Required. Tag name.
+  deviceCount: number, # Required. Number of devices with this tag.
 }
 </code></pre>
 </div>
@@ -4170,27 +3645,12 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeviceTagAsy
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetDeviceTagAsync_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">DeviceTag</code>:</p>
 <pre><code>{
-  tagName: string,
-  deviceCount: number
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  tagName: string, # Required. Tag name.
+  deviceCount: number, # Required. Number of devices with this tag.
 }
 </code></pre>
 </div>
@@ -4255,7 +3715,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeviceTagAsy
     <tr>
       <td>
         <span class="xref">Azure.Pageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+        <p><p>The Pageable&lt;BinaryData&gt; from the service containing a list of BinaryData objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -4268,32 +3728,12 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeviceTagAsy
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetDeviceTags_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">DeviceTagsListValue</code>:</p>
 <pre><code>{
-  value: [
-    {
-      tagName: string,
-      deviceCount: number
-    }
-  ],
-  nextLink: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  tagName: string, # Required. Tag name.
+  deviceCount: number, # Required. Number of devices with this tag.
 }
 </code></pre>
 </div>
@@ -4344,7 +3784,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeviceTagAsy
     <tr>
       <td>
         <span class="xref">Azure.AsyncPageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+        <p><p>The AsyncPageable&lt;BinaryData&gt; from the service containing a list of BinaryData objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -4357,32 +3797,12 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeviceTagAsy
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetDeviceTagsAsync_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">DeviceTagsListValue</code>:</p>
 <pre><code>{
-  value: [
-    {
-      tagName: string,
-      deviceCount: number
-    }
-  ],
-  nextLink: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  tagName: string, # Required. Tag name.
+  deviceCount: number, # Required. Number of devices with this tag.
 }
 </code></pre>
 </div>
@@ -4454,32 +3874,17 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetDeviceTagAsy
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetGroup_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Group</code>:</p>
 <pre><code>{
-  groupId: string,
-  groupType: "DeviceClassIdAndIoTHubTag" | "InvalidDeviceClassIdAndIoTHubTag" | "DefaultDeviceClassId",
-  tags: [string],
-  createdDateTime: string,
-  deviceCount: number,
-  deploymentId: string,
-  deviceClassId: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  groupId: string, # Required. Group identity.
+  groupType: "DeviceClassIdAndIoTHubTag" | "InvalidDeviceClassIdAndIoTHubTag" | "DefaultDeviceClassId", # Required. Group type.
+  tags: [string], # Required. IoT Hub tags.
+  createdDateTime: string, # Required. Date and time when the update was created.
+  deviceCount: number, # Optional. The number of devices in the group.
+  deploymentId: string, # Optional. The deployment Id for the group.
+  deviceClassId: string, # Optional. The device class Id for the group.
 }
 </code></pre>
 </div>
@@ -4566,32 +3971,17 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetGroupAsync (
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetGroupAsync_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Group</code>:</p>
 <pre><code>{
-  groupId: string,
-  groupType: "DeviceClassIdAndIoTHubTag" | "InvalidDeviceClassIdAndIoTHubTag" | "DefaultDeviceClassId",
-  tags: [string],
-  createdDateTime: string,
-  deviceCount: number,
-  deploymentId: string,
-  deviceClassId: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  groupId: string, # Required. Group identity.
+  groupType: "DeviceClassIdAndIoTHubTag" | "InvalidDeviceClassIdAndIoTHubTag" | "DefaultDeviceClassId", # Required. Group type.
+  tags: [string], # Required. IoT Hub tags.
+  createdDateTime: string, # Required. Date and time when the update was created.
+  deviceCount: number, # Optional. The number of devices in the group.
+  deploymentId: string, # Optional. The deployment Id for the group.
+  deviceClassId: string, # Optional. The device class Id for the group.
 }
 </code></pre>
 </div>
@@ -4656,7 +4046,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetGroupAsync (
     <tr>
       <td>
         <span class="xref">Azure.Pageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+        <p><p>The Pageable&lt;BinaryData&gt; from the service containing a list of BinaryData objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -4669,37 +4059,17 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetGroupAsync (
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetGroups_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">GroupsListValue</code>:</p>
 <pre><code>{
-  value: [
-    {
-      groupId: string,
-      groupType: "DeviceClassIdAndIoTHubTag" | "InvalidDeviceClassIdAndIoTHubTag" | "DefaultDeviceClassId",
-      tags: [string],
-      createdDateTime: string,
-      deviceCount: number,
-      deploymentId: string,
-      deviceClassId: string
-    }
-  ],
-  nextLink: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  groupId: string, # Required. Group identity.
+  groupType: "DeviceClassIdAndIoTHubTag" | "InvalidDeviceClassIdAndIoTHubTag" | "DefaultDeviceClassId", # Required. Group type.
+  tags: [string], # Required. IoT Hub tags.
+  createdDateTime: string, # Required. Date and time when the update was created.
+  deviceCount: number, # Optional. The number of devices in the group.
+  deploymentId: string, # Optional. The deployment Id for the group.
+  deviceClassId: string, # Optional. The device class Id for the group.
 }
 </code></pre>
 </div>
@@ -4750,7 +4120,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetGroupAsync (
     <tr>
       <td>
         <span class="xref">Azure.AsyncPageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+        <p><p>The AsyncPageable&lt;BinaryData&gt; from the service containing a list of BinaryData objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -4763,37 +4133,17 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetGroupAsync (
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetGroupsAsync_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">GroupsListValue</code>:</p>
 <pre><code>{
-  value: [
-    {
-      groupId: string,
-      groupType: "DeviceClassIdAndIoTHubTag" | "InvalidDeviceClassIdAndIoTHubTag" | "DefaultDeviceClassId",
-      tags: [string],
-      createdDateTime: string,
-      deviceCount: number,
-      deploymentId: string,
-      deviceClassId: string
-    }
-  ],
-  nextLink: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  groupId: string, # Required. Group identity.
+  groupType: "DeviceClassIdAndIoTHubTag" | "InvalidDeviceClassIdAndIoTHubTag" | "DefaultDeviceClassId", # Required. Group type.
+  tags: [string], # Required. IoT Hub tags.
+  createdDateTime: string, # Required. Date and time when the update was created.
+  deviceCount: number, # Optional. The number of devices in the group.
+  deploymentId: string, # Optional. The deployment Id for the group.
+  deviceClassId: string, # Optional. The device class Id for the group.
 }
 </code></pre>
 </div>
@@ -4865,29 +4215,14 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetGroupAsync (
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetGroupUpdateCompliance_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">UpdateCompliance</code>:</p>
 <pre><code>{
-  totalDeviceCount: number,
-  onLatestUpdateDeviceCount: number,
-  newUpdatesAvailableDeviceCount: number,
-  updatesInProgressDeviceCount: number
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  totalDeviceCount: number, # Required. Total number of devices.
+  onLatestUpdateDeviceCount: number, # Required. Number of devices on the latest update.
+  newUpdatesAvailableDeviceCount: number, # Required. Number of devices with a newer update available.
+  updatesInProgressDeviceCount: number, # Required. Number of devices with update in-progress.
 }
 </code></pre>
 </div>
@@ -4974,29 +4309,14 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetGroupUpdateC
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetGroupUpdateComplianceAsync_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">UpdateCompliance</code>:</p>
 <pre><code>{
-  totalDeviceCount: number,
-  onLatestUpdateDeviceCount: number,
-  newUpdatesAvailableDeviceCount: number,
-  updatesInProgressDeviceCount: number
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  totalDeviceCount: number, # Required. Total number of devices.
+  onLatestUpdateDeviceCount: number, # Required. Number of devices on the latest update.
+  newUpdatesAvailableDeviceCount: number, # Required. Number of devices with a newer update available.
+  updatesInProgressDeviceCount: number, # Required. Number of devices with update in-progress.
 }
 </code></pre>
 </div>
@@ -5069,7 +4389,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetGroupUpdateC
     <tr>
       <td>
         <span class="xref">Azure.Pageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+        <p><p>The Pageable&lt;BinaryData&gt; from the service containing a list of BinaryData objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -5082,33 +4402,13 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetGroupUpdateC
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetInstallableUpdatesForDeviceClasses_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">UpdateIdsListValue</code>:</p>
 <pre><code>{
-  value: [
-    {
-      provider: string,
-      name: string,
-      version: string
-    }
-  ],
-  nextLink: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  provider: string, # Required. Update provider.
+  name: string, # Required. Update name.
+  version: string, # Required. Update version.
 }
 </code></pre>
 </div>
@@ -5181,7 +4481,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetGroupUpdateC
     <tr>
       <td>
         <span class="xref">Azure.AsyncPageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+        <p><p>The AsyncPageable&lt;BinaryData&gt; from the service containing a list of BinaryData objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -5194,33 +4494,13 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetGroupUpdateC
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetInstallableUpdatesForDeviceClassesAsync_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">UpdateIdsListValue</code>:</p>
 <pre><code>{
-  value: [
-    {
-      provider: string,
-      name: string,
-      version: string
-    }
-  ],
-  nextLink: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  provider: string, # Required. Update provider.
+  name: string, # Required. Update name.
+  version: string, # Required. Update version.
 }
 </code></pre>
 </div>
@@ -5306,36 +4586,21 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetGroupUpdateC
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetLogCollectionOperation_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LogCollectionOperation</code>:</p>
 <pre><code>{
-  operationId: string,
+  operationId: string, # Optional. The diagnostics operation id.
   deviceList: [
     {
-      deviceId: string,
-      moduleId: string
+      deviceId: string, # Required. Device Id
+      moduleId: string, # Optional. Module Id
     }
-  ],
-  description: string,
-  createdDateTime: string,
-  lastActionDateTime: string,
-  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed"
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  ], # Required. Array of Device Update agent ids
+  description: string, # Optional. Description of the diagnostics operation.
+  createdDateTime: string, # Optional. The timestamp when the operation was created.
+  lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
+  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed", # Optional. Operation status.
 }
 </code></pre>
 </div>
@@ -5422,36 +4687,21 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetLogCollectio
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetLogCollectionOperationAsync_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LogCollectionOperation</code>:</p>
 <pre><code>{
-  operationId: string,
+  operationId: string, # Optional. The diagnostics operation id.
   deviceList: [
     {
-      deviceId: string,
-      moduleId: string
+      deviceId: string, # Required. Device Id
+      moduleId: string, # Optional. Module Id
     }
-  ],
-  description: string,
-  createdDateTime: string,
-  lastActionDateTime: string,
-  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed"
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  ], # Required. Array of Device Update agent ids
+  description: string, # Optional. Description of the diagnostics operation.
+  createdDateTime: string, # Optional. The timestamp when the operation was created.
+  lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
+  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed", # Optional. Operation status.
 }
 </code></pre>
 </div>
@@ -5537,40 +4787,25 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetLogCollectio
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetLogCollectionOperationDetailedStatus_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LogCollectionOperationDetailedStatus</code>:</p>
 <pre><code>{
-  operationId: string,
-  createdDateTime: string,
-  lastActionDateTime: string,
-  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed",
+  operationId: string, # Optional. The device diagnostics operation id.
+  createdDateTime: string, # Optional. The timestamp when the operation was created.
+  lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
+  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed", # Optional. Operation status.
   deviceStatus: [
     {
-      deviceId: string,
-      moduleId: string,
-      status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed",
-      resultCode: string,
-      extendedResultCode: string,
-      logLocation: string
+      deviceId: string, # Required. Device id
+      moduleId: string, # Optional. Module id.
+      status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed", # Required. Log upload status
+      resultCode: string, # Optional. Log upload result code
+      extendedResultCode: string, # Optional. Log upload extended result code
+      logLocation: string, # Optional. Log upload location
     }
-  ],
-  description: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  ], # Optional. Status of the devices in the operation
+  description: string, # Optional. Device diagnostics operation description.
 }
 </code></pre>
 </div>
@@ -5657,40 +4892,25 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetLogCollectio
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetLogCollectionOperationDetailedStatusAsync_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LogCollectionOperationDetailedStatus</code>:</p>
 <pre><code>{
-  operationId: string,
-  createdDateTime: string,
-  lastActionDateTime: string,
-  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed",
+  operationId: string, # Optional. The device diagnostics operation id.
+  createdDateTime: string, # Optional. The timestamp when the operation was created.
+  lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
+  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed", # Optional. Operation status.
   deviceStatus: [
     {
-      deviceId: string,
-      moduleId: string,
-      status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed",
-      resultCode: string,
-      extendedResultCode: string,
-      logLocation: string
+      deviceId: string, # Required. Device id
+      moduleId: string, # Optional. Module id.
+      status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed", # Required. Log upload status
+      resultCode: string, # Optional. Log upload result code
+      extendedResultCode: string, # Optional. Log upload extended result code
+      logLocation: string, # Optional. Log upload location
     }
-  ],
-  description: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  ], # Optional. Status of the devices in the operation
+  description: string, # Optional. Device diagnostics operation description.
 }
 </code></pre>
 </div>
@@ -5755,7 +4975,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetLogCollectio
     <tr>
       <td>
         <span class="xref">Azure.Pageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+        <p><p>The Pageable&lt;BinaryData&gt; from the service containing a list of BinaryData objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -5768,41 +4988,21 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetLogCollectio
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetLogCollectionOperations_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LogCollectionOperationListValue</code>:</p>
 <pre><code>{
-  value: [
+  operationId: string, # Optional. The diagnostics operation id.
+  deviceList: [
     {
-      operationId: string,
-      deviceList: [
-        {
-          deviceId: string,
-          moduleId: string
-        }
-      ],
-      description: string,
-      createdDateTime: string,
-      lastActionDateTime: string,
-      status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed"
+      deviceId: string, # Required. Device Id
+      moduleId: string, # Optional. Module Id
     }
-  ],
-  nextLink: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  ], # Required. Array of Device Update agent ids
+  description: string, # Optional. Description of the diagnostics operation.
+  createdDateTime: string, # Optional. The timestamp when the operation was created.
+  lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
+  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed", # Optional. Operation status.
 }
 </code></pre>
 </div>
@@ -5853,7 +5053,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetLogCollectio
     <tr>
       <td>
         <span class="xref">Azure.AsyncPageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+        <p><p>The AsyncPageable&lt;BinaryData&gt; from the service containing a list of BinaryData objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -5866,41 +5066,21 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetLogCollectio
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetLogCollectionOperationsAsync_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LogCollectionOperationListValue</code>:</p>
 <pre><code>{
-  value: [
+  operationId: string, # Optional. The diagnostics operation id.
+  deviceList: [
     {
-      operationId: string,
-      deviceList: [
-        {
-          deviceId: string,
-          moduleId: string
-        }
-      ],
-      description: string,
-      createdDateTime: string,
-      lastActionDateTime: string,
-      status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed"
+      deviceId: string, # Required. Device Id
+      moduleId: string, # Optional. Module Id
     }
-  ],
-  nextLink: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  ], # Required. Array of Device Update agent ids
+  description: string, # Optional. Description of the diagnostics operation.
+  createdDateTime: string, # Optional. The timestamp when the operation was created.
+  lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
+  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed", # Optional. Operation status.
 }
 </code></pre>
 </div>
@@ -5980,44 +5160,29 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetLogCollectio
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetOperation_System_String_System_Nullable_Azure_ETag__Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">DeviceOperation</code>:</p>
 <pre><code>{
-  operationId: string,
-  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed",
+  operationId: string, # Required. Operation Id.
+  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed", # Required. Operation status.
   error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
+    code: string, # Required. Server defined error code.
+    message: string, # Required. A human-readable representation of the error.
+    target: string, # Optional. The target of the error.
+    details: [Error], # Optional. An array of errors that led to the reported error.
     innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  },
-  traceId: string,
-  lastActionDateTime: string (ISO 8601 Format),
-  createdDateTime: string (ISO 8601 Format),
-  etag: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+      code: string, # Required. A more specific error code than what was provided by the containing error.
+      message: string, # Optional. A human-readable representation of the error.
+      errorDetail: string, # Optional. The internal error or exception message.
+      innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
+    }, # Optional. An object containing more specific information than the current object about the error.
+    occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
+  }, # Optional. Operation error encountered, if any.
+  traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
+  lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
+  createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
+  etag: string, # Optional. Operation ETag.
 }
 </code></pre>
 </div>
@@ -6112,44 +5277,29 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetOperationAsy
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetOperationAsync_System_String_System_Nullable_Azure_ETag__Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">DeviceOperation</code>:</p>
 <pre><code>{
-  operationId: string,
-  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed",
+  operationId: string, # Required. Operation Id.
+  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed", # Required. Operation status.
   error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
+    code: string, # Required. Server defined error code.
+    message: string, # Required. A human-readable representation of the error.
+    target: string, # Optional. The target of the error.
+    details: [Error], # Optional. An array of errors that led to the reported error.
     innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  },
-  traceId: string,
-  lastActionDateTime: string (ISO 8601 Format),
-  createdDateTime: string (ISO 8601 Format),
-  etag: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+      code: string, # Required. A more specific error code than what was provided by the containing error.
+      message: string, # Optional. A human-readable representation of the error.
+      errorDetail: string, # Optional. The internal error or exception message.
+      innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
+    }, # Optional. An object containing more specific information than the current object about the error.
+    occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
+  }, # Optional. Operation error encountered, if any.
+  traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
+  lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
+  createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
+  etag: string, # Optional. Operation ETag.
 }
 </code></pre>
 </div>
@@ -6230,7 +5380,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetOperationAsy
     <tr>
       <td>
         <span class="xref">Azure.Pageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+        <p><p>The Pageable&lt;BinaryData&gt; from the service containing a list of BinaryData objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -6243,49 +5393,29 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetOperationAsy
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetOperations_System_String_System_Nullable_System_Int32__Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">DeviceOperationsListValue</code>:</p>
 <pre><code>{
-  value: [
-    {
-      operationId: string,
-      status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed",
-      error: {
-        code: string,
-        message: string,
-        target: string,
-        details: [Error],
-        innererror: {
-          code: string,
-          message: string,
-          errorDetail: string,
-          innerError: InnerError
-        },
-        occurredDateTime: string (ISO 8601 Format)
-      },
-      traceId: string,
-      lastActionDateTime: string (ISO 8601 Format),
-      createdDateTime: string (ISO 8601 Format),
-      etag: string
-    }
-  ],
-  nextLink: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
+  operationId: string, # Required. Operation Id.
+  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed", # Required. Operation status.
   error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
+    code: string, # Required. Server defined error code.
+    message: string, # Required. A human-readable representation of the error.
+    target: string, # Optional. The target of the error.
+    details: [Error], # Optional. An array of errors that led to the reported error.
     innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+      code: string, # Required. A more specific error code than what was provided by the containing error.
+      message: string, # Optional. A human-readable representation of the error.
+      errorDetail: string, # Optional. The internal error or exception message.
+      innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
+    }, # Optional. An object containing more specific information than the current object about the error.
+    occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
+  }, # Optional. Operation error encountered, if any.
+  traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
+  lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
+  createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
+  etag: string, # Optional. Operation ETag.
 }
 </code></pre>
 </div>
@@ -6352,7 +5482,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetOperationAsy
     <tr>
       <td>
         <span class="xref">Azure.AsyncPageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+        <p><p>The AsyncPageable&lt;BinaryData&gt; from the service containing a list of BinaryData objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -6365,49 +5495,29 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetOperationAsy
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetOperationsAsync_System_String_System_Nullable_System_Int32__Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">DeviceOperationsListValue</code>:</p>
 <pre><code>{
-  value: [
-    {
-      operationId: string,
-      status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed",
-      error: {
-        code: string,
-        message: string,
-        target: string,
-        details: [Error],
-        innererror: {
-          code: string,
-          message: string,
-          errorDetail: string,
-          innerError: InnerError
-        },
-        occurredDateTime: string (ISO 8601 Format)
-      },
-      traceId: string,
-      lastActionDateTime: string (ISO 8601 Format),
-      createdDateTime: string (ISO 8601 Format),
-      etag: string
-    }
-  ],
-  nextLink: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
+  operationId: string, # Required. Operation Id.
+  status: "Undefined" | "NotStarted" | "Running" | "Succeeded" | "Failed", # Required. Operation status.
   error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
+    code: string, # Required. Server defined error code.
+    message: string, # Required. A human-readable representation of the error.
+    target: string, # Optional. The target of the error.
+    details: [Error], # Optional. An array of errors that led to the reported error.
     innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+      code: string, # Required. A more specific error code than what was provided by the containing error.
+      message: string, # Optional. A human-readable representation of the error.
+      errorDetail: string, # Optional. The internal error or exception message.
+      innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
+    }, # Optional. An object containing more specific information than the current object about the error.
+    occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
+  }, # Optional. Operation error encountered, if any.
+  traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
+  lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
+  createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
+  etag: string, # Optional. Operation ETag.
 }
 </code></pre>
 </div>
@@ -6471,29 +5581,14 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetOperationAsy
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetUpdateCompliance_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">UpdateCompliance</code>:</p>
 <pre><code>{
-  totalDeviceCount: number,
-  onLatestUpdateDeviceCount: number,
-  newUpdatesAvailableDeviceCount: number,
-  updatesInProgressDeviceCount: number
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  totalDeviceCount: number, # Required. Total number of devices.
+  onLatestUpdateDeviceCount: number, # Required. Number of devices on the latest update.
+  newUpdatesAvailableDeviceCount: number, # Required. Number of devices with a newer update available.
+  updatesInProgressDeviceCount: number, # Required. Number of devices with update in-progress.
 }
 </code></pre>
 </div>
@@ -6558,29 +5653,14 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetUpdateCompli
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_GetUpdateComplianceAsync_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">UpdateCompliance</code>:</p>
 <pre><code>{
-  totalDeviceCount: number,
-  onLatestUpdateDeviceCount: number,
-  newUpdatesAvailableDeviceCount: number,
-  updatesInProgressDeviceCount: number
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+  totalDeviceCount: number, # Required. Total number of devices.
+  onLatestUpdateDeviceCount: number, # Required. Number of devices on the latest update.
+  newUpdatesAvailableDeviceCount: number, # Required. Number of devices with a newer update available.
+  updatesInProgressDeviceCount: number, # Required. Number of devices with update in-progress.
 }
 </code></pre>
 </div>
@@ -6655,7 +5735,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetUpdateCompli
     <tr>
       <td>
         <span class="xref">Azure.Operation</span>
-        <p><p>The response returned from the service.</p>
+        <p><p>The Operation representing an asynchronous operation on the service.</p>
 </p>
       </td>
     </tr>
@@ -6667,25 +5747,6 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetUpdateCompli
   
   
   
-  <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_ImportDevices_Azure_WaitUntil_System_String_Azure_Core_RequestContent_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
-}
-</code></pre>
-</div>
   
   
   <h5 class="exceptions">Exceptions</h5>
@@ -6765,7 +5826,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Operation&gt; ImportDevicesA
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Operation</span>&gt;
-        <p><p>The response returned from the service.</p>
+        <p><p>The Operation representing an asynchronous operation on the service.</p>
 </p>
       </td>
     </tr>
@@ -6777,25 +5838,6 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Operation&gt; ImportDevicesA
   
   
   
-  <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_ImportDevicesAsync_Azure_WaitUntil_System_String_Azure_Core_RequestContent_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
-}
-</code></pre>
-</div>
   
   
   <h5 class="exceptions">Exceptions</h5>
@@ -6887,35 +5929,20 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Operation&gt; ImportDevicesA
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_RetryDeployment_System_String_System_String_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Deployment</code>:</p>
 <pre><code>{
-  deploymentId: string,
-  startDateTime: string (ISO 8601 Format),
+  deploymentId: string, # Required. The deployment identifier.
+  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
   updateId: {
-    provider: string,
-    name: string,
-    version: string
-  },
-  groupId: string,
-  isCanceled: boolean,
-  isRetried: boolean
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Required. Update identity.
+  groupId: string, # Required. The group identity
+  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
 }
 </code></pre>
 </div>
@@ -7018,35 +6045,20 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; RetryDeployment
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_RetryDeploymentAsync_System_String_System_String_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Deployment</code>:</p>
 <pre><code>{
-  deploymentId: string,
-  startDateTime: string (ISO 8601 Format),
+  deploymentId: string, # Required. The deployment identifier.
+  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
   updateId: {
-    provider: string,
-    name: string,
-    version: string
-  },
-  groupId: string,
-  isCanceled: boolean,
-  isRetried: boolean
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Required. Update identity.
+  groupId: string, # Required. The group identity
+  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
 }
 </code></pre>
 </div>
@@ -7148,35 +6160,20 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; RetryDeployment
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_StopDeployment_System_String_System_String_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Deployment</code>:</p>
 <pre><code>{
-  deploymentId: string,
-  startDateTime: string (ISO 8601 Format),
+  deploymentId: string, # Required. The deployment identifier.
+  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
   updateId: {
-    provider: string,
-    name: string,
-    version: string
-  },
-  groupId: string,
-  isCanceled: boolean,
-  isRetried: boolean
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Required. Update identity.
+  groupId: string, # Required. The group identity
+  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
 }
 </code></pre>
 </div>
@@ -7279,35 +6276,20 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; StopDeploymentA
   
   
   <h5 id="Azure_IoT_DeviceUpdate_DeviceManagementClient_StopDeploymentAsync_System_String_System_String_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Deployment</code>:</p>
 <pre><code>{
-  deploymentId: string,
-  startDateTime: string (ISO 8601 Format),
+  deploymentId: string, # Required. The deployment identifier.
+  startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
   updateId: {
-    provider: string,
-    name: string,
-    version: string
-  },
-  groupId: string,
-  isCanceled: boolean,
-  isRetried: boolean
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [Error],
-    innererror: {
-      code: string,
-      message: string,
-      errorDetail: string,
-      innerError: InnerError
-    },
-    occurredDateTime: string (ISO 8601 Format)
-  }
+    provider: string, # Required. Update provider.
+    name: string, # Required. Update name.
+    version: string, # Required. Update version.
+  }, # Required. Update identity.
+  groupId: string, # Required. The group identity
+  isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+  isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
 }
 </code></pre>
 </div>

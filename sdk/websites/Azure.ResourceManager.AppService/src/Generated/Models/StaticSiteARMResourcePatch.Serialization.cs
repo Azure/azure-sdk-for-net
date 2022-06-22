@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(RepositoryUri))
             {
                 writer.WritePropertyName("repositoryUrl");
-                writer.WriteStringValue(RepositoryUri.AbsoluteUri);
+                writer.WriteStringValue(RepositoryUri);
             }
             if (Optional.IsDefined(Branch))
             {
@@ -70,9 +69,9 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> defaultHostname = default;
-            Optional<Uri> repositoryUrl = default;
+            Optional<string> repositoryUrl = default;
             Optional<string> branch = default;
             Optional<IReadOnlyList<string>> customDomains = default;
             Optional<string> repositoryToken = default;
@@ -109,6 +108,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -128,12 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("repositoryUrl"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                repositoryUrl = null;
-                                continue;
-                            }
-                            repositoryUrl = new Uri(property0.Value.GetString());
+                            repositoryUrl = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("branch"))
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StaticSiteARMResourcePatch(id, name, type, systemData, kind.Value, defaultHostname.Value, repositoryUrl.Value, branch.Value, Optional.ToList(customDomains), repositoryToken.Value, buildProperties.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(stagingEnvironmentPolicy), Optional.ToNullable(allowConfigFileUpdates), templateProperties.Value, contentDistributionEndpoint.Value, keyVaultReferenceIdentity.Value, Optional.ToList(userProvidedFunctionApps), provider.Value);
+            return new StaticSiteARMResourcePatch(id, name, type, systemData.Value, kind.Value, defaultHostname.Value, repositoryUrl.Value, branch.Value, Optional.ToList(customDomains), repositoryToken.Value, buildProperties.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(stagingEnvironmentPolicy), Optional.ToNullable(allowConfigFileUpdates), templateProperties.Value, contentDistributionEndpoint.Value, keyVaultReferenceIdentity.Value, Optional.ToList(userProvidedFunctionApps), provider.Value);
         }
     }
 }

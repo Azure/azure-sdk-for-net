@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             if (Optional.IsDefined(SingleSignOnUri))
             {
                 writer.WritePropertyName("singleSignOnUrl");
-                writer.WriteStringValue(SingleSignOnUri.AbsoluteUri);
+                writer.WriteStringValue(SingleSignOnUri);
             }
             if (Optional.IsCollectionDefined(AadDomains))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         {
             Optional<SingleSignOnStates> singleSignOnState = default;
             Optional<Guid> enterpriseAppId = default;
-            Optional<Uri> singleSignOnUrl = default;
+            Optional<string> singleSignOnUrl = default;
             Optional<IList<string>> aadDomains = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -76,12 +76,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
                 if (property.NameEquals("singleSignOnUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        singleSignOnUrl = null;
-                        continue;
-                    }
-                    singleSignOnUrl = new Uri(property.Value.GetString());
+                    singleSignOnUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("aadDomains"))

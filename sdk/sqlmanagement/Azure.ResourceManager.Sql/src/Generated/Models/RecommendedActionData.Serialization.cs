@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> recommendationReason = default;
             Optional<DateTimeOffset> validSince = default;
             Optional<DateTimeOffset> lastRefresh = default;
@@ -90,6 +90,11 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -356,7 +361,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new RecommendedActionData(id, name, type, systemData, kind.Value, location.Value, recommendationReason.Value, Optional.ToNullable(validSince), Optional.ToNullable(lastRefresh), state.Value, Optional.ToNullable(isExecutableAction), Optional.ToNullable(isRevertableAction), Optional.ToNullable(isArchivedAction), Optional.ToNullable(executeActionStartTime), Optional.ToNullable(executeActionDuration), Optional.ToNullable(revertActionStartTime), Optional.ToNullable(revertActionDuration), Optional.ToNullable(executeActionInitiatedBy), Optional.ToNullable(executeActionInitiatedTime), Optional.ToNullable(revertActionInitiatedBy), Optional.ToNullable(revertActionInitiatedTime), Optional.ToNullable(score), implementationDetails.Value, errorDetails.Value, Optional.ToList(estimatedImpact), Optional.ToList(observedImpact), Optional.ToList(timeSeries), Optional.ToList(linkedObjects), Optional.ToDictionary(details));
+            return new RecommendedActionData(id, name, type, systemData.Value, kind.Value, location.Value, recommendationReason.Value, Optional.ToNullable(validSince), Optional.ToNullable(lastRefresh), state.Value, Optional.ToNullable(isExecutableAction), Optional.ToNullable(isRevertableAction), Optional.ToNullable(isArchivedAction), Optional.ToNullable(executeActionStartTime), Optional.ToNullable(executeActionDuration), Optional.ToNullable(revertActionStartTime), Optional.ToNullable(revertActionDuration), Optional.ToNullable(executeActionInitiatedBy), Optional.ToNullable(executeActionInitiatedTime), Optional.ToNullable(revertActionInitiatedBy), Optional.ToNullable(revertActionInitiatedTime), Optional.ToNullable(score), implementationDetails.Value, errorDetails.Value, Optional.ToList(estimatedImpact), Optional.ToList(observedImpact), Optional.ToList(timeSeries), Optional.ToList(linkedObjects), Optional.ToDictionary(details));
         }
     }
 }

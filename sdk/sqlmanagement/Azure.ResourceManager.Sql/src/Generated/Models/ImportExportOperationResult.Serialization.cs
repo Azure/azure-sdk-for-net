@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<Guid> requestId = default;
             Optional<string> requestType = default;
             Optional<string> queuedTime = default;
             Optional<string> lastModifiedTime = default;
-            Optional<Uri> blobUri = default;
+            Optional<string> blobUri = default;
             Optional<string> serverName = default;
             Optional<string> databaseName = default;
             Optional<string> status = default;
@@ -59,6 +59,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -98,12 +103,7 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("blobUri"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                blobUri = null;
-                                continue;
-                            }
-                            blobUri = new Uri(property0.Value.GetString());
+                            blobUri = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("serverName"))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ImportExportOperationResult(id, name, type, systemData, Optional.ToNullable(requestId), requestType.Value, queuedTime.Value, lastModifiedTime.Value, blobUri.Value, serverName.Value, databaseName.Value, status.Value, errorMessage.Value, Optional.ToList(privateEndpointConnections));
+            return new ImportExportOperationResult(id, name, type, systemData.Value, Optional.ToNullable(requestId), requestType.Value, queuedTime.Value, lastModifiedTime.Value, blobUri.Value, serverName.Value, databaseName.Value, status.Value, errorMessage.Value, Optional.ToList(privateEndpointConnections));
         }
     }
 }

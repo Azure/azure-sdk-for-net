@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(RelayArmUri))
             {
                 writer.WritePropertyName("relayArmUri");
-                writer.WriteStringValue(RelayArmUri.AbsoluteUri);
+                writer.WriteStringValue(RelayArmUri);
             }
             if (Optional.IsDefined(Hostname))
             {
@@ -74,10 +73,10 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> serviceBusNamespace = default;
             Optional<string> relayName = default;
-            Optional<Uri> relayArmUri = default;
+            Optional<string> relayArmUri = default;
             Optional<string> hostname = default;
             Optional<int> port = default;
             Optional<string> sendKeyName = default;
@@ -107,6 +106,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -131,12 +135,7 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("relayArmUri"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                relayArmUri = null;
-                                continue;
-                            }
-                            relayArmUri = new Uri(property0.Value.GetString());
+                            relayArmUri = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("hostname"))
@@ -173,7 +172,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new HybridConnectionData(id, name, type, systemData, kind.Value, serviceBusNamespace.Value, relayName.Value, relayArmUri.Value, hostname.Value, Optional.ToNullable(port), sendKeyName.Value, sendKeyValue.Value, serviceBusSuffix.Value);
+            return new HybridConnectionData(id, name, type, systemData.Value, kind.Value, serviceBusNamespace.Value, relayName.Value, relayArmUri.Value, hostname.Value, Optional.ToNullable(port), sendKeyName.Value, sendKeyValue.Value, serviceBusSuffix.Value);
         }
     }
 }

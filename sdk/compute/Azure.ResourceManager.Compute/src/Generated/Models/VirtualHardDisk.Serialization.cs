@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,24 +18,19 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri");
-                writer.WriteStringValue(Uri.AbsoluteUri);
+                writer.WriteStringValue(Uri);
             }
             writer.WriteEndObject();
         }
 
         internal static VirtualHardDisk DeserializeVirtualHardDisk(JsonElement element)
         {
-            Optional<Uri> uri = default;
+            Optional<string> uri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        uri = null;
-                        continue;
-                    }
-                    uri = new Uri(property.Value.GetString());
+                    uri = property.Value.GetString();
                     continue;
                 }
             }

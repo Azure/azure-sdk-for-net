@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -21,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> SAS url for packet capture on vpn connection. </summary>
-        public Uri SasUri { get; set; }
+        public string SasUri { get; set; }
         /// <summary> List of site link connection names. </summary>
         public IList<string> LinkConnectionNames { get; }
     }

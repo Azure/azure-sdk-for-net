@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(OutputBlobUri))
             {
                 writer.WritePropertyName("outputBlobUri");
-                writer.WriteStringValue(OutputBlobUri.AbsoluteUri);
+                writer.WriteStringValue(OutputBlobUri);
             }
             if (Optional.IsDefined(ErrorBlobUri))
             {
                 writer.WritePropertyName("errorBlobUri");
-                writer.WriteStringValue(ErrorBlobUri.AbsoluteUri);
+                writer.WriteStringValue(ErrorBlobUri);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

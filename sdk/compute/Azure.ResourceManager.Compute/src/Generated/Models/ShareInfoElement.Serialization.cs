@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,17 +14,12 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static ShareInfoElement DeserializeShareInfoElement(JsonElement element)
         {
-            Optional<Uri> vmUri = default;
+            Optional<string> vmUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        vmUri = null;
-                        continue;
-                    }
-                    vmUri = new Uri(property.Value.GetString());
+                    vmUri = property.Value.GetString();
                     continue;
                 }
             }

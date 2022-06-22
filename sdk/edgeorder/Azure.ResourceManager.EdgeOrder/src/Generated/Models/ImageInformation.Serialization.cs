@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         internal static ImageInformation DeserializeImageInformation(JsonElement element)
         {
             Optional<ImageType> imageType = default;
-            Optional<Uri> imageUrl = default;
+            Optional<string> imageUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageType"))
@@ -31,12 +30,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (property.NameEquals("imageUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        imageUrl = null;
-                        continue;
-                    }
-                    imageUrl = new Uri(property.Value.GetString());
+                    imageUrl = property.Value.GetString();
                     continue;
                 }
             }

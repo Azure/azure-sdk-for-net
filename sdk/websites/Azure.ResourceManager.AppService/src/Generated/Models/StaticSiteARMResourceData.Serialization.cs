@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -34,14 +33,17 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("kind");
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -49,7 +51,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(RepositoryUri))
             {
                 writer.WritePropertyName("repositoryUrl");
-                writer.WriteStringValue(RepositoryUri.AbsoluteUri);
+                writer.WriteStringValue(RepositoryUri);
             }
             if (Optional.IsDefined(Branch))
             {
@@ -90,14 +92,14 @@ namespace Azure.ResourceManager.AppService
             Optional<SkuDescription> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<string> kind = default;
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> defaultHostname = default;
-            Optional<Uri> repositoryUrl = default;
+            Optional<string> repositoryUrl = default;
             Optional<string> branch = default;
             Optional<IReadOnlyList<string>> customDomains = default;
             Optional<string> repositoryToken = default;
@@ -139,6 +141,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -169,6 +176,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -188,12 +200,7 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("repositoryUrl"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                repositoryUrl = null;
-                                continue;
-                            }
-                            repositoryUrl = new Uri(property0.Value.GetString());
+                            repositoryUrl = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("branch"))
@@ -310,7 +317,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new StaticSiteARMResourceData(id, name, type, systemData, tags, location, kind.Value, sku.Value, identity, defaultHostname.Value, repositoryUrl.Value, branch.Value, Optional.ToList(customDomains), repositoryToken.Value, buildProperties.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(stagingEnvironmentPolicy), Optional.ToNullable(allowConfigFileUpdates), templateProperties.Value, contentDistributionEndpoint.Value, keyVaultReferenceIdentity.Value, Optional.ToList(userProvidedFunctionApps), provider.Value);
+            return new StaticSiteARMResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind.Value, sku.Value, identity, defaultHostname.Value, repositoryUrl.Value, branch.Value, Optional.ToList(customDomains), repositoryToken.Value, buildProperties.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(stagingEnvironmentPolicy), Optional.ToNullable(allowConfigFileUpdates), templateProperties.Value, contentDistributionEndpoint.Value, keyVaultReferenceIdentity.Value, Optional.ToList(userProvidedFunctionApps), provider.Value);
         }
     }
 }

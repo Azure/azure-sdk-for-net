@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,14 +21,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStringValue(Level.Value.ToSerialString());
             }
             writer.WritePropertyName("sasUrl");
-            writer.WriteStringValue(SasUri.AbsoluteUri);
+            writer.WriteStringValue(SasUri);
             writer.WriteEndObject();
         }
 
         internal static AzureTableStorageApplicationLogsConfig DeserializeAzureTableStorageApplicationLogsConfig(JsonElement element)
         {
             Optional<LogLevel> level = default;
-            Uri sasUrl = default;
+            string sasUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("level"))
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("sasUrl"))
                 {
-                    sasUrl = new Uri(property.Value.GetString());
+                    sasUrl = property.Value.GetString();
                     continue;
                 }
             }

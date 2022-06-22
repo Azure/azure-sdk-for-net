@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<AdvisorStatus> advisorStatus = default;
             Optional<AutoExecuteStatus> autoExecuteStatus = default;
             Optional<AutoExecuteStatusInheritedFrom> autoExecuteStatusInheritedFrom = default;
@@ -73,6 +73,11 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -149,7 +154,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new AdvisorData(id, name, type, systemData, kind.Value, location.Value, Optional.ToNullable(advisorStatus), Optional.ToNullable(autoExecuteStatus), Optional.ToNullable(autoExecuteStatusInheritedFrom), recommendationsStatus.Value, Optional.ToNullable(lastChecked), Optional.ToList(recommendedActions));
+            return new AdvisorData(id, name, type, systemData.Value, kind.Value, location.Value, Optional.ToNullable(advisorStatus), Optional.ToNullable(autoExecuteStatus), Optional.ToNullable(autoExecuteStatusInheritedFrom), recommendationsStatus.Value, Optional.ToNullable(lastChecked), Optional.ToList(recommendedActions));
         }
     }
 }

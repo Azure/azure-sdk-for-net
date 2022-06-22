@@ -59,27 +59,27 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(ExtensionUri))
             {
                 writer.WritePropertyName("extension_url");
-                writer.WriteStringValue(ExtensionUri.AbsoluteUri);
+                writer.WriteStringValue(ExtensionUri);
             }
             if (Optional.IsDefined(ProjectUri))
             {
                 writer.WritePropertyName("project_url");
-                writer.WriteStringValue(ProjectUri.AbsoluteUri);
+                writer.WriteStringValue(ProjectUri);
             }
             if (Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("icon_url");
-                writer.WriteStringValue(IconUri.AbsoluteUri);
+                writer.WriteStringValue(IconUri);
             }
             if (Optional.IsDefined(LicenseUri))
             {
                 writer.WritePropertyName("license_url");
-                writer.WriteStringValue(LicenseUri.AbsoluteUri);
+                writer.WriteStringValue(LicenseUri);
             }
             if (Optional.IsDefined(FeedUri))
             {
                 writer.WritePropertyName("feed_url");
-                writer.WriteStringValue(FeedUri.AbsoluteUri);
+                writer.WriteStringValue(FeedUri);
             }
             if (Optional.IsCollectionDefined(Authors))
             {
@@ -141,18 +141,18 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> extensionId = default;
             Optional<string> title = default;
             Optional<SiteExtensionType> extensionType = default;
             Optional<string> summary = default;
             Optional<string> description = default;
             Optional<string> version = default;
-            Optional<Uri> extensionUrl = default;
-            Optional<Uri> projectUrl = default;
-            Optional<Uri> iconUrl = default;
-            Optional<Uri> licenseUrl = default;
-            Optional<Uri> feedUrl = default;
+            Optional<string> extensionUrl = default;
+            Optional<string> projectUrl = default;
+            Optional<string> iconUrl = default;
+            Optional<string> licenseUrl = default;
+            Optional<string> feedUrl = default;
             Optional<IList<string>> authors = default;
             Optional<string> installerCommandLineParams = default;
             Optional<DateTimeOffset> publishedDateTime = default;
@@ -186,6 +186,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -235,52 +240,27 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("extension_url"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                extensionUrl = null;
-                                continue;
-                            }
-                            extensionUrl = new Uri(property0.Value.GetString());
+                            extensionUrl = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("project_url"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                projectUrl = null;
-                                continue;
-                            }
-                            projectUrl = new Uri(property0.Value.GetString());
+                            projectUrl = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("icon_url"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                iconUrl = null;
-                                continue;
-                            }
-                            iconUrl = new Uri(property0.Value.GetString());
+                            iconUrl = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("license_url"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                licenseUrl = null;
-                                continue;
-                            }
-                            licenseUrl = new Uri(property0.Value.GetString());
+                            licenseUrl = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("feed_url"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                feedUrl = null;
-                                continue;
-                            }
-                            feedUrl = new Uri(property0.Value.GetString());
+                            feedUrl = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("authors"))
@@ -362,7 +342,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new SiteExtensionInfoData(id, name, type, systemData, kind.Value, extensionId.Value, title.Value, Optional.ToNullable(extensionType), summary.Value, description.Value, version.Value, extensionUrl.Value, projectUrl.Value, iconUrl.Value, licenseUrl.Value, feedUrl.Value, Optional.ToList(authors), installerCommandLineParams.Value, Optional.ToNullable(publishedDateTime), Optional.ToNullable(downloadCount), Optional.ToNullable(localIsLatestVersion), localPath.Value, Optional.ToNullable(installedDateTime), provisioningState.Value, comment.Value);
+            return new SiteExtensionInfoData(id, name, type, systemData.Value, kind.Value, extensionId.Value, title.Value, Optional.ToNullable(extensionType), summary.Value, description.Value, version.Value, extensionUrl.Value, projectUrl.Value, iconUrl.Value, licenseUrl.Value, feedUrl.Value, Optional.ToList(authors), installerCommandLineParams.Value, Optional.ToNullable(publishedDateTime), Optional.ToNullable(downloadCount), Optional.ToNullable(localIsLatestVersion), localPath.Value, Optional.ToNullable(installedDateTime), provisioningState.Value, comment.Value);
         }
     }
 }

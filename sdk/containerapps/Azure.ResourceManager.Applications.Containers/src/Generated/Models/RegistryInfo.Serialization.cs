@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
             if (Optional.IsDefined(RegistryUri))
             {
                 writer.WritePropertyName("registryUrl");
-                writer.WriteStringValue(RegistryUri.AbsoluteUri);
+                writer.WriteStringValue(RegistryUri);
             }
             if (Optional.IsDefined(RegistryUserName))
             {
@@ -36,19 +35,14 @@ namespace Azure.ResourceManager.Applications.Containers.Models
 
         internal static RegistryInfo DeserializeRegistryInfo(JsonElement element)
         {
-            Optional<Uri> registryUrl = default;
+            Optional<string> registryUrl = default;
             Optional<string> registryUserName = default;
             Optional<string> registryPassword = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registryUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        registryUrl = null;
-                        continue;
-                    }
-                    registryUrl = new Uri(property.Value.GetString());
+                    registryUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("registryUserName"))

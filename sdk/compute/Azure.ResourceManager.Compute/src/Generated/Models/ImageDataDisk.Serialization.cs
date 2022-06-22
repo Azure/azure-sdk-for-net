@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(BlobUri))
             {
                 writer.WritePropertyName("blobUri");
-                writer.WriteStringValue(BlobUri.AbsoluteUri);
+                writer.WriteStringValue(BlobUri);
             }
             if (Optional.IsDefined(Caching))
             {
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
             int lun = default;
             Optional<WritableSubResource> snapshot = default;
             Optional<WritableSubResource> managedDisk = default;
-            Optional<Uri> blobUri = default;
+            Optional<string> blobUri = default;
             Optional<CachingTypes> caching = default;
             Optional<int> diskSizeGB = default;
             Optional<StorageAccountTypes> storageAccountType = default;
@@ -96,12 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("blobUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        blobUri = null;
-                        continue;
-                    }
-                    blobUri = new Uri(property.Value.GetString());
+                    blobUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("caching"))

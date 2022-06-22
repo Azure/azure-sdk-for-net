@@ -65,16 +65,20 @@ namespace Azure.Template
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Task{Response}"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SecretBundle</c>:
         /// <code>{
-        ///   value: string,
-        ///   id: string,
-        ///   contentType: string,
-        ///   tags: Dictionary&lt;string, string&gt;,
-        ///   kid: string,
-        ///   managed: boolean
+        ///   value: string, # Optional. The secret value.
+        ///   id: string, # Optional. The secret id.
+        ///   contentType: string, # Optional. The content type of the secret.
+        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Application specific metadata in the form of key-value pairs.
+        ///   kid: string, # Optional. If this is a secret backing a KV certificate, then this field specifies the corresponding key backing the KV certificate.
+        ///   managed: boolean, # Optional. True if the secret&apos;s lifetime is managed by key vault. If this is a secret backing a certificate, then managed will be true.
         /// }
         /// </code>
         /// 
@@ -103,16 +107,20 @@ namespace Azure.Template
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns cref="Response"> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SecretBundle</c>:
         /// <code>{
-        ///   value: string,
-        ///   id: string,
-        ///   contentType: string,
-        ///   tags: Dictionary&lt;string, string&gt;,
-        ///   kid: string,
-        ///   managed: boolean
+        ///   value: string, # Optional. The secret value.
+        ///   id: string, # Optional. The secret id.
+        ///   contentType: string, # Optional. The content type of the secret.
+        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Application specific metadata in the form of key-value pairs.
+        ///   kid: string, # Optional. If this is a secret backing a KV certificate, then this field specifies the corresponding key backing the KV certificate.
+        ///   managed: boolean, # Optional. True if the secret&apos;s lifetime is managed by key vault. If this is a secret backing a certificate, then managed will be true.
         /// }
         /// </code>
         /// 

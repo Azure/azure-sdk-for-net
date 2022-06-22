@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies information about the unmanaged user image to base the scale set on. </summary>
         internal VirtualHardDisk Image { get; set; }
         /// <summary> Specifies the virtual hard disk&apos;s uri. </summary>
-        public Uri ImageUri
+        public string ImageUri
         {
             get => Image is null ? default : Image.Uri;
             set

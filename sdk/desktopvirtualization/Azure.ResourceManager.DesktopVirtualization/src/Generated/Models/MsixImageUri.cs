@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Represents URI referring to MSIX Image. </summary>
@@ -18,6 +16,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> URI to Image. </summary>
-        public Uri Uri { get; set; }
+        public string Uri { get; set; }
     }
 }

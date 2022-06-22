@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -31,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="uri"> The URI of the server key. </param>
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
         /// <param name="autoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
-        internal ManagedInstanceEncryptionProtectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string serverKeyName, ServerKeyType? serverKeyType, Uri uri, string thumbprint, bool? autoRotationEnabled) : base(id, name, resourceType, systemData)
+        internal ManagedInstanceEncryptionProtectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string serverKeyName, ServerKeyType? serverKeyType, string uri, string thumbprint, bool? autoRotationEnabled) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             ServerKeyName = serverKeyName;
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The encryption protector type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </summary>
         public ServerKeyType? ServerKeyType { get; set; }
         /// <summary> The URI of the server key. </summary>
-        public Uri Uri { get; }
+        public string Uri { get; }
         /// <summary> Thumbprint of the server key. </summary>
         public string Thumbprint { get; }
         /// <summary> Key auto rotation opt-in flag. Either true or false. </summary>

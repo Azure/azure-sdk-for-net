@@ -33,7 +33,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Azure.Messaging.WebPubSub/Azure.Messaging.WebPubSub.WebPubSubServiceClient.html",
-          "hash": "l5tP7fldFr5xsCamAse+5Q=="
+          "hash": "eJyQq0DmDQUoJM8RGwFtGQ=="
         }
       },
       "is_incremental": false,
@@ -147,13 +147,6 @@
         "full_build_reason_code": "NoAvailableBuildCache"
       },
       "processors": {
-        "TocDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
-          "incrementalPhase": "build",
-          "total_file_count": 0,
-          "skipped_file_count": 0
-        },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
@@ -164,6 +157,13 @@
           "can_incremental": false,
           "incrementalPhase": "build",
           "total_file_count": 2,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
           "skipped_file_count": 0
         }
       }

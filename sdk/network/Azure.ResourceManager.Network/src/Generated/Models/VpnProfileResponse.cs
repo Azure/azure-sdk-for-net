@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Vpn Profile Response for package generation. </summary>
@@ -19,12 +17,12 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of VpnProfileResponse. </summary>
         /// <param name="profileUri"> URL to the VPN profile. </param>
-        internal VpnProfileResponse(Uri profileUri)
+        internal VpnProfileResponse(string profileUri)
         {
             ProfileUri = profileUri;
         }
 
         /// <summary> URL to the VPN profile. </summary>
-        public Uri ProfileUri { get; }
+        public string ProfileUri { get; }
     }
 }

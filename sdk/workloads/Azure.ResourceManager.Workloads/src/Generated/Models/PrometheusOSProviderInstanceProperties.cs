@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Gets or sets the PrometheusOS provider properties. </summary>
@@ -21,13 +19,13 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of PrometheusOSProviderInstanceProperties. </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
         /// <param name="prometheusUri"> URL of the Node Exporter endpoint. </param>
-        internal PrometheusOSProviderInstanceProperties(string providerType, Uri prometheusUri) : base(providerType)
+        internal PrometheusOSProviderInstanceProperties(string providerType, string prometheusUri) : base(providerType)
         {
             PrometheusUri = prometheusUri;
             ProviderType = providerType ?? "PrometheusOS";
         }
 
         /// <summary> URL of the Node Exporter endpoint. </summary>
-        public Uri PrometheusUri { get; set; }
+        public string PrometheusUri { get; set; }
     }
 }

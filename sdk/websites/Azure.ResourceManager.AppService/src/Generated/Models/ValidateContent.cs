@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> &lt;code&gt;true&lt;/code&gt; if App Service plan is running as a windows container. </summary>
         public bool? IsXenon { get; set; }
         /// <summary> Base URL of the container registry. </summary>
-        public Uri ContainerRegistryBaseUri { get; set; }
+        public string ContainerRegistryBaseUri { get; set; }
         /// <summary> Username for to access the container registry. </summary>
         public string ContainerRegistryUsername { get; set; }
         /// <summary> Password for to access the container registry. </summary>

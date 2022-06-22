@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUri");
-                writer.WriteStringValue(ServiceUri.AbsoluteUri);
+                writer.WriteStringValue(ServiceUri);
             }
             if (Optional.IsDefined(UseCommonAlertSchema))
             {
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string webhookResourceId = default;
             bool isGlobalRunbook = default;
             Optional<string> name = default;
-            Optional<Uri> serviceUri = default;
+            Optional<string> serviceUri = default;
             Optional<bool> useCommonAlertSchema = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -80,12 +79,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("serviceUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        serviceUri = null;
-                        continue;
-                    }
-                    serviceUri = new Uri(property.Value.GetString());
+                    serviceUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("useCommonAlertSchema"))
