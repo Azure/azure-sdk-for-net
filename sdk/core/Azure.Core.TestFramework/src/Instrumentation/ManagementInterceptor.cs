@@ -24,16 +24,6 @@ namespace Azure.Core.TestFramework
 
         public void Intercept(IInvocation invocation)
         {
-            if (invocation.Method.Name == "IsTagResourcePresent" && invocation.TargetType.Name == "ArmClient")
-            {
-                var isTagResource = invocation.Proxy.GetType().GetField("_isTagResourcePresent", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(invocation.Proxy) as bool?;
-                if (isTagResource is not null && isTagResource.Value)
-                {
-                    invocation.ReturnValue = isTagResource.Value;
-                    return;
-                }
-            }
-
             bool modifiedAskToWait = false;
 
             if (_testMode == RecordedTestMode.Playback && IsLro(invocation.Method.ReturnType))
