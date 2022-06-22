@@ -1,0 +1,1244 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Pet Store Service",
+    "version": "2021-03-25"
+  },
+  "tags": [],
+  "paths": {
+    "/pets/{petId}": {
+      "get": {
+        "operationId": "Pets_get",
+        "description": "Gets an instance of the resource.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Pet.petId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "Pets_update",
+        "description": "Updates an existing instance of the resource.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Pet.petId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "tag": {
+                    "type": "string"
+                  },
+                  "age": {
+                    "type": "integer",
+                    "format": "int32",
+                    "minimum": 0,
+                    "maximum": 20
+                  },
+                  "ownerId": {
+                    "type": "integer",
+                    "format": "int64"
+                  }
+                },
+                "description": "The template for adding optional properties.",
+                "x-cadl-name": "OptionalProperties<UpdateableProperties<Pet>>"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "Pets_delete",
+        "description": "Deletes an existing instance of the resource.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Pet.petId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource deleted successfully."
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pets": {
+      "post": {
+        "operationId": "Pets_create",
+        "description": "Creates a new instance of the resource.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Resource create operation completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "Pets_list",
+        "description": "Lists all instances of the resource.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Paged response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rest.Resource.Page_Pet"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pets/{petId}/checkups/{checkupId}": {
+      "put": {
+        "operationId": "PetCheckups_CreateOrUpdate",
+        "description": "Creates or update a instance of the extension resource.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Pet.petId"
+          },
+          {
+            "$ref": "#/components/parameters/Checkup.checkupId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Checkup"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Resource create operation completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Checkup"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Checkup"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pets/{petId}/checkups": {
+      "get": {
+        "operationId": "PetCheckups_List",
+        "description": "Lists all instances of the extension resource.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Pet.petId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paged response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rest.Resource.Page_Checkup"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pets/{petId}/insurance": {
+      "get": {
+        "operationId": "PetInsurance_Get",
+        "description": "Gets the singleton resource.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Pet.petId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Insurance"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "PetInsurance_Update",
+        "description": "Updates the singleton resource.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Pet.petId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Insurance"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "provider": {
+                    "type": "string"
+                  },
+                  "premium": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "deductible": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "description": "The template for adding optional properties.",
+                "x-cadl-name": "OptionalProperties<UpdateableProperties<Insurance>>"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pets/{petId}/toys/{toyId}": {
+      "get": {
+        "operationId": "Toys_get",
+        "description": "Gets an instance of the resource.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Pet.petId"
+          },
+          {
+            "$ref": "#/components/parameters/Toy.toyId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Toy"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pets/{petId}/toys": {
+      "get": {
+        "operationId": "Toys_list",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Pet.petId"
+          },
+          {
+            "name": "nameFilter",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paged response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rest.Resource.Page_Toy"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pets/{petId}/toys/{toyId}/insurance": {
+      "get": {
+        "operationId": "ToyInsurance_Get",
+        "description": "Gets the singleton resource.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Pet.petId"
+          },
+          {
+            "$ref": "#/components/parameters/Toy.toyId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Insurance"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "ToyInsurance_Update",
+        "description": "Updates the singleton resource.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Pet.petId"
+          },
+          {
+            "$ref": "#/components/parameters/Toy.toyId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Insurance"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "provider": {
+                    "type": "string"
+                  },
+                  "premium": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "deductible": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "description": "The template for adding optional properties.",
+                "x-cadl-name": "OptionalProperties<UpdateableProperties<Insurance>>"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/checkups/{checkupId}": {
+      "put": {
+        "operationId": "Checkups_createOrUpdate",
+        "description": "Creates or update a instance of the resource.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Checkup.checkupId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Checkup"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Resource create operation completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Checkup"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Checkup"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/checkups": {
+      "get": {
+        "operationId": "Checkups_list",
+        "description": "Lists all instances of the resource.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Paged response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rest.Resource.Page_Checkup"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/owners/{ownerId}": {
+      "get": {
+        "operationId": "Owners_get",
+        "description": "Gets an instance of the resource.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Owner.ownerId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Owner"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "Owners_update",
+        "description": "Updates an existing instance of the resource.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Owner.ownerId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Owner"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "age": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "description": "The template for adding optional properties.",
+                "x-cadl-name": "OptionalProperties<UpdateableProperties<Owner>>"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "Owners_delete",
+        "description": "Deletes an existing instance of the resource.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Owner.ownerId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource deleted successfully."
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/owners": {
+      "post": {
+        "operationId": "Owners_create",
+        "description": "Creates a new instance of the resource.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Owner"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Resource create operation completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Owner"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Owner"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "Owners_list",
+        "description": "Lists all instances of the resource.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Paged response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rest.Resource.Page_Owner"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/owners/{ownerId}/checkups/{checkupId}": {
+      "put": {
+        "operationId": "OwnerCheckups_CreateOrUpdate",
+        "description": "Creates or update a instance of the extension resource.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Owner.ownerId"
+          },
+          {
+            "$ref": "#/components/parameters/Checkup.checkupId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Checkup"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Resource create operation completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Checkup"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Checkup"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/owners/{ownerId}/checkups": {
+      "get": {
+        "operationId": "OwnerCheckups_List",
+        "description": "Lists all instances of the extension resource.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Owner.ownerId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paged response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rest.Resource.Page_Checkup"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/owners/{ownerId}/insurance": {
+      "get": {
+        "operationId": "OwnerInsurance_Get",
+        "description": "Gets the singleton resource.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Owner.ownerId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Insurance"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "OwnerInsurance_Update",
+        "description": "Updates the singleton resource.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Owner.ownerId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Insurance"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetStoreError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "provider": {
+                    "type": "string"
+                  },
+                  "premium": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "deductible": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "description": "The template for adding optional properties.",
+                "x-cadl-name": "OptionalProperties<UpdateableProperties<Insurance>>"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "Pet.petId": {
+        "name": "petId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "Checkup.checkupId": {
+        "name": "checkupId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "Toy.toyId": {
+        "name": "toyId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "Owner.ownerId": {
+        "name": "ownerId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "schemas": {
+      "Pet": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "tag": {
+            "type": "string"
+          },
+          "age": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0,
+            "maximum": 20
+          },
+          "ownerId": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "age",
+          "ownerId"
+        ]
+      },
+      "PetStoreError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ]
+      },
+      "Rest.Resource.Page_Pet": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Pet"
+            },
+            "x-cadl-name": "Pet[]",
+            "description": "The items on this page"
+          },
+          "nextLink": {
+            "type": "string",
+            "description": "The link to the next page of items"
+          }
+        },
+        "description": "Paged response",
+        "required": [
+          "value"
+        ]
+      },
+      "Checkup": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "vetName": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "vetName",
+          "notes"
+        ]
+      },
+      "Rest.Resource.Page_Checkup": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Checkup"
+            },
+            "x-cadl-name": "Checkup[]",
+            "description": "The items on this page"
+          },
+          "nextLink": {
+            "type": "string",
+            "description": "The link to the next page of items"
+          }
+        },
+        "description": "Paged response",
+        "required": [
+          "value"
+        ]
+      },
+      "Insurance": {
+        "type": "object",
+        "properties": {
+          "provider": {
+            "type": "string"
+          },
+          "premium": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "deductible": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "required": [
+          "provider",
+          "premium",
+          "deductible"
+        ]
+      },
+      "Toy": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "petId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "petId",
+          "name"
+        ]
+      },
+      "Rest.Resource.Page_Toy": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Toy"
+            },
+            "x-cadl-name": "Toy[]",
+            "description": "The items on this page"
+          },
+          "nextLink": {
+            "type": "string",
+            "description": "The link to the next page of items"
+          }
+        },
+        "description": "Paged response",
+        "required": [
+          "value"
+        ]
+      },
+      "Owner": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "age": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "age"
+        ]
+      },
+      "Rest.Resource.Page_Owner": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Owner"
+            },
+            "x-cadl-name": "Owner[]",
+            "description": "The items on this page"
+          },
+          "nextLink": {
+            "type": "string",
+            "description": "The link to the next page of items"
+          }
+        },
+        "description": "Paged response",
+        "required": [
+          "value"
+        ]
+      }
+    }
+  }
+}
