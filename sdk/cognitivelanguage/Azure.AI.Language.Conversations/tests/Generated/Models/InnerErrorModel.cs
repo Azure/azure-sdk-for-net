@@ -12,13 +12,13 @@ using Azure.Core;
 namespace Azure.AI.Language.Conversations
 {
     /// <summary> An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses. </summary>
-    public partial class InnerErrorModel
+    internal partial class InnerErrorModel
     {
         /// <summary> Initializes a new instance of InnerErrorModel. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> Error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        public InnerErrorModel(InnerErrorCode code, string message)
+        internal InnerErrorModel(InnerErrorCode code, string message)
         {
             if (message == null)
             {
@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="details"> Error details. </param>
         /// <param name="target"> Error target. </param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
-        internal InnerErrorModel(InnerErrorCode code, string message, IDictionary<string, string> details, string target, InnerErrorModel innererror)
+        internal InnerErrorModel(InnerErrorCode code, string message, IReadOnlyDictionary<string, string> details, string target, InnerErrorModel innererror)
         {
             Code = code;
             Message = message;
@@ -46,14 +46,14 @@ namespace Azure.AI.Language.Conversations
         }
 
         /// <summary> One of a server-defined set of error codes. </summary>
-        public InnerErrorCode Code { get; set; }
+        public InnerErrorCode Code { get; }
         /// <summary> Error message. </summary>
-        public string Message { get; set; }
+        public string Message { get; }
         /// <summary> Error details. </summary>
-        public IDictionary<string, string> Details { get; }
+        public IReadOnlyDictionary<string, string> Details { get; }
         /// <summary> Error target. </summary>
-        public string Target { get; set; }
+        public string Target { get; }
         /// <summary> An object containing more specific information than the current object about the error. </summary>
-        public InnerErrorModel Innererror { get; set; }
+        public InnerErrorModel Innererror { get; }
     }
 }

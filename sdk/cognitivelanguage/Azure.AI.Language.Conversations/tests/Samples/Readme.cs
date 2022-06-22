@@ -2,8 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
 using Azure.Core.TestFramework;
+
+#region Snippet:ConversationAnalysisClient_Namespaces
+using Azure.Core;
+using Azure.AI.Language.Conversations;
+#endregion
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
 {
@@ -12,7 +16,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         public void CreateConversationAnalysisClient()
         {
             #region Snippet:ConversationAnalysisClient_Create
-            Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com");
+            Uri endpoint = new Uri("https://myaccount.cognitive.microsoft.com");
             AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
