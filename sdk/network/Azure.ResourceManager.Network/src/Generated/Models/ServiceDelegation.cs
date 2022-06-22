@@ -12,15 +12,15 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Details the service to which the subnet is delegated. </summary>
-    public partial class Delegation : NetworkWritableResourceData
+    public partial class ServiceDelegation : NetworkWritableResourceData
     {
-        /// <summary> Initializes a new instance of Delegation. </summary>
-        public Delegation()
+        /// <summary> Initializes a new instance of ServiceDelegation. </summary>
+        public ServiceDelegation()
         {
             Actions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of Delegation. </summary>
+        /// <summary> Initializes a new instance of ServiceDelegation. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="serviceName"> The name of the service to whom the subnet should be delegated (e.g. Microsoft.Sql/servers). </param>
         /// <param name="actions"> The actions permitted to the service upon delegation. </param>
         /// <param name="provisioningState"> The provisioning state of the service delegation resource. </param>
-        internal Delegation(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string serviceName, IReadOnlyList<string> actions, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ServiceDelegation(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string serviceName, IReadOnlyList<string> actions, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             Etag = etag;
             ServiceName = serviceName;
