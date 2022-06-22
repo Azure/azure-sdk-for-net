@@ -6092,45 +6092,8 @@ namespace Azure.ResourceManager.Network.Models
         internal ConnectivityIssue() { }
         public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IDictionary<string, string>> Context { get { throw null; } }
         public Azure.ResourceManager.Network.Models.IssueType? IssueType { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ConnectivityIssueOrigin? Origin { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ConnectivityIssueSeverity? Severity { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ConnectivityIssueOrigin : System.IEquatable<Azure.ResourceManager.Network.Models.ConnectivityIssueOrigin>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ConnectivityIssueOrigin(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.ConnectivityIssueOrigin Inbound { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ConnectivityIssueOrigin Local { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ConnectivityIssueOrigin Outbound { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Network.Models.ConnectivityIssueOrigin other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Network.Models.ConnectivityIssueOrigin left, Azure.ResourceManager.Network.Models.ConnectivityIssueOrigin right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Network.Models.ConnectivityIssueOrigin (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Network.Models.ConnectivityIssueOrigin left, Azure.ResourceManager.Network.Models.ConnectivityIssueOrigin right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ConnectivityIssueSeverity : System.IEquatable<Azure.ResourceManager.Network.Models.ConnectivityIssueSeverity>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ConnectivityIssueSeverity(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.ConnectivityIssueSeverity Error { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ConnectivityIssueSeverity Warning { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Network.Models.ConnectivityIssueSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Network.Models.ConnectivityIssueSeverity left, Azure.ResourceManager.Network.Models.ConnectivityIssueSeverity right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Network.Models.ConnectivityIssueSeverity (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Network.Models.ConnectivityIssueSeverity left, Azure.ResourceManager.Network.Models.ConnectivityIssueSeverity right) { throw null; }
-        public override string ToString() { throw null; }
+        public Azure.ResourceManager.Network.Models.IssueOrigin? Origin { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.IssueSeverity? Severity { get { throw null; } }
     }
     public partial class ConnectivitySource
     {
@@ -7572,6 +7535,43 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(Azure.ResourceManager.Network.Models.IPVersion left, Azure.ResourceManager.Network.Models.IPVersion right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.IPVersion (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.IPVersion left, Azure.ResourceManager.Network.Models.IPVersion right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IssueOrigin : System.IEquatable<Azure.ResourceManager.Network.Models.IssueOrigin>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IssueOrigin(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.IssueOrigin Inbound { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.IssueOrigin Local { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.IssueOrigin Outbound { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.IssueOrigin other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.IssueOrigin left, Azure.ResourceManager.Network.Models.IssueOrigin right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.IssueOrigin (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.IssueOrigin left, Azure.ResourceManager.Network.Models.IssueOrigin right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IssueSeverity : System.IEquatable<Azure.ResourceManager.Network.Models.IssueSeverity>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IssueSeverity(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.IssueSeverity Error { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.IssueSeverity Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.IssueSeverity other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.IssueSeverity left, Azure.ResourceManager.Network.Models.IssueSeverity right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.IssueSeverity (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.IssueSeverity left, Azure.ResourceManager.Network.Models.IssueSeverity right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

@@ -231,8 +231,8 @@ directive:
       $.NextHopParameters.properties.targetNicResourceId['x-ms-format'] = 'arm-id';
       $.NextHopResult.properties.routeTableId['x-ms-format'] = 'arm-id';
       $.Direction['x-ms-enum'].name = 'TrafficDirection';
-      $.ConnectivityIssue.properties.origin['x-ms-enum'].name = 'ConnectivityIssueOrigin';
-      $.ConnectivityIssue.properties.severity['x-ms-enum'].name = 'ConnectivityIssueSeverity';
+      $.ConnectivityIssue.properties.origin['x-ms-enum'].name = 'IssueOrigin';
+      $.ConnectivityIssue.properties.severity['x-ms-enum'].name = 'IssueSeverity';
       $.ConnectivityParameters.properties.protocol['x-ms-enum'].name = 'NetworkProtocol';
       $.PacketCaptureStorageLocation.properties.storageId['x-ms-format'] = 'arm-id';
       $.TroubleshootingProperties.properties.storageId['x-ms-format'] = 'arm-id';
