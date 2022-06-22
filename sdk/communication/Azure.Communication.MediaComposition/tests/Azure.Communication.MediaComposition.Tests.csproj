@@ -20,4 +20,8 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\" />
+    <Folder Include="SessionRecords\Sample1_MediaCompositionClient\" />
+  </ItemGroup>
 </Project>

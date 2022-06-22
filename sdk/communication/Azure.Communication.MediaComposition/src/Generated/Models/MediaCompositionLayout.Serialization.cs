@@ -16,6 +16,11 @@ namespace Azure.Communication.MediaComposition.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind");
+                writer.WriteStringValue(Kind.Value.ToString());
+            }
             if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution");
@@ -51,16 +56,12 @@ namespace Azure.Communication.MediaComposition.Models
                 writer.WritePropertyName("placeholderImageUri");
                 writer.WriteStringValue(PlaceholderImageUri);
             }
-            if (Optional.IsDefined(Kind))
-            {
-                writer.WritePropertyName("kind");
-                writer.WriteStringValue(Kind.Value.ToString());
-            }
             writer.WriteEndObject();
         }
 
         internal static MediaCompositionLayout DeserializeMediaCompositionLayout(JsonElement element)
         {
+            Optional<LayoutType> kind = default;
             Optional<LayoutResolution> resolution = default;
             Optional<GridLayoutOptions> grid = default;
             Optional<AutoGridLayoutOptions> autoGrid = default;
@@ -68,9 +69,18 @@ namespace Azure.Communication.MediaComposition.Models
             Optional<PresentationLayoutOptions> presentation = default;
             Optional<CustomLayoutOptions> custom = default;
             Optional<string> placeholderImageUri = default;
-            Optional<LayoutType> kind = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    kind = new LayoutType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("resolution"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -136,18 +146,8 @@ namespace Azure.Communication.MediaComposition.Models
                     placeholderImageUri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kind"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    kind = new LayoutType(property.Value.GetString());
-                    continue;
-                }
             }
-            return new MediaCompositionLayout(resolution.Value, grid.Value, autoGrid.Value, presenter.Value, presentation.Value, custom.Value, placeholderImageUri.Value, Optional.ToNullable(kind));
+            return new MediaCompositionLayout(Optional.ToNullable(kind), resolution.Value, grid.Value, autoGrid.Value, presenter.Value, presentation.Value, custom.Value, placeholderImageUri.Value);
         }
     }
 }

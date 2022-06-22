@@ -18,6 +18,7 @@ namespace Azure.Communication.MediaComposition.Models
         }
 
         /// <summary> Initializes a new instance of MediaCompositionLayout. </summary>
+        /// <param name="kind"> Kind of layout. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="grid"> Configure the grid layout. </param>
         /// <param name="autoGrid"> Configure the autogrid layout. </param>
@@ -25,9 +26,9 @@ namespace Azure.Communication.MediaComposition.Models
         /// <param name="presentation"> Configure the presentation layout. </param>
         /// <param name="custom"> Configure custom layout. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>
-        /// <param name="kind"> Kind of layout. </param>
-        internal MediaCompositionLayout(LayoutResolution resolution, GridLayoutOptions grid, AutoGridLayoutOptions autoGrid, PresenterLayoutOptions presenter, PresentationLayoutOptions presentation, CustomLayoutOptions custom, string placeholderImageUri, LayoutType? kind)
+        internal MediaCompositionLayout(LayoutType? kind, LayoutResolution resolution, GridLayoutOptions grid, AutoGridLayoutOptions autoGrid, PresenterLayoutOptions presenter, PresentationLayoutOptions presentation, CustomLayoutOptions custom, string placeholderImageUri)
         {
+            Kind = kind;
             Resolution = resolution;
             Grid = grid;
             AutoGrid = autoGrid;
@@ -35,9 +36,10 @@ namespace Azure.Communication.MediaComposition.Models
             Presentation = presentation;
             Custom = custom;
             PlaceholderImageUri = placeholderImageUri;
-            Kind = kind;
         }
 
+        /// <summary> Kind of layout. </summary>
+        public LayoutType? Kind { get; set; }
         /// <summary> The dimensions of the scene or objects in the scene. </summary>
         public LayoutResolution Resolution { get; set; }
         /// <summary> Configure the grid layout. </summary>
@@ -52,7 +54,5 @@ namespace Azure.Communication.MediaComposition.Models
         public CustomLayoutOptions Custom { get; set; }
         /// <summary> Set global placeholder image. </summary>
         public string PlaceholderImageUri { get; set; }
-        /// <summary> Kind of layout. </summary>
-        public LayoutType? Kind { get; set; }
     }
 }
