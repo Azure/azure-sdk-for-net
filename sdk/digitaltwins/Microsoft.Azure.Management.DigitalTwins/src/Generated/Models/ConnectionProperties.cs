@@ -34,9 +34,12 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// <param name="provisioningState">The provisioning state. Possible
         /// values include: 'Pending', 'Approved', 'Rejected',
         /// 'Disconnected'</param>
+        /// <param name="privateEndpoint">The private endpoint.</param>
         /// <param name="groupIds">The list of group ids for the private
         /// endpoint connection.</param>
-        public ConnectionProperties(string provisioningState = default(string), ConnectionPropertiesPrivateEndpoint privateEndpoint = default(ConnectionPropertiesPrivateEndpoint), IList<string> groupIds = default(IList<string>), ConnectionPropertiesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(ConnectionPropertiesPrivateLinkServiceConnectionState))
+        /// <param name="privateLinkServiceConnectionState">The connection
+        /// state.</param>
+        public ConnectionProperties(string provisioningState = default(string), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), IList<string> groupIds = default(IList<string>), ConnectionPropertiesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(ConnectionPropertiesPrivateLinkServiceConnectionState))
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
@@ -58,9 +61,10 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
+        /// Gets or sets the private endpoint.
         /// </summary>
         [JsonProperty(PropertyName = "privateEndpoint")]
-        public ConnectionPropertiesPrivateEndpoint PrivateEndpoint { get; set; }
+        public PrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary>
         /// Gets or sets the list of group ids for the private endpoint
@@ -70,6 +74,7 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         public IList<string> GroupIds { get; set; }
 
         /// <summary>
+        /// Gets or sets the connection state.
         /// </summary>
         [JsonProperty(PropertyName = "privateLinkServiceConnectionState")]
         public ConnectionPropertiesPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
