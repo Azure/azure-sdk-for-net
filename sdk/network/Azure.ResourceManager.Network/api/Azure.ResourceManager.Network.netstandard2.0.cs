@@ -3461,7 +3461,9 @@ namespace Azure.ResourceManager.Network
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.IPConfiguration> IPConfigurations { get { throw null; } }
         public Azure.Core.ResourceIdentifier NatGatewayId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.NetworkSecurityGroupData NetworkSecurityGroup { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy? PrivateEndpointNetworkPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.PrivateEndpointData> PrivateEndpoints { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy? PrivateLinkServiceNetworkPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string Purpose { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ResourceNavigationLink> ResourceNavigationLinks { get { throw null; } }
@@ -3469,8 +3471,6 @@ namespace Azure.ResourceManager.Network
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ServiceAssociationLink> ServiceAssociationLinks { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.ServiceEndpointPolicyData> ServiceEndpointPolicies { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ServiceEndpointPropertiesFormat> ServiceEndpoints { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy? VirtualNetworkPrivateEndpointNetworkPolicy { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy? VirtualNetworkPrivateLinkServiceNetworkPolicy { get { throw null; } set { } }
     }
     public partial class SubnetResource : Azure.ResourceManager.ArmResource
     {
