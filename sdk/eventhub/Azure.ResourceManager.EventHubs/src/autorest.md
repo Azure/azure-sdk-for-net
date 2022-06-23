@@ -6,14 +6,13 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.EventHubs
-tag: package-2021-11
 require: https://github.com/Azure/azure-rest-api-specs/blob/8fb0263a6adbb529a9a7bf3e56110f3abdd55c72/specification/eventhub/resource-manager/readme.md
+tag: package-2021-11
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
-
-# temporary enable this because of a bug in modeler v4: https://github.com/Azure/autorest/issues/4524
 modelerfour:
-  lenient-model-deduplication: true
+  flatten-payloads: false
 
 request-path-to-resource-name:
     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}: DisasterRecoveryAuthorizationRule
@@ -21,6 +20,14 @@ request-path-to-resource-name:
 override-operation-name:
     Namespaces_CheckNameAvailability: CheckEventHubNameAvailability
     DisasterRecoveryConfigs_CheckNameAvailability: CheckDisasterRecoveryNameAvailability
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus

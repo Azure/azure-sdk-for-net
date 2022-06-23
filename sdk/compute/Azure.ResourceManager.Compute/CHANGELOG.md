@@ -6,6 +6,15 @@
 
 ### Breaking Changes
 
+- Base type of `VirtualMachineScaleSetVmExtensionData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `GalleryApplicationPatch` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `GalleryImagePatch` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `GalleryPatch` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `GalleryPatch` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Type `GalleryUpdateResourceData` was removed.
+- Base type of `VirtualMachineScaleSetExtensionPatch ` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `VirtualMachineScaleSetVmExtensionPatch  ` changed to `Azure.ResourceManager.Models.ResourceData`.
+
 ### Bugs Fixed
 
 ### Other Changes

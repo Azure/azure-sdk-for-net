@@ -18,7 +18,7 @@ namespace Azure.AI.Language.Conversations
     internal partial class ConversationAnalysisRestClient
     {
         private readonly HttpPipeline _pipeline;
-        private readonly string _endpoint;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -30,7 +30,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ConversationAnalysisRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2022-05-15-preview")
+        public ConversationAnalysisRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2022-05-01")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -44,7 +44,7 @@ namespace Azure.AI.Language.Conversations
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/:analyze-conversations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -106,186 +106,6 @@ namespace Azure.AI.Language.Conversations
                         value = AnalyzeConversationTaskResult.DeserializeAnalyzeConversationTaskResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateSubmitJobRequest(AnalyzeConversationJobsInput body)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/analyze-conversations/jobs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Submit a collection of conversations for analysis. Specify one or more unique tasks to be executed. </summary>
-        /// <param name="body"> The collection of conversations to analyze and one or more tasks to execute. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ConversationAnalysisSubmitJobHeaders>> SubmitJobAsync(AnalyzeConversationJobsInput body, CancellationToken cancellationToken = default)
-        {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
-
-            using var message = CreateSubmitJobRequest(body);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ConversationAnalysisSubmitJobHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Submit a collection of conversations for analysis. Specify one or more unique tasks to be executed. </summary>
-        /// <param name="body"> The collection of conversations to analyze and one or more tasks to execute. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<ConversationAnalysisSubmitJobHeaders> SubmitJob(AnalyzeConversationJobsInput body, CancellationToken cancellationToken = default)
-        {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
-
-            using var message = CreateSubmitJobRequest(body);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ConversationAnalysisSubmitJobHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateJobStatusRequest(Guid jobId, bool? showStats)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/analyze-conversations/jobs/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (showStats != null)
-            {
-                uri.AppendQuery("showStats", showStats.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Get the status of an analysis job. A job may consist of one or more tasks. Once all tasks are succeeded, the job will transition to the succeeded state and results will be available for each task. </summary>
-        /// <param name="jobId"> Job ID. </param>
-        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<AnalyzeConversationJobState>> JobStatusAsync(Guid jobId, bool? showStats = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateJobStatusRequest(jobId, showStats);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AnalyzeConversationJobState value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AnalyzeConversationJobState.DeserializeAnalyzeConversationJobState(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Get the status of an analysis job. A job may consist of one or more tasks. Once all tasks are succeeded, the job will transition to the succeeded state and results will be available for each task. </summary>
-        /// <param name="jobId"> Job ID. </param>
-        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AnalyzeConversationJobState> JobStatus(Guid jobId, bool? showStats = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateJobStatusRequest(jobId, showStats);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AnalyzeConversationJobState value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AnalyzeConversationJobState.DeserializeAnalyzeConversationJobState(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateCancelJobRequest(Guid jobId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/analyze-conversations/jobs/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendPath(":cancel", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Cancel a long-running Text Analysis conversations job. </summary>
-        /// <param name="jobId"> Job ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ConversationAnalysisCancelJobHeaders>> CancelJobAsync(Guid jobId, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateCancelJobRequest(jobId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ConversationAnalysisCancelJobHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Cancel a long-running Text Analysis conversations job. </summary>
-        /// <param name="jobId"> Job ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ConversationAnalysisCancelJobHeaders> CancelJob(Guid jobId, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateCancelJobRequest(jobId);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ConversationAnalysisCancelJobHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }

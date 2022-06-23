@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeletedSiteResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeletedSiteResource> GetDeletedSitesByLocationAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DeletedSiteResource> GetDeletedSitesByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<DeletedSiteResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -825,7 +825,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedSiteResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeletedSiteResource> GetDeletedSitesByLocation(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<DeletedSiteResource> GetDeletedSitesByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<DeletedSiteResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> The String to use. </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeletedSiteResource>> GetDeletedWebAppByLocationDeletedWebAppAsync(string location, string deletedSiteId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedSiteResource>> GetDeletedWebAppByLocationDeletedWebAppAsync(AzureLocation location, string deletedSiteId, CancellationToken cancellationToken = default)
         {
             using var scope = DeletedSiteDeletedWebAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedWebAppByLocationDeletedWebApp");
             scope.Start();
@@ -892,7 +892,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> The String to use. </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeletedSiteResource> GetDeletedWebAppByLocationDeletedWebApp(string location, string deletedSiteId, CancellationToken cancellationToken = default)
+        public virtual Response<DeletedSiteResource> GetDeletedWebAppByLocationDeletedWebApp(AzureLocation location, string deletedSiteId, CancellationToken cancellationToken = default)
         {
             using var scope = DeletedSiteDeletedWebAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedWebAppByLocationDeletedWebApp");
             scope.Start();
@@ -916,7 +916,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Location name. </param>
         /// <param name="operationId"> Operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetSubscriptionOperationWithAsyncResponseGlobalAsync(string location, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetSubscriptionOperationWithAsyncResponseGlobalAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             using var scope = DeletedSiteGlobalClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSubscriptionOperationWithAsyncResponseGlobal");
             scope.Start();
@@ -940,7 +940,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Location name. </param>
         /// <param name="operationId"> Operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetSubscriptionOperationWithAsyncResponseGlobal(string location, string operationId, CancellationToken cancellationToken = default)
+        public virtual Response GetSubscriptionOperationWithAsyncResponseGlobal(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             using var scope = DeletedSiteGlobalClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSubscriptionOperationWithAsyncResponseGlobal");
             scope.Start();
@@ -1481,17 +1481,15 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/checknameavailability
         /// Operation Id: CheckNameAvailability
         /// </summary>
-        /// <param name="name"> Resource name to verify. </param>
-        /// <param name="type"> Resource type used for verification. </param>
-        /// <param name="isFqdn"> Is fully qualified domain name. </param>
+        /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ResourceNameAvailability>> CheckAppServiceNameAvailabilityAsync(string name, CheckNameResourceType type, bool? isFqdn = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceNameAvailability>> CheckAppServiceNameAvailabilityAsync(ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAppServiceNameAvailability");
             scope.Start();
             try
             {
-                var response = await DefaultRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, name, type, isFqdn, cancellationToken).ConfigureAwait(false);
+                var response = await DefaultRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1506,17 +1504,15 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/checknameavailability
         /// Operation Id: CheckNameAvailability
         /// </summary>
-        /// <param name="name"> Resource name to verify. </param>
-        /// <param name="type"> Resource type used for verification. </param>
-        /// <param name="isFqdn"> Is fully qualified domain name. </param>
+        /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ResourceNameAvailability> CheckAppServiceNameAvailability(string name, CheckNameResourceType type, bool? isFqdn = null, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceNameAvailability> CheckAppServiceNameAvailability(ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAppServiceNameAvailability");
             scope.Start();
             try
             {
-                var response = DefaultRestClient.CheckNameAvailability(Id.SubscriptionId, name, type, isFqdn, cancellationToken);
+                var response = DefaultRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1930,7 +1926,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Location where you plan to create the static site. </param>
         /// <param name="content"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StaticSitesWorkflowPreview>> PreviewWorkflowStaticSiteAsync(string location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StaticSitesWorkflowPreview>> PreviewWorkflowStaticSiteAsync(AzureLocation location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
         {
             using var scope = StaticSitesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.PreviewWorkflowStaticSite");
             scope.Start();
@@ -1954,7 +1950,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Location where you plan to create the static site. </param>
         /// <param name="content"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StaticSitesWorkflowPreview> PreviewWorkflowStaticSite(string location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
+        public virtual Response<StaticSitesWorkflowPreview> PreviewWorkflowStaticSite(AzureLocation location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
         {
             using var scope = StaticSitesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.PreviewWorkflowStaticSite");
             scope.Start();

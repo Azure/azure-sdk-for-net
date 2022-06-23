@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsDefined(Id))
             {
@@ -30,13 +30,18 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static SnapshotRecoverySource DeserializeSnapshotRecoverySource(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -45,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new SnapshotRecoverySource(location.Value, id.Value);
+            return new SnapshotRecoverySource(Optional.ToNullable(location), id.Value);
         }
     }
 }

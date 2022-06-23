@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ARM resource for a PremierAddOn. </summary>
-    public partial class PremierAddOnPatchResource : ProxyOnlyResource
+    public partial class PremierAddOnPatchResource : ResourceData
     {
         /// <summary> Initializes a new instance of PremierAddOnPatchResource. </summary>
         public PremierAddOnPatchResource()
@@ -23,19 +23,20 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="sku"> Premier add on SKU. </param>
         /// <param name="product"> Premier add on Product. </param>
         /// <param name="vendor"> Premier add on Vendor. </param>
         /// <param name="marketplacePublisher"> Premier add on Marketplace publisher. </param>
         /// <param name="marketplaceOffer"> Premier add on Marketplace offer. </param>
-        internal PremierAddOnPatchResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string sku, string product, string vendor, string marketplacePublisher, string marketplaceOffer) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal PremierAddOnPatchResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string sku, string product, string vendor, string marketplacePublisher, string marketplaceOffer, string kind) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Product = product;
             Vendor = vendor;
             MarketplacePublisher = marketplacePublisher;
             MarketplaceOffer = marketplaceOffer;
+            Kind = kind;
         }
 
         /// <summary> Premier add on SKU. </summary>
@@ -48,5 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string MarketplacePublisher { get; set; }
         /// <summary> Premier add on Marketplace offer. </summary>
         public string MarketplaceOffer { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId");
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(ResourceId))
             {
@@ -30,13 +31,18 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ResourceAccessRule DeserializeResourceAccessRule(JsonElement element)
         {
-            Optional<string> tenantId = default;
+            Optional<Guid> tenantId = default;
             Optional<string> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"))
                 {
-                    tenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("resourceId"))
@@ -45,7 +51,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new ResourceAccessRule(tenantId.Value, resourceId.Value);
+            return new ResourceAccessRule(Optional.ToNullable(tenantId), resourceId.Value);
         }
     }
 }

@@ -32,14 +32,18 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// DigitalTwinsEndpointResourceProperties class.
         /// </summary>
         /// <param name="provisioningState">The provisioning state. Possible
-        /// values include: 'Provisioning', 'Deleting', 'Succeeded', 'Failed',
-        /// 'Canceled', 'Deleted', 'Warning', 'Suspending', 'Restoring',
-        /// 'Moving', 'Disabled'</param>
+        /// values include: 'Provisioning', 'Deleting', 'Updating',
+        /// 'Succeeded', 'Failed', 'Canceled', 'Deleted', 'Warning',
+        /// 'Suspending', 'Restoring', 'Moving', 'Disabled'</param>
         /// <param name="createdTime">Time when the Endpoint was added to
         /// DigitalTwinsInstance.</param>
         /// <param name="authenticationType">Specifies the authentication type
-        /// being used for connecting to the endpoint. Possible values include:
-        /// 'KeyBased', 'IdentityBased'</param>
+        /// being used for connecting to the endpoint. Defaults to 'KeyBased'.
+        /// If 'KeyBased' is selected, a connection string must be specified
+        /// (at least the primary connection string). If 'IdentityBased' is
+        /// select, the endpointUri and entityPath properties must be
+        /// specified. Possible values include: 'KeyBased',
+        /// 'IdentityBased'</param>
         /// <param name="deadLetterSecret">Dead letter storage secret for
         /// key-based authentication. Will be obfuscated during read.</param>
         /// <param name="deadLetterUri">Dead letter storage URL for
@@ -61,9 +65,9 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
 
         /// <summary>
         /// Gets the provisioning state. Possible values include:
-        /// 'Provisioning', 'Deleting', 'Succeeded', 'Failed', 'Canceled',
-        /// 'Deleted', 'Warning', 'Suspending', 'Restoring', 'Moving',
-        /// 'Disabled'
+        /// 'Provisioning', 'Deleting', 'Updating', 'Succeeded', 'Failed',
+        /// 'Canceled', 'Deleted', 'Warning', 'Suspending', 'Restoring',
+        /// 'Moving', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -76,8 +80,11 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
 
         /// <summary>
         /// Gets or sets specifies the authentication type being used for
-        /// connecting to the endpoint. Possible values include: 'KeyBased',
-        /// 'IdentityBased'
+        /// connecting to the endpoint. Defaults to 'KeyBased'. If 'KeyBased'
+        /// is selected, a connection string must be specified (at least the
+        /// primary connection string). If 'IdentityBased' is select, the
+        /// endpointUri and entityPath properties must be specified. Possible
+        /// values include: 'KeyBased', 'IdentityBased'
         /// </summary>
         [JsonProperty(PropertyName = "authenticationType")]
         public string AuthenticationType { get; set; }

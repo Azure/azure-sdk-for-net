@@ -4,6 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
+csharp: true
 library-name: KeyVault
 namespace: Azure.ResourceManager.KeyVault
 tag: package-2021-10
@@ -12,12 +13,21 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
 override-operation-name:
   Vaults_CheckNameAvailability: CheckVaultNameAvailability
   MHSMPrivateLinkResources_ListByMhsmResource: GetMhsmPrivateLinkResources
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}
 - /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedManagedHSMs/{name}
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -62,19 +72,12 @@ directive:
   - from: swagger-document
     where: $.definitions.ManagedHsmSku.properties.family
     transform: delete $['x-ms-client-default']
-  - from: swagger-document
-    where: $.paths..parameters[?(@.name === 'location')]
-    transform: >
-      $['x-ms-format'] = 'azure-location';
   - from: managedHsm.json
     where: $.definitions
     transform: >
       $.ManagedHsmResource['x-ms-client-name'] = 'ManagedHsmTrackedResourceData';
-      $.ManagedHsmResource.properties.location['x-ms-format'] = 'azure-location';
       $.MHSMIPRule.properties.value['x-ms-client-name'] = 'AddressRange';
-      $.DeletedManagedHsmProperties.properties.location['x-ms-format'] = 'azure-location';
       $.DeletedManagedHsmProperties.properties.mhsmId['x-ms-format'] = 'arm-id';
-      $.MHSMPrivateEndpointConnection.properties.etag['x-ms-format'] = 'etag';
       $.ManagedHsmProperties.properties.networkAcls['x-ms-client-name'] = 'NetworkRuleSet';
       $.ManagedHsmProperties.properties.provisioningState['x-ms-enum']['name'] = 'ManagedHsmProvisioningState';
       $.ManagedHsmProperties.properties.createMode['x-ms-enum']['name'] = 'ManagedHsmCreateMode';
@@ -93,11 +96,7 @@ directive:
       $.Resource['x-ms-client-name'] = 'KeyVaultResourceData';
       $.IPRule.properties.value['x-ms-client-name'] = 'AddressRange';
       $.IPRule['x-ms-client-name'] = 'VaultIPRule';
-      $.DeletedVaultProperties.properties.location['x-ms-format'] = 'azure-location';
       $.DeletedVaultProperties.properties.vaultId['x-ms-format'] = 'arm-id';
-      $.VaultCreateOrUpdateParameters.properties.location['x-ms-format'] = 'azure-location';
-      $.VaultAccessPolicyParameters.properties.location['x-ms-format'] = 'azure-location';
-      $.Vault.properties.location['x-ms-format'] = 'azure-location';
       $.Vault['x-csharp-usage'] = 'model,input,output';
       $.VaultProperties.properties.createMode['x-ms-enum']['name'] = 'VaultCreateMode';
       $.VaultProperties.properties.networkAcls['x-ms-client-name'] = 'NetworkRuleSet';

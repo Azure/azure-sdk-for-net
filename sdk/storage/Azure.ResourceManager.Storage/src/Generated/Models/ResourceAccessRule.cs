@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Resource Access Rule. </summary>
@@ -18,14 +20,14 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of ResourceAccessRule. </summary>
         /// <param name="tenantId"> Tenant Id. </param>
         /// <param name="resourceId"> Resource Id. </param>
-        internal ResourceAccessRule(string tenantId, string resourceId)
+        internal ResourceAccessRule(Guid? tenantId, string resourceId)
         {
             TenantId = tenantId;
             ResourceId = resourceId;
         }
 
         /// <summary> Tenant Id. </summary>
-        public string TenantId { get; set; }
+        public Guid? TenantId { get; set; }
         /// <summary> Resource Id. </summary>
         public string ResourceId { get; set; }
     }

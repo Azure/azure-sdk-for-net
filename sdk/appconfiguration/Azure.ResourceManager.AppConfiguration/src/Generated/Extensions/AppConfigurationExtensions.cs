@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="configStoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DeletedConfigurationStoreResource>> GetDeletedConfigurationStoreAsync(this SubscriptionResource subscriptionResource, string location, string configStoreName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DeletedConfigurationStoreResource>> GetDeletedConfigurationStoreAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
             return await subscriptionResource.GetDeletedConfigurationStores().GetAsync(location, configStoreName, cancellationToken).ConfigureAwait(false);
         }
@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="configStoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DeletedConfigurationStoreResource> GetDeletedConfigurationStore(this SubscriptionResource subscriptionResource, string location, string configStoreName, CancellationToken cancellationToken = default)
+        public static Response<DeletedConfigurationStoreResource> GetDeletedConfigurationStore(this SubscriptionResource subscriptionResource, AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
             return subscriptionResource.GetDeletedConfigurationStores().Get(location, configStoreName, cancellationToken);
         }

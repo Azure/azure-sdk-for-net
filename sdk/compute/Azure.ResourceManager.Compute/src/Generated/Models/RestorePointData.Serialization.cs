@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<IList<WritableSubResource>> excludeDisks = default;
             Optional<RestorePointSourceMetadata> sourceMetadata = default;
             Optional<string> provisioningState = default;
@@ -83,6 +83,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -169,7 +174,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new RestorePointData(id, name, type, systemData, Optional.ToList(excludeDisks), sourceMetadata.Value, provisioningState.Value, Optional.ToNullable(consistencyMode), Optional.ToNullable(timeCreated), sourceRestorePoint, instanceView.Value);
+            return new RestorePointData(id, name, type, systemData.Value, Optional.ToList(excludeDisks), sourceMetadata.Value, provisioningState.Value, Optional.ToNullable(consistencyMode), Optional.ToNullable(timeCreated), sourceRestorePoint, instanceView.Value);
         }
     }
 }

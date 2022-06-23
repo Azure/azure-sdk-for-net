@@ -8,10 +8,6 @@ namespace Azure.AI.Language.Conversations.Tests
 {
     public class ConversationAnalysisClientTests
     {
-        public Uri Endpoint => new("https://test.api.cognitive.microsoft.com", UriKind.Absolute);
-
-        public ConversationAnalysisClient Client => new(Endpoint, new AzureKeyCredential("test"));
-
         [Test]
         public void ConversationAnalysisClientEndpointNull()
         {
@@ -23,7 +19,7 @@ namespace Azure.AI.Language.Conversations.Tests
         [Test]
         public void ConversationAnalysisClientCredentialNull()
         {
-            Uri endpoint = new("https://test.api.cognitive.microsoft.com", UriKind.Absolute);
+            Uri endpoint = new("https://test.cognitive.microsoft.com", UriKind.Absolute);
 
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
                 () => new ConversationAnalysisClient(endpoint, null));

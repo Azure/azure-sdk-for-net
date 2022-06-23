@@ -6,6 +6,14 @@
 
 ### Breaking Changes
 
+- Base type of `KeyVaultPrivateEndpointConnectionData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `ManagedHsmData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `ManagedHsmPrivateEndpointConnectionData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Type `KeyVaultResourceData` was removed.
+- Base type of `ManagedHsmPrivateLinkResourceData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Type `ManagedHsmTrackedResourceData` was removed.
+- Base type of `PrivateLinkResourceData` changed to `Azure.ResourceManager.Models.ResourceData`.
+
 ### Bugs Fixed
 
 ### Other Changes

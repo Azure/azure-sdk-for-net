@@ -50,7 +50,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "32",
+        "Content-Length": "21",
         "Content-Type": "application/json",
         "traceparent": "00-54e72f4bd19c5743ae5c6b12892f28b8-bc8058c7a2e80a42-00",
         "User-Agent": [
@@ -61,7 +61,6 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "tags": {},
         "location": "westus2"
       },
       "StatusCode": 201,

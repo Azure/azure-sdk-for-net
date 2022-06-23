@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// Get the tenant id for the system assigned identity.
         /// Only be used in response
         /// </param>
-        internal ManagedIdentity(ManagedIdentityType? identityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, string principalId, string tenantId)
+        internal ManagedIdentity(ManagedIdentityType? identityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, string principalId, Guid? tenantId)
         {
             IdentityType = identityType;
             UserAssignedIdentities = userAssignedIdentities;
@@ -52,6 +53,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// Get the tenant id for the system assigned identity.
         /// Only be used in response
         /// </summary>
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
     }
 }

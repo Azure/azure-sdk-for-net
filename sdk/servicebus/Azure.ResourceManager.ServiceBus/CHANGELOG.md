@@ -6,6 +6,17 @@
 
 ### Breaking Changes
 
+- Base type of `DisasterRecoveryData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `MigrationConfigPropertiesData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `NetworkRuleSetData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `ServiceBusAuthorizationRuleData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `ServiceBusPrivateEndpointConnectionData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `ServiceBusQueueData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `ServiceBusRuleData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `ServiceBusSubscriptionData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `ServiceBusTopicData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Type `ProxyResource` was removed.
+
 ### Bugs Fixed
 
 ### Other Changes

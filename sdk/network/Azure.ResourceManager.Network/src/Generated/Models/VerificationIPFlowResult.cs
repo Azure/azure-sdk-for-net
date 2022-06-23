@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VerificationIPFlowResult. </summary>
         /// <param name="access"> Indicates whether the traffic is allowed or denied. </param>
         /// <param name="ruleName"> Name of the rule. If input is not matched against any security rule, it is not displayed. </param>
-        internal VerificationIPFlowResult(Access? access, string ruleName)
+        internal VerificationIPFlowResult(NetworkAccess? access, string ruleName)
         {
             Access = access;
             RuleName = ruleName;
         }
 
         /// <summary> Indicates whether the traffic is allowed or denied. </summary>
-        public Access? Access { get; }
+        public NetworkAccess? Access { get; }
         /// <summary> Name of the rule. If input is not matched against any security rule, it is not displayed. </summary>
         public string RuleName { get; }
     }

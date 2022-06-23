@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<byte[]> blob = default;
             Optional<PublicCertificateLocation> publicCertificateLocation = default;
             Optional<string> thumbprint = default;
@@ -73,6 +73,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -114,7 +119,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new PublicCertificateData(id, name, type, systemData, kind.Value, blob.Value, Optional.ToNullable(publicCertificateLocation), thumbprint.Value);
+            return new PublicCertificateData(id, name, type, systemData.Value, blob.Value, Optional.ToNullable(publicCertificateLocation), thumbprint.Value, kind.Value);
         }
     }
 }

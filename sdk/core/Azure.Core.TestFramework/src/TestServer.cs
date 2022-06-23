@@ -37,7 +37,11 @@ namespace Azure.Core.TestFramework
                     {
                         if (https)
                         {
-                            listenOptions.UseHttps(TestEnvironment.DevCertPath, TestEnvironment.DevCertPassword);
+                            listenOptions.UseHttps(TestEnvironment.DevCertPath, TestEnvironment.DevCertPassword, config =>
+                            {
+                                config.ClientCertificateMode = Microsoft.AspNetCore.Server.Kestrel.Https.ClientCertificateMode.AllowCertificate;
+                                config.ClientCertificateValidation = (_, _, _) => true;
+                            });
                         }
                     });
                 })
