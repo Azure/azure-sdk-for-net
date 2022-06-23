@@ -176,7 +176,7 @@ public class EventTracking
     ///   processor or consumer has received for each partition it is reading or processing from.
     /// </remarks>
     ///
-    private int _checkEvent(EventData eventData, string partitionReceivedFrom, Metrics metrics)
+    private int CheckEvent(EventData eventData, string partitionReceivedFrom, Metrics metrics)
     {
         // Id Checks
         var hasID = eventData.Properties.TryGetValue(IdPropertyName, out var eventIdProperty);
