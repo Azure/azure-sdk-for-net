@@ -69,7 +69,7 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
         public async Task QueryDataAsync()
         {
             #region Snippet:VerifyLogsAsync
-            var workspaceId = "...";            
+            var workspaceId = "...";
             var tableName = "...";
 
             TokenCredential credential = new DefaultAzureCredential();

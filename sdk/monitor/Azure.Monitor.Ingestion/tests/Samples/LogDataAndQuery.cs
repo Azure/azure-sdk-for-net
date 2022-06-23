@@ -77,7 +77,7 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
         public void QueryData()
         {
             #region Snippet:VerifyLogs
-            var workspaceId = "...";            
+            var workspaceId = "...";
             string tableName = "...";
 
             TokenCredential credential = new DefaultAzureCredential();

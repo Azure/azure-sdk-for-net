@@ -7,7 +7,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-- https://github.com/Azure/azure-rest-api-specs/blob/c6d856b6ca7f079e96ed8680bd867b8d6c197669/specification/monitor/data-plane/ingestion/preview/2021-11-01-preview/DataCollectionRules.json
+- https://github.com/Azure/azure-rest-api-specs/blob/d0188b838d6d338a688707c714803fdb3c1384ec/specification/monitor/data-plane/ingestion/preview/2021-11-01-preview/DataCollectionRules.json
 namespace: Azure.Monitor.Ingestion
 security: AADToken
 security-scopes: https://monitor.azure.com//.default
