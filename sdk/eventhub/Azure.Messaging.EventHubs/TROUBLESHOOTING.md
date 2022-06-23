@@ -231,7 +231,7 @@ Further reading:
 - [Debug ThreadPool Starvation][DebugThreadPoolStarvation]
 - [Diagnosing ThreadPool Exhaustion Issues in .NET Core Apps][DiagnoseThreadPoolExhaustion] _(video)_
 
-**"Soft Delete" is enabled for a Blob Storage checkpoint store:**
+#### "Soft Delete" is enabled for a Blob Storage checkpoint store:
 
 To coordinate with other event processors, the checkpoint store ownership records are inspected during each load balancing cycle.  When using an Azure Blob Storage as a checkpoint store, the "soft delete" feature can cause large delays when attempting to read the contents of a container.   It is strongly recommended that "soft delete" be disabled.  For more information, see: [Soft delete for blobs][SoftDeleteBlobStorage].
 
