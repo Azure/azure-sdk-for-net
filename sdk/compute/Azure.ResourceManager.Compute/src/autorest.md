@@ -123,6 +123,7 @@ directive:
       $.VirtualMachineExtensionUpdateProperties.properties.type["x-ms-client-name"] = "ExtensionType";
       $.VirtualMachineNetworkInterfaceIPConfigurationProperties.properties.privateIPAddressVersion["x-ms-enum"].name = "IPVersion";
       $.VirtualMachinePublicIPAddressConfigurationProperties.properties.publicIPAddressVersion["x-ms-enum"].name = "IPVersion";
+      $.VirtualMachineInstanceView.properties.hyperVGeneration["x-ms-enum"].name = "HyperVGeneration";
   - from: virtualMachineImage.json
     where: $.definitions
     transform: >
@@ -161,8 +162,8 @@ directive:
       $.SshPublicKey["x-ms-client-name"] = "SshPublicKeyInfo";
       $.UpdateResource["x-ms-client-name"] = "ComputeUpdateResourceData";
       $.SubResourceWithColocationStatus["x-ms-client-name"] = "ComputeSubResourceDataWithColocationStatus";
-      $.HyperVGenerationType["x-ms-enum"].name = "HyperVGenerationType";
       $.OSDisk.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
+      $.HyperVGenerationType["x-ms-enum"].name = "HyperVGeneration";
   - from: sshPublicKey.json
     where: $.definitions
     transform: >
