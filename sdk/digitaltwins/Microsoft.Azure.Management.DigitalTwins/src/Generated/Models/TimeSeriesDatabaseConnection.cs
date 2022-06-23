@@ -14,31 +14,31 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
     using System.Linq;
 
     /// <summary>
-    /// DigitalTwinsInstance endpoint resource.
+    /// Describes a time series database connection resource.
     /// </summary>
-    public partial class DigitalTwinsEndpointResource : ExternalResource
+    public partial class TimeSeriesDatabaseConnection : ExternalResource
     {
         /// <summary>
-        /// Initializes a new instance of the DigitalTwinsEndpointResource
+        /// Initializes a new instance of the TimeSeriesDatabaseConnection
         /// class.
         /// </summary>
-        public DigitalTwinsEndpointResource()
+        public TimeSeriesDatabaseConnection()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DigitalTwinsEndpointResource
+        /// Initializes a new instance of the TimeSeriesDatabaseConnection
         /// class.
         /// </summary>
-        /// <param name="properties">DigitalTwinsInstance endpoint resource
-        /// properties.</param>
         /// <param name="id">The resource identifier.</param>
         /// <param name="name">Extension resource name.</param>
         /// <param name="type">The resource type.</param>
         /// <param name="systemData">Metadata pertaining to creation and last
         /// modification of the resource.</param>
-        public DigitalTwinsEndpointResource(DigitalTwinsEndpointResourceProperties properties, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
+        /// <param name="properties">Properties of a specific time series
+        /// database connection.</param>
+        public TimeSeriesDatabaseConnection(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), TimeSeriesDatabaseConnectionProperties properties = default(TimeSeriesDatabaseConnectionProperties))
             : base(id, name, type, systemData)
         {
             Properties = properties;
@@ -51,10 +51,11 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets digitalTwinsInstance endpoint resource properties.
+        /// Gets or sets properties of a specific time series database
+        /// connection.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public DigitalTwinsEndpointResourceProperties Properties { get; set; }
+        public TimeSeriesDatabaseConnectionProperties Properties { get; set; }
 
     }
 }

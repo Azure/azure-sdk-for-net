@@ -19,12 +19,13 @@ namespace Microsoft.Azure.Management.DigitalTwins
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PrivateEndpointConnectionsOperations operations.
+    /// TimeSeriesDatabaseConnectionsOperations operations.
     /// </summary>
-    public partial interface IPrivateEndpointConnectionsOperations
+    public partial interface ITimeSeriesDatabaseConnectionsOperations
     {
         /// <summary>
-        /// List private endpoint connection properties.
+        /// Get all existing time series database connections for this
+        /// DigitalTwins instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the
@@ -48,10 +49,9 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PrivateEndpointConnectionsResponse>> ListWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<TimeSeriesDatabaseConnection>>> ListWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get private endpoint connection properties for the given private
-        /// endpoint.
+        /// Get the description of an existing time series database connection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the
@@ -60,8 +60,8 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <param name='resourceName'>
         /// The name of the DigitalTwinsInstance.
         /// </param>
-        /// <param name='privateEndpointConnectionName'>
-        /// The name of the private endpoint connection.
+        /// <param name='timeSeriesDatabaseConnectionName'>
+        /// Name of time series database connection.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -78,9 +78,9 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PrivateEndpointConnection>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TimeSeriesDatabaseConnection>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceName, string timeSeriesDatabaseConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete private endpoint connection with the specified name.
+        /// Create or update a time series database connection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the
@@ -89,38 +89,11 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <param name='resourceName'>
         /// The name of the DigitalTwinsInstance.
         /// </param>
-        /// <param name='privateEndpointConnectionName'>
-        /// The name of the private endpoint connection.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Update the status of a private endpoint connection with the given
-        /// name.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the
-        /// DigitalTwinsInstance.
-        /// </param>
-        /// <param name='resourceName'>
-        /// The name of the DigitalTwinsInstance.
-        /// </param>
-        /// <param name='privateEndpointConnectionName'>
-        /// The name of the private endpoint connection.
+        /// <param name='timeSeriesDatabaseConnectionName'>
+        /// Name of time series database connection.
         /// </param>
         /// <param name='properties'>
-        /// The connection properties.
+        /// Properties of a specific time series database connection.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -137,9 +110,9 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PrivateEndpointConnection>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string privateEndpointConnectionName, ConnectionProperties properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TimeSeriesDatabaseConnection>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string timeSeriesDatabaseConnectionName, TimeSeriesDatabaseConnectionProperties properties = default(TimeSeriesDatabaseConnectionProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete private endpoint connection with the specified name.
+        /// Delete a time series database connection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the
@@ -148,8 +121,8 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <param name='resourceName'>
         /// The name of the DigitalTwinsInstance.
         /// </param>
-        /// <param name='privateEndpointConnectionName'>
-        /// The name of the private endpoint connection.
+        /// <param name='timeSeriesDatabaseConnectionName'>
+        /// Name of time series database connection.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -160,13 +133,15 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TimeSeriesDatabaseConnection>> DeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, string timeSeriesDatabaseConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update the status of a private endpoint connection with the given
-        /// name.
+        /// Create or update a time series database connection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the
@@ -175,11 +150,11 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <param name='resourceName'>
         /// The name of the DigitalTwinsInstance.
         /// </param>
-        /// <param name='privateEndpointConnectionName'>
-        /// The name of the private endpoint connection.
+        /// <param name='timeSeriesDatabaseConnectionName'>
+        /// Name of time series database connection.
         /// </param>
         /// <param name='properties'>
-        /// The connection properties.
+        /// Properties of a specific time series database connection.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -196,6 +171,58 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PrivateEndpointConnection>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string privateEndpointConnectionName, ConnectionProperties properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TimeSeriesDatabaseConnection>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string timeSeriesDatabaseConnectionName, TimeSeriesDatabaseConnectionProperties properties = default(TimeSeriesDatabaseConnectionProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Delete a time series database connection.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the
+        /// DigitalTwinsInstance.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the DigitalTwinsInstance.
+        /// </param>
+        /// <param name='timeSeriesDatabaseConnectionName'>
+        /// Name of time series database connection.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<TimeSeriesDatabaseConnection>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, string timeSeriesDatabaseConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get all existing time series database connections for this
+        /// DigitalTwins instance.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<TimeSeriesDatabaseConnection>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
