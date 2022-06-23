@@ -10,8 +10,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/2d6cb29af754f48a08f94cb6113bb1f01a4e0eb9/specification/compute/resource-manager/readme.md
-tag: package-2022-03-02
+require: https://github.com/Azure/azure-rest-api-specs/blob/e50265479cae5da79144cce18a80751214a4ceca/specification/compute/resource-manager/readme.md
+tag: package-2022-04-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -107,6 +107,7 @@ directive:
       $.ResourceSkuCapacity["x-ms-client-name"] = "ComputeResourceSkuCapacity";
       $.ResourceSkuLocationInfo["x-ms-client-name"] = "ComputeResourceSkuLocationInfo";
       $.ResourceSkuRestrictionInfo["x-ms-format"] = "ComputeResourceSkuRestrictionInfo";
+# copy the systemData from common-types here so that it will be automatically replaced
   - from: common.json
     where: $.definitions
     transform: >
@@ -115,6 +116,59 @@ directive:
       $.SubResourceReadOnly["x-ms-client-name"] = "ComputeSubResourceData";
       $.SubResourceReadOnly.properties.id["x-ms-format"] = "arm-id";
       $.ExtendedLocationType["x-ms-enum"].name = "ExtendedLocationType";
+      $.SystemData = {
+        "description": "Metadata pertaining to creation and last modification of the resource.",
+        "type": "object",
+        "readOnly": true,
+        "properties": {
+            "createdBy": {
+            "type": "string",
+            "description": "The identity that created the resource."
+            },
+            "createdByType": {
+            "type": "string",
+            "description": "The type of identity that created the resource.",
+            "enum": [
+                "User",
+                "Application",
+                "ManagedIdentity",
+                "Key"
+            ],
+            "x-ms-enum": {
+                "name": "createdByType",
+                "modelAsString": true
+            }
+            },
+            "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp of resource creation (UTC)."
+            },
+            "lastModifiedBy": {
+            "type": "string",
+            "description": "The identity that last modified the resource."
+            },
+            "lastModifiedByType": {
+            "type": "string",
+            "description": "The type of identity that last modified the resource.",
+            "enum": [
+                "User",
+                "Application",
+                "ManagedIdentity",
+                "Key"
+            ],
+            "x-ms-enum": {
+                "name": "createdByType",
+                "modelAsString": true
+            }
+            },
+            "lastModifiedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp of resource last modification (UTC)"
+            }
+          }
+        };
   - from: virtualMachine.json
     where: $.definitions
     transform: >
@@ -230,8 +284,6 @@ directive:
       $.UpdateDomain.properties.id["x-ms-format"] = "arm-id";
       $.Extension["x-ms-client-name"] = "CloudServiceExtension";
       $.Extension.properties.properties["x-ms-client-flatten"] = true;
-      $.SubResource["x-ms-client-name"] = "ComputeWriteableSubResourceData";
-      $.SubResource.properties.id["x-ms-format"] = "arm-id";
       $.CloudServiceRole.properties.properties["x-ms-client-flatten"] = true;
       $.RoleInstance["x-ms-client-name"] = "CloudServiceRoleInstance";
       $.RoleInstance.properties.properties["x-ms-client-flatten"] = true;
