@@ -13,8 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Template
 {
-    /// <summary> The ListPetToysResponse service client. </summary>
-    public partial class ListPetToysResponseClient
+    /// <summary> The Products service client. </summary>
+    public partial class ProductsClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -27,28 +27,28 @@ namespace Azure.Template
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of ListPetToysResponseClient for mocking. </summary>
-        protected ListPetToysResponseClient()
+        /// <summary> Initializes a new instance of ProductsClient for mocking. </summary>
+        protected ProductsClient()
         {
         }
 
-        /// <summary> Initializes a new instance of ListPetToysResponseClient. </summary>
+        /// <summary> Initializes a new instance of ProductsClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
-        public ListPetToysResponseClient(TokenCredential credential) : this(credential, new Uri(""), new PetStoreServiceClientOptions())
+        public ProductsClient(TokenCredential credential) : this(credential, new Uri(""), new ProductsClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of ListPetToysResponseClient. </summary>
+        /// <summary> Initializes a new instance of ProductsClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="endpoint"/> is null. </exception>
-        public ListPetToysResponseClient(TokenCredential credential, Uri endpoint, PetStoreServiceClientOptions options)
+        public ProductsClient(TokenCredential credential, Uri endpoint, ProductsClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            options ??= new PetStoreServiceClientOptions();
+            options ??= new ProductsClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
@@ -56,40 +56,27 @@ namespace Azure.Template
             _endpoint = endpoint;
         }
 
-        /// <param name="petId"> The String to use. </param>
-        /// <param name="nameFilter"> The String to use. </param>
+        /// <param name="id"> The Integer to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="petId"/> or <paramref name="nameFilter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="petId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ToyListResults</c>:
+        /// Schema for <c>Product</c>:
         /// <code>{
-        ///   items: [
-        ///     {
-        ///       id: number, # Required.
-        ///       petId: number, # Required.
-        ///       name: string, # Required.
-        ///     }
-        ///   ], # Required.
-        ///   nextLink: string, # Optional.
+        ///   id: number, # Required.
         /// }
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> GetListPetToysResponsesAsync(string petId, string nameFilter, RequestContext context = null)
+        public virtual async Task<Response> GetProductAsync(int id, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(petId, nameof(petId));
-            Argument.AssertNotNull(nameFilter, nameof(nameFilter));
-
-            using var scope = ClientDiagnostics.CreateScope("ListPetToysResponseClient.GetListPetToysResponses");
+            using var scope = ClientDiagnostics.CreateScope("ProductsClient.GetProduct");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetListPetToysResponsesRequest(petId, nameFilter, context);
+                using HttpMessage message = CreateGetProductRequest(id, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -99,40 +86,27 @@ namespace Azure.Template
             }
         }
 
-        /// <param name="petId"> The String to use. </param>
-        /// <param name="nameFilter"> The String to use. </param>
+        /// <param name="id"> The Integer to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="petId"/> or <paramref name="nameFilter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="petId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ToyListResults</c>:
+        /// Schema for <c>Product</c>:
         /// <code>{
-        ///   items: [
-        ///     {
-        ///       id: number, # Required.
-        ///       petId: number, # Required.
-        ///       name: string, # Required.
-        ///     }
-        ///   ], # Required.
-        ///   nextLink: string, # Optional.
+        ///   id: number, # Required.
         /// }
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response GetListPetToysResponses(string petId, string nameFilter, RequestContext context = null)
+        public virtual Response GetProduct(int id, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(petId, nameof(petId));
-            Argument.AssertNotNull(nameFilter, nameof(nameFilter));
-
-            using var scope = ClientDiagnostics.CreateScope("ListPetToysResponseClient.GetListPetToysResponses");
+            using var scope = ClientDiagnostics.CreateScope("ProductsClient.GetProduct");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetListPetToysResponsesRequest(petId, nameFilter, context);
+                using HttpMessage message = CreateGetProductRequest(id, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -142,17 +116,15 @@ namespace Azure.Template
             }
         }
 
-        internal HttpMessage CreateGetListPetToysResponsesRequest(string petId, string nameFilter, RequestContext context)
+        internal HttpMessage CreateGetProductRequest(int id, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/pets/", false);
-            uri.AppendPath(petId, true);
-            uri.AppendPath("/toys", false);
-            uri.AppendQuery("nameFilter", nameFilter, true);
+            uri.AppendPath("/products/", false);
+            uri.AppendPath(id, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
