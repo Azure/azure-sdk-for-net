@@ -12,7 +12,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing the ServiceBusRule data model. </summary>
-    public partial class ServiceBusRuleData : ProxyResource
+    public partial class ServiceBusRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceBusRuleData. </summary>
         public ServiceBusRuleData()
@@ -24,17 +24,18 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="action"> Represents the filter actions which are allowed for the transformation of a message that have been matched by a filter expression. </param>
         /// <param name="filterType"> Filter type that is evaluated against a BrokeredMessage. </param>
         /// <param name="sqlFilter"> Properties of sqlFilter. </param>
         /// <param name="correlationFilter"> Properties of correlationFilter. </param>
-        internal ServiceBusRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, FilterAction action, FilterType? filterType, SqlFilter sqlFilter, CorrelationFilter correlationFilter) : base(id, name, resourceType, systemData, location)
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        internal ServiceBusRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FilterAction action, FilterType? filterType, SqlFilter sqlFilter, CorrelationFilter correlationFilter, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Action = action;
             FilterType = filterType;
             SqlFilter = sqlFilter;
             CorrelationFilter = correlationFilter;
+            Location = location;
         }
 
         /// <summary> Represents the filter actions which are allowed for the transformation of a message that have been matched by a filter expression. </summary>
@@ -45,5 +46,7 @@ namespace Azure.ResourceManager.ServiceBus
         public SqlFilter SqlFilter { get; set; }
         /// <summary> Properties of correlationFilter. </summary>
         public CorrelationFilter CorrelationFilter { get; set; }
+        /// <summary> The geo-location where the resource lives. </summary>
+        public AzureLocation? Location { get; }
     }
 }

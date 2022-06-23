@@ -33,14 +33,17 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -132,18 +135,18 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IList<string>> zones = default;
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
             IList<ContainerInstanceContainer> containers = default;
             Optional<IList<ImageRegistryCredential>> imageRegistryCredentials = default;
             Optional<ContainerGroupRestartPolicy> restartPolicy = default;
             Optional<IPAddress> ipAddress = default;
-            OperatingSystemTypes osType = default;
+            OperatingSystemType osType = default;
             Optional<IList<ContainerInstanceVolume>> volumes = default;
             Optional<ContainerGroupPropertiesInstanceView> instanceView = default;
             Optional<ContainerGroupDiagnostics> diagnostics = default;
@@ -181,6 +184,11 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -211,6 +219,11 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -275,7 +288,7 @@ namespace Azure.ResourceManager.ContainerInstance
                         }
                         if (property0.NameEquals("osType"))
                         {
-                            osType = new OperatingSystemTypes(property0.Value.GetString());
+                            osType = new OperatingSystemType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("volumes"))
@@ -377,7 +390,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     continue;
                 }
             }
-            return new ContainerGroupData(id, name, type, systemData, tags, location, Optional.ToList(zones), identity, provisioningState.Value, containers, Optional.ToList(imageRegistryCredentials), Optional.ToNullable(restartPolicy), ipAddress.Value, osType, Optional.ToList(volumes), instanceView.Value, diagnostics.Value, Optional.ToList(subnetIds), dnsConfig.Value, Optional.ToNullable(sku), encryptionProperties.Value, Optional.ToList(initContainers));
+            return new ContainerGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, provisioningState.Value, containers, Optional.ToList(imageRegistryCredentials), Optional.ToNullable(restartPolicy), ipAddress.Value, osType, Optional.ToList(volumes), instanceView.Value, diagnostics.Value, Optional.ToList(subnetIds), dnsConfig.Value, Optional.ToNullable(sku), encryptionProperties.Value, Optional.ToList(initContainers), Optional.ToList(zones));
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             Optional<ManagedIdentityType> type = default;
             Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             Optional<string> principalId = default;
-            Optional<string> tenantId = default;
+            Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -76,11 +77,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 if (property.NameEquals("tenantId"))
                 {
-                    tenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
                     continue;
                 }
             }
-            return new ManagedIdentity(Optional.ToNullable(type), Optional.ToDictionary(userAssignedIdentities), principalId.Value, tenantId.Value);
+            return new ManagedIdentity(Optional.ToNullable(type), Optional.ToDictionary(userAssignedIdentities), principalId.Value, Optional.ToNullable(tenantId));
         }
     }
 }

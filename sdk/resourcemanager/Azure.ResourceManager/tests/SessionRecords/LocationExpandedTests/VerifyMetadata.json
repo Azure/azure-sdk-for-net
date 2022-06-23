@@ -6,34 +6,43 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-576fe1197f94b94fbc738678a64efbd4-b4015a34a1e84842-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220112.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "4f52c5f76ae48abbda3fe7c3c3032ba1",
+        "traceparent": "00-889902638c435dbc1a569b6880cf04c6-41a9ec4aba501cb5-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220621.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "5c451da9178e78f73ca6089c4b1f346a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "468",
+        "Content-Length": "747",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 12 Jan 2022 06:12:25 GMT",
+        "Date": "Tue, 21 Jun 2022 12:42:58 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "1751f209-1f83-4f15-9f4a-4c9a0c99bd20",
-        "x-ms-ratelimit-remaining-subscription-reads": "11986",
-        "x-ms-request-id": "1751f209-1f83-4f15-9f4a-4c9a0c99bd20",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220112T061226Z:1751f209-1f83-4f15-9f4a-4c9a0c99bd20"
+        "x-ms-correlation-request-id": "2209869e-57ea-4934-8bdf-0b08079d1f5f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11770",
+        "x-ms-request-id": "2209869e-57ea-4934-8bdf-0b08079d1f5f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220621T124258Z:2209869e-57ea-4934-8bdf-0b08079d1f5f"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
         "tags": {
-          "tagKey1": "tagValue1",
-          "tagKey2": "tagValue2"
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
         },
         "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
         "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
@@ -52,25 +61,26 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220112.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "44475ca62bbd1452cc8e3b87df91231b",
+        "traceparent": "00-16542dc9e9dccd2f8e2d01bd003632c6-4648e04dd99d64a8-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220621.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "45c12c8ae83f7a647fe78c57b5cf71ac",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "29714",
+        "Content-Length": "30202",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 12 Jan 2022 06:12:26 GMT",
+        "Date": "Tue, 21 Jun 2022 12:42:58 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "819e053e-4a86-4d53-967f-0b9e199e9a2b",
-        "x-ms-ratelimit-remaining-subscription-reads": "11985",
-        "x-ms-request-id": "819e053e-4a86-4d53-967f-0b9e199e9a2b",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220112T061227Z:819e053e-4a86-4d53-967f-0b9e199e9a2b"
+        "x-ms-correlation-request-id": "e9437fad-4d73-4dd8-92f2-79190ed650e9",
+        "x-ms-ratelimit-remaining-subscription-reads": "11769",
+        "x-ms-request-id": "e9437fad-4d73-4dd8-92f2-79190ed650e9",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220621T124259Z:e9437fad-4d73-4dd8-92f2-79190ed650e9"
       },
       "ResponseBody": {
         "value": [
@@ -327,48 +337,6 @@
             }
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/northcentralus",
-            "name": "northcentralus",
-            "type": "Region",
-            "displayName": "North Central US",
-            "regionalDisplayName": "(US) North Central US",
-            "metadata": {
-              "regionType": "Physical",
-              "regionCategory": "Recommended",
-              "geographyGroup": "US",
-              "longitude": "-87.6278",
-              "latitude": "41.8819",
-              "physicalLocation": "Illinois",
-              "pairedRegion": [
-                {
-                  "name": "southcentralus",
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southcentralus"
-                }
-              ]
-            }
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/westus",
-            "name": "westus",
-            "type": "Region",
-            "displayName": "West US",
-            "regionalDisplayName": "(US) West US",
-            "metadata": {
-              "regionType": "Physical",
-              "regionCategory": "Recommended",
-              "geographyGroup": "US",
-              "longitude": "-122.417",
-              "latitude": "37.783",
-              "physicalLocation": "California",
-              "pairedRegion": [
-                {
-                  "name": "eastus",
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastus"
-                }
-              ]
-            }
-          },
-          {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southafricanorth",
             "name": "southafricanorth",
             "type": "Region",
@@ -448,27 +416,6 @@
                 {
                   "name": "japanwest",
                   "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/japanwest"
-                }
-              ]
-            }
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/jioindiawest",
-            "name": "jioindiawest",
-            "type": "Region",
-            "displayName": "Jio India West",
-            "regionalDisplayName": "(Asia Pacific) Jio India West",
-            "metadata": {
-              "regionType": "Physical",
-              "regionCategory": "Recommended",
-              "geographyGroup": "Asia Pacific",
-              "longitude": "70.05773",
-              "latitude": "22.470701",
-              "physicalLocation": "Jamnagar",
-              "pairedRegion": [
-                {
-                  "name": "jioindiacentral",
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/jioindiacentral"
                 }
               ]
             }
@@ -600,27 +547,6 @@
             }
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/uaenorth",
-            "name": "uaenorth",
-            "type": "Region",
-            "displayName": "UAE North",
-            "regionalDisplayName": "(Middle East) UAE North",
-            "metadata": {
-              "regionType": "Physical",
-              "regionCategory": "Recommended",
-              "geographyGroup": "Middle East",
-              "longitude": "55.316666",
-              "latitude": "25.266666",
-              "physicalLocation": "Dubai",
-              "pairedRegion": [
-                {
-                  "name": "uaecentral",
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/uaecentral"
-                }
-              ]
-            }
-          },
-          {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/brazilsouth",
             "name": "brazilsouth",
             "type": "Region",
@@ -637,6 +563,26 @@
                 {
                   "name": "southcentralus",
                   "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southcentralus"
+                }
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastus2euap",
+            "name": "eastus2euap",
+            "type": "Region",
+            "displayName": "East US 2 EUAP",
+            "regionalDisplayName": "(US) East US 2 EUAP",
+            "metadata": {
+              "regionType": "Physical",
+              "regionCategory": "Recommended",
+              "geographyGroup": "US",
+              "longitude": "-78.3889",
+              "latitude": "36.6681",
+              "pairedRegion": [
+                {
+                  "name": "centraluseuap",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/centraluseuap"
                 }
               ]
             }
@@ -869,6 +815,17 @@
             }
           },
           {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/singapore",
+            "name": "singapore",
+            "type": "Region",
+            "displayName": "Singapore",
+            "regionalDisplayName": "Singapore",
+            "metadata": {
+              "regionType": "Logical",
+              "regionCategory": "Other"
+            }
+          },
+          {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southafrica",
             "name": "southafrica",
             "type": "Region",
@@ -924,6 +881,17 @@
             }
           },
           {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/unitedstateseuap",
+            "name": "unitedstateseuap",
+            "type": "Region",
+            "displayName": "United States EUAP",
+            "regionalDisplayName": "United States EUAP",
+            "metadata": {
+              "regionType": "Logical",
+              "regionCategory": "Other"
+            }
+          },
+          {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastasiastage",
             "name": "eastasiastage",
             "type": "Region",
@@ -948,6 +916,90 @@
             }
           },
           {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/northcentralus",
+            "name": "northcentralus",
+            "type": "Region",
+            "displayName": "North Central US",
+            "regionalDisplayName": "(US) North Central US",
+            "metadata": {
+              "regionType": "Physical",
+              "regionCategory": "Other",
+              "geographyGroup": "US",
+              "longitude": "-87.6278",
+              "latitude": "41.8819",
+              "physicalLocation": "Illinois",
+              "pairedRegion": [
+                {
+                  "name": "southcentralus",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southcentralus"
+                }
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/westus",
+            "name": "westus",
+            "type": "Region",
+            "displayName": "West US",
+            "regionalDisplayName": "(US) West US",
+            "metadata": {
+              "regionType": "Physical",
+              "regionCategory": "Other",
+              "geographyGroup": "US",
+              "longitude": "-122.417",
+              "latitude": "37.783",
+              "physicalLocation": "California",
+              "pairedRegion": [
+                {
+                  "name": "eastus",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastus"
+                }
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/jioindiawest",
+            "name": "jioindiawest",
+            "type": "Region",
+            "displayName": "Jio India West",
+            "regionalDisplayName": "(Asia Pacific) Jio India West",
+            "metadata": {
+              "regionType": "Physical",
+              "regionCategory": "Other",
+              "geographyGroup": "Asia Pacific",
+              "longitude": "70.05773",
+              "latitude": "22.470701",
+              "physicalLocation": "Jamnagar",
+              "pairedRegion": [
+                {
+                  "name": "jioindiacentral",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/jioindiacentral"
+                }
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/uaenorth",
+            "name": "uaenorth",
+            "type": "Region",
+            "displayName": "UAE North",
+            "regionalDisplayName": "(Middle East) UAE North",
+            "metadata": {
+              "regionType": "Physical",
+              "regionCategory": "Other",
+              "geographyGroup": "Middle East",
+              "longitude": "55.316666",
+              "latitude": "25.266666",
+              "physicalLocation": "Dubai",
+              "pairedRegion": [
+                {
+                  "name": "uaecentral",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/uaecentral"
+                }
+              ]
+            }
+          },
+          {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/centraluseuap",
             "name": "centraluseuap",
             "type": "Region",
@@ -963,26 +1015,6 @@
                 {
                   "name": "eastus2euap",
                   "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastus2euap"
-                }
-              ]
-            }
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastus2euap",
-            "name": "eastus2euap",
-            "type": "Region",
-            "displayName": "East US 2 EUAP",
-            "regionalDisplayName": "(US) East US 2 EUAP",
-            "metadata": {
-              "regionType": "Physical",
-              "regionCategory": "Other",
-              "geographyGroup": "US",
-              "longitude": "-78.3889",
-              "latitude": "36.6681",
-              "pairedRegion": [
-                {
-                  "name": "centraluseuap",
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/centraluseuap"
                 }
               ]
             }
@@ -1370,7 +1402,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1600993272",
+    "RandomSeed": "2115576799",
     "RESOURCE_MANAGER_URL": "https://management.azure.com",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }

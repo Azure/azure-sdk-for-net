@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ARM resource for a certificate. </summary>
-    public partial class CertificatePatch : ProxyOnlyResource
+    public partial class CertificatePatch : ResourceData
     {
         /// <summary> Initializes a new instance of CertificatePatch. </summary>
         public CertificatePatch()
@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="password"> Certificate password. </param>
         /// <param name="friendlyName"> Friendly name of the certificate. </param>
         /// <param name="subjectName"> Subject name of the certificate. </param>
@@ -48,7 +47,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="serverFarmId"> Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;. </param>
         /// <param name="canonicalName"> CNAME of the certificate to be issued via free certificate. </param>
         /// <param name="domainValidationMethod"> Method of domain validation for free cert. </param>
-        internal CertificatePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string password, string friendlyName, string subjectName, IList<string> hostNames, byte[] pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expirationOn, string thumbprint, bool? valid, byte[] cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, string serverFarmId, string canonicalName, string domainValidationMethod) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal CertificatePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string password, string friendlyName, string subjectName, IList<string> hostNames, byte[] pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expirationOn, string thumbprint, bool? valid, byte[] cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, string serverFarmId, string canonicalName, string domainValidationMethod, string kind) : base(id, name, resourceType, systemData)
         {
             Password = password;
             FriendlyName = friendlyName;
@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
             ServerFarmId = serverFarmId;
             CanonicalName = canonicalName;
             DomainValidationMethod = domainValidationMethod;
+            Kind = kind;
         }
 
         /// <summary> Certificate password. </summary>
@@ -115,5 +116,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string CanonicalName { get; set; }
         /// <summary> Method of domain validation for free cert. </summary>
         public string DomainValidationMethod { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="prefixSize"> If maskingFunction is set to Text, the number of characters to show unmasked in the beginning of the string. Otherwise, this parameter will be ignored. </param>
         /// <param name="suffixSize"> If maskingFunction is set to Text, the number of characters to show unmasked at the end of the string. Otherwise, this parameter will be ignored. </param>
         /// <param name="replacementString"> If maskingFunction is set to Text, the character to use for masking the unexposed part of the string. Otherwise, this parameter will be ignored. </param>
-        internal DataMaskingRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, string kind, string idPropertiesId, string aliasName, DataMaskingRuleState? ruleState, string schemaName, string tableName, string columnName, DataMaskingFunction? maskingFunction, string numberFrom, string numberTo, string prefixSize, string suffixSize, string replacementString) : base(id, name, resourceType, systemData)
+        internal DataMaskingRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, string idPropertiesId, string aliasName, DataMaskingRuleState? ruleState, string schemaName, string tableName, string columnName, DataMaskingFunction? maskingFunction, string numberFrom, string numberTo, string prefixSize, string suffixSize, string replacementString) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Kind = kind;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The location of the data masking rule. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> The kind of Data Masking Rule. Metadata, used for Azure portal. </summary>
         public string Kind { get; }
         /// <summary> The rule Id. </summary>

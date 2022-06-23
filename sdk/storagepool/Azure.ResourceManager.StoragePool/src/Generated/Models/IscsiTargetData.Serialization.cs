@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.StoragePool
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             IscsiTargetAclMode aclMode = default;
             Optional<IList<Acl>> staticAcls = default;
             Optional<IList<IscsiLun>> luns = default;
             string targetIqn = default;
-            ProvisioningStates provisioningState = default;
+            ProvisioningState provisioningState = default;
             OperationalStatus status = default;
             Optional<IList<string>> endpoints = default;
             Optional<int> port = default;
@@ -121,6 +121,11 @@ namespace Azure.ResourceManager.StoragePool
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -175,7 +180,7 @@ namespace Azure.ResourceManager.StoragePool
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            provisioningState = new ProvisioningStates(property0.Value.GetString());
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"))
@@ -227,7 +232,7 @@ namespace Azure.ResourceManager.StoragePool
                     continue;
                 }
             }
-            return new IscsiTargetData(id, name, type, systemData, managedBy.Value, Optional.ToList(managedByExtended), aclMode, Optional.ToList(staticAcls), Optional.ToList(luns), targetIqn, provisioningState, status, Optional.ToList(endpoints), Optional.ToNullable(port), Optional.ToList(sessions));
+            return new IscsiTargetData(id, name, type, systemData.Value, managedBy.Value, Optional.ToList(managedByExtended), aclMode, Optional.ToList(staticAcls), Optional.ToList(luns), targetIqn, provisioningState, status, Optional.ToList(endpoints), Optional.ToNullable(port), Optional.ToList(sessions));
         }
     }
 }

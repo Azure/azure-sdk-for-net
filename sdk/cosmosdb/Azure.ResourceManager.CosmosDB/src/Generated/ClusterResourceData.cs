@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> A class representing the ClusterResource data model. </summary>
-    public partial class ClusterResourceData : ManagedCassandraARMResourceProperties
+    public partial class ClusterResourceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ClusterResourceData. </summary>
         /// <param name="location"> The location. </param>
@@ -28,14 +28,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="properties"> Properties of a managed Cassandra cluster. </param>
-        internal ClusterResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SystemAssignedServiceIdentity identity, ClusterResourceProperties properties) : base(id, name, resourceType, systemData, tags, location, identity)
+        /// <param name="identity"> Identity for the resource. </param>
+        internal ClusterResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterResourceProperties properties, SystemAssignedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Identity = identity;
         }
 
         /// <summary> Properties of a managed Cassandra cluster. </summary>
         public ClusterResourceProperties Properties { get; set; }
+        /// <summary> Identity for the resource. </summary>
+        public SystemAssignedServiceIdentity Identity { get; set; }
     }
 }

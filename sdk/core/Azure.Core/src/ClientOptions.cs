@@ -61,7 +61,7 @@ namespace Azure.Core
                 // Implementation Note: this code must use the copy constructors on DiagnosticsOptions and RetryOptions specifying
                 // null as the argument rather than calling their default constructors. Calling their default constructors would result
                 // in a stack overflow as this constructor is called from a static initializer.
-                _transport = GetDefaultTransport();
+                _transport = HttpPipelineTransport.Create();
                 Diagnostics = new DiagnosticsOptions(null);
                 Retry = new RetryOptions(null);
             }
@@ -111,19 +111,6 @@ namespace Azure.Core
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
-
-        private static HttpPipelineTransport GetDefaultTransport()
-        {
-#if NETFRAMEWORK
-            if (!AppContextSwitchHelper.GetConfigValue(
-                "Azure.Core.Pipeline.DisableHttpWebRequestTransport",
-                "AZURE_CORE_DISABLE_HTTPWEBREQUESTTRANSPORT"))
-            {
-                return HttpWebRequestTransport.Shared;
-            }
-#endif
-            return HttpClientTransport.Shared;
-        }
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

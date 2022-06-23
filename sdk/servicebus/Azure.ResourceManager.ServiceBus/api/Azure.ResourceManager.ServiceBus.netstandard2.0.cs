@@ -15,10 +15,11 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.DisasterRecoveryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.DisasterRecoveryResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DisasterRecoveryData : Azure.ResourceManager.ServiceBus.Models.ProxyResource
+    public partial class DisasterRecoveryData : Azure.ResourceManager.Models.ResourceData
     {
         public DisasterRecoveryData() { }
         public string AlternateName { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string PartnerNamespace { get { throw null; } set { } }
         public long? PendingReplicationOperationsCount { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.DisasterRecoveryProvisioningState? ProvisioningState { get { throw null; } }
@@ -60,9 +61,10 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.MigrationConfigPropertiesResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.MigrationConfigPropertiesResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MigrationConfigPropertiesData : Azure.ResourceManager.ServiceBus.Models.ProxyResource
+    public partial class MigrationConfigPropertiesData : Azure.ResourceManager.Models.ResourceData
     {
         public MigrationConfigPropertiesData() { }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string MigrationState { get { throw null; } }
         public long? PendingReplicationOperationsCount { get { throw null; } }
         public string PostMigrationName { get { throw null; } set { } }
@@ -211,11 +213,12 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.NamespaceTopicAuthorizationRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.NamespaceTopicAuthorizationRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class NetworkRuleSetData : Azure.ResourceManager.ServiceBus.Models.ProxyResource
+    public partial class NetworkRuleSetData : Azure.ResourceManager.Models.ResourceData
     {
         public NetworkRuleSetData() { }
         public Azure.ResourceManager.ServiceBus.Models.DefaultAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.NetworkRuleSetIPRules> IPRules { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.PublicNetworkAccessFlag? PublicNetworkAccess { get { throw null; } set { } }
         public bool? TrustedServiceAccessEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.NetworkRuleSetVirtualNetworkRules> VirtualNetworkRules { get { throw null; } }
@@ -232,10 +235,11 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.NetworkRuleSetResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.NetworkRuleSetResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ServiceBusAuthorizationRuleData : Azure.ResourceManager.ServiceBus.Models.ProxyResource
+    public partial class ServiceBusAuthorizationRuleData : Azure.ResourceManager.Models.ResourceData
     {
         public ServiceBusAuthorizationRuleData() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.AccessRights> Rights { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.AccessRight> Rights { get { throw null; } }
     }
     public static partial class ServiceBusExtensions
     {
@@ -350,10 +354,11 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceBusPrivateEndpointConnectionData : Azure.ResourceManager.ServiceBus.Models.ProxyResource
+    public partial class ServiceBusPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public ServiceBusPrivateEndpointConnectionData() { }
         public Azure.ResourceManager.ServiceBus.Models.ConnectionState ConnectionState { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.EndpointProvisioningState? ProvisioningState { get { throw null; } set { } }
     }
@@ -386,7 +391,7 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.ServiceBusQueueResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusQueueResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceBusQueueData : Azure.ResourceManager.ServiceBus.Models.ProxyResource
+    public partial class ServiceBusQueueData : Azure.ResourceManager.Models.ResourceData
     {
         public ServiceBusQueueData() { }
         public System.DateTimeOffset? AccessedOn { get { throw null; } }
@@ -401,6 +406,7 @@ namespace Azure.ResourceManager.ServiceBus
         public bool? EnablePartitioning { get { throw null; } set { } }
         public string ForwardDeadLetteredMessagesTo { get { throw null; } set { } }
         public string ForwardTo { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.TimeSpan? LockDuration { get { throw null; } set { } }
         public int? MaxDeliveryCount { get { throw null; } set { } }
         public long? MaxMessageSizeInKilobytes { get { throw null; } set { } }
@@ -444,12 +450,13 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.ServiceBusRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceBusRuleData : Azure.ResourceManager.ServiceBus.Models.ProxyResource
+    public partial class ServiceBusRuleData : Azure.ResourceManager.Models.ResourceData
     {
         public ServiceBusRuleData() { }
         public Azure.ResourceManager.ServiceBus.Models.FilterAction Action { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.CorrelationFilter CorrelationFilter { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.FilterType? FilterType { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.SqlFilter SqlFilter { get { throw null; } set { } }
     }
     public partial class ServiceBusRuleResource : Azure.ResourceManager.ArmResource
@@ -481,7 +488,7 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceBusSubscriptionData : Azure.ResourceManager.ServiceBus.Models.ProxyResource
+    public partial class ServiceBusSubscriptionData : Azure.ResourceManager.Models.ResourceData
     {
         public ServiceBusSubscriptionData() { }
         public System.DateTimeOffset? AccessedOn { get { throw null; } }
@@ -497,6 +504,7 @@ namespace Azure.ResourceManager.ServiceBus
         public string ForwardDeadLetteredMessagesTo { get { throw null; } set { } }
         public string ForwardTo { get { throw null; } set { } }
         public bool? IsClientAffine { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.TimeSpan? LockDuration { get { throw null; } set { } }
         public int? MaxDeliveryCount { get { throw null; } set { } }
         public long? MessageCount { get { throw null; } }
@@ -536,7 +544,7 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.ServiceBusTopicResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusTopicResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceBusTopicData : Azure.ResourceManager.ServiceBus.Models.ProxyResource
+    public partial class ServiceBusTopicData : Azure.ResourceManager.Models.ResourceData
     {
         public ServiceBusTopicData() { }
         public System.DateTimeOffset? AccessedOn { get { throw null; } }
@@ -548,6 +556,7 @@ namespace Azure.ResourceManager.ServiceBus
         public bool? EnableBatchedOperations { get { throw null; } set { } }
         public bool? EnableExpress { get { throw null; } set { } }
         public bool? EnablePartitioning { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public long? MaxMessageSizeInKilobytes { get { throw null; } set { } }
         public int? MaxSizeInMegabytes { get { throw null; } set { } }
         public bool? RequiresDuplicateDetection { get { throw null; } set { } }
@@ -591,7 +600,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public string SecondaryConnectionString { get { throw null; } }
         public string SecondaryKey { get { throw null; } }
     }
-    public enum AccessRights
+    public enum AccessRight
     {
         Manage = 0,
         Send = 1,
@@ -798,11 +807,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static implicit operator Azure.ResourceManager.ServiceBus.Models.PrivateLinkConnectionStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.PrivateLinkConnectionStatus left, Azure.ResourceManager.ServiceBus.Models.PrivateLinkConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ProxyResource : Azure.ResourceManager.Models.ResourceData
-    {
-        public ProxyResource() { }
-        public string Location { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PublicNetworkAccessFlag : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.PublicNetworkAccessFlag>
