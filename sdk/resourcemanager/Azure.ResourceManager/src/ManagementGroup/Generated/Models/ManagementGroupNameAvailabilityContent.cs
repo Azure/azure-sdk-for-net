@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
     /// <summary> Management group name availability check parameters. </summary>
@@ -13,11 +15,12 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         /// <summary> Initializes a new instance of ManagementGroupNameAvailabilityContent. </summary>
         public ManagementGroupNameAvailabilityContent()
         {
+            ResourceType = "Microsoft.Management/managementGroups";
         }
 
         /// <summary> the name to check for availability. </summary>
         public string Name { get; set; }
         /// <summary> fully qualified resource type which includes provider namespace. </summary>
-        public Type? ResourceType { get; set; }
+        public ResourceType? ResourceType { get; set; }
     }
 }

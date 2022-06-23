@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(ResourceType.Value.ToString());
+                writer.WriteStringValue(ResourceType.Value);
             }
             writer.WriteEndObject();
         }
