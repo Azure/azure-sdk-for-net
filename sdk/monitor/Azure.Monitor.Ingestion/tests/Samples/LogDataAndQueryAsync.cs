@@ -16,10 +16,11 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
         public async Task LogDataAsync()
         {
             #region Snippet:UploadCustomLogsAsync
-            Uri dataCollectionEndpoint = new Uri("...");
+            var dataCollectionEndpoint = new Uri("...");
+            var dataCollectionRuleImmutableId = "...";
+            var streamName = "...";
+
             TokenCredential credential = new DefaultAzureCredential();
-            string dataCollectionRuleImmutableId = "...";
-            string streamName = "...";
 #if SNIPPET
 #else
             dataCollectionEndpoint = new Uri(TestEnvironment.DCREndpoint);
@@ -68,9 +69,10 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
         public async Task QueryDataAsync()
         {
             #region Snippet:VerifyLogsAsync
-            string workspaceId = "...";
+            var workspaceId = "...";            
+            var tableName = "...";
+
             TokenCredential credential = new DefaultAzureCredential();
-            string tableName = "...";
 #if SNIPPET
 #else
             credential = TestEnvironment.ClientSecretCredential;

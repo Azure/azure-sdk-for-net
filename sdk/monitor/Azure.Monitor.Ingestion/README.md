@@ -2,7 +2,7 @@
 
 This section should give out brief introduction of the client library.
 
-The Azure Monitor Ingestion client library is used to send custom logs to [Azure Monitor](https://docs.microsoft.com/en-us/azure/azure-monitor/overview).
+The Azure Monitor Ingestion client library is used to send custom logs to [Azure Monitor](https://docs.microsoft.com/azure/azure-monitor/overview).
 
 This library allows you to send data from virtually any source to supported built-in tables or to custom tables that you create in Log Analytics workspace. You can even extend the schema of built-in tables with custom columns.
 
@@ -14,8 +14,6 @@ This library allows you to send data from virtually any source to supported buil
 * [Change log](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/CHANGELOG.md)
 
 ## Getting started
-
-This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
 
 ### Prerequisites
 
@@ -34,14 +32,14 @@ dotnet add package Azure.Monitor.Ingestion --prerelease
 
 ### Authenticate the client
 
-An authenticated client is required to ingest data. To authenticate, create an instance of a [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) class (see [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md) for `DefaultAzureCredential` and other `TokenCredential` implementations). Pass it to the constructor of your client class.
+An authenticated client is required to ingest data. To authenticate, create an instance of a [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) class (see [Azure.Identity](https://docs.microsoft.com/dotnet/api/overview/azure/Identity-readme) for `DefaultAzureCredential` and other `TokenCredential` implementations). Pass it to the constructor of your client class.
 
 To authenticate, the following example uses `DefaultAzureCredential` from the [Azure.Identity](https://www.nuget.org/packages/Azure.Identity) package:
 
 ```C# Snippet:CreateLogsIngestionClient
-Uri dataCollectionEndpoint = new Uri("...");
-TokenCredential credential = new DefaultAzureCredential();
-LogsIngestionClient client = new LogsIngestionClient(dataCollectionEndpoint, credential);
+var dataCollectionEndpoint = new Uri("...");
+var credential = new DefaultAzureCredential();
+var client = new LogsIngestionClient(dataCollectionEndpoint, credential);
 ```
 
 ## Key concepts
@@ -62,7 +60,7 @@ The DCR must understand the structure of the input data and the structure of the
 it can use a transformation to convert the source data to match the target table. You may also use the transform to
 filter source data and perform any other calculations or conversions.
 
-For more details, refer to [Data collection rules in Azure Monitor](https://docs.microsoft.com/azure/azure-monitor/essentials/data-collection-rule-overview).
+For more details, refer to [Data collection rules in Azure Monitor][data_collection_rule].
 
 ### Log Analytics Workspace Tables
 
@@ -101,10 +99,11 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 You can create a client and call the client's `Upload` method.
 
 ```C# Snippet:UploadCustomLogs
-Uri dataCollectionEndpoint = new Uri("...");
+var dataCollectionEndpoint = new Uri("...");
+var dataCollectionRuleImmutableId = "...";
+var streamName = "...";
+
 TokenCredential credential = new DefaultAzureCredential();
-string dataCollectionRuleImmutableId = "...";
-string streamName = "...";
 LogsIngestionClient client = new(dataCollectionEndpoint, credential);
 
 DateTimeOffset currentTime = DateTimeOffset.UtcNow;
@@ -149,9 +148,10 @@ Response response = client.Upload(dataCollectionRuleImmutableId, streamName, Req
 You can verify that your data has been uploaded correctly by using the [Azure.Monitor.Query](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/README.md#install-the-package) library. Please run the [Upload custom logs](#upload-custom-logs) sample first before verifying the logs. 
 
 ```C# Snippet:VerifyLogs
-string workspaceId = "...";
-TokenCredential credential = new DefaultAzureCredential();
+var workspaceId = "...";            
 string tableName = "...";
+
+TokenCredential credential = new DefaultAzureCredential();
 
 LogsQueryClient logsQueryClient = new(credential);
 LogsBatchQuery batch = new();
@@ -195,6 +195,9 @@ For more information see the [Code of Conduct FAQ](https://opensource.microsoft.
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 [azure_monitor_overview]: https://docs.microsoft.com/azure/azure-monitor/overview
+[logging]: https://docs.microsoft.com/dotnet/core/extensions/logging
+[data_collection_endpoint]: https://docs.microsoft.com/azure/azure-monitor/essentials/data-collection-endpoint-overview
+[data_collection_rule]: https://docs.microsoft.com/azure/azure-monitor/essentials/data-collection-rule-overview
 [logging]: https://docs.microsoft.com/dotnet/core/extensions/logging
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/monitor/Azure.Monitor.Ingestion/README.png)

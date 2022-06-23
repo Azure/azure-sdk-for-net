@@ -15,19 +15,20 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
         public void SetUpClient()
         {
             #region Snippet:CreateLogsIngestionClient
-            Uri dataCollectionEndpoint = new Uri("...");
-            TokenCredential credential = new DefaultAzureCredential();
-            LogsIngestionClient client = new LogsIngestionClient(dataCollectionEndpoint, credential);
+            var dataCollectionEndpoint = new Uri("...");
+            var credential = new DefaultAzureCredential();
+            var client = new LogsIngestionClient(dataCollectionEndpoint, credential);
             #endregion
         }
 
         public void LogData()
         {
             #region Snippet:UploadCustomLogs
-            Uri dataCollectionEndpoint = new Uri("...");
+            var dataCollectionEndpoint = new Uri("...");
+            var dataCollectionRuleImmutableId = "...";
+            var streamName = "...";
+
             TokenCredential credential = new DefaultAzureCredential();
-            string dataCollectionRuleImmutableId = "...";
-            string streamName = "...";
 #if SNIPPET
 #else
             dataCollectionEndpoint = new Uri(TestEnvironment.DCREndpoint);
@@ -76,9 +77,10 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
         public void QueryData()
         {
             #region Snippet:VerifyLogs
-            string workspaceId = "...";
-            TokenCredential credential = new DefaultAzureCredential();
+            var workspaceId = "...";            
             string tableName = "...";
+
+            TokenCredential credential = new DefaultAzureCredential();
 #if SNIPPET
 #else
             credential = TestEnvironment.ClientSecretCredential;

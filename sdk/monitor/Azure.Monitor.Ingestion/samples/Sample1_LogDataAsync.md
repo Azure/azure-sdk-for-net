@@ -7,10 +7,11 @@ To use these samples, you'll first need to set up resources. See [getting starte
 You can create a client and call the client's `UploadAsync` method
 
 ```C# Snippet:UploadCustomLogsAsync
-Uri dataCollectionEndpoint = new Uri("...");
+var dataCollectionEndpoint = new Uri("...");
+var dataCollectionRuleImmutableId = "...";
+var streamName = "...";
+
 TokenCredential credential = new DefaultAzureCredential();
-string dataCollectionRuleImmutableId = "...";
-string streamName = "...";
 LogsIngestionClient client = new(dataCollectionEndpoint, credential);
 
 DateTimeOffset currentTime = DateTimeOffset.UtcNow;
