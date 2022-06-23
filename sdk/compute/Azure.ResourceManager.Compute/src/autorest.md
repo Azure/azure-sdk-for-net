@@ -290,10 +290,10 @@ directive:
   - from: capacityReservation.json
     where: $.paths
     transform: >
-      $["/subscriptions/{subscriptionId}/providers/Microsoft.Compute/capacityReservationGroups"].get.parameters[2]["x-ms-enum"].name = "ExpandTypeForGetCapacityReservationGroups";
-      $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/capacityReservationGroups"].get.parameters[3]["x-ms-enum"].name = "ExpandTypeForGetCapacityReservationGroups";
+      $["/subscriptions/{subscriptionId}/providers/Microsoft.Compute/capacityReservationGroups"].get.parameters[2]["x-ms-enum"].name = "CapacityReservationGroupGetExpand";
+      $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/capacityReservationGroups"].get.parameters[3]["x-ms-enum"].name = "CapacityReservationGroupGetExpand";
   - from: virtualMachineScaleSet.json
     where: $.paths
     transform: >
-      $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}"].get.parameters[4]["x-ms-enum"].name = "ExpandTypeForGetVMScaleSet";
+      $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}"].get.parameters[4]["x-ms-enum"].name = "VirtualMachineScaleSetGetExpand";
 ```

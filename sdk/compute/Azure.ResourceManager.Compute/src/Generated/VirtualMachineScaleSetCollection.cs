@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmScaleSetName"/> is null. </exception>
-        public virtual async Task<Response<VirtualMachineScaleSetResource>> GetAsync(string vmScaleSetName, ExpandTypeForGetVmScaleSet? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineScaleSetResource>> GetAsync(string vmScaleSetName, VirtualMachineScaleSetGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmScaleSetName, nameof(vmScaleSetName));
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmScaleSetName"/> is null. </exception>
-        public virtual Response<VirtualMachineScaleSetResource> Get(string vmScaleSetName, ExpandTypeForGetVmScaleSet? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineScaleSetResource> Get(string vmScaleSetName, VirtualMachineScaleSetGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmScaleSetName, nameof(vmScaleSetName));
 
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmScaleSetName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string vmScaleSetName, ExpandTypeForGetVmScaleSet? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string vmScaleSetName, VirtualMachineScaleSetGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmScaleSetName, nameof(vmScaleSetName));
 
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmScaleSetName"/> is null. </exception>
-        public virtual Response<bool> Exists(string vmScaleSetName, ExpandTypeForGetVmScaleSet? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string vmScaleSetName, VirtualMachineScaleSetGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmScaleSetName, nameof(vmScaleSetName));
 

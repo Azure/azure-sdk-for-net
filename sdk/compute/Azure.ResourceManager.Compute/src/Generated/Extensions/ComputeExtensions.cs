@@ -1066,7 +1066,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CapacityReservationGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CapacityReservationGroupResource> GetCapacityReservationGroupsAsync(this SubscriptionResource subscriptionResource, ExpandTypeForGetCapacityReservationGroups? expand = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<CapacityReservationGroupResource> GetCapacityReservationGroupsAsync(this SubscriptionResource subscriptionResource, CapacityReservationGroupGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetCapacityReservationGroupsAsync(expand, cancellationToken);
         }
@@ -1080,7 +1080,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CapacityReservationGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CapacityReservationGroupResource> GetCapacityReservationGroups(this SubscriptionResource subscriptionResource, ExpandTypeForGetCapacityReservationGroups? expand = null, CancellationToken cancellationToken = default)
+        public static Pageable<CapacityReservationGroupResource> GetCapacityReservationGroups(this SubscriptionResource subscriptionResource, CapacityReservationGroupGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetCapacityReservationGroups(expand, cancellationToken);
         }
@@ -1436,7 +1436,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="vmScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmScaleSetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<VirtualMachineScaleSetResource>> GetVirtualMachineScaleSetAsync(this ResourceGroupResource resourceGroupResource, string vmScaleSetName, ExpandTypeForGetVmScaleSet? expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualMachineScaleSetResource>> GetVirtualMachineScaleSetAsync(this ResourceGroupResource resourceGroupResource, string vmScaleSetName, VirtualMachineScaleSetGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetVirtualMachineScaleSets().GetAsync(vmScaleSetName, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -1453,7 +1453,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="vmScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmScaleSetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<VirtualMachineScaleSetResource> GetVirtualMachineScaleSet(this ResourceGroupResource resourceGroupResource, string vmScaleSetName, ExpandTypeForGetVmScaleSet? expand = null, CancellationToken cancellationToken = default)
+        public static Response<VirtualMachineScaleSetResource> GetVirtualMachineScaleSet(this ResourceGroupResource resourceGroupResource, string vmScaleSetName, VirtualMachineScaleSetGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetVirtualMachineScaleSets().Get(vmScaleSetName, expand, cancellationToken);
         }
