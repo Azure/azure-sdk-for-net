@@ -26,6 +26,10 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
+keep-plural-enums:
+- IntervalInMins
+- ExpandTypeForGetCapacityReservationGroups
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -173,6 +177,7 @@ directive:
       $.VirtualMachineExtensionUpdateProperties.properties.type["x-ms-client-name"] = "ExtensionType";
       $.VirtualMachineNetworkInterfaceIPConfigurationProperties.properties.privateIPAddressVersion["x-ms-enum"].name = "IPVersion";
       $.VirtualMachinePublicIPAddressConfigurationProperties.properties.publicIPAddressVersion["x-ms-enum"].name = "IPVersion";
+      $.VirtualMachineInstanceView.properties.hyperVGeneration["x-ms-enum"].name = "HyperVGeneration";
   - from: virtualMachineImage.json
     where: $.definitions
     transform: >
@@ -211,8 +216,8 @@ directive:
       $.SshPublicKey["x-ms-client-name"] = "SshPublicKeyInfo";
       $.UpdateResource["x-ms-client-name"] = "ComputeUpdateResourceData";
       $.SubResourceWithColocationStatus["x-ms-client-name"] = "ComputeSubResourceDataWithColocationStatus";
-      $.HyperVGenerationType["x-ms-enum"].name = "HyperVGenerationType";
       $.OSDisk.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
+      $.HyperVGenerationType["x-ms-enum"].name = "HyperVGeneration";
   - from: sshPublicKey.json
     where: $.definitions
     transform: >
@@ -300,6 +305,7 @@ directive:
       $.TargetRegion.properties.storageAccountType["x-ms-enum"].name = "ImageStorageAccountType";
       $.GalleryArtifactPublishingProfileBase.properties.storageAccountType["x-ms-enum"].name = "ImageStorageAccountType";
       $.GalleryTargetExtendedLocation.properties.storageAccountType["x-ms-enum"].name = "ImageStorageAccountType";
+      $.SharingProfile.properties.permissions["x-ms-client-name"] = "permission";
   - from: gallery.json
     where: $.parameters
     transform: >
@@ -333,4 +339,13 @@ directive:
     where: $.definitions
     transform: >
       $.RunCommandDocumentBase.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
+  - from: capacityReservation.json
+    where: $.paths
+    transform: >
+      $["/subscriptions/{subscriptionId}/providers/Microsoft.Compute/capacityReservationGroups"].get.parameters[2]["x-ms-enum"].name = "CapacityReservationGroupGetExpand";
+      $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/capacityReservationGroups"].get.parameters[3]["x-ms-enum"].name = "CapacityReservationGroupGetExpand";
+  - from: virtualMachineScaleSet.json
+    where: $.paths
+    transform: >
+      $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}"].get.parameters[4]["x-ms-enum"].name = "VirtualMachineScaleSetGetExpand";
 ```

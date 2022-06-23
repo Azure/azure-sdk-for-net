@@ -211,7 +211,7 @@ If the number of processors configured to us the same Event Hub, consumer group,
 
 The most frequent causes of this behavior are:
 
-**Exceptions being thrown in the event processing handler:**
+#### Exceptions being thrown in the event processing handler:
 
 It is very important that an application's handler code guards against exceptions; the event processor does not have enough understanding of the application and its state to know how an exception should be handled.  Any exception thrown in a handler will go uncaught by the processor and will **NOT** be directed to the error handler.  
 
@@ -219,7 +219,7 @@ Behavior is not guaranteed but, for most hosts, this will fault the task respons
 
 It is strongly recommended that all handlers be wrapped in a `try/catch` block and that exceptions are not permitted to bubble.
 
-**Too many partitions are owned:**
+#### Too many partitions are owned:
 
 The event processor works in a concurrent and highly asynchronous manner.  Each partition owned by the processor is hosted by a dedicated background task.  The processor infrastructure also relies on a background task to perform health checks, error recovery, and load balancing activities.  Each of these tasks relies on continuations for asynchronous operations being scheduled in a timely manner in order to make forward progress.
 

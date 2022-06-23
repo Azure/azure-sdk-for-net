@@ -17,14 +17,13 @@ namespace Azure.ResourceManager.EventHubs.Models
         public EventHubsEncryption()
         {
             KeyVaultProperties = new ChangeTrackingList<EventHubsKeyVaultProperties>();
-            KeySource = "Microsoft.KeyVault";
         }
 
         /// <summary> Initializes a new instance of EventHubsEncryption. </summary>
         /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
         /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
         /// <param name="requireInfrastructureEncryption"> Enable Infrastructure Encryption (Double Encryption). </param>
-        internal EventHubsEncryption(IList<EventHubsKeyVaultProperties> keyVaultProperties, string keySource, bool? requireInfrastructureEncryption)
+        internal EventHubsEncryption(IList<EventHubsKeyVaultProperties> keyVaultProperties, KeySource? keySource, bool? requireInfrastructureEncryption)
         {
             KeyVaultProperties = keyVaultProperties;
             KeySource = keySource;
@@ -34,7 +33,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Properties of KeyVault. </summary>
         public IList<EventHubsKeyVaultProperties> KeyVaultProperties { get; }
         /// <summary> Enumerates the possible value of keySource for Encryption. </summary>
-        public string KeySource { get; set; }
+        public KeySource? KeySource { get; set; }
         /// <summary> Enable Infrastructure Encryption (Double Encryption). </summary>
         public bool? RequireInfrastructureEncryption { get; set; }
     }
