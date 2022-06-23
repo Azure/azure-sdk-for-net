@@ -201,10 +201,10 @@ public class Program
     ///
     public static TestScenario StringToTestScenario(string testScenario) => testScenario switch
     {
-        "BufferedProducerTest" or "BuffProd"=> TestScenario.BufferedProducerTest,
+        "BufferedProducerTest" or "BuffProd" => TestScenario.BufferedProducerTest,
         "BurstBufferedProducerTest" or "BurstBuffProd" => TestScenario.BurstBufferedProducerTest,
-        "EventProducerTest" or "EventProd"=> TestScenario.EventProducerTest,
-        "ProcessorTest" or "Processor"=> TestScenario.ProcessorTest,
+        "EventProducerTest" or "EventProd" => TestScenario.EventProducerTest,
+        "ProcessorTest" or "Processor" => TestScenario.ProcessorTest,
         "ConsumerTest" or "Consumer" => TestScenario.ConsumerTest,
         _ => throw new ArgumentNullException(),
     };
