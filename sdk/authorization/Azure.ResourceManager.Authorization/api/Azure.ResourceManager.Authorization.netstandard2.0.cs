@@ -589,22 +589,22 @@ namespace Azure.ResourceManager.Authorization.Models
         public string Role { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EnablementRules : System.IEquatable<Azure.ResourceManager.Authorization.Models.EnablementRules>
+    public readonly partial struct EnablementRule : System.IEquatable<Azure.ResourceManager.Authorization.Models.EnablementRule>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public EnablementRules(string value) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.EnablementRules Justification { get { throw null; } }
-        public static Azure.ResourceManager.Authorization.Models.EnablementRules MultiFactorAuthentication { get { throw null; } }
-        public static Azure.ResourceManager.Authorization.Models.EnablementRules Ticketing { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Authorization.Models.EnablementRules other) { throw null; }
+        public EnablementRule(string value) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.EnablementRule Justification { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.EnablementRule MultiFactorAuthentication { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.EnablementRule Ticketing { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Authorization.Models.EnablementRule other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Authorization.Models.EnablementRules left, Azure.ResourceManager.Authorization.Models.EnablementRules right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Authorization.Models.EnablementRules (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Authorization.Models.EnablementRules left, Azure.ResourceManager.Authorization.Models.EnablementRules right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Authorization.Models.EnablementRule left, Azure.ResourceManager.Authorization.Models.EnablementRule right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Authorization.Models.EnablementRule (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Authorization.Models.EnablementRule left, Azure.ResourceManager.Authorization.Models.EnablementRule right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ExpandedProperties
@@ -1143,7 +1143,7 @@ namespace Azure.ResourceManager.Authorization.Models
     public partial class RoleManagementPolicyEnablementRule : Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRule
     {
         public RoleManagementPolicyEnablementRule() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Authorization.Models.EnablementRules> EnabledRules { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Authorization.Models.EnablementRule> EnabledRules { get { throw null; } }
     }
     public partial class RoleManagementPolicyExpirationRule : Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRule
     {

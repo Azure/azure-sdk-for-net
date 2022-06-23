@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             string ruleName = Recording.GenerateAssetName("authorizationrule");
             AuthorizationRuleData ruleParameter = new AuthorizationRuleData()
             {
-                Rights = { AccessRights.Listen, AccessRights.Send }
+                Rights = { AccessRight.Listen, AccessRight.Send }
             };
             NamespaceAuthorizationRuleResource authorizationRule = (await eHNamespace1.GetNamespaceAuthorizationRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, ruleParameter)).Value;
             Assert.NotNull(authorizationRule);

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Initializes a new instance of ServiceBusAuthorizationRuleData. </summary>
         public ServiceBusAuthorizationRuleData()
         {
-            Rights = new ChangeTrackingList<AccessRights>();
+            Rights = new ChangeTrackingList<AccessRight>();
         }
 
         /// <summary> Initializes a new instance of ServiceBusAuthorizationRuleData. </summary>
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="systemData"> The systemData. </param>
         /// <param name="rights"> The rights associated with the rule. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal ServiceBusAuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<AccessRights> rights, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal ServiceBusAuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<AccessRight> rights, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Rights = rights;
             Location = location;
         }
 
         /// <summary> The rights associated with the rule. </summary>
-        public IList<AccessRights> Rights { get; }
+        public IList<AccessRight> Rights { get; }
         /// <summary> The geo-location where the resource lives. </summary>
         public AzureLocation? Location { get; }
     }

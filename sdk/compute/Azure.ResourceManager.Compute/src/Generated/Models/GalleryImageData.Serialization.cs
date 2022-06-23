@@ -125,8 +125,8 @@ namespace Azure.ResourceManager.Compute
             Optional<string> eula = default;
             Optional<Uri> privacyStatementUri = default;
             Optional<Uri> releaseNoteUri = default;
-            Optional<OperatingSystemTypes> osType = default;
-            Optional<OperatingSystemStateTypes> osState = default;
+            Optional<SupportedOperatingSystemType> osType = default;
+            Optional<OperatingSystemStateType> osState = default;
             Optional<HyperVGeneration> hyperVGeneration = default;
             Optional<DateTimeOffset> endOfLifeDate = default;
             Optional<GalleryImageIdentifier> identifier = default;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Compute
             Optional<ImagePurchasePlan> purchasePlan = default;
             Optional<GalleryProvisioningState> provisioningState = default;
             Optional<IList<GalleryImageFeature>> features = default;
-            Optional<ArchitectureTypes> architecture = default;
+            Optional<ArchitectureType> architecture = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            osType = property0.Value.GetString().ToOperatingSystemTypes();
+                            osType = property0.Value.GetString().ToSupportedOperatingSystemType();
                             continue;
                         }
                         if (property0.NameEquals("osState"))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            osState = property0.Value.GetString().ToOperatingSystemStateTypes();
+                            osState = property0.Value.GetString().ToOperatingSystemStateType();
                             continue;
                         }
                         if (property0.NameEquals("hyperVGeneration"))
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            architecture = new ArchitectureTypes(property0.Value.GetString());
+                            architecture = new ArchitectureType(property0.Value.GetString());
                             continue;
                         }
                     }
