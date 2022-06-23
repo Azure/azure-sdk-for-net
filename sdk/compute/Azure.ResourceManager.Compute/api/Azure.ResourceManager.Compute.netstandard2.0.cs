@@ -2450,12 +2450,12 @@ namespace Azure.ResourceManager.Compute.Models
         public string CloudServiceExtensionPropertiesType { get { throw null; } set { } }
         public string ForceUpdateTag { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public string ProtectedSettings { get { throw null; } set { } }
+        public System.BinaryData ProtectedSettings { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.CloudServiceVaultAndSecretReference ProtectedSettingsFromKeyVault { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string Publisher { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> RolesAppliedTo { get { throw null; } }
-        public string Settings { get { throw null; } set { } }
+        public System.BinaryData Settings { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
     }
     public partial class CloudServiceInstanceView
@@ -2470,6 +2470,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public CloudServiceNetworkProfile() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.LoadBalancerConfiguration> LoadBalancerConfigurations { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.CloudServiceSlotType? SlotType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SwappableCloudServiceId { get { throw null; } set { } }
     }
     public partial class CloudServicePatch
@@ -2489,6 +2490,24 @@ namespace Azure.ResourceManager.Compute.Models
         public long? Capacity { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Tier { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CloudServiceSlotType : System.IEquatable<Azure.ResourceManager.Compute.Models.CloudServiceSlotType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CloudServiceSlotType(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.CloudServiceSlotType Production { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.CloudServiceSlotType Staging { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.CloudServiceSlotType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.CloudServiceSlotType left, Azure.ResourceManager.Compute.Models.CloudServiceSlotType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.CloudServiceSlotType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.CloudServiceSlotType left, Azure.ResourceManager.Compute.Models.CloudServiceSlotType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CloudServiceUpgradeMode : System.IEquatable<Azure.ResourceManager.Compute.Models.CloudServiceUpgradeMode>
