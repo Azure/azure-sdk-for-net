@@ -120,8 +120,8 @@ directive:
       where: $.definitions
       transform: >
         $.SchemaGroup['x-ms-client-name'] = 'EventHubsSchemaGroup';
-        delete $.SchemaGroup.properties.properties.properties.eTag['format'];
-        $.SchemaGroup.properties.properties.properties.eTag['x-ms-format'] = 'etag';
+#       delete $.SchemaGroup.properties.properties.properties.eTag['format'];
+#        $.SchemaGroup.properties.properties.properties.eTag['x-ms-format'] = 'etag';
     - from: AvailableClusterRegions-preview.json
       where: $.definitions
       transform: >

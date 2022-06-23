@@ -13,16 +13,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing the SchemaGroup data model. </summary>
-    public partial class SchemaGroupData : ResourceData
+    /// <summary> A class representing the EventHubsSchemaGroup data model. </summary>
+    public partial class EventHubsSchemaGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of SchemaGroupData. </summary>
-        public SchemaGroupData()
+        /// <summary> Initializes a new instance of EventHubsSchemaGroupData. </summary>
+        public EventHubsSchemaGroupData()
         {
             GroupProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SchemaGroupData. </summary>
+        /// <summary> Initializes a new instance of EventHubsSchemaGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="schemaCompatibility"></param>
         /// <param name="schemaType"></param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal SchemaGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? updatedAtUtc, DateTimeOffset? createdAtUtc, Guid? eTag, IDictionary<string, string> groupProperties, SchemaCompatibility? schemaCompatibility, SchemaType? schemaType, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal EventHubsSchemaGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? updatedAtUtc, DateTimeOffset? createdAtUtc, Guid? eTag, IDictionary<string, string> groupProperties, SchemaCompatibility? schemaCompatibility, SchemaType? schemaType, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             UpdatedAtUtc = updatedAtUtc;
             CreatedAtUtc = createdAtUtc;

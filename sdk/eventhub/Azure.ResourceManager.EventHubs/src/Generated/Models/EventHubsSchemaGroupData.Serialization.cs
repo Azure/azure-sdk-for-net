@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class SchemaGroupData : IUtf8JsonSerializable
+    public partial class EventHubsSchemaGroupData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EventHubs
             writer.WriteEndObject();
         }
 
-        internal static SchemaGroupData DeserializeSchemaGroupData(JsonElement element)
+        internal static EventHubsSchemaGroupData DeserializeEventHubsSchemaGroupData(JsonElement element)
         {
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new SchemaGroupData(id, name, type, systemData.Value, Optional.ToNullable(updatedAtUtc), Optional.ToNullable(createdAtUtc), Optional.ToNullable(eTag), Optional.ToDictionary(groupProperties), Optional.ToNullable(schemaCompatibility), Optional.ToNullable(schemaType), Optional.ToNullable(location));
+            return new EventHubsSchemaGroupData(id, name, type, systemData.Value, Optional.ToNullable(updatedAtUtc), Optional.ToNullable(createdAtUtc), Optional.ToNullable(eTag), Optional.ToDictionary(groupProperties), Optional.ToNullable(schemaCompatibility), Optional.ToNullable(schemaType), Optional.ToNullable(location));
         }
     }
 }

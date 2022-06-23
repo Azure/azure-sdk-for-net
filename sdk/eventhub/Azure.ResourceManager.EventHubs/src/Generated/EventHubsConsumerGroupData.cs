@@ -11,15 +11,15 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing the ConsumerGroup data model. </summary>
-    public partial class ConsumerGroupData : ResourceData
+    /// <summary> A class representing the EventHubsConsumerGroup data model. </summary>
+    public partial class EventHubsConsumerGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumerGroupData. </summary>
-        public ConsumerGroupData()
+        /// <summary> Initializes a new instance of EventHubsConsumerGroupData. </summary>
+        public EventHubsConsumerGroupData()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumerGroupData. </summary>
+        /// <summary> Initializes a new instance of EventHubsConsumerGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="updatedOn"> The exact time the message was updated. </param>
         /// <param name="userMetadata"> User Metadata is a placeholder to store user-defined string data with maximum length 1024. e.g. it can be used to store descriptive data, such as list of teams and their contact information also user-defined configuration settings can be stored. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal ConsumerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string userMetadata, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal EventHubsConsumerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string userMetadata, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;

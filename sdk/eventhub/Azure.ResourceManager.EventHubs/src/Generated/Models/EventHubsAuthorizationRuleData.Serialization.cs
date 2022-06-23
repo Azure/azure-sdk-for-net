@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class AuthorizationRuleData : IUtf8JsonSerializable
+    public partial class EventHubsAuthorizationRuleData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.EventHubs
             writer.WriteEndObject();
         }
 
-        internal static AuthorizationRuleData DeserializeAuthorizationRuleData(JsonElement element)
+        internal static EventHubsAuthorizationRuleData DeserializeEventHubsAuthorizationRuleData(JsonElement element)
         {
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<AccessRight>> rights = default;
+            Optional<IList<EventHubsAccessRight>> rights = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AccessRight> array = new List<AccessRight>();
+                            List<EventHubsAccessRight> array = new List<EventHubsAccessRight>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new AccessRight(item.GetString()));
+                                array.Add(new EventHubsAccessRight(item.GetString()));
                             }
                             rights = array;
                             continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new AuthorizationRuleData(id, name, type, systemData.Value, Optional.ToList(rights), Optional.ToNullable(location));
+            return new EventHubsAuthorizationRuleData(id, name, type, systemData.Value, Optional.ToList(rights), Optional.ToNullable(location));
         }
     }
 }

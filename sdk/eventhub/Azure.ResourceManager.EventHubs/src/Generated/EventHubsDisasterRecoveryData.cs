@@ -11,15 +11,15 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing the DisasterRecovery data model. </summary>
-    public partial class DisasterRecoveryData : ResourceData
+    /// <summary> A class representing the EventHubsDisasterRecovery data model. </summary>
+    public partial class EventHubsDisasterRecoveryData : ResourceData
     {
-        /// <summary> Initializes a new instance of DisasterRecoveryData. </summary>
-        public DisasterRecoveryData()
+        /// <summary> Initializes a new instance of EventHubsDisasterRecoveryData. </summary>
+        public EventHubsDisasterRecoveryData()
         {
         }
 
-        /// <summary> Initializes a new instance of DisasterRecoveryData. </summary>
+        /// <summary> Initializes a new instance of EventHubsDisasterRecoveryData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="role"> role of namespace in GEO DR - possible values &apos;Primary&apos; or &apos;PrimaryNotReplicating&apos; or &apos;Secondary&apos;. </param>
         /// <param name="pendingReplicationOperationsCount"> Number of entities pending to be replicated. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal DisasterRecoveryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DisasterRecoveryProvisioningState? provisioningState, string partnerNamespace, string alternateName, RoleDisasterRecovery? role, long? pendingReplicationOperationsCount, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal EventHubsDisasterRecoveryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EventHubsDisasterRecoveryProvisioningState? provisioningState, string partnerNamespace, string alternateName, EventHubsDisasterRecoveryRole? role, long? pendingReplicationOperationsCount, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PartnerNamespace = partnerNamespace;
@@ -41,13 +41,13 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Provisioning state of the Alias(Disaster Recovery configuration) - possible values &apos;Accepted&apos; or &apos;Succeeded&apos; or &apos;Failed&apos;. </summary>
-        public DisasterRecoveryProvisioningState? ProvisioningState { get; }
+        public EventHubsDisasterRecoveryProvisioningState? ProvisioningState { get; }
         /// <summary> ARM Id of the Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </summary>
         public string PartnerNamespace { get; set; }
         /// <summary> Alternate name specified when alias and namespace names are same. </summary>
         public string AlternateName { get; set; }
         /// <summary> role of namespace in GEO DR - possible values &apos;Primary&apos; or &apos;PrimaryNotReplicating&apos; or &apos;Secondary&apos;. </summary>
-        public RoleDisasterRecovery? Role { get; }
+        public EventHubsDisasterRecoveryRole? Role { get; }
         /// <summary> Number of entities pending to be replicated. </summary>
         public long? PendingReplicationOperationsCount { get; }
         /// <summary> The geo-location where the resource lives. </summary>

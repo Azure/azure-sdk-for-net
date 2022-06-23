@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class NetworkRuleSetData : IUtf8JsonSerializable
+    public partial class EventHubsNetworkRuleSetData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventHubs
             writer.WriteEndObject();
         }
 
-        internal static NetworkRuleSetData DeserializeNetworkRuleSetData(JsonElement element)
+        internal static EventHubsNetworkRuleSetData DeserializeEventHubsNetworkRuleSetData(JsonElement element)
         {
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.EventHubs
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<bool> trustedServiceAccessEnabled = default;
-            Optional<DefaultAction> defaultAction = default;
-            Optional<IList<NetworkRuleSetVirtualNetworkRules>> virtualNetworkRules = default;
-            Optional<IList<NetworkRuleSetIPRules>> ipRules = default;
-            Optional<PublicNetworkAccessFlag> publicNetworkAccess = default;
+            Optional<EventHubsNetworkRuleSetDefaultAction> defaultAction = default;
+            Optional<IList<EventHubsNetworkRuleSetVirtualNetworkRules>> virtualNetworkRules = default;
+            Optional<IList<EventHubsNetworkRuleSetIPRules>> ipRules = default;
+            Optional<EventHubsPublicNetworkAccessFlag> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            defaultAction = new DefaultAction(property0.Value.GetString());
+                            defaultAction = new EventHubsNetworkRuleSetDefaultAction(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("virtualNetworkRules"))
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<NetworkRuleSetVirtualNetworkRules> array = new List<NetworkRuleSetVirtualNetworkRules>();
+                            List<EventHubsNetworkRuleSetVirtualNetworkRules> array = new List<EventHubsNetworkRuleSetVirtualNetworkRules>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkRuleSetVirtualNetworkRules.DeserializeNetworkRuleSetVirtualNetworkRules(item));
+                                array.Add(EventHubsNetworkRuleSetVirtualNetworkRules.DeserializeEventHubsNetworkRuleSetVirtualNetworkRules(item));
                             }
                             virtualNetworkRules = array;
                             continue;
@@ -159,10 +159,10 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<NetworkRuleSetIPRules> array = new List<NetworkRuleSetIPRules>();
+                            List<EventHubsNetworkRuleSetIPRules> array = new List<EventHubsNetworkRuleSetIPRules>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkRuleSetIPRules.DeserializeNetworkRuleSetIPRules(item));
+                                array.Add(EventHubsNetworkRuleSetIPRules.DeserializeEventHubsNetworkRuleSetIPRules(item));
                             }
                             ipRules = array;
                             continue;
@@ -174,14 +174,14 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccessFlag(property0.Value.GetString());
+                            publicNetworkAccess = new EventHubsPublicNetworkAccessFlag(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new NetworkRuleSetData(id, name, type, systemData.Value, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(location));
+            return new EventHubsNetworkRuleSetData(id, name, type, systemData.Value, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(location));
         }
     }
 }
