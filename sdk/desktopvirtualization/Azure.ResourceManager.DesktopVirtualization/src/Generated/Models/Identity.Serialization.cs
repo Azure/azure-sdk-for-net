@@ -5,60 +5,59 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.ElasticSan.Models
+namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class VirtualNetworkRule : IUtf8JsonSerializable
+    public partial class Identity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(VirtualNetworkResourceId);
-            if (Optional.IsDefined(Action))
+            if (Optional.IsDefined(ResourceIdentityType))
             {
-                writer.WritePropertyName("action");
-                writer.WriteStringValue(Action.Value.ToString());
+                writer.WritePropertyName("type");
+                writer.WriteStringValue(ResourceIdentityType.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworkRule DeserializeVirtualNetworkRule(JsonElement element)
+        internal static Identity DeserializeIdentity(JsonElement element)
         {
-            string id = default;
-            Optional<Action> action = default;
-            Optional<VirtualNetworkRuleState> state = default;
+            Optional<string> principalId = default;
+            Optional<Guid> tenantId = default;
+            Optional<ResourceIdentityType> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("principalId"))
                 {
-                    id = property.Value.GetString();
+                    principalId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("action"))
+                if (property.NameEquals("tenantId"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    action = new Action(property.Value.GetString());
+                    tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("type"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    state = property.Value.GetString().ToVirtualNetworkRuleState();
+                    type = new ResourceIdentityType(property.Value.GetString());
                     continue;
                 }
             }
-            return new VirtualNetworkRule(id, Optional.ToNullable(action), Optional.ToNullable(state));
+            return new Identity(principalId.Value, Optional.ToNullable(tenantId), Optional.ToNullable(type));
         }
     }
 }
