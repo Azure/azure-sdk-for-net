@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="status"> Enumerates the possible values for the status of the Event Hub. </param>
         /// <param name="captureDescription"> Properties of capture description. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal EventHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> partitionIds, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, long? messageRetentionInDays, long? partitionCount, EntityStatus? status, CaptureDescription captureDescription, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal EventHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> partitionIds, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, long? messageRetentionInDays, long? partitionCount, EventHubEntityStatus? status, CaptureDescription captureDescription, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             PartitionIds = partitionIds;
             CreatedOn = createdOn;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Number of partitions created for the Event Hub, allowed values are from 1 to 32 partitions. </summary>
         public long? PartitionCount { get; set; }
         /// <summary> Enumerates the possible values for the status of the Event Hub. </summary>
-        public EntityStatus? Status { get; set; }
+        public EventHubEntityStatus? Status { get; set; }
         /// <summary> Properties of capture description. </summary>
         public CaptureDescription CaptureDescription { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
