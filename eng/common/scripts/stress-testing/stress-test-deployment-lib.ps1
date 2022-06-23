@@ -105,7 +105,7 @@ function DeployStressTests(
     if ($LocalAddonsPath) {
         $absAddonsPath = Resolve-Path $LocalAddonsPath
         if (!(helm plugin list | Select-String 'file')) {
-            helm plugin add (Join-Path $absAddonsPath file-plugin)
+            RunOrExitOnFailure helm plugin add (Join-Path $absAddonsPath file-plugin)
         }
         RunOrExitOnFailure helm repo add --force-update $chartRepoName file://$absAddonsPath
     } else {
