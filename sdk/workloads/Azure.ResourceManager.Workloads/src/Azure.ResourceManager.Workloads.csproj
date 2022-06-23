@@ -5,4 +5,7 @@
     <Description>Azure Resource Manager client SDK for Azure resource provider Workloads</Description>
     <PackageTags>azure;management;arm;resource manager;workloads</PackageTags>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Security.KeyVault.Secrets" />
+  </ItemGroup>
 </Project>
