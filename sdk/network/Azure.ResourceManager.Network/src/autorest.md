@@ -255,8 +255,8 @@ directive:
         $.Delegation['x-ms-client-name'] = 'ServiceDelegation';
         $.ServiceAssociationLinkPropertiesFormat.properties.linkedResourceType['x-ms-format'] = 'resource-type';
         $.ServiceAssociationLinkPropertiesFormat.properties.link['x-ms-format'] = 'arm-id';
-        $.SubnetPropertiesFormat.properties.privateEndpointNetworkPolicies['x-ms-client-name'] = 'VirtualNetworkPrivateEndpointNetworkPolicy';
-        $.SubnetPropertiesFormat.properties.privateLinkServiceNetworkPolicies['x-ms-client-name'] = 'VirtualNetworkPrivateLinkServiceNetworkPolicy';
+        $.SubnetPropertiesFormat.properties.privateEndpointNetworkPolicies['x-ms-client-name'] = 'PrivateEndpointNetworkPolicy';
+        $.SubnetPropertiesFormat.properties.privateLinkServiceNetworkPolicies['x-ms-client-name'] = 'PrivateLinkServiceNetworkPolicy';
   - from: endpointService.json
     where: $.definitions
     transform: >

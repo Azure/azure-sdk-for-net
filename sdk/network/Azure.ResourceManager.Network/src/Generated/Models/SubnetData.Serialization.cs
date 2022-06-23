@@ -106,15 +106,15 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(VirtualNetworkPrivateEndpointNetworkPolicy))
+            if (Optional.IsDefined(PrivateEndpointNetworkPolicy))
             {
                 writer.WritePropertyName("privateEndpointNetworkPolicies");
-                writer.WriteStringValue(VirtualNetworkPrivateEndpointNetworkPolicy.Value.ToString());
+                writer.WriteStringValue(PrivateEndpointNetworkPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(VirtualNetworkPrivateLinkServiceNetworkPolicy))
+            if (Optional.IsDefined(PrivateLinkServiceNetworkPolicy))
             {
                 writer.WritePropertyName("privateLinkServiceNetworkPolicies");
-                writer.WriteStringValue(VirtualNetworkPrivateLinkServiceNetworkPolicy.Value.ToString());
+                writer.WriteStringValue(PrivateLinkServiceNetworkPolicy.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ApplicationGatewayIPConfigurations))
             {
