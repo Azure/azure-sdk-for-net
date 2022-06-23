@@ -2266,9 +2266,9 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class AdditionalUnattendContent
     {
         public AdditionalUnattendContent() { }
-        public string ComponentName { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComponentName? ComponentName { get { throw null; } set { } }
         public string Content { get { throw null; } set { } }
-        public string PassName { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.PassName? PassName { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SettingName? SettingName { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -2544,6 +2544,23 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.Core.ResourceIdentifier SourceVaultId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.CloudServiceVaultCertificate> VaultCertificates { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ComponentName : System.IEquatable<Azure.ResourceManager.Compute.Models.ComponentName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ComponentName(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.ComponentName MicrosoftWindowsShellSetup { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.ComponentName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.ComponentName left, Azure.ResourceManager.Compute.Models.ComponentName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.ComponentName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.ComponentName left, Azure.ResourceManager.Compute.Models.ComponentName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ComputePlan
     {
         public ComputePlan() { }
@@ -2667,7 +2684,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int CurrentValue { get { throw null; } }
         public long Limit { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.UsageName Name { get { throw null; } }
-        public string Unit { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.UsageUnit Unit { get { throw null; } }
     }
     public partial class ComputeWriteableSubResourceData
     {
@@ -4021,6 +4038,23 @@ namespace Azure.ResourceManager.Compute.Models
         public string Version { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PassName : System.IEquatable<Azure.ResourceManager.Compute.Models.PassName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PassName(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.PassName OobeSystem { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.PassName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.PassName left, Azure.ResourceManager.Compute.Models.PassName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.PassName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.PassName left, Azure.ResourceManager.Compute.Models.PassName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PatchAssessmentState : System.IEquatable<Azure.ResourceManager.Compute.Models.PatchAssessmentState>
     {
         private readonly object _dummy;
@@ -5023,6 +5057,23 @@ namespace Azure.ResourceManager.Compute.Models
         internal UsageName() { }
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct UsageUnit : System.IEquatable<Azure.ResourceManager.Compute.Models.UsageUnit>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public UsageUnit(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.UsageUnit Count { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.UsageUnit other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.UsageUnit left, Azure.ResourceManager.Compute.Models.UsageUnit right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.UsageUnit (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.UsageUnit left, Azure.ResourceManager.Compute.Models.UsageUnit right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class UserArtifactManage
     {
