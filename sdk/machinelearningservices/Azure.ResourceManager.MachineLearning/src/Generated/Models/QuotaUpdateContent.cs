@@ -22,6 +22,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The list for update quota. </summary>
         public IList<QuotaBaseProperties> Value { get; }
         /// <summary> Region of workspace quota to be updated. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
     }
 }

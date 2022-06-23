@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the WorkerPoolResource data model. </summary>
-    public partial class WorkerPoolResourceData : ProxyOnlyResource
+    public partial class WorkerPoolResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of WorkerPoolResourceData. </summary>
         public WorkerPoolResourceData()
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="sku"> Description of a SKU for a scalable resource. </param>
         /// <param name="workerSizeId"> Worker size ID for referencing this worker pool. </param>
         /// <param name="computeMode"> Shared or dedicated app hosting. </param>
         /// <param name="workerSize"> VM size of the worker pool instances. </param>
         /// <param name="workerCount"> Number of instances in the worker pool. </param>
         /// <param name="instanceNames"> Names of all instances in the worker pool (read only). </param>
-        internal WorkerPoolResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, SkuDescription sku, int? workerSizeId, ComputeModeOptions? computeMode, string workerSize, int? workerCount, IReadOnlyList<string> instanceNames) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal WorkerPoolResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SkuDescription sku, int? workerSizeId, ComputeModeOptions? computeMode, string workerSize, int? workerCount, IReadOnlyList<string> instanceNames, string kind) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             WorkerSizeId = workerSizeId;
@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.AppService
             WorkerSize = workerSize;
             WorkerCount = workerCount;
             InstanceNames = instanceNames;
+            Kind = kind;
         }
 
         /// <summary> Description of a SKU for a scalable resource. </summary>
@@ -55,5 +56,7 @@ namespace Azure.ResourceManager.AppService
         public int? WorkerCount { get; set; }
         /// <summary> Names of all instances in the worker pool (read only). </summary>
         public IReadOnlyList<string> InstanceNames { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

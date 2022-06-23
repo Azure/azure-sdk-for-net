@@ -6,6 +6,15 @@
 
 ### Breaking Changes
 
+- Base type of `AuthorizationRuleData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `ConsumerGroupData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `DisasterRecoveryData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `EventhubData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `EventHubsPrivateEndpointConnectionData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `NetworkRuleSetData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `SchemaGroupData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Type `ProxyResource` was removed.
+
 ### Bugs Fixed
 
 ### Other Changes

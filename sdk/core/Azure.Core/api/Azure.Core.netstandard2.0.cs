@@ -959,6 +959,7 @@ namespace Azure.Core.Pipeline
     public partial class HttpPipelineTransportOptions
     {
         public HttpPipelineTransportOptions() { }
+        public System.Collections.Generic.IList<System.Security.Cryptography.X509Certificates.X509Certificate2> ClientCertificates { get { throw null; } }
         public System.Func<Azure.Core.Pipeline.ServerCertificateCustomValidationArgs, bool>? ServerCertificateCustomValidationCallback { get { throw null; } set { } }
     }
     public partial class ServerCertificateCustomValidationArgs

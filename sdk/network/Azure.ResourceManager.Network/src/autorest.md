@@ -8,17 +8,25 @@ library-name: Network
 namespace: Azure.ResourceManager.Network
 require: https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/readme.md
 tag: package-track2-preview
-
-skip-csproj: true
-output-folder: Generated/
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
-
+skip-csproj: true
+modelerfour:
+  flatten-payloads: false
 model-namespace: true
 public-clients: false
 head-as-boolean: false
-flatten-payloads: false
-
 resource-model-requires-type: false
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  'locations': 'azure-location'
+  'azureLocation': 'azure-location'
+  'azureLocations': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu
@@ -92,11 +100,11 @@ directive:
     transform: >
       $.Resource['x-ms-client-name'] = 'NetworkTrackedResourceData';
       $.Resource.properties.id['x-ms-format'] = 'arm-id';
-      $.Resource.properties.location['x-ms-format'] = 'azure-location';
       $.Resource.properties.type['x-ms-format'] = 'resource-type';
       $.SubResource['x-ms-client-name'] = 'NetworkSubResource';
       $.SubResource.properties.id['x-ms-format'] = 'arm-id';
       $.ProvisioningState['x-ms-enum'].name = 'NetworkProvisioningState';
+      $.Access['x-ms-enum'].name = 'NetworkAccess';
   - from: network.json
     where: $.definitions
     transform: >
@@ -199,18 +207,6 @@ directive:
     where: $.definitions..resourceId
     transform: >
       $['x-ms-format'] = 'arm-id';
-  - from: swagger-document
-    where: $.definitions..etag
-    transform: >
-      $['x-ms-format'] = 'etag';
-  - from: swagger-document
-    where: $.definitions..location
-    transform: >
-      $['x-ms-format'] = 'azure-location';
-  - from: swagger-document
-    where: $.paths..parameters[?(@.name === "location")]
-    transform: >
-      $["x-ms-format"] = 'azure-location';
   - from: azureFirewall.json
     where: $.definitions.AzureFirewallIpGroups.properties.id
     transform: >
@@ -223,9 +219,6 @@ directive:
       $.SubnetAssociation.properties.id['x-ms-format'] = 'arm-id';
       $.Topology['x-ms-client-name'] = 'NetworkTopology';
       $.TopologyResource['x-ms-client-name'] = 'TopologyResourceInfo';
-      $.AvailableProvidersListParameters.properties.azureLocations.items['x-ms-format'] = 'azure-location';
-      $.AzureReachabilityReportParameters.properties.azureLocations.items['x-ms-format'] = 'azure-location';
-      $.AzureReachabilityReportItem.properties.azureLocation['x-ms-format'] = 'azure-location';
       $.PacketCapture.properties.type = {
         "readOnly": true,
         "type": "string",
@@ -237,15 +230,22 @@ directive:
       $.VerificationIPFlowParameters.properties.targetNicResourceId['x-ms-format'] = 'arm-id';
       $.NextHopParameters.properties.targetNicResourceId['x-ms-format'] = 'arm-id';
       $.NextHopResult.properties.routeTableId['x-ms-format'] = 'arm-id';
-  - from: virtualNetwork.json
-    where: $.definitions
-    transform: >
-      $.ServiceAssociationLinkPropertiesFormat.properties.locations.items['x-ms-format'] = 'azure-location';
-      $.ServiceEndpointPropertiesFormat.properties.locations.items['x-ms-format'] = 'azure-location';
+      $.Direction['x-ms-enum'].name = 'TrafficDirection';
+      $.ConnectivityIssue.properties.origin['x-ms-enum'].name = 'IssueOrigin';
+      $.ConnectivityIssue.properties.severity['x-ms-enum'].name = 'IssueSeverity';
+      $.ConnectivityParameters.properties.protocol['x-ms-enum'].name = 'NetworkWatcherProtocol';
+      $.PacketCaptureStorageLocation.properties.storageId['x-ms-format'] = 'arm-id';
+      $.TroubleshootingProperties.properties.storageId['x-ms-format'] = 'arm-id';
+      $.FlowLogProperties.properties.storageId['x-ms-format'] = 'arm-id';
+      $.FlowLogPropertiesFormat.properties.storageId['x-ms-format'] = 'arm-id';
   - from: usage.json
     where: $.definitions.Usage.properties.id
     transform: >
       $['x-ms-format'] = 'arm-id';
+  - from: virtualNetwork.json
+    where: $.definitions
+    transform: >
+        $.Delegation['x-ms-client-name'] = 'ServiceDelegation';
   - from: endpointService.json
     where: $.definitions
     transform: >

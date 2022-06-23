@@ -211,20 +211,20 @@ namespace Azure.ResourceManager.ServiceBus
         }
         #endregion
 
-        #region NamespaceDisasterRecoveryAuthorizationRuleResource
+        #region MigrationConfigPropertiesResource
         /// <summary>
-        /// Gets an object representing a <see cref="NamespaceDisasterRecoveryAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NamespaceDisasterRecoveryAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceDisasterRecoveryAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MigrationConfigPropertiesResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationConfigPropertiesResource.CreateResourceIdentifier" /> to create a <see cref="MigrationConfigPropertiesResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceDisasterRecoveryAuthorizationRuleResource" /> object. </returns>
-        public static NamespaceDisasterRecoveryAuthorizationRuleResource GetNamespaceDisasterRecoveryAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationConfigPropertiesResource" /> object. </returns>
+        public static MigrationConfigPropertiesResource GetMigrationConfigPropertiesResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NamespaceDisasterRecoveryAuthorizationRuleResource.ValidateResourceId(id);
-                return new NamespaceDisasterRecoveryAuthorizationRuleResource(client, id);
+                MigrationConfigPropertiesResource.ValidateResourceId(id);
+                return new MigrationConfigPropertiesResource(client, id);
             }
             );
         }
@@ -287,20 +287,20 @@ namespace Azure.ResourceManager.ServiceBus
         }
         #endregion
 
-        #region MigrationConfigPropertiesResource
+        #region NamespaceDisasterRecoveryAuthorizationRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationConfigPropertiesResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationConfigPropertiesResource.CreateResourceIdentifier" /> to create a <see cref="MigrationConfigPropertiesResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NamespaceDisasterRecoveryAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NamespaceDisasterRecoveryAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceDisasterRecoveryAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MigrationConfigPropertiesResource" /> object. </returns>
-        public static MigrationConfigPropertiesResource GetMigrationConfigPropertiesResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NamespaceDisasterRecoveryAuthorizationRuleResource" /> object. </returns>
+        public static NamespaceDisasterRecoveryAuthorizationRuleResource GetNamespaceDisasterRecoveryAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MigrationConfigPropertiesResource.ValidateResourceId(id);
-                return new MigrationConfigPropertiesResource(client, id);
+                NamespaceDisasterRecoveryAuthorizationRuleResource.ValidateResourceId(id);
+                return new NamespaceDisasterRecoveryAuthorizationRuleResource(client, id);
             }
             );
         }

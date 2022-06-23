@@ -8,16 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery image definition that you want to update. </summary>
-    public partial class GalleryImagePatch : GalleryUpdateResourceData
+    public partial class GalleryImagePatch : ResourceData
     {
         /// <summary> Initializes a new instance of GalleryImagePatch. </summary>
         public GalleryImagePatch()
         {
             Features = new ChangeTrackingList<GalleryImageFeature>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The description of this gallery image definition resource. This property is updatable. </summary>
@@ -61,5 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IList<GalleryImageFeature> Features { get; }
         /// <summary> The architecture of the image. Applicable to OS disks only. </summary>
         public ArchitectureTypes? Architecture { get; set; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

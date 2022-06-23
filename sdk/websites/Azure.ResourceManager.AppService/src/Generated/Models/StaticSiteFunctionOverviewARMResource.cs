@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Static Site Function Overview ARM resource. </summary>
-    public partial class StaticSiteFunctionOverviewARMResource : ProxyOnlyResource
+    public partial class StaticSiteFunctionOverviewARMResource : ResourceData
     {
         /// <summary> Initializes a new instance of StaticSiteFunctionOverviewARMResource. </summary>
         public StaticSiteFunctionOverviewARMResource()
@@ -23,18 +23,21 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="functionName"> The name for the function. </param>
         /// <param name="triggerType"> The trigger type of the function. </param>
-        internal StaticSiteFunctionOverviewARMResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string functionName, TriggerTypes? triggerType) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal StaticSiteFunctionOverviewARMResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string functionName, TriggerTypes? triggerType, string kind) : base(id, name, resourceType, systemData)
         {
             FunctionName = functionName;
             TriggerType = triggerType;
+            Kind = kind;
         }
 
         /// <summary> The name for the function. </summary>
         public string FunctionName { get; }
         /// <summary> The trigger type of the function. </summary>
         public TriggerTypes? TriggerType { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

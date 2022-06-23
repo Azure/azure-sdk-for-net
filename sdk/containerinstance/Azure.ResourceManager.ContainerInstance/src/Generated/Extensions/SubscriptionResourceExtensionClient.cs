@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerInstanceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerInstanceUsage> GetUsageWithLocationAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ContainerInstanceUsage> GetUsageWithLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<ContainerInstanceUsage>> FirstPageFunc(int? pageSizeHint)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerInstanceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerInstanceUsage> GetUsageWithLocation(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<ContainerInstanceUsage> GetUsageWithLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<ContainerInstanceUsage> FirstPageFunc(int? pageSizeHint)
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CachedImages" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CachedImages> GetCachedImagesWithLocationAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CachedImages> GetCachedImagesWithLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<CachedImages>> FirstPageFunc(int? pageSizeHint)
             {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CachedImages" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CachedImages> GetCachedImagesWithLocation(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<CachedImages> GetCachedImagesWithLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<CachedImages> FirstPageFunc(int? pageSizeHint)
             {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerInstanceCapabilities" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerInstanceCapabilities> GetCapabilitiesWithLocationAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ContainerInstanceCapabilities> GetCapabilitiesWithLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<ContainerInstanceCapabilities>> FirstPageFunc(int? pageSizeHint)
             {
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerInstanceCapabilities" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerInstanceCapabilities> GetCapabilitiesWithLocation(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<ContainerInstanceCapabilities> GetCapabilitiesWithLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<ContainerInstanceCapabilities> FirstPageFunc(int? pageSizeHint)
             {

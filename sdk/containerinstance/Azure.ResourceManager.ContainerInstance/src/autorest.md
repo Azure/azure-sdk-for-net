@@ -11,6 +11,15 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/4716fb039c67e1bee1d5
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
+modelerfour:
+  flatten-payloads: false
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu
@@ -60,7 +69,6 @@ directive:
       $.ContainerAttachResponse["x-ms-client-name"] = "ContainerAttachResult";
       $.ContainerExecResponse["x-ms-client-name"] = "ContainerExecResult";
       $.Capabilities["x-ms-client-name"] = "ContainerInstanceCapabilities";
-      $.Capabilities.properties.location["x-ms-format"] = "azure-location";
       $.ContainerGroupSubnetId.properties.id["x-ms-format"] = "arm-id";
       $.InitContainerDefinition["x-ms-client-name"] = "InitContainerDefinitionContent";
       $.LogAnalytics.properties.workspaceId["x-ms-format"] = "arm-id";
