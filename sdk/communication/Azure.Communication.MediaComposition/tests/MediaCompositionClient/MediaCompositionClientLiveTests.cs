@@ -13,7 +13,7 @@ namespace Azure.Communication.MediaComposition.Tests
     public class MediaCompositionClientLiveTests : MediaCompositionClientLiveTestBase
     {
         private const string mediaCompositionId = "presentation";
-        private readonly Dictionary<string, MediaInput> presentationInputs = new Dictionary<string, MediaInput>()
+        private static readonly Dictionary<string, MediaInput> _presentationInputs = new()
         {
             ["presenter"] = new()
             {
@@ -87,7 +87,7 @@ namespace Azure.Communication.MediaComposition.Tests
             catch (RequestFailedException ex)
             {
                 Assert.NotNull(ex.Message);
-                Assert.True(ex.Message.Contains("400"));
+                Assert.AreEqual(ex.Status, 400);
                 Console.WriteLine(ex.Message);
                 return;
             }
@@ -106,12 +106,12 @@ namespace Azure.Communication.MediaComposition.Tests
                     Presenter = new("presenter", "support")
                 };
 
-                await mediaCompositionClient.CreateAsync(mediaCompositionId, layout, presentationInputs, null);
+                await mediaCompositionClient.CreateAsync(mediaCompositionId, layout, _presentationInputs, null);
             }
             catch (RequestFailedException ex)
             {
                 Assert.NotNull(ex.Message);
-                Assert.True(ex.Message.Contains("400"));
+                Assert.AreEqual(ex.Status, 400);
                 Console.WriteLine(ex.Message);
                 return;
             }
@@ -155,7 +155,7 @@ namespace Azure.Communication.MediaComposition.Tests
             catch (RequestFailedException ex)
             {
                 Assert.NotNull(ex.Message);
-                Assert.True(ex.Message.Contains("400"));
+                Assert.AreEqual(ex.Status, 400);
                 Console.WriteLine(ex.Message);
                 return;
             }
@@ -178,12 +178,12 @@ namespace Azure.Communication.MediaComposition.Tests
                         }
                     }
                 };
-                await mediaCompositionClient.CreateAsync(mediaCompositionId, null, presentationInputs, outputs);
+                await mediaCompositionClient.CreateAsync(mediaCompositionId, null, _presentationInputs, outputs);
             }
             catch (RequestFailedException ex)
             {
                 Assert.NotNull(ex.Message);
-                Assert.True(ex.Message.Contains("400"));
+                Assert.AreEqual(ex.Status, 400);
                 Console.WriteLine(ex.Message);
                 return;
             }
@@ -215,8 +215,7 @@ namespace Azure.Communication.MediaComposition.Tests
             catch (RequestFailedException ex)
             {
                 Assert.NotNull(ex.Message);
-                Assert.True(ex.Message.Contains("404"));
-                Assert.True(ex.Message.Contains("Not Found"));
+                Assert.AreEqual(ex.Status, 404);
                 Console.WriteLine(ex.Message);
                 return;
             }
@@ -244,12 +243,11 @@ namespace Azure.Communication.MediaComposition.Tests
             catch (RequestFailedException ex)
             {
                 Assert.NotNull(ex.Message);
-                Assert.True(ex.Message.Contains("404"));
-                Assert.True(ex.Message.Contains("Not Found"));
+                Assert.AreEqual(ex.Status, 404);
                 Console.WriteLine(ex.Message);
                 return;
             }
-            Assert.Fail("An exception should have been thrown trying to start a non-existent media composition..");
+            Assert.Fail("An exception should have been thrown trying to start a non-existent media composition.");
         }
 
         [Test]
@@ -285,8 +283,7 @@ namespace Azure.Communication.MediaComposition.Tests
             catch (RequestFailedException ex)
             {
                 Assert.NotNull(ex.Message);
-                Assert.True(ex.Message.Contains("404"));
-                Assert.True(ex.Message.Contains("Not Found"));
+                Assert.AreEqual(ex.Status, 404);
                 Console.WriteLine(ex.Message);
                 return;
             }
@@ -329,8 +326,7 @@ namespace Azure.Communication.MediaComposition.Tests
             catch (RequestFailedException ex)
             {
                 Assert.NotNull(ex.Message);
-                Assert.True(ex.Message.Contains("404"));
-                Assert.True(ex.Message.Contains("Not Found"));
+                Assert.AreEqual(ex.Status, 404);
                 Console.WriteLine(ex.Message);
                 return;
             }
@@ -351,8 +347,7 @@ namespace Azure.Communication.MediaComposition.Tests
             catch (RequestFailedException ex)
             {
                 Assert.NotNull(ex.Message);
-                Assert.True(ex.Message.Contains("404"));
-                Assert.True(ex.Message.Contains("Not Found"));
+                Assert.AreEqual(ex.Status, 404);
                 Console.WriteLine(ex.Message);
                 return;
             }
@@ -385,7 +380,7 @@ namespace Azure.Communication.MediaComposition.Tests
                     }
                 }
             };
-            return await mediaCompositionClient.CreateAsync(mediaCompositionId, layout, presentationInputs, outputs);
+            return await mediaCompositionClient.CreateAsync(mediaCompositionId, layout, _presentationInputs, outputs);
         }
     }
 }
