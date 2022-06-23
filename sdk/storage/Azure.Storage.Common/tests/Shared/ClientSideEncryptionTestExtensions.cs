@@ -178,7 +178,7 @@ namespace Azure.Storage.Test.Shared
         {
             var result = new byte[contents.Length];
             // just bitflip the contents
-            new System.Collections.BitArray(contents).Not().CopyTo(contents, 0);
+            new System.Collections.BitArray(contents).Not().CopyTo(result, 0);
 
             return result;
         }
