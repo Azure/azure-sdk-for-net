@@ -623,7 +623,7 @@
                 "delegations": [
                   {
                     "name": "Microsoft.Sql/managedInstances",
-                    "type": "Microsoft.Sql",
+                    "type": "/Microsoft.Sql",
                     "properties": {
                       "serviceName": "Microsoft.Sql/managedInstances"
                     }
