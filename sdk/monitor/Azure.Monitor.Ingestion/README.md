@@ -6,7 +6,7 @@ The Azure Monitor Ingestion client library is used to send custom logs to [Azure
 
 This library allows you to send data from virtually any source to supported built-in tables or to custom tables that you create in Log Analytics workspace. You can even extend the schema of built-in tables with custom columns.
 
-  **Resources:**
+**Resources:**
 * [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/src)
 * [Package (NuGet)](https://www.nuget.org/packages/Azure.Monitor.Ingestion)
 * [API reference documentation](https://docs.microsoft.com/dotnet/api/overview/azure/monitor/ingestion?view=azure-dotnet)

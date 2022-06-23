@@ -26,6 +26,6 @@ Console.WriteLine("Table entry count: " + queryResponse.Value.GetResult<int>(cou
 ```
 
 To see the full example source files, see:
-* [HelloWorld](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/tests/Samples/Sample1_HelloWorldAsync.cs))
+* [QueryAsync](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/tests/Samples/LogDataAndQueryAsync.cs))
 
 <!-- please refer to <https://github.com/Azure/azure-sdk-for-net/main/sdk/template/Azure.Template/samples/Sample1_HelloWorldAsync.md> to write sample readme file. -->

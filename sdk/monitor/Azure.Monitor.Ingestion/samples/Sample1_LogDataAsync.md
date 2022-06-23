@@ -4,7 +4,7 @@ To use these samples, you'll first need to set up resources. See [getting starte
 
 ## <scenario> asynchronously
 
-You can create a client and call the client's `UploadAsync` method
+You can create a client and call the client's `UploadAsync` method. Please note that at this time the upload limit is 1 Mb. Any content uploaded larger than 1 Mb will throw an exception.
 
 ```C# Snippet:UploadCustomLogsAsync
 var dataCollectionEndpoint = new Uri("...");
@@ -52,6 +52,6 @@ Response response = await client.UploadAsync(dataCollectionRuleImmutableId, stre
 ```
 
 To see the full example source files, see:
-* [HelloWorld](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/tests/Samples/Sample1_HelloWorldAsync.cs))
+* [LogDataAsync](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/tests/Samples/LogDataAndQueryAsync.cs))
 
 <!-- please refer to <https://github.com/Azure/azure-sdk-for-net/main/sdk/template/Azure.Template/samples/Sample1_HelloWorldAsync.md> to write sample readme file. -->

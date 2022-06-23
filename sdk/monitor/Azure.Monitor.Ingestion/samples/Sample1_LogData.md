@@ -4,7 +4,7 @@ To use these samples, you'll first need to set up resources. See [getting starte
 
 ## <scenario>
 
-You can create a client and call the client's `Upload` method
+You can create a client and call the client's `Upload` method. Please note that at this time the upload limit is 1 Mb. Any content uploaded larger than 1 Mb will throw an exception.
 
 ```C# Snippet:UploadCustomLogs
 var dataCollectionEndpoint = new Uri("...");
@@ -52,6 +52,6 @@ Response response = client.Upload(dataCollectionRuleImmutableId, streamName, Req
 ```
 
 To see the full example source files, see:
-* [HelloWorld](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/tests/Samples/Sample1_HelloWorld.cs))
+* [LogData](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/tests/Samples/LogDataAndQuery.cs))
 
 <!-- please refer to <https://github.com/Azure/azure-sdk-for-net/main/sdk/template/Azure.Template/samples/Sample1_HelloWorld.md> to write sample readme file. -->
