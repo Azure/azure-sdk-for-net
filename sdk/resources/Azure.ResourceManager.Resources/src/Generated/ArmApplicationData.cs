@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the ArmApplication data model. </summary>
-    public partial class ArmApplicationData : TrackedResourceData
+    public partial class ArmApplicationData : ArmApplicationResourceData
     {
         /// <summary> Initializes a new instance of ArmApplicationData. </summary>
         /// <param name="location"> The location. </param>
@@ -39,6 +39,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="managedBy"> ID of the resource that manages this resource. </param>
+        /// <param name="sku"> The SKU of the resource. </param>
         /// <param name="plan"> The plan information. </param>
         /// <param name="kind"> The kind of the managed application. Allowed values are MarketPlace and ServiceCatalog. </param>
         /// <param name="identity"> The identity of the resource. </param>
@@ -57,9 +59,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="artifacts"> The collection of managed application artifacts. </param>
         /// <param name="createdBy"> The client entity that created the JIT request. </param>
         /// <param name="updatedBy"> The client entity that last updated the JIT request. </param>
-        /// <param name="managedBy"> ID of the resource that manages this resource. </param>
-        /// <param name="sku"> The SKU of the resource. </param>
-        internal ArmApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ArmPlan plan, string kind, ArmApplicationManagedIdentity identity, ResourceIdentifier managedResourceGroupId, ResourceIdentifier applicationDefinitionId, BinaryData parameters, BinaryData outputs, ResourcesProvisioningState? provisioningState, ArmApplicationBillingDetails billingDetails, ArmApplicationJitAccessPolicy jitAccessPolicy, Guid? publisherTenantId, IReadOnlyList<ArmApplicationAuthorization> authorizations, ArmApplicationManagementMode? managementMode, ArmApplicationPackageContact customerSupport, ArmApplicationPackageSupportUris supportUris, IReadOnlyList<ArmApplicationArtifact> artifacts, ArmApplicationDetails createdBy, ArmApplicationDetails updatedBy, string managedBy, ArmApplicationSku sku) : base(id, name, resourceType, systemData, tags, location)
+        internal ArmApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ArmApplicationSku sku, ArmPlan plan, string kind, ArmApplicationManagedIdentity identity, ResourceIdentifier managedResourceGroupId, ResourceIdentifier applicationDefinitionId, BinaryData parameters, BinaryData outputs, ResourcesProvisioningState? provisioningState, ArmApplicationBillingDetails billingDetails, ArmApplicationJitAccessPolicy jitAccessPolicy, Guid? publisherTenantId, IReadOnlyList<ArmApplicationAuthorization> authorizations, ArmApplicationManagementMode? managementMode, ArmApplicationPackageContact customerSupport, ArmApplicationPackageSupportUris supportUris, IReadOnlyList<ArmApplicationArtifact> artifacts, ArmApplicationDetails createdBy, ArmApplicationDetails updatedBy) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
         {
             Plan = plan;
             Kind = kind;
@@ -79,8 +79,6 @@ namespace Azure.ResourceManager.Resources
             Artifacts = artifacts;
             CreatedBy = createdBy;
             UpdatedBy = updatedBy;
-            ManagedBy = managedBy;
-            Sku = sku;
         }
 
         /// <summary> The plan information. </summary>
@@ -125,9 +123,5 @@ namespace Azure.ResourceManager.Resources
         public ArmApplicationDetails CreatedBy { get; }
         /// <summary> The client entity that last updated the JIT request. </summary>
         public ArmApplicationDetails UpdatedBy { get; }
-        /// <summary> ID of the resource that manages this resource. </summary>
-        public string ManagedBy { get; set; }
-        /// <summary> The SKU of the resource. </summary>
-        public ArmApplicationSku Sku { get; set; }
     }
 }

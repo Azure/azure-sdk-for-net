@@ -9,22 +9,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmDeploymentScriptData : IUtf8JsonSerializable
+    public partial class TrackedResourceExtendedData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Optional.IsDefined(ExtendedLocation))
             {
-                writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                writer.WritePropertyName("extendedLocation");
+                writer.WriteObjectValue(ExtendedLocation);
             }
-            writer.WritePropertyName("location");
-            writer.WriteStringValue(Location);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -36,44 +33,30 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("kind");
-            writer.WriteStringValue(Kind.ToString());
+            writer.WritePropertyName("location");
+            writer.WriteStringValue(Location);
             writer.WriteEndObject();
         }
 
-        internal static ArmDeploymentScriptData DeserializeArmDeploymentScriptData(JsonElement element)
+        internal static TrackedResourceExtendedData DeserializeTrackedResourceExtendedData(JsonElement element)
         {
-            if (element.TryGetProperty("kind", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "AzureCLI": return AzureCliScript.DeserializeAzureCliScript(element);
-                    case "AzurePowerShell": return AzurePowerShellScript.DeserializeAzurePowerShellScript(element);
-                }
-            }
-            Optional<ArmDeploymentScriptManagedIdentity> identity = default;
-            AzureLocation location = default;
+            Optional<ExtendedLocation> extendedLocation = default;
             Optional<IDictionary<string, string>> tags = default;
-            ScriptType kind = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("extendedLocation"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    location = new AzureLocation(property.Value.GetString());
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -91,9 +74,9 @@ namespace Azure.ResourceManager.Resources
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("location"))
                 {
-                    kind = new ScriptType(property.Value.GetString());
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -122,7 +105,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ArmDeploymentScriptData(id, name, type, systemData.Value, identity.Value, location, Optional.ToDictionary(tags), kind);
+            return new TrackedResourceExtendedData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value);
         }
     }
 }
