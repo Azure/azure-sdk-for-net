@@ -2,17 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
 using CommandLine;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Consumer;
-using Azure.Messaging.EventHubs.Producer;
 using System.Diagnostics.Tracing;
 using Azure.Core.Diagnostics;
 
@@ -89,6 +82,8 @@ public class Program
                 var storageBlob = string.Empty;
                 var storageConnectionString = string.Empty;
 
+                metrics.Client.TrackEvent("Starting a test run.");
+
                 switch (t)
                 {
                     case TestScenario.BufferedProducerTest:
@@ -153,6 +148,8 @@ public class Program
 
             await tasksWaiting.ConfigureAwait(false);
             // Wait for all tests scenarios to finish before returning.
+
+            metrics.Client.TrackEvent("Test run is ending.");
         }
         catch (TaskCanceledException)
         {

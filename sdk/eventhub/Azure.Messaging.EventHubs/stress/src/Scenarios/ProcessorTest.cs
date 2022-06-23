@@ -99,7 +99,10 @@ public class ProcessorTest
                 var partitionCount = await _testConfiguration.GetEventHubPartitionCountAsync().ConfigureAwait(false);
                 var processor = new Processor(_testConfiguration, processorConfiguration, _metrics, partitionCount);
                 _identifier = processor.Identifier;
+
+                _metrics.Client.TrackEvent("Starting to process events");
                 await processor.StartAsync(ProcessEventHandler, ProcessErrorHandler, cancellationToken).ConfigureAwait(false);
+                _metrics.Client.TrackEvent("Stopping processing events");
                 break;
 
             case Role.PartitionPublisher:
@@ -109,7 +112,9 @@ public class ProcessorTest
                 var partitions = EventTracking.GetAssignedPartitions(partitionsCount, roleIndex, partitionIds, _roles);
 
                 var partitionPublisher = new PartitionPublisher(partitionPublisherConfiguration, _testConfiguration, _metrics, partitions);
+                _metrics.Client.TrackEvent("Starting to publish events");
                 await partitionPublisher.StartAsync(cancellationToken).ConfigureAwait(false);
+                _metrics.Client.TrackEvent("Stopping publishing events.");
                 break;
 
             default:
