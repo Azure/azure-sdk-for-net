@@ -75,7 +75,7 @@ public class TestConfiguration
     ///
     /// <returns>An array holding the partition IDs associated with the Event Hub used for this test.>/returns>
     ///
-    public async Task<string[]> GetEventHubPartitionKeysAsync()
+    public async Task<string[]> GetEventHubPartitionsAsync()
     {
         if (string.IsNullOrEmpty(EventHubsConnectionString) || string.IsNullOrEmpty(EventHub))
         {
