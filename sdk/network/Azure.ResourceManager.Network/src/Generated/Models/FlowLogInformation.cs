@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>
         /// <param name="enabled"> Flag to enable/disable flow logging. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> or <paramref name="storageId"/> is null. </exception>
-        public FlowLogInformation(ResourceIdentifier targetResourceId, string storageId, bool enabled)
+        public FlowLogInformation(ResourceIdentifier targetResourceId, ResourceIdentifier storageId, bool enabled)
         {
             if (targetResourceId == null)
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enabled"> Flag to enable/disable flow logging. </param>
         /// <param name="retentionPolicy"> Parameters that define the retention policy for flow log. </param>
         /// <param name="format"> Parameters that define the flow log format. </param>
-        internal FlowLogInformation(ResourceIdentifier targetResourceId, TrafficAnalyticsProperties flowAnalyticsConfiguration, string storageId, bool enabled, RetentionPolicyParameters retentionPolicy, FlowLogFormatParameters format)
+        internal FlowLogInformation(ResourceIdentifier targetResourceId, TrafficAnalyticsProperties flowAnalyticsConfiguration, ResourceIdentifier storageId, bool enabled, RetentionPolicyParameters retentionPolicy, FlowLogFormatParameters format)
         {
             TargetResourceId = targetResourceId;
             FlowAnalyticsConfiguration = flowAnalyticsConfiguration;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> ID of the storage account which is used to store the flow log. </summary>
-        public string StorageId { get; set; }
+        public ResourceIdentifier StorageId { get; set; }
         /// <summary> Flag to enable/disable flow logging. </summary>
         public bool Enabled { get; set; }
         /// <summary> Parameters that define the retention policy for flow log. </summary>

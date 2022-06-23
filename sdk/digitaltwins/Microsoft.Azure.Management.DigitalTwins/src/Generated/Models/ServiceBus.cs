@@ -30,14 +30,18 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// Initializes a new instance of the ServiceBus class.
         /// </summary>
         /// <param name="provisioningState">The provisioning state. Possible
-        /// values include: 'Provisioning', 'Deleting', 'Succeeded', 'Failed',
-        /// 'Canceled', 'Deleted', 'Warning', 'Suspending', 'Restoring',
-        /// 'Moving', 'Disabled'</param>
+        /// values include: 'Provisioning', 'Deleting', 'Updating',
+        /// 'Succeeded', 'Failed', 'Canceled', 'Deleted', 'Warning',
+        /// 'Suspending', 'Restoring', 'Moving', 'Disabled'</param>
         /// <param name="createdTime">Time when the Endpoint was added to
         /// DigitalTwinsInstance.</param>
         /// <param name="authenticationType">Specifies the authentication type
-        /// being used for connecting to the endpoint. Possible values include:
-        /// 'KeyBased', 'IdentityBased'</param>
+        /// being used for connecting to the endpoint. Defaults to 'KeyBased'.
+        /// If 'KeyBased' is selected, a connection string must be specified
+        /// (at least the primary connection string). If 'IdentityBased' is
+        /// select, the endpointUri and entityPath properties must be
+        /// specified. Possible values include: 'KeyBased',
+        /// 'IdentityBased'</param>
         /// <param name="deadLetterSecret">Dead letter storage secret for
         /// key-based authentication. Will be obfuscated during read.</param>
         /// <param name="deadLetterUri">Dead letter storage URL for
@@ -50,9 +54,9 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// during read.</param>
         /// <param name="endpointUri">The URL of the ServiceBus namespace for
         /// identity-based authentication. It must include the protocol
-        /// sb://</param>
+        /// 'sb://'.</param>
         /// <param name="entityPath">The ServiceBus Topic name for
-        /// identity-based authentication</param>
+        /// identity-based authentication.</param>
         public ServiceBus(string provisioningState = default(string), System.DateTime? createdTime = default(System.DateTime?), string authenticationType = default(string), string deadLetterSecret = default(string), string deadLetterUri = default(string), string primaryConnectionString = default(string), string secondaryConnectionString = default(string), string endpointUri = default(string), string entityPath = default(string))
             : base(provisioningState, createdTime, authenticationType, deadLetterSecret, deadLetterUri)
         {
@@ -84,14 +88,14 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
 
         /// <summary>
         /// Gets or sets the URL of the ServiceBus namespace for identity-based
-        /// authentication. It must include the protocol sb://
+        /// authentication. It must include the protocol 'sb://'.
         /// </summary>
         [JsonProperty(PropertyName = "endpointUri")]
         public string EndpointUri { get; set; }
 
         /// <summary>
         /// Gets or sets the ServiceBus Topic name for identity-based
-        /// authentication
+        /// authentication.
         /// </summary>
         [JsonProperty(PropertyName = "entityPath")]
         public string EntityPath { get; set; }

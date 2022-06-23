@@ -27,7 +27,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   The approach to use for calculating retry delays.
         /// </summary>
-        ///
+        /// <value>The default retry mode is <see cref="ServiceBusRetryMode.Exponential"/>.</value>
         public ServiceBusRetryMode Mode { get; set; } = ServiceBusRetryMode.Exponential;
 
         /// <summary>
