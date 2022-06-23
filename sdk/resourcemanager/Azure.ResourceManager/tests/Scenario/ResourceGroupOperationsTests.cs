@@ -86,7 +86,11 @@ namespace Azure.ResourceManager.Tests
         {
             var rgName = Recording.GenerateAssetName("testrg");
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
-            var rg1Op = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
+            var tags = new Dictionary<string, string>()
+            {
+                { "key", "value"}
+            };
+            var rg1Op = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2, tags).CreateOrUpdateAsync(rgName);
             ResourceGroupResource rg1 = rg1Op.Value;
             var parameters = new ResourceGroupPatch
             {
@@ -100,6 +104,14 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
             Assert.AreEqual(rg1.Data.Tags, rg2.Data.Tags);
+
+            var parameters3 = new ResourceGroupPatch
+            {
+                Name = rgName
+            };
+            parameters3.Tags.Clear();
+            ResourceGroupResource rg3 = await rg2.UpdateAsync(parameters3);
+            Assert.AreEqual(0, rg3.Data.Tags.Count);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.UpdateAsync(null));
         }
