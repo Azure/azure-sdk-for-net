@@ -96,7 +96,7 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 
 ### Upload custom logs
 
-You can create a client and call the client's `Upload` method.
+You can create a client and call the client's `Upload` method. Please note that at this time the upload limit is 1 Mb. Any content uploaded larger than 1 Mb will throw an exception.
 
 ```C# Snippet:UploadCustomLogs
 var dataCollectionEndpoint = new Uri("...");
