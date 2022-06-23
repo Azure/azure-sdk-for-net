@@ -195,5 +195,6 @@ For more information see the [Code of Conduct FAQ](https://opensource.microsoft.
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 [azure_monitor_overview]: https://docs.microsoft.com/azure/azure-monitor/overview
+[logging]: https://docs.microsoft.com/dotnet/core/extensions/logging
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/monitor/Azure.Monitor.Ingestion/README.png)
