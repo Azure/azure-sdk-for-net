@@ -111,6 +111,7 @@ directive:
       $.SubResource.properties.id["x-ms-format"] = "arm-id";
       $.SubResourceReadOnly["x-ms-client-name"] = "ComputeSubResourceData";
       $.SubResourceReadOnly.properties.id["x-ms-format"] = "arm-id";
+      $.ExtendedLocationType["x-ms-enum"].name = "ExtendedLocationType";
       $.SystemData = {
         "description": "Metadata pertaining to creation and last modification of the resource.",
         "type": "object",
@@ -177,6 +178,7 @@ directive:
     transform: >
       $.VirtualMachineImageProperties.properties.dataDiskImages.description = "The list of data disk images information.";
       $.VirtualMachineImageResource["x-ms-client-name"] = "VirtualMachineImageBase";
+      $.OSDiskImage.properties.operatingSystem["x-ms-enum"].name = "SupportedOperatingSystemType";
   - from: virtualMachineScaleSet.json
     where: $.definitions
     transform: >
@@ -188,6 +190,7 @@ directive:
       $.RollingUpgradeStatusInfo["x-ms-client-name"] = "VirtualMachineScaleSetRollingUpgrade";
       $.VirtualMachineScaleSetSku.properties.resourceType["x-ms-format"] = "resource-type";
       $.VirtualMachineScaleSetVMInstanceView.properties.assignedHost["x-ms-format"] = "arm-id";
+      $.VirtualMachineScaleSetOSDisk.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
   - from: restorePoint.json
     where: $.definitions
     transform: >
@@ -208,6 +211,8 @@ directive:
       $.SshPublicKey["x-ms-client-name"] = "SshPublicKeyInfo";
       $.UpdateResource["x-ms-client-name"] = "ComputeUpdateResourceData";
       $.SubResourceWithColocationStatus["x-ms-client-name"] = "ComputeSubResourceDataWithColocationStatus";
+      $.HyperVGenerationType["x-ms-enum"].name = "HyperVGenerationType";
+      $.OSDisk.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
   - from: sshPublicKey.json
     where: $.definitions
     transform: >
@@ -230,6 +235,8 @@ directive:
       $.Disk.properties.managedByExtended.items["x-ms-format"] = "arm-id";
       $.DiskProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
       $.DiskUpdateProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
+      $.DiskProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
+      $.DiskUpdateProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
   - from: diskAccess.json
     where: $.definitions
     transform: >
@@ -241,11 +248,14 @@ directive:
       $.DiskRestorePointProperties.properties.sourceResourceId["x-ms-format"] = "arm-id";
       $.DiskRestorePointProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
       $.DiskRestorePointProperties.properties.sourceResourceLocation["x-ms-format"] = "azure-location";
+      $.DiskRestorePointProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
   - from: snapshot.json
     where: $.definitions
     transform: >
       $.SnapshotProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
       $.SnapshotUpdateProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
+      $.SnapshotProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
+      $.SnapshotUpdateProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
   - from: diskRPCommon.json
     where: $.definitions
     transform: >
@@ -285,6 +295,11 @@ directive:
       $.DiskImageEncryption.properties.diskEncryptionSetId["x-ms-format"] = "arm-id";
       $.GalleryArtifactVersionSource.properties.id["x-ms-format"] = "arm-id";
       $.UpdateResourceDefinition["x-ms-client-name"] = "GalleryUpdateResourceData";
+      $.GalleryImageProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
+      $.GalleryApplicationProperties.properties.supportedOSType["x-ms-enum"].name = "SupportedOperatingSystemType";
+      $.TargetRegion.properties.storageAccountType["x-ms-enum"].name = "ImageStorageAccountType";
+      $.GalleryArtifactPublishingProfileBase.properties.storageAccountType["x-ms-enum"].name = "ImageStorageAccountType";
+      $.GalleryTargetExtendedLocation.properties.storageAccountType["x-ms-enum"].name = "ImageStorageAccountType";
   - from: gallery.json
     where: $.parameters
     transform: >
@@ -294,12 +309,14 @@ directive:
     transform: >
       $.PirResource["x-ms-client-name"] = "PirResourceData";
       $.PirSharedGalleryResource["x-ms-client-name"] = "PirSharedGalleryResourceData";
+      $.SharedGalleryImageProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
   - from: communityGallery.json
     where: $.definitions
     transform: >
       $.PirCommunityGalleryResource["x-ms-client-name"] = "PirCommunityGalleryResourceData";
       $.PirCommunityGalleryResource.properties.type["x-ms-client-name"] = "ResourceType";
       $.PirCommunityGalleryResource.properties.type["x-ms-format"] = "resource-type";
+      $.CommunityGalleryImageProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
   - from: cloudService.json
     where: $.definitions.LoadBalancerConfigurationProperties
     transform: >
@@ -308,4 +325,12 @@ directive:
       $.required = ["frontendIpConfigurations"];
       $.properties.frontendIPConfigurations = undefined;
     reason: Service returns response with property name as frontendIpConfigurations.
+  - from: image.json
+    where: $.definitions
+    transform: >
+      $.ImageOSDisk.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
+  - from: runCommand.json
+    where: $.definitions
+    transform: >
+      $.RunCommandDocumentBase.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
 ```

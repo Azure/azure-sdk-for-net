@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SkuDescription sku, ExtendedLocation extendedLocation, string workerTierName, StatusOptions? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, string geoRegion, bool? perSiteScaling, bool? elasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpirationOn, DateTimeOffset? freeOfferExpirationOn, string resourceGroup, bool? reserved, bool? isXenon, bool? hyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? zoneRedundant, string kind) : base(id, name, resourceType, systemData, tags, location)
+        internal AppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SkuDescription sku, ExtendedLocation extendedLocation, string workerTierName, StatusOption? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, string geoRegion, bool? perSiteScaling, bool? elasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpirationOn, DateTimeOffset? freeOfferExpirationOn, string resourceGroup, bool? reserved, bool? isXenon, bool? hyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? zoneRedundant, string kind) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ExtendedLocation = extendedLocation;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Target worker tier assigned to the App Service plan. </summary>
         public string WorkerTierName { get; set; }
         /// <summary> App Service plan status. </summary>
-        public StatusOptions? Status { get; }
+        public StatusOption? Status { get; }
         /// <summary> App Service plan subscription. </summary>
         public string Subscription { get; }
         /// <summary> Specification for the App Service Environment to use for the App Service plan. </summary>

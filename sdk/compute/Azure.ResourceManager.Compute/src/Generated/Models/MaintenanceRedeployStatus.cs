@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="maintenanceWindowEndOn"> End Time for the Maintenance Window. </param>
         /// <param name="lastOperationResultCode"> The Last Maintenance Operation Result Code. </param>
         /// <param name="lastOperationMessage"> Message returned for the last Maintenance Operation. </param>
-        internal MaintenanceRedeployStatus(bool? isCustomerInitiatedMaintenanceAllowed, DateTimeOffset? preMaintenanceWindowStartOn, DateTimeOffset? preMaintenanceWindowEndOn, DateTimeOffset? maintenanceWindowStartOn, DateTimeOffset? maintenanceWindowEndOn, MaintenanceOperationResultCodeTypes? lastOperationResultCode, string lastOperationMessage)
+        internal MaintenanceRedeployStatus(bool? isCustomerInitiatedMaintenanceAllowed, DateTimeOffset? preMaintenanceWindowStartOn, DateTimeOffset? preMaintenanceWindowEndOn, DateTimeOffset? maintenanceWindowStartOn, DateTimeOffset? maintenanceWindowEndOn, MaintenanceOperationResultCodeType? lastOperationResultCode, string lastOperationMessage)
         {
             IsCustomerInitiatedMaintenanceAllowed = isCustomerInitiatedMaintenanceAllowed;
             PreMaintenanceWindowStartOn = preMaintenanceWindowStartOn;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> End Time for the Maintenance Window. </summary>
         public DateTimeOffset? MaintenanceWindowEndOn { get; }
         /// <summary> The Last Maintenance Operation Result Code. </summary>
-        public MaintenanceOperationResultCodeTypes? LastOperationResultCode { get; }
+        public MaintenanceOperationResultCodeType? LastOperationResultCode { get; }
         /// <summary> Message returned for the last Maintenance Operation. </summary>
         public string LastOperationMessage { get; }
     }

@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> displayName = default;
             Optional<string> message = default;
             Optional<NotificationLevel> level = default;
-            Optional<Channels> channels = default;
+            Optional<Channel> channels = default;
             Optional<IReadOnlyList<string>> categoryTags = default;
             Optional<string> actionName = default;
             Optional<int> enabled = default;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            channels = property0.Value.GetString().ToChannels();
+                            channels = property0.Value.GetString().ToChannel();
                             continue;
                         }
                         if (property0.NameEquals("categoryTags"))

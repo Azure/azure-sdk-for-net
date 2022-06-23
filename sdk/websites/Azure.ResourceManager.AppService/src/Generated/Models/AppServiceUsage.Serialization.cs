@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<long> currentValue = default;
             Optional<long> limit = default;
             Optional<DateTimeOffset> nextResetTime = default;
-            Optional<ComputeModeOptions> computeMode = default;
+            Optional<ComputeModeOption> computeMode = default;
             Optional<string> siteMode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            computeMode = property0.Value.GetString().ToComputeModeOptions();
+                            computeMode = property0.Value.GetString().ToComputeModeOption();
                             continue;
                         }
                         if (property0.NameEquals("siteMode"))

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> The signed services accessible with the service SAS. Possible values include: Blob (b), Container (c), File (f), Share (s). </summary>
         public SignedResource? Resource { get; set; }
         /// <summary> The signed permissions for the service SAS. Possible values include: Read (r), Write (w), Delete (d), List (l), Add (a), Create (c), Update (u) and Process (p). </summary>
-        public Permissions? Permissions { get; set; }
+        public Permission? Permissions { get; set; }
         /// <summary> An IP address or a range of IP addresses from which to accept requests. </summary>
         public string IPAddressOrRange { get; set; }
         /// <summary> The protocol permitted for a request made with the account SAS. </summary>

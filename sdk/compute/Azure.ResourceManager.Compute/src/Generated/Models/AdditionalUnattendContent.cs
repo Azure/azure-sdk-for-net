@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="componentName"> The component name. Currently, the only allowable value is Microsoft-Windows-Shell-Setup. </param>
         /// <param name="settingName"> Specifies the name of the setting to which the content applies. Possible values are: FirstLogonCommands and AutoLogon. </param>
         /// <param name="content"> Specifies the XML formatted content that is added to the unattend.xml file for the specified path and component. The XML must be less than 4KB and must include the root element for the setting or feature that is being inserted. </param>
-        internal AdditionalUnattendContent(string passName, string componentName, SettingNames? settingName, string content)
+        internal AdditionalUnattendContent(string passName, string componentName, SettingName? settingName, string content)
         {
             PassName = passName;
             ComponentName = componentName;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The component name. Currently, the only allowable value is Microsoft-Windows-Shell-Setup. </summary>
         public string ComponentName { get; set; }
         /// <summary> Specifies the name of the setting to which the content applies. Possible values are: FirstLogonCommands and AutoLogon. </summary>
-        public SettingNames? SettingName { get; set; }
+        public SettingName? SettingName { get; set; }
         /// <summary> Specifies the XML formatted content that is added to the unattend.xml file for the specified path and component. The XML must be less than 4KB and must include the root element for the setting or feature that is being inserted. </summary>
         public string Content { get; set; }
     }
