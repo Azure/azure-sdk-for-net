@@ -123,7 +123,7 @@
     <PackageReference Update="Apache.Avro" Version="1.11.0" />
     <PackageReference Update="CloudNative.CloudEvents" Version="2.0.0" />
     <PackageReference Update="CloudNative.CloudEvents.SystemTextJson" Version="2.0.0" />
-    <PackageReference Update="MessagePack" Version="1.9.11" /> <!--Override the dependency version in Microsoft.AspNetCore.SignalR.Protocols.MessagePack to fix a vulnerability.-->
+    <PackageReference Update="MessagePack" Version="1.9.11" />
     <PackageReference Update="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="1.1.5" />
     <PackageReference Update="Microsoft.Azure.SignalR" Version="1.18.0" />
     <PackageReference Update="Microsoft.Azure.SignalR.Management" Version="1.18.0" />
