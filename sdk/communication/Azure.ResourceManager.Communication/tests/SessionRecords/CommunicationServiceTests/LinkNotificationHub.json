@@ -977,6 +977,8 @@
     }
   ],
   "Variables": {
+    "NOTIFICATION_HUBS_CONNECTION_STRING": "Endpoint=sb://sdktest.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=Kg==",
+    "NOTIFICATION_HUBS_RESOURCE_ID": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/nhrg/providers/Microsoft.NotificationHubs/namespaces/sdktest/notificationHubs/sdktest",
     "RandomSeed": "1219082532",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
