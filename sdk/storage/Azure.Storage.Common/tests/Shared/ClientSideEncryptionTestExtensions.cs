@@ -51,16 +51,13 @@ namespace Azure.Storage.Test.Shared
                     .Returns<string, ReadOnlyMemory<byte>, CancellationToken>(async (algorithm, key, cancellationToken) =>
                     {
                         await Task.Delay(optionalDelay);
-                        // TODO develop transformative function that can work with different size keys. no-op is fine for now
-                        //return Xor(userKeyBytes, key.ToArray());
-                        return key.ToArray();
+                        return KeyWrapImpl(userKeyBytes, key.ToArray());
                     });
                 keyMock.Setup(k => k.UnwrapKeyAsync(s_algorithmName, It.IsNotNull<ReadOnlyMemory<byte>>(), expectedCancellationToken ?? It.IsAny<CancellationToken>()))
                     .Returns<string, ReadOnlyMemory<byte>, CancellationToken>(async (algorithm, wrappedKey, cancellationToken) =>
                     {
                         await Task.Delay(optionalDelay);
-                        //return Xor(userKeyBytes, wrappedKey.ToArray());
-                        return wrappedKey.ToArray();
+                        return KeyWrapImpl(userKeyBytes, wrappedKey.ToArray());
                     });
             }
             else
